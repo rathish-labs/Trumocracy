@@ -1,0 +1,151 @@
+#!/usr/bin/env bash
+#
+# contribute-learning — send an AGENT-learning from a product back to the vektor org.
+#
+# A scaffolded product runs this to append one entry to the vektor org's
+# learnings/agent-learnings.md and open a PR. It is the AGENT-level analogue of a
+# product's in-repo refine-log: a product's refine-log stays in the product; an
+# *agent* learning (how a VEKTOR role should behave better) belongs in the org repo,
+# where a human reviews it and — if adopted — edits the role definition.
+#
+# It does NOT edit any agent definition. It only proposes a learning (status:
+# proposed). Agent definitions are changed only by a human, in the org repo.
+#
+# Usage:
+#   scripts/contribute-learning \
+#     --role <role> --what "<what happened>" --change "<proposed change>" \
+#     [--project <name>] [--date <YYYY-MM-DD>] [--vektor <url|path>] \
+#     [--base <branch>] [--fork] [--dry-run]
+#
+#   --role     (required) one of: product-owner project-manager architect engineer
+#              tester reviewer-qa technical-writer sre prompt-architect
+#   --what     (required) the signal — what the role did/missed, grounded in a real event
+#   --change   (required) the concrete, reviewable change proposed to the role definition
+#   --project  source product name        (default: current repo dir name)
+#   --date     ISO-8601 date              (default: today)
+#   --vektor   org repo URL or local path (default: https://github.com/rrathishk/vektor.git)
+#   --base     base branch for the PR     (default: main)
+#   --fork     fork the org repo first (for contributors without push access; needs gh)
+#   --dry-run  print the row + plan; make no clone, commit, or PR
+#   -h|--help  show this help
+#
+# Requires: git. PR creation also requires the GitHub CLI (gh); without gh the branch
+# is pushed and a compare URL is printed for you to open the PR manually.
+
+set -euo pipefail
+
+die()  { echo "contribute-learning: error: $*" >&2; exit 1; }
+info() { echo "contribute-learning: $*"; }
+usage() { sed -n '2,/^set -euo/p' "$0" | sed 's/^# \{0,1\}//; s/^#$//' | sed '$d'; }
+
+DEFAULT_VEKTOR="https://github.com/rrathishk/vektor.git"
+VALID_ROLES="product-owner project-manager architect engineer tester reviewer-qa technical-writer sre prompt-architect"
+
+ROLE=""; WHAT=""; CHANGE=""; PROJECT=""; DATE=""; VEKTOR=""; BASE="main"; FORK=0; DRYRUN=0
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --role)    ROLE="${2:-}"; shift 2 ;;
+    --what)    WHAT="${2:-}"; shift 2 ;;
+    --change)  CHANGE="${2:-}"; shift 2 ;;
+    --project) PROJECT="${2:-}"; shift 2 ;;
+    --date)    DATE="${2:-}"; shift 2 ;;
+    --vektor)  VEKTOR="${2:-}"; shift 2 ;;
+    --base)    BASE="${2:-}"; shift 2 ;;
+    --fork)    FORK=1; shift ;;
+    --dry-run) DRYRUN=1; shift ;;
+    -h|--help) usage; exit 0 ;;
+    *) die "unknown argument: $1 (try --help)" ;;
+  esac
+done
+
+# --- Validate inputs -------------------------------------------------------
+[ -n "$ROLE" ]   || die "--role is required (try --help)"
+[ -n "$WHAT" ]   || die "--what is required (the signal)"
+[ -n "$CHANGE" ] || die "--change is required (the proposed change to the role definition)"
+echo " $VALID_ROLES " | grep -q " $ROLE " || die "--role '$ROLE' is not a VEKTOR role: $VALID_ROLES"
+
+[ -n "$VEKTOR" ]  || VEKTOR="$DEFAULT_VEKTOR"
+[ -n "$PROJECT" ] || PROJECT="$(basename "$(pwd)")"
+if [ -z "$DATE" ]; then DATE="$(date +%F)"; fi
+
+# Keep table cells single-line and pipe-safe.
+sanitize() { printf '%s' "$1" | tr '\n' ' ' | sed 's/|/\\|/g; s/  */ /g'; }
+WHAT="$(sanitize "$WHAT")"; CHANGE="$(sanitize "$CHANGE")"; PROJECT="$(sanitize "$PROJECT")"
+
+REGISTER="learnings/agent-learnings.md"
+
+# next_al_id <path-to-register> -> AL-## (max existing + 1, else AL-01)
+next_al_id() {
+  local f="$1" n
+  n="$(grep -oE 'AL-[0-9]+' "$f" 2>/dev/null | sed 's/AL-//' | sort -n | tail -1 || true)"
+  if [ -z "$n" ]; then echo "AL-01"; else printf 'AL-%02d' "$((10#$n + 1))"; fi
+}
+
+# append_row <register-path> <row-markdown> : insert after the register table separator,
+# and drop the "_(empty …)_" placeholder line if present.
+append_row() {
+  local f="$1" row="$2" tmp; tmp="$(mktemp)"
+  awk -v row="$row" '
+    /^\| AL \| Date \| Source project \|/ { print; inhdr=1; next }
+    inhdr && /^\|[-| ]+\|[[:space:]]*$/   { print; print row; inhdr=0; next }
+    /^_\(empty — append the first agent-learning/ { next }
+    { print }
+  ' "$f" > "$tmp" && mv "$tmp" "$f"
+}
+
+if [ "$DRYRUN" -eq 1 ]; then
+  ROW="| <AL-id> | $DATE | $PROJECT | $ROLE | $WHAT | $CHANGE | proposed |"
+  info "DRY RUN — would append to $REGISTER in $VEKTOR (base $BASE):"
+  echo "$ROW"
+  exit 0
+fi
+
+command -v git >/dev/null 2>&1 || die "git is required"
+
+# --- Clone the org repo into a temp workspace ------------------------------
+WORK="$(mktemp -d)"
+cleanup() { rm -rf "$WORK"; }
+trap cleanup EXIT
+
+info "cloning vektor org from $VEKTOR"
+if [ -d "$VEKTOR/.git" ]; then
+  git clone --quiet "$VEKTOR" "$WORK/vektor"
+else
+  git clone --quiet --depth 1 "$VEKTOR" "$WORK/vektor"
+fi
+cd "$WORK/vektor"
+
+[ -f "$REGISTER" ] || die "$REGISTER not found in the org repo — is --vektor correct?"
+
+# Optional fork for contributors without push access.
+if [ "$FORK" -eq 1 ]; then
+  command -v gh >/dev/null 2>&1 || die "--fork needs the GitHub CLI (gh)"
+  gh repo fork --remote --remote-name origin >/dev/null
+fi
+
+AL_ID="$(next_al_id "$REGISTER")"
+ROW="| $AL_ID | $DATE | $PROJECT | $ROLE | $WHAT | $CHANGE | proposed |"
+BRANCH="agent-learning/${ROLE}-$(echo "$DATE" | tr -d '-')-$(echo "$AL_ID" | tr 'A-Z' 'a-z')"
+
+git checkout --quiet -b "$BRANCH" "origin/$BASE" 2>/dev/null || git checkout --quiet -b "$BRANCH"
+append_row "$REGISTER" "$ROW"
+
+git add "$REGISTER"
+git commit --quiet -m "learnings($ROLE): add $AL_ID from $PROJECT (proposed)" \
+  -m "What happened: $WHAT" -m "Proposed change: $CHANGE"
+info "committed $AL_ID to branch $BRANCH"
+
+git push --quiet -u origin "$BRANCH"
+
+# --- Open the PR -----------------------------------------------------------
+PR_TITLE="learnings($ROLE): $AL_ID — agent-learning from $PROJECT"
+PR_BODY="$(printf 'Proposed agent-learning (status: **proposed**).\n\n- **AL:** %s\n- **Role:** %s\n- **Source project:** %s\n- **What happened:** %s\n- **Proposed change to the role definition:** %s\n\nReview via the **meta-reviewer** skill. Agent definitions are edited only by a human, in this repo — this PR only registers the learning.' \
+  "$AL_ID" "$ROLE" "$PROJECT" "$WHAT" "$CHANGE")"
+
+if command -v gh >/dev/null 2>&1; then
+  gh pr create --base "$BASE" --head "$BRANCH" --title "$PR_TITLE" --body "$PR_BODY"
+  info "opened PR for $AL_ID."
+else
+  info "gh not found — branch pushed. Open a PR for '$BRANCH' against '$BASE' manually."
+fi
