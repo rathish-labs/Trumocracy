@@ -1,0 +1,20 @@
+{
+  "name": "@trumocracy/evm-harness",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Deterministic in-process EVM test harness: solc-js compilation + EthereumJS execution. No node, no network.",
+  "main": "src/index.mjs",
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "dependencies": {
+    "@ethereumjs/common": "^10.0.0",
+    "@ethereumjs/evm": "^10.0.0",
+    "@ethereumjs/util": "^10.0.0",
+    "@ethereumjs/vm": "^10.0.0",
+    "poseidon-solidity": "^0.0.5",
+    "solc": "^0.8.28",
+    "viem": "^2.40.0"
+  }
+}

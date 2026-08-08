@@ -1,0 +1,31 @@
+{
+  "name": "trumocracy",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Decentralized political party incubation, membership and governance — VEKTOR-built.",
+  "license": "AGPL-3.0-or-later",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "workspaces": [
+    "packages/*",
+    "services/*",
+    "apps/*",
+    "tools/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "test:protocol": "npm run test -w @trumocracy/protocol",
+    "test:contracts": "npm run test -w @trumocracy/contracts",
+    "test:sdk": "npm run test -w @trumocracy/sdk",
+    "lint:deps": "node tools/dep-guard/check.mjs",
+    "typecheck": "tsc -b --pretty false",
+    "verify": "npm run lint:deps && npm run typecheck && npm run test"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  }
+}
