@@ -13,6 +13,7 @@ import {
   attach,
   artifacts,
   ZERO_PROOF,
+  proposalSnapshot,
 } from './fixture.mjs';
 
 const DAY = 86400;
@@ -31,7 +32,7 @@ const proposalInput = (o = {}) => [
 ];
 
 async function setup({ members = 40, flags } = {}) {
-  const ctx = await deployProtocol({ residents: 1000, population: 0, ...(flags ? { flags } : {}) });
+  const ctx = await deployProtocol({ population: 0, ...(flags ? { flags } : {}) });
   const petitionId = keccak256(toHex('p:gov'));
   const { partyAddress, governorAddress } = await activateParty(ctx, { petitionId });
   const party = attach(ctx, 'Party', partyAddress);
@@ -51,12 +52,15 @@ async function setup({ members = 40, flags } = {}) {
 
 /** Cast `n` votes of one choice, each from a distinct nullifier. */
 async function castVotes(ctx, governor, partyId, proposalId, choice, n, tenureSeconds, offset = 0) {
+  const snap = await proposalSnapshot(governor, proposalId);
   for (let i = 0; i < n; i++) {
     const signals = tenureSignals({
+      partyRoot: snap.root,
       partyId,
       scope: scopeId('vote', partyId, `0x${proposalId.toString(16).padStart(64, '0')}`),
       nullifier: 7_000_000n + BigInt(offset + i) + BigInt(choice) * 1_000_000n,
       tenureSeconds,
+      snapshotAt: snap.at,
     });
     await governor.send('vote', [proposalId, choice, ZERO_PROOF, signals]);
   }
@@ -149,11 +153,14 @@ describe('UT-0200 proposal lifecycle', () => {
       }),
     ]);
     await s2.ctx.chain.warp(2 * DAY + 1);
+    const snap = await proposalSnapshot(s2.governor, 0n);
     const signals = tenureSignals({
+      partyRoot: snap.root,
       partyId: s2.partyId,
       scope: scopeId('vote', s2.partyId, '0x' + '0'.repeat(64)),
       nullifier: 6_300_000n,
       tenureSeconds: 20 * DAY,
+      snapshotAt: snap.at,
     });
     await s2.governor.send('vote', [0n, CHOICE.FOR, ZERO_PROOF, signals]);
     const r = await s2.governor.expectRevert('vote', [0n, CHOICE.AGAINST, ZERO_PROOF, signals], { from: 4 });
@@ -201,6 +208,7 @@ describe('UT-0210 quorum and supermajority arithmetic', () => {
     const id = 1n;
     await s.ctx.chain.warp(2 * DAY + 1);
     const voteScope = scopeId('vote', s.partyId, `0x${id.toString(16).padStart(64, '0')}`);
+    const snap = await proposalSnapshot(s.governor, id);
     let n = 0n;
     const cast = async (choice, count) => {
       for (let i = 0; i < count; i++) {
@@ -208,7 +216,14 @@ describe('UT-0210 quorum and supermajority arithmetic', () => {
           id,
           choice,
           ZERO_PROOF,
-          tenureSignals({ partyId: s.partyId, scope: voteScope, nullifier: 8_000_000n + n++, tenureSeconds: 20 * DAY }),
+          tenureSignals({
+            partyRoot: snap.root,
+            partyId: s.partyId,
+            scope: voteScope,
+            nullifier: 8_000_000n + n++,
+            tenureSeconds: 20 * DAY,
+            snapshotAt: snap.at,
+          }),
         ]);
       }
     };
@@ -274,7 +289,7 @@ describe('UT-0220 anti-capture: growth surge raises the constitutional bar', () 
 
 describe('UT-0230 entrenchment', () => {
   it('refuses a proposal that targets a clause the party made immutable', async () => {
-    const ctx = await deployProtocol({ residents: 1000, population: 0 });
+    const ctx = await deployProtocol({ population: 0 });
     const petitionId = keccak256(toHex('p:entrench'));
     const { partyAddress, governorAddress } = await activateParty(ctx, { petitionId });
     const party = attach(ctx, 'Party', partyAddress);

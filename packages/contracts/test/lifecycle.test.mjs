@@ -19,6 +19,10 @@ import {
   ATTESTER,
   flagId,
   attach,
+  ISSUER_STATE,
+  NS_EPASSPORT,
+  NS_CIVIL_REGISTRY,
+  NS_SOCIAL,
 } from './fixture.mjs';
 
 const DAY = 86400;
@@ -31,13 +35,35 @@ describe('UT-0100 protocol deployment', () => {
   }, 300_000);
 
   it('seeds a region that clears the anonymity floor', async () => {
-    expect(await ctx.regions.read('verifiedResidents', [ctx.rid])).toBe(1200n);
+    expect(await ctx.regions.read('verifiedResidents', [ctx.rid])).toBe(14n);
     expect(await ctx.regions.read('anonymitySetSufficient', [ctx.rid])).toBe(true);
   });
 
   it('UT-0101 accepts a population only via the median of ≥5 sources, after a dispute window', async () => {
     const pop = await ctx.regions.read('population', [ctx.rid]);
     expect(pop[0]).toBe(1_000_274n); // median of the five seeded values
+  });
+
+  it('UT-0117 pins the production floors, which the fast test fixture deliberately lowers', async () => {
+    // The fixture runs small floors so the suite finishes; these assertions are what stop
+    // that convenience from ever becoming the deployed configuration.
+    expect(await ctx.regions.read('PRODUCTION_MIN_ANONYMITY_SET', [])).toBe(1000n);
+    expect(await ctx.partyRegistry.read('PRODUCTION_ABSOLUTE_FLOOR_ENDORSEMENTS', [])).toBe(500n);
+
+    // …and this fixture is correctly flagged as NOT production-grade.
+    expect(await ctx.regions.read('anonymityFloorIsProductionGrade', [])).toBe(false);
+    expect(await ctx.partyRegistry.read('endorsementFloorIsProductionGrade', [])).toBe(false);
+
+    const real = await deployProtocol({ anonymityFloor: 1000, endorsementFloor: 500, residents: 0 });
+    expect(await real.regions.read('anonymityFloorIsProductionGrade', [])).toBe(true);
+    expect(await real.partyRegistry.read('endorsementFloorIsProductionGrade', [])).toBe(true);
+  }, 120_000);
+
+  it('UT-0118 refuses a deployment configured with no floor at all', async () => {
+    const A = artifacts();
+    await expect(
+      ctx.chain.deploy(A.RegionRegistry, [ctx.timelock.toString(), 0n]),
+    ).rejects.toThrow(/BadAnonymityFloor/);
   });
 
   it('UT-0102 satisfies the ADR-003 invariant: ≥2 issuers, ≥1 non-state', async () => {
@@ -189,7 +215,8 @@ describe('UT-0110 petition → threshold → activation', () => {
       BigInt(90 * DAY),
     ]);
     const p = await ctx.partyRegistry.read('petitions', [PETITION]);
-    // 2% of 1,000,274 = 20,006 (ceil); dominates both the verified count and the floor.
+    // 2% of the median population (1,000,274) = 20,006 (ceil), which dominates both the
+    // verified-resident count and the endorsement floor.
     expect(p[5]).toBe(20_006n);
   });
 
@@ -228,8 +255,10 @@ describe('UT-0110 petition → threshold → activation', () => {
 
   it('UT-0114 lets an endorser withdraw before activation', async () => {
     const before = (await ctx.partyRegistry.read('petitions', [PETITION]))[6];
+    // Withdrawal proves against the ENDORSEMENT scope and the same nullifier, so the
+    // contract can require that this person actually endorsed before decrementing.
     const signals = await residencySignals(ctx, {
-      scope: scopeId('withdraw-endorsement', PETITION),
+      scope: scopeId('endorse', PETITION),
       nullifier: 42n,
       commitment: 1_000_000n,
     });
@@ -238,11 +267,11 @@ describe('UT-0110 petition → threshold → activation', () => {
   });
 
   it('UT-0115 activates automatically at the threshold, with no approval step anywhere', async () => {
-    const small = await deployProtocol({ residents: 1000, population: 0 });
+    const small = await deployProtocol({ population: 0 });
     const id = keccak256(toHex('petition:small'));
     const { partyAddress, governorAddress, required } = await activateParty(small, { petitionId: id });
-    // Population is 0, verified is 1000 → the absolute floor of 500 binds.
-    expect(required).toBe(500n);
+    // Population is 0 and the verified count is tiny, so the endorsement floor binds.
+    expect(required).toBe(BigInt(small.endorsementFloor));
     expect(partyAddress).toMatch(/^0x[0-9a-f]{40}$/i);
     expect(governorAddress).toMatch(/^0x[0-9a-f]{40}$/i);
 
@@ -253,7 +282,7 @@ describe('UT-0110 petition → threshold → activation', () => {
   }, 300_000);
 
   it('UT-0116 refuses to publish an action in a region too small to hide anyone', async () => {
-    const thin = await deployProtocol({ residents: 40, population: 3000 });
+    const thin = await deployProtocol({ anonymityFloor: 100, residents: 40, population: 3000 });
     const id = keccak256(toHex('petition:thin'));
     await thin.partyRegistry.send('openPetition', [
       id,
@@ -278,7 +307,7 @@ describe('UT-0120 membership', () => {
   let ctx;
   let party;
   beforeAll(async () => {
-    ctx = await deployProtocol({ residents: 1000, population: 0 });
+    ctx = await deployProtocol({ population: 0 });
     const { partyAddress } = await activateParty(ctx, { petitionId: keccak256(toHex('p:mem')) });
     party = attach(ctx, 'Party', partyAddress);
   }, 300_000);

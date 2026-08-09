@@ -120,6 +120,7 @@ contract PersonhoodRegistry {
     error NotSpenderAuthoriser(address caller);
     error IssuerSetInvalid();
     error NamespaceMismatch(bytes32 expected, bytes32 got);
+    error SpenderAuthoriserAlreadySet();
 
     constructor(address timelock_, VerifierRegistry verifiers_) {
         if (timelock_ == address(0) || address(verifiers_) == address(0)) revert ZeroAddress();
@@ -268,6 +269,9 @@ contract PersonhoodRegistry {
     function setSpenderAuthoriser(address authoriser) external {
         if (msg.sender != timelock) revert NotTimelock();
         if (authoriser == address(0)) revert ZeroAddress();
+        // Set once. Re-callable, this was a one-transaction path to making any address —
+        // including the timelock itself — a universal, irrevocable nullifier burner.
+        if (spenderAuthoriser != address(0)) revert SpenderAuthoriserAlreadySet();
         spenderAuthoriser = authoriser;
         authorisedSpender[authoriser] = true;
         emit SpenderAuthoriserSet(authoriser);

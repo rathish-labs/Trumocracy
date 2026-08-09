@@ -93,8 +93,8 @@ describe('UT-0400 tier rules: reference vs chain', () => {
 
 describe('UT-0410 petition threshold: reference vs chain', () => {
   const scenarios = [
-    { population: 1_000_000, residents: 1200, label: 'population dominates' },
-    { population: 0, residents: 1000, label: 'oracle deflated to zero' },
+    { population: 1_000_000, residents: 14, label: 'population dominates' },
+    { population: 0, residents: 14, label: 'oracle deflated to zero' },
     { population: 0, residents: 0, label: 'empty region — floor binds' },
   ];
 
@@ -103,10 +103,14 @@ describe('UT-0410 petition threshold: reference vs chain', () => {
       const ctx = await deployProtocol({ residents: s.residents, population: s.population });
       const onChain = await ctx.partyRegistry.read('requiredEndorsements', [ctx.rid, 200]);
       const pop = Number((await ctx.regions.read('population', [ctx.rid]))[0]);
+      // The floor is a deployment parameter, so the reference must be given the SAME floor
+      // the chain was deployed with. Comparing against the production constant while the
+      // fixture runs a smaller one would be a differential test of two different systems.
       const ref = petitionThreshold({
         eligiblePopulation: pop,
         verifiedResidents: s.residents,
         thresholdBps: 200,
+        absoluteFloor: ctx.endorsementFloor,
       });
       expect(Number(onChain)).toBe(ref);
     }, 300_000);
@@ -138,7 +142,7 @@ describe('UT-0420 growth surge: reference vs chain', () => {
     // directly. Feed the chain's own recorded samples back through the reference and require
     // the same verdict.
     const { deployProtocol: dp } = await import('./fixture.mjs');
-    const ctx = await dp({ residents: 1000, population: 0 });
+    const ctx = await dp({ population: 0 });
     const { activateParty, attach, residencySignals, scopeId, ZERO_PROOF } = await import('./fixture.mjs');
     const { partyAddress } = await activateParty(ctx, { petitionId: keccak256(toHex('p:diff-surge')) });
     const party = attach(ctx, 'Party', partyAddress);

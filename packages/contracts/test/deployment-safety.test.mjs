@@ -29,20 +29,54 @@ const reader = (overrides = {}) => async (id) => {
   throw new Error('unknown circuit');
 };
 
+const PRODUCTION_FLOORS = {
+  anonymityFloorIsProductionGrade: true,
+  endorsementFloorIsProductionGrade: true,
+};
+
 describe('UT-0600 promotion gate', () => {
-  it('passes a production deployment wired to real verifiers', async () => {
-    const r = await assertSafeToPromote('production', reader(), async () => false);
+  it('passes a production deployment wired to real verifiers and production floors', async () => {
+    const r = await assertSafeToPromote('production', reader(), async () => false, PRODUCTION_FLOORS);
     expect(r.safe).toBe(true);
     expect(r.circuits).toBe(3);
+  });
+
+  it('UT-0607 refuses production when the anonymity floor is the fast test value', async () => {
+    // The floor is a deployment parameter so the suite can finish; this is the gate that
+    // stops that convenience from shipping. A deployment with a tiny k looks identical to a
+    // working one from outside and provides no anonymity at all.
+    const err = await assertSafeToPromote('production', reader(), async () => false, {
+      ...PRODUCTION_FLOORS,
+      anonymityFloorIsProductionGrade: false,
+    }).catch((e) => e);
+    expect(err).toBeInstanceOf(UnsafeDeploymentError);
+    expect(err.findings.some((f) => /anonymity/i.test(f.issue) && f.severity === 'critical')).toBe(true);
+  });
+
+  it('UT-0608 refuses production when the endorsement floor is below the protocol value', async () => {
+    const err = await assertSafeToPromote('production', reader(), async () => false, {
+      ...PRODUCTION_FLOORS,
+      endorsementFloorIsProductionGrade: false,
+    }).catch((e) => e);
+    expect(err).toBeInstanceOf(UnsafeDeploymentError);
+    expect(err.findings.some((f) => /endorsement/i.test(f.issue) && f.severity === 'critical')).toBe(true);
+  });
+
+  it('UT-0609 treats an UNCHECKED floor as failing, never as passing by default', async () => {
+    // Omission must not be a pass. The most likely way this gate gets defeated in practice
+    // is a caller that forgets to read the floors at all.
+    await expect(assertSafeToPromote('production', reader(), async () => false)).rejects.toThrow(
+      /NOT safe to promote/,
+    );
   });
 
   it('UT-0601 refuses production when ANY circuit is wired to a mock', async () => {
     for (const target of CIRCUITS) {
       const isMock = async (addr) => addr === '0xmock';
       const overrides = { [target]: { ...realEntry(target), verifier: '0xmock' } };
-      await expect(assertSafeToPromote('production', reader(overrides), isMock)).rejects.toThrow(
-        UnsafeDeploymentError,
-      );
+      await expect(
+        assertSafeToPromote('production', reader(overrides), isMock, PRODUCTION_FLOORS),
+      ).rejects.toThrow(UnsafeDeploymentError);
     }
   });
 
@@ -52,21 +86,23 @@ describe('UT-0600 promotion gate', () => {
       await expect(assertSafeToPromote(env, reader(), isMock)).resolves.toMatchObject({ safe: true });
     }
     for (const env of ['testnet', 'staging', 'production']) {
-      await expect(assertSafeToPromote(env, reader(), isMock)).rejects.toThrow(UnsafeDeploymentError);
+      await expect(assertSafeToPromote(env, reader(), isMock, PRODUCTION_FLOORS)).rejects.toThrow(
+        UnsafeDeploymentError,
+      );
     }
   });
 
   it('UT-0603 refuses a circuit with no published ceremony', async () => {
     const overrides = { residency_member: { ...realEntry('residency_member'), ceremonyURI: '' } };
-    await expect(assertSafeToPromote('staging', reader(overrides), async () => false)).rejects.toThrow(
-      /NOT safe to promote/,
-    );
+    await expect(
+      assertSafeToPromote('staging', reader(overrides), async () => false, PRODUCTION_FLOORS),
+    ).rejects.toThrow(/NOT safe to promote/);
   });
 
   it('UT-0604 refuses a circuit with no zkeyHash — clients could not detect a swapped key', async () => {
     const overrides = { tenure_member: { ...realEntry('tenure_member'), zkeyHash: '0x' + '00'.repeat(32) } };
     try {
-      await assertSafeToPromote('production', reader(overrides), async () => false);
+      await assertSafeToPromote('production', reader(overrides), async () => false, PRODUCTION_FLOORS);
       throw new Error('should have thrown');
     } catch (e) {
       expect(e).toBeInstanceOf(UnsafeDeploymentError);
@@ -78,13 +114,15 @@ describe('UT-0600 promotion gate', () => {
     const missing = async () => {
       throw new Error('unregistered');
     };
-    await expect(assertSafeToPromote('production', missing, async () => false)).rejects.toThrow(
-      UnsafeDeploymentError,
-    );
+    await expect(
+      assertSafeToPromote('production', missing, async () => false, PRODUCTION_FLOORS),
+    ).rejects.toThrow(UnsafeDeploymentError);
   });
 
   it('UT-0606 rejects an unknown environment rather than defaulting to permissive', async () => {
-    await expect(assertSafeToPromote('prod', reader(), async () => false)).rejects.toThrow(/unknown environment/);
+    await expect(
+      assertSafeToPromote('prod', reader(), async () => false, PRODUCTION_FLOORS),
+    ).rejects.toThrow(/unknown environment/);
   });
 });
 

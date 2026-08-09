@@ -29,7 +29,21 @@ contract PartyRegistry {
     uint16 public constant DEFAULT_THRESHOLD_BPS = 200; // 2%
     uint16 public constant MIN_THRESHOLD_BPS = 50;
     uint16 public constant MAX_THRESHOLD_BPS = 2_000;
-    uint64 public constant ABSOLUTE_FLOOR_ENDORSEMENTS = 500;
+    /**
+     * @notice The endorsement floor a real deployment MUST use.
+     *
+     * @dev No party charters on a handful of accounts, however small or thinly-measured its
+     *      region. Pinned for testnet and above by `assertSafeToPromote`.
+     */
+    uint64 public constant PRODUCTION_ABSOLUTE_FLOOR_ENDORSEMENTS = 500;
+
+    /**
+     * @notice The endorsement floor this deployment enforces.
+     * @dev A parameter for the same reason as `RegionRegistry.minAnonymitySet`: paying for
+     *      five hundred real endorsement transactions in every fixture made the suite too
+     *      slow to finish, and a suite that does not finish is not a control.
+     */
+    uint64 public immutable absoluteFloorEndorsements;
     uint64 public constant MIN_PETITION_SECONDS = 30 days;
     uint64 public constant MAX_PETITION_SECONDS = 365 days;
 
@@ -71,6 +85,17 @@ contract PartyRegistry {
     mapping(bytes32 partyId => address) public partyOf;
     mapping(bytes32 partyId => address) public governorOf;
 
+    /// @dev petition → endorsement nullifier → already withdrawn. Stops a repeat decrement.
+    mapping(bytes32 petitionId => mapping(uint256 nullifier => bool)) public withdrawn;
+
+    /**
+     * @notice How stale a residency proof may be.
+     * @dev A circuit cannot read the clock, so it proves "my credential had not expired at
+     *      `provedAt`" and the contract bounds how far in the past that may be. Without the
+     *      bound, an expired credential could be used forever by replaying an old timestamp.
+     */
+    uint64 public constant MAX_PROOF_AGE = 1 hours;
+
     event PetitionOpened(
         bytes32 indexed petitionId,
         bytes32 indexed jurisdiction,
@@ -99,6 +124,10 @@ contract PartyRegistry {
     error ForkCoolingOff(uint64 until);
     error ForkInitiatorsInsufficient(uint16 haveBps, uint16 needBps);
     error UnknownParty(bytes32 partyId);
+    error BadEndorsementFloor();
+    error AlreadyWithdrawn();
+    error ProofTooOld(uint64 provedAt, uint64 nowTs);
+    error ProofFromTheFuture(uint64 provedAt, uint64 nowTs);
 
     constructor(
         PersonhoodRegistry personhood_,
@@ -106,14 +135,22 @@ contract PartyRegistry {
         VerifierRegistry verifiers_,
         FeatureFlags flags_,
         PartyDeployer partyDeployer_,
-        GovernorDeployer governorDeployer_
+        GovernorDeployer governorDeployer_,
+        uint64 absoluteFloorEndorsements_
     ) {
+        if (absoluteFloorEndorsements_ == 0) revert BadEndorsementFloor();
         personhood = personhood_;
         regions = regions_;
         verifiers = verifiers_;
         flags = flags_;
         partyDeployer = partyDeployer_;
         governorDeployer = governorDeployer_;
+        absoluteFloorEndorsements = absoluteFloorEndorsements_;
+    }
+
+    /// @notice True only for a deployment configured to the protocol's real floor.
+    function endorsementFloorIsProductionGrade() external view returns (bool) {
+        return absoluteFloorEndorsements >= PRODUCTION_ABSOLUTE_FLOOR_ENDORSEMENTS;
     }
 
     // ------------------------------------------------------------ petitions
@@ -176,7 +213,7 @@ contract PartyRegistry {
         uint256 byVerified = _ceilMulDiv(verified, thresholdBps, 10_000);
 
         uint256 required = byPopulation > byVerified ? byPopulation : byVerified;
-        if (required < ABSOLUTE_FLOOR_ENDORSEMENTS) required = ABSOLUTE_FLOOR_ENDORSEMENTS;
+        if (required < absoluteFloorEndorsements) required = absoluteFloorEndorsements;
         return uint64(required);
     }
 
@@ -190,15 +227,16 @@ contract PartyRegistry {
         Petition storage p = _get(petitionId);
         if (p.state != PetitionState.Gathering) revert NotGathering();
         if (block.timestamp >= p.closesAt) revert PetitionClosed(p.closesAt);
-        if (publicSignals.length != 6) revert InvalidProof();
+        if (publicSignals.length != 7) revert InvalidProof();
+        _requireFreshProof(publicSignals[6]);
 
         if (bytes32(publicSignals[1]) != p.jurisdiction) revert InvalidProof();
         if (bytes32(publicSignals[3]) != _endorseScope(petitionId)) revert InvalidProof();
         if (!regions.knownRoot(p.jurisdiction, publicSignals[0])) revert InvalidProof();
 
         uint256 k = regions.verifiedResidents(p.jurisdiction);
-        if (k < regions.MIN_ANONYMITY_SET()) {
-            revert AnonymitySetTooSmall(p.jurisdiction, k, regions.MIN_ANONYMITY_SET());
+        if (k < regions.minAnonymitySet()) {
+            revert AnonymitySetTooSmall(p.jurisdiction, k, regions.minAnonymitySet());
         }
 
         if (!verifiers.verify(CIRCUIT_RESIDENCY, proof, publicSignals)) revert InvalidProof();
@@ -210,20 +248,38 @@ contract PartyRegistry {
 
     /**
      * @notice Withdraw an endorsement before activation (FR-015).
-     * @dev Uses a distinct scope so withdrawal is itself once-only and unlinkable to the
-     *      original endorsement.
+     *
+     * @dev Withdrawal proves against the **endorsement scope**, not a separate one, and the
+     *      contract requires that exact nullifier to have been spent endorsing this petition.
+     *
+     *      An earlier version used a distinct scope in the name of unlinkability, which meant
+     *      it verified nothing at all: any resident could decrement any petition, repeatedly,
+     *      without ever having endorsed it — a one-call veto on a party's existence. The
+     *      unlinkability that was being protected does not exist here anyway: endorsing is
+     *      public by design (ADR-006), so a public act being publicly reversed reveals nothing
+     *      the endorsement did not.
      */
     function withdrawEndorsement(bytes32 petitionId, uint256[8] calldata proof, uint256[] calldata publicSignals)
         external
     {
         Petition storage p = _get(petitionId);
         if (p.state != PetitionState.Gathering) revert NotGathering();
-        if (publicSignals.length != 6) revert InvalidProof();
-        if (bytes32(publicSignals[3]) != _withdrawScope(petitionId)) revert InvalidProof();
+        if (publicSignals.length != 7) revert InvalidProof();
         if (p.endorsements == 0) revert NotEndorsed();
-        if (!verifiers.verify(CIRCUIT_RESIDENCY, proof, publicSignals)) revert InvalidProof();
-        personhood.spendNullifier(_withdrawScope(petitionId), publicSignals[4]);
 
+        bytes32 endorseScope = _endorseScope(petitionId);
+        if (bytes32(publicSignals[1]) != p.jurisdiction) revert InvalidProof();
+        if (bytes32(publicSignals[3]) != endorseScope) revert InvalidProof();
+        if (!regions.knownRoot(p.jurisdiction, publicSignals[0])) revert InvalidProof();
+        _requireFreshProof(publicSignals[6]);
+
+        uint256 nullifier = publicSignals[4];
+        if (!personhood.isSpent(endorseScope, nullifier)) revert NotEndorsed();
+        if (withdrawn[petitionId][nullifier]) revert AlreadyWithdrawn();
+
+        if (!verifiers.verify(CIRCUIT_RESIDENCY, proof, publicSignals)) revert InvalidProof();
+
+        withdrawn[petitionId][nullifier] = true;
         p.endorsements -= 1;
         emit EndorsementWithdrawn(petitionId, p.endorsements);
     }
@@ -376,6 +432,13 @@ contract PartyRegistry {
     function _get(bytes32 petitionId) private view returns (Petition storage p) {
         p = petitions[petitionId];
         if (p.opensAt == 0) revert UnknownPetition(petitionId);
+    }
+
+    /// @dev Bound how stale a residency proof's asserted "now" may be (see MAX_PROOF_AGE).
+    function _requireFreshProof(uint256 provedAt) internal view {
+        uint64 t = uint64(provedAt);
+        if (t > block.timestamp) revert ProofFromTheFuture(t, uint64(block.timestamp));
+        if (block.timestamp - t > MAX_PROOF_AGE) revert ProofTooOld(t, uint64(block.timestamp));
     }
 
     function _ceilMulDiv(uint256 a, uint256 b, uint256 d) private pure returns (uint256) {

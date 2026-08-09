@@ -23,7 +23,8 @@ include "./lib/lean_imt.circom";
  * refuses to publish an action when |residents(R)| < 1000 (NFR-002). A commitment is not a
  * person, but in a set of forty it is close enough to one to be dangerous.
  *
- * Public:  [residencyRoot, regionId, minTier, scope, nullifier, identityCommitment]
+ * Public:  [residencyRoot, regionId, minTier, scope, nullifier, identityCommitment, provedAt]
+ *          — exactly the seven signals, in this order, that the contracts require.
  * Private: identitySecret, validUntil, tier, merkle path
  */
 template ResidencyMember(depth) {
@@ -44,7 +45,7 @@ template ResidencyMember(depth) {
     signal input pathDepth;
 
     // --- public, but supplied by the verifier contract as a bound value ---
-    signal input nowTs;
+    signal input provedAt;
 
     // 1. the commitment must be the prover's
     component commit = Poseidon(1);
@@ -67,11 +68,15 @@ template ResidencyMember(depth) {
     }
     inclusion.root === residencyRoot;
 
-    // 3. not expired.  NOTE: `nowTs` is a public input the contract binds to block.timestamp;
-    //    a circuit cannot read the clock, and letting the prover choose it would make every
-    //    expiry check vacuous.
+    // 3. not expired.
+    //
+    //    `provedAt` is the moment the prover asserts their credential was still valid. A
+    //    circuit cannot read the clock, so the CONTRACT bounds how stale this may be
+    //    (PartyRegistry.MAX_PROOF_AGE / Party.MAX_PROOF_AGE). Neither half is sufficient
+    //    alone: without the circuit constraint an expired credential passes, and without the
+    //    contract bound the prover replays an old timestamp forever.
     component notExpired = LessThan(64);
-    notExpired.in[0] <== nowTs;
+    notExpired.in[0] <== provedAt;
     notExpired.in[1] <== validUntil;
     notExpired.out === 1;
 
@@ -90,5 +95,5 @@ template ResidencyMember(depth) {
     nul.out === nullifier;
 }
 
-component main {public [residencyRoot, regionId, minTier, scope, nullifier, identityCommitment, nowTs]} =
+component main {public [residencyRoot, regionId, minTier, scope, nullifier, identityCommitment, provedAt]} =
     ResidencyMember(32);

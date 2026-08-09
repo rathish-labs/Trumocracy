@@ -2,7 +2,7 @@
 
 ```
 Document ID:   CODE-TRUMOCRACY
-Version:       1.0.0
+Version:       1.1.0
 Status:        In Review
 Owner:         Ravi Deshmukh — Principal Architect (acting engineer, Phase 0/1 drop)
 Source:        SDD-TRUMOCRACY v1.0.0 §9 · ADR-011
@@ -103,9 +103,12 @@ L2 in the Doc 04 cost suite.
 | UT-0030..0055 | party lifecycle, vision/charter validation, regions, anonymity guard, issuer invariant, flags | protocol | 41 |
 | UT-0100..0125 | deployment, enrolment, petitions, activation, membership | contracts | 25 |
 | UT-0200..0230 | proposals, quorum, supermajority, surge, entrenchment, timelock | contracts | 11 |
-| UT-0300..0361 | adversarial, one suite per RISK; capability-absence; deployment safety; ship-dark | contracts | 18 |
+| UT-0300..0361, SEC-* | adversarial, one suite per RISK; capability-absence; ship-dark; security regressions | contracts | 34 |
 | UT-0400..0420 | differential: reference vs chain | contracts | 12 |
 | UT-0500..0525 | indexer projection: determinism, ordering, divergence, reader-blindness | indexer | 16 |
+| UT-0600..0612 | deployment promotion gate | contracts | 13 |
+| UT-0700..0742 | client safety surfaces: receipt-free confirmation, warning banner, a11y | web | 16 |
+| (SDK) | identity, proofs, transports, verified reads, prediction | sdk | 124 |
 
 Every `UT-####` maps to an `FR`/`NFR`/`RISK` in the RTM (Doc 08).
 
@@ -129,8 +132,15 @@ Doc 04 records the limitation rather than letting the green check imply more tha
 
 ## 5. Defects found by the review loop, and what was done
 
-The Doc 04 test strategy reviewed this code drop and found four real defects. All four are
-fixed in this drop, each with a regression test named for the guarantee it protects.
+Two independent reviews have now run against this code: the Doc 04 test strategy, and
+reviewer-qa's security scan (`artifacts/reviews/SECURITY-SCAN-2026-08-09.md`, which scored
+this document **48% / FAIL** at v1.0.0 and withheld merge sign-off). Between them they found
+**six criticals and eight highs**. That is the honest headline, and it is worth stating why
+it happened: the first four defects were caught by a reviewer reading the code, and the next
+six by a reviewer reading it *again, adversarially*. Neither was caught by the tests, because
+the tests were written by the same person who wrote the bug.
+
+### 5.1 Found by the Doc 04 test strategy — all fixed
 
 | # | Defect | Severity | Fix | Regression test |
 |---|---|---|---|---|
@@ -144,6 +154,35 @@ references (the ADR set ends at 014), and a RACI conflict where the same named i
 owned both the requirements and the architecture. Three findings were escalated to Doc 03 §16
 as open questions rather than silently closed: the NFR-025 / force-inclusion timing conflict,
 the un-measurability of NFR-004's duplicate rate, and the Phase-1 public-tally exposure.
+
+### 5.2 Found by the independent security scan — fixed in v1.1.0
+
+| # | Defect | Severity | Fix | Regression |
+|---|---|---|---|---|
+| C-01 | `issueResidency` took `attesterId` as a caller-supplied `bytes32`, and `Attester` had no address field. The id is public — it is emitted in `AttesterAuthorised` — so **anyone could mint unlimited residency credentials**. That tree is the Sybil boundary for joining and endorsing *and* the source of `verifiedResidents()`, so the attacker controlled the counter meant to bound them. | **Critical** | An attester is an account: `registerAttester` records an `issuer` address and `issueResidency` checks `msg.sender`. | SEC-C01 |
+| C-02 | `vote()` never read `publicSignals[0]` or `[1]`. Nothing bound a vote to the proposal's snapshot root, `Party.knownRoot` was written and read by no contract, and `JoinedAfterSnapshot` was declared and never thrown. **A prover could build their own Merkle tree and vote once per secret.** ADR-008 §2 existed only in prose. | **Critical** | The proposal records `snapshotRoot` and `snapshotAt`; `vote()` requires both, plus the party id. | SEC-C02 |
+| C-03 | Circuits declared 7 and 6 public signals; contracts required 6 and 5. The dropped inputs were exactly the timestamps. With real verifiers every action would revert permanently; widened without binding, expiry would be vacuous. `personhood_enrol.circom` **did not exist at all**. | **Critical** | Arities aligned end to end (4 / 7 / 6), `provedAt` bounded by `MAX_PROOF_AGE` in the contract, `personhood_enrol.circom` written, and the contract is now the documented arity of record (`packages/circuits/README.md`). | SEC-C03 |
+| C-04 | `surgeActive()` computed `endS.memberCount - startS.memberCount` **before** the guard that checked which was larger. One member leaving panicked a view that `join`, `leave` and `propose` all call — bricking the party permanently, in a system with no admin to unstick it. | **Critical** | Guard moved ahead of the subtraction. | SEC-C04 |
+| C-06 | Nothing bound a proposal's tier to what its `callData` could do. Tier 0 is 5% quorum, no discussion and **zero timelock** — so `dissolve()` under a Tier-0 proposal ended a party in three days. | **Critical** | `requiredTier(target, callData)` classifies the call and `propose()` rejects an under-priced tier. Unrecognised calls into the party fail closed at constitutional. | SEC-C06 |
+| H-01 | `setSpenderAuthoriser` was re-callable and self-authorising, so one call made any address an irrevocable universal nullifier burner. | **High** | Set once; a second call reverts. | SEC-H01 |
+| H-03 | `uint16` truncation in the basis-point conversion: 66 votes against a 10-member snapshot reported 464 bps and defeated a proposal that passed. | **High** | Clamped to `BPS` before narrowing. | SEC-H03 |
+| H-04 | `withdrawEndorsement` checked no jurisdiction, no root, and **no prior endorsement** — any resident could decrement any petition repeatedly. A one-call veto on whether a party may exist. | **High** | Withdrawal proves against the *endorsement* scope and requires that nullifier to have been spent; a per-petition `withdrawn` map stops a repeat. | SEC-H04 |
+
+### 5.3 Open, not fixed in this drop
+
+- **C-05 fork initiation is taken from calldata.** `openForkPetition` accepts `initiators` and
+  `forkInitiatedAt` as parameters with no on-chain initiation state, so `FORK_MIN_INITIATOR_BPS`
+  and `FORK_COOLING_OFF` are currently decorative. The `fork` flag is off in every environment
+  above dev, and the fix — a real `initiateFork` accumulating per-member nullifier signatures —
+  is Phase-3 scope. **It must not be enabled before then.**
+- **H-02** `surgeActive` is O(n²) over up to 512 storage samples on a state-changing path.
+- **H-05** there is no expedited path to retire a compromised circuit.
+- **H-06** the published `identityCommitment` is a stable pseudonym across a party's events.
+- **H-07** root history is 64 *insertions*, not a time window, so a busy region can evict a
+  root a citizen is still proving against.
+- Seven medium and six low findings, including missing indexer events and no reorg handling.
+
+All of these are recorded in the scan and routed; none is closed by silence.
 
 ## 6. Feature-flag ledger (ship dark)
 
@@ -162,9 +201,20 @@ the un-measurability of NFR-004's duplicate rate, and the Phase-1 public-tally e
 | `sponsored_gas` | on | on | on | no | never — degrades to self-pay, never to denial |
 
 Every flag carries a removal target; `permanentFlags()` returns empty and a test asserts it,
-so a flag cannot quietly become permanent configuration. Every flag that can be exercised
-on-chain is *also* enforced by the `FeatureFlags` contract — a frontend-only flag would leave
-the risky path live for a direct caller.
+so a flag cannot quietly become permanent configuration.
+
+**Correction to v1.0.0 of this document.** It claimed every on-chain flag is contract-enforced.
+That was not true, and the security scan was right to call it out: only `petitions`,
+`party_governance`, `maci_voting` and `fork` are read by a contract today. `elections`,
+`recall`, `treasury`, `delegation` and `private_endorsement` are marked `onChain: true` in the
+registry because they *will* be enforced by the modules that implement them — and those
+modules do not exist yet. Until they do, those five flags gate nothing on-chain, which is
+harmless only because the capability they name is entirely unimplemented. When each module
+lands it must read its flag in the same commit.
+
+**Two further v1.0.0 claims corrected:** §5 reported the `spendNullifier` critical as fixed —
+the fix was real but incomplete (see H-01) — and §7.4 called the growth array "correct but
+wasteful", when it also contained the C-04 underflow.
 
 ## 7. Known limitations of this drop
 
@@ -174,13 +224,15 @@ the risky path live for a direct caller.
 2. **Circuits are written but not compiled.** `packages/circuits` holds the Circom sources for
    `residency_member` and `tenure_member`; compiling them needs the `circom` binary, which is
    a Phase-2 CI job. Nothing in this drop claims a proof has been verified.
-3. **Elections, Recall, Treasury and the MACI adapter are not implemented.** They are Phase-3
+3. **The fork path must stay disabled** until C-05 is fixed (§5.3).
+4. **Elections, Recall, Treasury and the MACI adapter are not implemented.** They are Phase-3
    scope, and their flags are off in every environment above dev. The `Governor` already
    refuses the public-tally path when `maci_voting` is on, so the switchover cannot leave both
    paths open.
-4. **`Party.growthSamples` trims by array shift**, which is O(n) at the 512-sample bound.
-   Correct but wasteful; a ring buffer is queued as debt before mainnet scale.
-5. **Phase-1 tallies are publicly readable on-chain.** The client and indexer suppress interim
+5. **`Party.growthSamples` trims by array shift** and `surgeActive` is O(n²) over the
+   512-sample bound, on a path that `join` and `leave` both take. A ring buffer and a cached
+   verdict are required before mainnet scale (scan finding H-02).
+6. **Phase-1 tallies are publicly readable on-chain.** The client and indexer suppress interim
    counts, but chain state is chain state. This is a real limitation, stated plainly in the
    release notes and closed by MACI in Phase 3 — not hidden behind a UI that implies more
    privacy than the protocol currently delivers.

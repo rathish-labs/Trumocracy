@@ -56,6 +56,18 @@ contract Governor {
         // snapshot
         uint64 createdAt;
         uint64 snapshotMembers;
+        /**
+         * @dev The party's member-tree root at the instant the proposal opened, and the
+         *      instant itself. Both are bound into the vote proof's public signals.
+         *
+         *      Without this binding the whole anti-capture design was decorative: a prover
+         *      could build their own Merkle tree, prove inclusion against their own root,
+         *      and vote as many times as they had secrets. "Eligibility is snapshotted at
+         *      creation" has to be enforced by the contract, because the circuit cannot know
+         *      which root is the real one.
+         */
+        uint256 snapshotRoot;
+        uint64 snapshotAt;
         bool surgeAtCreation;
         // schedule
         uint64 discussionEndsAt;
@@ -123,12 +135,42 @@ contract Governor {
     error ProposalCooldown(uint64 until);
     error ExecutionFailed();
     error MaciPathRequired();
+    error WrongSnapshotRoot(uint256 expected, uint256 got);
+    error WrongSnapshotTime(uint64 expected, uint64 got);
+    error TierTooLowForAction(bytes4 selector, uint8 declaredTier, uint8 requiredTier);
+    error TargetNotPermitted(address target);
 
     constructor(Party party_, PersonhoodRegistry personhood_, VerifierRegistry verifiers_, FeatureFlags flags_) {
         party = party_;
         personhood = personhood_;
         verifiers = verifiers_;
         flags = flags_;
+    }
+
+    /**
+     * @notice The minimum tier a call is allowed to be proposed under.
+     *
+     * @dev Without this, the tier was a label the proposer chose while the `callData` did
+     *      whatever it liked: a Tier-0 proposal (5% quorum, no discussion, **zero timelock**)
+     *      carrying `dissolve()` could end a party in three days. Tier is the price of an
+     *      action, so the action has to set it — not the person asking.
+     */
+    function requiredTier(address target, bytes calldata callData) public view returns (uint8) {
+        if (target == address(0) || callData.length < 4) return G.TIER_OPERATIONAL;
+        bytes4 selector = bytes4(callData[:4]);
+
+        if (target == address(party)) {
+            if (selector == Party.dissolve.selector) return G.TIER_CONSTITUTIONAL;
+            if (selector == Party.amendCharter.selector) return G.TIER_CONSTITUTIONAL;
+            if (selector == Party.publishManifesto.selector) return G.TIER_STRUCTURAL;
+            // An unrecognised call into the party is treated as the most serious thing it
+            // could be. Fail closed: a new privileged function must be classified here
+            // deliberately, not inherit the cheapest tier by omission.
+            return G.TIER_CONSTITUTIONAL;
+        }
+        // Calls to anything else (a treasury module, an external contract) are structural at
+        // minimum; a party spending or binding itself is not an operational matter.
+        return G.TIER_STRUCTURAL;
     }
 
     // ------------------------------------------------------------ proposal
@@ -148,17 +190,20 @@ contract Governor {
      * @notice Open a proposal. Anyone with sufficient tenure may propose; there is no
      *         pre-screening, no moderation queue and no sponsor requirement (FR-024).
      *
-     * @param publicSignals [partyRootAtSnapshot, partyId, scope, actionNullifier, tenureSeconds]
+     * @param publicSignals [partyRootAtSnapshot, partyId, scope, actionNullifier, tenureSeconds, snapshotAt]
      */
     function propose(ProposalInput calldata input, uint256[8] calldata proof, uint256[] calldata publicSignals)
         external
         returns (uint256 proposalId)
     {
         flags.requireEnabled(FLAG_GOVERNANCE);
-        if (publicSignals.length != 5) revert InvalidProof();
+        if (publicSignals.length != 6) revert InvalidProof();
         if (input.clauseId != bytes32(0) && party.immutableClause(input.clauseId)) {
             revert ClauseIsImmutable(input.clauseId);
         }
+
+        uint8 needed = requiredTier(input.target, input.callData);
+        if (input.tier < needed) revert TierTooLowForAction(_selectorOf(input.callData), input.tier, needed);
 
         bool surge = party.surgeActive();
         G.Rules memory r = G.effectiveRules(input.tier, _charterTenure(input.tier), surge);
@@ -208,6 +253,8 @@ contract Governor {
                 cid: input.cid,
                 createdAt: nowTs,
                 snapshotMembers: snapshotMembers,
+                snapshotRoot: party.memberRoot(),
+                snapshotAt: nowTs,
                 surgeAtCreation: surge,
                 discussionEndsAt: discussionEnds,
                 votingEndsAt: votingEnds,
@@ -254,7 +301,7 @@ contract Governor {
      *      citizens before close — that is a client and indexer obligation (see ADR-012);
      *      the chain cannot hide what it stores, so the suppression is enforced above it.
      *
-     * @param publicSignals [partyRootAtSnapshot, partyId, scope, actionNullifier, tenureSeconds]
+     * @param publicSignals [partyRootAtSnapshot, partyId, scope, actionNullifier, tenureSeconds, snapshotAt]
      */
     function vote(uint256 proposalId, Choice choice, uint256[8] calldata proof, uint256[] calldata publicSignals)
         external
@@ -273,10 +320,17 @@ contract Governor {
 
         Proposal storage p = _get(proposalId);
         if (block.timestamp < p.discussionEndsAt || block.timestamp >= p.votingEndsAt) revert NotInVoting();
-        if (publicSignals.length != 5) revert InvalidProof();
+        if (publicSignals.length != 6) revert InvalidProof();
 
         bytes32 scope = keccak256(abi.encodePacked("vote", party.partyId(), proposalId));
         if (bytes32(publicSignals[2]) != scope) revert InvalidProof();
+
+        // The proof must be against THIS party's member tree as it stood when the proposal
+        // opened, and against this proposal's snapshot time — otherwise the prover chooses
+        // both the electorate and their own tenure.
+        if (publicSignals[0] != p.snapshotRoot) revert WrongSnapshotRoot(p.snapshotRoot, publicSignals[0]);
+        if (bytes32(publicSignals[1]) != party.partyId()) revert InvalidProof();
+        if (uint64(publicSignals[5]) != p.snapshotAt) revert WrongSnapshotTime(p.snapshotAt, uint64(publicSignals[5]));
 
         uint256 nullifier = publicSignals[3];
         uint64 tenure = uint64(publicSignals[4]);
@@ -345,7 +399,7 @@ contract Governor {
     {
         Proposal storage p = _get(proposalId);
         if (block.timestamp >= p.discussionEndsAt) revert NotInDiscussion();
-        if (publicSignals.length != 5) revert InvalidProof();
+        if (publicSignals.length != 6) revert InvalidProof();
         bytes32 scope = keccak256(abi.encodePacked("cancel", party.partyId(), proposalId));
         if (bytes32(publicSignals[2]) != scope) revert InvalidProof();
         if (!verifiers.verify(CIRCUIT_TENURE, proof, publicSignals)) revert InvalidProof();
@@ -381,6 +435,10 @@ contract Governor {
     function _get(uint256 id) private view returns (Proposal storage) {
         if (id >= _proposals.length) revert UnknownProposal(id);
         return _proposals[id];
+    }
+
+    function _selectorOf(bytes calldata callData) private pure returns (bytes4) {
+        return callData.length < 4 ? bytes4(0) : bytes4(callData[:4]);
     }
 
     function _charterTenure(uint8 tier) private view returns (uint32) {

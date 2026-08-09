@@ -24,6 +24,7 @@ import {
   flagId,
   NS_EPASSPORT,
   NS_SOCIAL,
+  proposalSnapshot,
 } from './fixture.mjs';
 
 const DAY = 86400;
@@ -261,7 +262,7 @@ describe('nullifier griefing — disenfranchisement by a stranger', () => {
   }, 120_000);
 
   it('UT-0326 authorises exactly the modules the registry deployed, and nothing else', async () => {
-    const ctx = await deployProtocol({ residents: 1000, population: 0 });
+    const ctx = await deployProtocol({ population: 0 });
     const { partyAddress, governorAddress } = await activateParty(ctx, {
       petitionId: keccak256(toHex('p:spenders')),
     });
@@ -278,7 +279,7 @@ describe('nullifier griefing — disenfranchisement by a stranger', () => {
 describe('RISK-12 population-oracle manipulation', () => {
   let ctx;
   beforeAll(async () => {
-    ctx = await deployProtocol({ residents: 1000, population: 1_000_000 });
+    ctx = await deployProtocol({ population: 1_000_000 });
   }, 300_000);
 
   it('UT-0330 absorbs one corrupt source via the median', async () => {
@@ -321,10 +322,17 @@ describe('RISK-12 population-oracle manipulation', () => {
   }, 120_000);
 
   it('UT-0334 leaves a deflation attacker with nothing: the floors still bind', async () => {
-    // population 0, 1000 verified residents → threshold is max(0, 20, 500) = 500.
-    const zero = await deployProtocol({ residents: 1000, population: 0 });
+    // With the population oracle driven to zero, the endorsement floor is what remains — and
+    // it is what makes the oracle safe to depend on at all (RISK-12).
+    const zero = await deployProtocol({ population: 0 });
     const required = await zero.partyRegistry.read('requiredEndorsements', [zero.rid, 200]);
-    expect(required).toBe(500n);
+    expect(required).toBe(BigInt(zero.endorsementFloor));
+
+    // And a production-configured deployment falls back to the real floor of 500, not to a
+    // number an attacker could reach with a handful of accounts.
+    const prod = await deployProtocol({ population: 0, endorsementFloor: 500, anonymityFloor: 1000, residents: 0 });
+    expect(await prod.partyRegistry.read('requiredEndorsements', [prod.rid, 200])).toBe(500n);
+    expect(await prod.partyRegistry.read('PRODUCTION_ABSOLUTE_FLOOR_ENDORSEMENTS', [])).toBe(500n);
   }, 300_000);
 });
 
@@ -414,7 +422,7 @@ describe('ship-dark: on-chain feature flags', () => {
   it('UT-0360 blocks a flagged-off capability even for a direct contract caller', async () => {
     // Phase-1 default: fork is on, elections/recall/MACI are dark. Turn petitions off and
     // confirm the contract refuses — a frontend-only flag would leave this path live.
-    const ctx = await deployProtocol({ residents: 1000, population: 0 });
+    const ctx = await deployProtocol({ population: 0 });
     await ctx.flags.send('disable', [flagId('petitions'), 'phase gate'], { from: 9 });
     const r = await ctx.partyRegistry.expectRevert('openPetition', [
       keccak256(toHex('p:flagged-off')),
@@ -431,7 +439,6 @@ describe('ship-dark: on-chain feature flags', () => {
   it('UT-0361 closes the provable-vote path once receipt-free voting is live', async () => {
     // Leaving both paths open would let a coercer simply demand the provable one.
     const ctx = await deployProtocol({
-      residents: 1000,
       population: 0,
       flags: ['petitions', 'party_governance', 'maci_voting'].map(flagId),
     });
@@ -525,3 +532,277 @@ function push20s(hex) {
     .pushes.filter((p) => p.size === 20)
     .map((p) => p.value);
 }
+
+// ---------------------------------------------------------------------------------------
+// Regressions for the findings of the independent security scan
+// (artifacts/reviews/SECURITY-SCAN-2026-08-09.md). Each test is named for the guarantee it
+// protects, not the bug that broke it, because the guarantee is what has to survive.
+// ---------------------------------------------------------------------------------------
+
+describe('SEC regressions — findings from the independent scan', () => {
+  it('SEC-C01 only the registered attester account can issue a residency credential', async () => {
+    // The attester id is public — it is emitted in `AttesterAuthorised`. If holding the id
+    // were enough, anyone could mint unlimited residency credentials, and that tree is both
+    // the Sybil boundary for joining and the source of the count that bounds it.
+    const ctx = await deployProtocol({ residents: 0 });
+    const r = await ctx.regions.expectRevert('issueResidency', [ctx.rid, ATTESTER, 12345n], { from: 6 });
+    expect(r.reason).toMatch(/NotAuthorisedAttester/);
+
+    // The real attester still can.
+    await ctx.regions.send('issueResidency', [ctx.rid, ATTESTER, 12345n]);
+    expect(await ctx.regions.read('verifiedResidents', [ctx.rid])).toBe(1n);
+  }, 120_000);
+
+  it('SEC-C02 a vote must prove against the proposal’s own snapshot root and time', async () => {
+    const ctx = await deployProtocol({ population: 0 });
+    const { partyAddress, governorAddress } = await activateParty(ctx, {
+      petitionId: keccak256(toHex('p:snapshot')),
+    });
+    const party = attach(ctx, 'Party', partyAddress);
+    const governor = attach(ctx, 'Governor', governorAddress);
+    const partyId = await party.read('partyId', []);
+
+    for (let i = 0; i < 5; i++) {
+      await party.send('join', [
+        ZERO_PROOF,
+        await residencySignals(ctx, {
+          scope: scopeId('join', partyId),
+          nullifier: 6_600_000n + BigInt(i),
+          commitment: 6_700_000n + BigInt(i),
+        }),
+      ]);
+    }
+    await ctx.chain.warp(20 * DAY);
+
+    await governor.send('propose', [
+      [1, '0x' + '00'.repeat(32), keccak256(toHex('body')), 'ipfs://p', 0, '0x' + '00'.repeat(20), '0x'],
+      ZERO_PROOF,
+      tenureSignals({
+        partyId,
+        scope: scopeId('propose', partyId),
+        nullifier: 6_800_000n,
+        tenureSeconds: 20 * DAY,
+      }),
+    ]);
+    await ctx.chain.warp(2 * DAY + 1);
+
+    const voteScope = scopeId('vote', partyId, '0x' + '0'.repeat(64));
+    const snap = await proposalSnapshot(governor, 0n);
+
+    // An attacker proving against a tree of their own construction is refused outright,
+    // which is what makes "eligibility is snapshotted at creation" true rather than stated.
+    const forged = await governor.expectRevert('vote', [
+      0n,
+      1,
+      ZERO_PROOF,
+      tenureSignals({
+        partyRoot: 999_999_999n,
+        partyId,
+        scope: voteScope,
+        nullifier: 6_900_000n,
+        tenureSeconds: 20 * DAY,
+        snapshotAt: snap.at,
+      }),
+    ]);
+    expect(forged.reason).toMatch(/WrongSnapshotRoot/);
+
+    // A correct root with the wrong snapshot time is refused too — otherwise the prover
+    // picks their own tenure, since the circuit derives it from `snapshotAt`.
+    const wrongTime = await governor.expectRevert('vote', [
+      0n,
+      1,
+      ZERO_PROOF,
+      tenureSignals({
+        partyRoot: snap.root,
+        partyId,
+        scope: voteScope,
+        nullifier: 6_900_001n,
+        tenureSeconds: 20 * DAY,
+        snapshotAt: Number(snap.at) + 1,
+      }),
+    ]);
+    expect(wrongTime.reason).toMatch(/WrongSnapshotTime/);
+
+    // The honest voter still votes.
+    await governor.send('vote', [
+      0n,
+      1,
+      ZERO_PROOF,
+      tenureSignals({
+        partyRoot: snap.root,
+        partyId,
+        scope: voteScope,
+        nullifier: 6_900_002n,
+        tenureSeconds: 20 * DAY,
+        snapshotAt: snap.at,
+      }),
+    ]);
+  }, 300_000);
+
+  it('SEC-C04 a member leaving never bricks the party', async () => {
+    // The surge check computed a difference before checking which sample was larger, so one
+    // departure panicked a view that join, leave and propose all call — permanently, with no
+    // admin path, in a system that deliberately has no admin.
+    const ctx = await deployProtocol({ population: 0 });
+    const { partyAddress } = await activateParty(ctx, { petitionId: keccak256(toHex('p:leave')) });
+    const party = attach(ctx, 'Party', partyAddress);
+    const partyId = await party.read('partyId', []);
+
+    for (let i = 0; i < 4; i++) {
+      await party.send('join', [
+        ZERO_PROOF,
+        await residencySignals(ctx, {
+          scope: scopeId('join', partyId),
+          nullifier: 7_600_000n + BigInt(i),
+          commitment: 7_700_000n + BigInt(i),
+        }),
+      ]);
+      await ctx.chain.warp(2 * 3600);
+    }
+
+    await party.send('leave', [
+      ZERO_PROOF,
+      await residencySignals(ctx, {
+        scope: scopeId('leave', partyId),
+        nullifier: 7_800_000n,
+        commitment: 7_700_000n,
+      }),
+    ]);
+    await ctx.chain.warp(2 * 3600);
+
+    // The party still works after shrinking.
+    expect(await party.read('surgeActive', [])).toBeTypeOf('boolean');
+    await party.send('join', [
+      ZERO_PROOF,
+      await residencySignals(ctx, {
+        scope: scopeId('join', partyId),
+        nullifier: 7_900_000n,
+        commitment: 7_900_001n,
+      }),
+    ]);
+    expect(await party.read('memberCount', [])).toBe(4n);
+  }, 300_000);
+
+  it('SEC-C06 the price of an action is set by the action, not by the proposer', async () => {
+    const ctx = await deployProtocol({ population: 0 });
+    const { partyAddress, governorAddress } = await activateParty(ctx, {
+      petitionId: keccak256(toHex('p:tier')),
+    });
+    const party = attach(ctx, 'Party', partyAddress);
+    const governor = attach(ctx, 'Governor', governorAddress);
+    const partyId = await party.read('partyId', []);
+    await party.send('join', [
+      ZERO_PROOF,
+      await residencySignals(ctx, {
+        scope: scopeId('join', partyId),
+        nullifier: 8_100_000n,
+        commitment: 8_200_000n,
+      }),
+    ]);
+    await ctx.chain.warp(200 * DAY);
+
+    const dissolveCall = '0xa5d3fed5'; // dissolve()
+    // Tier 0 is 5% quorum, no discussion and ZERO timelock. Dissolving a party under it
+    // would let a handful of people end it in three days.
+    const r = await governor.expectRevert('propose', [
+      [0, '0x' + '00'.repeat(32), keccak256(toHex('kill')), 'ipfs://k', 0, partyAddress, dissolveCall],
+      ZERO_PROOF,
+      tenureSignals({
+        partyId,
+        scope: scopeId('propose', partyId),
+        nullifier: 8_300_000n,
+        tenureSeconds: 200 * DAY,
+      }),
+    ]);
+    expect(r.reason).toMatch(/TierTooLowForAction/);
+
+    // The classifier fails closed: an unrecognised call into the party is constitutional.
+    expect(await governor.read('requiredTier', [partyAddress, '0xdeadbeef'])).toBe(3);
+    expect(await governor.read('requiredTier', [partyAddress, dissolveCall])).toBe(3);
+    // And a proposal with no call at all stays operational.
+    expect(await governor.read('requiredTier', ['0x' + '00'.repeat(20), '0x'])).toBe(0);
+  }, 300_000);
+
+  it('SEC-H01 the nullifier-spender authority can be set once and never re-pointed', async () => {
+    const ctx = await deployProtocol({ residents: 0 });
+    const r = await ctx.personhood.expectRevert('setSpenderAuthoriser', [ctx.chain.addressOf(7)]);
+    expect(r.reason).toMatch(/SpenderAuthoriserAlreadySet/);
+  }, 120_000);
+
+  it('SEC-H03 a participation ratio above 100% cannot wrap the basis-point counter', async () => {
+    const ctx = await deployProtocol({ residents: 0 });
+    const A = artifacts();
+    const probe = await ctx.chain.deploy(A.RulesProbe, []);
+    // 66 votes against a 10-member snapshot is 66,000 bps, which overflows a uint16 and
+    // would silently report 464 — turning a landslide into a failed quorum.
+    const [passedFlag, quorumBps] = await probe.read('tally', [0, 0, false, 66n, 0n, 0n, 10n]);
+    expect(quorumBps).toBe(10_000);
+    expect(passedFlag).toBe(true);
+  }, 120_000);
+});
+
+describe('SEC-H04 withdrawal cannot be used as a veto', () => {
+  it('refuses a withdrawal from someone who never endorsed', async () => {
+    // Before this check, `withdrawEndorsement` verified nothing that tied the caller to a
+    // prior endorsement: any resident could decrement any petition, repeatedly. That is a
+    // one-call veto on whether a party is allowed to exist.
+    const ctx = await deployProtocol({ population: 0 });
+    const id = keccak256(toHex('p:veto'));
+    await ctx.partyRegistry.send('openPetition', [
+      id, ctx.rid, 'Under Attack', keccak256(toHex('c')), 'ipfs://c', 200, BigInt(90 * DAY),
+    ]);
+
+    const endorser = await residencySignals(ctx, {
+      scope: scopeId('endorse', id),
+      nullifier: 4_100_000n,
+      commitment: 4_200_000n,
+    });
+    await ctx.partyRegistry.send('endorse', [id, ZERO_PROOF, endorser]);
+    expect((await ctx.partyRegistry.read('petitions', [id]))[6]).toBe(1n);
+
+    // A stranger with a perfectly valid residency proof, who simply never endorsed.
+    const stranger = await residencySignals(ctx, {
+      scope: scopeId('endorse', id),
+      nullifier: 4_300_000n,
+      commitment: 4_400_000n,
+    });
+    const r = await ctx.partyRegistry.expectRevert('withdrawEndorsement', [id, ZERO_PROOF, stranger], { from: 4 });
+    expect(r.reason).toMatch(/NotEndorsed/);
+    expect((await ctx.partyRegistry.read('petitions', [id]))[6]).toBe(1n);
+
+    // The real endorser can withdraw, exactly once.
+    await ctx.partyRegistry.send('withdrawEndorsement', [id, ZERO_PROOF, endorser]);
+    expect((await ctx.partyRegistry.read('petitions', [id]))[6]).toBe(0n);
+    const twice = await ctx.partyRegistry.expectRevert('withdrawEndorsement', [id, ZERO_PROOF, endorser]);
+    expect(twice.reason).toMatch(/AlreadyWithdrawn|NotEndorsed/);
+  }, 300_000);
+
+  it('SEC-C03 refuses a residency proof whose asserted "now" is stale or in the future', async () => {
+    // A circuit cannot read the clock, so it proves the credential had not expired at a
+    // timestamp it is given. Unbounded, that timestamp lets an expired credential be reused
+    // forever by replaying an old value.
+    const ctx = await deployProtocol({ population: 0 });
+    const id = keccak256(toHex('p:stale'));
+    await ctx.partyRegistry.send('openPetition', [
+      id, ctx.rid, 'Stale Proof', keccak256(toHex('c')), 'ipfs://c', 200, BigInt(90 * DAY),
+    ]);
+
+    const stale = await residencySignals(ctx, {
+      scope: scopeId('endorse', id),
+      nullifier: 4_500_000n,
+      commitment: 4_600_000n,
+      provedAt: Number(ctx.chain.timestamp) - 7 * DAY,
+    });
+    expect((await ctx.partyRegistry.expectRevert('endorse', [id, ZERO_PROOF, stale])).reason).toMatch(/ProofTooOld/);
+
+    const future = await residencySignals(ctx, {
+      scope: scopeId('endorse', id),
+      nullifier: 4_700_000n,
+      commitment: 4_800_000n,
+      provedAt: Number(ctx.chain.timestamp) + 3600,
+    });
+    expect((await ctx.partyRegistry.expectRevert('endorse', [id, ZERO_PROOF, future])).reason).toMatch(
+      /ProofFromTheFuture/,
+    );
+  }, 300_000);
+});

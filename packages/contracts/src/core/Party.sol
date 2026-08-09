@@ -113,6 +113,7 @@ contract Party {
     error ClauseIsImmutable(bytes32 clauseId);
     error GovernorAlreadySet();
     error EmptyContent();
+    error StaleProof(uint64 provedAt);
 
     constructor(
         bytes32 partyId_,
@@ -167,7 +168,8 @@ contract Party {
         notDissolved
         returns (uint256 newRoot)
     {
-        if (publicSignals.length != 6) revert InvalidProof();
+        if (publicSignals.length != 7) revert InvalidProof();
+        _requireFreshProof(publicSignals[6]);
 
         uint256 residencyRoot = publicSignals[0];
         bytes32 regionId = bytes32(publicSignals[1]);
@@ -182,8 +184,8 @@ contract Party {
         // NFR-002: publishing an action scoped to a region with a tiny verified population
         // would identify the actor by elimination. Refuse rather than pretend.
         uint256 k = regions.verifiedResidents(regionId);
-        if (k < regions.MIN_ANONYMITY_SET()) {
-            revert AnonymitySetTooSmall(regionId, k, regions.MIN_ANONYMITY_SET());
+        if (k < regions.minAnonymitySet()) {
+            revert AnonymitySetTooSmall(regionId, k, regions.minAnonymitySet());
         }
 
         if (joinedAt[identityCommitment] != 0 && leftAt[identityCommitment] == 0) {
@@ -217,7 +219,8 @@ contract Party {
      *      to anyone — including to the party.
      */
     function leave(uint256[8] calldata proof, uint256[] calldata publicSignals) external returns (uint64) {
-        if (publicSignals.length != 6) revert InvalidProof();
+        if (publicSignals.length != 7) revert InvalidProof();
+        _requireFreshProof(publicSignals[6]);
         bytes32 scope = bytes32(publicSignals[3]);
         uint256 nullifier = publicSignals[4];
         uint256 identityCommitment = publicSignals[5];
@@ -275,10 +278,15 @@ contract Party {
             for (uint256 s = e - 1; s >= 1; s--) {
                 GrowthSample storage startS = growthSamples[s - 1];
                 if (uint256(endS.timestamp) - uint256(startS.timestamp) > 30 days) break;
+                // The ordering here is load-bearing: computing the difference before
+                // checking which sample is larger underflows the moment a single member
+                // leaves, and an arithmetic panic in this view would revert join, leave and
+                // propose permanently, with no admin path to unstick the party.
                 if (startS.memberCount == 0) continue;
+                if (endS.memberCount <= startS.memberCount) continue;
                 uint256 growthBps =
                     ((uint256(endS.memberCount) - uint256(startS.memberCount)) * 10_000) / uint256(startS.memberCount);
-                if (endS.memberCount > startS.memberCount && growthBps > 2_000) return true;
+                if (growthBps > 2_000) return true;
             }
         }
         return false;
@@ -375,6 +383,15 @@ contract Party {
     }
 
     // ------------------------------------------------------------ internals
+
+    /// @dev See PartyRegistry.MAX_PROOF_AGE — a circuit cannot read the clock, so the
+    ///      contract bounds how stale the "now" it proved against may be.
+    uint64 public constant MAX_PROOF_AGE = 1 hours;
+
+    function _requireFreshProof(uint256 provedAt) internal view {
+        uint64 t = uint64(provedAt);
+        if (t > block.timestamp || block.timestamp - t > MAX_PROOF_AGE) revert StaleProof(t);
+    }
 
     function _joinScope() internal view returns (bytes32) {
         return keccak256(abi.encodePacked("join", partyId));

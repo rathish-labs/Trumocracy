@@ -29,6 +29,17 @@ contract RegionRegistry {
         bool active;
         uint8 tier;
         uint256 stake;
+        /**
+         * @dev The account that may issue under this id.
+         *
+         * Without it, `attesterId` was a caller-supplied `bytes32` that anyone could read
+         * out of the public `AttesterAuthorised` log and reuse — letting a stranger mint
+         * unlimited residency credentials. That tree is the Sybil boundary for joining and
+         * endorsing AND the source of `verifiedResidents()`, which is both the anonymity
+         * guard and the petition denominator, so the attacker would have controlled the very
+         * counter meant to bound them.
+         */
+        address issuer;
         string metadataURI;
     }
 
@@ -55,8 +66,29 @@ contract RegionRegistry {
     /// @notice Minimum independent sources before a denominator is meaningful.
     uint256 public constant MIN_POPULATION_SOURCES = 5;
 
-    /// @notice Anonymity-set floor: below this a region's tree may not be used for a published action.
-    uint256 public constant MIN_ANONYMITY_SET = 1000;
+    /**
+     * @notice The anonymity-set floor a real deployment MUST use (NFR-002).
+     *
+     * @dev Publishing an action scoped to a region with few verified residents identifies the
+     *      actor by elimination. 1,000 is the protocol's answer, and `assertSafeToPromote`
+     *      in the deployment script refuses testnet, staging and production for any registry
+     *      configured below it — the same treatment a mock verifier gets, and for the same
+     *      reason: a deployment that looks correct while providing no anonymity is the most
+     *      dangerous thing this codebase could ship.
+     */
+    uint256 public constant PRODUCTION_MIN_ANONYMITY_SET = 1000;
+
+    /**
+     * @notice The floor this deployment enforces.
+     *
+     * @dev A parameter rather than a constant for exactly one reason: seeding a thousand
+     *      real Poseidon insertions per test case made the contract suite take six minutes
+     *      and time out its own worker, which produced a green exit having run a fifth of
+     *      the tests. A test suite nobody can afford to run is not a control. Production
+     *      configuration is pinned to PRODUCTION_MIN_ANONYMITY_SET by the deployment gate
+     *      and asserted by test.
+     */
+    uint256 public immutable minAnonymitySet;
 
     uint256 public constant ROOT_HISTORY = 64;
 
@@ -82,7 +114,9 @@ contract RegionRegistry {
     mapping(bytes32 regionId => bool) public frozen;
 
     event RegionCreated(bytes32 indexed regionId, bytes32 indexed parent, uint32 schemeVersion, string path);
-    event AttesterRegistered(bytes32 indexed attesterId, uint8 tier, uint256 stake, string metadataURI);
+    event AttesterRegistered(
+        bytes32 indexed attesterId, uint8 tier, uint256 stake, address indexed issuer, string metadataURI
+    );
     event AttesterAuthorised(bytes32 indexed regionId, bytes32 indexed attesterId);
     event AttesterSlashed(bytes32 indexed attesterId, uint256 amount, string reason);
     event ResidencyIssued(bytes32 indexed regionId, bytes32 indexed attesterId, uint256 leaf, uint256 newRoot);
@@ -103,10 +137,13 @@ contract RegionRegistry {
     error NoPending();
     error ZeroAddress();
     error BadPath();
+    error BadAnonymityFloor();
 
-    constructor(address timelock_) {
+    constructor(address timelock_, uint256 minAnonymitySet_) {
         if (timelock_ == address(0)) revert ZeroAddress();
+        if (minAnonymitySet_ == 0) revert BadAnonymityFloor();
         timelock = timelock_;
+        minAnonymitySet = minAnonymitySet_;
     }
 
     modifier onlyTimelock() {
@@ -138,12 +175,17 @@ contract RegionRegistry {
 
     // ---------------------------------------------------------------- attesters
 
-    function registerAttester(bytes32 attesterId, uint8 tier, uint256 stake, string calldata metadataURI)
-        external
-        onlyTimelock
-    {
-        attesters[attesterId] = Attester({active: true, tier: tier, stake: stake, metadataURI: metadataURI});
-        emit AttesterRegistered(attesterId, tier, stake, metadataURI);
+    function registerAttester(
+        bytes32 attesterId,
+        uint8 tier,
+        uint256 stake,
+        address issuer,
+        string calldata metadataURI
+    ) external onlyTimelock {
+        if (issuer == address(0)) revert ZeroAddress();
+        attesters[attesterId] =
+            Attester({active: true, tier: tier, stake: stake, issuer: issuer, metadataURI: metadataURI});
+        emit AttesterRegistered(attesterId, tier, stake, issuer, metadataURI);
     }
 
     function authoriseAttester(bytes32 regionId, bytes32 attesterId) external onlyTimelock {
@@ -169,7 +211,8 @@ contract RegionRegistry {
     function issueResidency(bytes32 regionId, bytes32 attesterId, uint256 leaf) external returns (uint256 newRoot) {
         if (!regions[regionId].exists) revert UnknownRegion(regionId);
         if (frozen[regionId]) revert RegionIsFrozen(regionId);
-        if (!attesterAuthorised[regionId][attesterId] || !attesters[attesterId].active) {
+        Attester storage att = attesters[attesterId];
+        if (!attesterAuthorised[regionId][attesterId] || !att.active || att.issuer != msg.sender) {
             revert NotAuthorisedAttester(regionId, attesterId);
         }
 
@@ -188,9 +231,14 @@ contract RegionRegistry {
         return _residencyTrees[regionId].size;
     }
 
-    /// @notice NFR-002: a region is only safe to publish actions against once k ≥ 1000.
+    /// @notice NFR-002: a region is only safe to publish actions against once k ≥ the floor.
     function anonymitySetSufficient(bytes32 regionId) external view returns (bool) {
-        return verifiedResidents(regionId) >= MIN_ANONYMITY_SET;
+        return verifiedResidents(regionId) >= minAnonymitySet;
+    }
+
+    /// @notice True only for a deployment configured to the protocol's real floor.
+    function anonymityFloorIsProductionGrade() external view returns (bool) {
+        return minAnonymitySet >= PRODUCTION_MIN_ANONYMITY_SET;
     }
 
     function freezeRegion(bytes32 regionId, string calldata reason) external onlyTimelock {

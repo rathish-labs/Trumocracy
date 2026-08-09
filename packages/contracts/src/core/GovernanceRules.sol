@@ -92,11 +92,16 @@ library GovernanceRules {
     ) internal pure returns (bool ok, uint16 quorumReachedBps, uint16 approvalReachedBps) {
         if (snapshotMembers == 0) return (false, 0, 0);
 
+        // Clamp before narrowing. A ratio above 100% is not supposed to happen, but if it
+        // ever did, a silent uint16 wrap would turn "everyone voted" into "quorum missed"
+        // and defeat a proposal that passed — a failure the citizens could not see.
         uint256 participation = forVotes + againstVotes + abstainVotes;
-        quorumReachedBps = uint16((participation * BPS) / snapshotMembers);
+        uint256 quorumRaw = (participation * BPS) / snapshotMembers;
+        quorumReachedBps = uint16(quorumRaw > BPS ? BPS : quorumRaw);
 
         uint256 decisive = forVotes + againstVotes;
-        approvalReachedBps = decisive == 0 ? 0 : uint16((forVotes * BPS) / decisive);
+        uint256 approvalRaw = decisive == 0 ? 0 : (forVotes * BPS) / decisive;
+        approvalReachedBps = uint16(approvalRaw > BPS ? BPS : approvalRaw);
 
         ok = quorumReachedBps >= r.quorumBps && approvalReachedBps >= r.approvalBps;
     }

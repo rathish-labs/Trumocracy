@@ -21,12 +21,20 @@ export const DEPLOY_ORDER = Object.freeze([
   { name: 'FeatureFlags', args: ['timelock', 'emergencyDisabler', 'initiallyEnabled[]'] },
   { name: 'VerifierRegistry', args: ['timelock'] },
   { name: 'PersonhoodRegistry', args: ['timelock', 'VerifierRegistry'] },
-  { name: 'RegionRegistry', args: ['timelock'] },
+  { name: 'RegionRegistry', args: ['timelock', 'minAnonymitySet (production: 1000)'] },
   { name: 'PartyDeployer', args: [] },
   { name: 'GovernorDeployer', args: [] },
   {
     name: 'PartyRegistry',
-    args: ['PersonhoodRegistry', 'RegionRegistry', 'VerifierRegistry', 'FeatureFlags', 'PartyDeployer', 'GovernorDeployer'],
+    args: [
+      'PersonhoodRegistry',
+      'RegionRegistry',
+      'VerifierRegistry',
+      'FeatureFlags',
+      'PartyDeployer',
+      'GovernorDeployer',
+      'absoluteFloorEndorsements (production: 500)',
+    ],
   },
 ]);
 
@@ -67,8 +75,11 @@ export class UnsafeDeploymentError extends Error {
  * @param {string} environment                 one of ENVIRONMENTS
  * @param {(circuitId: string) => Promise<{verifier: string, zkeyHash: string, ceremonyURI: string}>} readCircuit
  * @param {(address: string) => Promise<boolean>} isInsecureMock  probes `IS_INSECURE_MOCK()`
+ * @param {{anonymityFloorIsProductionGrade?: boolean, endorsementFloorIsProductionGrade?: boolean}} [floors]
+ *        read from `RegionRegistry` and `PartyRegistry`. Omitted values are treated as NOT
+ *        production-grade, because an unchecked floor must never pass by default.
  */
-export async function assertSafeToPromote(environment, readCircuit, isInsecureMock) {
+export async function assertSafeToPromote(environment, readCircuit, isInsecureMock, floors = {}) {
   const env = ENVIRONMENTS[environment];
   if (!env) throw new UnsafeDeploymentError(`unknown environment: ${environment}`, []);
 
@@ -103,6 +114,28 @@ export async function assertSafeToPromote(environment, readCircuit, isInsecureMo
     }
   }
 
+  // The policy floors (NFR-002 anonymity set, and the endorsement floor) are deployment
+  // parameters so the test suite can finish in seconds instead of timing out. That
+  // convenience must never reach a real network: a deployment with k=12 publishes actions
+  // into an anonymity set of twelve people, which identifies the actor by elimination while
+  // looking, from the outside, exactly like a working private system.
+  if (!env.mocksAllowed) {
+    if (floors.anonymityFloorIsProductionGrade !== true) {
+      findings.push({
+        circuit: '—',
+        severity: 'critical',
+        issue: `RegionRegistry.minAnonymitySet is below PRODUCTION_MIN_ANONYMITY_SET (NFR-002)`,
+      });
+    }
+    if (floors.endorsementFloorIsProductionGrade !== true) {
+      findings.push({
+        circuit: '—',
+        severity: 'critical',
+        issue: 'PartyRegistry.absoluteFloorEndorsements is below PRODUCTION_ABSOLUTE_FLOOR_ENDORSEMENTS',
+      });
+    }
+  }
+
   if (findings.length > 0) {
     throw new UnsafeDeploymentError(
       `${environment} is NOT safe to promote: ${findings.length} finding(s)`,
@@ -121,5 +154,6 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   console.log('\nPost-deployment wiring:\n');
   WIRING_STEPS.forEach((s, i) => console.log(`  ${String(i + 1).padStart(2)}. ${s}`));
   console.log('\nPromotion gate: testnet, staging and production refuse any registered verifier');
-  console.log('exposing IS_INSECURE_MOCK(), any missing zkeyHash, and any missing ceremony URI.');
+  console.log('exposing IS_INSECURE_MOCK(), any missing zkeyHash, any missing ceremony URI,');
+  console.log('and any deployment whose anonymity or endorsement floor is below production.');
 }

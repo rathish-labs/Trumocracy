@@ -72,11 +72,25 @@ export const PHASE1_FLAGS = ['petitions', 'party_governance', 'fork', 'treasury'
 /**
  * @param {object} opts
  * @param {string[]} opts.flags               flag ids to enable (default PHASE1_FLAGS)
- * @param {number}  opts.residents            residency leaves to seed (default 1200 → clears k≥1000)
- * @param {number}  opts.population           eligible population for the region (default 1,000,000)
+ * @param {number}  opts.residents            residency leaves to seed
+ * @param {number}  opts.population           eligible population for the region
+ * @param {number}  opts.anonymityFloor       the k this deployment enforces
+ *
+ * Note on `anonymityFloor`: production is pinned to 1,000 (NFR-002) and a test asserts it,
+ * but seeding a thousand real Poseidon insertions per fixture made the suite take six
+ * minutes and time out its own worker — which produced a GREEN EXIT having run one test
+ * file in five. Tests therefore run a small floor and seed just above it; the production
+ * value is verified by `deployment-safety` and by UT-0117 rather than by paying for it in
+ * every fixture.
  */
 export async function deployProtocol(opts = {}) {
-  const { flags: enabledFlags = PHASE1_FLAGS, residents = 1200, population = 1_000_000 } = opts;
+  const {
+    flags: enabledFlags = PHASE1_FLAGS,
+    anonymityFloor = 12,
+    endorsementFloor = 8,
+    residents = anonymityFloor + 2,
+    population = 1_000_000,
+  } = opts;
 
   const A = artifacts();
   const chain = await Chain.create();
@@ -94,7 +108,7 @@ export async function deployProtocol(opts = {}) {
   ]);
   const verifiers = await chain.deploy(A.VerifierRegistry, [timelock.toString()]);
   const personhood = await chain.deploy(A.PersonhoodRegistry, [timelock.toString(), verifiers.address.toString()]);
-  const regions = await chain.deploy(A.RegionRegistry, [timelock.toString()]);
+  const regions = await chain.deploy(A.RegionRegistry, [timelock.toString(), BigInt(anonymityFloor)]);
   const partyDeployer = await chain.deploy(A.PartyDeployer, []);
   const governorDeployer = await chain.deploy(A.GovernorDeployer, []);
   const partyRegistry = await chain.deploy(A.PartyRegistry, [
@@ -104,13 +118,14 @@ export async function deployProtocol(opts = {}) {
     flagsC.address.toString(),
     partyDeployer.address.toString(),
     governorDeployer.address.toString(),
+    BigInt(endorsementFloor),
   ]);
 
   // Verifiers: accepting mocks for the governance-layer tests, plus a rejecting one so the
   // "a bad proof is refused" path is exercised rather than assumed.
   const enrolVerifier = await chain.deploy(A.MockVerifier, [4n, true]);
-  const residencyVerifier = await chain.deploy(A.MockVerifier, [6n, true]);
-  const tenureVerifier = await chain.deploy(A.MockVerifier, [5n, true]);
+  const residencyVerifier = await chain.deploy(A.MockVerifier, [7n, true]);
+  const tenureVerifier = await chain.deploy(A.MockVerifier, [6n, true]);
 
   await verifiers.send('register', [
     keccak256(toHex('personhood_enrol')),
@@ -145,7 +160,14 @@ export async function deployProtocol(opts = {}) {
   await regions.send('createRegion', [REGION_PATH, SCHEME_VERSION, regionId('IN/KA'), 3]);
 
   const rid = regionId(REGION_PATH);
-  await regions.send('registerAttester', [ATTESTER, 2, 10n ** 18n, 'ipfs://attester/civic-notary']);
+  // An attester is an ACCOUNT, not a self-asserted id: `issueResidency` checks msg.sender.
+  await regions.send('registerAttester', [
+    ATTESTER,
+    2,
+    10n ** 18n,
+    timelock.toString(),
+    'ipfs://attester/civic-notary',
+  ]);
   await regions.send('authoriseAttester', [rid, ATTESTER]);
 
   // Population oracle: five independent sources, median, then the dispute window.
@@ -178,6 +200,8 @@ export async function deployProtocol(opts = {}) {
     residencyVerifier,
     tenureVerifier,
     rid,
+    anonymityFloor,
+    endorsementFloor,
   };
 }
 
@@ -190,9 +214,13 @@ export async function deployProtocol(opts = {}) {
  * match), not the circuit's. Binding the signals to a real witness is the circuit's job and
  * is covered by the circuit suite (Doc 04 §ZK doctrine).
  */
-export async function residencySignals({ regions, rid }, { scope, nullifier, commitment, minTier = 1 }) {
+export async function residencySignals(ctx, { scope, nullifier, commitment, minTier = 1, provedAt }) {
+  const { regions, rid, chain } = ctx;
   const root = await regions.read('residencyRoot', [rid]);
-  return [root, BigInt(rid), BigInt(minTier), BigInt(scope), BigInt(nullifier), BigInt(commitment)];
+  // `provedAt` is the "now" the circuit proved the credential had not expired at; the
+  // contract bounds how stale it may be (MAX_PROOF_AGE).
+  const now = provedAt ?? chain.timestamp;
+  return [root, BigInt(rid), BigInt(minTier), BigInt(scope), BigInt(nullifier), BigInt(commitment), BigInt(now)];
 }
 
 /** Enrolment public signals: [issuerNullifier, identityCommitment, issuerId, namespaceId] */
@@ -200,9 +228,28 @@ export function enrolSignals({ issuerNullifier, commitment, issuerId, namespaceI
   return [BigInt(issuerNullifier), BigInt(commitment), BigInt(issuerId), BigInt(namespaceId)];
 }
 
-/** Tenure proof public signals: [partyRootAtSnapshot, partyId, scope, actionNullifier, tenureSeconds] */
-export function tenureSignals({ partyRoot = 0n, partyId, scope, nullifier, tenureSeconds }) {
-  return [BigInt(partyRoot), BigInt(partyId), BigInt(scope), BigInt(nullifier), BigInt(tenureSeconds)];
+/**
+ * Tenure proof public signals:
+ * [partyRootAtSnapshot, partyId, scope, actionNullifier, tenureSeconds, snapshotAt]
+ *
+ * The root and `snapshotAt` are bound by `Governor.vote` to the proposal's own snapshot, so
+ * a test that votes must pass the values the proposal actually recorded.
+ */
+export function tenureSignals({ partyRoot = 0n, partyId, scope, nullifier, tenureSeconds, snapshotAt = 0n }) {
+  return [
+    BigInt(partyRoot),
+    BigInt(partyId),
+    BigInt(scope),
+    BigInt(nullifier),
+    BigInt(tenureSeconds),
+    BigInt(snapshotAt),
+  ];
+}
+
+/** Read a proposal's snapshot root and time, for building a vote proof against it. */
+export async function proposalSnapshot(governor, proposalId) {
+  const p = await governor.read('proposals', [proposalId]);
+  return { root: p.snapshotRoot, at: p.snapshotAt };
 }
 
 export const ZERO_PROOF = [0n, 0n, 0n, 0n, 0n, 0n, 0n, 0n];
@@ -250,6 +297,12 @@ export async function activateParty(ctx, { petitionId, endorsements, thresholdBp
 
   const required = (await partyRegistry.read('petitions', [petitionId]))[5];
   const n = endorsements ?? Number(required);
+  if (n > 600) {
+    throw new Error(
+      `activateParty would need ${n} endorsements; use a fixture with a lower threshold ` +
+        `rather than paying for them — see the note on anonymityFloor in deployProtocol().`,
+    );
+  }
   for (let i = 0; i < n; i++) {
     const signals = await residencySignals(ctx, {
       scope: scopeId('endorse', petitionId),

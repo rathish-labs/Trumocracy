@@ -263,6 +263,235 @@
       ],
       "gate": "Gate 2 - Doc 14 v1.0.0 delivered as a Gate-2 input, Status In Review. It does NOT clear Gate 2 by itself: the RTM (Doc 08) does not exist, Docs 07 green suites do not exist, rollback is undrilled, audits are not started, and the sre release decision in Doc 09 s7 is HALTED. Per CLAUDE.md the guide also needs a passing business-mode document-review report before the SOP advances.",
       "next_role": "neutral (non-technical-writer) role running the document-review skill in business mode over docs/14-user-guide.md v1.0.0 -> artifacts/reviews/14-user-guide-v1.0.0-business-cycle1.md; then product-owner (Priya Raghunathan) for Gate-2 sign-off of the guide once the release is genuinely ready."
+    },
+    {
+      "id": "reviewer-qa-2026-08-09T0600",
+      "role": "reviewer-qa",
+      "file": "artifacts/reviewer-qa-2026-08-09T0600.md",
+      "timestamp": "2026-08-09T06:00:00Z",
+      "phase": "Verify",
+      "product": "Trumocracy",
+      "scope": "Independent security scan of packages/contracts/src/core/*.sol, packages/circuits/circuits/*.circom, packages/protocol/src/*.js and services/indexer/src/index.js; plus technical-mode document-review of Doc 03 (SDD) and Doc 06 (Coding & UT + code drop). READ-ONLY: nothing under docs/ written or edited, no product code written or edited, no test artifact written.",
+      "summary": "Ran the independent Gate-2 security scan and withheld merge sign-off. Found 6 critical, 8 high, 7 medium and 6 low defects in the code drop, none covered by an existing test. Verified the claimed capability absences hold structurally (no admin/pause/proxy/upgrade/transfer; no delegatecall/selfdestruct/payable/fallback; ring buffers correct at the 64-insert boundary; no reentrancy exploit in Governor.execute) - where the absences fail they fail through AUTHORISED callers. Scored Doc 03 at 77% FAIL (3C/3H/4M/3L) and Doc 06 at 48% FAIL (6C/6H/5M/4L). RTM verification was IMPOSSIBLE: docs/07 and docs/08 do not exist. MERGE SIGN-OFF WITHHELD; Gate 2 must not be scheduled.",
+      "artifacts_written": [
+        "artifacts/reviews/SECURITY-SCAN-2026-08-09.md",
+        "artifacts/reviews/03-architecture-design-sdd-v1.0.0-technical-cycle1.md",
+        "artifacts/reviews/06-coding-and-ut-v1.0.0-technical-cycle1.md",
+        "artifacts/reviewer-qa-2026-08-09T0600.md"
+      ],
+      "evidence_runs": {
+        "node packages/contracts/script/compile.mjs": "all 11 units compile; largest PartyDeployer 13,185 bytes, all under EIP-170",
+        "node tools/dep-guard/check.mjs": "6 workspace packages checked - layering OK (exit 0)",
+        "npx vitest run --root packages/protocol": "82/82 pass in 810ms (reference implementation only - covers none of the findings)",
+        "contract suite": "NOT RUN this session (budget). Every finding derived from source, not from a failing test."
+      },
+      "findings": {
+        "critical": 6,
+        "high": 8,
+        "medium": 7,
+        "low": 6
+      },
+      "critical_findings": [
+        "C-01 RegionRegistry.sol:169 issueResidency has no caller authentication - attesterId is caller-supplied and struct Attester has no operator address. Anyone mints unlimited residency credentials, which is the Sybil boundary for join/endorse and the source of verifiedResidents().",
+        "C-02 Governor.sol:259/153/343 never bind partyRootAtSnapshot or the circuit's snapshotAt. Party.knownRoot is written and read by no contract; error JoinedAfterSnapshot() is declared and never thrown. Unlimited forged votes at any tier against an attacker-built tree.",
+        "C-03 Circuit/contract public-signal arity mismatch: residency_member declares 7 vs contract 6, tenure_member declares 6 vs contract 5. The dropped inputs are exactly nowTs and snapshotAt - the two the circuit comments say the contract must bind. test/fixture.mjs registers mocks at the contract arities so UT-0341 validates the mistake. No personhood_enrol circuit exists at all.",
+        "C-04 Party.sol:279-281 surgeActive subtracts before the guard that prevents underflow. The first membership decrease permanently bricks join, leave and propose with no recovery path. JS reference does not share the bug (live differential divergence); UT-0420's fixture is monotonic by construction so it cannot catch it.",
+        "C-05 PartyRegistry.sol:306-356 openForkPetition takes initiators and forkInitiatedAt from calldata; no fork-initiation state exists anywhere. FORK_MIN_INITIATOR_BPS and FORK_COOLING_OFF are dead constants.",
+        "C-06 Governor.sol:327-340 binds no relationship between a proposal's tier and what its callData may do. A tier-0 proposal (5% quorum, zero discussion, zero timelock) can call Party.dissolve(). The entire ADR-008 s1 tier table is bypassable."
+      ],
+      "high_findings": [
+        "H-01 PersonhoodRegistry.sol:268 setSpenderAuthoriser is re-callable and self-authorises its argument, with no de-authorisation path - the timelock can become a universal nullifier burner in one call. The Doc 06 s5 defect-1 fix is INCOMPLETE one level up, and irreversible. UT-0325/0326 do not cover it.",
+        "H-02 Party.sol:268-285 surgeActive is O(n^2) over up to 512 storage samples (~130,800 iterations at the cap) and is called from join/leave/propose - a hard liveness ceiling, not the optimisation Doc 06 s7.4 and SDD s13 describe.",
+        "H-03 GovernanceRules.sol:96 casts quorum to uint16 and wraps at >=6.5536x turnout; governance.js:147 does not. The chain can record Defeated on a 660% turnout the client reported as passed.",
+        "H-04 PartyRegistry.sol:216-229 withdrawEndorsement requires no prior endorsement, no jurisdiction match, no known root and no anonymity floor - residents of any region can decrement any petition.",
+        "H-05 VerifierRegistry.sol:53-80 has no emergency retire; a circuit found unsound stays live 30 days. enrol/issueResidency/join/leave/withdrawEndorsement are ungated by FeatureFlags, falsifying both the FeatureFlags docstring and Doc 06 s6.",
+        "H-06 The published identityCommitment is a stable cross-context pseudonym (indexed in Joined and Enrolled), defeating the scoped-nullifier unlinkability claim; PartyRegistry.endorse publishes it and never reads it.",
+        "H-07 RegionRegistry root history is 64 INSERTIONS, not a time window - at SDD s7.6 scale a proof's root is evicted before the citizen can submit it, and the revert is the misleading InvalidProof.",
+        "H-08 No personhood_enrol.circom exists; CIRCUIT_ENROL is the root of every Sybil claim and its circuit is unwritten. Doc 06 s7.2 does not say so."
+      ],
+      "verified_clean": [
+        "No admin/pause/proxy/upgrade/ownership surface: enumerated every external+public mutating function across all 9 core contracts.",
+        "Mechanical scan for delegatecall, selfdestruct, assembly, payable, receive() and fallback() across packages/contracts/src/ returns nothing.",
+        "No transferable membership, no balance, no weight field; vote can only += 1.",
+        "authoriseSpender is correctly restricted to spenderAuthoriser and unreachable by any other path (H-01 concerns the layer above).",
+        "Nullifier scoping is sound at every call site except execute (M-04): join/leave/endorse/withdraw/vote/propose/cancel all pin their scope, which is inside the nullifier hash.",
+        "All three root-history ring buffers behave correctly at the 64-insert boundary: no still-valid root evicted early, no evicted root left accepted, root 0 handled. The defect is the sizing policy (H-07), not the buffer.",
+        "Governor.execute is CEI-safe against re-execution; no reentrancy exploit found (re-entering finalize/vote/propose/execute is independently gated). The danger is what the call may DO (C-06, M-04), not the ordering.",
+        "_ceilMulDiv matches Math.ceil; RegionRegistry._sort and PersonhoodRegistry.issuerSetValid() are bounded and not attacker-influenced; FeatureFlags is one-directional as advertised.",
+        "packages/protocol has zero runtime dependencies and dep-guard layering passes."
+      ],
+      "document_reviews": [
+        {
+          "document": "docs/03-architecture-design-sdd.md",
+          "version": "1.0.0",
+          "mode": "technical",
+          "score": 77,
+          "critical": 3,
+          "high": 3,
+          "medium": 4,
+          "low": 3,
+          "cycle": 1,
+          "verdict": "FAIL",
+          "root_cause": "Three security properties are asserted in prose with no design element specifying their enforcement (proposal snapshot binding, fork initiation, attester identity) - each became a critical code defect. Also: no STRIDE row for Governor.execute's arbitrary call; s5.3's 'complete list' claim is materially false; s9 delegates the repo design and omits CI topology.",
+          "routed_to": "architect"
+        },
+        {
+          "document": "docs/06-coding-and-ut.md",
+          "version": "1.0.0",
+          "mode": "technical",
+          "score": 48,
+          "critical": 6,
+          "high": 6,
+          "medium": 5,
+          "low": 4,
+          "cycle": 1,
+          "verdict": "FAIL",
+          "root_cause": "Covers the code drop per CLAUDE.md, so all six code criticals land here. Three of the document's own claims are untrue of the repository: s5 reports the spendNullifier Critical as fixed (bypassable via setSpenderAuthoriser), s6 claims every on-chain-exercisable flag is enforced on-chain (5 of 11 flags appear in no contract), s7.4 calls the growth-sample array 'correct but wasteful' (it is neither).",
+          "routed_to": "engineer"
+        }
+      ],
+      "rtm_verification": "NOT POSSIBLE - docs/07-test-cases.md and docs/08-requirements-traceability-matrix.md DO NOT EXIST. The tester has not produced them. Zero-gaps in Must rows cannot be verified against a matrix that has not been written. Doc 06 s3's claim that every UT-#### maps to an FR/NFR/RISK in Doc 08 is therefore unverifiable.",
+      "merge_signoff": "WITHHELD",
+      "gate": "Gate 2 - readiness summary written in this note. NOT READY. Blockers: (1) six critical code defects, none test-covered; (2) docs/07 and docs/08 do not exist so the RTM zero-gap condition is unmet; (3) the Doc 06 s6 flag ledger is factually wrong - 5 of 11 flags marked 'On-chain: yes' appear in no contract, and enrol/issueResidency/join/leave are ungated; (4) no rollback drill evidence, and two shipped paths are irreversible by construction (setSpenderAuthoriser has no de-authorisation; Party.dissolve cannot be undone). Do not assemble a Gate-2 packet.",
+      "open_items": [
+        "docs/07 and docs/08 unwritten - hard Gate-2 blocker, owned by the tester.",
+        "No personhood_enrol.circom - every Sybil-resistance claim is unreviewable until it exists.",
+        "Architect's OPEN-05 (unrestricted spendNullifier) reported fixed in Doc 06 s5; H-01 finds the fix incomplete one level up and irreversible.",
+        "OPEN-03 (unconditional FeatureFlags.disable) is partly addressed by the deliberate ungating of vote/finalize/execute, which I endorse; the ungating of enrol/join/leave/issueResidency appears unintentional.",
+        "Contract suite NOT re-run this session (budget) - a future reviewer-qa session must run it before signing any merge."
+      ],
+      "ids_touched": {
+        "created": "none - reviewer-qa mints no IDs",
+        "referenced_not_modified": "ADR-003/004/005/007/008/010/011/013/014, CON-002/003/004, NFR-002/003/005/008, FR-001/003/015/018/020/024/029/034/047, RISK-01/06/10/12/16, UT-0300..0361, UT-0400..0420, UT-0600..0612, OPEN-03/05/06/17"
+      },
+      "next_role": "engineer (fix all 6 critical + 8 high findings in artifacts/reviews/SECURITY-SCAN-2026-08-09.md, then Doc 06 v1.1.0); tester (regression cases named per finding, plus Docs 07 and 08); architect (Doc 03 v1.1.0). Then reviewer-qa re-scan INCLUDING a full contract-suite run before any merge sign-off. project-manager: do NOT schedule Gate 2."
+    },
+    {
+      "id": "tester-2026-08-09T0500",
+      "role": "tester",
+      "file": "artifacts/tester-2026-08-09T0500.md",
+      "timestamp": "2026-08-09T05:00:00Z",
+      "phase": "Verify",
+      "product": "Trumocracy",
+      "scope": "Docs 07 and 08 ONLY. No product code written or edited. No other document edited.",
+      "summary": "Authored the Test Cases & Suites (Doc 07, TC-TRUMOCRACY v1.0.0, In Review) - 255 TC-#### across the 22 suites Doc 04 reserved, derived from the Doc 02 s8 / Doc 05 s6 Gherkin and the SDD s11 failure modes - and the RTM (Doc 08, RTM-TRUMOCRACY v1.0.0, In Review) - 87 requirement rows of which 64 are gating Must rows. Executed the three fast suites and observed 222/222 passing; took the contract suite as given from Doc 06 s3/s5 and labelled it inherited, never observed. RESULT: 10 of 64 Must rows complete, 54 open. Gate 2 is NOT approvable.",
+      "artifacts_written": [
+        "docs/07-test-cases-suites.md",
+        "docs/08-traceability-matrix.md"
+      ],
+      "artifacts_read": [
+        "CLAUDE.md",
+        "docs/templates/07-test-cases-suites.template.md",
+        "docs/templates/08-traceability-matrix.template.md",
+        "docs/02-requirements-srs.md",
+        "docs/03-architecture-design-sdd.md (s5.2, s11, s12, s13, s14, s16)",
+        "docs/04-test-strategy-master-plan.md (s8, s9, s13, s14)",
+        "docs/05-product-backlog.md",
+        "docs/06-coding-and-ut.md",
+        "packages/protocol/test/*, packages/contracts/test/*, packages/sdk/test/*, services/indexer/test/*, apps/web/test/*",
+        "packages/contracts/src/core/*.sol (Party, PartyRegistry, Governor, GovernanceRules)",
+        "artifacts/memory-index.json"
+      ],
+      "suites_executed": {
+        "packages/protocol": "82/82 pass, 494 ms (observed 2026-08-09)",
+        "services/indexer": "16/16 pass, 467 ms (observed 2026-08-09)",
+        "packages/sdk": "124/124 pass, 2.35 s (observed 2026-08-09)",
+        "packages/contracts": "NOT executed (~5 min); results inherited from Doc 06 s3/s5",
+        "apps/web": "NOT executed; suite exists (UT-0700..UT-0742)",
+        "packages/circuits": "no suite - circuits not compiled (Doc 06 s7.2)"
+      },
+      "counts": {
+        "TC_designed": 255,
+        "TC_automated": 143,
+        "TC_observed_passing": 72,
+        "TC_inherited_green": 55,
+        "TC_not_executed_web": 16,
+        "TC_blocked": 97,
+        "TC_no_mechanism": 10,
+        "TC_manual_not_run": 12,
+        "RTM_rows_total": 87,
+        "RTM_rows_must": 64,
+        "RTM_must_complete": 10,
+        "RTM_must_gap": 54,
+        "RTM_nonmust_complete": 3,
+        "RTM_nonmust_gap": 20,
+        "must_completion_pct": 15.6,
+        "observed_test_failures": 0
+      },
+      "must_rows_complete": [
+        "FR-016",
+        "FR-020",
+        "FR-021",
+        "FR-022",
+        "FR-024",
+        "FR-025",
+        "FR-026",
+        "FR-027",
+        "FR-028",
+        "FR-051 (conditional - re-verify when the treasury flag ships)"
+      ],
+      "gap_by_reason": {
+        "G-PHASE3 (capability not implemented: MACI, elections, recall, recovery, relayer)": 17,
+        "G-NOMECH (design has no mechanism for the stated guarantee)": 9,
+        "G-NOENV (needs an environment or instrument that does not exist)": 9,
+        "G-EXTERNAL (audit, legal review, usability study, reproducible-build attestation)": 5,
+        "G-UI (client surface not built or not verified)": 5,
+        "G-UNMEASURABLE (not falsifiable or not measurable as written)": 4,
+        "G-CIRCUIT (needs compiled circuits and real verifiers; today mocks)": 3,
+        "G-TRACE (chain itself broken - primary reason; 16 rows affected in total)": 2
+      },
+      "key_decisions": [
+        "Stated a four-part completion rule in Doc 08 s1 and applied it uniformly; a mock verifier blocks completion only where the guarantee depends on proof soundness.",
+        "Separated OBSERVED evidence (222 tests I ran) from INHERITED evidence (contract suite, Doc 06) in every status cell; no row is complete on the strength of a suite I did not run.",
+        "Did not fabricate any link to close a row. FR-011 and FR-035 have PASSING tests and are still recorded as gaps because Doc 03 s5.2 assigns them no DES - the chain does not close.",
+        "Zero of 22 Must NFRs close. Recorded as-is rather than softened.",
+        "Named the four gaps that cannot close by building harder: NFR-004 unmeasurable by design, FR-002/NFR-001 unfalsifiable as written, NFR-025 contradicts ADR-001, receipt-freeness needs Phase-3 MACI."
+      ],
+      "new_findings": [
+        "TD-07-01 (Medium, engineer): Doc 06 s3's UT inventory omits UT-0600..0612 (deployment safety, 13 tests) and UT-0700..0742 (apps/web, 16 tests) - two real test groups the RTM cites.",
+        "TD-07-02 (Low, engineer): Doc 06 s3 range labels imply a 1:1 id-per-test mapping in packages/protocol that does not hold.",
+        "CHAIN DEFECT (Principal Architect): 15 Must rows have NO DES in SDD s5.2 - FR-010, FR-011, FR-035, FR-039, FR-056, FR-060 and NFR-006/009/010/011/012/013/015/023/024. NFR-007 additionally has no story and no NF backlog item.",
+        "NO MECHANISM (requirement defects, not test defects): FR-010 name/emblem collision, FR-018 dwell period, FR-008 residency cooldown, FR-023 churn limit, FR-056 filtering register, FR-004 per-region attestor cap (OPEN-02), FR-009 source independence (OPEN-12), NFR-020 open-ballot flag freeze (OPEN-03), FR-001 cross-identifier-type enrolment residual."
+      ],
+      "open_findings_disposition": {
+        "closed_with_regression_tests": [
+          "OPEN-04 (UT-0109/0109b)",
+          "OPEN-05 (UT-0325/0326)",
+          "OPEN-06 (UT-0109c)"
+        ],
+        "partially_addressed": [
+          "OPEN-03 - UT-0360/0361 stop a flag halting a vote already under way, but the open-ballot freeze NFR-020 requires still has no mechanism"
+        ],
+        "still_open_each_blocking_a_must_row": [
+          "OPEN-01",
+          "OPEN-02",
+          "OPEN-03",
+          "OPEN-07",
+          "OPEN-08",
+          "OPEN-10",
+          "OPEN-11",
+          "OPEN-12",
+          "OPEN-13",
+          "OPEN-14",
+          "OPEN-15",
+          "OPEN-17"
+        ]
+      },
+      "open_items": [
+        "GATE 2 IS NOT APPROVABLE: 54 open Must rows against a zero-gap criterion. Recommend not scheduling Gate 2 until the count closes (Doc 13 MS-13, 2027-05-14).",
+        "Architect: close the 15 missing DES links - FR-011 and FR-035 convert into complete rows immediately.",
+        "Product owner: OI-01..OI-05; the OPEN-01 receipt-freeness-at-v1 decision; stories for FR-005, FR-049, FR-050, FR-052, FR-053.",
+        "Engineer: packages/contracts/package.json now exists (OPEN-17 appears resolved) but I did not run the suite - confirm a green contract run in CI and reconcile the Doc 06 s3 inventory (TD-07-01).",
+        "Docs 07 and 08 each need a passing technical-mode document-review report by a neutral non-tester role before the SOP advances.",
+        "Rollback has never been drilled (TC-2425); no audit has started (TC-1863); no environment exists for any of TS-PERF, TS-LOAD, TS-COST, TS-RES, TS-EXIT, TS-SMOKE."
+      ],
+      "ids_touched": {
+        "created": "TC-0001..0040, TC-1001..1048, TC-1200..1209, TC-1400..1406, TC-1600..1614, TC-1800..1803, TC-1850..1863, TC-1950..1963, TC-2050..2053, TC-2080..2084, TC-2150..2153, TC-2200..2203, TC-2250..2255, TC-2330..2333, TC-2380..2382, TC-2420..2426, TC-2480..2482, TC-2520..2523, TC-2560..2561, TC-2600..2752, TC-3200..3209, TC-3250..3253 (255 cases); findings TD-07-01, TD-07-02",
+        "referenced_not_modified": "BR-001..012, FR-001..061, NFR-001..026, CON-001..012, RISK-01..16, DES-001..063, ADR-001..014, SCR-01..20, EP-01..10, FE-001..028, US-0001..0070, NF-01..08, UT-0001..0055/0100..0125/0200..0230/0300..0361/0400..0420/0500..0525/0600..0612/0700..0742/2500..2623, OPEN-01..18, OI-01..11",
+        "not_touched": "no product code; no BR/FR/NFR/DES/ADR/US/UT minted or edited"
+      },
+      "gate": "Gate 2 - RTM authored and submitted with 54 open Must rows recorded. The traceability criterion (zero gaps in Must rows) FAILS. The tester does not approve gates and does not sign merges. STOPPED.",
+      "next_role": "reviewer-qa - independently verify this RTM (zero-gap check), confirm the 54 open Must rows and the 15 broken DES links, run the security scan, and decide the merge. Also needed: a neutral non-tester role running document-review in technical mode over docs/07-test-cases-suites.md and docs/08-traceability-matrix.md v1.0.0."
     }
   ]
 }
