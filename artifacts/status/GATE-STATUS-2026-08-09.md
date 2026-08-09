@@ -81,8 +81,33 @@ what has to happen before a single real citizen touches it.
 | SDK + web client | built in this run |
 | Elections, recall, treasury, fork, MACI | **not implemented** — Phase 3, flags off everywhere above dev |
 
-Four security defects were found by the review loop and fixed with regression tests before
-any of this was committed: an unrestricted nullifier burn (one-call disenfranchisement),
-per-issuer enrolment nullifiers that silently turned one-person-one-vote into one-person-N-votes,
-an unenforced issuer-plurality invariant, and feature flags that could freeze a ballot already
-in progress. Doc 06 §5 records each with its regression test.
+## What the review loop found
+
+Two independent reviews ran against this code and found, between them, **ten critical or high
+defects** — every one of which was written by the same person who wrote the tests that passed
+over them. That is the finding a reader should take most seriously, and it is the argument for
+the two independent audits on the critical path.
+
+**From the test strategy (Doc 04):** an unrestricted nullifier burn (a one-call
+disenfranchisement of any citizen); per-issuer enrolment nullifiers that silently turned
+one-person-one-vote into one-person-N-votes under 1-of-N acceptance; an issuer-plurality
+invariant exposed as a view that nothing enforced; and feature flags that could freeze a
+ballot already in progress.
+
+**From the security scan (reviewer-qa, which scored the code drop 48% and withheld merge
+sign-off):** residency credentials mintable by anyone holding a public id; votes never bound
+to the proposal's snapshot root, making the entire anti-capture design decorative;
+circuit/contract signal-count mismatches plus a missing enrolment circuit; an arithmetic
+underflow that bricked a party permanently when one member left; a proposal tier that the
+proposer chose independently of what their call did, so a zero-timelock proposal could
+dissolve a party in three days; a re-pointable nullifier-spender authority; a basis-point
+truncation that defeated a passing proposal; and an endorsement withdrawal that required no
+prior endorsement — a one-call veto on whether a party may exist.
+
+All ten are fixed with named regression tests (Doc 06 §5). One critical remains open and is
+recorded rather than closed: **fork initiation is taken from calldata**, so the 10% threshold
+and 30-day cooling-off are currently decorative. The `fork` flag is off in every environment
+above dev and must stay off until it is fixed.
+
+Also fixed: the contract suite was running **one of five test files and still exiting zero**,
+because its worker timed out at six minutes. It now runs all five in about a minute.
