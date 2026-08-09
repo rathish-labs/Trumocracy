@@ -1,0 +1,85 @@
+name: verify
+
+# Every gate that CI can mechanically enforce runs here. The ones it cannot — the two
+# independent audits, the ceremonies, the manual accessibility passes — are tracked in
+# Doc 04 and Doc 13, not silently omitted.
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      # ADR-011: the dependency direction is a security property (it keeps the pure reference
+      # implementation credible as a differential oracle), so it is enforced, not documented.
+      - name: Dependency direction (ADR-011)
+        run: npm run lint:deps
+
+      - name: Contracts compile and fit under EIP-170
+        run: npm run build -w @trumocracy/contracts
+
+      - name: Rules — reference implementation
+        run: npm run test -w @trumocracy/protocol
+
+      - name: Indexer projection
+        run: npm run test -w @trumocracy/indexer
+
+      # The long one: the whole protocol deployed on an in-process EVM, including the
+      # adversarial suites and the differential tests against the reference implementation.
+      - name: Contracts — integration, adversarial and differential
+        run: npm run test -w @trumocracy/contracts
+
+      - name: SDK
+        run: npm run test -w @trumocracy/sdk --if-present
+
+      - name: Web client
+        run: npm run test -w @trumocracy/web --if-present
+
+  flag-debt:
+    # A feature flag with no removal target quietly becomes permanent configuration, and
+    # permanent configuration is how a codebase stops being testable. Surface it every build.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: No flag may exist without a removal target
+        run: |
+          node -e "
+            const { permanentFlags, FLAGS } = require('./packages/protocol/src/flags.js');
+            const stuck = permanentFlags();
+            if (stuck.length) {
+              console.error('Flags with no removal target:', stuck.map(f => f.key).join(', '));
+              process.exit(1);
+            }
+            console.log(Object.keys(FLAGS).length + ' flags, all with a removal target');
+          " || node --input-type=module -e "
+            import { permanentFlags, FLAGS } from './packages/protocol/src/flags.js';
+            const stuck = permanentFlags();
+            if (stuck.length) {
+              console.error('Flags with no removal target:', stuck.map(f => f.key).join(', '));
+              process.exit(1);
+            }
+            console.log(Object.keys(FLAGS).length + ' flags, all with a removal target');
+          "
