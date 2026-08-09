@@ -20,8 +20,8 @@ proof it is given — so an arity drift fails closed rather than silently accept
 These are **sources only**. Compiling them needs the `circom` binary and a phase-2 ceremony
 per circuit (ADR-005 §2), both of which are Phase-2 deliverables. Nothing in this repository
 has ever verified a real proof, and the deployment gate in
-`packages/contracts/script/deploy.mjs` refuses to promote any environment still wired to a
-development mock.
+`packages/contracts/src/promotion-gate.mjs` refuses to promote any environment still wired to
+a development mock.
 
 ## Two things a reviewer should check first
 

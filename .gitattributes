@@ -1,0 +1,5 @@
+# Normalise line endings in the repository to LF regardless of the checkout platform.
+# A CRLF checkout is not cosmetic here: it has already broken tooling that parses source as
+# text (Vite's SSR transform choked on a shebang in a CRLF file), and it makes every Windows
+# checkout produce a whole-file diff against CI.
+* text=auto eol=lf

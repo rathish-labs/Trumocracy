@@ -14,7 +14,7 @@ import {
   DEPLOY_ORDER,
   WIRING_STEPS,
   CIRCUITS,
-} from '../script/deploy.mjs';
+} from '../src/promotion-gate.mjs';
 
 const realEntry = (circuit) => ({
   verifier: '0x1111111111111111111111111111111111111111',
