@@ -849,7 +849,7 @@ The **product-owner** promotes worth-it learnings into new `BR`/`FR` in Doc 02 w
 SOP at the top and passes through BOTH gates** — Gate 1 and Gate 2 — exactly like any other bet.
 It is never fast-tracked, however obvious it seems from inside an incident.
 
-### 10.4 Entries already opened by this release (pre-production, from design and code review)
+### 10.4 Entries staged for the refine log (pre-production, from the launch-readiness review)
 
 | REF | Signal source | Learning | Severity |
 |---|---|---|---|
@@ -861,8 +861,14 @@ It is never fast-tracked, however obvious it seems from inside an incident.
 | `REF-06` | design review | A compromised verifier stays live for up to ~60 days (30-day timelock + 30-day supersede grace); and `VerifierRegistry` exposes no accessor to enumerate historical versions for the safety gate | Med |
 | `REF-07` | metric / config | Phase-1 flag posture disagrees across `flags.js`, `fixture.mjs` and Doc 13 §9 | Med |
 
-These are **pre-production** entries opened by the sre from the launch readiness review. They are
-routed to the product-owner with the first weekly routing after this document leaves `In Review`.
+**Status: staged, not yet written.** `docs/refine-log.md` is a separate artefact and was outside the
+write scope of this session, so `REF-01`…`REF-07` are **defined here and MUST be appended to
+`docs/refine-log.md` by the sre before the first routing**. Until they are written there, they do not
+formally exist — the artefact-bus rule is not negotiable: if it isn't written down, it doesn't exist.
+They are then routed to the product-owner (Priya Raghunathan) with the first weekly routing, and the
+routing is recorded in §3 of the refine log. The sre **detects and routes**; the product-owner
+**decides** whether any of them becomes a `BR`/`FR`, and any promoted bet re-enters the SOP at the top
+through **both** gates.
 
 ---
 

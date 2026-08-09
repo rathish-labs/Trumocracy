@@ -150,8 +150,7 @@ describe('CON-003 / RISK-16 the operator must be powerless', () => {
     // slot, so there is no write path that could re-point it after deployment. That is the
     // property that distinguishes a linked library from an upgradeable implementation.
     const code = A.Party.deployedBytecode.toLowerCase();
-    const addresses = [...code.matchAll(/73([0-9a-f]{40})/g)].map((m) => m[1]); // PUSH20
-    const nonPoseidon = addresses.filter((a) => a !== '3333333c0a88f9be4fd23ed0536f9b6c427e3b93');
+    const nonPoseidon = push20s(code).filter((a) => a !== '3333333c0a88f9be4fd23ed0536f9b6c427e3b93');
     // Any other pushed address would deserve an explanation; today there are none.
     expect(nonPoseidon, `unexpected hard-coded addresses: ${nonPoseidon.join(', ')}`).toEqual([]);
   });
@@ -165,6 +164,8 @@ describe('CON-003 / RISK-16 the operator must be powerless', () => {
     expect(scanOpcodes('0x60f4').has(0xf4)).toBe(false);
     // 0x5b 0xf4 is JUMPDEST then DELEGATECALL: a real occurrence, and must be reported.
     expect(scanOpcodes('0x5bf4').has(0xf4)).toBe(true);
+    // A PUSH20 of the Poseidon address is one address, not twenty overlapping ones.
+    expect(push20s('0x73' + '11'.repeat(20))).toEqual(['11'.repeat(20)]);
     // And the scanner sees ordinary opcodes in real compiled output.
     const real = scanOpcodes(A.Party.deployedBytecode);
     expect(real.has(0x35)).toBe(true); // CALLDATALOAD — every dispatcher has one
@@ -468,23 +469,59 @@ describe('ship-dark: on-chain feature flags', () => {
 });
 
 /**
- * Walk EVM bytecode and return the set of opcodes that are actually EXECUTED positions,
- * skipping the immediate data of PUSH1..PUSH32.
+ * Strip solc's trailing CBOR metadata.
  *
- * Splitting bytecode into byte pairs and looking for `f4` finds every `0xf4` that happens to
- * sit inside a pushed constant — an address, a hash, a jump table — and reports DELEGATECALL
- * in a contract that has none. Getting this right is the difference between a control and a
- * superstition.
+ * The compiler appends a metadata blob (source hash, compiler version) after the runtime
+ * code, with its own length in the final two bytes. Those bytes are arbitrary — they will
+ * contain 0xf4, 0xff and anything else — and they are never executed. Walking them as
+ * opcodes produces exactly the false positives that make a capability-absence test lie.
  */
-function scanOpcodes(hex) {
+function stripMetadata(hex) {
   const bytes = Uint8Array.from(Buffer.from(hex.replace(/^0x/, ''), 'hex'));
-  const found = new Set();
+  if (bytes.length < 2) return bytes;
+  const len = (bytes[bytes.length - 2] << 8) | bytes[bytes.length - 1];
+  const cut = bytes.length - 2 - len;
+  // Sanity-check: the blob starts with a CBOR map header (0xa1..0xaf).
+  if (cut > 0 && cut < bytes.length && bytes[cut] >= 0xa1 && bytes[cut] <= 0xaf) {
+    return bytes.slice(0, cut);
+  }
+  return bytes;
+}
+
+/**
+ * Walk executable EVM bytecode, returning the opcodes at instruction positions and the
+ * immediates of every PUSH.
+ *
+ * Splitting bytecode into byte pairs and grepping finds every 0xf4 that happens to sit
+ * inside a pushed constant — an address, a hash, a jump table — and reports DELEGATECALL in a
+ * contract that has none. Getting this right is the difference between a control and a
+ * superstition, and this file has now been burned by the naive version twice.
+ */
+function walk(hex) {
+  const bytes = stripMetadata(hex);
+  const opcodes = new Set();
+  const pushes = [];
   for (let i = 0; i < bytes.length; i++) {
     const op = bytes[i];
-    found.add(op);
+    opcodes.add(op);
     if (op >= 0x60 && op <= 0x7f) {
-      i += op - 0x5f; // PUSH1..PUSH32 — skip the immediate
+      const n = op - 0x5f;
+      pushes.push({
+        size: n,
+        value: Buffer.from(bytes.slice(i + 1, i + 1 + n)).toString('hex'),
+      });
+      i += n;
     }
   }
-  return found;
+  return { opcodes, pushes };
+}
+
+function scanOpcodes(hex) {
+  return walk(hex).opcodes;
+}
+
+function push20s(hex) {
+  return walk(hex)
+    .pushes.filter((p) => p.size === 20)
+    .map((p) => p.value);
 }

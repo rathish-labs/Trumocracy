@@ -21,8 +21,10 @@
     "test:contracts": "npm run test -w @trumocracy/contracts",
     "test:sdk": "npm run test -w @trumocracy/sdk",
     "lint:deps": "node tools/dep-guard/check.mjs",
-    "typecheck": "tsc -b --pretty false",
-    "verify": "npm run lint:deps && npm run typecheck && npm run test"
+    "compile:contracts": "node packages/contracts/script/compile.mjs",
+    "deploy:plan": "node packages/contracts/script/deploy.mjs",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "verify": "npm run lint:deps && npm run compile:contracts && npm run typecheck && npm run test"
   },
   "devDependencies": {
     "typescript": "^5.9.3",

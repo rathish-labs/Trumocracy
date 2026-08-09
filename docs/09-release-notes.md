@@ -23,13 +23,13 @@ Last updated:  2026-08-09
 |---|---|
 | RTM (Doc 08) zero gaps in Must rows | **Not met** — `docs/08-traceability-matrix.md` does not exist |
 | All suites green, 0 Sev-1/2 (Doc 07) | **Not met** — `docs/07-test-cases-suites.md` does not exist |
-| Coding & UT record (Doc 06) | **Not met** — `docs/06-coding-and-ut.md` does not exist |
-| User Guide published (Doc 14) | **Not met** — `docs/14-user-guide.md` does not exist |
+| Coding & UT record (Doc 06) | Present at v1.0.0, `Status: In Review` — not yet review-passed |
+| User Guide published (Doc 14) | Present at v1.0.0, `Status: In Review` — not yet published |
 | Two independent audits, 0 critical/high open (`NFR-009`) | **Not met** — MS-09/MS-10 target 2027-03-12 / 2027-04-16 |
 | Six ceremony transcripts, `zkeyHash` frozen | **Not met** — MS-08 target 2027-03-05; verifiers are mocks |
 | Rollback drilled < 15 min (`NFR-020`) | **Not met** — drill defined in Doc 10 §8.6, not yet executed |
 | MACI 5-of-7 committee constituted (`ADR-006`) | **Not met** — MS-12 target 2027-05-07 |
-| Passing `document-review` reports | **Not met** — `artifacts/reviews/` is empty |
+| Passing `document-review` reports | **Not met** — only `01-press-release-prfaq-v1.0.0-business-cycle1` exists; Docs 02–14 unreviewed |
 
 Gate 2 is milestone **MS-13**, target **2027-05-14**, and it gates the **Phase-3** production rollout
 — not this release. Release `0.1.0` is the **Phase-1 walking skeleton on public testnet**
@@ -213,10 +213,13 @@ open, none is fixed by this release.
 | **REL-LIM-01** | **Every proof is verified by `MockVerifier`, which accepts any proof.** The privacy and one-person-one-vote guarantees are **simulated, not enforced**, in this release. | Total. Anyone can forge an enrolment, a residency proof or a vote. | `packages/contracts/src/mocks/MockVerifier.sol`; Doc 13 §3.1 Phase 1 | Phase 2 (MS-08); enforced by the deployment-safety gate, Doc 10 §3.2 |
 | **REL-LIM-02** | **Votes are anonymous but not receipt-free.** | Vote-buying and coercion are not defended against. | `NFR-003`, `BR-011`, `ADR-006`; flag `maci_voting` | Phase 3 (MS-12/MS-13) |
 | **REL-LIM-03** | **`RegionRegistry.issueResidency` does not bind the caller to the attester.** The function checks that `attesterId` is authorised and active, but never checks that `msg.sender` is that attester — any address may pass an authorised `attesterId` and insert residency leaves. | A residency tree can be inflated at will, which inflates the verified-resident term of the petition threshold and manufactures endorsement eligibility. Directly undermines `RISK-01`. | `packages/contracts/src/core/RegionRegistry.sol:169`; `FR-006`, `NFR-004`, `RISK-01`, `RISK-05` | **Must be fixed and re-tested before any real-value deployment.** Routed to engineer via `REF-02` |
-| **REL-LIM-04** | **`PersonhoodRegistry.spendNullifier` is unpermissioned.** Any address may burn an arbitrary `(scope, nullifier)` pair. Nullifiers are visible in the public signals of a pending transaction. | A watcher can front-run and pre-spend a citizen's nullifier, permanently denying that person that action in that scope. A silent, targeted disenfranchisement primitive. Conflicts with `NFR-025`. | `packages/contracts/src/core/PersonhoodRegistry.sol:212`; `NFR-025`, `RISK-09` | **Must be fixed before any real-value deployment.** Routed to engineer via `REF-03` |
+| ~~**REL-LIM-04**~~ | ~~`PersonhoodRegistry.spendNullifier` unpermissioned~~ — **FIXED in this drop.** Burning a nullifier now requires `authorisedSpender[msg.sender]`; the authoriser is set by the timelock and authorises only the `Party`/`Governor` pairs the registry deploys. | The one-call disenfranchisement primitive is closed. | `PersonhoodRegistry.sol:259-262`; Doc 06 §5 defect 1; `UT-0325`, `UT-0326` | **Closed** (verified by the sre against source, 2026-08-09) |
 | **REL-LIM-05** | **Population sources all submit through the timelock.** `RegionRegistry.submitPopulation` is `onlyTimelock`, so the "median of ≥5 independent sources" is operationally a median of five values chosen by one governance path. | Weakens the `RISK-12` mitigation from *structural* to *procedural*. The 7-day dispute window and ±5%/quarter drift cap still bind. | `packages/contracts/src/core/RegionRegistry.sol:213`; `FR-009`, `DES-007`, `RISK-12` | Open — routed via `REF-04` |
 | **REL-LIM-06** | **On-chain flags are boolean, not percentage.** `FeatureFlags` has no cohort or percentage concept, so a staged 1→10→50→100% rollout of any **on-chain-gated** capability is expressible only in the client. On-chain, every gated capability is all-or-nothing, network-wide. | Staged rollout is a client-cohort control, not a protocol control. Stated honestly in Doc 10 §6. | `packages/contracts/src/core/FeatureFlags.sol`; `NFR-020` | Open — routed via `REF-05` |
-| **REL-LIM-07** | **Disabling `party_governance` stops voting on ballots that are already open.** `Governor.vote` calls `flags.requireEnabled(FLAG_GOVERNANCE)` on every ballot, and `FeatureFlags.disable` has no open-ballot check. `NFR-020` requires that a flag governing an open ballot's rules **MUST NOT** be changeable while that ballot is open. | The emergency kill switch is also a disenfranchisement lever, and its use during an open ballot would violate a Must NFR. Mitigated operationally in Doc 11 §5 (PB-KILL) — not in code. | `Governor.sol:262`, `FeatureFlags.sol:64`; `NFR-020`, `CON-003` | **Blocks Gate 2.** Routed via `REF-01` |
+| ~~**REL-LIM-07**~~ | ~~Disabling `party_governance` stops voting on open ballots~~ — **FIXED in this drop.** `vote`, `finalize` and `execute` are deliberately **not** flag-gated; only `propose` is. Flags now gate *starting* a capability, never *completing* one already under way. | `NFR-020` sentence 3 is satisfied for ballots. | `Governor.sol:262` (explicit NOTE), `Governor.sol:157`; Doc 06 §5 defect 4; `UT-0360`, `UT-0361` | **Closed** (verified by the sre against source, 2026-08-09) |
+| **REL-LIM-15** | **The same hazard survives at activation.** `PartyRegistry.activate` still calls `flags.requireEnabled(FLAG_PETITIONS)`. A petition that has **already met its threshold** cannot be activated while the flag is off — the flag blocks the completion of a citizen process that has already succeeded. | Disabling `petitions` is not purely additive: it strands successful petitions until the flag is re-enabled, which takes **30 days** through the timelock. Same class as the defect fixed for voting; same principle violated. | `PartyRegistry.sol:241`; `NFR-020`, `CON-003`; Doc 06 §5 defect 4 states the principle | **Open.** Routed via `REF-08`; operational control in Doc 11 PB-KILL |
+| **REL-LIM-16** | **`enrol()` now fails closed on `issuerSetValid()`** — correct for the invariant, but it makes issuer removal a **global** lever: deactivating a compromised issuer that tips the region below "≥2 active, ≥1 non-state" halts **all** enrolment network-wide, and adding a replacement takes **30 days**. | The primary containment action in the issuer-compromise playbook can itself cause a 30-day enrolment outage. A real cliff, not a theoretical one. | `PersonhoodRegistry.sol:209`, `:176`; `ADR-003`, `ADR-010`; Doc 06 §5 defect 3 | **Open** — operational control in Doc 11 PB-ISSUER. Routed via `REF-09` |
+| **REL-LIM-17** | **Nullifier-spender authorisation is irrevocable and monotonic.** `authoriseSpender` has **no** de-authorisation path (deliberate — revoking a live party's ability to record votes would be a pause button by another name), and `setSpenderAuthoriser` authorises the new authoriser **without removing the old one**. | The set of addresses able to burn nullifiers only ever grows and can never shrink. Correct given `CON-003`, but it must be **inventoried and monitored** rather than assumed small. | `PersonhoodRegistry.sol:269-288` | **Accepted by design** — inventoried in Doc 12 §2.6, monitored per Doc 11. Routed via `REF-10` for visibility |
 | **REL-LIM-08** | **Enabling `maci_voting` before the MACI module ships bricks voting.** `Governor.vote` reverts with `MaciPathRequired` when the flag is on, and no alternative vote path exists in this release. | A single timelocked `enable('maci_voting')` would make every party ungovernable with no way to undo it faster than the emergency disabler can act. | `Governor.sol:266` | Operational control only — Doc 10 §5.1 forbids enabling it before Phase 3 |
 | **REL-LIM-09** | **A compromised verifier cannot be promptly retired.** `VerifierRegistry.register` is timelock-only (30 days, `ADR-010`) and superseding a circuit leaves the old verifier accepting proofs for a further `SUPERSEDE_GRACE = 30 days`. | Worst case ~60 days of a known-bad verifier still accepting proofs. The only fast lever is disabling the flag on the entrypoint that consumes it. | `VerifierRegistry.sol:33,65`; `NFR-017`, `DES-039`, `RISK-10` | Open — routed via `REF-06` |
 | **REL-LIM-10** | **Phase-1 flag posture is inconsistent between sources.** `flags.js` prod defaults have `treasury: false` and `fork: false`; the test fixture's `PHASE1_FLAGS` enables `fork` **and** `treasury`; Doc 13 §9 says both OFF. | A deployment driven from the test fixture would ship two capabilities that plan and registry both say are dark. | `packages/protocol/src/flags.js` vs `packages/contracts/test/fixture.mjs:62` vs Doc 13 §9 | Doc 10 §5.1 makes `flags.js` prod defaults the single source of truth. Routed via `REF-07` |
@@ -344,7 +347,7 @@ before use (`ADR-014`).
 | Epics / stories | `N/A — not yet produced` (Doc 05 exists; no per-release story cut recorded) |
 | Test status | `N/A — not yet measured`. Suites present: `packages/contracts/test/{lifecycle,governance,adversarial,differential}.test.mjs`, `packages/protocol/test/*`. Docs 06/07/08 do not exist; no suite result of record |
 | NFR verification | `NFR-005` cost `N/A — not yet measured` · `NFR-006` p95 `N/A — not yet measured` · `NFR-007` availability `N/A — not yet measured` · `NFR-008` load `N/A — not yet measured` · `NFR-020` rollback drill **not executed** |
-| Security / a11y | Audits **not started** (MS-04 contracting target 2026-10-15). `NFR-011` a11y `N/A — not yet measured`. Four security defects open in this document: `REL-LIM-03`, `REL-LIM-04`, `REL-LIM-07`, `REL-LIM-12` |
+| Security / a11y | Audits **not started** (MS-04 contracting target 2026-10-15). `NFR-011` a11y `N/A — not yet measured`. Security defects **open**: `REL-LIM-03`, `REL-LIM-12`, `REL-LIM-15`, `REL-LIM-16`. Security defects **closed in this drop**: `REL-LIM-04`, `REL-LIM-07` (Doc 06 §5) |
 | Dependencies | OP Stack L2 (Base Sepolia for testnet) · Ethereum blobs · ERC-4337 bundler + paymaster · IPFS pinning cluster ≥3 operators · Arweave mirror · indexer (Postgres read model) · `@zk-kit/lean-imt.sol` 2.0.1 · `poseidon-solidity` 0.0.5 · Solidity 0.8.28 (Cancun) · Node 22. Full record: Doc 12 |
 | Rollback | Flag-off via `FeatureFlags.disable` (emergency disabler, single tx) + client bundle revert + indexer/relayer re-point. **Target < 15 min (`NFR-020`). Cannot halt a running vote or reverse an on-chain decision** (`ADR-010`, `CON-003`). Full procedure and honest limits: Doc 10 §8 |
 | Approvals (Gate 2) | **None.** Product `—` · Eng `—` · QA `—` · SRE `—` · Security `—` |
@@ -372,14 +375,14 @@ Chen Wei (sre — owner of this document).
 | Architecture (SDD) | `docs/03-architecture-design-sdd.md` |
 | Test strategy | `docs/04-test-strategy-master-plan.md` |
 | Backlog | `docs/05-product-backlog.md` |
-| Coding & UT | `N/A — not yet produced` (`docs/06-coding-and-ut.md`) |
+| Coding & UT | `docs/06-coding-and-ut.md` (v1.0.0, In Review) |
 | Test cases | `N/A — not yet produced` (`docs/07-test-cases-suites.md`) |
 | **RTM** | `N/A — not yet produced` (`docs/08-traceability-matrix.md`) — **Gate-2 blocker** |
 | Deployment runbook | `docs/10-deployment-runbook.md` |
 | Operations runbook | `docs/11-operations-runbook.md` |
 | Application inventory | `docs/12-application-inventory.md` |
 | Project plan | `docs/13-project-plan.md` |
-| User guide | `N/A — not yet produced` (`docs/14-user-guide.md`) |
+| User guide | `docs/14-user-guide.md` (v1.0.0, In Review) |
 | Refine log | `docs/refine-log.md` |
 | Dashboards | `N/A — not yet produced` — Doc 11 §4 specifies them |
 | ADRs | `docs/adr/ADR-001` … `ADR-014` |
@@ -393,15 +396,23 @@ initiated, for the reasons in §0. Specifically, three preconditions are not mer
 **failing**:
 
 1. **RTM (Doc 08) does not exist** — the Must-row zero-gap check cannot be performed at all.
+   Doc 07 (test cases) is likewise absent, so there is no suite result of record either.
 2. **Rollback is unproven** — the drill in Doc 10 §8.6 has not been executed (`NFR-020`, Doc 13
    §3.3 item 5).
-3. **Two Must-blocking defects are open in code** — `REL-LIM-03` (unauthenticated residency
-   issuance) and `REL-LIM-04` (unpermissioned nullifier burn). Either alone defeats `NFR-004` /
-   `NFR-025` in a production deployment.
+3. **One Must-blocking defect remains open in code** — `REL-LIM-03`: `RegionRegistry.issueResidency`
+   does not authenticate `msg.sender` against `attesterId`, so residency trees can be inflated at
+   will. This defeats `NFR-004` in any deployment carrying real political consequence. Two sibling
+   defects of the same class (`REL-LIM-04`, `REL-LIM-07`) were fixed in this drop; this one was not,
+   and it is the last of the family.
+
+**Verified fixed since the first readiness pass** (re-read against source on 2026-08-09):
+`REL-LIM-04` (nullifier burn now access-controlled) and `REL-LIM-07` (open ballots no longer
+flag-gated). **Newly found in the same pass:** `REL-LIM-15` (activation still flag-gated),
+`REL-LIM-16` (issuer-removal enrolment cliff), `REL-LIM-17` (irrevocable spender set).
 
 Routed back through the project-manager (Ana-Maria Petrescu). Owning roles: engineer
-(`REL-LIM-03`, `-04`, `-07`, `-12`), tester (Docs 07/08), technical-writer (Doc 14),
-architect (`REL-LIM-05`, `-06`, `-09`).
+(`REL-LIM-03`, `-12`, `-15`), tester (Docs 07/08), architect (`REL-LIM-05`, `-06`, `-09`, `-16`),
+technical-writer (Doc 14 publication).
 
 ---
 ### Downstream

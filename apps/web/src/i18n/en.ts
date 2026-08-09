@@ -11,7 +11,7 @@
 export const en = {
   meta: {
     name: 'English',
-    dir: 'ltr' as const,
+    dir: 'ltr' as 'ltr' | 'rtl',
   },
   common: {
     appName: 'Trumocracy',
@@ -224,4 +224,25 @@ export const en = {
   },
 };
 
-export type Messages = typeof en;
+/**
+ * Widen the literal types `typeof en` infers.
+ *
+ * Without this, `Messages` is a type only the English file can satisfy: TypeScript infers
+ * every string as its own literal, so `ar.ts` fails to typecheck for the crime of being in
+ * Arabic. Widening leaf strings — while keeping the *shape*, the function signatures and
+ * the `dir` union intact — gives us what we actually want: every locale must supply exactly
+ * the same keys with the same argument lists, and may of course say different words.
+ */
+type Widen<T> = T extends 'ltr' | 'rtl'
+  ? 'ltr' | 'rtl'
+  : T extends string
+    ? string
+    : T extends (...args: infer A) => infer R
+      ? (...args: A) => Widen<R>
+      : T extends readonly (infer U)[]
+        ? Widen<U>[]
+        : T extends object
+          ? { [K in keyof T]: Widen<T[K]> }
+          : T;
+
+export type Messages = Widen<typeof en>;

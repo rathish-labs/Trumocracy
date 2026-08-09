@@ -105,7 +105,7 @@ a core release** — record both. Release `0.1.0` is the Phase-1 walking skeleto
 | L2 (Base) sequencer healthy; L1 force-inclusion path reachable | verified within 1 h of the window | Chen Wei |
 | `PoseidonT3` library deployed and address recorded for linking | see §5 step 1 | Samuel Oyelaran |
 | Ceremony transcripts published, `zkeyHash` values computed and independently reproducible | **Phase 2+** — `N/A` for release 0.1.0 (mocks) | Rafael Duarte |
-| ≥2 personhood issuers registered, ≥1 non-state (`PersonhoodRegistry.issuerSetValid() == true`) | before any real enrolment | Marcus Adeyemi |
+| ≥2 personhood issuers registered, ≥1 non-state (`PersonhoodRegistry.issuerSetValid() == true`) — **seed 3, not 2** (see §5.2 issuer-removal warning) | before any real enrolment; `enrol()` **fails closed** on this invariant | Marcus Adeyemi |
 | ≥2 residency attesters per launch region | before any real residency issuance | Marcus Adeyemi |
 | ≥5 population sources registered per launch region | before any petition can activate | Yuki Sato |
 | Legal sign-off for the jurisdiction (`CON-005`, `NFR-015`) | per pilot jurisdiction | Sofia Marchetti |
@@ -119,7 +119,7 @@ a core release** — record both. Release `0.1.0` is the Phase-1 walking skeleto
 ### 3.1 The VEKTOR checklist, with its actual state on 2026-08-09
 
 - [ ] **RTM 0 gaps (Doc 08)** — **FAIL: `docs/08-traceability-matrix.md` does not exist.**
-- [ ] **All suites green; 0 Sev-1/2 (Doc 07)** — **FAIL: `docs/07-test-cases-suites.md` does not exist.** Contract and protocol suites exist in-repo but there is no result of record.
+- [ ] **All suites green; 0 Sev-1/2 (Doc 07)** — **FAIL: `docs/07-test-cases-suites.md` does not exist.** Contract and protocol suites exist in-repo and Doc 06 records a `UT-####` inventory, but there is no `TC-####` result of record.
 - [ ] Load test meets NFRs (`NFR-008`) — `N/A — not yet measured`
 - [ ] Security + a11y scans clean (`NFR-009`, `NFR-011`) — **FAIL: audits not started** (MS-04 contracting target 2026-10-15)
 - [ ] Dashboards + alerts live (Doc 11) — **FAIL: not yet built** (specified in Doc 11 §4)
@@ -131,9 +131,9 @@ a core release** — record both. Release `0.1.0` is the Phase-1 walking skeleto
 - [ ] Six ceremony transcripts, ≥500 contributors each, `zkeyHash` frozen — **FAIL**
 - [ ] MACI 5-of-7 committee constituted and DKG rehearsed (`ADR-006`, MS-12) — **FAIL**
 - [ ] Legal sign-off per pilot jurisdiction (`NFR-015`, `CON-005`) — **FAIL**
-- [ ] Passing `document-review` report for each major doc — **FAIL: `artifacts/reviews/` is empty**
+- [ ] Passing `document-review` report for each major doc — **FAIL: only Doc 01 cycle 1 exists in `artifacts/reviews/`**
 - [ ] **Deployment-safety gate green** (§3.2) — **cannot pass by construction in Phase 1: the registry is wired to `MockVerifier`**
-- [ ] Open Must-blocking code defects = 0 — **FAIL: Doc 09 `REL-LIM-03`, `REL-LIM-04`, `REL-LIM-07`, `REL-LIM-12` open**
+- [ ] Open Must-blocking code defects = 0 — **FAIL: Doc 09 `REL-LIM-03`, `REL-LIM-12`, `REL-LIM-15`, `REL-LIM-16` open.** (`REL-LIM-04` and `REL-LIM-07` were fixed in the current drop and re-verified against source on 2026-08-09.)
 
 > **Rule.** If any box above is unchecked, the deployment is **not started** and the sre emits
 > `<missing_information>` naming the blocker, routing it back through the project-manager. The sre
@@ -370,13 +370,22 @@ timelock RegionRegistry.authoriseAttester $(regionId IN/KA/BLR) $(cast keccak ci
 # the contract does not enforce a minimum.
 ```
 
-> **⚠ `issueResidency` does not authenticate its caller.** `RegionRegistry.issueResidency` checks
-> that `attesterId` is authorised and active but never checks `msg.sender`
-> (`RegionRegistry.sol:169`). Until fixed, **any address can insert residency leaves under any
-> authorised attester's identity**, inflating the verified-resident term of the petition threshold.
-> This is Doc 09 `REL-LIM-03` / `REF-02` and is a **hard blocker for any deployment carrying real
-> political consequence.** Watch `ResidencyIssued` volume per attester (Doc 11 §5, PB-ATTEST) as the
-> only compensating control available today.
+> **⚠ `issueResidency` does not authenticate its caller — STILL OPEN as of 2026-08-09.**
+> `RegionRegistry.issueResidency` checks that `attesterId` is authorised and active but never checks
+> `msg.sender` (`RegionRegistry.sol:169-181`). **Any address can insert residency leaves under any
+> authorised attester's identity**, inflating the verified-resident term of the petition threshold
+> and manufacturing endorsement eligibility. This is Doc 09 `REL-LIM-03` / `REF-02` and is a **hard
+> blocker for any deployment carrying real political consequence.** Two sibling defects of the same
+> class — an unpermissioned `spendNullifier` and flag-gated voting — were fixed in the current drop
+> (Doc 06 §5); **this one was not.** Watch `ResidencyIssued` volume per attester (Doc 11 §5,
+> PB-ATTEST) as the only compensating control available today, and note it is detection *after* the
+> fact, not prevention.
+
+> **⚠ Issuer removal is a global lever.** `PersonhoodRegistry.enrol` now fails closed on
+> `issuerSetValid()` (`PersonhoodRegistry.sol:209`). Deactivating a compromised issuer that tips a
+> region below "≥2 active, ≥1 non-state" halts **all** enrolment network-wide, and adding a
+> replacement takes **30 days**. Seed **three** issuers per launch region, not two, so the
+> containment action in Doc 11 PB-ISSUER has headroom (Doc 09 `REL-LIM-16` / `REF-09`).
 
 ### 5.3 ⭐ Population-oracle bootstrap
 
@@ -626,18 +635,26 @@ T+00:00  DECLARE. On-call SRE declares rollback in the incident channel. No deba
          * DOES NOT stop an open ballot from closing on schedule -- BUT SEE THE WARNING BELOW.
          Verify: cast call $FEATURE_FLAGS "isEnabled(bytes32)(bool)" $(cast keccak <flag>) == false
 
-    !! WARNING -- disabling `party_governance` DISENFRANCHISES OPEN BALLOTS.
-       Governor.vote calls flags.requireEnabled(FLAG_GOVERNANCE) on EVERY ballot
-       (Governor.sol:262) and FeatureFlags.disable has no open-ballot check.
-       NFR-020 requires that a flag governing an OPEN ballot MUST NOT be changeable while
-       that ballot is open -- the code does not enforce this (Doc 09 REL-LIM-07 / REF-01).
-       PROCEDURE UNTIL FIXED: before disabling `party_governance`, query open proposals
-       (state == Voting) across all parties. If ANY ballot is open, disabling it requires an
-       explicit, recorded decision by the SRE (A) with the PO (Priya Raghunathan) consulted,
-       and a public notice naming every affected ballot. Prefer reverting the client bundle
-       instead, which removes the surface without disenfranchising direct callers.
-       This is an operational control standing in for a missing code control. It is a
-       Gate-2 blocker, not an acceptable steady state.
+    OK -- open ballots are SAFE from `party_governance`. `vote`, `finalize` and `execute`
+       are deliberately NOT flag-gated (Governor.sol:262, explicit NOTE); only `propose` is.
+       Flags gate STARTING a capability, never COMPLETING one already under way. A ballot in
+       its window runs to its close and executes regardless of the flag. This is the design
+       principle -- verified against source 2026-08-09.
+
+    !! WARNING -- disabling `petitions` STRANDS SUCCESSFUL PETITIONS.
+       PartyRegistry.activate still calls flags.requireEnabled(FLAG_PETITIONS)
+       (PartyRegistry.sol:241). A petition that has ALREADY MET ITS THRESHOLD cannot be
+       activated while the flag is off, and re-enabling takes 30 DAYS through the timelock.
+       The same principle the voting path now honours is violated one step later
+       (Doc 09 REL-LIM-15 / REF-08).
+       PROCEDURE UNTIL FIXED: before disabling `petitions`, enumerate petitions where
+       endorsements >= requiredEndorsements and state == Gathering. If ANY exists, disabling
+       requires an explicit, recorded decision by the SRE (A) with the PO (Priya Raghunathan)
+       consulted, plus a public notice naming every stranded petition and the 30-day
+       re-enable path. Prefer reverting the client bundle, which removes the surface without
+       stranding anyone -- `activate` is permissionless, so a stranded petition's supporters
+       cannot route around the flag themselves.
+       This is an operational control standing in for a missing code control.
 
 (b) T+02:00  REVERT THE CLIENT BUNDLE
          1. Identify the last-known-good CID:      cat deploy/CID_HISTORY | tail -2
