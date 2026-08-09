@@ -3,9 +3,8 @@
 ```
 Status:        Accepted
 Date:          2026-08-08
-Owner:         Priya Raghunathan (Principal Architect)
-Traces:        BR-TRANSPARENCY, FR-MANIFESTO-*, NFR-COST-01, NFR-CENSOR-01, NFR-PRIV-03,
-               RISK-STATE, RISK-DATALOSS
+Owner:         Ravi Deshmukh (Principal Architect)
+Traces:        BR-005, FR-046..FR-048, NFR-005, NFR-014, NFR-010, RISK-07, RISK-09
 ```
 
 ## Context
@@ -13,7 +12,7 @@ Traces:        BR-TRANSPARENCY, FR-MANIFESTO-*, NFR-COST-01, NFR-CENSOR-01, NFR-
 A party vision covering eight pillars is a document of tens to hundreds of kilobytes, revised
 repeatedly, and it must be (a) permanently available, (b) provably unmodified after publication,
 (c) censorship-resistant, and (d) cheap. Storing it on-chain would cost dollars per revision and
-violate NFR-COST-01. Storing it on our servers would make us the censor.
+violate NFR-005. Storing it on our servers would make us the censor.
 
 ## Decision
 
@@ -32,7 +31,7 @@ prove it is the original. Nothing about availability depends on our goodwill.
 **Immutable version history.** Every manifesto revision appends to a per-party
 `ManifestoVersion[]` with `(cid, contentHash, author, timestamp, changeSummary)`. Old versions are
 never removed. A party that quietly rewrote its promises after an election is permanently visible —
-this is the mechanical basis for the "dynamic accountability" requirement (BR-ACCOUNT), and it is
+this is the mechanical basis for the "dynamic accountability" requirement (BR-005), and it is
 why the diff view is a first-class UI surface (SCR-MANIFESTO-DIFF), not a developer feature.
 
 **The hard rule: no personal data, at any tier, ever.** Not encrypted, not hashed, not "pseudonymous

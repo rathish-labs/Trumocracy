@@ -3,8 +3,8 @@
 ```
 Status:        Accepted
 Date:          2026-08-08
-Owner:         Priya Raghunathan (Principal Architect)
-Traces:        NFR-UX-01, NFR-A11Y-01, NFR-CENSOR-01, NFR-PERF-01, RISK-CLIENT, RISK-STATE
+Owner:         Ravi Deshmukh (Principal Architect)
+Traces:        NFR-022, NFR-011, NFR-014, NFR-006, RISK-08, RISK-07
 ```
 
 ## Context

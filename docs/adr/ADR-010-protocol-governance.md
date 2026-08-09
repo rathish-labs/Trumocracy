@@ -3,8 +3,8 @@
 ```
 Status:        Accepted
 Date:          2026-08-08
-Owner:         Priya Raghunathan (Principal Architect)
-Traces:        CON-NO-OPERATOR, NFR-STABILITY-01, NFR-EXIT-01, RISK-UPGRADE, RISK-STATE
+Owner:         Ravi Deshmukh (Principal Architect)
+Traces:        CON-003, NFR-017, NFR-018, RISK-16, RISK-07
 ```
 
 ## Context
@@ -34,7 +34,7 @@ Phase 4; the sunset of any deployment key is itself a timelocked, published, irr
 transaction (`renounceProtocolKeys()`), and the roadmap treats it as a Gate-2-equivalent milestone
 rather than an aspiration.
 
-**Guaranteed exit (NFR-EXIT-01).** Every party can export its full state — charter, manifesto
+**Guaranteed exit (NFR-018).** Every party can export its full state — charter, manifesto
 history, member commitment tree, vote history, treasury record — as a signed, verifiable archive at
 any time, with **no permission from anyone**, and re-instantiate it on another deployment or another
 chain. Exit is tested in CI as a first-class flow (TC-EXIT-*), because an exit path that has never

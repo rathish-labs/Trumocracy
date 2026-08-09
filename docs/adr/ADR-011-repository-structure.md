@@ -3,8 +3,8 @@
 ```
 Status:        Accepted
 Date:          2026-08-08
-Owner:         Priya Raghunathan (Principal Architect)
-Traces:        SDD §9, CON-OPENSOURCE, NFR-AUDIT-01
+Owner:         Ravi Deshmukh (Principal Architect)
+Traces:        SDD §9, CON-004, NFR-021
 ```
 
 ## Context

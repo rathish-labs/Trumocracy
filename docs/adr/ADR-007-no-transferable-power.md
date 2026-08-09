@@ -3,9 +3,8 @@
 ```
 Status:        Accepted
 Date:          2026-08-08
-Owner:         Priya Raghunathan (Principal Architect)
-Traces:        BR-EQUAL, BR-ANTICORRUPT, FR-MEM-*, FR-TREAS-*, NFR-SYBIL-01, NFR-PLUTO-01,
-               RISK-FLASHGOV, RISK-PLUTO, RISK-BRIBE
+Owner:         Ravi Deshmukh (Principal Architect)
+Traces:        BR-003, BR-010, FR-020..FR-023, FR-049..FR-052, NFR-004, RISK-03, RISK-02
 ```
 
 ## Context

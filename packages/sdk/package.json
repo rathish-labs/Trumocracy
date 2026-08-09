@@ -1,0 +1,24 @@
+{
+  "name": "@trumocracy/sdk",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Client SDK for Trumocracy: identity derivation, scope-bound nullifiers, zkey-pinned proving, multi-transport submission and a chain-verified read model.",
+  "license": "AGPL-3.0-or-later",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "scripts": {
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@trumocracy/protocol": "*",
+    "@zk-kit/lean-imt": "^2.2.5",
+    "poseidon-lite": "^0.3.0",
+    "viem": "^2.40.0"
+  },
+  "devDependencies": {
+    "vitest": "^3.2.4"
+  }
+}

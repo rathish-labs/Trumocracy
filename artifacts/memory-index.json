@@ -1,1 +1,213 @@
-{}
+{
+  "notes": [
+    {
+      "id": "product-owner-2026-08-08T1610",
+      "role": "product-owner",
+      "file": "artifacts/product-owner-2026-08-08T1610.md",
+      "timestamp": "2026-08-08T16:10:00Z",
+      "phase": "Vision · Define",
+      "product": "Trumocracy",
+      "summary": "Turned the raw Trumocracy bet into an approvable direction: PR-FAQ (Doc 01), requirements (Doc 02) and backlog (Doc 05) at v1.0.0, Status In Review. Stopped for Gate 1. No design, no code.",
+      "artifacts_written": [
+        "docs/01-press-release-prfaq.md",
+        "docs/02-requirements-srs.md",
+        "docs/05-product-backlog.md"
+      ],
+      "ids_touched": {
+        "BR": "BR-001..BR-012",
+        "FR": "FR-001..FR-061",
+        "NFR": "NFR-001..NFR-026",
+        "CON": "CON-001..CON-012",
+        "RISK": "RISK-01..RISK-16",
+        "EP": "EP-01..EP-10",
+        "FE": "FE-001..FE-028",
+        "US": "US-0001..US-0070",
+        "SCR": "SCR-01..SCR-20 (provisional; architect owns final assignment in Doc 03)"
+      },
+      "counts": {
+        "BR": 12,
+        "FR": 61,
+        "FR_must": 42,
+        "FR_should": 16,
+        "FR_could": 3,
+        "NFR": 26,
+        "CON": 12,
+        "RISK": 16,
+        "tradeoffs": 6,
+        "open_issues": 11,
+        "EP": 10,
+        "FE": 28,
+        "US": 70
+      },
+      "key_decisions": [
+        "Must set is 42 FRs (20 walking-skeleton + 22 guardrail), justified in Doc 02 s11; only coherent deferral offered is recall FR-042/043/045 (OI-02).",
+        "Deliberate disclosure asymmetry: members anonymous always; candidates public by explicit informed consent (TD-02).",
+        "Erasure vs immutability resolved by holding no personal data at all (TD-03, CON-008, NFR-015) - recorded as a legal posture, not a certainty.",
+        "Receipt-freeness chosen over individual vote verification (TD-06).",
+        "No operator override anywhere (CON-003, FR-056, TD-04); only jurisdiction-scoped display filtering, publicly logged.",
+        "CON-001 absolute: organises parties, never runs binding state elections."
+      ],
+      "open_items": [
+        "OI-01 threshold calibration method (Gate 1)",
+        "OI-02 accept 42-FR Must set or defer recall (Gate 1)",
+        "OI-03 acceptable enrolment exclusion rate + non-document attestation path (Gate 1)",
+        "OI-04 the three pilot jurisdictions (Gate 1)",
+        "OI-05 NFR-002 k>=1000 anonymity floor conflicts with BR-004 ward-level representation (Gate 1)",
+        "Doc 05 s12 declares four non-Must coverage gaps: FR-005, FR-049/050/052, FR-053 - stories owed by product-owner"
+      ],
+      "gate": "Gate 1 - readiness summary written in this note; awaiting project-manager packet and human approval",
+      "refine_intake": "not invoked - docs/refine-log.md contains no REF-## entries; no requirement carries Source = REF-## at v1.0.0",
+      "next_role": "project-manager (Doc 13 + Gate-1 packet); neutral role to run document-review skill in business mode over Docs 01/02/05 v1.0.0"
+    },
+    {
+      "id": "project-manager-2026-08-09T0100",
+      "role": "project-manager",
+      "file": "artifacts/project-manager-2026-08-09T0100.md",
+      "timestamp": "2026-08-09T01:00:00Z",
+      "phase": "Define",
+      "product": "Trumocracy",
+      "summary": "Wrote the Project Plan (Doc 13, PLAN-TRUMOCRACY v1.0.0, Status In Review): outcome-anchored, four ADR-derived phases, the two gates only, milestones MS-01..MS-15 with dates, critical path through the cryptography programme, the living risk register of record (RISK-01..RISK-16 carried across plus new RISK-17..RISK-21), canonical RACI, resourcing against CON-007, rollout/rollback, a Gate-1 readiness packet and kill criteria. Stopped at Gate 1 - the human approver decides; the PM does not approve gates. No code, no design, no requirements authored.",
+      "artifacts_written": [
+        "docs/13-project-plan.md"
+      ],
+      "ids_touched": {
+        "created": "MS-01..MS-15, WS-01..WS-13, DEP-01..DEP-10, A-PLAN-01..A-PLAN-02, O-1..O-11, KC-1..KC-7, KC-P1..KC-P3, E-01..E-02, RISK-17..RISK-21",
+        "referenced_not_modified": "BR-001..BR-012, FR-001..FR-061, NFR-001..NFR-026, CON-001..CON-012, RISK-01..RISK-16, TD-01..TD-06, OI-01..OI-11, A-01..A-06, EP-01..EP-10, NF-01..NF-08, ADR-001..ADR-014",
+        "not_touched": "no DES, no US, no UT, no TC, no REF, no SCR assignment"
+      },
+      "key_decisions": [
+        "Gate 2 re-based from CON-007's 2027-02-15 to an evidence-based 2027-05-14 (+13 weeks): six phase-2 ceremonies at >=500 contributors each, two parallel independent audits, 5 weeks remediation to zero critical/high, and a 30-day on-chain registry timelock are externally paced and do not compress with effort.",
+        "Phase 3 is the launch, not Phase 2: a production rollout with MACI OFF is voting without coercion resistance and violates Must requirements BR-011/NFR-003. Phase 2 is a dark mainnet phase; Gate 2 sits immediately before the Phase-3 rollout.",
+        "Budget costed at USD 4.55M against the USD 4.2M appetite: -USD 0.35M with zero contingency (RISK-19). Three levers presented; L2 recommended (launch in 1 pilot, roll the other 2 post-launch, ~USD 4.13M). L3 (hold the date, cut scope) refused as non-viable.",
+        "Cutting features does not buy time - recall deferral (OI-02) frees ~3 weeks on the feature path, which is not the critical path.",
+        "Added RISK-17..RISK-21 (delivery/schedule risks) to the register of record; RISK-01..RISK-16 carried across unchanged in meaning with exposure = L x I and the ADR carrying each mitigation named.",
+        "Named three previously unnamed role holders (PM Ana-Maria Petrescu, Eng Lead Samuel Oyelaran, Test Lead Ji-woo Park); all other names reused verbatim from Doc 02 s2.7. 15 + 3 = exactly the 18 of CON-007, which surfaced a ~4.5 FTE structural engineering gap.",
+        "OI-05 recorded as resolved in design by ADR-004 s2 (escalate an action's anonymity scope to the nearest ancestor region meeting k>=1000) - a design answer needing product confirmation, not a requirements change. PM recommendation: confirm."
+      ],
+      "open_items": [
+        "BLOCKING: artifacts/reviews/ is empty - Gate 1 cannot be presented until passing document-review reports exist for Docs 01, 02, 05 and 13 at their current versions (business mode, neutral non-owning reviewer, >=95% and zero critical/high/medium). Doc 13 must be reviewed by a role that is NOT the project-manager.",
+        "E-01 governance exception: ADR-001..ADR-014 are Accepted and dated 2026-08-08, before the Gate-1 target of 2026-08-22, contrary to 'nothing is designed until Gate 1 clears'. Needs a recorded human decision.",
+        "E-02 governance exception / RISK-21 / DEP-09: Priya Raghunathan signs Doc 02 as Product Owner and all 14 ADRs as Principal Architect - a RACI role-separation defect. Needs a recorded human decision.",
+        "Appetite variance decision required at Gate 1 (date / budget / pilot count) - PM recommends lever L2.",
+        "MS-04 (2026-10-15, both audit firms contracted) is the first irreversible date after Gate 1; missing it costs ~10 weeks.",
+        "Start weekly artifacts/status/STATUS-WBR-<YYYY-Www>.md; daily reports on demand only."
+      ],
+      "gate": "Gate 1 - readiness packet assembled in Doc 13 s13 (what is ready, the five OI decisions, the appetite variance with three costed levers, the two governance exceptions, go/no-go). Recommendation: GO - conditional. PM is R, PO is A; the human approver decides. STOPPED.",
+      "milestones": {
+        "MS-01 Gate 1 - direction approved": "2026-08-22",
+        "MS-02 design baselined": "2026-09-11",
+        "MS-03 repo scaffolded, coding starts": "2026-09-14",
+        "MS-04 audit firms contracted, ceremony programme opened": "2026-10-15",
+        "MS-05 Phase-1 walking skeleton green on testnet": "2026-11-27",
+        "MS-06 circuit specification freeze": "2026-12-11",
+        "MS-07 >=500 contributors pledged per circuit": "2027-01-08",
+        "MS-08 six phase-2 ceremonies complete": "2027-03-05",
+        "MS-09 both independent audits reported": "2027-03-12",
+        "MS-10 audit remediation closed, zero critical/high": "2027-04-16",
+        "MS-11 issuer + attester registries live": "2027-04-19",
+        "MS-12 MACI 5-of-7 committee constituted, DKG rehearsed": "2027-05-07",
+        "MS-13 Gate 2 - launch readiness": "2027-05-14",
+        "MS-14 staged rollout 100% in lead pilot": "2027-07-09",
+        "MS-15 Phase 4 entry review": "2027-09-03"
+      },
+      "top_risks_by_exposure": [
+        "RISK-01 Sybil inflation of a threshold (20)",
+        "RISK-02 coercion and vote-buying (20)",
+        "RISK-04 mob capture of a founding charter (20)",
+        "RISK-06 deanonymisation via correlation or timing (20)",
+        "RISK-20 MACI Phase-3 complexity underestimated (20, new)"
+      ],
+      "next_role": "a neutral (non-project-manager) role to run the document-review skill in business mode over docs/13-project-plan.md v1.0.0 (and Docs 01/02/05 v1.0.0); then present the Gate-1 packet to the human approver"
+    },
+    {
+      "id": "architect-teststrategy-2026-08-09T0100",
+      "role": "architect",
+      "file": "artifacts/architect-teststrategy-2026-08-09T0100.md",
+      "timestamp": "2026-08-09T01:00:00Z",
+      "phase": "Design",
+      "product": "Trumocracy",
+      "scope": "Doc 04 (test strategy) ONLY. Doc 03 SDD and docs/adr/ were authored concurrently by the Principal Architect and were NOT touched in this session. No product code written or edited.",
+      "summary": "Wrote the Test Strategy & Master Test Plan (Doc 04, MTP-TRUMOCRACY v1.0.0, Status In Review), grounded in Doc 02, Doc 05, ADR-001..ADR-014 and the code that actually exists (tools/evm-harness, tools/dep-guard, packages/protocol + its 82 green unit tests, packages/contracts/src). Seven test levels mapped to the ADR-011 topology; differential testing (protocol reference vs deployed contract) named the highest-value suite; a mandatory ZK doctrine where positive tests count for nothing; capability-absence testing as a first-class technique with six stated limits; 16 adversarial suites, one per RISK; a verification method for all 26 NFRs; and 18 OPEN findings of which 7 are Gate-2 blocking.",
+      "artifacts_written": [
+        "docs/04-test-strategy-master-plan.md"
+      ],
+      "artifacts_read": [
+        "CLAUDE.md",
+        "docs/02-requirements-srs.md",
+        "docs/05-product-backlog.md",
+        "docs/templates/04-test-strategy-master-plan.template.md",
+        "docs/adr/ADR-001-execution-layer.md .. docs/adr/ADR-014-offchain-services.md",
+        "tools/evm-harness/src/index.mjs",
+        "tools/dep-guard/check.mjs",
+        "packages/protocol/src/*.js",
+        "packages/protocol/test/*.test.js",
+        "packages/contracts/src/core/*.sol",
+        "packages/contracts/src/interfaces/IProofVerifier.sol",
+        "package.json",
+        "artifacts/product-owner-2026-08-08T1610.md"
+      ],
+      "ids_touched": {
+        "BR": "BR-001..BR-012 (covered)",
+        "FR": "FR-001..FR-061 (every FR has a named suite)",
+        "NFR": "NFR-001..NFR-026 (every NFR has method / instrument / environment / threshold / owner)",
+        "CON": "CON-001..CON-012 (each mapped to a suite)",
+        "RISK": "RISK-01..RISK-16 (one dedicated adversarial suite each)",
+        "EP": "EP-01..EP-10",
+        "FE": "FE-001..FE-028",
+        "US": "US-0001..US-0070",
+        "NF": "NF-01..NF-08",
+        "SCR": "SCR-01..SCR-20",
+        "ADR": "ADR-001..ADR-014 (read and referenced; not written)",
+        "DES": "DES-036, DES-041, DES-052, DES-063 referenced from the ADRs only - no DES minted here",
+        "TS": "TS-FUNC, TS-EDGE, TS-DIFF, TS-ZK, TS-ABSENCE, TS-ABI, TS-SEC, TS-PRIV, TS-DATA, TS-PERF, TS-LOAD, TS-COST, TS-A11Y, TS-I18N, TS-COMPAT, TS-RES, TS-EXIT, TS-UPG, TS-SMOKE, TS-EXPL, TS-UAT, TS-ADV-01..TS-ADV-16",
+        "OPEN": "OPEN-01..OPEN-18 (findings raised by this plan)",
+        "TC": "TC-0001..TC-3299 ranges RESERVED, not assigned (tester owns Doc 07)",
+        "UT": "UT-0001..UT-3999 ranges reserved; UT-0001..UT-0040 already in use in packages/protocol/test/"
+      },
+      "counts": {
+        "test_levels": 7,
+        "suites": 37,
+        "adversarial_suites": 16,
+        "nfrs_with_verification_method": 26,
+        "open_findings": 18,
+        "gate2_blocking_findings": 7
+      },
+      "key_decisions": [
+        "No Foundry/Hardhat/RPC: tools/evm-harness (solc-js + EthereumJS) is the contract test runner, because offline byte-identical reproduction on a fresh clone is what makes results credible to an outside auditor.",
+        "TS-DIFF (packages/protocol reference vs deployed contract) is the highest-value suite; zero divergences is merge-blocking and any divergence is automatically Sev-1.",
+        "Harness discipline as flake control: fresh Chain per test (do not rely on snapshot/revertTo); assert on timestamp not blockNumber (warp approximates blocks as seconds/2); harness gasUsed is execution gas only, so it is a regression detector and NOT a price - real cost needs calldata + blob-fee model + testnet.",
+        "The harness runs Mainnet/Cancun, so ALL L2 behaviour (force-inclusion, sequencer, L1 fee) is testnet-or-above; a harness-only suite may not gate an L2-dependent promotion.",
+        "Zero flake tolerance and no retries at L0-L3 (deterministic by construction); max one logged retry at L4-L6.",
+        "Coverage: 100% line+branch on packages/protocol and on the immutable core, justified by ADR-010 (core unfixable in place) and by protocol being the TS-DIFF oracle. Circuits are NOT measured by line coverage - the metric is 100% claims.json negative-test coverage plus a clean circomspect.",
+        "Quarterly seeded-defect drill (20 defects, >=90% caught) replaces a mutation-testing tool; no such tool exists in the repo and none was invented.",
+        "ZK doctrine: positive tests prove nothing; Z2 negative/malformed-witness tests are mandatory and CI fails when a claim in claims.json has no negative test; circomspect findings >= Warning fail the build; witness generation is differentially tested against packages/protocol; Gate-2 rule that circuit results MUST NOT be presented as evidence of soundness.",
+        "Capability-absence testing is first-class: ABI allowlist snapshot (primary), denylist + PUSH4 bytecode selector scan + DELEGATECALL/SELFDESTRUCT opcode scan, storage-layout snapshot, negative-authority matrix, human review checklist - with six stated limits of the technique.",
+        "Mock verifiers (MockVerifierAlwaysTrue) are banned from any suite claiming a ZK property.",
+        "Guardrail escalation rule: any defect against a guardrail FR or a capability-absence assertion is automatically Sev-1 regardless of user impact, because TD-04 leaves no override to fix the consequence.",
+        "Test data: no real personal data in ANY environment including a developer laptop (CON-002), enforced by three build-failing CI scanners with no bypass; production notification/support stores may never be copied downward."
+      ],
+      "open_items": [
+        "OPEN-01 (Gate-2 blocking) MACI_VOTING off in staging/prod and deferred to Phase 3 by ADR-006, but FR-031/FR-032/NFR-003 receipt-freeness are Must guardrails - not delivered at v1. Independently reached by the project-manager in Doc 13.",
+        "OPEN-02 (Gate-2 blocking) FR-004's 50%-per-region attestor share cap has no implementing mechanism; PersonhoodRegistry has a per-epoch count cap and no region dimension.",
+        "OPEN-03 (Gate-2 blocking) FeatureFlags.disable() is unconditional and unilateral; nothing prevents disabling a flag governing an open ballot or blocking execution of a passed proposal - which NFR-020 requires and CON-003 forbids having.",
+        "OPEN-04 (Gate-2 blocking) ADR-003 scopes the issuer nullifier per issuer under 1-of-N acceptance, so one human with two accepted credentials enrols twice and votes twice, contradicting FR-001/BR-006.",
+        "OPEN-05 (Gate-2 blocking) PersonhoodRegistry.spendNullifier is external with no caller restriction - any address can burn any nullifier and deny a citizen an action.",
+        "OPEN-06 (Gate-2 blocking) issuerSetValid() is advisory; enrol() never consults it, so a region can fall to a single state issuer and keep enrolling.",
+        "OPEN-07 FR-011's minimum-substance standard is a 280-character length floor, not a substance check (OI-09 open).",
+        "OPEN-08 FR-002/NFR-001 'better than chance' is not falsifiable as written; needs an adversary game with epsilon and sample size.",
+        "OPEN-09 No named QA Lead in Doc 02's roster; Doc 04 ownership resolves to the architect per CLAUDE.md. Doc 13 subsequently names Ji-woo Park as Test Lead - reconcile at Doc 04 v1.0.1.",
+        "OPEN-10 OI-05: Doc 13 records it as design-resolved by ADR-004 s2 (escalate to nearest ancestor meeting k>=1000). That resolves PUBLICATION scope; the open point is that escalation must never apply to ELIGIBILITY, or a ward election's electorate silently changes. TS-ADV-06/A-06.10 tests that boundary.",
+        "OPEN-11 (Gate-2 blocking) NFR-025 demands alternative inclusion <= 60 min; ADR-001 states L1 force-inclusion is 12-24 h. Irreconcilable as written.",
+        "OPEN-12 RegionRegistry.submitPopulation is onlyTimelock, so 'independent' population sources all arrive through one authority.",
+        "OPEN-13 OI-10 collusion bound unset, so NFR-001 has no pass threshold.",
+        "OPEN-14 NFR-004's 0.1% duplicate rate is not internally measurable by design; needs an out-of-band consented audited sample with a stated confidence interval.",
+        "OPEN-15 NFR-005's median cost per citizen governance action has no enumerated denominator.",
+        "OPEN-16 ADR-001 and ADR-002 both cite a non-existent 'ADR-017'; the sponsorship policy lives in ADR-014.",
+        "OPEN-17 packages/contracts has no package.json/test workspace although root package.json declares test:contracts - npm run verify silently skips all contract tests today.",
+        "OPEN-18 Doc 04 s16 still carries CON-007's Gate-2 date of 2027-02-15; Doc 13 re-bases Gate 2 to 2027-05-14 (MS-13) and is the schedule of record. Doc 04 s16 must be re-based at v1.0.1. Ordering and exit signals are unaffected."
+      ],
+      "gate": "Gate 1 treated as approved by the requesting human's build-end-to-end directive. Doc 04 is a Design-phase artifact drafted early and is APPROVED AT GATE 2 (exit) per the template, so no gate was passed or claimed here.",
+      "next_role": "document-review skill in technical mode by a neutral (non-architect) role over docs/04-test-strategy-master-plan.md v1.0.0 -> artifacts/reviews/04-test-strategy-master-plan-v1.0.0-technical-cycle1.md. Then engineer (Doc 06), who must build the packages/contracts test workspace (OPEN-17), add storageLayout to the evm-harness outputSelection (hard dependency of TS-ABSENCE s6.3), and stand up circom/snarkjs/circomspect. Then tester (Docs 07/08). OPEN-01..06 and OPEN-11 should be routed to the Principal Architect / product-owner before coding starts on the affected areas."
+    }
+  ]
+}

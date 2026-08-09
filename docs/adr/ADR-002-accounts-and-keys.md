@@ -3,9 +3,8 @@
 ```
 Status:        Accepted
 Date:          2026-08-08
-Owner:         Priya Raghunathan (Principal Architect)
-Traces:        NFR-UX-01 (usable by a non-technical citizen), NFR-KEY-01 (key loss at population
-               scale), NFR-COST-01, FR-ACCT-*, RISK-KEYLOSS, RISK-COERCE
+Owner:         Ravi Deshmukh (Principal Architect)
+Traces:        NFR-022, NFR-016, NFR-005, FR-058, FR-059, RISK-11, RISK-02
 ```
 
 ## Context
@@ -46,7 +45,7 @@ We need self-custody **without** the seed phrase, and recovery **without** a rec
    is the single most important invariant in the account layer.
 
 **Gas:** citizens hold no gas token. A **paymaster** sponsors UserOperations for whitelisted
-protocol actions, rate-limited per personhood nullifier (ADR-017). The account also supports
+protocol actions, rate-limited per personhood nullifier (ADR-014). The account also supports
 self-payment so the system degrades to "pay your own fee" rather than "you cannot participate" if
 sponsorship is exhausted.
 

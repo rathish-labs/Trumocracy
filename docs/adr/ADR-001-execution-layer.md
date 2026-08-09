@@ -3,10 +3,9 @@
 ```
 Status:        Accepted
 Date:          2026-08-08
-Owner:         Priya Raghunathan (Principal Architect)
+Owner:         Ravi Deshmukh (Principal Architect)
 Supersedes:    —
-Traces:        NFR-COST-01 (median citizen action < USD 0.01), NFR-CENSOR-01, NFR-AVAIL-01,
-               CON-NO-OPERATOR, RISK-SEQ, RISK-STATE
+Traces:        NFR-005, NFR-014, NFR-007, CON-003, RISK-09, RISK-07
 ```
 
 ## Context
@@ -18,7 +17,7 @@ Trumocracy needs a public, verifiable execution environment where:
    a cent, the platform is a toy for the wealthy — which is precisely the failure mode the product
    exists to eliminate. Cost is not a performance concern here; it is a **legitimacy** concern.
 2. **No single operator may be able to stop the system**, alter results, or be compelled to. A
-   government that dislikes an emerging party is an in-scope adversary (RISK-STATE).
+   government that dislikes an emerging party is an in-scope adversary (RISK-07).
 3. **Zero-knowledge proof verification must be cheap on-chain.** Every privacy guarantee in this
    design terminates in an on-chain SNARK verification. If pairing checks are expensive or
    unavailable, the whole privacy architecture collapses into "trust the server".
@@ -29,7 +28,7 @@ Trumocracy needs a public, verifiable execution environment where:
 
 | Option | Cost/action | ZK verify | Neutrality | Maturity | Verdict |
 |---|---|---|---|---|---|
-| Ethereum L1 | $0.50 – $20 | precompiled, cheap in gas *units*, ruinous in USD | highest | highest | **Rejected** — violates NFR-COST-01 by 2–3 orders of magnitude |
+| Ethereum L1 | $0.50 – $20 | precompiled, cheap in gas *units*, ruinous in USD | highest | highest | **Rejected** — violates NFR-005 by 2–3 orders of magnitude |
 | **OP Stack L2 (shared: Base / OP Mainnet)** | **~$0.0001 – $0.002** | bn254 precompiles inherited from L1 | inherits Ethereum security; sequencer is a liveness-only trust | very high | **Accepted for v1** |
 | ZK-rollup L2 (zkSync, Linea, Scroll, Polygon zkEVM) | ~$0.001 – $0.01 | supported, but recursive-proof cost and non-standard precompile behaviour vary | inherits Ethereum | high | Rejected for v1 — EVM-equivalence caveats around precompiles and gas metering add ZK-on-ZK risk for no benefit we need today |
 | Solana | ~$0.0002 | no bn254 pairing precompile parity; alt_bn128 syscalls exist but the Groth16 tooling and audited verifier ecosystem is far thinner | single client history, validator concentration | high | Rejected — the ZK verifier ecosystem is the deciding factor, not throughput |
@@ -44,7 +43,7 @@ Trumocracy needs a public, verifiable execution environment where:
   go on-chain; documents go to content-addressed storage (ADR-009).
 - **Fee abstraction:** citizens never hold the gas token. All citizen-facing transactions are
   sponsored through an ERC-4337 paymaster (ADR-002), rate-limited per personhood nullifier
-  (ADR-017) so sponsorship cannot be drained by a Sybil flood.
+  (ADR-014) so sponsorship cannot be drained by a Sybil flood.
 - **Censorship escape hatch:** every state-changing citizen action MUST also be submittable through
   the L2's **L1 force-inclusion** path (`OptimismPortal.depositTransaction`). If the sequencer
   censors a party, its members can still act from L1 within the force-inclusion window. This is
@@ -66,7 +65,7 @@ Trumocracy needs a public, verifiable execution environment where:
 - **The sequencer is a liveness and ordering trust assumption.** A censoring sequencer can delay
   (not forge) actions. Mitigated by force-inclusion, but delay during a live vote is itself an
   attack. Mitigation: voting windows MUST be ≥ 72h so a force-inclusion round trip (typically
-  ~12–24h) cannot silently disenfranchise anyone (NFR-AVAIL-01, RISK-SEQ).
+  ~12–24h) cannot silently disenfranchise anyone (NFR-007, RISK-09).
 - **Blob-fee volatility** makes cost a *distribution*, not a constant. The treasury MUST hold a
   sponsorship buffer sized to 90 days at p95 fees, and the paymaster degrades to
   "user may self-pay" rather than failing closed (Doc 11 §runbook).

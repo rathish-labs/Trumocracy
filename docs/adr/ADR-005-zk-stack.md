@@ -3,8 +3,8 @@
 ```
 Status:        Accepted
 Date:          2026-08-08
-Owner:         Priya Raghunathan (Principal Architect)
-Traces:        NFR-PRIV-01, NFR-COST-01, NFR-PERF-01, FR-ID-*, FR-VOTE-*, RISK-CIRCUIT, RISK-SETUP
+Owner:         Ravi Deshmukh (Principal Architect)
+Traces:        NFR-001, NFR-005, NFR-006, FR-001..FR-005, FR-030..FR-035, RISK-10
 ```
 
 ## Context
@@ -13,7 +13,7 @@ Every privacy property in this system reduces to one on-chain question: *"is thi
 The proving system choice therefore drives (a) on-chain verification cost, which drives whether
 citizens can afford to participate; (b) client-side proving time, which drives whether a five-year-old
 Android phone can generate a proof before the user gives up; and (c) the trusted-setup posture, which
-is a live compromise risk (RISK-SETUP).
+is a live compromise risk (RISK-10).
 
 | System | On-chain verify | Setup | Client proving (mobile) | Tooling maturity |
 |---|---|---|---|---|

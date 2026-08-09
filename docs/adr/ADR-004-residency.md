@@ -3,9 +3,9 @@
 ```
 Status:        Accepted
 Date:          2026-08-08
-Owner:         Priya Raghunathan (Principal Architect)
-Traces:        BR-LOCAL, FR-REGION-*, FR-NOM-*, NFR-PRIV-01, NFR-PRIV-02, RISK-DEANON,
-               RISK-ORACLE, CON-NO-DOC-CUSTODY
+Owner:         Ravi Deshmukh (Principal Architect)
+Traces:        BR-004, FR-006..FR-009, FR-036..FR-038, NFR-001, NFR-002, RISK-06, RISK-12,
+               CON-002
 ```
 
 ## Context
@@ -21,7 +21,7 @@ individual you are, and without revealing your address to anyone, including us.*
 A second, less obvious problem: **the denominator**. "A petition succeeds at 2% support of the
 region" requires knowing the region's eligible population. That number is an oracle, and an oracle
 is an attack surface — inflate it and no petition ever succeeds; deflate it and a handful of
-accounts can charter a party (RISK-ORACLE).
+accounts can charter a party (RISK-12).
 
 ## Decision
 
@@ -57,7 +57,7 @@ publishes:       ZK proof + Nₐ + R + the root used
 
 The chain learns: *a valid resident of region R acted, once, in this scope.* It does not learn which
 one. The **anonymity set is every credentialed resident of R** — which is why the protocol enforces
-a **minimum anonymity-set size (`k ≥ 1000`, NFR-PRIV-02)** before a region's tree can be used for
+a **minimum anonymity-set size (`k ≥ 1000`, NFR-002)** before a region's tree can be used for
 any published action, and otherwise falls back to the parent region. A ward with 40 verified
 residents provides no anonymity, and pretending otherwise would be a lie that gets someone hurt.
 

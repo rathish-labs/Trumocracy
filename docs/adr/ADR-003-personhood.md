@@ -3,9 +3,8 @@
 ```
 Status:        Accepted
 Date:          2026-08-08
-Owner:         Priya Raghunathan (Principal Architect)
-Traces:        BR-IDENTITY, FR-ID-*, NFR-SYBIL-01, NFR-PRIV-01, CON-NO-DOC-CUSTODY,
-               RISK-SYBIL, RISK-IDP-SPOF, RISK-DEANON
+Owner:         Ravi Deshmukh (Principal Architect)
+Traces:        BR-006, FR-001..FR-005, NFR-004, NFR-001, CON-002, RISK-01, RISK-05, RISK-06
 ```
 
 ## Context
@@ -15,7 +14,7 @@ naive implementations all fail:
 
 - **Government ID upload → server checks it.** Creates a database of citizens' identity documents
   linked to their political affiliation. This is the single most dangerous artefact it is possible
-  to build. Categorically rejected (CON-NO-DOC-CUSTODY).
+  to build. Categorically rejected (CON-002).
 - **One biometric provider (iris/face) as the sole gate.** Creates a single company that decides who
   is a person. That is a gatekeeper — the exact thing we are removing — and a single point of
   compulsion, outage, and exclusion (people whose biometrics fail enrolment).
@@ -45,9 +44,28 @@ actionNullifier     Nₐ = Poseidon(s, actionScope)          — proves "this hu
 
 Two distinct nullifier layers, and the separation matters:
 
-- `Nᵢ` is computed **inside** the issuer's ZK circuit from the issuer's own identifier
-  (e.g. a passport's document hash, an Aadhaar hash, an orb iris code). It enforces *uniqueness at
-  enrolment* — one passport cannot enrol twice — without the protocol ever learning the identifier.
+- `Nᵢ` is computed **inside** the issuer's ZK circuit from the underlying identifier
+  (e.g. a passport's document hash, an Aadhaar hash, an orb iris code), scoped to an
+  **identifier namespace** rather than to the issuer. It enforces *uniqueness at enrolment* —
+  one passport cannot enrol twice — without the protocol ever learning the identifier.
+
+  **The namespace, not the issuer, is the deduplication key**, and this distinction is
+  load-bearing. Under 1-of-N acceptance, scoping the nullifier per *issuer* would let one
+  human enrol once with each accepted issuer and then vote once per enrolment — silently
+  converting "one person, one vote" into "one person, N votes". Every issuer that reads the
+  same underlying credential (three different vendors all reading the same ICAO e-passport)
+  therefore shares one `namespaceId`, so all three derive the *same* `Nᵢ` from the same
+  document and the second enrolment is refused on-chain.
+
+  **The residual, stated plainly:** namespaces cannot dedup *across* credential types. A
+  person holding both a passport and a social-graph credential can enrol twice. Nothing in
+  this design fixes that, because fixing it would require a common identifier across
+  unrelated issuers — which is exactly the linkable master identity the whole architecture
+  exists to avoid. It is bounded instead: tier-1 (social) credentials are capped at ≤5% of a
+  region's enrolments per epoch, are excluded by default from T2/T3 decisions, and a party
+  charter that cares can require a minimum tier for every action. A double-enrolled person
+  gets at most one extra vote in low-tier decisions, at the cost of obtaining and maintaining
+  two independent credentials — and gains nothing they could sell (ADR-007 §6).
 - `Nₐ` is computed from the citizen's own secret and the **action scope** (a petition ID, a proposal
   ID, an election ID). It enforces *one action per human per scope*, and because the scope changes,
   actions in different votes are **cryptographically unlinkable to each other**. A citizen who

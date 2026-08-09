@@ -18,7 +18,8 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
 /** name -> packages it may depend on (workspace-internal only; '*' = any external) */
 const ALLOWED = {
   '@trumocracy/protocol': [],
-  '@trumocracy/contracts': [],
+  // contracts depends on protocol for DIFFERENTIAL TESTS only (dev dependency).
+  '@trumocracy/contracts': ['@trumocracy/protocol'],
   '@trumocracy/circuits': [],
   '@trumocracy/sdk': ['@trumocracy/protocol', '@trumocracy/contracts', '@trumocracy/circuits'],
   '@trumocracy/ui': ['@trumocracy/protocol'],

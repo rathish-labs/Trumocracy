@@ -3,21 +3,21 @@
 ```
 Status:        Accepted
 Date:          2026-08-08
-Owner:         Priya Raghunathan (Principal Architect)
-Traces:        BR-GOVERN, BR-ACCOUNT, FR-PROP-*, FR-CHARTER-*, FR-FORK-*, NFR-STABILITY-01,
-               RISK-MOBCAP, RISK-FLASHGOV, RISK-BRIGADE
+Owner:         Ravi Deshmukh (Principal Architect)
+Traces:        BR-008, BR-005, FR-024..FR-029, FR-012, FR-027, FR-053, NFR-017, RISK-04,
+               RISK-03
 ```
 
 ## Context
 
 ADR-007 removes *purchased* capture. It does nothing about the other route: **membership flooding**.
-Because anyone may join any party without approval (a core product requirement, BR-EQUAL), a hostile
+Because anyone may join any party without approval (a core product requirement, BR-003), a hostile
 group — or a rival party, or a state actor with a supply of real, verified humans — can join a party
 en masse and rewrite its founding charter. This is not hypothetical; entryism is one of the oldest
 tactics in party politics, and open membership makes it cheap.
 
 The naive fixes are all product-destroying:
-- Require approval to join → restores the gatekeeper. **Forbidden by BR-EQUAL.**
+- Require approval to join → restores the gatekeeper. **Forbidden by BR-003.**
 - Weight votes by tenure → restores oligarchy of the founders. **Forbidden by ADR-007.**
 - Give founders a veto → restores the godfather. **Forbidden by the product thesis.**
 

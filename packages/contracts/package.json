@@ -1,0 +1,24 @@
+{
+  "name": "@trumocracy/contracts",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Trumocracy core contracts. The core is immutable: no proxy, no admin, no pause (ADR-010).",
+  "scripts": {
+    "test": "vitest run",
+    "build": "node script/compile.mjs"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.6.1",
+    "@zk-kit/lean-imt.sol": "^2.0.1",
+    "poseidon-solidity": "^0.0.5"
+  },
+  "devDependencies": {
+    "@trumocracy/evm-harness": "*",
+    "@zk-kit/lean-imt": "^2.2.5",
+    "poseidon-lite": "^0.3.0",
+    "viem": "^2.40.0",
+    "vitest": "^3.2.4",
+    "@trumocracy/protocol": "*"
+  }
+}

@@ -3,8 +3,8 @@
 ```
 Status:        Accepted
 Date:          2026-08-08
-Owner:         Priya Raghunathan (Principal Architect) · Reviewed by: Counsel (external)
-Traces:        CON-LEGAL-01, CON-LEGAL-02, NFR-PRIV-03, NFR-COMPLY-01, RISK-STATE, RISK-MISUSE
+Owner:         Ravi Deshmukh (Principal Architect) · Reviewed by: Sofia Marchetti (Head of Legal & Regulatory)
+Traces:        CON-001, CON-005, NFR-010, NFR-015, RISK-07, RISK-13
 ```
 
 > This ADR records architectural decisions with legal consequences. It is not legal advice, and each

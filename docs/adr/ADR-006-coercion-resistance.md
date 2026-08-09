@@ -3,8 +3,8 @@
 ```
 Status:        Accepted
 Date:          2026-08-08
-Owner:         Priya Raghunathan (Principal Architect)
-Traces:        BR-ACCOUNT, FR-VOTE-*, NFR-COERCE-01, RISK-COERCE, RISK-BRIBE, RISK-COORD
+Owner:         Ravi Deshmukh (Principal Architect)
+Traces:        BR-005, FR-030..FR-035, NFR-003, RISK-02, RISK-10
 ```
 
 ## Context
@@ -45,7 +45,7 @@ committee** replacing MACI's single coordinator.
    compliance, the rational briber does not pay — the market for votes collapses rather than being
    policed.
 5. A coerced voter under duress does the same: comply in front of the coercer, then silently
-   override afterwards. This is why the voting window MUST be long (≥72h, NFR-COERCE-01) and why the
+   override afterwards. This is why the voting window MUST be long (≥72h, NFR-003) and why the
    UI MUST NOT display any "you voted for X" confirmation that could be shown to a coercer — the
    client shows only "your ballot was accepted" with a **plausible-deniability screen** that looks
    identical for every choice (SCR-VOTE-CONFIRM, and a **panic re-vote** gesture, DES-063).

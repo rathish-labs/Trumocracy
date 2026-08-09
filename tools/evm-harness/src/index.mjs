@@ -172,6 +172,12 @@ export class Chain {
   constructor(vm, common) {
     this.vm = vm;
     this.common = common;
+    /**
+     * Custom errors from every contract in the system. A call into contract A can revert
+     * with an error defined in contract B, so decoding against only the callee's ABI
+     * produces an unreadable hex blob — which turns a precise assertion into a guess.
+     */
+    this.errorAbi = [];
     this.timestamp = 1_760_000_000n; // fixed genesis time — determinism matters for governance tests
     this.blockNumber = 1n;
     this._accounts = new Map();
@@ -267,7 +273,8 @@ export class Chain {
     });
     if (res.execResult.exceptionError) {
       throw new Error(
-        `deploy(${artifact.name ?? ''}) reverted: ${res.execResult.exceptionError} ${decodeRevert(res.execResult.returnValue, artifact.abi)}`,
+        `deploy(${artifact.name ?? ''}) reverted: ${res.execResult.exceptionError} ` +
+          decodeRevert(res.execResult.returnValue, [...artifact.abi, ...this.errorAbi]),
       );
     }
     return new Contract(this, res.createdAddress, artifact.abi, artifact.name);
@@ -294,13 +301,38 @@ export class Chain {
     this.blockNumber = snap.b;
   }
 
+  /** Register every contract's custom errors so cross-contract reverts decode by name. */
+  registerErrors(artifactsByName) {
+    const seen = new Set(this.errorAbi.map((e) => e.name));
+    for (const artifact of Object.values(artifactsByName)) {
+      for (const entry of artifact.abi ?? []) {
+        if (entry.type === 'error' && !seen.has(entry.name)) {
+          seen.add(entry.name);
+          this.errorAbi.push(entry);
+        }
+      }
+    }
+    return this;
+  }
+
+  /** Bind an ABI to an already-deployed address (e.g. one read out of an event). */
+  attach(artifact, address) {
+    const addr =
+      typeof address === 'string' ? createAddressFromString(address.toLowerCase()) : address;
+    return new Contract(this, addr, artifact.abi, artifact.name);
+  }
+
   async _call(contract, functionName, args, opts = {}) {
     const { from = 0, value = 0n, expectRevert = false, gasLimit = 30_000_000n } = opts;
     const caller = this.account(from);
     const data = encodeFunctionData({ abi: contract.abi, functionName, args });
+    const to =
+      typeof contract.address === 'string'
+        ? createAddressFromString(contract.address.toLowerCase())
+        : contract.address;
 
     const res = await this.vm.evm.runCall({
-      to: contract.address,
+      to,
       data: bytes(data),
       caller,
       origin: caller,
@@ -313,14 +345,17 @@ export class Chain {
     if (failed && !expectRevert) {
       throw new Error(
         `${contract.name ?? 'contract'}.${functionName} reverted: ` +
-          `${res.execResult.exceptionError} ${decodeRevert(res.execResult.returnValue, contract.abi)}`,
+          `${res.execResult.exceptionError} ${decodeRevert(res.execResult.returnValue, [...contract.abi, ...this.errorAbi])}`,
       );
     }
     if (!failed && expectRevert) {
       throw new Error(`${contract.name ?? 'contract'}.${functionName} was expected to revert but succeeded`);
     }
     if (failed) {
-      return { reverted: true, reason: decodeRevert(res.execResult.returnValue, contract.abi) };
+      return {
+        reverted: true,
+        reason: decodeRevert(res.execResult.returnValue, [...contract.abi, ...this.errorAbi]),
+      };
     }
 
     const logs = (res.execResult.logs ?? []).map(([address, topics, data]) => ({
