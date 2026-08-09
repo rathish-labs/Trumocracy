@@ -114,13 +114,25 @@ describe('CON-003 / RISK-16 the operator must be powerless', () => {
 
   it('UT-0311 has no DELEGATECALL in the core — no proxy pattern can hide behind it', () => {
     const A = artifacts();
-    // f4 is DELEGATECALL. Its absence means the contract cannot be turned into a proxy
-    // shell whose behaviour is defined elsewhere.
-    for (const name of ['Party', 'Governor', 'PartyRegistry']) {
-      const code = A[name].deployedBytecode.toLowerCase().slice(2);
-      const opcodes = code.match(/../g) ?? [];
-      expect(opcodes.includes('f4'), `${name} bytecode contains DELEGATECALL`).toBe(false);
+    for (const name of ['Party', 'Governor', 'PartyRegistry', 'PersonhoodRegistry', 'RegionRegistry']) {
+      const found = scanOpcodes(A[name].deployedBytecode);
+      expect(found.has(0xf4), `${name} bytecode contains DELEGATECALL`).toBe(false);
+      expect(found.has(0xff), `${name} bytecode contains SELFDESTRUCT`).toBe(false);
     }
+  });
+
+  it('UT-0311b proves the opcode scanner actually detects DELEGATECALL when it is present', () => {
+    // A capability-absence test is worthless if the detector cannot detect. A naive scanner
+    // that walks bytes two at a time mistakes PUSH immediates for opcodes and produces both
+    // false positives and — worse — false confidence. Assert the detector on a known-positive.
+    const A = artifacts();
+    // 0x60 0xf4 is PUSH1 0xf4: the f4 is DATA, not an opcode, and must NOT be reported.
+    expect(scanOpcodes('0x60f4').has(0xf4)).toBe(false);
+    // 0x5b 0xf4 is JUMPDEST then DELEGATECALL: a real occurrence, and must be reported.
+    expect(scanOpcodes('0x5bf4').has(0xf4)).toBe(true);
+    // And the scanner sees ordinary opcodes in real compiled output.
+    const real = scanOpcodes(A.Party.deployedBytecode);
+    expect(real.has(0x35)).toBe(true); // CALLDATALOAD — every dispatcher has one
   });
 
   it('UT-0312 restricts the emergency flag control to DISABLE only — it can never add power', async () => {
@@ -419,3 +431,25 @@ describe('ship-dark: on-chain feature flags', () => {
     expect(r.reason).toMatch(/MaciPathRequired/);
   }, 300_000);
 });
+
+/**
+ * Walk EVM bytecode and return the set of opcodes that are actually EXECUTED positions,
+ * skipping the immediate data of PUSH1..PUSH32.
+ *
+ * Splitting bytecode into byte pairs and looking for `f4` finds every `0xf4` that happens to
+ * sit inside a pushed constant — an address, a hash, a jump table — and reports DELEGATECALL
+ * in a contract that has none. Getting this right is the difference between a control and a
+ * superstition.
+ */
+function scanOpcodes(hex) {
+  const bytes = Uint8Array.from(Buffer.from(hex.replace(/^0x/, ''), 'hex'));
+  const found = new Set();
+  for (let i = 0; i < bytes.length; i++) {
+    const op = bytes[i];
+    found.add(op);
+    if (op >= 0x60 && op <= 0x7f) {
+      i += op - 0x5f; // PUSH1..PUSH32 — skip the immediate
+    }
+  }
+  return found;
+}
