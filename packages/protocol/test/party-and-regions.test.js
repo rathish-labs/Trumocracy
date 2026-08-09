@@ -286,7 +286,7 @@ describe('UT-0053 feature flags — risky capabilities ship dark', () => {
     }
   });
 
-  it('UT-0054 keeps the censorship escape hatch and self-pay fallback permanently on', () => {
+  it('UT-0054 keeps the censorship escape hatch and gas sponsorship permanently on', () => {
     expect(isEnabled('l1_force_inclusion', 'prod')).toBe(true);
     expect(isEnabled('sponsored_gas', 'prod')).toBe(true);
   });

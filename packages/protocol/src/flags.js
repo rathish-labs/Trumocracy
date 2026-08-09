@@ -86,7 +86,7 @@ export const FLAGS = Object.freeze({
     description: 'ERC-4337 paymaster sponsorship, rate-limited per personhood nullifier.',
     defaults: { dev: true, staging: true, prod: true },
     onChain: false,
-    removeBy: 'never — degrades to self-pay, never to denial',
+    removeBy: 'never — exhaustion queues the action at zero cost; it never charges or denies',
   },
 });
 

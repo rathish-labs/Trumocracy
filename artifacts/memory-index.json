@@ -208,6 +208,61 @@
       ],
       "gate": "Gate 1 treated as approved by the requesting human's build-end-to-end directive. Doc 04 is a Design-phase artifact drafted early and is APPROVED AT GATE 2 (exit) per the template, so no gate was passed or claimed here.",
       "next_role": "document-review skill in technical mode by a neutral (non-architect) role over docs/04-test-strategy-master-plan.md v1.0.0 -> artifacts/reviews/04-test-strategy-master-plan-v1.0.0-technical-cycle1.md. Then engineer (Doc 06), who must build the packages/contracts test workspace (OPEN-17), add storageLayout to the evm-harness outputSelection (hard dependency of TS-ABSENCE s6.3), and stand up circom/snarkjs/circomspect. Then tester (Docs 07/08). OPEN-01..06 and OPEN-11 should be routed to the Principal Architect / product-owner before coding starts on the affected areas."
+    },
+    {
+      "id": "technical-writer-2026-08-09T0400",
+      "role": "technical-writer",
+      "file": "artifacts/technical-writer-2026-08-09T0400.md",
+      "timestamp": "2026-08-09T04:00:00Z",
+      "phase": "Launch (pre-Gate 2)",
+      "product": "Trumocracy",
+      "scope": "Doc 14 (User Guide) ONLY. No code, no design, no requirements, no test artifacts. No other document edited.",
+      "summary": "Wrote the end-user User Guide (Doc 14, UG-TRUMOCRACY v1.0.0, Status In Review) for release 0.1.0, from the Diataxis-based template: tutorials (prove personhood, confirm area, back a petition), how-to guides (start a party, back/withdraw, join, propose and vote, publish promises, stand for a position, recall, recover access, leave, fork, troubleshooting), reference (screens, every protocol number, supported devices, message table, glossary) and explanation (how it works, why there is no override, the privacy/compulsion table from ADR-013 s3 in plain language). Grade-8 reading level, second person, zero crypto vocabulary, two 'What this means' asides. Every capability that is flag-OFF in production is documented with an explicit 'Not available in version 0.1.0' banner.",
+      "artifacts_written": [
+        "docs/14-user-guide.md"
+      ],
+      "artifacts_read": [
+        "CLAUDE.md",
+        "docs/templates/14-user-guide.template.md",
+        "docs/01-press-release-prfaq.md",
+        "docs/02-requirements-srs.md",
+        "docs/03-architecture-design-sdd.md (s5.6, s7, s11, s12, s13, s16)",
+        "docs/05-product-backlog.md",
+        "docs/06-coding-and-ut.md (s6, s7)",
+        "docs/09-release-notes.md",
+        "docs/adr/ADR-002, ADR-003, ADR-004, ADR-006, ADR-008, ADR-013",
+        "packages/protocol/src/constants.js",
+        "packages/protocol/src/flags.js",
+        "artifacts/memory-index.json"
+      ],
+      "ids_touched": {
+        "created": "none - the User Guide mints no IDs",
+        "referenced_not_modified": "BR-001..BR-012, FR-001..FR-061, NFR-001..NFR-026, CON-001..CON-008, TD-01..TD-06, OI-01/OI-08/OI-09, US-0001..US-0070, SCR-01..SCR-20, EP-01..EP-10, FE-001..FE-028, ADR-002/003/004/006/008/013, REL-LIM-01..REL-LIM-14",
+        "flags_documented": "petitions, party_governance (ON) · elections, recall, maci_voting, private_endorsement, delegation, treasury, fork (OFF in prod) · l1_force_inclusion, sponsored_gas (ON, permanent)"
+      },
+      "key_decisions": [
+        "Documented release 0.1.0 as shipped, not as specified: every flag-OFF capability (standing for office, recall, fork, treasury, receipt-free voting, private endorsement) carries an explicit 'Not available in version 0.1.0 - Phase 3/4' banner rather than being described as live.",
+        "REL-LIM-01 surfaced to the citizen in s0.1 and s2.6: verifiers are mocks in this drop, so personhood and privacy guarantees are simulated, not enforced. The guide tells the reader not to organise for real on 0.1.0.",
+        "The receipt-freeness warning (s2.6) is written unsoftened, as its own signposted section, with the anonymous-vs-receipt-free distinction, what protection is coming (silent re-vote, 5-of-7 committee), when (Phase 3), and five concrete things to do meanwhile.",
+        "REL-LIM-13 disclosed: a determined observer can read a running tally from the public record; client suppression is a UI behaviour, not a guarantee.",
+        "No dwell period documented - FR-018 requires one but OI-08 leaves it unset and Doc 09 describes shipped behaviour as 'count reaches the requirement, anyone may activate'. Shipped behaviour documented; no number invented.",
+        "No activation percentage claimed (OI-01 open): guide states 2% default, 0.5%-20% range, and that the share is set per area and published before any petition opens there.",
+        "Sponsorship exhaustion documented as queue-and-delay, never a charge (FR-061 + NFR-005, both Must). Doc 09's 'fall back to paying their own sub-cent fee' line contradicts this and is raised as a conflict, not reconciled unilaterally.",
+        "No URLs, support hours, status page or alternative access addresses invented - s6 and s2.12 carry a visible 'not yet published, ships with the release' marker.",
+        "No independent verifier tool claimed: FR-055 is Should and absent from Doc 09's delivered list, so the guide says the record is re-countable by hand and a ready-made tool is not in this release.",
+        "Anonymity-set escalation (k>=1000) explained as affecting WHERE an action is published, never WHO may act - consistent with ADR-004 s2 and OPEN-10."
+      ],
+      "open_items": [
+        "CONFLICT needing a decision: Doc 09 says a citizen may 'fall back to paying their own sub-cent fee if sponsorship is exhausted'; FR-061 and NFR-005 (both Must) say queue and USD 0.00 always. Guide documents the Must behaviour. One source must be corrected.",
+        "Support link, status page, bug-report route and the alternative access addresses are unpublished - marked in the guide as not yet available. Owner: sre (Chen Wei).",
+        "OI-01 (activation percentage per area) and OI-08 (dwell period) still unset; the guide is written so neither number is needed, but both must be published before the first petition opens.",
+        "OI-09 minimum-substance standard described qualitatively only; the concrete standard is not documented product behaviour.",
+        "NFR-011 accessibility conformance is stated in the guide as a target, not evidence - no audit run. Replace with the conformance report at Gate 2.",
+        "FR-005 (revocation and appeal) still has no story (Doc 05 s12 gap); the guide documents the appeal route only as far as FR-005 states it.",
+        "Doc 14 must be re-cut for Phase 3: s2.6, s2.7, s2.8, s2.11 and s3.4 all change the day maci_voting, elections, recall and fork are enabled."
+      ],
+      "gate": "Gate 2 - Doc 14 v1.0.0 delivered as a Gate-2 input, Status In Review. It does NOT clear Gate 2 by itself: the RTM (Doc 08) does not exist, Docs 07 green suites do not exist, rollback is undrilled, audits are not started, and the sre release decision in Doc 09 s7 is HALTED. Per CLAUDE.md the guide also needs a passing business-mode document-review report before the SOP advances.",
+      "next_role": "neutral (non-technical-writer) role running the document-review skill in business mode over docs/14-user-guide.md v1.0.0 -> artifacts/reviews/14-user-guide-v1.0.0-business-cycle1.md; then product-owner (Priya Raghunathan) for Gate-2 sign-off of the guide once the release is genuinely ready."
     }
   ]
 }

@@ -68,7 +68,8 @@ Trumocracy needs a public, verifiable execution environment where:
   ~12–24h) cannot silently disenfranchise anyone (NFR-007, RISK-09).
 - **Blob-fee volatility** makes cost a *distribution*, not a constant. The treasury MUST hold a
   sponsorship buffer sized to 90 days at p95 fees, and the paymaster degrades to
-  "user may self-pay" rather than failing closed (Doc 11 §runbook).
+  **queue-with-an-explanation at zero cost to the citizen** rather than failing closed
+  (FR-061, NFR-005; Doc 11 §runbook).
 - We inherit the L2's upgrade key risk. Accepted for v1 and explicitly re-opened in Phase 4.
 
 **Phase 4 revisit (ADR-001b, deferred).** Once the protocol has a real member base, migrate to a

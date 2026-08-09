@@ -53,8 +53,15 @@ treasury, on a permissionless network. Policy:
   calls.
 - **Circuit-breaker**: if daily spend exceeds the p99 baseline by 3×, sponsorship degrades to
   self-pay and pages the on-call SRE, rather than draining the treasury silently.
-- Sponsorship exhaustion is a **degradation, never a denial**: the citizen is always able to pay
-  their own sub-cent fee, and the UI explains that clearly rather than failing.
+- Sponsorship exhaustion is a **degradation, never a denial, and never a charge**: the action is
+  **queued** with a plain explanation and an expected time (FR-061, NFR-005). The citizen is
+  charged USD 0.00 in every case.
+
+  Self-payment exists in the SDK **only** as a censorship escape hatch — used when the paymaster
+  and every alternate bundler are unavailable or censoring, i.e. when the alternative is denial
+  rather than delay. It is never offered as a way to skip the queue: letting a citizen pay to act
+  sooner during a live vote is money buying influence, which is the one thing this platform is
+  built to prevent (ADR-007).
 
 ## Consequences
 

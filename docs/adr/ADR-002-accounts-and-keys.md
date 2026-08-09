@@ -44,10 +44,16 @@ We need self-custody **without** the seed phrase, and recovery **without** a rec
    is enforced by test (UT/TC "no privileged actor can act on a member account") and by review — it
    is the single most important invariant in the account layer.
 
-**Gas:** citizens hold no gas token. A **paymaster** sponsors UserOperations for whitelisted
-protocol actions, rate-limited per personhood nullifier (ADR-014). The account also supports
-self-payment so the system degrades to "pay your own fee" rather than "you cannot participate" if
-sponsorship is exhausted.
+**Gas:** citizens hold no gas token and **are never charged, in any case** (NFR-005, FR-061). A
+**paymaster** sponsors UserOperations for whitelisted protocol actions, rate-limited per
+personhood nullifier (ADR-014). When a budget is exhausted the action is **queued with a clear
+explanation and an expected time** — never rejected, never charged for.
+
+An earlier draft of this ADR degraded to "pay your own fee". That was wrong, and the reason is
+worth recording: routine self-payment would let a citizen with money act *now* while a citizen
+without money waits. Money would buy immediacy, which in a live vote is money buying influence —
+the exact thing ADR-007 exists to prevent. The account retains a self-pay code path solely as a
+**censorship escape hatch** (ADR-014), where the alternative is not delay but denial.
 
 **EOA compatibility:** existing wallet users may participate via **EIP-7702** delegation, which
 gives an EOA the same smart-account behaviour without a migration. This is a convenience path, not

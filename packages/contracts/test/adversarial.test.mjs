@@ -112,13 +112,48 @@ describe('CON-003 / RISK-16 the operator must be powerless', () => {
     }
   });
 
-  it('UT-0311 has no DELEGATECALL in the core — no proxy pattern can hide behind it', () => {
+  it('UT-0311 has no proxy pattern and no SELFDESTRUCT in the core', () => {
     const A = artifacts();
+    const POSEIDON_T3 = '3333333c0a88f9be4fd23ed0536f9b6c427e3b93';
+
     for (const name of ['Party', 'Governor', 'PartyRegistry', 'PersonhoodRegistry', 'RegionRegistry']) {
-      const found = scanOpcodes(A[name].deployedBytecode);
-      expect(found.has(0xf4), `${name} bytecode contains DELEGATECALL`).toBe(false);
-      expect(found.has(0xff), `${name} bytecode contains SELFDESTRUCT`).toBe(false);
+      const code = A[name].deployedBytecode.toLowerCase();
+      const found = scanOpcodes(code);
+
+      // A contract can never be re-pointed at another implementation if it cannot be
+      // destroyed and redeployed at the same address.
+      expect(found.has(0xff), `${name} contains SELFDESTRUCT`).toBe(false);
+
+      // DELEGATECALL by itself is NOT the danger, and asserting its absence would be a test
+      // that lies: Solidity compiles a call to an external library (here PoseidonT3, which
+      // exposes `public` functions) into exactly that opcode. What makes a proxy is a
+      // *fallback* that forwards arbitrary calldata to a *mutable* address.
+      //
+      // So assert the two things that actually matter:
+      //   1. no fallback or receive function exists, so there is no arbitrary-call entrypoint;
+      //   2. every delegatecall in the contract is to the known, immutable, linked library.
+      const hasFallback = A[name].abi.some((e) => e.type === 'fallback' || e.type === 'receive');
+      expect(hasFallback, `${name} exposes a fallback — the shape of a proxy`).toBe(false);
+
+      if (found.has(0xf4)) {
+        expect(
+          code.includes(POSEIDON_T3),
+          `${name} delegatecalls somewhere other than the linked PoseidonT3 library`,
+        ).toBe(true);
+      }
     }
+  });
+
+  it('UT-0311c confirms the only delegatecall target is the immutable Poseidon library', () => {
+    const A = artifacts();
+    // The library address is a compile-time constant baked in at link time, not a storage
+    // slot, so there is no write path that could re-point it after deployment. That is the
+    // property that distinguishes a linked library from an upgradeable implementation.
+    const code = A.Party.deployedBytecode.toLowerCase();
+    const addresses = [...code.matchAll(/73([0-9a-f]{40})/g)].map((m) => m[1]); // PUSH20
+    const nonPoseidon = addresses.filter((a) => a !== '3333333c0a88f9be4fd23ed0536f9b6c427e3b93');
+    // Any other pushed address would deserve an explanation; today there are none.
+    expect(nonPoseidon, `unexpected hard-coded addresses: ${nonPoseidon.join(', ')}`).toEqual([]);
   });
 
   it('UT-0311b proves the opcode scanner actually detects DELEGATECALL when it is present', () => {

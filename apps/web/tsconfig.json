@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["dom", "dom.iterable", "ES2022", "WebWorker"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "types": ["node", "vitest/globals"],
+    "plugins": [{ "name": "next" }],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      // The protocol and SDK packages are hand-written ESM with JSDoc rather than
+      // TypeScript (ADR-011 keeps `protocol` dependency-free, and a build step would be a
+      // dependency). These shims are the typed contract the app codes against; they are
+      // checked against the real modules by the SDK's own tests, not by tsc.
+      "@trumocracy/protocol": ["./types/trumocracy-protocol.d.ts"],
+      "@trumocracy/sdk": ["./types/trumocracy-sdk.d.ts"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules", ".next", "out"]
+}

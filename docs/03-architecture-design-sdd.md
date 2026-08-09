@@ -227,11 +227,11 @@ Six decisions carry the design; everything else follows from them.
 | DES-040 | passkey + 4337 smart account | no seed phrase, no gas token | FR-058, NFR-022 | ERC-4337, RIP-7212 |
 | DES-041 | L1 force-inclusion transport | sequencer censorship fallback, wired into the SDK | NFR-014, NFR-025, RISK-09 | `OptimismPortal` |
 | DES-042 | social recovery, 7-day timelocked | recover without a recovery company | FR-058, FR-059, NFR-016 | guardians + owner veto |
-| DES-043 | paymaster per-nullifier budget | sponsorship cannot be drained by Sybils | FR-061, RISK-15 | relayer policy |
+| DES-043 | paymaster per-nullifier budget | sponsorship cannot be drained by Sybils; exhaustion queues at zero cost | FR-061, NFR-005, RISK-15 | relayer policy |
 | DES-044 | party state export | exit right, tested in CI | NFR-018 | SDK + `apps/verifier` |
 | DES-045 | pure `@trumocracy/protocol` | reference rules, differentially tested vs chain | NFR-021 | JS, zero deps |
 | DES-050 | reproducible static bundle | anyone can verify the served client | NFR-014, RISK-08 | pinned toolchain + hash job |
-| DES-051 | multi-transport client | bundler → alt bundler → self-pay → L1 | NFR-007, NFR-014 | SDK |
+| DES-051 | multi-transport client | bundler → alt bundler → queue → self-pay (censorship only) → L1 | NFR-007, NFR-014 | SDK |
 | DES-052 | client zkey pinning | refuses to prove with an unregistered proving key | RISK-10 | client |
 | DES-063 | safe confirmation + panic re-vote | screen safe to show a coercer | NFR-003, RISK-02 | client |
 
@@ -373,9 +373,12 @@ the word "wallet".
 indexer), generates the tenure proof locally, submits. Confirmation screen is identical for
 every choice and offers "change my vote" for the whole window.
 
-**Degraded modes.** Bundler down → alternate bundler → self-pay → L1 force-inclusion.
+**Degraded modes.** Bundler down → alternate bundler → queue → (censorship only) self-pay → L1
+force-inclusion.
 Indexer down or lying → client falls back to direct chain reads (slower, still correct).
-Sponsorship exhausted → self-pay, never denial. Coordinator committee short of threshold →
+Sponsorship exhausted → **queued at zero cost with an explanation and an expected time**, never a
+charge and never a denial (FR-061, NFR-005); self-pay is reserved for the censorship case, where
+the alternative is denial rather than delay. Coordinator committee short of threshold →
 election re-run under a fresh committee with the encrypted queue intact; **never** a fallback
 to a plaintext tally, which would retroactively strip privacy from people who already voted.
 
@@ -492,7 +495,7 @@ topology are in ADR-011 §Decision; the test topology is in Doc 04.
 | **I**nfo | deanonymise by elimination in a small region | k ≥ 1000 guard + scope escalation (DES-008) | correlation over time (RISK-06) |
 | **I**nfo | deanonymise by timing/traffic | no reader logging, random submission delay, sponsored ops indistinguishable | a global passive adversary — **not defended**, stated in §16 |
 | **I**nfo | compelled disclosure of the member list | the list does not exist (§5.3) | attester-side data, outside our boundary |
-| **D**oS | drain gas sponsorship | per-nullifier budgets + circuit breaker (DES-043) | degrades to self-pay, never denial |
+| **D**oS | drain gas sponsorship | per-nullifier budgets + circuit breaker (DES-043) | actions queue at zero cost; delay, never charge or denial |
 | **D**oS | sequencer censors a party | L1 force-inclusion (DES-041), ≥72 h windows | delay within the window |
 | **E**oP | flash-loan governance takeover | **no transferable power exists** (ADR-007) | none — attack class removed |
 | **E**oP | mob rewrites a charter | tiers + snapshot + adaptive quorum + entrenchment + fork (ADR-008) | a genuinely persuaded majority over a year — which is democracy |
@@ -574,7 +577,7 @@ tally; a published transparency report covers filtering actions and compulsion a
 | FR-049 / DES-033 | contribution under cap | whale splits into 100 donations | cap is per **nullifier**, not per address → **reject** |
 | FR-053 / DES-034 | fork proceeds | parent tries to block | no blocking function exists |
 | FR-058 / DES-042 | recovery via guardians | guardians collude | 7-day timelock + owner veto + public notice |
-| FR-061 / DES-043 | sponsored action | budget exhausted | **degrade to self-pay**, never deny |
+| FR-061 / DES-043 | sponsored action | budget exhausted | **queue with an explanation and an expected time**; never charge, never deny |
 | NFR-014 / DES-041 | normal submission | sequencer censors | L1 force-inclusion; tested in CI, not assumed |
 
 ## 12. Architecture Decision Records
