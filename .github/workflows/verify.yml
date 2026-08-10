@@ -15,7 +15,13 @@ concurrency:
 
 jobs:
   verify:
-    runs-on: ubuntu-latest
+    strategy:
+      # Cross-OS signal is the point of the matrix: a Windows-only failure must not be
+      # masked by the Linux leg being cancelled, or vice versa.
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4

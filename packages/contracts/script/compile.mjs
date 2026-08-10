@@ -1,6 +1,14 @@
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { compile, readSolidityDir } from '@trumocracy/evm-harness';
-const sources = readSolidityDir('/home/user/Trumocracy/packages/contracts/src', '/home/user/Trumocracy/packages/contracts/src');
-const { contracts, warnings } = compile(sources, { roots: ['/home/user/Trumocracy/packages/contracts', '/home/user/Trumocracy'] });
+
+const HERE = path.dirname(fileURLToPath(import.meta.url));
+const SRC = path.resolve(HERE, '..', 'src');
+const PKG = path.resolve(HERE, '..');
+const REPO = path.resolve(HERE, '..', '..', '..');
+
+const sources = readSolidityDir(SRC, SRC);
+const { contracts, warnings } = compile(sources, { roots: [PKG, REPO] });
 console.log('compiled:', Object.keys(contracts).join(', '));
 for (const [n,c] of Object.entries(contracts)) {
   const size = (c.deployedBytecode.length-2)/2;
