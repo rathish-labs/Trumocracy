@@ -492,6 +492,46 @@
       },
       "gate": "Gate 2 - RTM authored and submitted with 54 open Must rows recorded. The traceability criterion (zero gaps in Must rows) FAILS. The tester does not approve gates and does not sign merges. STOPPED.",
       "next_role": "reviewer-qa - independently verify this RTM (zero-gap check), confirm the 54 open Must rows and the 15 broken DES links, run the security scan, and decide the merge. Also needed: a neutral non-tester role running document-review in technical mode over docs/07-test-cases-suites.md and docs/08-traceability-matrix.md v1.0.0."
+    },
+    {
+      "id": "project-manager-2026-08-09T2100",
+      "role": "project-manager",
+      "file": "artifacts/project-manager-2026-08-09T2100.md",
+      "timestamp": "2026-08-09T21:00:00Z",
+      "phase": "Define — Gate 1 decision recording",
+      "product": "Trumocracy",
+      "summary": "Documentation-only session. Recorded the human approver's (Rathish's) Gate 1 decision: APPROVED against Doc 02 v1.0.0 on 2026-08-09, with re-affirmation required at Doc 02 v1.1.0 (nine-requirement change request inbound next session). Wrote the decision record and updated the gate status packet. No product code, no design, no requirements, no docs/ files touched.",
+      "artifacts_written": [
+        "artifacts/status/GATE1-DECISION-2026-08-09.md",
+        "artifacts/status/GATE-STATUS-2026-08-09.md (updated)"
+      ],
+      "ids_touched": {
+        "referenced_not_modified": "Doc 02 v1.0.0, FR-042, FR-043, FR-045, ADR-004 §2, MS-13, OI-01..OI-05, E-01, E-02, RISK-19, CON-007",
+        "milestone_confirmed": "MS-13 at 2027-05-14",
+        "commit_referenced_not_created": "a08d8c6 (two-OS CI matrix, PR #1)"
+      },
+      "key_decisions": [
+        "Gate 1 APPROVED by Rathish 2026-08-09 against Doc 02 v1.0.0. Re-affirmation required at v1.1.0.",
+        "OI-01 method fixed (regional population oracle, calibrated per region, published before first petition opens above dev); number open with hard deadline.",
+        "OI-02 recall kept (FR-042/043/045 in scope).",
+        "OI-03 phased: Phase 1 government eID sole anchor, exclusion accepted and documented; Phase 3 non-document path needs own ADR/threat model/audit.",
+        "OI-04 one pilot; jurisdiction not yet named; credential rail as pluggable adapter; OPEN: name jurisdiction and eID rail before enrolment requirement implemented.",
+        "OI-05 confirmed as designed (ADR-004 §2).",
+        "E-01 accepted knowingly. E-02 confirmed.",
+        "B-01 L2 accepted (~USD 4.13M, one pilot, roll two post-launch).",
+        "S-01 accepted (Gate 2 at 2027-05-14, ceremony- and audit-paced).",
+        "Fork initiation deferred — remains open critical, flag stays off above dev."
+      ],
+      "open_items": [
+        "Re-affirmation of Gate 1 at Doc 02 v1.1.0 — nine-requirement change request inbound next session.",
+        "OI-04: name the pilot jurisdiction and its eID rail — must close before enrolment requirement is implemented.",
+        "OI-01: threshold percentage — must be published before first petition opens above dev.",
+        "Fork initiation open critical — deferred; fork flag must stay off above dev until fixed. Blocks Gate 2.",
+        "54 open Must rows in RTM (Doc 08) — pre-existing, Gate-2 blocking, tracked.",
+        "Missing document-review reports for several document versions — pre-existing, tracked."
+      ],
+      "gate": "Gate 1 APPROVED 2026-08-09 by Rathish. PM recorded the decision. Gate 2 remains OPEN and NOT READY.",
+      "next_role": "product-owner (to receive the nine-requirement change request next session and produce Doc 02 v1.1.0, then trigger re-affirmation of Gate 1 at v1.1.0)"
     }
   ]
 }
