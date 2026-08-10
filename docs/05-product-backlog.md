@@ -2,11 +2,14 @@
 
 ```
 Document ID:   BKLG-TRUMOCRACY
-Version:       1.0.0
+Version:       1.1.0
 Status:        In Review
 Owner:         Priya Raghunathan — Product Owner
-Source:        SRS-TRUMOCRACY (docs/02-requirements-srs.md), PR-TRUMOCRACY (docs/01-press-release-prfaq.md)
-Last updated:  2026-08-08
+Source:        SRS-TRUMOCRACY (docs/02-requirements-srs.md v1.1.0), PR-TRUMOCRACY (docs/01-press-release-prfaq.md)
+Last updated:  2026-08-09
+Change:        v1.1.0 — Nine-requirement change request (CR-v1.1.0) directed by Rathish 2026-08-09.
+               Adds BR-013, FR-062..073; FE-029..036; US-0071..0083; SCR-21..23 (provisional).
+               Source: artifacts/status/GATE1-DECISION-2026-08-09.md §7 (CR-v1.1.0).
 ```
 
 > **Based on:** SAFe (Epic → Feature → Story) + Mike Cohn user-story standard. **Produced in:** Define; living through Coding & UT.
@@ -21,25 +24,26 @@ Last updated:  2026-08-08
 ## 1. Product goal & link to vision
 
 **Goal.** Ship the walking skeleton of citizen-owned party formation — *enrol → draft → endorse →
-threshold → activate → join → propose → vote → nominate → elect → recall* — with every
+threshold → activate → join → propose → vote → nominate → debate → elect → recall* — with every
 non-negotiable guardrail (anonymity, sybil resistance, receipt-freeness, no-operator-discretion,
 zero cost) present from the first line of code rather than retrofitted.
 
-Traces to Doc 01 §B (customer journey) and Doc 02 `BR-001` … `BR-012`.
+Traces to Doc 01 §B (customer journey) and Doc 02 `BR-001` … `BR-013`.
 
 **Walking-skeleton definition of "alive":** one verified citizen can, unaided on a low-end phone,
 enrol, draft an eight-pillar party, gather endorsements from other verified residents, watch it
 activate automatically at threshold, join it, propose something, vote anonymously, stand for a ward
-office, be elected, and be recalled — with a third party able to independently reproduce every count
-along the way. Stories are ordered so that this becomes true as early as possible.
+office, complete the debate cycle, be elected, and be recalled — with a third party able to
+independently reproduce every count along the way. Stories are ordered so that this becomes true as
+early as possible.
 
 ## 2. Backlog structure & hierarchy
 
 `Theme → Epic (EP-##) → Feature (FE-###) → User Story (US-####) → Task`.
 Non-functional work appears as **explicit backlog items**, never as an assumption — see §8.
 
-**Contents.** 10 epics · 28 features · 70 user stories · 8 explicit non-functional backlog items.
-All 42 Must FRs in Doc 02 are covered by at least one story; coverage is asserted in §12 and
+**Contents.** 10 epics · 36 features · 83 user stories · 8 explicit non-functional backlog items.
+All 54 Must FRs in Doc 02 v1.1.0 are covered by at least one story; coverage is asserted in §12 and
 verified in the RTM.
 
 ## 3. Prioritization framework
@@ -76,10 +80,11 @@ Outcome hypothesis: We believe that proving a person is real and locally eligibl
   duplicate rate is <=0.1% and 0 member deanonymisations are confirmed.
 Business value / link: BR-006, BR-009, BR-004
 In scope: enrolment, one-credential-per-human, per-scope action limits, cross-scope unlinkability,
-  residency scope, versioned region registry, population denominators.
+  residency scope, versioned region registry, population denominators, deterministic enrolment
+  nullifier, pluggable credential adapter, government eID issuer hierarchy.
 Out of scope: any storage of identity documents; any identity issued by Trumocracy.
 Success metric: <=0.1% duplicate credentials; 0 identity fields at data inventory; >=2 attestors live per region.
-Features: FE-001, FE-002, FE-003, FE-004
+Features: FE-001, FE-002, FE-003, FE-004, FE-034, FE-036
 Owner: Marcus Adeyemi            Status: Backlog
 ```
 ```
@@ -115,10 +120,11 @@ Outcome hypothesis: We believe join-without-approval plus strictly equal standin
   least one founding drafter has been outvoted by month 12.
 Business value / link: BR-003, BR-010, BR-012
 In scope: join, leave, equal standing, maturation period, churn rate limits, aggregate-only
-  membership visibility.
+  membership visibility, single-party-at-a-time constraint, tenure waiver for new parties
+  (with anti-capture active).
 Out of scope: membership tiers, dues, invitations, expulsion.
-Success metric: 0 approval steps; 0 weighted votes; churn-attack simulation defeated.
-Features: FE-010, FE-011, FE-012
+Success metric: 0 approval steps; 0 weighted votes; churn-attack simulation defeated; 0 dual-memberships.
+Features: FE-010, FE-011, FE-012, FE-030, FE-033
 Owner: Grace Mbeki               Status: Backlog
 ```
 ```
@@ -149,16 +155,20 @@ Owner: Aisha Nkemdirim           Status: Backlog
 ```
 ```
 EP-07  Localized nomination & internal election
-Outcome hypothesis: We believe binding candidacy and voting to where a person actually lives will
-  achieve real local representation; we'll know when 100% of nominations are scope-checked and 0
-  out-of-region ballots are counted.
-Business value / link: BR-004, BR-009
+Outcome hypothesis: We believe binding candidacy and voting to where a person actually lives, and
+  requiring debates before any election, will achieve real local representation with informed voters;
+  we'll know when 100% of nominations are scope-checked, 0 out-of-region ballots are counted, and
+  every election is preceded by three completed debates per candidate.
+Business value / link: BR-004, BR-009, BR-013
 In scope: self-nomination scoped to region+office, nomination endorsements, informed consent to
-  public identity, candidacy withdrawal, election timetable immutability, automatic office
-  assignment, fixed terms.
-Out of scope: nomination of others; central candidate lists; appointment of any kind.
-Success metric: 0 out-of-scope nominations or ballots accepted; 100% consented disclosures.
-Features: FE-020, FE-021, FE-022
+  public identity, candidacy withdrawal, mandatory pre-election debates (three per candidate),
+  post-debate member vote determining candidacy, candidate feedback scoring, election timetable
+  immutability, automatic office assignment, fixed terms. No automatic renomination.
+Out of scope: nomination of others; central candidate lists; appointment of any kind; automatic
+  renomination of incumbents.
+Success metric: 0 out-of-scope nominations or ballots accepted; 100% consented disclosures;
+  100% of major-election ballots preceded by three completed debates per candidate.
+Features: FE-020, FE-021, FE-022, FE-031, FE-032
 Owner: Aisha Nkemdirim           Status: Backlog
 ```
 ```
@@ -177,16 +187,17 @@ Owner: Erik Lindqvist            Status: Backlog
 ```
 ```
 EP-09  Public verifiability & the moderation-by-code boundary
-Outcome hypothesis: We believe emitting a tamper-evident record of every governance action and
-  shipping an independent verifier will achieve trust without trusting us; we'll know when >=25
-  distinct third parties reproduce tallies by month 6 and the security audit finds 0 privileged
-  governance paths.
+Outcome hypothesis: We believe emitting a tamper-evident record of every governance action,
+  shipping an independent verifier, and making participation profiles public will achieve trust
+  without trusting us; we'll know when >=25 distinct third parties reproduce tallies by month 6 and
+  the security audit finds 0 privileged governance paths.
 Business value / link: BR-005, BR-008, BR-009
 In scope: verifiable record emission, independent verifier, party history export, absence of
-  operator override, jurisdiction-scoped display filtering with a public log.
+  operator override, jurisdiction-scoped display filtering with a public log, public participation
+  profiles (FR-062), ballot-direction prohibition (FR-063).
 Out of scope: content moderation of political speech; any deletion from the record.
 Success metric: 0 privileged override paths at audit; 100% of filtering actions publicly logged.
-Features: FE-025, FE-026
+Features: FE-025, FE-026, FE-029
 Owner: Erik Lindqvist            Status: Backlog
 ```
 ```
@@ -196,11 +207,11 @@ Outcome hypothesis: We believe removing tokens, fees, seed phrases and jargon wi
   minutes at SUS >=75 and citizen cost is USD 0.00 in 100% of cases.
 Business value / link: BR-007
 In scope: fee sponsorship and per-person budgets, degrade-by-delay, seedless recovery with timelock
-  and cancellation, privacy-preserving recovery, WCAG 2.2 AA, low-bandwidth and offline behaviour,
-  i18n/RTL, plain language.
+  and cancellation, privacy-preserving recovery, nullifier-collision recovery (FR-071, FR-072),
+  WCAG 2.2 AA, low-bandwidth and offline behaviour, i18n/RTL, plain language.
 Out of scope: desktop-optimised experience; any charge to a citizen, ever.
 Success metric: USD 0.00 citizen cost; >=80% unaided completion; 0 WCAG A/AA failures.
-Features: FE-027, FE-028
+Features: FE-027, FE-028, FE-035
 Owner: Hiroshi Tanaka            Status: Backlog
 ```
 
@@ -236,6 +247,14 @@ Owner: Hiroshi Tanaka            Status: Backlog
 | FE-026 | No-operator-discretion boundary (EP-09) | We removed our own power and you can verify it | FR-056, FR-057, NFR-017 | US-0064–0065 | Daniel Okonkwo |
 | FE-027 | Fee sponsorship & no-token flows (EP-10) | It is free, and you never meet a wallet | FR-060, FR-061, NFR-005, NFR-023 | US-0066–0067 | Hiroshi Tanaka |
 | FE-028 | Recovery & universal access (EP-10) | Losing your phone does not end your citizenship; a cheap phone is enough | FR-058, FR-059, NFR-011, NFR-012, NFR-013, NFR-016 | US-0068–0070 | Amara Diallo |
+| FE-029 | Public participation profile (EP-09) | Your participation is visible; your votes are not — and the system proves the difference | FR-062, FR-063 | US-0071–0072 | Erik Lindqvist |
+| FE-030 | Single party membership enforcement (EP-04) | One party at a time, enforced — no simultaneous memberships, no tenure arbitrage | FR-064 | US-0073 | Rafael Duarte |
+| FE-031 | Candidate feedback scoring (EP-07) | Members signal quality before the ballot; downvotes are private to protect the voter | FR-065 | US-0074–0075 | Aisha Nkemdirim |
+| FE-032 | Mandatory pre-election debates (EP-07) | Every candidate faces three debates; incumbency buys no automatic pass | FR-066, FR-067 | US-0076–0077 | Aisha Nkemdirim |
+| FE-033 | Tenure waiver for new parties (EP-04) | New parties can mobilise without tenure gating, but anti-capture never switches off | FR-068 | US-0078 | Rafael Duarte |
+| FE-034 | Deterministic enrolment nullifier (EP-01) | Duplicate detection by mathematics, not by matching names or faces | FR-069, FR-070 | US-0079–0080 | Marcus Adeyemi |
+| FE-035 | Nullifier-collision recovery (EP-10) | Losing your keys does not lose your history; a stolen credential cannot take your seat | FR-071, FR-072 | US-0081–0082 | Amara Diallo |
+| FE-036 | Government eID issuer hierarchy (EP-01) | One class of credential mints uniqueness; all others help but never grant new entries | FR-073 | US-0083 | Marcus Adeyemi |
 
 ## 6. User stories
 
@@ -400,6 +419,62 @@ AC:
   Scenario (negative): Retroactive edit attempt
     When an attempt is made to apply a new boundary to a closed contest
     Then the attempt is refused and logged
+```
+```
+US-0079  Enrol via deterministic nullifier with duplicate prevention      (FE-034 · EP-01)
+As a verified citizen, I want my enrolment to be unduplicated by mathematics rather than by matching
+my name or face, so that my identity is never exposed in the deduplication process.
+Owner: Marcus Adeyemi   Priority: Must   Points: 8   Implements: FR-069   Depends on: US-0001
+AC:
+  Scenario: First enrolment derives and stores nullifier
+    Given a credential with a valid issuer signature, unexpired, with a correct region attribute
+    When the enrolment derivation runs
+    Then only the derived nullifier is stored; no underlying identifier is retained
+  Scenario (adversarial): Same credential presented twice
+    Given the same credential submitted in a second enrolment attempt
+    When the derivation runs
+    Then the nullifier matches an existing record and the enrolment is rejected as a duplicate
+  Scenario (negative): Tampered credential attribute
+    Given a credential with a region attribute that does not place the person in the declared region
+    When the derivation verification runs
+    Then the enrolment is rejected with the reason (region-attribute invalid)
+```
+```
+US-0080  Enrol via any of the supported adapter types      (FE-034 · EP-01)
+As a citizen whose government issues a contactless-chip travel document rather than a digital wallet,
+I want to enrol through the appropriate adapter, so that adapter choice does not determine eligibility.
+Owner: Marcus Adeyemi   Priority: Must   Points: 5   Implements: FR-070   Depends on: US-0079
+AC:
+  Scenario: Government eID wallet adapter
+    Given a region where government eID wallets are the designated adapter
+    When a citizen with a government eID wallet presents their credential
+    Then the enrolment adapter accepts the evidence and produces a valid nullifier input
+  Scenario: Offline paper KYC adapter
+    Given a region where offline paper KYC is the approved adapter
+    When a citizen presents the required paper identity evidence
+    Then the paper KYC adapter path accepts it and produces a valid nullifier input
+  Scenario (negative): Hard-coded single adapter
+    When a deployment is inspected for adapter configuration
+    Then the adapter layer is pluggable and no single credential type is the only supported path
+```
+```
+US-0083  Only government eID rail mints enrolment nullifiers      (FE-036 · EP-01)
+As a member, I want to know that liveness attestors and non-eID providers cannot create new
+enrolment records, so that the uniqueness boundary is clear and auditable.
+Owner: Marcus Adeyemi   Priority: Must   Points: 5   Implements: FR-073   Depends on: US-0079
+AC:
+  Scenario: Government eID credential enrols
+    Given a credential from the designated government eID rail in a region
+    When it is submitted for enrolment
+    Then an enrolment nullifier is minted and the record is accepted
+  Scenario (adversarial): Availability-only credential attempts enrolment
+    Given a liveness attestor credential not designated as a uniqueness-minting class
+    When it is submitted for enrolment
+    Then no nullifier is minted, the attempt is refused with reason (non-eID class), and the event is logged
+  Scenario: Availability-only credential used for liveness only
+    Given the same availability-only credential used for a liveness attestation request
+    When the request is processed
+    Then liveness is confirmed without creating or modifying any enrolment record
 ```
 
 ### EP-02 · Party drafting & the eight mandatory pillars
@@ -719,6 +794,43 @@ AC:
     When they leave one party and join another
     Then both actions succeed without delay
 ```
+```
+US-0073  Be limited to one party at a time      (FE-030 · EP-04)
+As a member, I want the platform to enforce a single active membership so that no one can hold sway
+in multiple parties simultaneously.
+Owner: Rafael Duarte   Priority: Must   Points: 5   Implements: FR-064   Depends on: US-0024
+AC:
+  Scenario: Switch parties voids old membership and resets tenure
+    Given a member of party A who requests to join party B
+    When the join request is processed
+    Then membership in party A is voided, membership in party B takes effect, and the tenure clock resets to zero
+  Scenario (adversarial): Simultaneous dual membership attempt
+    When a member attempts to hold membership in two parties simultaneously through any mechanism
+    Then no such dual-membership state exists and the attempt fails
+  Scenario (negative): Vote before tenure re-established
+    Given a member who joined party B after leaving party A less than one month ago
+    When they attempt to vote in party B before one month of membership has elapsed
+    Then the vote is rejected as tenure not yet met
+```
+```
+US-0078  Benefit from new-party tenure waiver without losing anti-capture protection      (FE-033 · EP-04)
+As a founding member of a brand-new party, I want to vote before the one-month tenure requirement
+applies, so that the party can act immediately, while knowing anti-capture controls still protect us.
+Owner: Rafael Duarte   Priority: Must   Points: 5   Implements: FR-068   Depends on: US-0029
+AC:
+  Scenario: Tenure waived in party's first three months
+    Given a party in its first three calendar months of active status
+    When a founding member who joined before activation attempts to vote
+    Then the one-month tenure requirement is waived and the vote is accepted
+  Scenario (adversarial): Anti-capture controls remain active during waiver
+    Given a sudden flood of 10,000 new members joining the new party within one hour
+    When a proposal snapshot is taken
+    Then growth-surge defence controls and churn rate limits apply unchanged — UT-0220 confirms this
+  Scenario: Waiver ends at three months
+    Given a party that has been active for three calendar months
+    When a new member who joined during that period attempts to vote before their one-month mark
+    Then the standard one-month tenure requirement applies and the action is refused with the date rights begin
+```
 
 ### EP-05 · Proposals, charter amendment & governance stability
 
@@ -954,7 +1066,7 @@ AC:
     Then outcome, turnout, quorum and threshold status are stated in plain language at grade-8 reading level
     And a one-tap route to the independent verification instructions is offered
   Scenario: Accessible result
-    When the result screen is audited against WCAG 2.2 AA with a screen reader at 200% text scale
+    When the result screen is audited against WCAG 2.2 AA by screen reader and keyboard/switch at 200% text scale
     Then zero Level A or AA failures are found
 ```
 
@@ -1081,6 +1193,78 @@ AC:
     Given an office with a charter-declared fixed term
     When the term ends without a fresh election
     Then the office expires automatically
+```
+```
+US-0074  Cast a feedback vote on a candidate      (FE-031 · EP-07)
+As a matured member, I want to signal my view of each candidate with one vote, so that the aggregate
+tells the membership something real about suitability.
+Owner: Aisha Nkemdirim   Priority: Must   Points: 5   Implements: FR-065   Depends on: US-0047
+AC:
+  Scenario: Upvote scores +3
+    Given a matured member who has not yet voted on candidate C in election E
+    When they cast an upvote
+    Then candidate C's tally increases by 3 and the member cannot vote on C again in E
+  Scenario: Downvote scores -1
+    Given a matured member who has not yet voted on candidate C in election E
+    When they cast a downvote
+    Then candidate C's tally decreases by 1 and the member cannot vote on C again in E
+  Scenario (adversarial): Second feedback vote on same candidate
+    Given a member who has already cast a feedback vote on candidate C in election E
+    When they attempt another feedback vote on C in E
+    Then the attempt is refused as already-voted
+```
+```
+US-0075  See aggregate candidate feedback but not individual votes      (FE-031 · EP-07)
+As a member deciding how to vote in a post-debate member vote, I want to see the aggregate feedback
+score but not who voted how, so that pressure from local strongmen cannot follow individual votes.
+Owner: Aisha Nkemdirim   Priority: Must   Points: 5   Implements: FR-065   Depends on: US-0074
+AC:
+  Scenario: Aggregate tally is public
+    Given feedback votes cast by multiple members on a candidate
+    When the public record is viewed
+    Then the aggregate tally (sum of +3 upvotes and -1 downvotes) is shown
+  Scenario (adversarial): Individual vote inspection
+    Given a member who cast a downvote on a local political figure
+    When any actor inspects every interface, export, log and public record
+    Then no individual feedback vote is linkable to its caster
+```
+```
+US-0076  Complete three debates before a candidacy proceeds to the ballot      (FE-032 · EP-07)
+As a member voter, I want every candidate to have addressed local conditions, local problems, and the
+work required before appearing on any election ballot, so that I vote on record rather than on rumour.
+Owner: Aisha Nkemdirim   Priority: Must   Points: 8   Implements: FR-066   Depends on: US-0047
+AC:
+  Scenario: Three debates scheduled and completed
+    Given a major election approaching for office O with three candidates
+    When debates are scheduled
+    Then three debates per candidate are scheduled, covering local conditions, local problems, and the
+      work required respectively
+    And attendance attestation and the post-debate content reference are recorded on the verifiable record
+  Scenario (adversarial): Candidate skips a debate
+    Given a candidate who fails to attend their scheduled local-conditions debate
+    When the absence is recorded
+    Then their absence is publicly visible in their participation record and on their profile
+  Scenario (negative): Ballot without completed debates
+    When the system attempts to place a candidate on a ballot without three completed debates
+    Then the action is refused and the missing debates are named
+```
+```
+US-0077  See no automatic renomination of incumbents      (FE-032 · EP-07)
+As a member, I want every election cycle to start fresh, so that holding office is not the same as
+keeping it without accountability.
+Owner: Aisha Nkemdirim   Priority: Must   Points: 5   Implements: FR-067   Depends on: US-0076
+AC:
+  Scenario: Post-debate member vote determines candidacy
+    Given three completed debates and a post-debate member vote that closes with candidate C net positive
+    When the election ballot is assembled
+    Then candidate C is included because the member vote passed, not because of incumbency
+  Scenario (adversarial): Incumbent attempts automatic advance
+    Given a sitting office-holder whose term is expiring
+    When the next election cycle opens
+    Then they receive no automatic placement on the ballot; they must complete the full debate cycle
+  Scenario (negative): Ballot assembled without post-debate vote
+    When an actor attempts to place any candidate on a ballot without a completed post-debate member vote
+    Then the attempt is refused and logged
 ```
 
 ### EP-08 · Accountability: manifestos, records & mid-term recall
@@ -1271,6 +1455,45 @@ AC:
     When any actor attempts to filter content without a public log entry, or to delete the underlying record
     Then the action is refused
 ```
+```
+US-0071  View my public participation profile      (FE-029 · EP-09)
+As any citizen or observer, I want to see a member's participation record, so that active engagement
+is visible and accountability extends beyond what a person says.
+Owner: Erik Lindqvist   Priority: Must   Points: 5   Implements: FR-062   Depends on: US-0061
+SCR: SCR-21 (provisional)
+AC:
+  Scenario: Profile shows participation without ballot direction
+    Given a verified citizen's profile viewed by any actor
+    When the profile loads
+    Then it shows: elections and ballots participated in (without ballot direction), current and past
+      party memberships, petitions endorsed, proposals authored, and debates attended
+    And no ballot direction is shown for any contested vote
+  Scenario: Office-holder governance vote is an exception
+    Given an elected representative's profile
+    When their office-capacity governance vote is displayed
+    Then the direction is attributed to them per FR-048
+  Scenario (adversarial): No ballot direction findable
+    When an actor inspects every profile element, export and public record combination
+    Then no contested vote direction is discoverable for any ordinary member
+```
+```
+US-0072  Confirm ballot direction is never shown on any profile or export      (FE-029 · EP-09)
+As a privacy-conscious member, I want assurance enforced by test that no platform path reveals how I
+voted, so that social or workplace pressure cannot be exerted using platform data.
+Owner: Dr. Lena Kowalczyk   Priority: Must   Points: 5   Implements: FR-063   Depends on: US-0071
+SCR: SCR-21 (provisional)
+AC:
+  Scenario (adversarial): All surfaces inspected for ballot direction
+    Given any member's ballot direction on any contested vote
+    When every interface, log, export, public record and profile view is examined
+    Then no ballot direction for that member is discoverable
+    And UT-0700 confirms no ballot-direction field is reachable through any client surface
+    And UT-0701 confirms no ballot-direction field is present in any public-record export
+  Scenario: Office-holder exception only
+    Given an elected representative who voted in official office capacity
+    When that specific vote is inspected
+    Then direction is publicly attributed — this is the sole permitted exception governed by FR-048
+```
 
 ### EP-10 · Zero-friction access: cost, recovery, accessibility
 
@@ -1358,6 +1581,47 @@ AC:
     When the app is opened
     Then a clear, actionable message is shown rather than a broken screen
 ```
+```
+US-0081  Recover from a nullifier collision with a seven-day delay and veto      (FE-035 · EP-10)
+As a citizen who has lost their key material but still holds their credential, I want the collision-
+detection path to become a recovery rather than a permanent lock-out, so that losing keys is
+survivable without creating a second identity.
+Owner: Amara Diallo   Priority: Must   Points: 13   Implements: FR-071, FR-072   Depends on: US-0068
+SCR: SCR-19 (provisional — re-confirm with architect)
+AC:
+  Scenario: Collision routes to recovery
+    Given a citizen whose derived nullifier matches an existing record
+    When they re-authenticate with their credential and prove current key ownership
+    Then the system routes them to the recovery flow; no second identity is created
+    And membership, tenure and governance history are confirmed intact
+  Scenario: Seven-day delay and notification
+    Given a recovery initiated
+    When the recovery is submitted
+    Then a seven-day delay is imposed, a notification is sent to the registered channel, and the veto window is open for the full delay
+  Scenario (adversarial): Active-key holder vetoes
+    Given an active-key holder who receives the recovery notification
+    When they submit a veto signal during the seven-day window
+    Then the recovery is aborted and the existing key remains in control
+```
+```
+US-0082  Be barred from voting while a recovery delay is in progress      (FE-035 · EP-10)
+As any member, I want to know that a credential undergoing key rotation cannot vote during the delay,
+so that recovery windows cannot be exploited for vote manipulation.
+Owner: Rafael Duarte   Priority: Must   Points: 5   Implements: FR-072   Depends on: US-0081
+AC:
+  Scenario: Vote attempt during delay is refused
+    Given a credential that has initiated a nullifier-collision recovery and is within the seven-day delay
+    When the credential attempts to cast any vote
+    Then the vote is refused and the reason (recovery delay active) is returned
+  Scenario: Normal voting resumes after delay
+    Given the same credential after the seven-day delay has completed and keys have been rotated
+    When it attempts to cast a vote
+    Then the vote is accepted normally
+  Scenario (adversarial): Attacker races recovery against a ballot
+    Given a live ballot and an attacker who initiates recovery under the original key during the ballot
+    When they attempt to vote under the original key before rotation completes
+    Then the vote is refused while recovery is active; the ballot-scope nullifier prevents double-counting
+```
 
 ## 7. Screen / UX inventory (provisional)
 
@@ -1369,7 +1633,7 @@ AC:
 | Screen | Name | Feature | Implements |
 |--------|------|---------|-----------|
 | SCR-01 | Pre-enrolment disclosure & consent | FE-001 | FR-003, NFR-015, NFR-023 |
-| SCR-02 | Attestor choice & enrolment | FE-001, FE-002 | FR-001, FR-004 |
+| SCR-02 | Attestor choice & enrolment | FE-001, FE-002, FE-034 | FR-001, FR-004, FR-069, FR-070 |
 | SCR-03 | Residency attestation | FE-004 | FR-006, FR-008 |
 | SCR-04 | Party draft editor (eight pillars) | FE-005, FE-006 | FR-010, FR-011, FR-012 |
 | SCR-05 | Publish check & deficiency report | FE-006 | FR-011 |
@@ -1378,7 +1642,7 @@ AC:
 | SCR-08 | Threshold & denominator explainer | FE-008 | FR-009, FR-016 |
 | SCR-09 | Activation record | FE-009 | FR-018 |
 | SCR-10 | Party home & aggregate membership | FE-010 | FR-020, FR-026 |
-| SCR-11 | Join / leave | FE-010 | FR-020, FR-022 |
+| SCR-11 | Join / leave (single-party enforcement) | FE-010, FE-030 | FR-020, FR-022, FR-064 |
 | SCR-12 | Proposal list & detail (tier, quorum, timelock) | FE-013, FE-014, FE-015 | FR-024, FR-025, FR-026, FR-027 |
 | SCR-13 | Ballot booth (cast / re-cast) | FE-017, FE-018 | FR-030, FR-031, FR-032 |
 | SCR-14 | Result & verify-it-yourself | FE-019 | FR-033, FR-055 |
@@ -1386,8 +1650,11 @@ AC:
 | SCR-16 | Election & office record | FE-022 | FR-039, FR-040, FR-041 |
 | SCR-17 | Manifesto, commitments & version history | FE-023 | FR-046, FR-047, FR-048 |
 | SCR-18 | Recall initiation & ballot | FE-024 | FR-042, FR-043, FR-045 |
-| SCR-19 | Account recovery | FE-028 | FR-058, FR-059 |
+| SCR-19 | Account recovery (seedless + collision recovery) | FE-028, FE-035 | FR-058, FR-059, FR-071, FR-072 |
 | SCR-20 | Public transparency dashboard & filtering log | FE-025, FE-026 | FR-054, FR-056, FR-057, NFR-019 |
+| SCR-21 | Public participation profile | FE-029 | FR-062, FR-063 |
+| SCR-22 | Candidate feedback widget | FE-031 | FR-065 |
+| SCR-23 | Debate schedule, attendance & post-debate vote | FE-032 | FR-066, FR-067 |
 
 ## 8. Non-functional backlog items
 
@@ -1410,7 +1677,8 @@ Modified Fibonacci (1, 2, 3, 5, 8, 13). **Reference story: US-0024 "Join a party
 Anything estimated above 13 must be split before it enters a sprint. Estimates are re-baselined once
 the architect publishes Doc 03, because several stories (US-0007, US-0038, US-0041, US-0042, US-0068)
 carry the bulk of the technical unknown and are deliberately estimated pessimistically until then.
-**Total: 70 stories, 396 points** as currently estimated.
+**Total (v1.1.0): 83 stories, approximately 484 points** (v1.0.0 was 70 stories at 396 points;
+13 new stories from CR-v1.1.0 add approximately 88 points at preliminary estimates).
 
 ## 10. Backlog refinement cadence & WIP limits
 
@@ -1436,33 +1704,35 @@ reviewer-qa (the engineer never merges their own work).
 
 ## 12. Traceability
 
-Coverage assertion at v1.0.0 — to be independently verified by the tester in the RTM (Doc 08):
+Coverage assertion at v1.1.0 — to be independently verified by the tester in the RTM (Doc 08):
 
-- **All 42 Must FRs** in Doc 02 are implemented by at least one story above.
-- Must FR → story map: FR-001→US-0001 · FR-002→US-0006, US-0007 · FR-003→US-0002, US-0003 ·
-  FR-004→US-0004, US-0005 · FR-006→US-0008 · FR-007→US-0010 · FR-008→US-0009 · FR-009→US-0019,
-  US-0020 · FR-010→US-0011, US-0012 · FR-011→US-0014, US-0015 · FR-014→US-0016 · FR-016→US-0019 ·
-  FR-018→US-0022 · FR-020→US-0024, US-0026 · FR-021→US-0027 · FR-022→US-0025 · FR-023→US-0029,
-  US-0030 · FR-024→US-0031 · FR-025→US-0033, US-0034 · FR-026→US-0035 · FR-027→US-0036 ·
-  FR-028→US-0037 · FR-030→US-0038 · FR-031→US-0041 · FR-032→US-0042 · FR-033→US-0044, US-0045 ·
-  FR-035→US-0028, US-0040 · FR-036→US-0046, US-0047 · FR-037→US-0049, US-0050 · FR-039→US-0051,
-  US-0052 · FR-040→US-0053 · FR-042→US-0057 · FR-043→US-0058 · FR-045→US-0060 · FR-047→US-0055 ·
-  FR-051→US-0028 · FR-054→US-0061 · FR-056→US-0064, US-0065 · FR-058→US-0068 · FR-059→US-0069 ·
-  FR-060→US-0066 · FR-061→US-0067.
+- **All 54 Must FRs** in Doc 02 v1.1.0 are implemented by at least one story.
+- Must FR → story map (v1.0.0 carries forward unchanged): FR-001→US-0001 · FR-002→US-0006, US-0007 ·
+  FR-003→US-0002, US-0003 · FR-004→US-0004, US-0005 · FR-006→US-0008 · FR-007→US-0010 ·
+  FR-008→US-0009 · FR-009→US-0019, US-0020 · FR-010→US-0011, US-0012 · FR-011→US-0014, US-0015 ·
+  FR-014→US-0016 · FR-016→US-0019 · FR-018→US-0022 · FR-020→US-0024, US-0026 · FR-021→US-0027 ·
+  FR-022→US-0025 · FR-023→US-0029, US-0030 · FR-024→US-0031 · FR-025→US-0033, US-0034 ·
+  FR-026→US-0035 · FR-027→US-0036 · FR-028→US-0037 · FR-030→US-0038 · FR-031→US-0041 ·
+  FR-032→US-0042 · FR-033→US-0044, US-0045 · FR-035→US-0028, US-0040 · FR-036→US-0046, US-0047 ·
+  FR-037→US-0049, US-0050 · FR-039→US-0051, US-0052 · FR-040→US-0053 · FR-042→US-0057 ·
+  FR-043→US-0058 · FR-045→US-0060 · FR-047→US-0055 · FR-051→US-0028 · FR-054→US-0061 ·
+  FR-056→US-0064, US-0065 · FR-058→US-0068 · FR-059→US-0069 · FR-060→US-0066 · FR-061→US-0067.
+- **v1.1.0 additions (CR-v1.1.0):** FR-062→US-0071 · FR-063→US-0072 · FR-064→US-0073 ·
+  FR-065→US-0074, US-0075 · FR-066→US-0076 · FR-067→US-0077 · FR-068→US-0078 ·
+  FR-069→US-0079 · FR-070→US-0080 · FR-071→US-0081 · FR-072→US-0082 · FR-073→US-0083.
 - Should/Could FRs covered: FR-005 (deferred — see gap note), FR-012→US-0013 · FR-013→US-0021 ·
   FR-015→US-0017 · FR-017→US-0018 · FR-019→US-0023 · FR-029→US-0032 · FR-034→US-0043 ·
   FR-038→US-0048, US-0049 · FR-041→US-0053 · FR-044→US-0059 · FR-046→US-0054 · FR-048→US-0056 ·
   FR-055→US-0062, US-0063 · FR-057→US-0065.
-- **Known gaps at v1.0.0 (declared, not hidden):** `FR-005` (credential revocation and appeal),
-  `FR-049`/`FR-050`/`FR-052` (treasury caps, ledger, spend approval) and `FR-053` (party fork) have
-  **no story yet**. All four are Should or Could. They MUST be storied before their target sprint,
-  and the tester MUST record them as open non-Must RTM rows rather than silently absent. Owner of
-  closing this gap: **Priya Raghunathan**.
-- `DES-###` links: **not yet assigned** — added after Gate 1 when Doc 03 exists.
+- **Known gaps (carried from v1.0.0, declared, not hidden):** `FR-005` (credential revocation and
+  appeal), `FR-049`/`FR-050`/`FR-052` (treasury caps, ledger, spend approval) and `FR-053` (party
+  fork) have **no story yet**. All are Should or Could. They MUST be storied before their target
+  sprint. Owner: **Priya Raghunathan**.
+- `DES-###` links: **not yet assigned** — added after Gate 1 when Doc 03 is updated.
 - `TC-####` links: **not yet assigned** — added by the tester in Doc 07.
 
 ---
 
 ### Downstream
 Stories are built per Doc 06 (Coding & UT), verified by Doc 07 (Test Cases), and reconciled in
-Doc 08 (RTM). No story may be started before Gate 1 clears.
+Doc 08 (RTM). No story may be started before Gate 1 re-affirmation at v1.1.0 clears.

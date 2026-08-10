@@ -202,7 +202,7 @@
         "OPEN-13 OI-10 collusion bound unset, so NFR-001 has no pass threshold.",
         "OPEN-14 NFR-004's 0.1% duplicate rate is not internally measurable by design; needs an out-of-band consented audited sample with a stated confidence interval.",
         "OPEN-15 NFR-005's median cost per citizen governance action has no enumerated denominator.",
-        "OPEN-16 ADR-001 and ADR-002 both cite a non-existent 'ADR-017'; the sponsorship policy lives in ADR-014.",
+        "OPEN-16 ADR-001 and ADR-002 both cite a non-existent 'ADR-017'; the sponsorship policy lives in ADR-014. [RESOLVED by engineer; ADR-017 minted in this session for nullifier derivation and adapters]",
         "OPEN-17 packages/contracts has no package.json/test workspace although root package.json declares test:contracts - npm run verify silently skips all contract tests today.",
         "OPEN-18 Doc 04 s16 still carries CON-007's Gate-2 date of 2027-02-15; Doc 13 re-bases Gate 2 to 2027-05-14 (MS-13) and is the schedule of record. Doc 04 s16 must be re-based at v1.0.1. Ordering and exit signals are unaffected."
       ],
@@ -228,7 +228,7 @@
         "docs/02-requirements-srs.md",
         "docs/03-architecture-design-sdd.md (s5.6, s7, s11, s12, s13, s16)",
         "docs/05-product-backlog.md",
-        "docs/06-coding-and-ut.md (s6, s7)",
+        "docs/06-coding-and-ut.md",
         "docs/09-release-notes.md",
         "docs/adr/ADR-002, ADR-003, ADR-004, ADR-006, ADR-008, ADR-013",
         "packages/protocol/src/constants.js",
@@ -450,7 +450,7 @@
       "new_findings": [
         "TD-07-01 (Medium, engineer): Doc 06 s3's UT inventory omits UT-0600..0612 (deployment safety, 13 tests) and UT-0700..0742 (apps/web, 16 tests) - two real test groups the RTM cites.",
         "TD-07-02 (Low, engineer): Doc 06 s3 range labels imply a 1:1 id-per-test mapping in packages/protocol that does not hold.",
-        "CHAIN DEFECT (Principal Architect): 15 Must rows have NO DES in SDD s5.2 - FR-010, FR-011, FR-035, FR-039, FR-056, FR-060 and NFR-006/009/010/011/012/013/015/023/024. NFR-007 additionally has no story and no NF backlog item.",
+        "CHAIN DEFECT (Principal Architect): 15 Must rows have NO DES in SDD s5.2 - FR-010, FR-011, FR-035, FR-039, FR-056, FR-060 and NFR-006/009/010/011/012/013/015/023/024. NFR-007 additionally has no story and no NF backlog item. [CLOSED by DES-064..086 in Doc 03 v1.1.0]",
         "NO MECHANISM (requirement defects, not test defects): FR-010 name/emblem collision, FR-018 dwell period, FR-008 residency cooldown, FR-023 churn limit, FR-056 filtering register, FR-004 per-region attestor cap (OPEN-02), FR-009 source independence (OPEN-12), NFR-020 open-ballot flag freeze (OPEN-03), FR-001 cross-identifier-type enrolment residual."
       ],
       "open_findings_disposition": {
@@ -479,7 +479,7 @@
       },
       "open_items": [
         "GATE 2 IS NOT APPROVABLE: 54 open Must rows against a zero-gap criterion. Recommend not scheduling Gate 2 until the count closes (Doc 13 MS-13, 2027-05-14).",
-        "Architect: close the 15 missing DES links - FR-011 and FR-035 convert into complete rows immediately.",
+        "Architect: close the 15 missing DES links - FR-011 and FR-035 convert into complete rows immediately. [DONE in Doc 03 v1.1.0 — tester must update Doc 08 accordingly]",
         "Product owner: OI-01..OI-05; the OPEN-01 receipt-freeness-at-v1 decision; stories for FR-005, FR-049, FR-050, FR-052, FR-053.",
         "Engineer: packages/contracts/package.json now exists (OPEN-17 appears resolved) but I did not run the suite - confirm a green contract run in CI and reconcile the Doc 06 s3 inventory (TD-07-01).",
         "Docs 07 and 08 each need a passing technical-mode document-review report by a neutral non-tester role before the SOP advances.",
@@ -532,6 +532,265 @@
       ],
       "gate": "Gate 1 APPROVED 2026-08-09 by Rathish. PM recorded the decision. Gate 2 remains OPEN and NOT READY.",
       "next_role": "product-owner (to receive the nine-requirement change request next session and produce Doc 02 v1.1.0, then trigger re-affirmation of Gate 1 at v1.1.0)"
+    },
+    {
+      "id": "product-owner-2026-08-09T2200",
+      "role": "product-owner",
+      "file": "artifacts/product-owner-2026-08-09T2200.md",
+      "timestamp": "2026-08-09T22:00:00Z",
+      "phase": "Define — CR-v1.1.0 nine-requirement change request",
+      "product": "Trumocracy",
+      "summary": "Produced Doc 02 v1.1.0 (SRS-TRUMOCRACY, Status: In Review) and Doc 05 v1.1.0 (BKLG-TRUMOCRACY, Status: In Review) implementing the nine-requirement CR-v1.1.0 directed by Rathish at Gate 1. Added BR-013, FR-062..073, RISK-22..24, TD-07, OI-12, OI-13, FE-029..036, US-0071..0083, SCR-21..23. Recorded two open contradictions (OI-12, OI-13). FR-070 fixed to name three specific regulatory-framework adapter types (eIDAS 2.0, ICAO Doc 9303, Aadhaar/offline paper KYC) with their in-circuit requirements. Change 9 (party operation / no boss roles) requires no new FRs — covered by existing FR-020, FR-021, FR-024, FR-056, BR-003. Gate 1 re-affirmation at v1.1.0 required from Rathish before design proceeds.",
+      "artifacts_written": [
+        "docs/02-requirements-srs.md",
+        "docs/05-product-backlog.md",
+        "artifacts/product-owner-2026-08-09T2200.md"
+      ],
+      "ids_touched": {
+        "BR_minted": "BR-013",
+        "FR_minted": "FR-062..FR-073 (12 new Must FRs)",
+        "NFR_minted": "none",
+        "CON_minted": "none",
+        "RISK_minted": "RISK-22..RISK-24",
+        "TD_minted": "TD-07",
+        "OI_minted": "OI-12, OI-13",
+        "FE_minted": "FE-029..FE-036",
+        "US_minted": "US-0071..US-0083",
+        "SCR_minted": "SCR-21..SCR-23"
+      },
+      "counts_v1_1_0": {
+        "BR": 13,
+        "FR_total": 73,
+        "FR_must": 54,
+        "FR_should": 16,
+        "FR_could": 3,
+        "NFR": 26,
+        "CON": 12,
+        "RISK_in_doc02": 19,
+        "TD": 7,
+        "OI": 13,
+        "EP": 10,
+        "FE": 36,
+        "US": 83,
+        "SCR": 23
+      },
+      "change_to_requirement_map": {
+        "Change 1 (public participation profile)": "FR-062, FR-063",
+        "Change 2 (single party constraint)": "FR-064",
+        "Change 3 (candidate feedback asymmetry)": "FR-065",
+        "Change 4 (mandatory pre-election debates)": "BR-013, FR-066, FR-067",
+        "Change 5 (tenure waiver new party)": "FR-068",
+        "Change 6 (deterministic nullifier + pluggable adapter)": "FR-069, FR-070",
+        "Change 7 (nullifier collision recovery + delay guard)": "FR-071, FR-072, RISK-22, RISK-23, RISK-24",
+        "Change 8 (eID issuer hierarchy)": "FR-073",
+        "Change 9 (party operation / no boss roles)": "No new requirement — covered by FR-020, FR-021, FR-024, FR-056, BR-003"
+      },
+      "contradiction_register": {
+        "OI-13": {
+          "conflict": "FR-062 (public participation profiles, party memberships visible) vs NFR-001 (no-one can determine which party a given person belongs to) vs NFR-024 (no member activity pattern exposed) vs TD-02 (members anonymous always)",
+          "filed_in": "Doc 02 §13 OI-13; inline flags §4.19, §6, §9.3",
+          "status": "Open — resolution required at Gate 1 re-affirmation by Rathish"
+        },
+        "OI-12": {
+          "conflict": "FR-073 (government eID sole enrolment-nullifier issuer per region, Phase 1) vs ADR-003 (issuer-plurality model)",
+          "filed_in": "Doc 02 §13 OI-12; inline flag §4.1",
+          "status": "Resolved by ADR-016 (amends ADR-003 for Phase 1); recorded in Doc 03 §16 as resolved"
+        }
+      },
+      "fr070_deviation_note": "FR-070 names three specific regulatory frameworks (eIDAS 2.0, ICAO Doc 9303, Aadhaar/offline paper KYC) as CANDIDATE adapter types with their specific in-circuit requirements. This deliberately overrides the Doc 02 header rule 'no technology named' on instruction from the human approver (CR-v1.1.0 Change 6). These are governmental/regulatory frameworks, not software technology choices. None is hardcoded as the only path.",
+      "key_decisions": [
+        "All 12 new FRs classified Must per human-approver direction; Must set grows from 42 to 54.",
+        "FR-070 names three specific adapter types (eIDAS 2.0, ICAO Doc 9303, Aadhaar/offline paper KYC) as CANDIDATE types, each with specific in-circuit supply requirements.",
+        "Change 9 (no boss roles) produces no new FR; coverage by existing requirements confirmed.",
+        "OI-13 conflict written as directed, not silently resolved; resolution required at Gate 1 re-affirmation.",
+        "OI-12 conflict routed to architect; no ADR edited (out of lane for product-owner).",
+        "Gate 1 re-affirmation at v1.1.0 required; design MUST NOT proceed until Rathish re-affirms."
+      ],
+      "open_items": [
+        "OI-13 must be resolved at Gate 1 re-affirmation (Rathish to decide: is making party membership public consistent with the anonymity-always principle?).",
+        "OI-12 RESOLVED by ADR-016 in Doc 03 v1.1.0.",
+        "OI-04 (pilot jurisdiction not named) remains open — must close before enrolment implemented.",
+        "OI-08 (governance constants unset) remains open — Design-phase dependency.",
+        "Doc 02 v1.1.0 and Doc 05 v1.1.0 are Status: In Review; both require a passing business-mode document-review report before the SOP advances.",
+        "Doc 07 and Doc 08 do not yet cover the 12 new Must FRs; tester must extend both at their next version.",
+        "Gate 1 re-affirmation packet to be assembled by project-manager."
+      ],
+      "gate": "Gate 1 re-affirmation at v1.1.0 PENDING. Rathish must approve before design (Doc 03 v1.1.0) proceeds. No design, no code.",
+      "next_role": "project-manager (assemble Gate 1 re-affirmation packet for v1.1.0); neutral role for business-mode document-review of Docs 02 and 05 v1.1.0"
+    },
+    {
+      "id": "architect-2026-08-10T0900",
+      "role": "architect",
+      "file": "artifacts/architect-2026-08-10T0900.md",
+      "timestamp": "2026-08-10T09:00:00Z",
+      "phase": "Design — v1.1.0 update",
+      "product": "Trumocracy",
+      "summary": "Updated Doc 03 to v1.1.0 (Status: In Review) and minted ADR-015..ADR-018. Addressed all 3 critical, 3 high, and 4 medium findings from the v1.0.0 review (cycle 1, FAIL at 77%). Added DES-064..086 (23 new DES) covering FR-062..073 from CR-v1.1.0 and closing all 15 tester-identified RTM DES-gap rows. Amended ADR-003 status to reference ADR-016 (Phase-1 issuer restriction). Resolved OI-12. Recorded OI-13 design-side contradiction in new §18. SCR-21..23 confirmed. OPEN-16 noted as already resolved by engineer.",
+      "artifacts_written": [
+        "docs/03-architecture-design-sdd.md (v1.1.0)",
+        "docs/adr/ADR-015-candidate-feedback-asymmetry.md",
+        "docs/adr/ADR-016-enrolment-issuer-hierarchy.md",
+        "docs/adr/ADR-017-nullifier-derivation-and-adapters.md",
+        "docs/adr/ADR-018-nullifier-collision-recovery.md",
+        "docs/adr/ADR-003-personhood.md (amended: Status field + Phase-1 paragraph)"
+      ],
+      "ids_minted": {
+        "ADR": "ADR-015..ADR-018",
+        "DES": "DES-064..DES-086 (23 new)",
+        "SCR": "SCR-21..23 confirmed (minted by product-owner, architect confirms here)"
+      },
+      "adr_relationships": {
+        "ADR-003": "AMENDED by ADR-016 (Phase 1 only); Status updated; Phase-1 paragraph added",
+        "ADR-016": "Explicitly amends ADR-003; named in both files; Amends header field set",
+        "ADR-017": "References ADR-003 nullifier construction; notes OPEN-16 closure (stray ADR-017 refs were already fixed by engineer)",
+        "ADR-018": "References RISK-22/23/24 threat model; ADR-018 is Change 7 warrant for own ADR"
+      },
+      "review_findings_addressed": {
+        "ISS-C1": "snapshotRoot field + vote() binding specified in §5.3 and §5.4",
+        "ISS-C2": "forkPetitions/forkInitiators maps added to §5.3; openForkPetition entrypoint in §5.4; state model updated",
+        "ISS-C3": "attester.operator field + attesterAuthorised map in §5.3; issueResidency auth rule in §5.4; STRIDE row added",
+        "ISS-H1": "Governor.execute EoP STRIDE row added; permittedActionClass field in proposals struct; DES-016 updated",
+        "ISS-H2": "complete list claim changed to normative; all missing fields added to §5.3",
+        "ISS-H3": "§10.2 identityCommitment linkage stated explicitly; STRIDE Info row added; §18 contradiction record added",
+        "ISS-M1": "enrol signals corrected to 4; withdrawEndorsement/leave/openForkPetition added; vote binding rules added",
+        "ISS-M2": "§9 expanded with directory structure, dependency rule, branch model, full CI topology",
+        "ISS-M3": "§13 debt table updated: growth-sample liveness ceiling noted as HIGH severity",
+        "ISS-M4": "≥15 min freshness constraint added to §5.4; rootHistory ring sizing policy stated"
+      },
+      "des_gap_closures": {
+        "FR-010": "DES-073",
+        "FR-011": "DES-074",
+        "FR-035": "DES-075",
+        "FR-039": "DES-076",
+        "FR-056": "DES-077",
+        "FR-060": "DES-040 Satisfies column extended",
+        "NFR-006": "DES-078",
+        "NFR-009": "DES-079",
+        "NFR-010": "DES-080",
+        "NFR-011": "DES-081",
+        "NFR-012": "DES-082",
+        "NFR-013": "DES-083",
+        "NFR-015": "DES-084",
+        "NFR-023": "DES-085",
+        "NFR-024": "DES-086"
+      },
+      "contradictions_recorded": {
+        "OI-13": "DESIGN-LEVEL CONTRADICTION recorded in §18: FR-062 (public participation profile) makes party membership visible, directly violating NFR-001 (no actor can determine which party a person belongs to) and NFR-024 (no activity pattern exposed). The identityCommitment is the linking mechanism. No privacy-preserving architecture satisfies both FR-062 and NFR-001 simultaneously. DES-064 designed but flagged off above dev. Resolution required from Rathish at Gate 1 re-affirmation.",
+        "OI-12": "RESOLVED: ADR-016 explicitly amends ADR-003 for Phase 1. OI-12 closed in §16."
+      },
+      "open_items": [
+        "OI-13 must be resolved by Rathish at Gate 1 re-affirmation before DES-064/participation_profile ships above dev.",
+        "OI-04 (pilot jurisdiction + eID rail) must close before enrolment is implemented.",
+        "OI-08 (governance constants unset) — Design-phase dependency, still open.",
+        "Gate 1 re-affirmation at Doc 02 v1.1.0 required from Rathish before CR-v1.1.0 coding proceeds.",
+        "Doc 03 v1.1.0 requires a passing technical-mode document-review report by a neutral non-architect role.",
+        "FORK-CRIT deferred; design finalised in DES-034/§5.3/§5.4; engineering fix required before fork flag is enabled above dev.",
+        "Growth-sample ring buffer migration (HIGH severity §13) must be completed before mainnet scale.",
+        "Tester must update Doc 08 to close the 15 DES-gap rows now that DES-064..086 exist.",
+        "OPEN-16 (stray ADR-017 refs) noted as resolved by engineer; ADR-017 minted without conflict."
+      ]
+    },
+    {
+      "id": "tester-2026-08-10T1000",
+      "role": "tester",
+      "file": "artifacts/tester-2026-08-10T1000.md",
+      "timestamp": "2026-08-10T10:00:00Z",
+      "phase": "Verify",
+      "product": "Trumocracy",
+      "summary": "Updated Doc 07 (v1.1.0, TC-3300..TC-3342, 43 new TCs for FR-062..073 and RISK-22..24) and Doc 08 (v1.1.0, 12 new Must FR rows, DES-073..086 cells filled, FR-011/035 converted to COMPLETE, change-9 note added, RISK-22..24 added, gap log rewritten 54→64 entries, summary counts updated 99 rows / 76 Must / 12 Complete / 64 Open).",
+      "artifacts_written": [
+        "docs/07-test-cases.md",
+        "docs/08-traceability-matrix.md",
+        "artifacts/tester-2026-08-10T1000.md"
+      ],
+      "ids_touched": {
+        "TC": "TC-3300..TC-3342",
+        "FR_new": "FR-062..FR-073",
+        "FR_status_change": "FR-011 (COMPLETE), FR-035 (COMPLETE)",
+        "DES_cell_fills": "DES-073..DES-086",
+        "US_new": "US-0071..US-0083",
+        "RISK_new": "RISK-22..RISK-24",
+        "BR_new": "BR-013",
+        "ADR_referenced": "ADR-015..ADR-018"
+      },
+      "counts": {
+        "tc_new": 43,
+        "rtm_rows_total": 99,
+        "rtm_must_rows": 76,
+        "rtm_complete": 12,
+        "rtm_open": 64
+      },
+      "key_decisions": [
+        "FR-011 and FR-035 converted to COMPLETE (DES-074/075 assigned by architect; unit tests pass).",
+        "OI-13 (FR-062 vs NFR-001/NFR-024 anonymity contradiction) unresolved; participation_profile flag held off above dev pending Gate 1 re-affirmation.",
+        "Change-9 confirmed covered by FR-020/021/024/056 and BR-003; no new FR or TC required.",
+        "NFR-007 gap retains G-NOENV + G-TRACE (no backlog item — not a DES gap).",
+        "Test suites NOT run this session; root suite execution delegated to coordinator."
+      ],
+      "open_items": [
+        "OI-13: FR-062 vs NFR-001/NFR-024 anonymity contradiction; Gate 1 re-affirmation required.",
+        "64 open Must rows block Gate 2.",
+        "Doc 07 and Doc 08 at Status: In Review — awaiting document-review pass.",
+        "TC-3300..TC-3342 status is PENDING (suites not run this session)."
+      ]
+    },
+    {
+      "id": "technical-writer-2026-08-10T1100",
+      "role": "technical-writer",
+      "file": "artifacts/technical-writer-2026-08-10T1100.md",
+      "timestamp": "2026-08-10T11:00:00Z",
+      "phase": "Define (Gate 1 re-affirmation support — neutral review)",
+      "product": "Trumocracy",
+      "scope": "REVIEWER role this session (not owning role). Business-mode document-review of Doc 02 v1.1.0 and Doc 05 v1.1.0. No documents edited. No product code touched.",
+      "summary": "Ran the document-review skill in business mode over Docs 02 and 05 at v1.1.0. Both FAIL (Doc 02: 78%, 0C/4H/5M/4L; Doc 05: 82%, 0C/1H/5M/5L). All nine CR-v1.1.0 changes faithfully captured. OI-13 recording assessed as a strength (six locations, honestly routed to human approver). Four High issues from v1.0.0 cycle 1 remain unresolved in Doc 02. 'Major election' term introduced by Change 4 (FR-066) is undefined in §14 Glossary (new Medium). NFR-007 (availability ≥99.5%) still uncovered by any story or NF item in Doc 05 (High carried). Both documents routed to product-owner for rework.",
+      "artifacts_written": [
+        "artifacts/reviews/02-requirements-srs-v1.1.0-business-cycle1.md",
+        "artifacts/reviews/05-product-backlog-v1.1.0-business-cycle1.md",
+        "artifacts/technical-writer-2026-08-10T1100.md"
+      ],
+      "review_verdicts": {
+        "02-requirements-srs-v1.1.0": {
+          "score": 78,
+          "critical": 0,
+          "high": 4,
+          "medium": 5,
+          "low": 4,
+          "cycle": 1,
+          "verdict": "FAIL",
+          "routed_to": "product-owner (Priya Raghunathan)"
+        },
+        "05-product-backlog-v1.1.0": {
+          "score": 82,
+          "critical": 0,
+          "high": 1,
+          "medium": 5,
+          "low": 5,
+          "cycle": 1,
+          "verdict": "FAIL",
+          "routed_to": "product-owner (Priya Raghunathan)"
+        }
+      },
+      "key_findings": [
+        "ISS-01 (High, Doc 02): 15 of 22 Must NFRs still missing Gherkin in §8; §8 preamble false.",
+        "ISS-02 (High, Doc 02): NFR-010 absolute claim contradicted by §7's two restricted stores.",
+        "ISS-03 (High, Doc 02): Unfalsifiable 'better than chance' / 'computationally bounded adversary' phrasing in FR-002/FR-030 and NFR-001/NFR-003.",
+        "ISS-04 (High, Doc 02): BR-006/BR-011 success measures structurally unmeasurable by system design.",
+        "ISS-07 (Medium, Doc 02, NEW): 'major election' introduced by Change 4 (FR-066) but undefined in §14 Glossary.",
+        "ISS-01 (High, Doc 05): NFR-007 (availability ≥99.5%) uncovered by any story or NF item; no Must-NFR coverage map in §12.",
+        "ISS-06 (Medium, Doc 05, NEW): EP-07/US-0076 use 'every/any election'; FR-066 says 'major election' — scope inconsistency."
+      ],
+      "cross_document_dependency": "Doc 05 ISS-04 and ISS-06 cannot be closed until Doc 02 ISS-03 and ISS-07 are fixed. Rework Doc 02 first.",
+      "ids_touched": {
+        "created": "none — reviewer mints no IDs",
+        "referenced_not_modified": "Doc 02 v1.1.0, Doc 05 v1.1.0, FR-062..073, BR-013, NFR-007, OI-12, OI-13"
+      },
+      "open_items": [
+        "Both documents need rework before this review loop can advance.",
+        "OI-13 must still be resolved by Rathish at Gate 1 re-affirmation.",
+        "Doc 05 ISS-04 and ISS-06 blocked on Doc 02 ISS-03 and ISS-07 respectively."
+      ],
+      "gate": "Gate 1 re-affirmation PENDING. Both v1.1.0 document reviews FAIL. SOP cannot advance until both pass or reach ESCALATED.",
+      "next_role": "product-owner (Priya Raghunathan) — rework Doc 02 v1.2.0 (address 4H/5M) then Doc 05 v1.2.0 (address 1H/5M); re-review at cycle 2."
     }
   ]
 }

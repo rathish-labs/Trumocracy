@@ -2,13 +2,14 @@
 
 ```
 Document ID:   TC-TRUMOCRACY
-Version:       1.0.0
+Version:       1.1.0
 Status:        In Review
 Owner:         Ji-woo Park — Test Lead (tester)
 Source:        MTP-TRUMOCRACY (docs/04-test-strategy-master-plan.md) · BKLG-TRUMOCRACY (docs/05-product-backlog.md)
                SRS-TRUMOCRACY §8 Gherkin (docs/02-requirements-srs.md) · SDD-TRUMOCRACY §5.2, §11 (docs/03-architecture-design-sdd.md)
                CODE-TRUMOCRACY (docs/06-coding-and-ut.md)
-Last updated:  2026-08-09
+Last updated:  2026-08-10
+Changelog:     v1.1.0 (2026-08-10) — TC-3300..TC-3342 minted for FR-062..073 (CR-v1.1.0); TS-CR1 suite added; RTM rows added in Doc 08.
 ```
 
 > **Based on:** IEEE 829 test-case specification. **Produced in:** Verify. **Approved at:** Gate 2.
@@ -140,9 +141,10 @@ TC ranges are the ones **reserved in Doc 04 §14**; the tester assigns the actua
 | `TS-ADV-01…16` | **Adversarial, one per RISK** | mixed | RISK-01…RISK-16 | TC-2600–TC-2752 | 43 | 24 | 19 |
 | `TS-EXPL` | Exploratory charters | L7 | one per EP-01…EP-10 | TC-3200–TC-3209 | 10 | 0 | 10 |
 | `TS-UAT` | User acceptance & usability | L7 | NFR-022, Doc 01 §B journey | TC-3250–TC-3253 | 4 | 0 | 4 |
-| | | | **Total** | | **255** | **143** | **112** |
+| `TS-CR1` | CR-v1.1.0 — FR-062..073; RISK-22..24 | L3–L6 | FR-062..073 · BR-013 | TC-3300–TC-3342 | 43 | 0 | 43 |
+| | | | **Total** | | **298** | **143** | **155** |
 
-**143 of 255 cases have an implementing automated test.** Of those 143, **72 were executed and
+**143 of 298 cases have an implementing automated test.** (43 new TC-3300..TC-3342 are all Blocked — no implementing code in this drop.) Of those 143, **72 were executed and
 observed passing by the tester this session**; **55** are inherited-green contract cases; **16** are
 `apps/web` component cases that exist but were not executed this session.
 
@@ -513,7 +515,7 @@ consequence.
 
 | Check | Verdict |
 |---|---|
-| Every Must FR has ≥ 1 functional case | **Yes** — all 42 Must FRs have at least one `TC` in `TS-FUNC` or its suite equivalent. 14 of those cases are Blocked or No-mechanism. |
+| Every Must FR has ≥ 1 functional case | **Yes** — all 54 Must FRs have at least one `TC`. The 12 new Must FRs (FR-062..073) are covered by TC-3300..TC-3342 in `TS-CR1`; all are Blocked (capabilities not yet implemented in this drop). The original 14 Blocked/No-mechanism cases are unchanged. |
 | Every NFR has a measuring case | **Yes for all 26** — but 22 of the 26 measuring cases cannot execute today. |
 | Every SDD §11 failure mode has a negative/edge case | **Yes** — all 26 §11 rows map to a `TS-EDGE` or `TS-ADV` case (TC-1001…TC-1048, TC-2600…TC-2752). |
 | Boundary values covered (min, max, just-over, empty, null) | **Yes** — exact tie (TC-1028), 999/1000 anonymity (TC-1950/1953), tenure ±1 s (TC-1031), ±5% drift (TC-1012), 5-source minimum (TC-1013), 100% overshoot (TC-0025). |
@@ -588,12 +590,12 @@ defect waiting to come back.**
 
 | Measure | Value |
 |---|---|
-| Cases designed | **255** |
+| Cases designed | **298** |
 | Cases with an implementing automated test | **143** (56%) |
 | Cases executed and observed passing this session | **72** |
 | Cases inherited green from Doc 06 (contract suite) | **55** |
 | Cases automated but not executed this session (`apps/web`) | **16** |
-| Cases **Blocked** (code, circuit, environment or instrument absent) | **97** |
+| Cases **Blocked** (code, circuit, environment or instrument absent) | **140** |
 | Cases **No mechanism** (the product has nothing to test) | **10** |
 | Cases **Manual — not run** | **12** |
 | Observed test failures | **0** |
@@ -629,3 +631,110 @@ numbers.
 ### Downstream
 Pass/fail rolls into release readiness (Doc 04 §10.2, Docs 09–10) and the RTM (Doc 08).
 `reviewer-qa` independently verifies the RTM and signs the merge; the tester does not.
+
+
+---
+
+## 5.2 `TS-CR1` — CR-v1.1.0 cases: FR-062..073 (TC-3300–TC-3342)
+
+**Context.** These 43 cases derive from the twelve new Must FRs introduced by the CR-v1.1.0 nine-requirement change request (Doc 02 v1.1.0) and their corresponding DES elements (DES-064..072, Doc 03 v1.1.0). **None of the underlying capabilities exists in deployed code in this Phase-1 drop.** Every case is Blocked with the phase and reason stated per row, consistent with the §0.1 vocabulary. The two approver-mandated composition cases are marked **[MANDATED]** in their titles.
+
+**Shared preconditions.** Same fixture infrastructure as §3.1. Feature flags `participation_profile`, `single_party_membership`, `candidate_feedback`, `elections`, `debates`, `recovery` all off above dev (Doc 03 §15; DES-064..072 designed, not shipped).
+
+### TC-3300..TC-3302 — FR-062 public participation profile (DES-064 · US-0071 · SCR-21)
+
+| TC | Title | Verifies | Expected result | Status |
+|---|---|---|---|---|
+| TC-3300 | Participation profile loads all five field groups: elections participated in (no direction), party memberships, endorsed petitions, authored proposals, attended debates | US-0071 · FR-062 | All five field groups present; ballot direction absent from every record | **Blocked — OI-13 unresolved; participation_profile flag off above dev (DES-064)** |
+| TC-3301 | Profile for a contested-ballot voter reveals no ballot direction | US-0071 · FR-062, FR-063 | No direction field or inferred direction signal in any profile view | **Blocked — OI-13 unresolved (DES-064)** |
+| TC-3302 | Elected representative office-capacity vote publicly attributed on their profile (FR-048 exception) | US-0071 · FR-062, FR-048 | Direction visible only for office-capacity votes; ordinary member ballot directions hidden | **Blocked — Phase 3 (Elections not implemented; DES-067 not shipped)** |
+
+### TC-3303..TC-3306 — FR-063 ballot-direction MUST-NOT prohibition (DES-064 · US-0072)
+
+| TC | Title | Verifies | Expected result | Status |
+|---|---|---|---|---|
+| TC-3303 | Ballot direction not reachable through any client surface — consistent with UT-0700 | US-0072 · FR-063 | No ballot-direction field in any client-accessible endpoint or rendered view | **Not run** — apps/web · UT-0700 exists; suite not executed this session |
+| TC-3304 | Ballot direction absent from any public-record export — consistent with UT-0701 | US-0072 · FR-063 | No ballot-direction field in any event log, export or indexed record | **Not run** — apps/web · UT-0701 exists; suite not executed this session |
+| TC-3305 | Ballot direction not inferrable from any combination of public data (profile views, public records, derived datasets) | US-0072 · FR-063 | Adversarial union of all public fields yields no directional signal per the MUST-NOT prohibition | **Blocked — G-UI/G-PHASE3: full no-inference audit requires a deployed system with real ballots** |
+| TC-3306 | Elected office-holder office-capacity vote is the sole permitted ballot-direction disclosure (FR-048 exception boundary) | US-0072 · FR-063, FR-048 | Office-capacity vote direction attributable; all ordinary member ballot directions hidden; boundary enforced | **Blocked — Phase 3 (Elections not implemented; exception boundary requires office-holder state)** |
+
+### TC-3307..TC-3309 — FR-064 single party membership constraint (DES-065 · US-0073)
+
+| TC | Title | Verifies | Expected result | Status |
+|---|---|---|---|---|
+| TC-3307 | Joining party B voids party A membership automatically; tenure clock resets to zero | US-0073 · FR-064 | Party A membership-scope nullifier revoked; party B active; tenure = 0 | **Blocked — Phase 3 (DES-065 global membership-scope nullifier not yet coded)** |
+| TC-3308 | Simultaneous membership in two parties via any mechanism (same session, different device, different address) fails | US-0073 · FR-064 | No dual-membership state; every bypass path rejected | **Blocked — Phase 3 (DES-065 not coded)** |
+| TC-3309 | **[MANDATED (a)]** Leave party A, join party B, attempt to vote in party B before one month elapses: vote rejected as tenure not yet met; FR-068 waiver is inapplicable because the tenure clock reset to 0 on party switch | US-0073, US-0078 · FR-064, FR-068 | Join-B sets tenure = 0; vote at day 15 rejected with tenure-not-met; FR-068 waiver does NOT apply (waiver relaxes tenure for the party duration, not for a member whose clock reset on switching) | **Blocked — Phase 3 (DES-065 + DES-068; cross-FR interaction; no implementing code in this drop)** |
+
+### TC-3310..TC-3312 — FR-068 tenure waiver for new parties (DES-068 · US-0078)
+
+| TC | Title | Verifies | Expected result | Status |
+|---|---|---|---|---|
+| TC-3310 | Member who joined before party activation votes in the party first 3 calendar months; waiver applies; vote accepted without one-month tenure | US-0078 · FR-068 | Vote accepted; newPartyWaiverActive(partyId) = true; one-month tenure check bypassed | **Blocked — Phase 3 (DES-068 not coded)** |
+| TC-3311 | **[MANDATED (b)]** Growth surge of 10,000 new members in month 2 while waiver is active; snapshot mechanism (FR-028) and churn-rate limits (FR-023) raise the quorum bar identically to a non-waivered party; UT-0220 growth-surge defence confirmed active | US-0078 · FR-068, FR-023, FR-028 | newPartyWaiverActive = true; proposal snapshot locked; surge-adjusted quorum bar raised per UT-0220 logic; waiver touches ONLY the tenure check, never anti-capture parameters | **Blocked — Phase 3 (DES-068 + DES-014/DES-019 anti-capture interaction; no cross-contract integration test in this drop)** |
+| TC-3312 | Anti-capture controls (FR-023 churn limit, FR-028 eligibility snapshot) remain fully enforced while new-party tenure waiver is active | US-0078 · FR-068, FR-023, FR-028 | Waiver relaxes only the one-month tenure check; churn limits and snapshot eligibility rules apply identically to waivered and non-waivered parties | **Blocked — Phase 3** |
+
+### TC-3313..TC-3316 — FR-065 candidate feedback scoring (DES-066 · US-0074, US-0075 · SCR-23)
+
+| TC | Title | Verifies | Expected result | Status |
+|---|---|---|---|---|
+| TC-3313 | Upvote on candidate C in election E: tally +3; scope nullifier keccak(feedback, electionId, candidateId) spent | US-0074 · FR-065 | Tally += 3; nullifier spent; member cannot cast another feedback vote on C in E | **Blocked — Phase 3 (DES-066 not implemented; Elections Phase 3, Doc 06 §7.3)** |
+| TC-3314 | Downvote on candidate C in election E: tally -1; same nullifier spent | US-0074 · FR-065 | Tally -= 1; nullifier spent | **Blocked — Phase 3** |
+| TC-3315 | Second feedback vote on same candidate C in same election E: nullifier already spent; attempt refused | US-0074 · FR-065 | Attempt refused; first vote unchanged | **Blocked — Phase 3** |
+| TC-3316 | Individual feedback votes not linkable to caster; only aggregate tally publicly visible | US-0075 · FR-065 | No per-member vote record in public output; tally integer only | **Blocked — Phase 3** |
+
+### TC-3317..TC-3322 — FR-066, FR-067 mandatory debates and candidacy (DES-067 · US-0076, US-0077 · SCR-22)
+
+| TC | Title | Verifies | Expected result | Status |
+|---|---|---|---|---|
+| TC-3317 | Three debates scheduled per candidate before major election; each covers one required topic (local conditions, local problems, work required) | US-0076 · FR-066 | Three debate records with distinct topic codes on verifiable record | **Blocked — Phase 3 (DES-067 debate lifecycle not implemented; Elections Phase 3)** |
+| TC-3318 | Debate completion: attendance attestation and content CID recorded on-chain; off-chain pin loss does not erase on-chain attestation | US-0076 · FR-066 | On-chain CID and attestation present; record survives content-host failure | **Blocked — Phase 3** |
+| TC-3319 | Candidate absence from scheduled debate recorded in their participation record | US-0076 · FR-066 | Absence entry present; no silent skip | **Blocked — Phase 3** |
+| TC-3320 | Only net-positive post-debate member-vote candidates advance to the election ballot | US-0077 · FR-067 | Non-positive-score candidate excluded; on-chain guard rejects inclusion | **Blocked — Phase 3** |
+| TC-3321 | Sitting incumbent receives no automatic candidacy; must complete full debate-and-post-debate-vote cycle | US-0077 · FR-067 | Incumbent not placed on ballot without completed cycle; no privileged path | **Blocked — Phase 3** |
+| TC-3322 | Attempt to place incumbent on ballot without completed debate cycle: refused and logged | US-0077 · FR-067 | On-chain guard refuses; event logged with candidate ID and reason | **Blocked — Phase 3** |
+
+### TC-3323..TC-3325 — FR-069 deterministic enrolment nullifier (DES-069 · US-0079)
+
+| TC | Title | Verifies | Expected result | Status |
+|---|---|---|---|---|
+| TC-3323 | First enrolment: Poseidon(stable_id_secret, enrolment_scope) derived in-circuit; four universal checks pass (issuer sig, freshness, region, correct derivation); only nullifier stored; identifier never leaves the circuit | US-0079 · FR-069 | Nullifier on record; no identifier in any store; all four in-circuit checks verified | **Blocked — Phase 2 (DES-069; personhood_enrol circuit not compiled, Doc 06 §7.2)** |
+| TC-3324 | Same credential re-used in second enrolment: derived nullifier matches existing record; enrolment rejected as duplicate | US-0079 · FR-069 | Refused with duplicate-nullifier reason; first record intact; no second identity | **Blocked — Phase 2** |
+| TC-3325 | Credential with tampered region attribute: in-circuit region check fails; rejected with region-attribute-invalid reason | US-0079 · FR-069 | Rejected; correct reason returned; no partial record created | **Blocked — Phase 2** |
+
+### TC-3326..TC-3329 — FR-070 pluggable credential adapter (DES-070 · US-0080)
+
+| TC | Title | Verifies | Expected result | Status |
+|---|---|---|---|---|
+| TC-3326 | eIDAS 2.0 wallet adapter: QeAA trust-anchor signature verified vs national/supra-national trust list; stable personal identifier and residency attribute extracted and passed to FR-069 derivation | US-0080 · FR-070 | Adapter verifies QeAA; (stable_id, region) tuple passed to derivation; nullifier minted | **Blocked — Phase 2 (DES-070; circuit and adapter infrastructure not deployed)** |
+| TC-3327 | ICAO Doc 9303 NFC chip adapter: Document Security Object verified vs ICAO public key directory; stable identifier (MRZ DocumentNumber or chip pseudonym) and attested residency extracted | US-0080 · FR-070 | Adapter verifies SOD; (stable_id, residency) passed to derivation; nullifier minted | **Blocked — Phase 2** |
+| TC-3328 | Offline paper KYC adapter (e.g. Aadhaar offline XML or equivalent): government-signed assertion verified; stable identifier and residency extracted; no biometric retained after attestor check | US-0080 · FR-070 | Assertion processed; no biometric in any store; nullifier minted | **Blocked — Phase 2** |
+| TC-3329 | Adapter interface enforces pluggable pattern: no single credential type hard-coded; region-level config governs adapter selection | US-0080 · FR-070 | ICredentialAdapter interface prevents bypass; region config governs | **Blocked — Phase 2** |
+
+### TC-3330..TC-3332 — FR-073 government eID issuer hierarchy (DES-072 · US-0083)
+
+| TC | Title | Verifies | Expected result | Status |
+|---|---|---|---|---|
+| TC-3330 | Government eID credential in designated region: enrolment nullifier minted; record accepted | US-0083 · FR-073 | credentialClass == GOV_EID passes; nullifier minted and accepted | **Blocked — Phase 2 (DES-072; PersonhoodRegistry issuer-class enforcement not deployed)** |
+| TC-3331 | Availability-only credential class attempts enrolment: no nullifier minted; refused with NotEnrolmentClass | US-0083 · FR-073, FR-069 | Revert NotEnrolmentClass; no nullifier created; event logged | **Blocked — Phase 2 (DES-072)** |
+| TC-3332 | Availability-only credential used for liveness attestation only: no enrolment nullifier; no membership or governance rights granted | US-0083 · FR-073 | Liveness confirmed; no enrolment record; no party membership; no governance power | **Blocked — Phase 2 (DES-072)** |
+
+### TC-3333..TC-3339 — FR-071, FR-072 nullifier-collision recovery and delay/veto guard (DES-071 · US-0081, US-0082)
+
+| TC | Title | Verifies | Expected result | Status |
+|---|---|---|---|---|
+| TC-3333 | Nullifier collision on second enrolment: system routes to RECOVERY_PENDING state; does not reject as duplicate | US-0081 · FR-071 | State = RECOVERY_PENDING; user prompted for re-authentication | **Blocked — Phase 3 (DES-071 recovery state machine not implemented, Doc 06 §7.3)** |
+| TC-3334 | Recovery completes: state to KEY_ROTATED; membership, tenure and governance history survive intact; no second identity | US-0081 · FR-071 | Same nullifier; tenure unchanged; history intact; no additional nullifier entry | **Blocked — Phase 3** |
+| TC-3335 | Seven-day delay imposed before key rotation: KEY_ROTATED not reachable before delay elapses | US-0082 · FR-072 | rotationEffectiveAt = block.timestamp + 7 days; transition blocked | **Blocked — Phase 3** |
+| TC-3336 | Active-key veto window equals the full seven-day delay; veto accepted throughout the entire window (veto window >= delay) | US-0082 · FR-072 | Veto at day 6 of 7-day delay results in RECOVERY_ABORTED; veto threshold = delay threshold | **Blocked — Phase 3** |
+| TC-3337 | Recovering credential barred from casting any vote during the delay (isInRecovery check in vote()) | US-0082 · FR-072 | vote() reverts for recovering nullifier while state = RECOVERY_PENDING; active key votes normally | **Blocked — Phase 3** |
+| TC-3338 | Notification sent to registered channel at recovery initiation | US-0082 · FR-072 | Notification event emitted on-chain at RECOVERY_PENDING entry | **Blocked — Phase 3** |
+| TC-3339 | Active-key holder submits veto during delay: recovery aborted; existing key in full control | US-0082 · FR-072 | State to RECOVERY_ABORTED; original key operational; rotation cancelled | **Blocked — Phase 3** |
+
+### TC-3340..TC-3342 — ADV-17..19 · RISK-22, RISK-23, RISK-24 recovery attack scenarios
+
+| TC | Suite / RISK | Attack | Expected | Status |
+|---|---|---|---|---|
+| TC-3340 | ADV-17 · RISK-22 | Stolen credential: attacker initiates recovery to seize victim party membership; victim vetoes via on-chain active-key path within 7-day window | State to RECOVERY_ABORTED; victim key and membership preserved | **Blocked — Phase 3 (DES-071 not implemented)** |
+| TC-3341 | ADV-18 · RISK-23 | Attacker suppresses victim notification channel; victim retains independent on-chain veto path via active key (no channel dependency) | On-chain veto succeeds even with channel suppressed; RECOVERY_ABORTED; accepted residual = complete device + channel compromise | **Blocked — Phase 3** |
+| TC-3342 | ADV-19 · RISK-24 | Attacker initiates recovery during active ballot; recovering credential attempts to vote; isInRecovery(nullifier) in vote() blocks it; active key votes normally | Recovering credential vote() reverts; active-key vote proceeds; no double-counting; FR-032 last-valid-ballot rule applies | **Blocked — Phase 3** |
