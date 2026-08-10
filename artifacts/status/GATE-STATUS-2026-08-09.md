@@ -155,3 +155,39 @@ because its worker timed out at six minutes. It now runs all five in about a min
 These sit alongside the one-of-five-files finding above. The shared class is verification
 that reports success without verifying, which is the standing argument for the two
 independent audits on the critical path.
+
+---
+
+## CR-v1.1.0 update — 2026-08-10
+
+> This section records the state of the nine-requirement change request driven in the
+> 2026-08-10 session. The Gate-1 approval above (against Doc 02 v1.0.0) is unchanged and
+> intact. This section is additive only.
+
+**Doc 02 is now v1.1.1** (Status: In Review; passing business-mode review at cycle 2, score
+96%). Doc 05 is now v1.1.2 (Status: In Review; passing business-mode review at cycle 3,
+score 97%). Gate-1 re-affirmation at these versions is **PENDING**.
+
+**Gate-1 re-affirmation packet:** `artifacts/status/GATE1-REAFFIRMATION-CR-v1.1.0-2026-08-10.md`
+Prepared by: project-manager (Ana-Maria Petrescu). Awaiting Rathish's decision.
+
+**Blocking items — re-affirmation cannot be granted until both are resolved:**
+
+| Blocker | Description | Blocks |
+|---------|------------|--------|
+| SC-01 (CRITICAL) | Enrolment circuit trust anchor absent from `enrol()` public signal vector and issuer struct; single `CIRCUIT_ENROL` constant cannot serve three adapter classes; Sybil resistance is defeasible as specified. Architect must produce a revised Doc 03 addressing the trust anchor binding before Change 6 can be re-affirmed or coded. | FR-069, FR-070, DES-069, DES-070, ADR-017 (Change 6) |
+| OI-13 (open governance decision) | FR-062 (public participation profile) conflicts with NFR-001, NFR-002, NFR-024, TD-02. Security scan SC-02/SC-03/SC-04 make the deanonymisation consequence concrete. Three resolution options require a human decision. `participation_profile` flag must remain OFF above dev. | FR-062, FR-063, DES-064, SCR-21 (Change 1) |
+
+**Security scan findings summary** (`artifacts/reviews/SECURITY-SCAN-CR-v1.1.0-2026-08-10.md`):
+1C / 4H / 5M / 2L (SC-01..SC-12). Conducted by reviewer-qa in design/requirements phase.
+No product code was written to fix these this session; they are recorded, not closed.
+
+**Gate 2:** Unchanged — NOT READY. RTM (Doc 08 v1.1.2) shows 64 open Must rows. The gate
+conditions (suites green, RTM zero gaps, rollback proven) are not met. Expected state for
+the current phase.
+
+**Changes not blocked by SC-01 or OI-13 at requirements level:**
+Changes 2–5 (FR-064..FR-068), Change 8 (FR-073), and their DES/FE/US elements are not
+independently blocked by SC-01 or OI-13. Change 7 (FR-071, FR-072, recovery flow) is not
+a re-affirmation blocker but SC-05 (no rate limit on recovery re-initiation) must be
+addressed in the specification before Change 7 is coded.

@@ -2,14 +2,16 @@
 
 ```
 Document ID:   RTM-TRUMOCRACY
-Version:       1.1.0
+Version:       1.1.2
 Status:        In Review
 Owner:         Ji-woo Park — Test Lead (tester, author)
 Verifier:      reviewer-qa (independent) — Accountable for "RTM complete (zero gaps)" per CLAUDE.md RACI
-Source:        SRS-TRUMOCRACY v1.1.0 · SDD-TRUMOCRACY v1.1.0 §5.2 · BKLG-TRUMOCRACY v1.1.0 ·
-               CODE-TRUMOCRACY v1.0.0 · MTP-TRUMOCRACY v1.0.0 · TC-TRUMOCRACY v1.1.0
+Source:        SRS-TRUMOCRACY v1.1.0 · SDD-TRUMOCRACY v1.1.1 §5.2 · BKLG-TRUMOCRACY v1.1.0 ·
+               CODE-TRUMOCRACY v1.0.0 · MTP-TRUMOCRACY v1.0.0 · TC-TRUMOCRACY v1.1.1
 Last updated:  2026-08-10
-Changelog:     v1.1.0 (2026-08-10) — FR-062..073 rows added; DES-064..086 cells filled; FR-011, FR-035 converted to COMPLETE; Change-9 coverage note added; gap log updated to 64 entries.
+Changelog:     v1.1.2 (2026-08-10) — Screens dashboard corrected 20→23 (SCR-21/22/23 from CR-v1.1.0; cycle-2 NEW-ISS-01); TC source pin bumped to v1.1.1 (NEW-ISS-02).
+               v1.1.1 (2026-08-10) — FR-063 evidence corrected (obs. → not run; cycle-1 ISS-01); Risks dashboard updated 16→19 total, 12→15 gaps (ISS-02); §7 preamble documents gap-log renumbering (ISS-03); Doc 03 source pin bumped to v1.1.1.
+               v1.1.0 (2026-08-10) — FR-062..073 rows added; DES-064..086 cells filled; FR-011, FR-035 converted to COMPLETE; Change-9 coverage note added; gap log updated to 64 entries.
 ```
 
 > **Based on:** Bidirectional RTM (ISO/IEC/IEEE 29148 traceability). **Living.** **Verified at each gate.**
@@ -161,7 +163,7 @@ are a Doc 03 §5.2 defect.
 | BR-007, BR-012 | **FR-061** sponsorship degrades, never denies | DES-043 · ADR-014 | — | EP-10 ▸ FE-027 ▸ US-0067 | TC-0036, TC-2152 | UT-0054 (**obs.**, flag permanence only) | ☐ **G-PHASE3** — the paymaster/relayer service is not built; queue-with-explanation cannot be exercised |
 
 | BR-008, BR-009 | **FR-062** public participation profile (ballot participation, party memberships, endorsed petitions, authored proposals, debates attended) | DES-064 | SCR-21 | EP-02 ▸ FE-029 ▸ US-0071 | TC-3300, TC-3301, TC-3302 | none | ☐ **G-NOMECH** — OI-13 (FR-062 vs NFR-001/NFR-024 anonymity) unresolved; DES-064 designed but flagged off above dev; feature flag `participation_profile` is off until Gate 1 re-affirmation |
-| BR-008, BR-009 | **FR-063** ballot direction MUST NOT be disclosed through any path (FR-048 elected-representative exception) | DES-064 | SCR-21 | EP-02 ▸ FE-029 ▸ US-0072 | TC-3303, TC-3304, TC-3305, TC-3306 | UT-0700, UT-0701 (capability-absence, **obs.**) | ☐ **G-UI** — ballot-direction audit requires deployed client system; UT-0700/UT-0701 prove protocol-level absence but no front-end deployment |
+| BR-008, BR-009 | **FR-063** ballot direction MUST NOT be disclosed through any path (FR-048 elected-representative exception) | DES-064 | SCR-21 | EP-02 ▸ FE-029 ▸ US-0072 | TC-3303, TC-3304, TC-3305, TC-3306 | UT-0700, UT-0701 (capability-absence, **not run** — apps/web suite not executed this session; see §1.1) | ☐ **G-UI** — ballot-direction audit requires deployed client system; UT-0700/UT-0701 prove protocol-level absence but no front-end deployment |
 | BR-003 | **FR-064** single party at a time; switch resets tenure clock | DES-065 | — | EP-03 ▸ FE-030 ▸ US-0073 | TC-3307, TC-3308, TC-3309 | none | ☐ **G-PHASE3** — single-party membership nullifier (DES-065) designed but not implemented; party operations not live |
 | BR-013 | **FR-065** candidate feedback +3/−1; individual votes private; aggregate tally public | DES-066 · ADR-015 | SCR-23 | EP-07 ▸ FE-031 ▸ US-0074, US-0075 | TC-3313, TC-3314, TC-3315, TC-3316 | none | ☐ **G-PHASE3** — candidate feedback scorer (DES-066, ADR-015) not implemented; depends on Elections (Phase 3) |
 | BR-013 | **FR-066** three mandatory pre-election debates per candidate; local conditions, problems, work required; verifiable on-chain record | DES-067 | SCR-22 | EP-07 ▸ FE-032 ▸ US-0076 | TC-3317, TC-3318, TC-3319 | none | ☐ **G-PHASE3** — debate lifecycle (DES-067) not implemented; Elections Phase 3 |
@@ -305,10 +307,10 @@ was located by identifier in a real test file. Result of the reverse sweep:
 | FR — Should/Could | 19 | 14 (5 lack a `US`) | 3 | 16 |
 | NFR — Must | 22 | 21 (1 lacks a `US`: NFR-007) | **0** | **22** |
 | NFR — Should | 4 | 2 | 0 | 4 |
-| Risks | 16 | 16 | 4 fully mitigated & proven | 12 |
+| Risks | 19 | 19 | 4 fully mitigated & proven | 15 |
 | Stories | 83 | 83 (all carry Gherkin AC) | 12 meet the Definition of Done | 71 |
 | Test cases | 298 | 298 | 143 automated · 72 observed passing | 155 not executable |
-| Screens | 20 | 20 mapped | 0 verified (no UI suite executed) | 20 |
+| Screens | 23 | 23 mapped | 0 verified (no UI suite executed) | 23 |
 
 **Definition of Done check (CLAUDE.md).** A story is done only when its RTM row is complete.
 **12 of 83 stories** meet that bar: US-0019, US-0024, US-0025, US-0026, US-0027, US-0031, US-0033,
@@ -321,6 +323,7 @@ Owners are the named requirement owners from Doc 02; phase targets are Doc 13 mi
 12 new Must FR rows added for FR-062..073 (entries 53–64); G-TRACE secondary tags removed from 13
 rows whose DES gaps are now closed by DES-073..086. NFR-007 retains G-TRACE (no story/backlog item
 — not a DES gap).
+Gap-log entry numbers are internal sequence only; no externally referenced ID (FR, NFR, BR, US, TC) was renumbered. Prior references to old entry numbers should be resolved by FR/NFR ID, not by entry number.
 
 | # | Row | Reason | Blocking cause (one line) | Owner | Closes at |
 |---|---|---|---|---|---|

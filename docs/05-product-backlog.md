@@ -2,12 +2,29 @@
 
 ```
 Document ID:   BKLG-TRUMOCRACY
-Version:       1.1.0
+Version:       1.1.2
 Status:        In Review
 Owner:         Priya Raghunathan — Product Owner
-Source:        SRS-TRUMOCRACY (docs/02-requirements-srs.md v1.1.0), PR-TRUMOCRACY (docs/01-press-release-prfaq.md)
-Last updated:  2026-08-09
-Change:        v1.1.0 — Nine-requirement change request (CR-v1.1.0) directed by Rathish 2026-08-09.
+Source:        SRS-TRUMOCRACY (docs/02-requirements-srs.md v1.1.1), PR-TRUMOCRACY (docs/01-press-release-prfaq.md)
+Last updated:  2026-08-10
+Change:        v1.1.2 — Cycle-2 business-review rework (2026-08-10).
+               Addresses ISS-A..ISS-F from artifacts/reviews/05-product-backlog-v1.1.1-business-cycle2.md.
+               ISS-A: EP-06 outcome hypothesis rewritten to align with Doc 02 v1.1.1 BR-011 (adversarial-audit
+               properties; coercion rate as upper bound from incident reports, not operational observation);
+               ISS-B: §12 Must-NFR map corrected NFR-022→US-0070 (was US-0001);
+               ISS-C: §12 Must-NFR map corrected NFR-015→US-0003, SCR-01 (was US-0001, SCR-01);
+               ISS-D: §2 NF item count corrected 8→9; ISS-E: §2 source pin updated to Doc 02 v1.1.1;
+               ISS-F: US-0076 "Not Ready pending ISS-06" flag removed (ISS-06 resolved in v1.1.1).
+               v1.1.1 — Cycle-1 business-review rework (2026-08-10).
+               Addresses ISS-01..ISS-11 from artifacts/reviews/05-product-backlog-v1.1.0-business-cycle1.md.
+               Key changes: NF-09 added for NFR-007 availability coverage + Must-NFR coverage map added to §12 (ISS-01);
+               FR-005 removed from FE-002 Maps-to (ISS-02); FR-026 removed from SCR-10 (ISS-03); US-0007/US-0038
+               ACs updated with adversary-game parameters mirroring Doc 02 v1.1.1 (ISS-04); OI-08 constants marked
+               non-normative in 6 story ACs (ISS-05); EP-07 success metric and US-0076 AC aligned to FR-066 "major
+               election" scope (ISS-06); story point arithmetic corrected (ISS-07); §10 cadence aligned to Doc 13 (ISS-08);
+               FR-044 added to SCR-18 (ISS-09); WSJF sequencing rule stated (ISS-10); ICAO NFC scenario added to
+               US-0080 (ISS-11).
+               v1.1.0 — Nine-requirement change request (CR-v1.1.0) directed by Rathish 2026-08-09.
                Adds BR-013, FR-062..073; FE-029..036; US-0071..0083; SCR-21..23 (provisional).
                Source: artifacts/status/GATE1-DECISION-2026-08-09.md §7 (CR-v1.1.0).
 ```
@@ -42,9 +59,9 @@ early as possible.
 `Theme → Epic (EP-##) → Feature (FE-###) → User Story (US-####) → Task`.
 Non-functional work appears as **explicit backlog items**, never as an assumption — see §8.
 
-**Contents.** 10 epics · 36 features · 83 user stories · 8 explicit non-functional backlog items.
-All 54 Must FRs in Doc 02 v1.1.0 are covered by at least one story; coverage is asserted in §12 and
-verified in the RTM.
+**Contents.** 10 epics · 36 features · 83 user stories · 9 explicit non-functional backlog items. (ISS-D: count corrected from 8 to 9 after NF-09 was added.)
+All 54 Must FRs in Doc 02 v1.1.1 are covered by at least one story; coverage is asserted in §12 and
+verified in the RTM. (ISS-E: source pin updated from v1.1.0 to v1.1.1.)
 
 ## 3. Prioritization framework
 
@@ -66,6 +83,10 @@ guardrail retrofitted after launch is a breach, not a feature.
 | EP-09 Public verifiability & moderation-by-code | 8 | 9 | 7 | 5 | 4.80 | 9 |
 | EP-10 Zero-friction access: cost, recovery, accessibility | 10 | 7 | 9 | 8 | 3.25 | 10 |
 
+> **Sequencing rule:** WSJF scores measure value density; the walking-skeleton dependency chain
+> determines the actual start sequence and overrides WSJF where dependency order requires it (e.g.,
+> EP-01 must precede EP-02 because party drafting requires personhood). _(ISS-10.)_
+>
 > Sequence numbers order *epic start*, not completion. EP-09 and EP-10 are cross-cutting and their
 > stories are pulled forward alongside the epics they serve — verifiability (`FR-054`) and fee
 > sponsorship (`FR-060`) must be true of the very first action ever taken on the platform, not
@@ -143,8 +164,13 @@ Owner: Tomás Ferreira            Status: Backlog
 ```
 EP-06  Anonymous, receipt-free voting
 Outcome hypothesis: We believe unlinkable ballots plus an invisible re-vote override will achieve a
-  vote that cannot be bought or coerced; we'll know when the adversarial audit finds no receipt
-  construction and >=95% of reported coercion cases are successfully overridden.
+  vote that cannot be bought or coerced; we'll know when (a) an independent adversarial audit (PPT
+  adversary, λ ≥ 128 bits, N ≥ 10,000 ballot observations, 95% confidence) finds no receipt
+  construction and no re-vote distinguisher, AND (b) the coercion incident rate is published as an
+  upper bound derived from independent incident reports with a stated methodology — not as an
+  operational observation rate, since re-voting is by design invisible (TD-06, FR-032).
+  (ISS-A: "≥95% of reported coercion cases successfully overridden" removed; that metric is
+  structurally unobservable per Doc 02 v1.1.1 BR-011(c); replaced with BR-011(a)/(b) proxies.)
 Business value / link: BR-011, BR-009, BR-005
 In scope: eligible anonymous casting, unlinkability, receipt-freeness, silent re-vote, results
   embargo, non-transferability, publicly reproducible tally.
@@ -156,9 +182,10 @@ Owner: Aisha Nkemdirim           Status: Backlog
 ```
 EP-07  Localized nomination & internal election
 Outcome hypothesis: We believe binding candidacy and voting to where a person actually lives, and
-  requiring debates before any election, will achieve real local representation with informed voters;
-  we'll know when 100% of nominations are scope-checked, 0 out-of-region ballots are counted, and
-  every election is preceded by three completed debates per candidate.
+  requiring debates before every major election (as defined in Doc 02 §14 and FR-066), will achieve
+  real local representation with informed voters; we'll know when 100% of nominations are
+  scope-checked, 0 out-of-region ballots are counted, and 100% of major-election ballots are preceded
+  by three completed debates per candidate. _(ISS-06: aligned to FR-066 "major election" scope.)_
 Business value / link: BR-004, BR-009, BR-013
 In scope: self-nomination scoped to region+office, nomination endorsements, informed consent to
   public identity, candidacy withdrawal, mandatory pre-election debates (three per candidate),
@@ -220,7 +247,7 @@ Owner: Hiroshi Tanaka            Status: Backlog
 | ID | Feature (Epic) | Benefit hypothesis | Maps to | Stories | Owner |
 |----|----------------|--------------------|---------|---------|-------|
 | FE-001 | Personhood enrolment (EP-01) | A citizen proves they are one real human, once, without handing over documents to us | FR-001, FR-003, NFR-004, NFR-010 | US-0001–0003 | Marcus Adeyemi |
-| FE-002 | Attestor plurality & concentration control (EP-01) | No single identity provider can capture or halt a region | FR-004, FR-005, NFR-004 | US-0004–0005 | Marcus Adeyemi |
+| FE-002 | Attestor plurality & concentration control (EP-01) | No single identity provider can capture or halt a region | FR-004, NFR-004 | US-0004–0005 | Marcus Adeyemi |
 | FE-003 | Per-scope action limits & cross-scope unlinkability (EP-01) | One action per person per scope, with no way to join the dots between scopes | FR-002, NFR-001, NFR-002 | US-0006–0007 | Dr. Lena Kowalczyk |
 | FE-004 | Residency scope & versioned region registry (EP-01) | Rights follow where you actually live, without us learning your address | FR-006, FR-007, FR-008 | US-0008–0010 | Marcus Adeyemi |
 | FE-005 | Party draft creation (EP-02) | Anyone can start a party, pseudonymously, with no permission | FR-010, FR-012, NFR-012 | US-0011–0013 | Tomás Ferreira |
@@ -367,8 +394,8 @@ Owner: Dr. Lena Kowalczyk   Priority: Must   Points: 13   Implements: FR-002, NF
 AC:
   Scenario (adversarial): Colluding observers correlate
     Given one person who acted in scope S and scope T
-    When Trumocracy, an operator, an attestor and a party pool everything they hold and analyse it
-    Then they cannot determine better than chance whether the two actions came from one person or two
+    When an adversary holding {all operator logs, all attestor credential hashes, full public verifiable record, network timing at 1-second granularity} analyses N ≥ 10,000 independently drawn same-person action pairs
+    Then the adversary's advantage in correctly identifying each pair as same-person is ≤ ε over 1/2 at 95% confidence (ε and collusion bound per Doc 02 NFR-001 / OI-10; provisional test value ε = 0.02)
   Scenario: Small-scope protection
     Given a scope with fewer than 1,000 eligible actors
     When a person acts in it
@@ -445,14 +472,18 @@ As a citizen whose government issues a contactless-chip travel document rather t
 I want to enrol through the appropriate adapter, so that adapter choice does not determine eligibility.
 Owner: Marcus Adeyemi   Priority: Must   Points: 5   Implements: FR-070   Depends on: US-0079
 AC:
-  Scenario: Government eID wallet adapter
+  Scenario: Government eID wallet adapter (eIDAS 2.0 or equivalent)
     Given a region where government eID wallets are the designated adapter
     When a citizen with a government eID wallet presents their credential
-    Then the enrolment adapter accepts the evidence and produces a valid nullifier input
-  Scenario: Offline paper KYC adapter
+    Then the enrolment adapter verifies the trust-anchor signature, extracts the stable personal identifier and residency attribute, and produces a valid nullifier input
+  Scenario: ICAO Doc 9303 NFC chip adapter (biometric passport / NFC identity card)
+    Given a region where an ICAO Doc 9303 NFC chip adapter is configured
+    When a citizen presents a biometric passport or NFC-enabled identity card
+    Then the adapter verifies the Document Security Object against the ICAO public key directory, extracts the stable identifier field (MRZ DocumentNumber or chip pseudonym) and an attested residency claim, produces a valid nullifier input, and retains no biometric data
+  Scenario: Offline paper KYC adapter (e.g. Aadhaar offline XML or equivalent)
     Given a region where offline paper KYC is the approved adapter
     When a citizen presents the required paper identity evidence
-    Then the paper KYC adapter path accepts it and produces a valid nullifier input
+    Then the paper KYC adapter path accepts it and produces a valid nullifier input; no biometric data is retained after the attestor check
   Scenario (negative): Hard-coded single adapter
     When a deployment is inspected for adapter configuration
     Then the adapter layer is pluggable and no single credential type is the only supported path
@@ -659,9 +690,10 @@ US-0022  Watch a party activate itself      (FE-009 · EP-03)
 As a drafter, I want the party to switch on automatically when the bar is met and held, so that there
 is nobody to lobby, delay or bribe.
 Owner: Tomás Ferreira   Priority: Must   Points: 8   Implements: FR-018   Depends on: US-0019
+**Blocked pending OI-08** (dwell period unset; story not Ready until OI-08 closes — owner: Tomás Ferreira)
 AC:
   Scenario: Threshold met and held
-    Given a petition at or above threshold continuously for the published dwell period
+    Given a petition at or above threshold continuously for the published dwell period (example — non-normative; normative value set at OI-08 closure)
     When the dwell period elapses
     Then the party activates automatically with no human approval step in the path
     And the activation record immutably holds the charter version, count, denominator and its sources
@@ -769,9 +801,10 @@ US-0029  Wait out a maturation period before governing      (FE-012 · EP-04)
 As a long-standing member, I want brand-new members to wait before they can vote, so that a party
 cannot be taken over overnight.
 Owner: Rafael Duarte   Priority: Must   Points: 5   Implements: FR-023   Depends on: US-0024
+**Blocked pending OI-08** (maturation period unset; story not Ready until OI-08 closes — owner: Tomás Ferreira)
 AC:
   Scenario: New member is not yet eligible
-    Given a member who joined one hour ago and a maturation period that has not elapsed
+    Given a member who joined one hour ago and a maturation period that has not elapsed (example — non-normative; normative value set at OI-08 closure)
     When they attempt to vote, propose, nominate or sign a recall
     Then the action is refused and the date their rights begin is shown
   Scenario (adversarial): Mass flood
@@ -903,10 +936,11 @@ US-0035  Have a timelock between a decision and its effect      (FE-015 · EP-05
 As a member, I want a public waiting period before a passed change takes effect, so that I have time
 to react, argue or leave.
 Owner: Rafael Duarte   Priority: Must   Points: 5   Implements: FR-026   Depends on: US-0033
+**Blocked pending OI-08** (timelock durations unset; story not Ready until OI-08 closes — owner: Tomás Ferreira)
 AC:
   Scenario: Pending change is visible and not yet effective
-    Given a passed charter-tier proposal with a 14-day timelock
-    When 13 days have elapsed
+    Given a passed charter-tier proposal with its tier's published timelock duration (example — non-normative — 14 days; normative value set at OI-08 closure)
+    When one day less than the full timelock has elapsed
     Then the change has not taken effect and is publicly listed as pending with its effective date
   Scenario (adversarial): Bypass attempt
     When any actor attempts to shorten, waive, skip or bypass the timelock
@@ -922,7 +956,7 @@ AC:
     Given a charter clause designated entrenched
     When a proposal to amend it opens
     Then it takes the highest tier and the longest timelock
-    And only members whose membership predates the proposal by the published minimum age count toward quorum
+    And only members whose membership predates the proposal by the published minimum age (example — non-normative; normative value set at OI-08 closure) count toward quorum
   Scenario (adversarial): Mob capture
     Given a party of 10,000 members of whom 9,000 joined in the last week
     When they vote to amend an entrenched founding clause
@@ -955,7 +989,7 @@ AC:
   Scenario: Eligible and unlinkable
     Given a closed ballot with 5,000 cast votes
     When Trumocracy, an operator, an attestor and the party jointly analyse everything they hold
-    Then no cast ballot can be linked to its voter better than chance
+    Then an adversary holding {all operator logs, all attestor credential hashes, full public verifiable record, network timing at 1-second granularity} cannot link any cast ballot to its voter with advantage > ε over 1/2 at 95% confidence across N ≥ 10,000 drawn ballot-person pairs (ε per Doc 02 NFR-001 / OI-10; provisional test value ε = 0.02)
     And the tally still proves each counted ballot came from exactly one eligible, not-yet-counted voter
   Scenario (adversarial): Ineligible voter
     Given a person who is not in the proposal's eligible set
@@ -1231,11 +1265,12 @@ AC:
 ```
 US-0076  Complete three debates before a candidacy proceeds to the ballot      (FE-032 · EP-07)
 As a member voter, I want every candidate to have addressed local conditions, local problems, and the
-work required before appearing on any election ballot, so that I vote on record rather than on rumour.
+work required before appearing on a major election ballot (as defined in Doc 02 §14 Glossary and FR-066),
+so that I vote on record rather than on rumour.
 Owner: Aisha Nkemdirim   Priority: Must   Points: 8   Implements: FR-066   Depends on: US-0047
 AC:
-  Scenario: Three debates scheduled and completed
-    Given a major election approaching for office O with three candidates
+  Scenario: Three debates scheduled and completed before a major election
+    Given a major election (as defined in Doc 02 §14) approaching for office O with three candidates
     When debates are scheduled
     Then three debates per candidate are scheduled, covering local conditions, local problems, and the
       work required respectively
@@ -1334,13 +1369,14 @@ US-0058  Require a higher bar to remove than to elect      (FE-024 · EP-08)
 As a member, I want recall to be genuinely harder than election, so that recall is accountability
 rather than a permanent re-run.
 Owner: Aisha Nkemdirim   Priority: Must   Points: 8   Implements: FR-043   Depends on: US-0057
+**Blocked pending OI-08** (recall bar unset; story not Ready until OI-08 closes — owner: Tomás Ferreira)
 AC:
   Scenario: Two stages, published in advance
-    Given an office-holder elected with 55% approval and a published recall bar of 60%
-    When a recall initiation reaches its signature threshold and the recall ballot closes at 58%
+    Given an office-holder and the published recall bar R% (example — non-normative: elected at 55%, recall bar 60%; normative value set at OI-08 closure)
+    When a recall initiation reaches its signature threshold and the recall ballot closes below R%
     Then the recall fails and the office-holder remains
   Scenario: Successful recall
-    When a later valid recall ballot closes at 62%
+    When a later valid recall ballot closes at or above R%
     Then the recall succeeds
   Scenario (negative): Bars changed mid-process
     When any actor attempts to change either bar after initiation opens
@@ -1351,9 +1387,10 @@ US-0059  Be protected from recall harassment      (FE-024 · EP-08)
 As a newly elected representative, I want a grace window and a cooldown after a failed recall, so
 that a losing faction cannot grind me down with repeated attempts.
 Owner: Daniel Okonkwo   Priority: Should   Points: 3   Implements: FR-044, NFR-024   Depends on: US-0058
+**Blocked pending OI-08** (grace/cooldown durations unset; story not Ready until OI-08 closes — owner: Tomás Ferreira)
 AC:
   Scenario (negative): Recall inside the grace window
-    Given an office-holder elected 5 days ago and a published 30-day grace window
+    Given an office-holder elected 5 days ago and the published grace window duration (example — non-normative: 30 days; normative value set at OI-08 closure)
     When a recall is initiated
     Then it is refused with the earliest permitted date
   Scenario (negative): Immediate re-attempt
@@ -1641,7 +1678,7 @@ AC:
 | SCR-07 | Endorse / withdraw | FE-007 | FR-014, FR-015 |
 | SCR-08 | Threshold & denominator explainer | FE-008 | FR-009, FR-016 |
 | SCR-09 | Activation record | FE-009 | FR-018 |
-| SCR-10 | Party home & aggregate membership | FE-010 | FR-020, FR-026 |
+| SCR-10 | Party home & aggregate membership | FE-010 | FR-020 |
 | SCR-11 | Join / leave (single-party enforcement) | FE-010, FE-030 | FR-020, FR-022, FR-064 |
 | SCR-12 | Proposal list & detail (tier, quorum, timelock) | FE-013, FE-014, FE-015 | FR-024, FR-025, FR-026, FR-027 |
 | SCR-13 | Ballot booth (cast / re-cast) | FE-017, FE-018 | FR-030, FR-031, FR-032 |
@@ -1649,7 +1686,7 @@ AC:
 | SCR-15 | Nomination & disclosure consent | FE-020, FE-021 | FR-036, FR-037, FR-038 |
 | SCR-16 | Election & office record | FE-022 | FR-039, FR-040, FR-041 |
 | SCR-17 | Manifesto, commitments & version history | FE-023 | FR-046, FR-047, FR-048 |
-| SCR-18 | Recall initiation & ballot | FE-024 | FR-042, FR-043, FR-045 |
+| SCR-18 | Recall initiation & ballot | FE-024 | FR-042, FR-043, FR-044, FR-045 |
 | SCR-19 | Account recovery (seedless + collision recovery) | FE-028, FE-035 | FR-058, FR-059, FR-071, FR-072 |
 | SCR-20 | Public transparency dashboard & filtering log | FE-025, FE-026 | FR-054, FR-056, FR-057, NFR-019 |
 | SCR-21 | Public participation profile | FE-029 | FR-062, FR-063 |
@@ -1670,6 +1707,7 @@ AC:
 | NF-06 | Censorship and operator-censorship simulations (blocked domain; withheld action) | NFR-014, NFR-025, RISK-08, RISK-09 | Chen Wei | Must |
 | NF-07 | Rollback drill proving < 15 min restore, plus the open-ballot flag freeze | NFR-020 | Chen Wei | Must |
 | NF-08 | Public governance-health dashboard (activation, turnout, attestor concentration, duplicate rate, sponsorship exhaustion, anonymity delays) with zero individually identifying fields | NFR-019 | Yuki Sato | Should |
+| NF-09 | Availability SLO instrumentation and error-budget dashboard (citizen write path ≥ 99.5% monthly; public read ≥ 99.9% monthly); single-operator-failure drill confirming no governance action blocked > 60 min; automated alerting when error budget drops below 50% | NFR-007 | Chen Wei | Must |
 
 ## 9. Estimation approach
 
@@ -1677,12 +1715,11 @@ Modified Fibonacci (1, 2, 3, 5, 8, 13). **Reference story: US-0024 "Join a party
 Anything estimated above 13 must be split before it enters a sprint. Estimates are re-baselined once
 the architect publishes Doc 03, because several stories (US-0007, US-0038, US-0041, US-0042, US-0068)
 carry the bulk of the technical unknown and are deliberately estimated pessimistically until then.
-**Total (v1.1.0): 83 stories, approximately 484 points** (v1.0.0 was 70 stories at 396 points;
-13 new stories from CR-v1.1.0 add approximately 88 points at preliminary estimates).
+**Total (v1.1.1): 83 stories, approximately 499 points** (v1.0.0 was 70 stories at approximately 415 points (corrected from 396; prior ISS-07); 13 new stories from CR-v1.1.0 add approximately 84 points at preliminary estimates). _(ISS-07: v1.0.0 base corrected to actual point sum; total revised accordingly.)_
 
 ## 10. Backlog refinement cadence & WIP limits
 
-- **Refinement:** weekly, 60 minutes, product-owner-led; architect and engineer consulted.
+- **Refinement:** Fortnightly, 60 minutes, product-owner-led; architect, engineer and tester consulted (aligned with Doc 13 §8.2). _(ISS-08: cadence corrected from "weekly" to "fortnightly" to match the project plan.)_
 - **Entry condition:** a story is pulled only when it satisfies the Definition of Ready below.
 - **WIP limits:** 3 stories in progress per engineer pair; **1** guardrail story
   (any story implementing a Must NFR or a guardrail FR) in review at a time — guardrails get
@@ -1704,10 +1741,17 @@ reviewer-qa (the engineer never merges their own work).
 
 ## 12. Traceability
 
-Coverage assertion at v1.1.0 — to be independently verified by the tester in the RTM (Doc 08):
+Coverage assertion at v1.1.1 — to be independently verified by the tester in the RTM (Doc 08):
 
-- **All 54 Must FRs** in Doc 02 v1.1.0 are implemented by at least one story.
-- Must FR → story map (v1.0.0 carries forward unchanged): FR-001→US-0001 · FR-002→US-0006, US-0007 ·
+- **All 54 Must FRs** in Doc 02 v1.1.1 are implemented by at least one story.
+- **Must-NFR → story/NF-item coverage map** (22 Must NFRs; ISS-01):
+  NFR-001→US-0007, US-0038, NF-01 · NFR-002→US-0039, NF-01 · NFR-003→US-0041, US-0042 · NFR-004→US-0005, NF-01 ·
+  NFR-005→US-0066, NF-04 · NFR-006→NF-05 · NFR-007→NF-09 (**new**) · NFR-009→NF-02, NF-03 ·
+  NFR-010→US-0002, NF-01 · NFR-011→US-0070, FE-028 · NFR-012→NF-05 · NFR-013→US-0070, FE-028 ·
+  NFR-014→NF-06 · NFR-015→US-0003, SCR-01 · NFR-016→US-0068, FE-028 · NFR-017→US-0065 ·
+  NFR-020→NF-07 · NFR-021→US-0062 · NFR-022→US-0070 · NFR-023→US-0066, US-0003 ·
+  NFR-024→US-0059, NF-08 · NFR-025→NF-06.
+- Must FR → story map (v1.0.0 carries forward unchanged, v1.1.x new FRs appended below): FR-001→US-0001 · FR-002→US-0006, US-0007 ·
   FR-003→US-0002, US-0003 · FR-004→US-0004, US-0005 · FR-006→US-0008 · FR-007→US-0010 ·
   FR-008→US-0009 · FR-009→US-0019, US-0020 · FR-010→US-0011, US-0012 · FR-011→US-0014, US-0015 ·
   FR-014→US-0016 · FR-016→US-0019 · FR-018→US-0022 · FR-020→US-0024, US-0026 · FR-021→US-0027 ·

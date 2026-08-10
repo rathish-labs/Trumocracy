@@ -2,7 +2,7 @@
 
 ```
 Document ID:   SDD-TRUMOCRACY
-Version:       1.1.0
+Version:       1.1.1
 Status:        In Review
 Owner:         Ravi Deshmukh — Principal Architect
 Approvers:     Rafael Duarte (Security), Chen Wei (Reliability), Dr. Lena Kowalczyk (Privacy),
@@ -21,6 +21,14 @@ Changelog:     v1.1.0 (2026-08-10) — CR-v1.1.0 nine-requirement update; DES-06
                consequence). Addresses all critical/high/medium findings from review cycle 1
                (artifacts/reviews/03-architecture-design-sdd-v1.0.0-technical-cycle1.md).
                OPEN-16 (stray ADR-017 references) resolved by engineer before this version.
+               v1.1.1 (2026-08-10) — ISS-01/02/03/04 from cycle-1 technical review
+               (artifacts/reviews/03-architecture-design-sdd-v1.1.0-technical-cycle1.md):
+               added `snapshotAt` to vote() public signals (5-signal arity: index 0 =
+               snapshotRoot, index 1 = snapshotAt); MUST checks rewritten in indexed form;
+               §10.3 aligned to DES-078 (p95 interactive ≤ 5 s, removes contradicting 3 s
+               figure); DES-068 party-switch exclusion stated explicitly (FR-064 clock reset
+               not excused by destination-party waiver); RFC 2119 keywords added throughout
+               §10.3–§10.9.
 ```
 
 > **Based on:** arc42 + C4 + Google design doc + IEEE 1016. **Produced in:** Design.
@@ -236,7 +244,7 @@ Six decisions carry the design; everything else follows from them.
 | DES-065 | single-party membership nullifier | global scope nullifier `keccak("membership", personhood)` enforces one-party-at-a-time; join-B burns join-A nullifier automatically; tenure clock resets on switch | FR-064 | PersonhoodRegistry |
 | DES-066 | candidate feedback scorer | per-candidate-per-election nullifier; upvote +3, downvote −1 (ADR-015); private votes; public tally | FR-065, ADR-015, SCR-23 | Elections; Solidity |
 | DES-067 | debate lifecycle | Elections contract: schedule 3 debates per candidate; off-chain content CID on-chain; attendance attestation; post-debate member vote determines candidacy | FR-066, FR-067, SCR-22 | Elections; IPFS |
-| DES-068 | tenure waiver flag for new parties | `newPartyWaiverActive(partyId)` = party age < 3 calendar months; waives one-month tenure check only; FR-023 surge defence + FR-028 snapshot remain active | FR-068 | Governor |
+| DES-068 | tenure waiver flag for new parties | `newPartyWaiverActive(partyId)` = party age < 3 calendar months; waives one-month tenure check only; FR-023 surge defence + FR-028 snapshot remain active. **Party-switch exclusion (FR-064):** a tenure clock reset by a party switch is NOT excused by the destination party's waiver — the waiver covers a party's founding cohort only, not members arriving by switch; a member who leaves party A and joins party B MUST be rejected at `vote()` if fewer than one month has elapsed since joining, unconditionally regardless of party B's age. | FR-068 | Governor |
 | DES-069 | in-circuit enrolment nullifier | `Poseidon(stable_id_secret, enrolment_scope)`; universal in-circuit checks: issuer authenticity, freshness, region, correct derivation; no identifier leaves circuit (ADR-017) | FR-069, ADR-017 | circuits/personhood_enrol |
 | DES-070 | credential adapter interface + registry | `ICredentialAdapter`: credentialClass, namespaceId, verifierAddress; per-class in-circuit requirements (ADR-017); region-level config, not hardcoded | FR-070, ADR-017 | ICredentialAdapter; PersonhoodRegistry |
 | DES-071 | nullifier-collision recovery state machine | RECOVERY_PENDING → veto or 7-day delay → KEY_ROTATED / ABORTED; `isInRecovery` blocks `vote()`; independent on-chain veto path; notification on initiation (ADR-018) | FR-071, FR-072, ADR-018 | PersonhoodRegistry |
@@ -324,8 +332,10 @@ Governor
                             executableAt, quorumBps, approvalBps, minTenureSeconds,
                             for/against/abstain, finalized, succeeded, executed, cancelled,
                             target, callData, permittedActionClass}]
-                    //                         ^^ snapshotRoot: ISS-C1 fix — MUST equal voter's
-                    //                            partyRootAtSnapshot at circuit publicSignals[0]
+                    //                         ^^ snapshotRoot (publicSignals[0]): ISS-C1 fix —
+                    //                            MUST equal voter's partyRootAtSnapshot;
+                    //                            snapshotAt (publicSignals[1]): ISS-01 fix —
+                    //                            MUST equal proposal.createdAt
                     //                         permittedActionClass: ISS-H1 fix — tier↔action binding
   lastProposalAt    author → uint64  // rate limiting
 ```
@@ -366,7 +376,7 @@ Key entrypoints, with their proof requirements:
 | `join(π, signals)` | `residency_member` | `keccak("join",partyId)` | membership leaf + `joinedAt` |
 | `leave(π, signals)` | `tenure_member` | `keccak("leave",partyId)` | removes membership leaf + `leftAt` |
 | `propose(input, π, signals)` | `tenure_member` | `keccak("propose",partyId)` | snapshotted proposal; records `snapshotRoot` |
-| `vote(id, choice, π, [snapshotRoot, tenure, scope, Nₐ])` | `tenure_member` | `keccak("vote",partyId,id)` | one vote; MUST check `snapshotRoot == proposal.snapshotRoot` AND `snapshotAt == proposal.createdAt` |
+| `vote(id, choice, π, [snapshotRoot, snapshotAt, tenure, scope, Nₐ])` | `tenure_member` | `keccak("vote",partyId,id)` | one vote; MUST check `publicSignals[0] == proposal.snapshotRoot` AND `publicSignals[1] == proposal.createdAt` |
 | `finalize(id)` / `execute(id)` | — | — | permissionless; `execute` checks `permittedActionClass` for the proposal's tier |
 | `openForkPetition(sourcePartyId, π, signals)` | `tenure_member` | `keccak("fork",sourcePartyId)` | records initiator; threshold ≥ 10% members; GUARDED by `fork` feature flag (off above dev) |
 | `vetoRecovery(enrolmentNullifier, proof)` | active-key signature | — | sets recovery.state = ABORTED |
@@ -630,36 +640,41 @@ is a **known, accepted design residual** pending further protocol evolution. For
 consequence, see §18.
 
 ### 10.3 Performance
-Budgets: < 200 KB initial JS; interactive < 3 s on 4× throttled mid-range Android over Slow
-4G; proof ≤ 4 s typical / 10 s worst on reference device; median citizen action < USD 0.01.
+Systems MUST meet the budgets defined in DES-078: initial JS ≤ 200 KB; p95 interactive
+≤ 5 s on 4× throttled mid-range Android over Slow 4G; proof ≤ 10 s worst-case on reference
+device; finalisation on-chain ≤ 120 s p95. Median citizen action MUST remain < USD 0.01.
 
 ### 10.4 Scalability
-Depth-32 trees (4.29 B leaves); constant-cost verification; batched MACI tallying; horizontal
-stateless off-chain services; per-region sharding of residency trees.
+The system MUST use depth-32 Merkle trees (4.29 B leaves) with constant-cost on-chain
+verification. MACI tallying MUST be batched. Off-chain services SHOULD be stateless and
+horizontally scalable; residency trees MUST be sharded per region.
 
 ### 10.5 Reliability / HA / DR
-RTO 15 min, RPO 0 off-chain. Chain liveness is the floor; L1 escape hatch is the backstop.
-Party state is exportable at any time by anyone (DES-044).
+Off-chain services MUST achieve RTO ≤ 15 min and RPO = 0. Chain liveness is the minimum
+liveness floor; the L1 force-inclusion path MUST serve as the backstop. Party state MUST be
+exportable at any time by anyone (DES-044).
 
 ### 10.6 Observability
-Governance-health SLIs: activation counts, turnout, quorum near-misses, recall rates, growth
-anomalies, sponsorship burn, proof-failure rate, force-inclusion usage, operator diversity.
-**No SLI may be derived from an individual's behaviour.** Detail in Doc 11.
+Systems MUST expose governance-health SLIs covering: activation counts, turnout, quorum
+near-misses, recall rates, growth anomalies, sponsorship burn, proof-failure rate,
+force-inclusion usage, and operator diversity. **No SLI MAY be derived from an individual's
+behaviour.** Detail in Doc 11.
 
 ### 10.7 Error handling & resilience
-Fail *closed* on anything security-relevant (bad proof, unknown root, spent nullifier, thin
-anonymity set, wrong `snapshotRoot`). Fail *open* on convenience (indexer, sponsorship,
-notifications). Idempotency free from nullifiers: a replayed action is rejected by
-construction.
+The system MUST fail *closed* on anything security-relevant (bad proof, unknown root, spent
+nullifier, thin anonymity set, wrong `snapshotRoot`). It SHOULD fail *open* on convenience
+faults (indexer, sponsorship, notifications). A replayed action MUST be rejected by
+construction via nullifier idempotency.
 
 ### 10.8 i18n & accessibility
-WCAG 2.2 AA tested in CI (DES-081); ≥ 8 launch languages including ≥ 1 RTL (DES-083);
-icon+audio assisted mode; grade-8 reading level in all primary copy (DES-085); full keyboard
-and screen-reader operation; 2 GB Android 9 / 64 kbit/s floor enforced (DES-082).
+Apps MUST pass WCAG 2.2 AA (tested in CI, DES-081); MUST ship ≥ 8 launch languages including
+≥ 1 RTL (DES-083); MUST support icon+audio assisted mode; MUST maintain grade-8 reading level
+in all primary copy (DES-085); MUST operate fully by keyboard and screen reader; MUST enforce
+the 2 GB RAM / Android 9 / 64 kbit/s floor (DES-082).
 
 ### 10.9 Cost / FinOps
-Cost per citizen action is a **product metric with an alert**. Sponsorship buffer ≥ 90 days
-at p95 fees; circuit breaker at 3× p99 daily spend.
+Cost per citizen action is a **product metric with an alert**. The sponsorship buffer MUST
+remain ≥ 90 days at p95 fees; a circuit breaker MUST engage at 3× p99 daily spend.
 
 ### 10.10 Compliance & auditability
 Every governance action emits an event; independent verifier binary reproduces every tally;

@@ -2,14 +2,15 @@
 
 ```
 Document ID:   TC-TRUMOCRACY
-Version:       1.1.0
+Version:       1.1.1
 Status:        In Review
 Owner:         Ji-woo Park — Test Lead (tester)
 Source:        MTP-TRUMOCRACY (docs/04-test-strategy-master-plan.md) · BKLG-TRUMOCRACY (docs/05-product-backlog.md)
                SRS-TRUMOCRACY §8 Gherkin (docs/02-requirements-srs.md) · SDD-TRUMOCRACY §5.2, §11 (docs/03-architecture-design-sdd.md)
                CODE-TRUMOCRACY (docs/06-coding-and-ut.md)
 Last updated:  2026-08-10
-Changelog:     v1.1.0 (2026-08-10) — TC-3300..TC-3342 minted for FR-062..073 (CR-v1.1.0); TS-CR1 suite added; RTM rows added in Doc 08.
+Changelog:     v1.1.1 (2026-08-10) — TC-3309 expected result updated to cite DES-068 party-switch exclusion (cycle-1 ISS-01); TS-CR1 Covers column corrected to include RISK-22..24 (ISS-02).
+               v1.1.0 (2026-08-10) — TC-3300..TC-3342 minted for FR-062..073 (CR-v1.1.0); TS-CR1 suite added; RTM rows added in Doc 08.
 ```
 
 > **Based on:** IEEE 829 test-case specification. **Produced in:** Verify. **Approved at:** Gate 2.
@@ -141,7 +142,7 @@ TC ranges are the ones **reserved in Doc 04 §14**; the tester assigns the actua
 | `TS-ADV-01…16` | **Adversarial, one per RISK** | mixed | RISK-01…RISK-16 | TC-2600–TC-2752 | 43 | 24 | 19 |
 | `TS-EXPL` | Exploratory charters | L7 | one per EP-01…EP-10 | TC-3200–TC-3209 | 10 | 0 | 10 |
 | `TS-UAT` | User acceptance & usability | L7 | NFR-022, Doc 01 §B journey | TC-3250–TC-3253 | 4 | 0 | 4 |
-| `TS-CR1` | CR-v1.1.0 — FR-062..073; RISK-22..24 | L3–L6 | FR-062..073 · BR-013 | TC-3300–TC-3342 | 43 | 0 | 43 |
+| `TS-CR1` | CR-v1.1.0 — FR-062..073; RISK-22..24 | L3–L6 | FR-062..073 · BR-013 · RISK-22..24 | TC-3300–TC-3342 | 43 | 0 | 43 |
 | | | | **Total** | | **298** | **143** | **155** |
 
 **143 of 298 cases have an implementing automated test.** (43 new TC-3300..TC-3342 are all Blocked — no implementing code in this drop.) Of those 143, **72 were executed and
@@ -664,7 +665,7 @@ Pass/fail rolls into release readiness (Doc 04 §10.2, Docs 09–10) and the RTM
 |---|---|---|---|---|
 | TC-3307 | Joining party B voids party A membership automatically; tenure clock resets to zero | US-0073 · FR-064 | Party A membership-scope nullifier revoked; party B active; tenure = 0 | **Blocked — Phase 3 (DES-065 global membership-scope nullifier not yet coded)** |
 | TC-3308 | Simultaneous membership in two parties via any mechanism (same session, different device, different address) fails | US-0073 · FR-064 | No dual-membership state; every bypass path rejected | **Blocked — Phase 3 (DES-065 not coded)** |
-| TC-3309 | **[MANDATED (a)]** Leave party A, join party B, attempt to vote in party B before one month elapses: vote rejected as tenure not yet met; FR-068 waiver is inapplicable because the tenure clock reset to 0 on party switch | US-0073, US-0078 · FR-064, FR-068 | Join-B sets tenure = 0; vote at day 15 rejected with tenure-not-met; FR-068 waiver does NOT apply (waiver relaxes tenure for the party duration, not for a member whose clock reset on switching) | **Blocked — Phase 3 (DES-065 + DES-068; cross-FR interaction; no implementing code in this drop)** |
+| TC-3309 | **[MANDATED (a)]** Leave party A, join party B, attempt to vote in party B before one month elapses: vote rejected as tenure not yet met; FR-068 waiver is inapplicable because the tenure clock reset to 0 on party switch | US-0073, US-0078 · FR-064, FR-068 | Join-B sets tenure = 0; vote at day 15 rejected with tenure-not-met; FR-068 waiver does NOT apply — DES-068 (Doc 03 v1.1.1) explicitly excludes party-switchers: a tenure clock reset by a party switch is not excused by the destination party's waiver; rejection holds unconditionally regardless of party B's age | **Blocked — Phase 3 (DES-065 + DES-068; cross-FR interaction; no implementing code in this drop)** |
 
 ### TC-3310..TC-3312 — FR-068 tenure waiver for new parties (DES-068 · US-0078)
 
