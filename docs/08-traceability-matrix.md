@@ -2,14 +2,16 @@
 
 ```
 Document ID:   RTM-TRUMOCRACY
-Version:       1.1.2
+Version:       1.1.4
 Status:        In Review
 Owner:         Ji-woo Park — Test Lead (tester, author)
 Verifier:      reviewer-qa (independent) — Accountable for "RTM complete (zero gaps)" per CLAUDE.md RACI
-Source:        SRS-TRUMOCRACY v1.1.0 · SDD-TRUMOCRACY v1.1.1 §5.2 · BKLG-TRUMOCRACY v1.1.0 ·
-               CODE-TRUMOCRACY v1.0.0 · MTP-TRUMOCRACY v1.0.0 · TC-TRUMOCRACY v1.1.1
+Source:        SRS-TRUMOCRACY v1.1.1 · SDD-TRUMOCRACY v1.1.2 §5.2 · BKLG-TRUMOCRACY v1.1.2 ·
+               CODE-TRUMOCRACY v1.0.0 · MTP-TRUMOCRACY v1.0.0 · TC-TRUMOCRACY v1.1.2
 Last updated:  2026-08-10
-Changelog:     v1.1.2 (2026-08-10) — Screens dashboard corrected 20→23 (SCR-21/22/23 from CR-v1.1.0; cycle-2 NEW-ISS-01); TC source pin bumped to v1.1.1 (NEW-ISS-02).
+Changelog:     v1.1.4 (2026-08-10) — §6 Test cases dashboard corrected to expanded-convention total 308 (pre-existing drift; 299 row anchors + 9 from collapsed TC-3200–TC-3209 range); breakdown corrected to 148 with evidence / 160 not executable; TC-count note added; SRS source pin bumped to v1.1.1; BKLG source pin bumped to v1.1.2.
+               v1.1.3 (2026-08-10) — FR-069/FR-070 rows updated with TC-3343..TC-3345 (SC-01 trust-anchor negatives); FR-069 description updated to 5 in-circuit checks; Doc 03 source pin bumped to v1.1.2; TC count dashboard 298→3⁠⁠⁠⁠⁠0⁠1.
+               v1.1.2 (2026-08-10) — Screens dashboard corrected 20→23 (SCR-21/22/23 from CR-v1.1.0; cycle-2 NEW-ISS-01); TC source pin bumped to v1.1.1 (NEW-ISS-02).
                v1.1.1 (2026-08-10) — FR-063 evidence corrected (obs. → not run; cycle-1 ISS-01); Risks dashboard updated 16→19 total, 12→15 gaps (ISS-02); §7 preamble documents gap-log renumbering (ISS-03); Doc 03 source pin bumped to v1.1.1.
                v1.1.0 (2026-08-10) — FR-062..073 rows added; DES-064..086 cells filled; FR-011, FR-035 converted to COMPLETE; Change-9 coverage note added; gap log updated to 64 entries.
 ```
@@ -169,8 +171,8 @@ are a Doc 03 §5.2 defect.
 | BR-013 | **FR-066** three mandatory pre-election debates per candidate; local conditions, problems, work required; verifiable on-chain record | DES-067 | SCR-22 | EP-07 ▸ FE-032 ▸ US-0076 | TC-3317, TC-3318, TC-3319 | none | ☐ **G-PHASE3** — debate lifecycle (DES-067) not implemented; Elections Phase 3 |
 | BR-013 | **FR-067** candidacy only from net-positive post-debate member vote; no auto-renomination of incumbents | DES-067 | SCR-22 | EP-07 ▸ FE-032 ▸ US-0077 | TC-3320, TC-3321, TC-3322 | none | ☐ **G-PHASE3** — post-debate candidacy vote flow (DES-067) not implemented; Elections Phase 3 |
 | BR-003 | **FR-068** tenure waiver first 3 months for newly chartered parties; FR-023/FR-028 anti-capture controls fully active | DES-068 | — | EP-03 ▸ FE-030 ▸ US-0078 | TC-3310, TC-3311, TC-3312 | UT-0220 (mandated; anti-capture defence) | ☐ **G-PHASE3** — tenure-waiver flag (DES-068) not implemented; depends on FR-064 single-party membership |
-| BR-002 | **FR-069** deterministic enrolment nullifier Poseidon(stable_id_secret, enrolment_scope); four in-circuit checks | DES-069 · ADR-017 | — | EP-01 ▸ FE-033 ▸ US-0079 | TC-3323, TC-3324, TC-3325 | none | ☐ **G-CIRCUIT** — in-circuit enrolment nullifier (DES-069); personhood_enrol circuit not compiled; MockVerifierAlwaysTrue in place |
-| BR-002 | **FR-070** pluggable credential adapter; three candidate types: eIDAS 2.0, ICAO Doc 9303 NFC, offline paper KYC (e.g. Aadhaar) | DES-070 · ADR-017 | — | EP-01 ▸ FE-034 ▸ US-0080 | TC-3326, TC-3327, TC-3328, TC-3329 | none | ☐ **G-CIRCUIT** — credential adapter interface (DES-070); circuits + adapter infrastructure not deployed |
+| BR-002 | **FR-069** deterministic enrolment nullifier Poseidon(stable_id_secret, enrolment_scope); five in-circuit checks (trust-anchor hash is public signal[4]; on-chain binding check per SC-01/DES-069) | DES-069 · ADR-017 | — | EP-01 ▸ FE-033 ▸ US-0079 | TC-3323, TC-3324, TC-3325, TC-3343, TC-3345 | none | ☐ **G-CIRCUIT** — in-circuit enrolment nullifier (DES-069); personhood_enrol circuit not compiled; MockVerifierAlwaysTrue in place |
+| BR-002 | **FR-070** pluggable credential adapter; three candidate types: eIDAS 2.0, ICAO Doc 9303 NFC, offline paper KYC (e.g. Aadhaar) | DES-070 · ADR-017 | — | EP-01 ▸ FE-034 ▸ US-0080 | TC-3326, TC-3327, TC-3328, TC-3329, TC-3344 | none | ☐ **G-CIRCUIT** — credential adapter interface (DES-070); circuits + adapter infrastructure not deployed |
 | BR-002 | **FR-071** nullifier collision routes to recovery state machine; key rotates; membership, tenure, history survive; no second identity | DES-071 · ADR-018 | — | EP-05 ▸ FE-035 ▸ US-0081 | TC-3333, TC-3334 | none | ☐ **G-PHASE3** — nullifier-collision recovery state machine (DES-071, ADR-018) not implemented |
 | BR-002 | **FR-072** seven-day recovery delay; active-key veto window ≥ delay; no voting during delay; notification at initiation | DES-071 · ADR-018 | — | EP-05 ▸ FE-035 ▸ US-0082 | TC-3335, TC-3336, TC-3337, TC-3338, TC-3339 | none | ☐ **G-PHASE3** — recovery 7-day delay and veto guard (DES-071, ADR-018) not implemented |
 | BR-002 | **FR-073** government eID sole enrolment-nullifier-minting class per region (Phase 1); availability-only classes MUST NOT mint | DES-072 · ADR-016 | — | EP-01 ▸ FE-036 ▸ US-0083 | TC-3330, TC-3331, TC-3332 | none | ☐ **G-PHASE3** — government-eID class enforcement (DES-072, ADR-016) not deployed to PersonhoodRegistry |
@@ -309,8 +311,10 @@ was located by identifier in a real test file. Result of the reverse sweep:
 | NFR — Should | 4 | 2 | 0 | 4 |
 | Risks | 19 | 19 | 4 fully mitigated & proven | 15 |
 | Stories | 83 | 83 (all carry Gherkin AC) | 12 meet the Definition of Done | 71 |
-| Test cases | 298 | 298 | 143 automated · 72 observed passing | 155 not executable |
+| Test cases | 308 | 308 | 148 with passing evidence (104 inh. · 44 obs.) | 160 not executable |
 | Screens | 23 | 23 mapped | 0 verified (no UI suite executed) | 23 |
+
+**TC count convention (Test cases row):** Doc 07 contains 299 TC row anchors. One of those rows is a collapsed range — TC-3200–TC-3209 represents ten distinct exploratory charters. This dashboard uses the **expanded** convention: 299 − 1 + 10 = **308 designed test cases**. The Blocked count includes those 10 charters as 10 separate cases. The 148 “with passing evidence” = 104 Pass (inh.) + 44 Pass (obs.) from Doc 07 §0.1; the 160 not executable = 125 Blocked + 22 Not run + 12 No mechanism + 1 out-of-scope.
 
 **Definition of Done check (CLAUDE.md).** A story is done only when its RTM row is complete.
 **12 of 83 stories** meet that bar: US-0019, US-0024, US-0025, US-0026, US-0027, US-0031, US-0033,
