@@ -111,3 +111,25 @@ above dev and must stay off until it is fixed.
 
 Also fixed: the contract suite was running **one of five test files and still exiting zero**,
 because its worker timed out at six minutes. It now runs all five in about a minute.
+
+**Build-and-CI integrity findings (added 2026-08-09, surfaced by the Windows checkout):**
+
+1. **The contracts compile / EIP-170 CI step had never passed on any runner.**
+   `packages/contracts/script/compile.mjs` hardcoded the absolute path
+   `/home/user/Trumocracy/...`, so the step could only succeed on the original dev machine —
+   a GitHub runner checks out to `/home/runner/work/...` and a Windows checkout resolves it
+   to a non-existent drive path. The EIP-170 size check it exists to enforce was therefore
+   non-functional in CI. **Fixed:** the script now resolves every path from its own module
+   location; verified on a Windows checkout compiling all 14 units, largest 16,466 bytes,
+   all under the 24,576-byte limit.
+
+2. **Watch item — two compile paths, different source sets.** The build script and the
+   vitest fixture (`packages/contracts/test/fixture.mjs`) compile overlapping but different
+   inputs: the fixture additionally compiles `test/support/`. This is by design, but it
+   means the size check and the test suite measure different artifacts — a green build and
+   a green suite are not evidence about the same compilation, and the two paths can drift
+   without either noticing.
+
+These sit alongside the one-of-five-files finding above. The shared class is verification
+that reports success without verifying, which is the standing argument for the two
+independent audits on the critical path.
