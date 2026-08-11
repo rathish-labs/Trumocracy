@@ -61,6 +61,11 @@ unconditional; the design phase may begin per §5. One new open item accompanies
 (entrenched-charter scope vs previously-absolute guarantees) — a decision for the approver
 before the architect fixes the amendment boundary in Doc 03.
 
+**OI-18 decided — 2026-08-11.** Option (c) two-tier core, with CON-001 promoted into the
+Tier-1 entrenched charter (fork-only). Full record:
+`artifacts/status/OI-18-DECISION-2026-08-11.md`. The design phase proceeds; Doc 03 v2
+specifies the Tier-2 super-process numbers with rationale.
+
 ---
 
 ## 3. Dispositions — open items OI-14, OI-15, OI-16

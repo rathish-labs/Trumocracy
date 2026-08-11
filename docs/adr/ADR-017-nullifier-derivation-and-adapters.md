@@ -19,6 +19,9 @@ Amendment:     2026-08-10 — SC-01 (SEC-TRUMOCRACY-CR-2026-08-10, critical find
                each class is conducted against the then-current trust anchor for that issuer
                class. See Doc 03 §5.3 (trustAnchorHash, verifierAddress fields), §5.4
                (enrol() 5-signal arity), §10.1 (SC-01 STRIDE row).
+Amendment:     2026-08-11 — post-registration trust-anchor lifecycle (rotation/revocation
+               governance) specified in ADR-020; this ADR's registration-time binding is
+               unchanged.
 ```
 
 ## Context

@@ -263,3 +263,21 @@ begin. One new open item: **OI-18** (entrenched-charter scope vs previously-abso
 — a decision for the approver before the architect fixes the amendment boundary in Doc 03.
 
 **Gate 2:** Unchanged — OPEN / NOT READY.
+
+---
+
+## OI-18 DECIDED — 2026-08-11
+
+**OI-18 DECIDED (2026-08-11, Rathish): option (c) two-tier core, with CON-001 promoted into
+the Tier-1 entrenched charter (fork-only).** Tier 1 now comprises the six existing charter rules
+plus CON-001 (parties only, never state elections), unamendable by any vote at any tier and
+changeable only by fork. Tier 2 (BR-011/NFR-003, CON-002/CON-008/NFR-010, CON-012, CON-013)
+is amendable only via a super-process the architect specifies in Doc 03 — minimum requirements:
+supermajority materially above the ordinary structural tier; timelock long enough the fork right
+is genuinely exercisable; two consecutive affirmative votes separated by that window; growth-surge
+defence active throughout; independent audit published before the second vote. Full record:
+`artifacts/status/OI-18-DECISION-2026-08-11.md`. The architect proceeds to Doc 03 v2 covering
+the FR-118/FR-119 amendment boundary and super-process numbers with rationale, the SC-13/SC-14
+trust-anchor governance design (FR-112/FR-113), the OI-17 governance constants (Tomás Ferreira),
+and DES elements for FR-114..FR-120 including FR-117's capability-absence obligation. Gate 2
+unchanged — OPEN / NOT READY.

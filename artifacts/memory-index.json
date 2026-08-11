@@ -1112,6 +1112,258 @@
         "Carry-forwards unchanged: OI-18 open, OI-01-NUM, OI-04-PILOT, FORK-CRIT, SC-13/SC-14, SC-05, OI-08/OI-17."
       ],
       "next_role": "product-owner (Priya Raghunathan): rework Doc 02 v2.1.0 → v2.1.1 addressing ISS-01 (Medium) + ISS-02..ISS-06 (Low); neutral reviewer for cycle 2"
+    },
+    {
+      "id": "project-manager-2026-08-11T1500",
+      "role": "project-manager",
+      "file": "artifacts/project-manager-2026-08-11T1500.md",
+      "timestamp": "2026-08-11T15:00:00Z",
+      "phase": "Define — OI-18 decision recording (pre-Design)",
+      "product": "Trumocracy",
+      "summary": "Recorded Rathish's OI-18 decision (2026-08-11): option (c) two-tier core, with CON-001 promoted into the Tier-1 entrenched charter (fork-only). Full verbatim decision recorded in OI-18-DECISION-2026-08-11.md. Edited GATE1-DECISION-2026-08-11.md (OI-18 decided paragraph appended after condition-satisfied sentence). Appended dated OI-18 DECIDED paragraph to GATE-STATUS-2026-08-09.md. No product code written. No docs/ files modified.",
+      "artifacts_written": [
+        "artifacts/status/OI-18-DECISION-2026-08-11.md",
+        "artifacts/status/GATE1-DECISION-2026-08-11.md (edited — OI-18 decided paragraph appended)",
+        "artifacts/status/GATE-STATUS-2026-08-09.md (edited — OI-18 DECIDED section appended)",
+        "artifacts/project-manager-2026-08-11T1500.md",
+        "artifacts/memory-index.json (updated — entry 30 appended)"
+      ],
+      "key_decisions": [
+        "OI-18 DECIDED 2026-08-11 by Rathish: option (c) two-tier core.",
+        "Tier 1 (fork-only): six existing charter rules + CON-001 (parties only, never state elections).",
+        "Tier 2 (super-process): BR-011/NFR-003, CON-002/CON-008/NFR-010, CON-012, CON-013. Five minimum super-process properties set by architect in Doc 03.",
+        "Tier 3 (ordinary tier): everything else."
+      ],
+      "ids_touched": {
+        "OI_decided": "OI-18",
+        "CON_promoted_to_Tier1": "CON-001",
+        "Tier2_members": "BR-011, NFR-003, CON-002, CON-008, NFR-010, CON-012, CON-013",
+        "FR_boundary_defined": "FR-118, FR-119",
+        "FR_DES_owed": "FR-114..FR-120 (incl. FR-117 capability-absence obligation)",
+        "carry_forwards_unchanged": "SC-13, SC-14, OI-01-NUM, OI-04-PILOT, FORK-CRIT, SC-05, OI-17"
+      },
+      "gate": "Gate 1 APPROVED unconditionally 2026-08-11. OI-18 DECIDED — no remaining open items block Design. Gate 2 NOT READY.",
+      "next_role": "architect (Ravi Deshmukh) — Doc 03 v2: amendment boundary + Tier-2 super-process numbers (FR-118/FR-119), SC-13/SC-14 trust-anchor governance, OI-17 constants, DES for FR-114..FR-120"
+    },
+    {
+      "id": "product-owner-2026-08-11T1600",
+      "role": "product-owner",
+      "file": "artifacts/product-owner-2026-08-11T1600.md",
+      "timestamp": "2026-08-11T16:00:00Z",
+      "phase": "Define — OI-18 decision applied to Doc 02 v2.2.0",
+      "product": "Trumocracy",
+      "summary": "Applied OI-18 decision (Rathish, 2026-08-11, option (c) two-tier core) to docs/02-requirements-srs.md → v2.2.0 (Status: In Review). Nine surgical edits: header v2.2.0 + change-log; FR-118 amended to seven entrenched rules (CON-001 promoted); ⚠ banner replaced with DECIDED banner; FR-119 amended to three-tier structure; §8 FR-118 Gherkin updated (seven rules + CON-001 adversarial scenario); §8 FR-119 Gherkin updated (Tier-2 scenario + Tier-3 scenario); §9.1 CON-001 annotated; §13 OI-18 row marked DECIDED; §14 Glossary updated (Entrenched charter to seven rules; Named absolutes (Tier 2) added; Super-process added). Consistency sweep: zero live 'six' charter references remain; zero ⚠ v2.1.0 banners remain.",
+      "artifacts_written": [
+        "docs/02-requirements-srs.md (v2.2.0)",
+        "artifacts/product-owner-2026-08-11T1600.md",
+        "artifacts/memory-index.json (updated — entry 31 appended)"
+      ],
+      "ids_touched": {
+        "FR_amended": "FR-118, FR-119",
+        "CON_annotated": "CON-001",
+        "OI_decided": "OI-18",
+        "glossary_updated": "Entrenched charter, Named absolutes (Tier 2), Super-process, Amendable protocol"
+      },
+      "high_water_marks_unchanged": {
+        "BR": "BR-021",
+        "FR": "FR-120",
+        "NFR": "NFR-028",
+        "CON": "CON-014",
+        "RISK": "RISK-32",
+        "TD": "TD-11",
+        "OI": "OI-18"
+      },
+      "consistency_sweep": {
+        "six_charter_live_occurrences_fixed": 0,
+        "six_charter_struck_history_preserved": 1,
+        "warning_banners_remaining": 0
+      },
+      "open_items": [
+        "Doc 02 v2.2.0 requires business-mode document-review (cycle N+1) by neutral reviewer.",
+        "Doc 03 v2 (architect): Tier-2 super-process numbers + five-property rationale, DES + ADR. SC-13/SC-14, OI-17, FR-114..FR-120 DES owed.",
+        "Carry-forwards: OI-01-NUM, OI-04-PILOT, FORK-CRIT, SC-13/SC-14, SC-05, OI-17, OI-08."
+      ],
+      "gate": "Gate 1 APPROVED unconditionally 2026-08-11. OI-18 now DECIDED and applied. Gate 2 NOT READY.",
+      "next_role": "Neutral reviewer (non-product-owner) — document-review skill in business mode over docs/02-requirements-srs.md v2.2.0"
+    },
+    {
+      "id": "architect-2026-08-11T1700",
+      "role": "architect",
+      "file": "artifacts/architect-2026-08-11T1700.md",
+      "timestamp": "2026-08-11T17:00:00Z",
+      "phase": "Design — Doc 03 v2.0.0 pass 1 of 2",
+      "product": "Trumocracy",
+      "summary": "Produced Doc 03 v2.0.0 (pass 1 of 2): 14 surgical edits covering four areas — (A) FR-118/FR-119 amendment boundary + Tier-2 super-process state machine; (B) SC-13/SC-14 trust-anchor lifecycle design (both findings closed at design level); (C) OI-17 governance constants table (ss10.11, 24 values with rationale); (D) DES-087..DES-091 for steward area FR-114..FR-120. ADR-019/ADR-020 forthcoming in pass 2. Next-increment scope (FR-074..FR-111 DES coverage) recorded not hidden.",
+      "artifacts_written": [
+        "docs/03-architecture-design-sdd.md (v2.0.0)",
+        "artifacts/architect-2026-08-11T1700.md",
+        "artifacts/memory-index.json (updated — entry 32 appended)"
+      ],
+      "ids_minted": {
+        "DES": "DES-087..DES-091 (5 new)",
+        "ADR_forthcoming": "ADR-019, ADR-020 (pass 2)"
+      },
+      "high_water_marks_after": {
+        "DES": "DES-091",
+        "ADR": "ADR-018 (ADR-019/020 forthcoming)"
+      },
+      "constants_set": {
+        "Tier3_quorum": "15% enrolled",
+        "Tier3_supermajority": "60% of votes cast",
+        "Tier3_timelock": "90 days",
+        "Tier2_quorum": "25% enrolled",
+        "Tier2_supermajority": "80% of votes cast",
+        "inter_vote_window": "180 days",
+        "audit_lead_time": "30 days",
+        "steward_term": "2 years",
+        "steward_seats": "5",
+        "steward_recall_bar": "20% affirmative quorum + 60% turnout",
+        "founding_member_count": "5",
+        "disclosure_lead_time": "21 days",
+        "anchor_overlap_window": "60 days",
+        "ordinary_revocation_timelock": "30 days",
+        "emergency_revocation_timelock": "7 days"
+      },
+      "open_items": [
+        "Pass 2: ADR-019 (Tier-2 super-process) + ADR-020 (trust-anchor lifecycle governance).",
+        "Next design increment: DES coverage for FR-074..FR-111 beyond DES-064..DES-086.",
+        "Doc 03 v2.0.0 requires technical-mode document-review (neutral non-architect reviewer).",
+        "SC-05 rate-limit DES element deferred to pass 2 or next increment."
+      ],
+      "OI_closed": ["OI-17", "OI-18"],
+      "SC_closed_at_design": ["SC-13", "SC-14"],
+      "gate": "Gate 1 APPROVED 2026-08-11. Design phase open. Gate 2 NOT READY. Doc 03 v2.0.0 in review."
+    },
+    {
+      "id": "engineer-2026-08-11T1900",
+      "role": "engineer (acting as NEUTRAL REVIEWER — document-review skill)",
+      "file": "artifacts/engineer-2026-08-11T1900.md",
+      "timestamp": "2026-08-11T19:00:00Z",
+      "phase": "Design — technical-mode document-review of Doc 03 v2.0.0 (cycle 1)",
+      "product": "Trumocracy",
+      "scope": "REVIEWER role. Technical-mode cycle-1 review of Doc 03 v2.0.0 (four scoped areas: FR-118/FR-119 amendment boundary; SC-13/SC-14 lifecycle; OI-17 constants; DES-087..DES-091 steward area). Read-only. No documents edited. No product code written.",
+      "summary": "Ran technical-mode document-review (cycle 1) over Doc 03 v2.0.0, ADR-019, ADR-020, ADR-017 amendment line. FAIL: 84%, 0C/2H/2M/3L. Two High: ISS-01 — §10.11/§10.1 use 'Tier-2 quorum and supermajority' for emergency revocation voting bar, contradicting ADR-020 (which says unchanged from ordinary Tier-3: 60%/15%); ISS-02 — OI-18 five binding super-process properties not faithfully represented in ADR-019's five (growth-surge dropped, quorum added; §14 five tests map to ADR-019 not OI-18). Two Medium: ISS-03 — STRIDE SC-01 Spoof residual not updated for post-registration compromise (SC-13 sub-residual missing from threat model table); ISS-04 — naming collision between platform Tier-1/2/3 and party T0/T1/T2/T3 in §10.11 without disambiguation. Three Low: §1.1 FR Must count 97 vs 101 (ISS-05); changelog says pass 1 of 2 (ISS-06); SC-14 SRE staleness SLA unspecified (ISS-07). Routed to architect for v2.0.1.",
+      "artifacts_written": [
+        "artifacts/reviews/03-architecture-design-sdd-v2.0.0-technical-cycle1.md",
+        "artifacts/engineer-2026-08-11T1900.md",
+        "artifacts/memory-index.json (updated — entry 33 appended)"
+      ],
+      "review_verdicts": {
+        "03-architecture-design-sdd-v2.0.0": {
+          "score": 84,
+          "critical": 0,
+          "high": 2,
+          "medium": 2,
+          "low": 3,
+          "cycle": 1,
+          "verdict": "FAIL",
+          "routed_to": "architect (Ravi Deshmukh) — rework to v2.0.1",
+          "issues": [
+            "ISS-01 (High): §10.11 emergency revocation row and §10.1 STRIDE DoS row say 'Tier-2 quorum and supermajority' for emergency revocation voting bar — contradicts ADR-020 (unchanged from ordinary Tier-3: 60%/15%); ADR wins; body text is defective.",
+            "ISS-02 (High): OI-18 property 4 (growth-surge defence) dropped from ADR-019's five numbered properties; quorum added as sixth; §14 five tests correspond to ADR-019's five, not OI-18's five; no Tier-2-specific growth-surge test.",
+            "ISS-03 (Medium): §10.1 STRIDE SC-01 Spoof residual not updated with post-registration-compromise sub-entry (SC-13 explicitly required this expansion).",
+            "ISS-04 (Medium): naming collision between platform Tier-1/2/3 and party T0/T1/T2/T3 in §10.11 without disambiguation note.",
+            "ISS-05 (Low): §1.1 FR Must count 97 vs actual 101.",
+            "ISS-06 (Low): changelog says 'Pass 1 of 2' but ADR-019 and ADR-020 are present in §12.",
+            "ISS-07 (Low): SC-14 SRE staleness SLA (max permissible gap from issuer rotation to on-chain update) not specified."
+          ]
+        }
+      },
+      "verified_sound": [
+        "Seven Tier-1 rules incl. CON-001: confirmed in ADR-019 and DES-087.",
+        "enrol() five-signal arity [Ni, C, issuerId, namespaceId, trustAnchorHash] UNCHANGED from v1.1.2.",
+        "ADR-017 2026-08-11 amendment line: confirmed present in file.",
+        "ADR index: twenty ADRs (ADR-001..ADR-020), all Accepted.",
+        "FR-112..FR-120 all mapped to DES elements in §15.",
+        "FR-117 capability-absence BY CONSTRUCTION + static dep-guard + vacancy simulation.",
+        "FR-116 propose-never-enact: StewardRegistry has no enact path.",
+        "Expulsion bar (80%/20%) > removal bar (60%/15%): FR-105 satisfied.",
+        "Steward recall affirmative-quorum discipline coherent with FR-114 and FR-104.",
+        "SC-14 rotation liveness gap closed (60-day dual-anchor overlap).",
+        "SC-13 emergency revocation path specified (7-day timelock, RISK-30).",
+        "Ruling 4 preserved throughout DES-090 (both functions via Governor.execute() only).",
+        "180-day inter-vote window sanity-checks against FR-053/NFR-018 mechanics.",
+        "§10.11 constants internally self-consistent (all values with rationale, no circular dependency)."
+      ],
+      "ids_touched": {
+        "review_reports_created": "03-architecture-design-sdd-v2.0.0-technical-cycle1.md",
+        "DES_reviewed": "DES-087..DES-091",
+        "ADR_reviewed": "ADR-017 amendment line, ADR-019, ADR-020",
+        "FR_reviewed": "FR-112..FR-120",
+        "code_written": "none",
+        "docs_edited": "none"
+      },
+      "gate": "Design phase — Doc 03 v2.0.0 FAIL (cycle 1). Routed to architect for v2.0.1. Gate 2 NOT READY.",
+      "next_role": "architect (Ravi Deshmukh) — rework Doc 03 v2.0.0 → v2.0.1 addressing ISS-01 (High), ISS-02 (High), ISS-03 (Medium), ISS-04 (Medium) and Lows; re-review at cycle 2 (technical mode, neutral reviewer)"
+    },
+    {
+      "id": "reviewer-qa-2026-08-11T2100",
+      "role": "reviewer-qa",
+      "file": "artifacts/reviewer-qa-2026-08-11T2100.md",
+      "timestamp": "2026-08-11T21:00:00Z",
+      "phase": "Verify — directed security scan (design phase)",
+      "product": "Trumocracy",
+      "scope": "Doc 03 v2.0.3 directed security scan: (1) amendment boundary (Charter/Guarded/Open Layer; DES-087; ADR-019; ss5.3/5.4/5.6; ss10.11), (2) steward powers (DES-088/089; FR-114..FR-117), plus trust-anchor lifecycle SC-13/SC-14 closure verification for any new surface opened by the governance path.",
+      "summary": "Conducted attack-model security scan of Doc 03 v2.0.3's two directed surfaces. Read SDD v2.0.3, ADR-019, ADR-020, SRS v2.2.0 ss4.39, OI-18-DECISION-2026-08-11.md. Minted SC-15..SC-21 (1C/3H/2M/1L). VERDICT: DESIGN ADVANCE BLOCKED by SC-15 (CRITICAL -- ProtocolGovernance not in IMMUTABLE CORE; Open Layer vote could replace it). SC-16/17/18 (HIGH) also require architect response in the same increment. All SC-01..SC-14 closures remain valid. Core designs for entrenched registry, five-property state machine, trust-anchor dual-anchor overlap, and steward zero-dependency property are sound.",
+      "artifacts_written": [
+        "artifacts/reviews/SECURITY-SCAN-DOC03-V2-2026-08-11.md",
+        "artifacts/reviewer-qa-2026-08-11T2100.md",
+        "artifacts/memory-index.json (updated -- entry 34 appended)"
+      ],
+      "findings": {
+        "critical": 1,
+        "high": 3,
+        "medium": 2,
+        "low": 1,
+        "total": 7,
+        "ids": "SC-15..SC-21"
+      },
+      "sc_minted": {
+        "SC-15": "CRITICAL -- ProtocolGovernance not in IMMUTABLE CORE; Open Layer vote could replace enforcement contract",
+        "SC-16": "HIGH -- GovernanceConstants layer classification and update mechanism underspecified; Guarded Layer bars potentially reducible via Open Layer vote",
+        "SC-17": "HIGH -- Steward publishAuditRef monopoly creates functional veto over Guarded Layer amendment timing; no citizen fallback",
+        "SC-18": "HIGH -- Trust-anchor state machine has no ROTATION_PENDING abort/revocation path",
+        "SC-19": "MEDIUM -- Steward agenda power over issuer onboarding; no citizen-initiated bypass specified",
+        "SC-20": "MEDIUM -- Guarded Layer quorum computation basis (snapshot vs live enrollment) unspecified",
+        "SC-21": "LOW -- Charter Layer hash-commitment guards rule IDs not substance; mitigated by permittedActionClass binding"
+      },
+      "verified_sound": [
+        "Seven-rule entrenched registry: no mutable setter; check fires at submission pre-tally",
+        "CON-001 scope-boundary promotion: correctly entrenched; CON-001 adversarial scenario in FR-118 Gherkin correct",
+        "Two-vote requirement: independent superProcessState slots per proposalId; no cross-proposal confusion possible",
+        "Snapshot immutability between votes: snapshotRoot committed at proposeAmendment(); P4-b revert assertion correct",
+        "Stale-first-vote replay: DEFEATED state has no transition back to FIRST_VOTE_OPEN",
+        "Double-proposal interleaving: concurrent proposals on same ruleId are independent; no precondition interference",
+        "Audit-ref timing enforcement: secondVote() and enact() code-enforce auditPublishedAt + AUDIT_LEAD_TIME",
+        "Audit content/independence acknowledged as social control in ADR-019 (transparent limitation, not hidden gap)",
+        "FR-117 zero-dependency BY CONSTRUCTION: no citizen-path contract imports StewardRegistry; sound",
+        "Steward ABI allowlist: four enumerated powers only; CI assertion enforces",
+        "FR-116 enactment: StewardRegistry has no enact path; Governor.execute() is the sole state-change path",
+        "Steward term arithmetic: 5 seats / 2-year terms / 3-2 annual stagger verified",
+        "Recall design: affirmative-quorum prevents silence-removal; growth-surge defence active throughout",
+        "SC-13 emergency revocation closure: full governance vote required; 7-day timelock only; ruling 4 preserved",
+        "SC-14 rotation closure: 60-day dual-anchor overlap; Sybil bounded by nullifier deduplication",
+        "Emergency revocation ACTIONS-vs-AMENDMENTS disambiguation: 60/15 bar correct (not 80/25); sound",
+        "rotateTrustAnchor() / revokeTrustAnchor() callable ONLY from Governor.execute() with permittedActionClass",
+        "ROTATION_PENDING forward transition (to ACTIVE with new hash) is sound; SC-18 concerns absent ABORT path only",
+        "REVOCATION_PENDING continuity: enrol() continues until anchorEffectiveAt (v2.0.3 fix confirmed correct)",
+        "RISK-30 7-day residual: epoch cap bounds blast radius; accepted and recorded"
+      ],
+      "merge_signoff": "WITHHELD -- SC-15 (CRITICAL) open",
+      "ids_touched": {
+        "SC_minted": "SC-15..SC-21",
+        "FR_referenced": "FR-114..FR-120",
+        "DES_referenced": "DES-087..DES-091",
+        "ADR_referenced": "ADR-019, ADR-020",
+        "RISK_referenced": "RISK-30, RISK-31, RISK-32",
+        "CON_referenced": "CON-001, CON-003",
+        "BR_referenced": "BR-011, BR-021",
+        "NFR_referenced": "NFR-003, NFR-017, NFR-018",
+        "docs_edited": "none",
+        "code_written": "none"
+      },
+      "gate": "Design advance BLOCKED by SC-15 (CRITICAL). Architect must resolve SC-15..SC-18 before backlog/test-design catch-up. Gate 2 NOT READY.",
+      "next_role": "architect (Ravi Deshmukh) -- resolve SC-15 (CRITICAL): add ProtocolGovernance/StewardRegistry to IMMUTABLE CORE in ss5.1 and DES-087; resolve SC-16/17/18 (HIGH); record SC-19/20 (MEDIUM) for next increment. Project-manager holds design advance until SC-15 is resolved."
     }
   ]
 }

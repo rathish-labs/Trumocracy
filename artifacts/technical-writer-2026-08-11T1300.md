@@ -146,3 +146,41 @@ Product-owner (Priya Raghunathan) to set `Status: Approved` in the document head
 ### Artifact written
 
 - `artifacts/reviews/02-requirements-srs-v2.1.1-business-cycle2.md` — review report (cycle 2 PASS)
+
+---
+
+## ADDENDUM — v2.2.0 cycle-1 verdict (2026-08-11)
+
+**PASS — 97% score · 0 Critical · 0 High · 0 Medium · 3 Low**
+
+Review report: `artifacts/reviews/02-requirements-srs-v2.2.0-business-cycle1.md`
+
+Scope: OI-18 decision application. Full re-read not performed on unchanged areas;
+focus on the ten coordinator-specified impact areas.
+
+### Ten focus checks
+
+| # | Focus | Status |
+|---|-------|--------|
+| 1 | FR-118 seven rules incl. CON-001, verbatim faithful | CONFIRMED |
+| 2 | FR-119 five super-process properties, none invented, numbers deferred | CONFIRMED |
+| 3 | ✅ banner after FR-118 accurate | CONFIRMED |
+| 4 | §8 FR-118/FR-119 Gherkin updated | CONFIRMED (1 Low — ISS-01) |
+| 5 | §9.1 CON-001 promotion note | CONFIRMED |
+| 6 | §13 OI-18 DECIDED | CONFIRMED |
+| 7 | §14 glossary (Entrenched charter 7 rules; Named absolutes; Super-process) | CONFIRMED |
+| 8 | No live "six rules" residue | CONFIRMED |
+| 9 | Counts unchanged (120/101/14/3) | CONFIRMED |
+| 10 | No new inconsistency | CONFIRMED (2 Low — ISS-02, ISS-03) |
+
+### Issues (all Low — non-blocking)
+
+| ID | Location | Finding |
+|----|----------|---------|
+| ISS-01 | §8 FR-119 Gherkin, line 1598 | Then-clause parenthetical says "five properties" but names only four explicitly; fifth (two consecutive votes) is implicit in "on either vote"; scenario itself exercises all five correctly |
+| ISS-02 | §15 approvals table, line 2067 | Notes reads "OI-18 open" — stale in v2.2.0; OI-18 is DECIDED per §13 |
+| ISS-03 | §11 counts paragraph, line 1915 | Label "(v2.1.0)" now two versions stale; data correct and unchanged; carry-over from cycle-2 NIL-01 |
+
+### Artifact written
+
+- `artifacts/reviews/02-requirements-srs-v2.2.0-business-cycle1.md` — review report (v2.2.0 cycle 1 PASS)
