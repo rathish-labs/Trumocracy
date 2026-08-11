@@ -566,6 +566,331 @@
         "SC": "SC-01..SC-12"
       },
       "next_role": "Human approver (Rathish) for Gate-1 re-affirmation decisions A and B. After decision: architect (SC-01 Doc 03 revision) and/or product-owner (OI-13 resolution per chosen option)."
+    },
+    {
+      "id": "product-owner-2026-08-10T1500",
+      "role": "product-owner",
+      "file": "artifacts/product-owner-2026-08-10T1500.md",
+      "timestamp": "2026-08-10T15:00:00Z",
+      "phase": "Vision · Define — v2.0.0 structural pass (pass 1 of 4)",
+      "product": "Trumocracy",
+      "summary": "Executed pass 1 of 4 (structural pass) on Doc 02 v1.1.1 → v2.0.0. All 13 assigned edits completed: header updated; §1.1/§1.2 reworked to self-governance-first framing with behavioural-tracking exclusion; §2.2 extended with 11 v2 product functions; §2.3 user-class rows added/updated for Supporter, Worker, Committee member; Ingrid Bergqvist added to §2.7; BR-014..BR-020 appended to §3; FR-046 marked superseded; FR-062 banner resolved and superseded; NFR-001/002/024 tier-scoped; TD-02 extended; §7 participation-profile row updated; OI-13 marked resolved; §15 v2.0.0 re-entry approval row added.",
+      "artifacts_written": [
+        "docs/02-requirements-srs.md (v2.0.0, structural pass)",
+        "artifacts/product-owner-2026-08-10T1500.md"
+      ],
+      "ids_touched": {
+        "BR_minted": "BR-014..BR-020",
+        "FR_minted": "none (pass 1 only)",
+        "NFR_minted": "none",
+        "CON_minted": "none",
+        "RISK_minted": "none",
+        "TD_minted": "none",
+        "OI_minted": "none",
+        "FR_superseded": "FR-046, FR-062 (retained for traceability)",
+        "NFR_amended": "NFR-001, NFR-002, NFR-024 (tier-scoping note appended)",
+        "TD_amended": "TD-02 (three-tier extension appended)",
+        "OI_resolved": "OI-13 (three-tier privacy ruling BR-017)"
+      },
+      "high_water_marks_after": {
+        "BR": "BR-020",
+        "FR": "FR-073",
+        "NFR": "NFR-026",
+        "CON": "CON-012",
+        "RISK": "RISK-24",
+        "TD": "TD-07",
+        "OI": "OI-13"
+      },
+      "open_items": [
+        "§4.24 and §4.28 forward-referenced but not yet created — land in passes 2–3.",
+        "§11 counts not yet updated — deferred to consistency pass (pass 4).",
+        "§12 v2.0.0 BR↔FR traces — deferred to passes 2–4 after new FRs are minted.",
+        "§14 Glossary 'Participation profile' entry still points to FR-062 — update in pass 4.",
+        "Passes 2–4 must complete before business-mode document-review is run on v2.0.0."
+      ],
+      "gate": "Gate 1 re-entry — Doc 02 v2.0.0 structural pass complete; awaiting passes 2–4 then business-mode review."
+    },
+    {
+      "id": "product-owner-2026-08-10T1600",
+      "role": "product-owner",
+      "file": "artifacts/product-owner-2026-08-10T1600.md",
+      "timestamp": "2026-08-10T16:00:00Z",
+      "phase": "Vision · Define — v2.0.0 FR pass (pass 2 of 4)",
+      "product": "Trumocracy",
+      "summary": "Appended §4.21–§4.28 to docs/02-requirements-srs.md v2.0.0: 22 new Must FRs (FR-074..FR-095) covering country selection & legal-registration boundary, party founding & digital constitution, participation tiers, three-tier privacy, committees, proposal lifecycle, candidate selection schedule, and measurable manifesto. Two ⚠ OI banners placed: OI-16 after FR-085 (append-only vs withdrawal-destroys-data), OI-14 after FR-090 (public authorship vs Supporter anonymity). No deviation from assigned numbering. Three additional contradictions noted but not resolved.",
+      "artifacts_written": [
+        "docs/02-requirements-srs.md (v2.0.0, §4.21–§4.28 appended)",
+        "artifacts/product-owner-2026-08-10T1600.md"
+      ],
+      "ids_touched": {
+        "FR_minted": "FR-074..FR-095 (22 new Must FRs)",
+        "OI_referenced_in_banners": "OI-14 (§4.25/FR-090), OI-16 (§4.24/FR-085) — not yet minted as §13 rows",
+        "FR_high_water_mark_after": "FR-095"
+      },
+      "open_items": [
+        "§13 must receive OI-14 and OI-16 as numbered rows (pass 3 or 4).",
+        "'Matured member' term undefined — needs §14 glossary entry.",
+        "§11 counts, §12 traces, §14 Glossary updates deferred to pass 4.",
+        "Three additional contradictions noted in memory file — not blockers."
+      ],
+      "gate": "Gate 1 re-entry — Doc 02 v2.0.0 pass 2 of 4 complete; passes 3–4 outstanding."
+    },
+    {
+      "id": "product-owner-2026-08-10T1400",
+      "role": "product-owner",
+      "file": "artifacts/product-owner-2026-08-10T1400.md",
+      "timestamp": "2026-08-10T14:00:00Z",
+      "phase": "Vision · Define — v2.0.0 re-entry",
+      "product": "Trumocracy",
+      "summary": "Brought Doc 01 (PR-FAQ) from v1.0.0 to v2.0.0 per the approver's expanded vision re-entry. Party self-governance first; participation tiers (Supporter/Worker/Candidate); one-pilot correction per OI-04; launch dateline moved to 2027-06-01 per S-01; four governance rulings embedded across §A, §B, §D, §E; four new §E3 hard questions; §C v2 metrics added; §D behavioural tracking added. No IDs minted. Doc 02 update is next.",
+      "artifacts_written": [
+        "docs/01-press-release-prfaq.md (v2.0.0)",
+        "artifacts/product-owner-2026-08-10T1400.md"
+      ],
+      "ids_touched": {
+        "referenced_not_modified": "CON-001, CON-007, NFR-015, NFR-020, NFR-009, RISK-01, RISK-02, RISK-06, RISK-09, OI-04, OI-01, S-01",
+        "minted": "none"
+      },
+      "key_decisions": [
+        "Enrolment target re-dated 2027-09-01 → 2027-12-01 (6 months post 2027-06-01 launch).",
+        "Delegation exclusion: 'no earlier than v2' → 'a future major version' (avoids self-reference in v2.0.0).",
+        "Business model FAQ: 'no revenue in v1' → 'at launch' (v2 doc self-reference fix).",
+        "Four new §E3 hard questions added (committees, non-violence, no-tracking, right-to-be-forgotten).",
+        "Per-user behavioural tracking added to §D with full political-intelligence-database rationale.",
+        "Pilot count corrected throughout to one; multi-country capability noted as in-scope from outset."
+      ],
+      "open_items": [
+        "OI-04-PILOT: pilot jurisdiction and eID rail unnamed — must close before enrolment requirement implemented.",
+        "OI-01-NUM: threshold percentage open — must close before first petition above dev.",
+        "OI-DOC13: v2 scope re-estimated schedule/appetite in Doc 13 — open item, not yet produced.",
+        "Doc 01 v2.0.0 requires business-mode document-review (neutral reviewer) before advancing.",
+        "Doc 02 v2.0.0 is next after Doc 01 passes review — will carry expanded vision into requirements."
+      ],
+      "gate": "Gate 1 re-entry — Doc 01 v2.0.0 produced; awaiting business-mode document-review.",
+      "next_role": "Neutral role to run document-review skill in business mode over docs/01-press-release-prfaq.md v2.0.0"
+    },
+    {
+      "id": "product-owner-2026-08-10T1700",
+      "role": "product-owner",
+      "file": "artifacts/product-owner-2026-08-10T1700.md",
+      "timestamp": "2026-08-10T17:00:00Z",
+      "phase": "Vision · Define — v2.0.0 FR pass (pass 3 of 4)",
+      "product": "Trumocracy",
+      "summary": "Appended §4.29–§4.38 to docs/02-requirements-srs.md v2.0.0: 18 new Must FRs (FR-096..FR-113). Amended FR-050 (Should→Must). Appended NFR-027..NFR-028 to §6; CON-013..CON-014 to §9.1; TD-08..TD-10 to §9.3; RISK-25..RISK-30 to §10; OI-14..OI-17 plus SC-13/SC-14 and fork-initiation carry-forward notes to §13. OI-15 ⚠ banner placed at FR-105. §4.38 opens with SC-13/SC-14 preamble citing the security re-scan. Pass 4 (§8 Gherkin, §11 counts, §12 traces, §14 Glossary) outstanding.",
+      "artifacts_written": [
+        "docs/02-requirements-srs.md (v2.0.0, §4.29–§4.38 + register additions)",
+        "artifacts/product-owner-2026-08-10T1700.md"
+      ],
+      "ids_touched": {
+        "FR_minted": "FR-096..FR-113 (18 new Must FRs)",
+        "FR_amended": "FR-050 (Priority Should→Must, note appended)",
+        "NFR_minted": "NFR-027..NFR-028",
+        "CON_minted": "CON-013..CON-014",
+        "RISK_minted": "RISK-25..RISK-30",
+        "TD_minted": "TD-08..TD-10",
+        "OI_minted": "OI-14..OI-17"
+      },
+      "high_water_marks_after": {
+        "BR": "BR-020",
+        "FR": "FR-113",
+        "NFR": "NFR-028",
+        "CON": "CON-014",
+        "RISK": "RISK-30",
+        "TD": "TD-10",
+        "OI": "OI-17"
+      },
+      "open_items": [
+        "Pass 4 outstanding: §8 Gherkin (new Must FRs), §11 counts, §12 traces, §14 Glossary.",
+        "OI-14/OI-15/OI-16: Gate 1 decision required from Rathish.",
+        "OI-17: governance constants set in Design (architect/Tomás Ferreira).",
+        "SC-13/SC-14: Doc 03 design change owed from architect after Gate 1.",
+        "§11 count tables need updating in pass 4 (FR-050 moves Should→Must).",
+        "FR-102 vs FR-053 priority tension noted — may need Low annotation in pass 4."
+      ],
+      "gate": "Gate 1 re-entry — Doc 02 v2.0.0 pass 3 of 4 complete; pass 4 outstanding."
+    },
+    {
+      "id": "product-owner-2026-08-10T1800",
+      "role": "product-owner",
+      "file": "artifacts/product-owner-2026-08-10T1800.md",
+      "timestamp": "2026-08-10T18:00:00Z",
+      "phase": "Vision · Define — v2.0.0 vision re-entry, pass 4 of 4",
+      "product": "Trumocracy",
+      "summary": "Pass 4 of 4 on Doc 02 v2.0.0: added 41 FR Gherkin blocks (FR-050, FR-074..FR-113) and 2 NFR blocks (NFR-027, NFR-028) to §8; added v2.0.0 tier-scoping notes to NFR-001/002/024; updated §8 preamble (24 Must NFRs); updated §11 counts to v2.0.0 (Must 94, Should 14, Could 3, 20 BR, 113 FR minted); appended v2.0.0 BR→FR traces to §12; verified §13; appended 16 glossary entries to §14; fixed supersession pointers (FR-046→FR-094/095, FR-062→FR-082..FR-086); added FR-102 editorial note; fixed §1.4 Doc 01 reference (v1.0.0→v2.0.0); consistency sweep clean (one stale ⚠ banner converted to ✅).",
+      "artifacts_written": [
+        "docs/02-requirements-srs.md (v2.0.0, pass 4 complete)",
+        "artifacts/product-owner-2026-08-10T1800.md"
+      ],
+      "ids_touched": {
+        "FR_gherkin_added": "FR-050, FR-074..FR-113 (41 blocks)",
+        "NFR_gherkin_added": "NFR-027, NFR-028",
+        "NFR_amended_gherkin": "NFR-001, NFR-002, NFR-024 (v2.0.0 tier-scoping note appended)"
+      },
+      "verified_counts": {
+        "Must_FR": 94,
+        "Should_FR": 14,
+        "Could_FR": 3,
+        "BR": 20,
+        "FR_minted": 113,
+        "FR_active": 111,
+        "FR_superseded": 2,
+        "NFR": 28,
+        "CON": 14,
+        "RISK_requirement_level": 25,
+        "TD": 10,
+        "Must_NFR": 24,
+        "Should_NFR": 4
+      },
+      "open_items": [
+        "OI-14/OI-15/OI-16: Gate 1 decision required from Rathish.",
+        "OI-17: governance constants — Design phase (Tomás Ferreira).",
+        "SC-13/SC-14: Doc 03 design change owed after Gate 1 (architect).",
+        "Doc 05 §1.4 reference shows v1.1.0 but Doc 05 is at v1.1.2 — LOW cosmetic, note for next reviewer.",
+        "Doc 02 v2.0.0 ready for business-mode document-review by neutral role."
+      ],
+      "gate": "Gate 1 re-entry — Doc 02 v2.0.0 all four passes complete; document ready for business-mode document-review."
+    },
+    {
+      "id": "technical-writer-2026-08-10T1900",
+      "role": "technical-writer (acting as NEUTRAL REVIEWER — document-review skill)",
+      "file": "artifacts/technical-writer-2026-08-10T1900.md",
+      "timestamp": "2026-08-10T19:00:00Z",
+      "phase": "Define — Gate 1 re-entry (v2.0.0) — business-mode document-review, cycle 1",
+      "product": "Trumocracy",
+      "scope": "REVIEWER role. Business-mode cycle-1 review of Doc 01 v2.0.0 and Doc 02 v2.0.0. Read-only. No documents edited. No product code touched.",
+      "summary": "Ran business-mode document-review (cycle 1) over Doc 01 v2.0.0 (PASS: 97%, 0C/0H/0M/2L) and Doc 02 v2.0.0 (FAIL: 92%, 0C/2H/1M/2L). Doc 01 advances; Doc 02 routes back to product-owner for v2.0.1. Three blocking fixes needed: §2.4 still says 'three pilot jurisdictions' (ISS-01 HIGH — intended one-pilot correction not applied); CON-007/§11 say launch 2027-03-01 which predates Gate 2 2027-05-14 (ISS-02 HIGH); §8 FR-062 Gherkin block not marked superseded/do-not-test (ISS-03 MEDIUM). All independently measured counts match document claims.",
+      "artifacts_written": [
+        "artifacts/reviews/01-press-release-prfaq-v2.0.0-business-cycle1.md",
+        "artifacts/reviews/02-requirements-srs-v2.0.0-business-cycle1.md",
+        "artifacts/technical-writer-2026-08-10T1900.md"
+      ],
+      "review_verdicts": {
+        "01-press-release-prfaq-v2.0.0": {
+          "score": 97,
+          "critical": 0,
+          "high": 0,
+          "medium": 0,
+          "low": 2,
+          "cycle": 1,
+          "verdict": "PASS",
+          "issues": [
+            "ISS-01 (Low): §E1 FAQ describes fork capability without noting it is Could-priority with open critical defect and flag OFF above dev",
+            "ISS-02 (Low): §C guardrail '>=25 distinct third-party organisations running the verifier by month 6' not formally indexed as FR/NFR in Doc 02"
+          ]
+        },
+        "02-requirements-srs-v2.0.0": {
+          "score": 92,
+          "critical": 0,
+          "high": 2,
+          "medium": 1,
+          "low": 2,
+          "cycle": 1,
+          "verdict": "FAIL",
+          "routed_to": "product-owner (Priya Raghunathan) for rework into v2.0.1",
+          "issues": [
+            "ISS-01 (High): §2.4 says 'three pilot jurisdictions at launch' — stale; intended correction not applied; contradicts Gate 1 Lever L2, Doc 01, OI-04",
+            "ISS-02 (High): CON-007/§11 say 'launch 2027-03-01' — predates Gate 2 (2027-05-14) by 10 weeks; structurally impossible under VEKTOR governance",
+            "ISS-03 (Medium): §8 Gherkin block for superseded FR-062 has no superseded/do-not-test marker; will mislead tester seeding Doc 07",
+            "ISS-04 (Low): CON-007 appetite only (USD 4.2M); accepted budget (~USD 4.13M per Lever L2) not cross-referenced",
+            "ISS-05 (Low): US/TC seeding deferred (recorded deferral, not a defect)"
+          ]
+        }
+      },
+      "independent_counts_verified": {
+        "Must_FR": 94,
+        "Should_FR": 14,
+        "Could_FR": 3,
+        "Superseded_FR": 2,
+        "FR_minted_total": 113,
+        "BR": 20,
+        "Must_NFR": 24,
+        "Should_NFR": 4,
+        "Gherkin_Must_FR_active": 94,
+        "Gherkin_Must_NFR": 24,
+        "New_v2_Gherkin_blocks": 41,
+        "BR_FR_traces_verified": "All (BR-013..BR-020 spot-checked)"
+      },
+      "gate": "Gate 1 re-entry — Doc 01 v2.0.0 PASS. Doc 02 v2.0.0 FAIL (3 blocking issues). SOP: route Doc 02 to product-owner for v2.0.1 rework; re-review at cycle 2.",
+      "open_items": [
+        "Doc 02 v2.0.0: FAIL — route to product-owner for rework (§2.4 one-pilot text, CON-007/§11 date, §8 FR-062 superseded marker). Should clear at cycle 2.",
+        "Doc 01 v2.0.0: PASS — product-owner may set Status: Approved.",
+        "OI-14/OI-15/OI-16: still pending Rathish Gate 1 re-entry decision.",
+        "OI-17: Design phase (Tomás Ferreira).",
+        "SC-13/SC-14: Doc 03 design change owed from architect after Gate 1."
+      ],
+      "next_role": "product-owner (rework Doc 02 v2.0.0 → v2.0.1); neutral role re-review at cycle 2"
+    },
+    {
+      "id": "product-owner-2026-08-10T2000",
+      "role": "product-owner",
+      "file": "artifacts/product-owner-2026-08-10T2000.md",
+      "timestamp": "2026-08-10T20:00:00Z",
+      "phase": "Define — Gate 1 re-entry · cycle-1 business-review rework",
+      "product": "Trumocracy",
+      "summary": "Reworked Doc 02 v2.0.0 → v2.0.1: fixed ISS-01 (§2.4 one-pilot correction), ISS-02 (CON-007 and §11 launch date 2027-03-01 → 2027-06-01), ISS-03 (§8 FR-062 Gherkin superseded marker), ISS-04 (CON-007 L2 accepted budget note), Low §1.4 Doc 05 pin v1.1.0 → v1.1.2. Set Doc 01 v2.0.0 Status to Approved (cycle-1 PASS 97%). No IDs minted.",
+      "artifacts_written": [
+        "docs/02-requirements-srs.md (v2.0.1 — six surgical edits)",
+        "docs/01-press-release-prfaq.md (Status: Approved — status-only, version unchanged)",
+        "artifacts/product-owner-2026-08-10T2000.md"
+      ],
+      "ids_touched": {
+        "minted": "none",
+        "CON_corrected": "CON-007 (launch date, Gate 1 re-entry target, L2 budget note)",
+        "FR_annotated": "FR-062 (§8 Gherkin superseded marker)"
+      },
+      "grep_results": {
+        "three_pilot_occurrences": "2 found: line 179 (§2.4) FIXED; line 1763 (OI-04) already correct",
+        "2027-03-01_occurrences": "2 found: line 1627 (CON-007) FIXED; line 1720 (§11) FIXED"
+      },
+      "gate": "Gate 1 re-entry — Doc 02 v2.0.1 ready for cycle-2 business-mode review (neutral role). Doc 01 v2.0.0 Approved.",
+      "next_role": "Neutral role for business-mode document-review of Doc 02 v2.0.1 (cycle 2)"
+    },
+    {
+      "id": "project-manager-2026-08-10T2100",
+      "role": "project-manager",
+      "file": "artifacts/project-manager-2026-08-10T2100.md",
+      "timestamp": "2026-08-10T21:00:00Z",
+      "phase": "Define — Gate 1 re-entry (v2.0.0 vision) packet assembly",
+      "product": "Trumocracy",
+      "summary": "Verified all v2.0.0 re-entry session artifacts (Doc 01 v2.0.0 PASS 97%, Doc 02 v2.0.1 PASS 98%, all ID mints confirmed, active Must 94/Should 14/Could 3, memory-index 23 entries valid JSON). Assembled Gate-1 re-entry packet (GATE1-REENTRY-v2.0.0-2026-08-10.md); updated GATE-STATUS-2026-08-09.md (v2.0.0 section appended). Status: PENDING Rathish decision. Three new decisions surfaced: OI-14/OI-15/OI-16. SC-01 and OI-13 confirmed closed/resolved. No product code written.",
+      "artifacts_written": [
+        "artifacts/status/GATE1-REENTRY-v2.0.0-2026-08-10.md",
+        "artifacts/status/GATE-STATUS-2026-08-09.md (updated — v2.0.0 section appended)",
+        "artifacts/project-manager-2026-08-10T2100.md",
+        "artifacts/memory-index.json (updated — entry 24 appended)"
+      ],
+      "verification_results": {
+        "doc_01_v2.0.0": "CONFIRMED — Status: Approved, review cycle-1 PASS 97%, 0C/0H/0M/2L",
+        "doc_02_v2.0.1": "CONFIRMED — Status: Approved, review cycle-2 PASS 98%, 0C/0H/0M/1L",
+        "review_01_v2.0.0_cycle1": "CONFIRMED — PASS 97%, 0C/0H/0M/2L (artifacts/reviews/01-press-release-prfaq-v2.0.0-business-cycle1.md)",
+        "review_02_v2.0.0_cycle1": "CONFIRMED — FAIL 92%, 0C/2H/1M/2L (artifacts/reviews/02-requirements-srs-v2.0.0-business-cycle1.md)",
+        "review_02_v2.0.1_cycle2": "CONFIRMED — PASS 98%, 0C/0H/0M/1L (artifacts/reviews/02-requirements-srs-v2.0.1-business-cycle2.md)",
+        "id_mint_BR_014_020": "CONFIRMED — 74 occurrences in Doc 02",
+        "id_mint_FR_074_113": "CONFIRMED — 40 new Must FRs per §11 table",
+        "id_mint_NFR_027_028": "CONFIRMED",
+        "id_mint_CON_013_014": "CONFIRMED",
+        "id_mint_RISK_025_030": "CONFIRMED",
+        "id_mint_TD_08_10": "CONFIRMED",
+        "id_mint_OI_14_17": "CONFIRMED",
+        "FR_050_raised_Must": "CONFIRMED",
+        "FR_046_superseded": "CONFIRMED",
+        "FR_062_superseded": "CONFIRMED",
+        "active_counts_Must_94_Should_14_Could_3": "CONFIRMED per §11 table",
+        "memory_index_pre_update": "CONFIRMED — 23 entries, valid JSON, product-owner-2026-08-10T2000 last",
+        "discrepancy_noted": "Cycle-2 review of Doc 02 v2.0.1 (report confirmed) has no memory-index entry — non-blocking; review report is the authoritative artifact."
+      },
+      "gate": "Gate 1 re-entry PENDING Rathish decision. Three new OIs: OI-14/OI-15/OI-16. Gate 2 NOT READY (64 open Must-row RTM gaps; v2.0.0 FRs not in RTM).",
+      "open_items": [
+        "OI-14/OI-15/OI-16: Gate 1 decision required from Rathish.",
+        "SC-13/SC-14: Doc 03 design change owed post-Gate-1 (architect).",
+        "SC-02/03/04 residual: security re-scan of three-tier model owed at next design pass.",
+        "SC-05: rate-limit on recovery re-initiation — Doc 03 v2 (architect).",
+        "Fork initiation defect: flag OFF above dev.",
+        "OI-01/OI-04: hard deadline / pilot jurisdiction — PO.",
+        "OI-08/OI-17: governance constants — Design (architect).",
+        "Doc 05 v2 + Doc 13 re-plan: after Gate 1."
+      ],
+      "next_role": "Human approver (Rathish) for Gate 1 re-entry decisions A and B (OI-14/OI-15/OI-16). After Gate 1: product-owner (Doc 05 v2), project-manager (Doc 13 re-plan), architect (Doc 03 v2)."
     }
   ]
 }
