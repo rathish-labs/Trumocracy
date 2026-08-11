@@ -233,3 +233,33 @@ were touched during the v2.0.0 re-entry session** — documents and artifacts on
 **Gate 2:** Unchanged — NOT READY. RTM (Doc 08 v1.1.2) shows 64 open Must rows. Doc 07/08
 cover v1.1.x FRs only; v2.0.0 FRs (FR-074..FR-113) have no test cases yet. The gate
 conditions (suites green, RTM zero gaps, rollback proven) are not met. Expected state.
+
+---
+
+## GATE 1 APPROVED at v2.0.0/v2.0.1 (2026-08-11)
+
+**Rathish approved Gate 1 on 2026-08-11** against Doc 01 v2.0.0 and Doc 02 v2.0.1, conditional
+on the steward-organisation requirements (Part B) landing as Doc 02 v2.1.0 with a passing
+business-mode review before the design phase begins. Full decision record:
+`artifacts/status/GATE1-DECISION-2026-08-11.md`.
+
+**OI dispositions decided (2026-08-11):**
+- **OI-14 DECIDED** — Worker tier and above; Supporters retain full voting rights but may not author unless they self-declare as Workers.
+- **OI-15 DECIDED** — Public tiers only; Supporters handled via FR-005 credential revocation, not expulsion.
+- **OI-16 DECIDED** — Confidential-class carve-out adopted; pre-nomination Worker disclosure data is destroyable on withdrawal; public records of completed actions remain append-only.
+
+**Carry-forwards unchanged:** OI-01 number open; OI-04 pilot jurisdiction open; fork initiation
+open critical (flag OFF above dev); SC-13/SC-14 Doc 03 design change owed to architect; OI-08/OI-17
+governance constants to Design phase.
+
+**Condition to satisfy this session (pre-design):** product-owner produces Doc 02 v2.1.0
+(steward requirements, Part B) → business-mode review → PASS → project-manager records
+condition satisfied → design phase (Doc 03 v2, Doc 05 v2, Doc 13 re-plan) may begin.
+
+**Condition satisfied — 2026-08-11.** Doc 02 v2.1.0 → v2.1.1: cycle-1 FAIL 91% reworked;
+cycle-2 PASS 99%, 0C/0H/0M/1L (report: `artifacts/reviews/02-requirements-srs-v2.1.1-business-cycle2.md`).
+Gate 1 approval is now unconditional. Design phase (Doc 03 v2, Doc 05 v2, Doc 13 re-plan) may
+begin. One new open item: **OI-18** (entrenched-charter scope vs previously-absolute guarantees)
+— a decision for the approver before the architect fixes the amendment boundary in Doc 03.
+
+**Gate 2:** Unchanged — OPEN / NOT READY.

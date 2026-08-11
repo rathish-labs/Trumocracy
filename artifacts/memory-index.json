@@ -891,6 +891,227 @@
         "Doc 05 v2 + Doc 13 re-plan: after Gate 1."
       ],
       "next_role": "Human approver (Rathish) for Gate 1 re-entry decisions A and B (OI-14/OI-15/OI-16). After Gate 1: product-owner (Doc 05 v2), project-manager (Doc 13 re-plan), architect (Doc 03 v2)."
+    },
+    {
+      "id": "project-manager-2026-08-11T0900",
+      "role": "project-manager",
+      "file": "artifacts/project-manager-2026-08-11T0900.md",
+      "timestamp": "2026-08-11T09:00:00Z",
+      "phase": "Define — Gate 1 v2.0.0 re-entry decision recording",
+      "product": "Trumocracy",
+      "summary": "Verified Doc 01 v2.0.0 (Approved, 97% cycle-1 PASS), Doc 02 v2.0.1 (Approved, 98% cycle-2 PASS), and re-entry packet (PENDING). Recorded Rathish's Gate 1 APPROVED (conditional) decision on 2026-08-11: GATE1-DECISION-2026-08-11.md written; GATE-STATUS-2026-08-09.md approval section appended; GATE1-REENTRY-v2.0.0-2026-08-10.md header and Decision section updated. OI-14/OI-15/OI-16 all decided. Condition: Doc 02 v2.1.0 (steward requirements, Part B) must pass business-mode review before design phase begins — not pre-marked satisfied.",
+      "artifacts_written": [
+        "artifacts/status/GATE1-DECISION-2026-08-11.md",
+        "artifacts/status/GATE-STATUS-2026-08-09.md (updated — approval section appended)",
+        "artifacts/status/GATE1-REENTRY-v2.0.0-2026-08-10.md (updated — status header + Decision section)",
+        "artifacts/project-manager-2026-08-11T0900.md",
+        "artifacts/memory-index.json (updated — entry 25 appended)"
+      ],
+      "key_decisions": [
+        "Gate 1 APPROVED (conditional) 2026-08-11 by Rathish against Doc 01 v2.0.0 + Doc 02 v2.0.1.",
+        "Condition: Doc 02 v2.1.0 (steward requirements, Part B) must pass business-mode review before design begins.",
+        "OI-14 DECIDED: Worker tier and above authorship (option a). Verbatim in §3 of decision record.",
+        "OI-15 DECIDED: Public tiers only expulsion; FR-005 for Supporters (option a). Verbatim in §3.",
+        "OI-16 DECIDED: Confidential-class carve-out adopted (option a). Verbatim in §3.",
+        "Carry-forwards: OI-01 number open, OI-04 pilot open, FORK-CRIT open critical flag OFF, SC-13/SC-14 design owed, OI-08/OI-17 constants to Design."
+      ],
+      "gate": "Gate 1 APPROVED (conditional) 2026-08-11. Gate 2 NOT READY.",
+      "next_role": "product-owner (Doc 02 v2.1.0 steward requirements, Part B); neutral reviewer (business-mode review v2.1.0); project-manager (record condition satisfaction on PASS). Post-condition: product-owner Doc 05 v2; project-manager Doc 13 re-plan; architect Doc 03 v2; tester Docs 07/08 catch-up."
+    },
+    {
+      "id": "product-owner-2026-08-11T1000",
+      "role": "product-owner",
+      "file": "artifacts/product-owner-2026-08-11T1000.md",
+      "timestamp": "2026-08-11T10:00:00Z",
+      "phase": "Define — Doc 02 v2.1.0 pass 1 of 3 (Gate 1 decision application)",
+      "product": "Trumocracy",
+      "summary": "Applied Gate 1 OI-14/OI-15/OI-16 dispositions to Doc 02: amended FR-024, FR-085, FR-090, FR-105, FR-107; replaced three ⚠ banners with ✅ DECIDED blocks; marked §13 OI-14/15/16 RESOLVED with strikethrough; appended BR-021 (steward org) to §3; added item 22 to §2.2 (platform-level stewardship); added Steward row to §2.3. Version bumped 2.0.1 → 2.1.0. Pass 1 of 3; FR-114..FR-120 and Gherkin land in passes 2–3.",
+      "artifacts_written": [
+        "docs/02-requirements-srs.md (v2.1.0, pass 1 of 3)",
+        "artifacts/product-owner-2026-08-11T1000.md"
+      ],
+      "ids_touched": {
+        "BR_minted": "BR-021",
+        "FR_minted": "none (passes 2–3)",
+        "FR_amended": "FR-024, FR-085, FR-090, FR-105, FR-107",
+        "OI_resolved": "OI-14, OI-15, OI-16"
+      },
+      "high_water_marks_after": {
+        "BR": "BR-021",
+        "FR": "FR-113",
+        "NFR": "NFR-028",
+        "CON": "CON-014",
+        "RISK": "RISK-30",
+        "TD": "TD-10",
+        "OI": "OI-17"
+      },
+      "open_items": [
+        "Passes 2–3 outstanding: FR-114..FR-120, §4.39 steward section, §8 Gherkin, §11 counts, §12 BR-021 trace, §14 Glossary Steward entry, TD-11, RISK-31/32, OI-18.",
+        "Business-mode review of v2.1.0 requires passes 2–3 complete first.",
+        "Carry-forwards: OI-01-NUM, OI-04-PILOT, FORK-CRIT, SC-13/SC-14, SC-05, OI-08/OI-17."
+      ],
+      "gate": "Gate 1 APPROVED (conditional) 2026-08-11. Condition not yet satisfied — passes 2–3 outstanding.",
+      "next_role": "product-owner (Doc 02 v2.1.0 passes 2–3: steward FR body FR-114..FR-120, §4.39, Gherkin, register updates)"
+    },
+    {
+      "id": "product-owner-2026-08-11T1100",
+      "role": "product-owner",
+      "file": "artifacts/product-owner-2026-08-11T1100.md",
+      "timestamp": "2026-08-11T11:00:00Z",
+      "phase": "Define — Doc 02 v2.1.0 pass 2 of 3 (steward-organisation FR body)",
+      "product": "Trumocracy",
+      "summary": "Pass 2 of 3 on Doc 02 v2.1.0. Inserted §4.39 (steward-organisation subsection: Bitcoin Foundation preamble blockquote + FR-114..FR-120 with OI-18 ⚠ banner after FR-118). Appended TD-11 to §9.3, RISK-31/RISK-32 to §10, extended OI-17 and appended OI-18 to §13. Pass 3 (§8 Gherkin, §11 counts, §12 trace, §14 Glossary) outstanding.",
+      "artifacts_written": [
+        "docs/02-requirements-srs.md (v2.1.0, pass 2 of 3)",
+        "artifacts/product-owner-2026-08-11T1100.md",
+        "artifacts/memory-index.json (entry 27 appended)"
+      ],
+      "ids_touched": {
+        "FR_minted": "FR-114..FR-120",
+        "TD_minted": "TD-11",
+        "RISK_minted": "RISK-31, RISK-32",
+        "OI_minted": "OI-18",
+        "OI_extended": "OI-17 (v2.1.0 annotation)"
+      },
+      "high_water_marks_after": {
+        "BR": "BR-021",
+        "FR": "FR-120",
+        "NFR": "NFR-028",
+        "CON": "CON-014",
+        "RISK": "RISK-32",
+        "TD": "TD-11",
+        "OI": "OI-18"
+      },
+      "open_items": [
+        "Pass 3 outstanding: §8 Gherkin FR-114..FR-120; §11 counts; §12 BR-021 trace; §14 Glossary Steward + Entrenched charter.",
+        "OI-18: entrenched-charter scope vs previously-absolute guarantees — decision required from approver before Design.",
+        "Carry-forwards unchanged: OI-01-NUM, OI-04-PILOT, FORK-CRIT, SC-13/SC-14, SC-05, OI-08/OI-17."
+      ],
+      "gate": "Gate 1 APPROVED (conditional) 2026-08-11. Condition not yet satisfied — pass 3 outstanding.",
+      "next_role": "product-owner (Doc 02 v2.1.0 pass 3: §8 Gherkin, §11 counts, §12 BR-021 trace, §14 Glossary)"
+    },
+    {
+      "id": "product-owner-2026-08-11T1200",
+      "role": "product-owner",
+      "file": "artifacts/product-owner-2026-08-11T1200.md",
+      "timestamp": "2026-08-11T12:00:00Z",
+      "phase": "Define — Doc 02 v2.1.0 pass 3 of 3 (Gherkin, counts, traceability, glossary, consistency)",
+      "product": "Trumocracy",
+      "summary": "Pass 3 of 3 on Doc 02 v2.1.0. Appended 7 FR Gherkin blocks (FR-114..FR-120) with adversarial scenarios to first Gherkin code block. Added v2.1.0 disposition comments to FR-024, FR-090, FR-105 blocks. Updated §11 counts to v2.1.0: 21 BR, 120 FR (118 active+2 superseded), 27 RISK rows, 11 TDs, Must 101 (94+7). Updated §12 with BR-021 trace, Part-B item-7 check, session-scope extension. Added 4 glossary entries (Steward, Entrenched charter, Amendable protocol, Steward vacancy). Updated §15 approvals: v2.0.0 row to APPROVED + new v2.1.0 condition row. Consistency sweep clean: 7/7 Gherkin blocks confirmed, 0 stale banners, 0 pending-OI-16 occurrences, all OI-14/15/16 DECIDED, OI-18 open, §4.39 header confirmed.",
+      "artifacts_written": [
+        "docs/02-requirements-srs.md (v2.1.0, pass 3 complete)",
+        "artifacts/product-owner-2026-08-11T1200.md",
+        "artifacts/memory-index.json (entry 28 appended)"
+      ],
+      "ids_touched": {
+        "FR_gherkin_added": "FR-114..FR-120",
+        "FR_gherkin_amended": "FR-024, FR-090, FR-105 (disposition comment lines)",
+        "no_new_ids_minted": true
+      },
+      "verified_counts": {
+        "Must_FR": 101,
+        "Should_FR": 14,
+        "Could_FR": 3,
+        "BR": 21,
+        "FR_minted": 120,
+        "FR_active": 118,
+        "FR_superseded": 2,
+        "NFR": 28,
+        "CON": 14,
+        "RISK_requirement_level": 27,
+        "TD": 11
+      },
+      "consistency_sweep": {
+        "FR_gherkin_blocks_114_120": "7/7 confirmed",
+        "stale_v200_decision_banners": 0,
+        "pending_OI_16_occurrences": 0,
+        "OI_14_15_16_status": "DECIDED",
+        "OI_18_status": "OPEN",
+        "section_439_continuation_header": "confirmed"
+      },
+      "open_items": [
+        "OI-18: entrenched-charter scope vs previously-absolute guarantees — decision required from Rathish before Design.",
+        "Doc 02 v2.1.0 ready for business-mode document-review (neutral role, cycle 1).",
+        "Gate 1 condition satisfied; project-manager to record on review PASS.",
+        "Carry-forwards: OI-01-NUM, OI-04-PILOT, FORK-CRIT, SC-13/SC-14, SC-05, OI-08/OI-17."
+      ],
+      "high_water_marks": {
+        "BR": "BR-021",
+        "FR": "FR-120",
+        "NFR": "NFR-028",
+        "CON": "CON-014",
+        "RISK": "RISK-32",
+        "TD": "TD-11",
+        "OI": "OI-18"
+      },
+      "gate": "Gate 1 APPROVED (conditional) 2026-08-11. Condition satisfied — Doc 02 v2.1.0 passes 1-3 complete. Awaiting business-mode review.",
+      "next_role": "Neutral role (not product-owner) to run document-review skill in business mode over docs/02-requirements-srs.md v2.1.0 (cycle 1). On PASS: project-manager records condition satisfaction."
+    },
+    {
+      "id": "technical-writer-2026-08-11T1300",
+      "role": "technical-writer (acting as NEUTRAL REVIEWER — document-review skill)",
+      "file": "artifacts/technical-writer-2026-08-11T1300.md",
+      "timestamp": "2026-08-11T13:00:00Z",
+      "phase": "Define — Gate 1 conditional approval · business-mode document-review, cycle 1",
+      "product": "Trumocracy",
+      "scope": "REVIEWER role. Business-mode cycle-1 review of Doc 02 v2.1.0 (steward-organisation requirements + OI-14/15/16 dispositions). Read-only on the document. No documents edited. No product code touched.",
+      "summary": "Ran business-mode document-review (cycle 1) over Doc 02 v2.1.0. FAIL: 91%, 0C/0H/1M/5L. One Medium issue: FR-092 §4.26 still contains 'pending OI-14' text — OI-14 is DECIDED at this version (§13 records it as such); the product-owner's consistency sweep checked for 'pending OI-16' but not 'pending OI-14'. Five Low issues: §2.5 stale CON range (CON-001..CON-012 should be CON-001..CON-014); §15 Downstream stale v1.1.0 text; §15 approvals '_pending_' row for superseded v1.1.0 re-affirmation; OI-16 Gherkin annotation absent from FR-085/FR-107 §8 blocks; FR-024/FR-105 missing negative OI-14/OI-15 scenarios in §8. All §11 counts independently verified and match. OI-18 named-absolutes list verified against §9.1/§6 — no missed absolutes. Gate 1 condition not yet satisfied.",
+      "artifacts_written": [
+        "artifacts/reviews/02-requirements-srs-v2.1.0-business-cycle1.md",
+        "artifacts/technical-writer-2026-08-11T1300.md",
+        "artifacts/memory-index.json (entry 29 appended)"
+      ],
+      "review_verdicts": {
+        "02-requirements-srs-v2.1.0": {
+          "score": 91,
+          "critical": 0,
+          "high": 0,
+          "medium": 1,
+          "low": 5,
+          "cycle": 1,
+          "verdict": "FAIL",
+          "routed_to": "product-owner (Priya Raghunathan) for rework into v2.1.1",
+          "issues": [
+            "ISS-01 (Medium): FR-092 §4.26 'authorship (per FR-090, pending OI-14)' — OI-14 decided; §13 records DECIDED; §4 still says pending. Missed by product-owner sweep.",
+            "ISS-02 (Low): §2.5 CON range 'CON-001…CON-012' stale — should be 'CON-001…CON-014'",
+            "ISS-03 (Low): §15 Downstream 'Nothing is designed until Gate 1 re-affirmation clears for v1.1.0' — stale v1.1.0 era language",
+            "ISS-04 (Low): §15 approvals '_pending_' row for v1.1.0 re-affirmation — superseded; OI-13 resolved; misleading at v2.1.0",
+            "ISS-05 (Low): OI-16 '# v2.1.0 per OI-16' annotation absent from FR-085 and FR-107 §8 Gherkin blocks",
+            "ISS-06 (Low): FR-024 and FR-105 §8 blocks missing negative OI-14/OI-15 Given/When/Then scenarios"
+          ]
+        }
+      },
+      "independent_counts_verified": {
+        "Must_FR": 101,
+        "Should_FR": 14,
+        "Could_FR": 3,
+        "Superseded_FR": 2,
+        "FR_minted_total": 120,
+        "BR": 21,
+        "CON": 14,
+        "Must_NFR": 24,
+        "Should_NFR": 4,
+        "NFR_total": 28,
+        "RISK_requirement_level": 27,
+        "TD": 11,
+        "Steward_FR_Gherkin_blocks": 7,
+        "OI_disposition_comments_in_s8": "3 (OI-14 in FR-024 and FR-090; OI-15 in FR-105; OI-16 absent from §8)"
+      },
+      "oi18_verification": {
+        "CON-001": "confirmed in §9.1 — 'absolute and not negotiable at any gate'; not in entrenched charter",
+        "BR-011/NFR-003": "confirmed in §3/§6 as Must; not in entrenched charter",
+        "CON-002/CON-008/NFR-010": "confirmed in §9.1/§6; not in entrenched charter",
+        "CON-012": "confirmed in §9.1; not in entrenched charter",
+        "CON-013": "confirmed in §9.1; not in entrenched charter",
+        "missed_absolutes": "none found within task verification scope"
+      },
+      "gate": "Gate 1 APPROVED (conditional) 2026-08-11. Condition NOT YET SATISFIED — Doc 02 v2.1.0 cycle-1 FAIL. Condition satisfied only when a PASS report exists.",
+      "open_items": [
+        "Doc 02 v2.1.0: FAIL — route to product-owner (Priya Raghunathan) for v2.1.1 rework. ISS-01 (Medium, one-line fix in FR-092) + five Lows. Cycle 2 review expected to PASS.",
+        "Gate 1 condition satisfaction record deferred — project-manager cannot record until PASS exists.",
+        "Carry-forwards unchanged: OI-18 open, OI-01-NUM, OI-04-PILOT, FORK-CRIT, SC-13/SC-14, SC-05, OI-08/OI-17."
+      ],
+      "next_role": "product-owner (Priya Raghunathan): rework Doc 02 v2.1.0 → v2.1.1 addressing ISS-01 (Medium) + ISS-02..ISS-06 (Low); neutral reviewer for cycle 2"
     }
   ]
 }

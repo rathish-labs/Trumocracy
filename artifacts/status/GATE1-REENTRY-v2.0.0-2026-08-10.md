@@ -5,7 +5,8 @@ Packet type:    Gate 1 re-entry — the approver's expanded vision re-enters the
                 top per the CLAUDE.md handbook (bet size → SOP top; never bypasses a gate).
 Approver:       Rathish (human approver — Gate 1)
 Prepared by:    Ana-Maria Petrescu — project-manager (VEKTOR SOP)
-Status:         PENDING — awaiting human approval; the project-manager cannot approve gates
+Status:         APPROVED (conditional) — 2026-08-11, by Rathish;
+                decision record: artifacts/status/GATE1-DECISION-2026-08-11.md
 Date:           2026-08-10
 Source docs:
   Doc 01 PR-FAQ      docs/01-press-release-prfaq.md        v2.0.0   Approved (cycle-1 PASS)
@@ -210,3 +211,23 @@ The packet records whichever of the following occurs:
 
 _Prepared by: Ana-Maria Petrescu, project-manager. 2026-08-10._
 _This packet is sourced from verified artifacts only. No figure is invented._
+
+---
+
+## Decision (2026-08-11)
+
+**Rathish approved Gate 1 on 2026-08-11.** Full decision record:
+`artifacts/status/GATE1-DECISION-2026-08-11.md`.
+
+**OI-14 — DECIDED:** Worker tier and above. Authorship is public; anyone who wishes to author
+self-declares as a Worker. Supporters retain full voting rights.
+
+**OI-15 — DECIDED:** Public tiers only. Supporters cannot be expelled without deanonymisation,
+which is refused. FR-005 credential revocation handles fraudulent Supporter enrolment.
+
+**OI-16 — DECIDED:** Confidential-class carve-out adopted. Pre-nomination Worker disclosures
+are destroyable on withdrawal (consent never completed); public records of completed actions
+remain append-only without exception.
+
+**Condition on design phase:** Doc 02 v2.1.0 (steward-organisation requirements, Part B)
+must pass its business-mode review before the design phase begins. Not pre-marked satisfied.
