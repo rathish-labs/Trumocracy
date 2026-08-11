@@ -1,7 +1,9 @@
 # ADR-003 — Proof of personhood: an issuer-agnostic adapter registry with scope-bound nullifiers
 
 ```
-Status:        Accepted
+Status:        Accepted — AMENDED by ADR-016 (Phase-1 issuer restriction: government eID
+               sole enrolment-nullifier class per region; 1-of-N plurality model resumes at
+               Phase 3+ per ADR-016 and a future ADR with its own threat model and audit)
 Date:          2026-08-08
 Owner:         Ravi Deshmukh (Principal Architect)
 Traces:        BR-006, FR-001..FR-005, NFR-004, NFR-001, CON-002, RISK-01, RISK-05, RISK-06
@@ -66,6 +68,11 @@ Two distinct nullifier layers, and the separation matters:
   charter that cares can require a minimum tier for every action. A double-enrolled person
   gets at most one extra vote in low-tier decisions, at the cost of obtaining and maintaining
   two independent credentials — and gains nothing they could sell (ADR-007 §6).
+
+  **Phase-1 amendment (ADR-016):** For Phase 1, the cross-type residual is eliminated by
+  restricting the enrolment-nullifier class to government eID credentials only. The 1-of-N
+  model resumes at Phase 3+, per ADR-016 and a new ADR to be written at that time.
+
 - `Nₐ` is computed from the citizen's own secret and the **action scope** (a petition ID, a proposal
   ID, an election ID). It enforces *one action per human per scope*, and because the scope changes,
   actions in different votes are **cryptographically unlinkable to each other**. A citizen who
@@ -116,7 +123,9 @@ to disenfranchise its legitimate users.
 - **State-issued credentials are a compulsion vector.** A state that issues the credential can
   refuse it to dissidents. This is why a state issuer may never be the *only* accepted issuer in a
   jurisdiction — enforced as a protocol invariant: `acceptedIssuers(region).length >= 2` and at
-  least one MUST be non-state (checked on-chain, tested).
+  least one MUST be non-state (checked on-chain, tested). **Phase-1 exception per ADR-016:** the
+  non-state requirement is relaxed in Phase 1, since all issuers are government-eID class by
+  definition. This is the accepted Phase-1 compulsion risk.
 - **Enrolment is a correlation moment.** Someone observing an issuer's servers learns "this passport
   enrolled in *something*". Mitigated by: enrolment does not name the platform to the issuer where
   the protocol allows it, mandatory random delay between enrolment and first action, and the

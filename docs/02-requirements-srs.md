@@ -2,12 +2,27 @@
 
 ```
 Document ID:   SRS-TRUMOCRACY
-Version:       1.0.0
+Version:       1.1.1
 Status:        In Review
 Owner:         Priya Raghunathan — Product Owner
-Approvers:     Gate 1 — Product, Engineering, Design, QA
+Approvers:     Gate 1 — Priya Raghunathan (Product Owner), Ana-Maria Petrescu (Project Manager),
+               Rathish (Human Approver — re-affirmation required at this version)
 Source:        PR-TRUMOCRACY (docs/01-press-release-prfaq.md)
-Last updated:  2026-08-08
+Last updated:  2026-08-10
+Change:        v1.1.1 — Cycle-1 business-review rework (2026-08-10).
+               Addresses ISS-01..ISS-13 from artifacts/reviews/02-requirements-srs-v1.1.0-business-cycle1.md.
+               Key changes: §8 preamble corrected + 15 missing Must-NFR Gherkin blocks added (ISS-01);
+               NFR-010 scoped to exclude two enumerated restricted stores (ISS-02); FR-002/FR-030/NFR-001/NFR-003
+               restated with defined adversary-game parameters (ISS-03); BR-006/BR-011 success measures
+               replaced with falsifiable, observable proxies (ISS-04); OI-08 constants marked non-normative
+               in §8 (ISS-05); NFR-024 harassment metric defined and reconciled with FR-056 (ISS-06);
+               "Major election" defined in §14 (ISS-07); §11 Won't→Could for three items aligned with
+               Doc 01 §D (ISS-08); FR-055/NFR-018 vs BR-005 reconciled with honest narrowing (ISS-09);
+               Change-9 trace added to §12/§13 (ISS-10); 5 RFC 2119 negation errors fixed (ISS-11);
+               Approvers named individually (ISS-12); OI-12 marked resolved by ADR-016 (ISS-13).
+               v1.1.0 — Nine-requirement change request (CR-v1.1.0) directed by Rathish
+               2026-08-09; re-affirmation of Gate 1 required at this version.
+               Source: artifacts/status/GATE1-DECISION-2026-08-09.md §7 (CR-v1.1.0).
 ```
 
 > **Based on:** ISO/IEC/IEEE 29148:2018 + IEEE 830. **Produced in:** Define. **Approved at:** Gate 1.
@@ -15,8 +30,9 @@ Last updated:  2026-08-08
 > **named person**, and traceable. This is the source of truth for scope.
 > **RFC 2119** keywords MUST / MUST NOT / SHOULD / MAY are used with their normative meaning.
 > **This document states WHAT and HOW WELL. It states no HOW.** No technology, protocol, chain,
-> library, algorithm or schema is named anywhere; all such choices belong to the architect in
-> Doc 03 after Gate 1.
+> library, algorithm or schema is named anywhere in general; FR-070 names three regulatory-framework
+> adapter categories by human-approver direction (CR-v1.1.0 Change 6) — this is a deliberate
+> exception to the general rule.
 
 ---
 
@@ -48,9 +64,10 @@ See §14 Glossary.
 
 ### 1.4 References
 - `docs/01-press-release-prfaq.md` — PR-FAQ (PR-TRUMOCRACY v1.0.0).
-- `docs/05-product-backlog.md` — Backlog (BKLG-TRUMOCRACY v1.0.0).
+- `docs/05-product-backlog.md` — Backlog (BKLG-TRUMOCRACY v1.1.0).
 - `CLAUDE.md` — VEKTOR org handbook (gates, ID scheme, traceability rule).
 - RFC 2119; ISO 8601; ISO/IEC/IEEE 29148:2018; WCAG 2.2 Level AA.
+- `artifacts/status/GATE1-DECISION-2026-08-09.md` — Gate 1 decision record (nine-requirement CR-v1.1.0).
 
 ### 1.5 Document overview
 §2 context and constraints · §3 business requirements · §4 functional requirements · §5 external
@@ -156,14 +173,15 @@ See §9.2.
 | BR-002 | A proposed party MUST gain full party status only by demonstrated support from a defined percentage of the eligible population of its declared jurisdiction, computed and applied by code. | Must | ≥ 12 parties activated in 12 months; 100% of activations traceable to a reproducible threshold computation | Tomás Ferreira | PR-FAQ §B, Obj. 2 |
 | BR-003 | Any verified citizen MUST be able to join any active party directly, with standing and voting rights identical to every other member. | Must | 0 joins requiring approval; 0 members holding >1 vote; ≥ 1 party where the founding drafter is outvoted by month 12 | Grace Mbeki | PR-FAQ §B, Obj. 3 |
 | BR-004 | Candidate nomination and voting MUST be scoped to the geographic region and office where the person actually resides. | Must | 100% of nominations and internal-election ballots scope-checked; 0 out-of-region votes counted | Aisha Nkemdirim | PR-FAQ §B, Obj. 4 |
-| BR-005 | Manifestos, commitments and office-holders' governance votes MUST be publicly verifiable, and members MUST be able to remove a non-performing representative mid-term. | Must | 100% of closed ballots independently reproducible; ≥ 1 recall reaching a vote per 20 offices per year | Erik Lindqvist | PR-FAQ §B, Obj. 5 |
-| BR-006 | Every participant MUST be a real, unique human eligible in a specific region, such that duplicate or synthetic accounts cannot profitably influence any count. | Must | Audited duplicate/synthetic-person rate ≤ 0.1% of credentials | Marcus Adeyemi | PR-FAQ §E2 |
+| BR-005 | Manifestos, commitments and office-holders' governance votes MUST be publicly verifiable, and members MUST be able to remove a non-performing representative mid-term. | Must | 100% of closed ballots independently reproducible from published raw data alone — any third party can re-compute the tally by hand without Trumocracy's cooperation (FR-033, FR-054); the open-source verifier tool that makes this convenient (FR-055) is a Should enhancement to the Must-level raw-data guarantee; ≥ 1 recall reaching a vote per 20 offices per year | Erik Lindqvist | PR-FAQ §B, Obj. 5 |
+| BR-006 | Every participant MUST be a real, unique human eligible in a specific region, such that duplicate or synthetic accounts cannot profitably influence any count. | Must | Audited duplicate/synthetic-person rate ≤ 0.1% of credentials per region, measured by independent out-of-band sampling (consented random sample of ≥ 5,000 credentials per region per quarterly audit, 95% confidence interval; audit body and consent framework confirmed before Gate 2; methodology: independent auditor draws sample, matches against external reference cohort, publishes protocol and confidence interval). | Marcus Adeyemi | PR-FAQ §E2 |
 | BR-007 | The platform MUST be usable by a non-technical citizen on a low-end phone at zero monetary cost and with no custodial or cryptographic concepts exposed in primary flows. | Must | ≥ 80% unaided enrol→endorse completion in ≤ 10 min; SUS ≥ 75; USD 0.00 charged to citizens; median platform cost < USD 0.01/action | Hiroshi Tanaka | PR-FAQ §B, §C |
 | BR-008 | Governance logic — membership rights, thresholds, quorums, timelocks, office assignment and recall — MUST execute automatically in code, with no human discretion available to any actor including Trumocracy. | Must | 0 privileged override paths present at security audit; 100% of state transitions attributable to a published rule | Tomás Ferreira | PR-FAQ §A.1 |
 | BR-009 | Proving personhood and residency MUST NOT expose a member's real-world identity or make them targetable; candidates for office publicly disclose identity by explicit choice. | Must | 0 confirmed deanonymisations of an ordinary member; 100% of candidate disclosures preceded by recorded informed consent | Dr. Lena Kowalczyk | PR-FAQ §A.2, §E3 |
 | BR-010 | Wealth MUST NOT be convertible into governance influence: no transferable voting instrument, no token-weighted vote, no purchasable membership, no vote-inflating fake members. | Must | 0 transferable governance instruments in the system; 0 governance outcomes correlated with contribution volume at audit | Erik Lindqvist | PR-FAQ §A.3, §E3 |
-| BR-011 | Voting MUST be receipt-free and coercion-resistant: a voter MUST be unable to prove to a third party how they voted, and MUST be able to invisibly override a coerced vote. | Must | ≥ 95% of reported coercion cases successfully overridden; 0 externally detectable overrides; adversarial audit finds no receipt construction | Aisha Nkemdirim | PR-FAQ §A.4, §E3 |
+| BR-011 | Voting MUST be receipt-free and coercion-resistant: a voter MUST be unable to prove to a third party how they voted, and MUST be able to invisibly override a coerced vote. | Must | (a) Adversarial audit (PPT adversary with λ ≥ 128 bits, N ≥ 10,000 ballot observations, 95% confidence) finds no receipt construction — no cryptographic or operational artefact enables a voter to prove their choice to a third party; (b) 0 externally detectable override events — an adversary holding full operator logs, public record and network timing data cannot detect that a re-vote occurred; (c) coercion incident rate published as an upper bound from independent incident reports with a stated methodology — not as an operational observation rate, since re-voting is by design invisible (TD-06, FR-032) | Aisha Nkemdirim | PR-FAQ §A.4, §E3 |
 | BR-012 | The platform MUST resist governance attacks — instantaneous voting-power acquisition and mob capture of an existing party's founding charter by a sudden membership flood. | Must | 0 successful takeovers; simulated flash-flood and flood-capture attacks fail in red-team exercise before Gate 2 | Rafael Duarte | PR-FAQ §E2 |
+| BR-013 | Every candidate seeking election to a party office MUST complete a structured, member-visible debate process before their name appears on an election ballot; candidacy MUST be determined by a member vote following those debates, and incumbency MUST NOT confer any automatic right to candidacy or renomination. | Must | 100% of major-election ballots preceded by three completed debates per candidate; 0 automatic renominations detected at launch audit | Aisha Nkemdirim | CR-v1.1.0; GATE1-DECISION-2026-08-09.md (Change 4) |
 
 ---
 
@@ -182,6 +200,11 @@ See §9.2.
 | FR-003 | MUST NOT persist, transmit onward, or make retrievable any identity document image, document number, biometric template, date of birth, or residential address after an enrolment check completes; only a non-identifying eligibility result may be retained. | BR-009 | Must | Dr. Lena Kowalczyk | I, A |
 | FR-004 | Support at least two mutually independent identity-attestation paths per launch region, publish each attestor's share of credentials issued per region, and refuse further issuance from any attestor whose share would exceed 50% in that region. | BR-006, BR-012 | Must | Marcus Adeyemi | T, I |
 | FR-005 | Revoke a personhood credential proven fraudulent, invalidate its future actions without altering the historical record, and provide a rejected or revoked applicant an appeal that requires no more personal data than the original check. | BR-006 | Should | Amara Diallo | T, D |
+| FR-069 | Derive a deterministic nullifier from a stable personal identifier within the enrolment credential using a published derivation, such that the nullifier is computed without revealing the underlying identifier; store only the derived nullifier on the verifiable record; and MUST reject any enrolment attempt whose derived nullifier matches an existing record. The derivation MUST verify: (a) the credential was signed by a recognised issuer, (b) the credential has not expired, (c) the region attribute establishes the person's residency in the claimed region tree, (d) the nullifier was correctly derived. No name matching, biometric data storage, or administrative review is used for duplicate detection. _(Extends the enrolment circuit addressed in the C-03 security finding. Source: CR-v1.1.0; GATE1-DECISION-2026-08-09.md, Change 6.)_ | BR-006, BR-009 | Must | Marcus Adeyemi | T, A |
+| FR-070 | Present the credential source as a pluggable adapter interface with no single implementation hardcoded. The platform MUST support at minimum the following three CANDIDATE adapter types (non-exhaustive; none is hardcoded as the only supported path; region-level adapter selection is a configuration decision; Doc 03 confirms final specifications): **(a) eIDAS 2.0 wallet adapters** — government-issued digital-identity wallets conforming to the eIDAS 2.0 EUDI wallet framework or any equivalent national digital-identity regulation. The adapter MUST supply to the FR-069 derivation: (i) a qualified electronic attestation of attributes bearing a valid qualified trust-anchor signature, verified against the issuing member-state's trust anchor published in the applicable national or supra-national trust list; (ii) the stable personal identifier designated by the issuing state (e.g. the natural-person identifier in the Personal Identification Data attestation); (iii) a residency attribute placing the person in the claimed region tree. The derivation operates on field (ii). **(b) ICAO Doc 9303 NFC chip adapters** — biometric passports and NFC-enabled identity cards conforming to ICAO Doc 9303. The adapter MUST supply to the FR-069 derivation: (i) the Document Security Object (SOD) verifiable against the issuing state's Document Signer Certificate obtained from the ICAO public key directory; (ii) the stable identifier field — MRZ DocumentNumber or chip-resident pseudonymous identifier as designated by the issuing state; (iii) an attested residency claim from a recognised attestor. The derivation operates on field (ii). **(c) Offline paper KYC adapters** — government-signed offline identity verification flows for jurisdictions where digital wallets are not yet available (e.g. Aadhaar offline XML, Aadhaar paperless eKYC, or any equivalent government-signed offline assertion scheme). The adapter MUST supply to the FR-069 derivation: (i) a digitally signed or verifier-attested assertion carrying a government-assigned stable identifier; (ii) a residency attribute established by the attestor; (iii) evidence of the attestor's authorisation to operate in the region. The derivation operates on the stable identifier in field (i); no biometric data is retained after the attestor check. _(Source: CR-v1.1.0; GATE1-DECISION-2026-08-09.md, Change 6.)_ | BR-006, CON-005 | Must | Marcus Adeyemi | I, A |
+| FR-073 | Designate, within each region, the government eID credential rail as the sole issuer class permitted to mint enrolment nullifiers; all other credential classes (liveness attestors, alternative identity providers) MUST be availability-only and MUST NOT create enrolment nullifiers; availability-only classes MAY attest liveness or authorise slow recovery as permitted by FR-071 and FR-072, but any such action MUST NOT grant membership or governance rights. _(Aligns with OI-03 Gate 1 disposition: government eID as sole Phase-1 uniqueness anchor per region. Relationship with ADR-003 issuer-plurality model requires architect review in Doc 03 — see §13 OI-12. Accepted exclusion per TD-05. Source: CR-v1.1.0; GATE1-DECISION-2026-08-09.md, Change 8.)_ | BR-006, BR-012 | Must | Marcus Adeyemi | I, A |
+
+> **⚠ v1.1.0 ADR-003 RELATIONSHIP NOTE (FR-073):** FR-073 mandates government eID as the sole enrolment-nullifier issuer per region (Phase 1, per OI-03). ADR-003 describes an issuer-plurality model. The architect MUST confirm in Doc 03 whether Phase-1 single-issuer-class policy is reconcilable with ADR-003 or requires an ADR amendment. This is recorded as OI-12.
 
 ### 4.2 Residency attestation & geographic hierarchy
 
@@ -225,6 +248,8 @@ See §9.2.
 | FR-021 | Grant every member of a party exactly one vote of identical weight in every party ballot, and MUST NOT expose any mechanism by which standing, weight, precedence or privilege can differ between members on grounds of seniority, office, tenure, contribution or any other attribute. | BR-003, BR-010 | Must | Grace Mbeki | T, I, A |
 | FR-022 | Allow a member to leave a party at any time, taking immediate effect on their rights, with no exit approval, penalty or notice period. | BR-003 | Must | Grace Mbeki | T |
 | FR-023 | Withhold governance rights (proposing, voting, nominating, endorsing a nomination, initiating or signing a recall) from a new member until a published maturation period has elapsed since joining; and rate-limit each person's join/leave transitions per party and in aggregate per period. | BR-012 | Must | Rafael Duarte | T, A |
+| FR-064 | Enforce that a verified person holds active membership in at most one party at a time; joining a new party MUST automatically void membership in the current party; switching parties MUST reset the membership tenure clock to zero. This constraint MUST be enforced by a global membership-scope nullifier that cannot be bypassed by leaving and re-joining within the same session. _(Source: CR-v1.1.0; GATE1-DECISION-2026-08-09.md, Change 2.)_ | BR-003, BR-012 | Must | Rafael Duarte | T, A |
+| FR-068 | Apply a maturation requirement of at least one month of continuous membership at the eligibility snapshot for any vote or governance action; MUST waive this requirement for all members of a party during that party's first three calendar months of active status; during any such waiver the growth-surge defence controls mandated by FR-023 and FR-028 MUST remain fully active — the waiver relaxes tenure only and MUST NOT relax anti-capture mechanisms. _(Growth-surge defence verified by UT-0220. Source: CR-v1.1.0; GATE1-DECISION-2026-08-09.md, Change 5.)_ | BR-003, BR-012 | Must | Rafael Duarte | T, A |
 
 ### 4.7 Proposals, charter amendment, tiers and timelocks
 
@@ -255,6 +280,7 @@ See §9.2.
 | FR-036 | Allow a matured member to nominate **only themselves**, only for an office whose region equals or contains the member's active residency scope, subject to a published minimum number of nomination endorsements from matured members resident in that region; and allow withdrawal of a candidacy at any time before the ballot locks. | BR-004 | Must | Aisha Nkemdirim | T, D |
 | FR-037 | Require, before a candidacy is published, an explicit, separately recorded, informed consent in which the member acknowledges that their real-world identity becomes public; and MUST NOT disclose the identity of any person who is not a consenting candidate or office-holder under any circumstance. | BR-009 | Must | Dr. Lena Kowalczyk | T, I, A |
 | FR-038 | State in that consent, before it is given, that disclosure is irreversible for the duration of the candidacy and any resulting term of office, and that consent may be revoked only by withdrawing the candidacy before the ballot locks. | BR-009 | Should | Sofia Marchetti | I, D |
+| FR-065 | Allow each matured party member to cast at most one feedback vote per candidate per election, where an upvote scores +3 and a downvote scores −1; the one-vote-per-member constraint MUST be enforced by the same nullifier mechanism as scope-action limits; individual votes MUST remain private and unlinkable to their caster; only the aggregate tally MUST be publicly visible. An ADR (architect's responsibility, Doc 03) will record the deliberate asymmetry rationale; this requirement states only the scoring rule, privacy asymmetry, and single-vote enforcement. _(Source: CR-v1.1.0; GATE1-DECISION-2026-08-09.md, Change 3.)_ | BR-004, BR-005 | Must | Aisha Nkemdirim | T, A |
 
 ### 4.10 Internal party elections
 
@@ -294,7 +320,7 @@ See §9.2.
 
 | ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
 |----|-------------------------------|-----------|----------|-------|-----------|
-| FR-053 | Allow any member to fork an active party's charter and manifesto into a new draft that records its lineage (source party and exact source versions), and require the fork to enter the Petition state and meet the full activation threshold on its own. | BR-001, BR-003 | Should | Tomás Ferreira | T, D |
+| FR-053 | Allow any member to fork an active party's charter and manifesto into a new draft that records its lineage (source party and exact source versions), and require the fork to enter the Petition state and meet the full activation threshold on its own. | BR-001, BR-003 | Could | Tomás Ferreira | T, D |
 
 ### 4.15 Audit and public verifiability
 
@@ -316,6 +342,8 @@ See §9.2.
 |----|-------------------------------|-----------|----------|-------|-----------|
 | FR-058 | Allow a citizen who has lost access to regain control of their personhood credential and residency scope without ever having been shown, stored or required to memorise a seed phrase or key material, subject to a published timelock, a notification to the account's registered channel, and a cancellation window during which the legitimate holder can abort the recovery. | BR-007 | Must | Amara Diallo | T, D |
 | FR-059 | Ensure that recovery re-keys access only, and that no participant in a recovery — helper, guardian, attestor, support agent or operator — can thereby learn the subject's party memberships, past ballots, endorsements or governance history. | BR-009 | Must | Dr. Lena Kowalczyk | T, A |
+| FR-071 | When an enrolment attempt produces a nullifier that matches an existing record, treat it as a recovery flow: the user MUST re-authenticate with their credential, re-derive the same nullifier, prove current key ownership, and rotate keys; membership, tenure and governance history MUST survive intact; no second identity MUST be created. This is the exclusive path for a person who has lost key material but retains their credential. _(Source: CR-v1.1.0; GATE1-DECISION-2026-08-09.md, Change 7.)_ | BR-006, BR-007, BR-009 | Must | Amara Diallo | T, A |
+| FR-072 | The nullifier-collision recovery flow (FR-071) MUST impose a minimum seven-day delay before key rotation completes; during the delay the active key MUST be able to veto the recovery by submitting a veto signal; the recovering credential MUST be barred from casting any vote during the delay; a notification MUST be sent to the registered channel at recovery initiation; and the veto window MUST be at least equal to the full seven-day delay. _(Source: CR-v1.1.0; GATE1-DECISION-2026-08-09.md, Change 7.)_ | BR-007, BR-009, BR-012 | Must | Rafael Duarte | T, A |
 
 ### 4.18 Cost abstraction and fee sponsorship
 
@@ -324,12 +352,28 @@ See §9.2.
 | FR-060 | Complete every primary citizen flow (enrol, draft, endorse, join, propose, vote, nominate, stand, recall, recover) without the citizen holding, acquiring, funding or spending any token, cryptocurrency, balance or payment instrument, and without exposing the words for such concepts in any primary flow. | BR-007 | Must | Hiroshi Tanaka | T, D, I |
 | FR-061 | Meter each person's platform-sponsored actions against a published per-person periodic budget, and when a budget or the global sponsorship pool is exhausted, degrade by delaying or queueing the action with a clear explanation and an expected time — and MUST NOT reject, charge for, or permanently deny a legitimate governance action. | BR-007, BR-012 | Must | Hiroshi Tanaka | T |
 
+### 4.19 Public participation profile
+
+> **⚠ v1.1.0 OPEN CONTRADICTION — FR-062 vs NFR-001, NFR-024, TD-02:** Making party membership and participation publicly visible on a profile directly contradicts NFR-001 ("no actor MUST be able to determine which party a given person belongs to") and NFR-024 ("no feature MUST expose a member's activity pattern"). TD-02 records the existing asymmetry as "members anonymous always." Resolution is required at Gate 1 re-affirmation (CR-v1.1.0). The requirement is written as directed by the approver; the conflict is not silently reconciled. See OI-13.
+
+| ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
+|----|-------------------------------|-----------|----------|-------|-----------|
+| FR-062 | Expose on each verified-citizen profile the following participation record, visible to any actor: (a) the list of ballots and elections in which they participated, without revealing their ballot direction on any contested vote; (b) their current and historical party memberships; (c) the petitions they have endorsed; (d) the proposals they have authored; (e) the debates they have attended (per FR-066). Exception: votes cast by an elected representative in their official office capacity MUST be publicly attributed per FR-048. _(Source: CR-v1.1.0; GATE1-DECISION-2026-08-09.md, Change 1.)_ | BR-005, BR-009 | Must | Erik Lindqvist | T, I, A |
+| FR-063 | MUST NOT disclose a member's ballot direction on any contested vote through any interface, export, log, inference or combination of public data; the prohibition applies to profile views, public records, and any derived dataset. Exception: the direction of a vote cast by an elected representative in their office capacity is public as required by FR-048. **Test obligation: UT-0700 and UT-0701 MUST verify the absence of any ballot-direction disclosure path.** _(Source: CR-v1.1.0; GATE1-DECISION-2026-08-09.md, Change 1.)_ | BR-009, BR-011 | Must | Dr. Lena Kowalczyk | T, I, A |
+
+### 4.20 Mandatory pre-election debates
+
+| ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
+|----|-------------------------------|-----------|----------|-------|-----------|
+| FR-066 | Schedule and require three debates per candidate before every major election; each debate MUST cover one of the following topic areas: (a) local conditions, (b) local problems, and (c) the work required for the office; debate content MUST be stored via a publicly verifiable external reference address recorded on the verifiable record; scheduling, attendance attestation, and the post-debate member vote on each candidate MUST be recorded on the verifiable record. _(Source: CR-v1.1.0; GATE1-DECISION-2026-08-09.md, Change 4.)_ | BR-013, BR-004 | Must | Aisha Nkemdirim | T, I, A |
+| FR-067 | Determine candidacy from the post-debate member vote on each candidate's suitability; incumbency MUST NOT confer any automatic advancement to a ballot; no candidate MUST be renominated automatically without completing the full debate and post-debate vote process for the current election cycle. _(Source: CR-v1.1.0; GATE1-DECISION-2026-08-09.md, Change 4.)_ | BR-013, BR-004, BR-012 | Must | Aisha Nkemdirim | T, I |
+
 ---
 
 ## 5. External interface requirements
 
 ### 5.1 User interfaces
-Primary surfaces are provisionally inventoried in Doc 05 §7 as `SCR-01` … `SCR-18`. **The screen
+Primary surfaces are provisionally inventoried in Doc 05 §7 as `SCR-01` … `SCR-23`. **The screen
 inventory is provisional and non-binding**; the architect confirms, splits or merges surfaces in
 Doc 03, and the tester reconciles the `SCR` links in the RTM (Doc 08). All surfaces MUST meet
 `NFR-011` (WCAG 2.2 AA), `NFR-012` (device/bandwidth floor), `NFR-013` (i18n/RTL) and `NFR-023`
@@ -364,20 +408,20 @@ governance activity in their content or metadata (`NFR-001`).
 
 | ID | Category | Requirement | Target | Traces to | Priority | Owner |
 |----|----------|-------------|--------|-----------|----------|-------|
-| NFR-001 | Privacy | No actor — Trumocracy, an operator, an attestor, a party, an office-holder, or any colluding subset short of the published collusion bound — MUST be able to determine which party a given person belongs to, or how they voted, from any data the system holds, emits or logs. | 0 confirmed linkages under adversarial audit; independent privacy audit passes with 0 critical/high findings | BR-009 | Must | Dr. Lena Kowalczyk |
+| NFR-001 | Privacy | The system MUST ensure that no actor — Trumocracy, an operator, an attestor, a party, an office-holder, or any colluding subset short of the published collusion bound — can determine which party a given person belongs to, or how they voted, from any data the system holds, emits or logs. The adversary model for audit purposes is: an adversary holding all operator logs, all attestor-issued credential hashes, the full public verifiable record, and network timing data at one-second granularity. The maximum advantage bound ε and the collusion bound (how many colluding parties privacy must survive) are set when OI-10 closes (Design phase, owner: Dr. Lena Kowalczyk). | 0 confirmed linkages at advantage > ε over random guessing (ε and collusion bound set at OI-10 closure; provisional test value ε = 0.02) across N ≥ 10,000 independently drawn action pairs at 95% confidence in an independent adversarial audit; independent privacy audit passes with 0 critical/high findings | BR-009 | Must | Dr. Lena Kowalczyk |
 | NFR-002 | Privacy — anonymity set | Every published action MUST be indistinguishable among at least **k = 1,000** eligible actors in the same scope; where fewer than k eligible actors exist or have acted, the action MUST be withheld from publication or aggregated until k is reached, with the delay disclosed to the user. | k ≥ 1,000 for 100% of published actions | BR-009 | Must | Dr. Lena Kowalczyk |
-| NFR-003 | Coercion resistance | Voting MUST be receipt-free: no computationally bounded adversary, even with the voter's full voluntary cooperation and device access after the fact, can distinguish the voter's actual choice from any other admissible choice; and re-voting MUST be indistinguishable from not re-voting. | Formal argument reviewed + independent adversarial audit finds no receipt construction | BR-011 | Must | Aisha Nkemdirim |
-| NFR-004 | Sybil resistance | Duplicate or synthetic persons MUST NOT exceed 0.1% of issued credentials in any region, and no single attestor MUST hold > 50% of credentials in a region. | ≤ 0.1% duplicates (audited quarterly); attestor share ≤ 50% enforced, ≤ 40% targeted | BR-006, BR-012 | Must | Marcus Adeyemi |
+| NFR-003 | Coercion resistance | Voting MUST be receipt-free: no probabilistic polynomial-time (PPT) adversary with security parameter λ ≥ 128 bits, even with the voter's full voluntary cooperation and device access after the fact, can distinguish the voter's actual choice from any other admissible choice with advantage greater than negligible in λ; and re-voting MUST be indistinguishable from not re-voting. | Formal security argument reviewed by independent cryptographer; independent adversarial audit (PPT adversary, λ ≥ 128 bits) finds no receipt construction and no re-vote distinguisher | BR-011 | Must | Aisha Nkemdirim |
+| NFR-004 | Sybil resistance | Duplicate or synthetic persons MUST NOT exceed 0.1% of issued credentials in any region; the system MUST ensure that no single attestor holds > 50% of credentials in a region. | ≤ 0.1% duplicates (audited quarterly); attestor share ≤ 50% enforced, ≤ 40% targeted | BR-006, BR-012 | Must | Marcus Adeyemi |
 | NFR-005 | Cost / Efficiency | Platform-borne cost of a median citizen governance action MUST be under **USD 0.01**, p99 under USD 0.05; the citizen MUST be charged **USD 0.00** in all cases. | median < USD 0.01; p99 < USD 0.05; citizen cost = 0 | BR-007 | Must | Hiroshi Tanaka |
 | NFR-006 | Performance | On the reference device (2 GB RAM, Android 9) over a 64 kbit/s link: primary screen interactive ≤ 5 s p95; an action acknowledged ≤ 5 s p95 and finalised on the verifiable record ≤ 120 s p95; full enrol→endorse journey completable in ≤ 10 minutes. | as stated | BR-007 | Must | Hiroshi Tanaka |
-| NFR-007 | Reliability / Availability | Citizen write path ≥ 99.5% monthly; public read/verification path ≥ 99.9% monthly; no single operator failure MUST block a citizen governance action for more than 60 minutes. | as stated | BR-007, BR-008 | Must | Chen Wei |
+| NFR-007 | Reliability / Availability | Citizen write path ≥ 99.5% monthly; public read/verification path ≥ 99.9% monthly; the system MUST ensure that no single operator failure blocks a citizen governance action for more than 60 minutes. | as stated | BR-007, BR-008 | Must | Chen Wei |
 | NFR-008 | Scalability / Capacity | Sustain 50,000,000 enrolled persons, 10,000,000 eligible voters within a single ballot window, and a peak of 5,000 governance actions per second without violating NFR-006. | verified by load test before Gate 2 | BR-002 | Should | Chen Wei |
 | NFR-009 | Security | Independent third-party security and cryptography audit completed before launch with **zero** critical or high findings open at Gate 2; no privileged administrative override present in any governance path. | 0 critical/high open | BR-008, BR-012 | Must | Rafael Duarte |
-| NFR-010 | Privacy & Data protection | Data minimisation by construction: no identity document, biometric template, address, date of birth or other direct identifier at rest anywhere in the system; no personal data on any immutable public record. | 0 such fields present at data-inventory inspection | BR-009 | Must | Dr. Lena Kowalczyk |
+| NFR-010 | Privacy & Data protection | Data minimisation by construction: no identity document, biometric template, address, date of birth or other direct identifier at rest on the verifiable public record or in any governance-path store; no personal data on any immutable public record. Restricted operational stores enumerated in §7 — (a) Recovery requests & notification channel (90-day retention, access-controlled, region-local) and (b) Support & appeal records (24-month retention, access-controlled, region-local) — are outside the scope of this requirement; each holds only the minimal personal data necessary for its stated operational purpose, subject to the controls and retention windows in §7. | 0 direct-identifier fields present on the verifiable public record or in governance-path stores at data-inventory inspection; the two enumerated restricted stores hold only the fields and retention durations stated in §7 | BR-009 | Must | Dr. Lena Kowalczyk |
 | NFR-011 | Accessibility | All primary flows MUST conform to **WCAG 2.2 Level AA**, be fully operable by screen reader and keyboard/switch, and remain usable at 200% text scaling. | 0 Level A/AA failures at Gate 2 | BR-007 | Must | Nadia Hassan |
 | NFR-012 | Portability / device & bandwidth floor | The client MUST function on 2 GB RAM / Android 9 and equivalent mobile browsers, install in ≤ 15 MB, and complete every primary flow at 64 kbit/s with intermittent connectivity, including offline draft composition with deferred submission. | 100% of primary flows pass on the reference device profile | BR-007 | Must | Nadia Hassan |
 | NFR-013 | Localization / i18n | At least 8 launch languages including at least one right-to-left script; no primary flow may present untranslated strings; date, number and name formats localised. | 100% primary-flow string coverage in all 8 locales | BR-007 | Must | Nadia Hassan |
-| NFR-014 | Censorship resistance | A citizen MUST be able to reach and use the platform when the primary domain or application distribution channel is blocked, and no single operator, host, domain or app store MUST be able to prevent governance actions network-wide. | ≥ 2 independent access paths verified in a blocking simulation before Gate 2 | BR-008 | Must | Chen Wei |
+| NFR-014 | Censorship resistance | A citizen MUST be able to reach and use the platform when the primary domain or application distribution channel is blocked; the system MUST ensure that no single operator, host, domain or app store can prevent governance actions network-wide. | ≥ 2 independent access paths verified in a blocking simulation before Gate 2 | BR-008 | Must | Chen Wei |
 | NFR-015 | Compliance / Legal / Regulatory | The system MUST satisfy erasure and rectification rights **by holding no personal data** rather than by deleting from an immutable record; where a user requests erasure, the system MUST demonstrate that no personal data exists to erase and MUST provide credential deactivation instead. The residual conflict between immutability and erasure MUST be documented, legally reviewed per jurisdiction, and disclosed to users before enrolment. | Legal sign-off per pilot jurisdiction before launch; disclosure present in enrolment flow | BR-009 | Must | Sofia Marchetti |
 | NFR-016 | Key recovery | ≥ 99% of legitimate recovery attempts MUST succeed within 14 days; recovery MUST NOT be usable to silently impersonate (notification + cancellation window mandatory); ≤ 0.01% of recoveries may be fraudulent. | as stated | BR-007 | Must | Amara Diallo |
 | NFR-017 | Upgradeability | Any change to platform-wide governance rules, thresholds or bounds MUST itself pass a tiered-threshold process with a timelock at least as long as the highest party tier, and MUST NOT be enactable unilaterally by Trumocracy, a funder or an operator. | 0 unilateral rule-change paths at audit | BR-008 | Must | Rafael Duarte |
@@ -387,15 +431,17 @@ governance activity in their content or metadata (`NFR-001`).
 | NFR-021 | Maintainability / openness | 100% of governance-critical logic MUST be published under an OSI-approved licence with reproducible builds, so a third party can verify that the running system corresponds to the published source. | build reproducibility verified by ≥ 1 independent party | BR-008 | Must | Rafael Duarte |
 | NFR-022 | Usability | ≥ 80% of first-time, non-technical users MUST complete enrol→endorse unaided within 10 minutes; System Usability Scale ≥ 75; support-contact rate ≤ 5% of enrolments. | as stated, measured on ≥ 200 users per launch locale | BR-007 | Must | Grace Mbeki |
 | NFR-023 | Content / UX writing & notifications | Primary flows MUST be written at or below a grade-8 reading level and MUST NOT contain the terms wallet, seed phrase, private key, gas, token, mint, chain, block, hash or equivalent jargon; error messages MUST state cause and next action; notifications MUST NOT reveal party membership or governance activity. | 0 jargon occurrences in primary flows; readability verified per locale | BR-007, BR-009 | Must | Nadia Hassan |
-| NFR-024 | Safety / anti-harassment | No feature MUST expose a member's identity, contact details, location precision below their declared region, or activity pattern to another member; recall and nomination flows MUST NOT enable targeted harassment of an individual member. | 0 identity-exposing surfaces at inspection; harassment-rate metric published | BR-009 | Must | Daniel Okonkwo |
-| NFR-025 | Liveness / operator independence | No single operator, sequencer, host or ordering service MUST be able to censor or indefinitely delay an individual citizen's governance action; a delayed action MUST be includable through an alternative path within 60 minutes. | verified in an operator-censorship simulation before Gate 2 | BR-008 | Must | Chen Wei |
+| NFR-024 | Safety / anti-harassment | The system MUST ensure that no feature exposes a member's identity, contact details, location precision below their declared region, or activity pattern to another member; recall and nomination flows MUST NOT enable targeted harassment of an individual member. The **harassment-rate metric** is defined as: the count of recall-initiation or nomination-initiation events directed at a single office-holder from distinct member nullifiers within any rolling 90-day window, normalised per 1,000 active members of that party, computed mechanically with no Trumocracy employee exercising discretion over political speech content. Where jurisdiction-scoped display filtering under FR-056/FR-057 is the applicable lever, its use is governed exclusively by FR-056 (legal basis, public log, no discretionary content judgement by Trumocracy). | 0 identity-exposing surfaces at inspection (I); harassment-rate metric computed mechanically and published monthly on the governance dashboard (NFR-019) within 72 hours of each month close | BR-009 | Must | Daniel Okonkwo |
+| NFR-025 | Liveness / operator independence | The system MUST ensure that no single operator, sequencer, host or ordering service can censor or indefinitely delay an individual citizen's governance action; a delayed action MUST be includable through an alternative path within 60 minutes. | verified in an operator-censorship simulation before Gate 2 | BR-008 | Must | Chen Wei |
 | NFR-026 | Compatibility | Supported: evergreen mobile browsers ≤ 24 months old and Android 9+. Unsupported combinations MUST fail with a clear, actionable message rather than a broken screen. | 100% of the supported matrix passes primary flows | BR-007 | Should | Nadia Hassan |
+
+> **⚠ v1.1.0 OPEN CONTRADICTION — NFR-001 & NFR-024 vs FR-062 (Change 1, CR-v1.1.0):** FR-062 makes party membership and participation records publicly visible on a user profile. NFR-001 states that no actor may determine which party a given person belongs to. NFR-024 prohibits exposing a member's activity pattern. These are directly in conflict. The requirement FR-062 is written as directed by the human approver; the contradiction is not silently reconciled. Resolution required at Gate 1 re-affirmation. See OI-13.
 
 ### 6.1 Regulatory & standards applicability
 
 | Standard / regulation | Applies? | Why / scope | Owner |
 |-----------------------|----------|-------------|-------|
-| GDPR / equivalent data-protection law | **Partial** | Applies to the minimal operational data we hold (notification channel, support records). Deliberately does **not** bite on the public record because that record contains no personal data (`NFR-010`). Erasure is satisfied by holding nothing (`NFR-015`) — this is a legal posture, not a solved problem; see `TD-03`. | Sofia Marchetti |
+| GDPR / equivalent data-protection law | **Partial** | Applies to the minimal operational data we hold: (a) the notification channel in Recovery requests (90-day retention) and (b) Support & appeal records (24-month retention), both enumerated in §7 (`NFR-010`). Does **not** bite on the public governance record, which contains no personal data. Erasure for those two restricted stores is satisfied by the stated retention windows and access controls; erasure for the public record is satisfied by holding no personal data there at all (`NFR-010`, `NFR-015`). The claim "erasure is satisfied by holding nothing" applies to the public record only; the two restricted stores are the exception — this is a legal posture, not a certainty; see `TD-03`. | Sofia Marchetti |
 | WCAG 2.2 Level AA | **Yes** | Binding on all primary flows (`NFR-011`). | Nadia Hassan |
 | National electoral law (per pilot jurisdiction) | **Partial** | Applies to party formation, registration and internal-democracy rules. Does **not** apply to us as an electoral authority because `CON-001` forbids conducting binding state elections. | Sofia Marchetti |
 | Political-finance / party-funding law | **Partial** | Applies only where treasury features are enabled (`FR-049`–`FR-052`); features are jurisdiction-gated and off by default. | Sofia Marchetti |
@@ -416,6 +462,7 @@ governance activity in their content or metadata (`NFR-001`).
 | Enrolment check result (eligibility, region, pass/fail) | Restricted | Trumocracy (non-identifying) | Until credential revoked | Region-local | **No** (by `FR-003`) |
 | Identity documents / biometric templates | **Never stored** | Attestor only, transiently | **0 — not persisted** | n/a | Would be — hence prohibited |
 | Personhood credential (holder-held) | Restricted | Holder's device + recovery mechanism | Life of credential | Holder | No |
+| Enrolment nullifier (derived, not reversible) | Public (verifiable record) | Verifiable public record | Permanent | Global | No (non-reversible derivation per FR-069) |
 | Per-scope action markers ("this scope already acted") | Restricted | Verifiable public record | Permanent | Global | No (unlinkable by `FR-002`) |
 | Residency scope (region identifier only) | Restricted | Trumocracy | Until changed (min 180 days) | Region-local | No — region, never address |
 | Region registry (versioned) | Public | Trumocracy, from external sources | Permanent, versioned | Global | No |
@@ -423,12 +470,15 @@ governance activity in their content or metadata (`NFR-001`).
 | Party draft / charter / eight pillars | Public (after publication) | Verifiable public record | Permanent, versioned | Global | Author pseudonymous |
 | Endorsement records | Public (aggregate); unlinkable individually | Verifiable public record | Permanent | Global | No |
 | Membership records | **Aggregate public, individual never disclosed** | Verifiable public record | Permanent (aggregate) | Global | No |
+| Participation profile (per FR-062) | Public (per-person, as directed) | Verifiable public record | Permanent | Global | **⚠ See OI-13 — conflicts with NFR-001/NFR-024** |
 | Proposals & eligibility snapshots | Public | Verifiable public record | Permanent | Global | No |
-| Ballots | Unlinkable; content secret until close | Verifiable public record | Permanent | Global | No |
+| Ballots | Unlinkable; content secret until close; direction never disclosed (FR-063) | Verifiable public record | Permanent | Global | No |
 | Tallies & results | Public | Verifiable public record | Permanent | Global | No |
+| Candidate feedback votes (FR-065) | Individual votes private; aggregate tally public | Verifiable public record | Permanent | Global | No |
 | Candidacies & consent records | **Public by explicit consent** | Verifiable public record | Permanent | Global | **Yes — by informed consent only** |
 | Office-holder governance votes | Public | Verifiable public record | Permanent | Global | **Yes — by consent, office-scoped** |
 | Manifestos, commitments, version history | Public | Verifiable public record | Permanent, versioned | Global | No |
+| Debate attendance records (FR-066) | Public | Verifiable public record | Permanent | Global | No |
 | Treasury entries | Public | Verifiable public record | Permanent | Region-gated | Contributor identity only where law requires |
 | Display-filtering log | Public | Trumocracy | Permanent | Global | No |
 | Recovery requests & notification channel | Restricted | Trumocracy | 90 days after completion | Region-local | **Yes — minimal, off the public record** |
@@ -442,8 +492,15 @@ immutable public record. Enforcement is verified at Gate 2 by data-inventory ins
 
 ## 8. Acceptance criteria (Gherkin) — one block per Must requirement
 
-> These seed the test cases in Doc 07. Every Must FR and every Must NFR below has at least one
-> positive and, where the requirement is a guardrail, at least one adversarial scenario.
+> These seed the test cases in Doc 07. Every Must FR has at least one positive and, where the
+> requirement is a guardrail, at least one adversarial scenario. Must NFRs with Gherkin blocks in
+> the second code block below (22 of 22 Must NFRs): NFR-001, NFR-002, NFR-003, NFR-004, NFR-005,
+> NFR-006, NFR-007, NFR-009, NFR-010, NFR-011, NFR-012, NFR-013, NFR-014, NFR-015, NFR-016,
+> NFR-017, NFR-020, NFR-021, NFR-022, NFR-023, NFR-024, NFR-025. NFR-001 and NFR-003 Gherkin
+> references the adversary-game parameters defined in §6; the collusion bound (OI-10) and the ε
+> value are provisional until OI-10 closes in Design. Governance-constant values used in several
+> Must-FR Gherkin blocks are illustrative examples only — see the `(example — non-normative)`
+> markers; normative values are set when OI-08 closes (Design phase, owner: Tomás Ferreira).
 
 ```gherkin
 # FR-001 — one credential per human
@@ -457,8 +514,8 @@ Given a verified person who has already acted in scope S
 When they attempt a second action in scope S
 Then the action is rejected as already-acted
 Given the same person acts once in scope S and once in scope T
-When an observer with full access to all published records analyses both actions
-Then the observer cannot determine, better than chance, whether the two actions came from one person or two
+When an adversary holding {all operator logs, all attestor credential hashes, full public verifiable record, network timing at 1-second granularity} analyses both actions across N ≥ 10,000 independently drawn same-person action pairs
+Then the adversary's advantage in correctly identifying that any given pair came from one person rather than two is ≤ ε over 1/2 at 95% confidence (ε set at OI-10 closure; provisional test value ε = 0.02)
 
 # FR-003 — no identity data at rest
 Given an enrolment check that has completed
@@ -573,17 +630,19 @@ When they submit a proposal with a declared tier
 Then it is accepted with no pre-screening, moderation or approval by any actor
 
 # FR-025 — tiered quorum and supermajority
-Given a charter-tier proposal requiring 40% quorum and 66% approval
-When it closes with 39% quorum and 90% approval
+# (example — non-normative; quorum and supermajority values unset; story not Ready until OI-08 closes; owner: Tomás Ferreira)
+Given a charter-tier proposal requiring a published quorum Q% and supermajority S% (example values used below: Q=40%, S=66%; normative values set at OI-08 closure)
+When it closes with turnout below Q% regardless of approval
 Then it does not pass and the failing condition is published
-When it closes with 45% quorum and 60% approval
+When it closes with turnout meeting Q% but approval below S%
 Then it does not pass and the failing condition is published
-When it closes with 45% quorum and 70% approval
+When it closes with turnout meeting Q% and approval meeting S%
 Then it passes and enters its timelock
 
 # FR-026 — timelock
-Given a passed charter-tier proposal with a 14-day timelock
-When 13 days have elapsed
+# (example — non-normative; timelock durations unset; story not Ready until OI-08 closes; owner: Tomás Ferreira)
+Given a passed charter-tier proposal with the published timelock duration for its tier (example: 14 days — not normative; normative value set at OI-08 closure)
+When one day less than the full timelock has elapsed
 Then the change has not taken effect and is publicly visible as pending
 When any actor attempts to shorten, waive or bypass the timelock
 Then no such capability exists and the attempt is refused
@@ -605,8 +664,8 @@ And the eligible set for that proposal is published and reproducible
 
 # FR-030 — ballot unlinkability
 Given a closed ballot with 5,000 cast votes
-When Trumocracy, an operator, an attestor and a party jointly analyse all data they hold
-Then they cannot link any cast ballot to the person who cast it better than chance
+When an adversary holding {all operator logs, all attestor credential hashes, full public verifiable record, network timing at 1-second granularity} attempts to link any cast ballot to the person who cast it, across N ≥ 10,000 independently drawn ballot-person pairs
+Then the adversary's advantage in correctly linking any ballot to its voter is ≤ ε over 1/2 at 95% confidence (ε set at OI-10 closure; provisional test value ε = 0.02)
 And the tally still proves every counted ballot came from exactly one eligible, not-yet-counted voter
 
 # FR-031 — receipt-freeness
@@ -669,10 +728,11 @@ When they initiate a recall of that office's holder during the term
 Then the recall initiation opens without approval from the office-holder, any other office-holder, the drafter or any platform actor
 
 # FR-043 — two-stage recall with a higher bar
-Given an office-holder elected with 55% approval and a published recall bar of 60%
-When a recall initiation reaches its signature threshold and the recall ballot closes at 58% approval
+# (example — non-normative; recall bar and election-approval values unset; story not Ready until OI-08 closes; owner: Tomás Ferreira)
+Given an office-holder elected with some approval share and a published recall bar R% (example: elected at 55%, recall bar 60% — not normative; normative value set at OI-08 closure)
+When a recall initiation reaches its signature threshold and the recall ballot closes below R%
 Then the recall fails and the office-holder remains
-When a subsequent valid recall ballot closes at 62% approval
+When a subsequent valid recall ballot closes at or above R%
 Then the recall succeeds
 
 # FR-045 — automatic revocation and by-election
@@ -737,14 +797,162 @@ Given a person who has exhausted their periodic sponsored-action budget
 When they attempt a legitimate governance action
 Then the action is queued with a clear explanation and an expected time
 And the action is neither rejected, charged for, nor permanently denied
+
+# FR-062 — public participation profile
+Given a verified citizen's profile viewed by any actor (authenticated or not)
+When the profile loads
+Then it shows: the list of elections and ballots in which they participated (without ballot direction), their current and past party memberships, petitions they endorsed, proposals they authored, and debates they attended
+And it does not reveal the direction of any ballot cast in a contested vote
+Given an elected representative whose office-capacity governance vote is examined on their profile
+When the vote record is displayed
+Then the direction is publicly attributed to them per FR-048
+
+# FR-063 — ballot-direction prohibition (MUST NOT; test obligation UT-0700, UT-0701)
+Given any member's ballot direction on any contested vote
+When any interface, log, export, public record, profile view or combination of them is examined by any actor
+Then no ballot direction for that member is discoverable
+And UT-0700 confirms no ballot-direction field is reachable through any client surface
+And UT-0701 confirms no ballot-direction field is present in any public-record export
+Given an elected office-holder who voted in their official office capacity
+When that specific vote is examined
+Then the direction is publicly attributed — this is the sole permitted exception, governed by FR-048
+
+# FR-064 — single party membership constraint
+Given a member of party A who requests to join party B
+When the join request is processed
+Then membership in party A is voided, membership in party B takes effect, and the tenure clock resets to zero
+When a member attempts to hold membership in two parties simultaneously through any mechanism
+Then no such dual-membership state exists and the attempt fails
+Given a member who left party A less than one month ago and joins party B
+When they attempt to vote in party B before one month of membership has elapsed
+Then the vote is rejected as tenure not yet met
+
+# FR-065 — candidate feedback scoring
+Given a matured party member who has not yet voted on candidate C in election E
+When they cast an upvote on candidate C
+Then C's tally increases by 3 and the member cannot vote on C again in E
+When they cast a downvote on candidate C
+Then C's tally decreases by 1 and the member cannot vote on C again in E
+When any actor inspects individual feedback votes
+Then no vote is linkable to its caster; only the aggregate tally is visible
+Given a member who has already cast a feedback vote on candidate C in election E
+When they attempt another feedback vote on C in E
+Then the attempt is refused
+
+# FR-066 — mandatory pre-election debates
+Given a major election is approaching for office O
+When the debate schedule is confirmed
+Then three debates are scheduled per candidate, covering local conditions, local problems, and the work required respectively
+When a debate is completed
+Then attendance attestation and any post-debate content reference are recorded on the verifiable record
+When a candidate fails to attend a scheduled debate
+Then their absence is recorded and visible in their participation record
+
+# FR-067 — candidacy from member vote; no automatic renomination
+Given three debates have been completed per candidate
+When the post-debate member vote closes
+Then only candidates who receive a net positive member-vote result advance to the election ballot
+Given a sitting office-holder whose term is expiring
+When the next election cycle opens
+Then they receive no automatic candidacy; they must complete the full debate and post-debate vote process
+When any actor attempts to place an incumbent on a ballot without a completed debate cycle
+Then the attempt is refused and logged
+
+# FR-068 — tenure waiver for new parties (growth-surge defence remains active)
+Given a party in its first three calendar months of active status
+When a member who joined before the party activated attempts to vote
+Then the one-month tenure requirement is waived and the vote is accepted
+And UT-0220 confirms that growth-surge defence controls remain fully enforced during the waiver
+Given a party in its first three calendar months and a sudden flood of 10,000 new members
+When a proposal snapshot is taken
+Then the snapshot mechanism (FR-028) and churn rate limits (FR-023) apply unchanged
+And no waiver of any anti-capture control is in effect
+
+# FR-069 — deterministic enrolment nullifier
+Given a credential with a stable personal identifier and a valid issuer signature
+When an enrolment attempt is submitted
+Then the system derives the nullifier without storing the underlying identifier, verifies the issuer signature, credential freshness, region attribute, and correct derivation, and stores only the nullifier
+Given the same credential re-used in a second enrolment attempt
+When the nullifier derivation is completed
+Then the derived nullifier matches the existing record and the enrolment is rejected as a duplicate
+Given a credential with a tampered region attribute
+When the derivation verification runs
+Then the enrolment is rejected and the reason (region-attribute invalid) is returned
+
+# FR-070 — pluggable credential adapter (eIDAS 2.0 wallet · ICAO Doc 9303 NFC chip · offline paper KYC e.g. Aadhaar)
+Given a region where an eIDAS 2.0 wallet adapter is configured
+When a citizen presents a qualified eID wallet attestation
+Then the adapter verifies the trust-anchor signature against the applicable national or supra-national trust list, extracts the designated stable personal identifier field and the residency attribute, and passes them to the FR-069 derivation
+Given a region where an ICAO Doc 9303 NFC chip adapter is configured
+When a citizen presents a biometric passport or NFC identity card
+Then the adapter verifies the Document Security Object against the ICAO public key directory, extracts the stable identifier field (MRZ DocumentNumber or chip pseudonym) and an attested residency claim, and passes them to the FR-069 derivation
+Given a region where an offline paper KYC adapter is configured (e.g. Aadhaar offline XML, Aadhaar paperless eKYC, or equivalent)
+When a citizen presents a verifier-attested identity assertion
+Then the adapter extracts the government-assigned stable identifier, the residency attribute, and attestor-authorisation evidence, and passes them to the FR-069 derivation; no biometric data is retained
+When any actor attempts to hard-code a single credential type as the only supported path
+Then the adapter interface prevents it; the platform architecture enforces the pluggable pattern
+
+# FR-071 — enrolment-collision recovery
+Given a citizen who has lost their key material but still holds their original credential
+When they attempt enrolment and the derived nullifier matches an existing record
+Then the system routes them to the recovery flow rather than rejecting them as a duplicate
+When the citizen re-authenticates, re-derives the same nullifier, and proves current key ownership
+Then their keys are scheduled for rotation, and membership, tenure and history are confirmed intact
+And no second identity is created
+
+# FR-072 — recovery delay and veto guard
+Given a nullifier-collision recovery initiated by a citizen
+When the recovery is submitted
+Then a seven-day delay is imposed before key rotation completes
+And the active key receives a veto window equal to the full seven-day delay
+And the recovering credential is barred from casting any vote during the delay
+And a notification is sent to the registered channel at initiation
+Given the active-key holder submitting a veto signal during the delay
+When the veto is received
+Then the recovery is aborted and the existing key remains in control
+
+# FR-073 — government eID issuer hierarchy
+Given an enrolment attempt using a government eID credential in a region where that rail is designated
+When the credential is verified
+Then the enrolment nullifier is minted and the record is accepted
+Given an enrolment attempt using an availability-only credential class (liveness attestor or non-eID provider)
+When the attempt is submitted
+Then no enrolment nullifier is minted and the attempt is refused with the reason (non-eID class, availability-only)
+And the availability-only credential may only be used for liveness attestation or slow recovery, not enrolment
 ```
 
 ```gherkin
+# NFR-001 — privacy: no actor determines party membership or vote from system data
+# Adversary model per §6 NFR-001: holds all operator logs, all attestor credential hashes, full public verifiable record, network timing at 1-second granularity
+# ε and collusion bound provisional until OI-10 closes (Design, owner: Dr. Lena Kowalczyk)
+Given an adversary with the capability set defined in NFR-001
+And the adversary selects N ≥ 10,000 independently drawn target members
+When the adversary attempts to determine which party each member belongs to or how they voted
+Then the adversary's advantage over random guessing is ≤ ε (provisional: 0.02) at 95% confidence across the N trials
+And an independent privacy audit finds zero critical or high linkage findings
+
 # NFR-002 — anonymity set floor
 Given a scope in which only 40 eligible actors exist
 When a person acts in that scope
 Then the action is withheld from publication or aggregated until at least 1,000 indistinguishable actors are present
 And the user is told that publication is delayed and why
+
+# NFR-003 — coercion resistance: receipt-freeness with PPT security parameter λ ≥ 128 bits
+Given a voter who has cast a ballot
+And the voter cooperates fully with a coercer, sharing device, credentials, and all stored artefacts after the fact
+When the coercer (modelled as a PPT adversary with security parameter λ ≥ 128 bits) attempts to determine the voter's actual choice
+Then the coercer's advantage over random guessing across the candidate set is negligible in λ
+Given a voter who cast a ballot at time T1 and cast a replacement ballot at time T2 before close
+When any observer examines the full public record, operator logs and network timing data
+Then the observer cannot distinguish "this voter re-voted" from "this voter voted exactly once at T1"
+
+# NFR-004 — sybil resistance: duplicate rate and attestor concentration cap
+Given an independent quarterly audit using a consented random sample of ≥ 5,000 credentials per region
+When the audit tests for duplicate or synthetic persons
+Then the detected duplicate/synthetic rate is ≤ 0.1% at 95% confidence
+Given an attestor that would reach 50% of credentials in a region with a new issuance
+When they attempt to issue that credential
+Then further issuance in that region is refused and the current share of each attestor is published
 
 # NFR-005 — cost ceiling
 Given a representative month of production traffic
@@ -752,15 +960,83 @@ When platform-borne cost per citizen governance action is measured
 Then the median is below USD 0.01 and the 99th percentile is below USD 0.05
 And the amount charged to citizens is USD 0.00 in 100% of cases
 
+# NFR-006 — performance on the reference device profile
+Given the reference device (2 GB RAM, Android 9) connected at 64 kbit/s with intermittent connectivity
+When a user navigates to any primary screen
+Then the screen is interactive within 5 seconds at the 95th percentile
+When a user submits any governance action
+Then it is acknowledged within 5 seconds p95 and finalised on the verifiable record within 120 seconds p95
+When a new citizen completes the full enrol→endorse journey
+Then the journey is completable within 10 minutes
+
+# NFR-007 — reliability and availability SLOs
+Given a representative calendar month of production traffic
+When the citizen write-path availability is measured
+Then it is ≥ 99.5% across the month
+When the public read and verification path availability is measured
+Then it is ≥ 99.9% across the month
+Given a single operator node taken offline (single-operator failure)
+When a citizen attempts a governance action within 60 minutes of the failure
+Then the action completes through an alternative path and no governance action is permanently blocked
+
+# NFR-009 — security audit: zero open critical/high at Gate 2
+Given an independent third-party security and cryptography audit completed before launch
+When the audit report is examined at Gate 2
+Then zero critical or high findings remain open
+And no privileged administrative override is present in any governance path, confirmed by audit inspection
+
+# NFR-010 — data minimisation: no direct identifier in public or governance-path stores
+Given a complete data-inventory inspection of the verifiable public record and all governance-path stores
+When every field of every stored entity is examined
+Then no identity document, biometric template, address, date of birth or other direct identifier is present
+And no personal data is present on any immutable public record
+Given the two restricted operational stores enumerated in §7 (Recovery requests & notification channel; Support & appeal records)
+When those stores are inspected
+Then each holds only the minimal personal data fields and retention durations stated in §7 (90 days; 24 months)
+
 # NFR-011 — accessibility
 Given each primary flow
 When it is audited against WCAG 2.2 Level AA and operated by screen reader and keyboard/switch at 200% text scale
 Then zero Level A or Level AA failures are found and every task is completable
 
+# NFR-012 — portability: reference device and bandwidth floor
+Given the reference device profile (2 GB RAM, Android 9 or equivalent mobile browser) at 64 kbit/s
+When the client is installed
+Then the install package is ≤ 15 MB
+When a user completes any primary flow including offline draft composition with deferred submission
+Then the flow completes successfully on the reference device profile
+
+# NFR-013 — localisation: 8 launch languages, no untranslated strings
+Given the platform deployed with all 8 launch languages configured, including at least one right-to-left locale
+When any primary flow is exercised in each language
+Then zero untranslated strings are displayed
+And dates, numbers and names are formatted according to each locale's conventions
+
 # NFR-014 — censorship resistance
 Given the primary domain and the app store listing are both blocked in a region
 When a citizen attempts a governance action
 Then at least one alternative access path succeeds
+
+# NFR-015 — compliance: erasure by design, legal review, pre-enrolment disclosure
+Given a user who requests erasure of their personal data
+When the system processes the request
+Then it demonstrates that no personal data exists to erase in the governance-path stores or on the public record
+And it offers credential deactivation as the available alternative
+And the enrolment flow has disclosed this limitation before the user enrolled
+Given a pilot jurisdiction before enablement
+When legal review is conducted
+Then legal sign-off is obtained per that jurisdiction before launch
+
+# NFR-016 — key recovery: success rate and fraud rate
+Given ≥ 500 legitimate recovery attempts measured
+When recovery outcomes are assessed
+Then ≥ 99% succeed within 14 days
+Given a completed recovery
+When the system is inspected for silent impersonation risk
+Then the registered channel received a notification with a cancellation window active during the recovery delay
+Given ≥ 10,000 recovery events audited
+When fraudulent recoveries are counted (attacker rotates a key without the legitimate holder's knowledge or veto)
+Then the fraud rate is ≤ 0.01%
 
 # NFR-017 — upgradeability without unilateral control
 Given a proposed change to a platform-wide governance rule
@@ -774,6 +1050,40 @@ Then the previous version is fully restored within 15 minutes
 Given a ballot that is currently open
 When a flag governing that ballot's rules is changed
 Then the change is refused until the ballot closes
+
+# NFR-021 — open source and reproducible builds
+Given the platform's governance-critical logic
+When any third party obtains the published source repository
+Then 100% of governance-critical logic is present under an OSI-approved licence
+When that third party builds from source and compares the result to the running system
+Then the build is byte-for-byte reproducible and matches the published artefact
+And ≥ 1 independent party has verified build reproducibility before Gate 2
+
+# NFR-022 — usability: unaided completion, SUS score, support rate
+Given a usability study of ≥ 200 first-time non-technical users per launch locale
+When they attempt the enrol→endorse journey unaided
+Then ≥ 80% complete it within 10 minutes
+And the System Usability Scale score is ≥ 75
+And the support-contact rate for enrolment is ≤ 5%
+
+# NFR-023 — content: grade-8 reading level, no jargon, notifications reveal nothing
+Given any primary flow in any of the 8 launch locales
+When the text is analysed for reading level
+Then it is at or below grade-8 reading level per the locale's equivalent measure
+When the text is searched for: wallet, seed phrase, private key, gas, token, mint, chain, block, hash, or equivalent jargon
+Then zero occurrences are found in primary flows
+Given a notification generated by any governance action
+When the notification content is examined
+Then it does not reveal party membership, party name, governance action type, or voting behaviour of the recipient
+
+# NFR-024 — anti-harassment: no identity exposure, mechanical harassment metric
+Given any member's profile or activity as viewable by any other member or unauthenticated actor
+When all surfaces, exports and logs are examined
+Then no identity, contact details, location precision below the member's declared region, or individual activity pattern is exposed
+Given the harassment-rate metric computed per NFR-024 (repeat recall/nomination initiations against a single office-holder per 1,000 members in 90 days)
+When this metric is computed for a production month
+Then it is published on the governance dashboard (NFR-019) within 72 hours of month close
+And the computation is performed mechanically, with no Trumocracy employee exercising discretion over political speech content
 
 # NFR-025 — operator cannot censor an individual
 Given an operator deliberately withholding one citizen's governance action
@@ -795,7 +1105,7 @@ Then the action has been included through an alternative path
 | CON-004 | All governance-critical logic MUST be open source under an OSI-approved licence with reproducible builds. | Openness | Rafael Duarte |
 | CON-005 | Electoral, party-registration, political-finance and association law differ per jurisdiction. Each launch jurisdiction MUST pass legal review before enablement, and features MUST be independently gateable per jurisdiction. | Legal | Sofia Marchetti |
 | CON-006 | No transferable token, coin, security, membership sale, subscription or fundraising instrument for the platform may exist. Governance rights MUST NOT be represented by anything transferable. | Anti-corruption | Erik Lindqvist |
-| CON-007 | Appetite: **USD 4.2M** and a team of **18** through launch. Gate 1 target 2026-08-22; Gate 2 target 2027-02-15; launch **2027-03-01**. Scope, not date, absorbs overrun. | Budget / schedule | Priya Raghunathan |
+| CON-007 | Appetite: **USD 4.2M** and a team of **18** through launch. Gate 1 target 2026-08-22; Gate 2 target 2027-05-14 (revised per B-01/S-01 Gate 1 decisions); launch **2027-03-01**. Scope, not date, absorbs overrun. | Budget / schedule | Priya Raghunathan |
 | CON-008 | The public record is immutable, which is irreconcilable with an unrestricted right of erasure. The constraint therefore is: **no personal data may ever be written to it.** | Legal / architectural | Sofia Marchetti |
 | CON-009 | Threshold denominators depend on third-party population statistics whose accuracy, granularity and update cadence Trumocracy does not control and MUST NOT modify. | External dependency | Yuki Sato |
 | CON-010 | Mobile application-store policies restrict political and election-related applications; distribution MUST NOT depend on a single store or domain. | Distribution | Hiroshi Tanaka |
@@ -821,8 +1131,11 @@ Then the action has been included through an alternative path
 | TD-02 | **Accountability vs anonymity.** You cannot hold someone accountable for a vote you cannot attribute. | Deliberate asymmetry: ordinary members anonymous; candidates and office-holders publicly identified **by their own informed consent**, with their office-capacity governance votes attributable. | Office-holders lose privacy permanently for the term — irreversibly. Some good people will not stand because of it. Members' *ordinary* votes remain unaccountable, so a member cannot be praised or blamed for them. | Erik Lindqvist |
 | TD-03 | **Immutability vs erasure rights.** An immutable record cannot honour "delete my data". | Hold no personal data anywhere, so erasure has nothing to bite on; offer credential deactivation instead of deletion; disclose the limitation *before* enrolment. | This is a legal posture, not a legal certainty. A regulator may disagree, and pseudonymous-but-immutable records may still be deemed personal data in some jurisdictions. Legal review per jurisdiction is a launch condition (`NFR-015`). | Sofia Marchetti |
 | TD-04 | **Code-only governance vs no recourse.** No override means no fix when something goes genuinely wrong. | Accept it. No override button exists, including for demonstrable error. Recourse is limited to what the charter's own tiered amendment process and the right to leave/fork provide. | A party can make a decision that is stupid, self-harming or the result of a bug, and nobody can undo it outside the charter's own process. Every operational instinct will push against this; the tenets say hold. | Tomás Ferreira |
-| TD-05 | **Sybil resistance vs inclusion.** Strong personhood proof excludes people without documents. | Require plural attestation paths including at least one non-document-based path per region, and publish exclusion rates as a launch metric. | Some eligible people will still be excluded — disproportionately the marginalised, which is precisely the population the product claims to serve. We measure it and publish it rather than claim it away. Open item `OI-03`. | Marcus Adeyemi |
+| TD-05 | **Sybil resistance vs inclusion.** Strong personhood proof excludes people without documents. | Require plural attestation paths including at least one non-document-based path per region, and publish exclusion rates as a launch metric. Phase 1 (per OI-03) uses government eID as the sole uniqueness anchor; FR-070 adds a pluggable adapter interface and FR-073 codifies the Phase-1 hierarchy. | Some eligible people will still be excluded — disproportionately the marginalised, which is precisely the population the product claims to serve. We measure it and publish it rather than claim it away. Open item `OI-03`. | Marcus Adeyemi |
 | TD-06 | **Coercion resistance vs verifiability and usability.** Letting a voter verify their own vote gives them a receipt; hiding it costs confidence and adds friction. | Choose receipt-freeness. The voter verifies that the *tally* is correct, not that *their* ballot is in it. | Voters cannot personally confirm their vote was counted, which is a genuine loss of individual confidence, and re-voting adds UX complexity. Mitigated by universal verifiability (`FR-033`), not eliminated. | Aisha Nkemdirim |
+| TD-07 | **Candidate feedback asymmetry.** Simple +1/−1 scoring treats upvotes and downvotes symmetrically; but casting a visible downvote against a local incumbent creates a retaliation risk that an upvote does not. | Accept deliberate asymmetry: upvote = +3, downvote = −1 (FR-065). Individual votes private; only aggregate tally public. An ADR (architect's, Doc 03) will document the full rationale and the equilibrium (net positive above ~25% of feedback casters). | Critics will note the scoring flatters incumbents by demanding more upvotes than downvotes to show a negative result; the asymmetry is the deliberate risk accepted to protect downvoters. | Aisha Nkemdirim |
+
+> **⚠ v1.1.0 OPEN CONTRADICTION — TD-02 vs FR-062 (Change 1, CR-v1.1.0):** TD-02 records the existing asymmetry as "ordinary members anonymous always." FR-062 (Change 1) makes party membership and participation publicly visible on each member's profile. These are directly in conflict. The requirement is written as directed by the approver; TD-02 is not silently revised. Resolution required at Gate 1 re-affirmation. See OI-13.
 
 ---
 
@@ -849,38 +1162,28 @@ Then the action has been included through an alternative path
 | RISK-14 | **Regulatory reclassification** — a regulator deems the platform an electoral body, a political-finance vehicle, or a data controller of political-opinion data. | 3 | 5 | `CON-001` absolute boundary stated on every public surface; `CON-005` per-jurisdiction legal review and feature gating; treasury features off by default; `NFR-015` documented posture. | Sofia Marchetti |
 | RISK-15 | **Adoption failure** — thresholds are never reached because too few citizens enrol, and the platform looks like a graveyard of dead petitions. | 4 | 4 | Field enrolment programme; threshold calibration reviewed against month-3 enrolment; petition expiry and archiving (`FR-013`) to avoid a visible graveyard; kill criteria 3 and 4 in Doc 01 §E2. | Grace Mbeki |
 | RISK-16 | **Trumocracy itself becomes the gatekeeper** — through code authorship, funding conditions, or an operational lever added under pressure. | 3 | 5 | `CON-003` no override, `CON-004` open source, `NFR-017` governed upgrades with timelock, `NFR-018` party exit/export rights, `NFR-021` reproducible builds; Gate-2 audit assertion that zero privileged governance paths exist. | Rafael Duarte |
+| RISK-22 | **Stolen-credential takeover (Change 7)** — an attacker who obtains a victim's credential (e.g., a stolen document or cloned eID) initiates the nullifier-collision recovery flow (FR-071) to seize the victim's party membership and voting rights. | 3 | 5 | `FR-072` seven-day delay + active-key veto; `NFR-016` ≥99% legitimate recovery success within 14 days; notification to registered channel at initiation; veto window equal to delay. _(Source: CR-v1.1.0; GATE1-DECISION-2026-08-09.md, Change 7.)_ | Rafael Duarte |
+| RISK-23 | **Veto suppression (Change 7)** — an attacker simultaneously compromises the victim's registered notification channel (e.g., email or phone) to suppress the recovery veto notification, preventing the legitimate holder from cancelling before key rotation completes. | 2 | 5 | `FR-072` active-key veto independent of notification channel where feasible; secondary out-of-band notification required; `NFR-016` fraud rate ≤ 0.01%. _(Source: CR-v1.1.0; GATE1-DECISION-2026-08-09.md, Change 7.)_ | Rafael Duarte |
+| RISK-24 | **Recovery raced against a live ballot (Change 7)** — an attacker initiates recovery during an active ballot window, briefly holding dual control of an active credential, and attempts to cast a replacement ballot under the original key before rotation completes. | 2 | 5 | `FR-072` voting barred for the recovering credential during the seven-day delay; active-key veto; `FR-032` only the last valid ballot counted; ballot-scope nullifiers prevent double-counting. _(Source: CR-v1.1.0; GATE1-DECISION-2026-08-09.md, Change 7.)_ | Rafael Duarte |
 
 ---
 
 ## 11. Requirements prioritization & release plan (MoSCoW)
 
-**Counts.** 12 BR · 61 FR · 26 NFR · 12 CON · 16 RISK · 6 recorded trade-offs.
+**Counts (v1.1.0).** 13 BR · 73 FR · 26 NFR · 12 CON · 19 RISK · 7 recorded trade-offs.
+_(v1.0.0 baseline: 12 BR · 61 FR · 26 NFR · 12 CON · 16 RISK · 6 TDs. Added by CR-v1.1.0: 1 BR, 12 FR, 3 RISK, 1 TD.)_
 
 | Priority | FR count | FR IDs |
 |----------|----------|--------|
-| **Must** | **42** | FR-001, 002, 003, 004, 006, 007, 008, 009, 010, 011, 014, 016, 018, 020, 021, 022, 023, 024, 025, 026, 027, 028, 030, 031, 032, 033, 035, 036, 037, 039, 040, 042, 043, 045, 047, 051, 054, 056, 058, 059, 060, 061 |
+| **Must** | **54** | FR-001, 002, 003, 004, 006, 007, 008, 009, 010, 011, 014, 016, 018, 020, 021, 022, 023, 024, 025, 026, 027, 028, 030, 031, 032, 033, 035, 036, 037, 039, 040, 042, 043, 045, 047, 051, 054, 056, 058, 059, 060, 061, 062, 063, 064, 065, 066, 067, 068, 069, 070, 071, 072, 073 |
 | **Should** | 16 | FR-005, 012, 013, 015, 017, 019, 029, 034, 038, 041, 044, 046, 048, 049, 050, 055 |
 | **Could** | 3 | FR-052, 053, 057 |
-| **Won't (this release)** | — | Vote delegation; state elections; cross-jurisdiction parties; social features; staff moderation of political speech; party dormancy lifecycle; treasury splitting on fork; personal blocklists (Doc 01 §D) |
+| **Won't (this release)** | — | Vote delegation; state elections; cross-jurisdiction parties; social features; staff moderation of political speech |
+| **Could (non-FR features, v2 candidates)** | — | Party dormancy/deactivation lifecycle; treasury splitting on fork; personal blocklists — deferred to v2, contingent on month-6 metrics per Doc 01 §D and FAQ §E3. Classified as Could in Doc 01 §D; not permanently excluded. _(ISS-08: aligned with Doc 01 §D.)_ |
 
 NFR priorities: **Must** — NFR-001…007, 009…017, 020…025 (22). **Should** — NFR-008, 018, 019, 026 (4).
 
-**On the size of the Must set.** 42 Must FRs is larger than a typical v1, and that is a deliberate,
-defensible choice rather than an absence of discipline. The set decomposes into:
-- **20 walking-skeleton FRs** — the minimum path a citizen must be able to walk end to end
-  (enrol → draft → endorse → threshold → activate → join → propose → vote → nominate → elect →
-  recall): FR-001, 006, 007, 009, 010, 011, 014, 016, 018, 020, 021, 022, 024, 025, 036, 039, 040,
-  042, 043, 045.
-- **22 guardrail FRs** — the non-negotiables from the brief, each of which, if deferred, makes the
-  shipped product actively harmful rather than merely incomplete: FR-002, 003, 004, 008, 023, 026,
-  027, 028, 030, 031, 032, 033, 035, 037, 047, 051, 054, 056, 058, 059, 060, 061.
-
-Deferring a guardrail is not a smaller v1; it is a different and worse product. The compression that
-*was* available has been taken: all treasury workflow, fork, dormancy, delegation, forums, moderation
-tooling and cross-jurisdiction support are out (Doc 01 §D), and 19 further FRs are Should/Could.
-**If Gate 1 requires a smaller Must set, the correct lever is to cut a walking-skeleton capability
-(e.g. defer recall, FR-042/043/045, to v1.1), not to cut a guardrail.** That is a decision for the
-Gate-1 approver, and it is recorded as open item `OI-01`.
+**On the size of the Must set.** The Must set grows from 42 to 54 with the nine changes in CR-v1.1.0. The 12 new Must FRs are a mix of walking-skeleton extensions (FR-066, FR-067, FR-069, FR-070, FR-071, FR-073) and guardrails (FR-062, FR-063, FR-064, FR-065, FR-068, FR-072). None of the new FRs is a Should or Could: the approver's direction sets them as Must. The two gates still govern direction and launch readiness respectively.
 
 **Release shape.** One release at 2027-03-01, delivered on trunk behind flags, rolled out
 1 → 10 → 50 → 100% in one pilot jurisdiction first, then the remaining two. Should items land inside
@@ -896,8 +1199,12 @@ authored by the tester and verified by reviewer-qa, is the system of record for 
 in any Must row blocks Gate 2.** Backlog stories are seeded in `docs/05-product-backlog.md` and each
 declares its `FR`/`NFR`; `DES` and `SCR` links are attached after Design and reconciled in the RTM.
 
-Requirements arising later from production learnings will carry a `Source = REF-##` value in §3/§4
-per the refine loop; none exist at v1.0.0.
+**v1.1.0 additions (CR-v1.1.0):** BR-013 → FR-066, FR-067. FR-062, FR-063 → BR-005, BR-009. FR-064, FR-068 → BR-003, BR-012. FR-065 → BR-004, BR-005. FR-069, FR-070, FR-073 → BR-006 (FR-070 also CON-005; FR-073 also BR-012). FR-071, FR-072 → BR-006/007/009/012. All 12 new Must FRs have been seeded with at least one US in Doc 05 v1.1.0.
+
+**CR-v1.1.0 Change 9 ('party operation / no boss roles'):** No new requirement minted. Analysis confirms coverage by FR-020 (join without approval), FR-021 (equal standing, no weight advantage by office), FR-024 (any matured member may propose), FR-056 (no operator override in governance path), BR-003 (equal standing). Detail: artifacts/product-owner-2026-08-09T2200.md. _(ISS-10.)_
+
+Requirements arising from production learnings will carry a `Source = REF-##` value in §3/§4
+per the refine loop; none exist at v1.0.0 or v1.1.0 (all v1.1.0 requirements source from CR-v1.1.0).
 
 ---
 
@@ -906,16 +1213,18 @@ per the refine loop; none exist at v1.0.0.
 | ID | Open issue | Needed by | Owner |
 |----|-----------|-----------|-------|
 | **OI-01** | **What activation threshold percentage is right?** The whole product hinges on this number and we do not have it. Too high and no party ever activates (kill criterion 4); too low and the network fills with noise. It must also survive `RISK-12` denominator error. Proposal: a jurisdiction-specific range calibrated against month-3 enrolment, fixed publicly before any petition opens. **Requires a Gate-1 decision on the calibration method, not the number.** | Gate 1 | Tomás Ferreira |
-| **OI-02** | **Is the Must set of 42 FRs accepted, or must a walking-skeleton capability be deferred?** See §11. Recall (FR-042/043/045) is the only coherent deferral candidate. Guardrails are not offered for deferral. | Gate 1 | Priya Raghunathan |
-| **OI-03** | **What exclusion rate from personhood enrolment is acceptable, and what is the non-document-based attestation path?** `TD-05` — the people most likely to fail a document check are the people the product exists to serve. Needs a target and a named alternative path per pilot jurisdiction. | Gate 1 | Marcus Adeyemi |
-| **OI-04** | **Which three pilot jurisdictions?** Selection gates `CON-005`, `A-01`, `A-02`, `A-03` and the whole legal posture. No requirement below can be finally validated until they are named. | Gate 1 | Sofia Marchetti |
-| **OI-05** | **Does `NFR-002` (k ≥ 1,000 anonymity floor) make small-region governance impossible?** A ward with 3,000 residents cannot produce a 1,000-strong anonymity set for a niche action, yet ward-level representation is objective 4. Either k is scope-dependent, or actions aggregate across regions, or small-region governance waits. This is a direct conflict between `BR-004` and `BR-009`. | Gate 1 | Dr. Lena Kowalczyk |
+| **OI-02** | **Is the Must set of 42 FRs accepted, or must a walking-skeleton capability be deferred?** See §11. Recall (FR-042/043/045) is the only coherent deferral candidate. Guardrails are not offered for deferral. _(Decided at Gate 1: Must set accepted in full; recall kept.)_ | Gate 1 ✓ | Priya Raghunathan |
+| **OI-03** | **What exclusion rate from personhood enrolment is acceptable, and what is the non-document-based attestation path?** `TD-05` — the people most likely to fail a document check are the people the product exists to serve. Needs a target and a named alternative path per pilot jurisdiction. _(Decided at Gate 1: Phase 1 = government eID sole anchor, exclusion accepted and documented. Phase 3 = non-document path needs own ADR, threat model, and audit.)_ | Gate 1 ✓ | Marcus Adeyemi |
+| **OI-04** | **Which three pilot jurisdictions?** Selection gates `CON-005`, `A-01`, `A-02`, `A-03` and the whole legal posture. No requirement below can be finally validated until they are named. _(Decided at Gate 1: one pilot; jurisdiction not yet named; eID rail as pluggable adapter. OPEN: name jurisdiction and eID rail before enrolment implemented.)_ | Gate 1 / enrolment | Sofia Marchetti |
+| **OI-05** | **Does `NFR-002` (k ≥ 1,000 anonymity floor) make small-region governance impossible?** _(Resolved at Gate 1: confirmed as designed per ADR-004 §2.)_ | Gate 1 ✓ | Dr. Lena Kowalczyk |
 | OI-06 | Funding sustainability beyond month 18, given `NFR-005` (citizen pays nothing) and `CON-006` (no fundraising instrument). | Gate 2 | Priya Raghunathan |
 | OI-07 | Whether ISO 27001 / SOC 2 certification is required by any pilot jurisdiction or major partner, or whether the independent audit suffices. | Design | Rafael Duarte |
 | OI-08 | Maturation period, dwell period, timelock durations, recall bars, grace windows and cooldown values — all currently "published" but unset. Each is a governance-sensitive constant. | Design | Tomás Ferreira |
 | OI-09 | Definition of the "published minimum-substance standard" for a policy pillar (`FR-011`) that is machine-checkable without becoming editorial judgement — dangerously close to the gatekeeping we forbid. | Design | Tomás Ferreira |
-| OI-10 | The published collusion bound referenced in `NFR-001` — how many colluding parties must privacy survive? | Design | Dr. Lena Kowalczyk |
+| OI-10 | The published collusion bound referenced in `NFR-001` and the advantage bound ε — how many colluding parties must privacy survive, and what is the maximum acceptable advantage over random guessing? These values are required to make the §8 NFR-001/FR-002/FR-030 Gherkin normative. The provisional test value ε = 0.02 is used in §8 Gherkin blocks until OI-10 closes. **Escalated for Gate 1 re-affirmation confirmation: the approver should record agreement that the provisional value ε = 0.02 is acceptable for the test-design phase, with the final bound to close no later than Doc 03 baseline.** | Gate 1 re-affirmation (escalated) / Design | Dr. Lena Kowalczyk |
 | OI-11 | Whether office-holders' *ordinary member* votes must be separable in practice from their office-capacity votes (`FR-048`) without leaking either. | Design | Erik Lindqvist |
+| **OI-12** | **FR-073 vs ADR-003 issuer-plurality model.** ~~FR-073 mandates the government eID credential rail as the sole enrolment-nullifier-issuing class per region (aligning with OI-03 Phase-1 decision). ADR-003 describes an issuer-plurality model. The architect MUST confirm in Doc 03 whether these are reconcilable or whether ADR-003 requires amendment.~~ **Resolved by ADR-016 (amends ADR-003 for Phase 1; see Doc 03 §16 and docs/adr/ADR-016-enrolment-issuer-hierarchy.md). OI-12 is closed.** _(ISS-13.)_ | Design ✓ | Marcus Adeyemi |
+| **OI-13** | **FR-062 (public participation profile) vs NFR-001, NFR-024, TD-02 (anonymity-always for ordinary members).** FR-062 makes party membership and participation records publicly visible on a user profile. NFR-001 and NFR-024 prohibit exactly this. TD-02 records the asymmetry as "members anonymous always." The conflict is flagged inline in §4.19 and §6. Resolution required at Gate 1 re-affirmation by the human approver (Rathish). | Gate 1 re-affirmation | Priya Raghunathan |
 
 ---
 
@@ -926,15 +1235,20 @@ per the refine loop; none exist at v1.0.0.
 | **Activation** | The automatic transition of a petition to an active party when the threshold is met and sustained (`FR-018`). |
 | **Anonymity set** | The number of eligible actors among whom a published action is indistinguishable (`NFR-002`). |
 | **Charter** | A party's founding document, containing the eight pillars and its amendment rules. |
+| **Debate** | A structured public event in which a candidate addresses members on one of three topic areas (local conditions, local problems, work required), required three times per candidate before a major election (`FR-066`). |
 | **Denominator** | The eligible-population figure of a region used to compute a threshold (`FR-009`). |
 | **Dwell period** | The continuous time a petition must remain at or above threshold before activating. |
 | **Entrenched clause** | A charter clause requiring the highest amendment tier, longest timelock and an age-qualified quorum (`FR-027`). |
 | **Jurisdiction** | The single region identifier a party declares and within which its threshold is computed. |
+| **Major election** | An election filling an office or position within a party — including by-elections (mid-term vacancies), elections following a successful recall (`FR-042`–`FR-045`), and scheduled end-of-term elections. Excludes internal non-office administrative votes (e.g., procedural motions, informal straw polls, and internal rule confirmations that do not place a named person in an office). The three-debate requirement (`FR-066`) and the post-debate candidacy-vote requirement (`FR-067`) apply to every major election; the scope of "major election" does not extend to sub-party administrative resolutions that do not fill a defined office. _(Added v1.1.1 — ISS-07.)_ |
 | **Maturation period** | The delay between joining a party and acquiring governance rights (`FR-023`). |
+| **Nullifier** | A deterministic, non-reversible token derived from a stable personal identifier; stored on the verifiable record instead of the identifier (`FR-069`). |
 | **Office** | An elected position within a party, bound to exactly one region. |
+| **Participation profile** | A public per-citizen record of elections participated in (without ballot direction), party memberships, petitions endorsed, proposals authored, and debates attended (`FR-062`). |
 | **Personhood credential** | Non-transferable proof that the holder is a unique, eligible human — not an identity. |
 | **Petition** | The state a published party draft occupies while gathering endorsements. |
 | **Pillar** | One of the eight mandatory policy areas: Finance, Society, Governance, Law, Education, Healthcare, Security, Regional Plans. |
+| **Pluggable adapter** | An interchangeable credential-source integration conforming to a published interface (`FR-070`). Candidate types: eIDAS 2.0 wallet, ICAO Doc 9303 NFC chip, offline paper KYC (e.g. Aadhaar). |
 | **Receipt-freeness** | The property that a voter cannot prove their choice to a third party (`NFR-003`). |
 | **Recall** | Member-initiated removal of an office-holder mid-term (`FR-042`–`FR-045`). |
 | **Scope** | A context in which a person may act at most once (a petition, a ballot, an election). |
@@ -947,15 +1261,12 @@ per the refine loop; none exist at v1.0.0.
 
 | Role | Name | Decision | Date | Notes |
 |------|------|----------|------|-------|
-| Product Owner (Accountable) | Priya Raghunathan | Submitted for Gate 1 | 2026-08-08 | v1.0.0, Status: In Review |
-| Project Manager (Responsible) | _pending_ | | | Consolidates the Gate-1 packet |
-| Architect (Consulted) | _pending_ | | | Feasibility of `NFR-002`, `NFR-005`, `CON-003` |
-| Engineering (Consulted) | _pending_ | | | Must-set size, `OI-02` |
-| QA / reviewer-qa (Consulted) | _pending_ | | | Testability of all Must rows |
-| **Human approver — Gate 1** | _pending_ | **Approve / Rework / Reject** | | Must decide `OI-01`…`OI-05` |
+| Product Owner (Accountable) | Priya Raghunathan | Approved v1.0.0; v1.1.0 submitted for re-affirmation | 2026-08-09 | v1.1.0 CR-v1.1.0 nine changes, Status: In Review |
+| Project Manager (Responsible) | Ana-Maria Petrescu | Approved v1.0.0 at Gate 1 | 2026-08-09 | Re-affirmation packet to be assembled for v1.1.0 |
+| **Human approver — Gate 1 re-affirmation** | Rathish | **Pending re-affirmation at v1.1.0** | _pending_ | Must confirm or revise OI-13 (profile vs anonymity) |
 
 ---
 
 ### Downstream
 Design (Doc 03) MUST address **every** FR and NFR and **every** RISK in this document. Coverage is
-verified in the RTM (Doc 08). Nothing is designed until Gate 1 clears.
+verified in the RTM (Doc 08). Nothing is designed until Gate 1 re-affirmation clears for v1.1.0.

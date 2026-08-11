@@ -2,15 +2,22 @@
 
 ```
 Prepared by:   project pipeline (VEKTOR SOP run end-to-end)
-Status:        BOTH GATES OPEN — neither has been approved
+Status:        GATE 1 APPROVED 2026-08-09 by Rathish against Doc 02 v1.0.0 —
+               re-affirmation pending at v1.1.0 (change request inbound).
+               GATE 2 OPEN — not yet ready.
 Audience:      the human approver
 ```
 
-> **Read this first.** VEKTOR has exactly two human approval gates, and **neither has been
-> approved.** The requesting human's instruction was to build the platform end to end "with
-> least gates", which was taken as a direction to *keep building through* the gate points
-> rather than stopping at them — not as an approval of either gate. No approval has been
-> given, recorded, or implied by anyone. Both packets below are open decisions.
+> **Read this first.** Gate 1 was approved by **Rathish** on **2026-08-09** against Doc 02
+> v1.0.0. The full decision record is at
+> `artifacts/status/GATE1-DECISION-2026-08-09.md`. **A nine-requirement change request arrives
+> next session**; the approval is bound to v1.0.0 and must be re-affirmed at v1.1.0 before
+> work under those changed requirements can proceed.
+>
+> Gate 2 **has not been approved.** The system is not launch-ready: the RTM (Doc 08) has 54
+> open Must rows, rollback has not been drilled, audits have not started, and circuits are
+> uncompiled. Both of these states are the correct states for the current phase of the project
+> — one gate is now behind us; the other sits at MS-13 (2027-05-14).
 >
 > Everything produced between the gate points is, by VEKTOR's own design, reversible: trunk
 > based, shipped dark behind flags, staged rollout, instant rollback. Nothing irreversible has
@@ -23,6 +30,10 @@ Audience:      the human approver
 **What it approves:** the PR-FAQ (Doc 01) and the requirements (Doc 02). Nothing should be
 designed until it clears.
 
+**APPROVED 2026-08-09 by Rathish against Doc 02 v1.0.0.**
+Full decision record: `artifacts/status/GATE1-DECISION-2026-08-09.md`.
+Re-affirmation required at Doc 02 v1.1.0 (nine-requirement change request inbound next session).
+
 **Deviation to record honestly:** design *was* produced before this gate cleared. The ADRs are
 dated 2026-08-08 and the SDD 2026-08-09, both ahead of any Gate-1 decision. This was a direct
 consequence of the "build end to end" instruction and is recorded here rather than
@@ -34,19 +45,19 @@ knowingly incurred on instruction.
 12 CON · 16 RISK, each with a named individual owner. 10 epics, 28 features, 70 stories with
 Gherkin acceptance criteria.
 
-**Open items the approver must decide:**
+**Open items — dispositions recorded 2026-08-09:**
 
-| # | Decision | Why it cannot be deferred |
-|---|---|---|
-| OI-01 | The activation threshold percentage, and the **method** used to calibrate it per region | The whole product hinges on this number. Too high and nothing ever activates; too low and the network fills with noise. It must be fixed and published before the first petition opens. |
-| OI-02 | Accept the 42-FR Must set, or defer recall (FR-042/043/045) to v1.1 | The product-owner declined to shrink the guardrail set and offered recall as the only coherent cut. Deferring frees ~3 weeks on the feature path only. |
-| OI-03 | The acceptable enrolment **exclusion rate**, and the non-document attestation path per pilot | The people most likely to fail a document check are the people this product claims to serve. |
-| OI-04 | The pilot jurisdictions — and whether to launch in 1 or 3 | Gates the legal review, the issuer/attester recruitment, and the budget variance below. |
-| OI-05 | Confirm the design answer to the k≥1000 anonymity floor vs ward-level governance | **Resolved in design** (ADR-004 §2: an action's anonymity scope escalates to the nearest ancestor region meeting the floor, while an *office* stays ward-scoped). Needs product confirmation, not a requirements change. |
-| E-01 | Accept or reject the design-before-gate deviation above | Governance integrity. |
-| E-02 | RACI defect: one named individual originally owned both Doc 02 and all fourteen ADRs | **Fixed** — architecture ownership was reassigned to a distinct named architect. Confirm the fix. |
-| B-01 | Budget: **USD 4.55M against a USD 4.2M appetite**, zero contingency | The project-manager offers three costed levers and recommends launching in one pilot, rolling the other two post-launch (≈USD 4.13M). |
-| S-01 | Schedule: Gate 2 moves **2027-02-15 → 2027-05-14** | Every week of the slip sits on externally-paced cryptography: six phase-2 ceremonies at ≥500 contributors each, and two independent audits. Cutting features does not buy this time back. |
+| # | Decision | Why it cannot be deferred | Disposition (2026-08-09) |
+|---|---|---|---|
+| OI-01 | The activation threshold percentage, and the **method** used to calibrate it per region | The whole product hinges on this number. Too high and nothing ever activates; too low and the network fills with noise. It must be fixed and published before the first petition opens. | **Method DECIDED.** Percentage of regional population from the population oracle, calibrated per region, published before the first petition opens above dev. Number stays open with that hard deadline. See `GATE1-DECISION-2026-08-09.md §3`. |
+| OI-02 | Accept the 42-FR Must set, or defer recall (FR-042/043/045) to v1.1 | The product-owner declined to shrink the guardrail set and offered recall as the only coherent cut. Deferring frees ~3 weeks on the feature path only. | **Keep recall (FR-042/043/045).** It is the accountability half of the product. 42-FR Must set accepted in full. See `GATE1-DECISION-2026-08-09.md §3`. |
+| OI-03 | The acceptable enrolment **exclusion rate**, and the non-document attestation path per pilot | The people most likely to fail a document check are the people this product claims to serve. | **Phased.** Phase 1: government eID sole uniqueness anchor; persons without a government identity cannot enrol — accepted, documented exclusion. Non-document path is Phase 3; needs its own ADR, threat model and audit before it can mint anything. See `GATE1-DECISION-2026-08-09.md §3`. |
+| OI-04 | The pilot jurisdictions — and whether to launch in 1 or 3 | Gates the legal review, the issuer/attester recruitment, and the budget variance below. | **One pilot, jurisdiction not yet named.** Credential rail specified as a pluggable adapter. **OPEN:** name the pilot jurisdiction and its eID rail before the enrolment requirement is implemented. See `GATE1-DECISION-2026-08-09.md §3`. |
+| OI-05 | Confirm the design answer to the k≥1000 anonymity floor vs ward-level governance | **Resolved in design** (ADR-004 §2: an action's anonymity scope escalates to the nearest ancestor region meeting the floor, while an *office* stays ward-scoped). Needs product confirmation, not a requirements change. | **Confirmed as designed (ADR-004 §2).** Ward-level offices, nominations and eligibility remain ward-scoped. See `GATE1-DECISION-2026-08-09.md §3`. |
+| E-01 | Accept or reject the design-before-gate deviation above | Governance integrity. | **Accepted knowingly.** ADR-001…ADR-014 ratified retrospectively as Gate 1 inputs; re-baselining at MS-02 against the five OI decisions. See `GATE1-DECISION-2026-08-09.md §4`. |
+| E-02 | RACI defect: one named individual originally owned both Doc 02 and all fourteen ADRs | **Fixed** — architecture ownership was reassigned to a distinct named architect. Confirm the fix. | **Confirmed.** Fix accepted. See `GATE1-DECISION-2026-08-09.md §4`. |
+| B-01 | Budget: **USD 4.55M against a USD 4.2M appetite**, zero contingency | The project-manager offers three costed levers and recommends launching in one pilot, rolling the other two post-launch (≈USD 4.13M). | **L2 accepted** — one pilot, roll two post-launch, ~USD 4.13M against the 4.2M appetite (~1.7% contingency). See `GATE1-DECISION-2026-08-09.md §5`. |
+| S-01 | Schedule: Gate 2 moves **2027-02-15 → 2027-05-14** | Every week of the slip sits on externally-paced cryptography: six phase-2 ceremonies at ≥500 contributors each, and two independent audits. Cutting features does not buy this time back. | **Accepted.** Gate 2 (MS-13) set at 2027-05-14. Ceremony- and audit-paced. See `GATE1-DECISION-2026-08-09.md §5`. |
 
 ---
 
@@ -107,7 +118,76 @@ prior endorsement — a one-call veto on whether a party may exist.
 All ten are fixed with named regression tests (Doc 06 §5). One critical remains open and is
 recorded rather than closed: **fork initiation is taken from calldata**, so the 10% threshold
 and 30-day cooling-off are currently decorative. The `fork` flag is off in every environment
-above dev and must stay off until it is fixed.
+above dev and must stay off until it is fixed. **Gate 1 disposition: deferred — remains an open
+critical, not closed** (see `GATE1-DECISION-2026-08-09.md §6`).
 
 Also fixed: the contract suite was running **one of five test files and still exiting zero**,
 because its worker timed out at six minutes. It now runs all five in about a minute.
+
+**Build-and-CI integrity findings (added 2026-08-09, surfaced by the Windows checkout):**
+
+1. **The contracts compile / EIP-170 CI step had never passed on any runner.**
+   `packages/contracts/script/compile.mjs` hardcoded the absolute path
+   `/home/user/Trumocracy/...`, so the step could only succeed on the original dev machine —
+   a GitHub runner checks out to `/home/runner/work/...` and a Windows checkout resolves it
+   to a non-existent drive path. The EIP-170 size check it exists to enforce was therefore
+   non-functional in CI. **Fixed:** the script now resolves every path from its own module
+   location; verified on a Windows checkout compiling all 14 units, largest 16,466 bytes,
+   all under the 24,576-byte limit.
+
+2. **Watch item — two compile paths, different source sets.** The build script and the
+   vitest fixture (`packages/contracts/test/fixture.mjs`) compile overlapping but different
+   inputs: the fixture additionally compiles `test/support/`. This is by design, but it
+   means the size check and the test suite measure different artifacts — a green build and
+   a green suite are not evidence about the same compilation, and the two paths can drift
+   without either noticing.
+
+3. **Two-OS matrix added; Windows-only failures now detectable in CI.** CI previously ran on
+   `ubuntu-latest` alone, which is why a Windows-only failure reached a clean clone undetected
+   — the vitest contract-suite parse failure caused by a shebang in a CLI file imported by a
+   test on a CRLF checkout, fixed by extracting the promotion gate into
+   `packages/contracts/src/promotion-gate.mjs` (commit `29c059a`). A two-OS matrix
+   (`ubuntu-latest` + `windows-latest`) was added in commit `a08d8c6` and first executed on
+   PR #1, per the approver. Note for the record: as of this entry the matrix commit is on the
+   PR branch; it lands on `main` when that PR merges. PR #1 execution is per the approver's
+   statement; the `gh` CLI was unavailable to verify independently.
+
+These sit alongside the one-of-five-files finding above. The shared class is verification
+that reports success without verifying, which is the standing argument for the two
+independent audits on the critical path.
+
+---
+
+## CR-v1.1.0 update — 2026-08-10
+
+> This section records the state of the nine-requirement change request driven in the
+> 2026-08-10 session. The Gate-1 approval above (against Doc 02 v1.0.0) is unchanged and
+> intact. This section is additive only.
+
+**Doc 02 is now v1.1.1** (Status: In Review; passing business-mode review at cycle 2, score
+96%). Doc 05 is now v1.1.2 (Status: In Review; passing business-mode review at cycle 3,
+score 97%). Gate-1 re-affirmation at these versions is **PENDING**.
+
+**Gate-1 re-affirmation packet:** `artifacts/status/GATE1-REAFFIRMATION-CR-v1.1.0-2026-08-10.md`
+Prepared by: project-manager (Ana-Maria Petrescu). Awaiting Rathish's decision.
+
+**Blocking items — re-affirmation cannot be granted until both are resolved:**
+
+| Blocker | Description | Blocks |
+|---------|------------|--------|
+| SC-01 (CRITICAL) | Enrolment circuit trust anchor absent from `enrol()` public signal vector and issuer struct; single `CIRCUIT_ENROL` constant cannot serve three adapter classes; Sybil resistance is defeasible as specified. Architect must produce a revised Doc 03 addressing the trust anchor binding before Change 6 can be re-affirmed or coded. | FR-069, FR-070, DES-069, DES-070, ADR-017 (Change 6) |
+| OI-13 (open governance decision) | FR-062 (public participation profile) conflicts with NFR-001, NFR-002, NFR-024, TD-02. Security scan SC-02/SC-03/SC-04 make the deanonymisation consequence concrete. Three resolution options require a human decision. `participation_profile` flag must remain OFF above dev. | FR-062, FR-063, DES-064, SCR-21 (Change 1) |
+
+**Security scan findings summary** (`artifacts/reviews/SECURITY-SCAN-CR-v1.1.0-2026-08-10.md`):
+1C / 4H / 5M / 2L (SC-01..SC-12). Conducted by reviewer-qa in design/requirements phase.
+No product code was written to fix these this session; they are recorded, not closed.
+
+**Gate 2:** Unchanged — NOT READY. RTM (Doc 08 v1.1.2) shows 64 open Must rows. The gate
+conditions (suites green, RTM zero gaps, rollback proven) are not met. Expected state for
+the current phase.
+
+**Changes not blocked by SC-01 or OI-13 at requirements level:**
+Changes 2–5 (FR-064..FR-068), Change 8 (FR-073), and their DES/FE/US elements are not
+independently blocked by SC-01 or OI-13. Change 7 (FR-071, FR-072, recovery flow) is not
+a re-affirmation blocker but SC-05 (no rate limit on recovery re-initiation) must be
+addressed in the specification before Change 7 is coded.
