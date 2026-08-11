@@ -191,3 +191,45 @@ Changes 2–5 (FR-064..FR-068), Change 8 (FR-073), and their DES/FE/US elements 
 independently blocked by SC-01 or OI-13. Change 7 (FR-071, FR-072, recovery flow) is not
 a re-affirmation blocker but SC-05 (no rate limit on recovery re-initiation) must be
 addressed in the specification before Change 7 is coded.
+
+---
+
+## v2.0.0 VISION RE-ENTRY (2026-08-10)
+
+> This section records the state of the v2.0.0 expanded-vision re-entry directed by Rathish
+> on 2026-08-10. The CR-v1.1.0 re-affirmation question above is **superseded** by this packet
+> — OI-13 is now resolved and SC-01 is now closed. Gate 1 re-entry requires a fresh human
+> approval against the v2.0.0 direction.
+
+**Doc 01 PR-FAQ is now v2.0.0** (Status: Approved — business-mode review cycle 1, 97%,
+0C/0H/0M/2L, PASS). **Doc 02 Requirements is now v2.0.1** (Status: Approved — business-mode
+review cycle 2, 98%, 0C/0H/0M/1L, PASS; cycle 1 at v2.0.0 was FAIL 92%, 0C/2H/1M/2L —
+fixed: §2.4 one-pilot correction, CON-007 launch date 2027-03-01 → 2027-06-01, §8 FR-062
+superseded marker).
+
+**Gate-1 re-entry packet:** `artifacts/status/GATE1-REENTRY-v2.0.0-2026-08-10.md`
+Prepared by: project-manager (Ana-Maria Petrescu). **Status: PENDING Rathish's decision.**
+
+**The CR-v1.1.0 re-affirmation question is superseded:**
+- SC-01 (CRITICAL blocker) — CLOSED 2026-08-10; confirmed by re-scan at
+  `artifacts/reviews/SECURITY-RESCAN-SC-01-2026-08-10.md`.
+- OI-13 (open governance decision) — RESOLVED at v2.0.0 by ruling 3 (BR-017): Supporters
+  have no public profile unconditionally; FR-062 superseded by FR-082..FR-086 (§4.24).
+
+**Three new decisions surfaced by v2.0.0 (pending Rathish at Gate 1):**
+
+| OI | Tension | PO default |
+|----|---------|-----------|
+| **OI-14** | Ruling 1 (authorship public, FR-090) vs Ruling 3 (Supporter anonymous, FR-082): Supporter cannot simultaneously author and be anonymous | (a) Worker-tier-and-above only |
+| **OI-15** | Anonymous Supporter expulsion is impossible without deanonymisation | (a) Expulsion scoped to public tiers; FR-005 fraud-revocation for Supporters |
+| **OI-16** | FR-107 append-only record vs FR-085 withdrawal-destroys-data: conflict for pre-nomination Worker disclosures | (a) Confidential-class carve-out |
+
+Until OI-14/15/16 are decided, the affected stories are not Ready.
+
+**Suite state (verified by orchestrating session, 2026-08-10):** npm test green — contracts 95,
+protocol 82, sdk 124, indexer 16, web 16, exit 0. **No product code, tests, or workflows
+were touched during the v2.0.0 re-entry session** — documents and artifacts only.
+
+**Gate 2:** Unchanged — NOT READY. RTM (Doc 08 v1.1.2) shows 64 open Must rows. Doc 07/08
+cover v1.1.x FRs only; v2.0.0 FRs (FR-074..FR-113) have no test cases yet. The gate
+conditions (suites green, RTM zero gaps, rollback proven) are not met. Expected state.
