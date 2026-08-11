@@ -2,14 +2,15 @@
 
 ```
 Document ID:   TC-TRUMOCRACY
-Version:       1.1.1
+Version:       1.1.2
 Status:        In Review
 Owner:         Ji-woo Park — Test Lead (tester)
 Source:        MTP-TRUMOCRACY (docs/04-test-strategy-master-plan.md) · BKLG-TRUMOCRACY (docs/05-product-backlog.md)
                SRS-TRUMOCRACY §8 Gherkin (docs/02-requirements-srs.md) · SDD-TRUMOCRACY §5.2, §11 (docs/03-architecture-design-sdd.md)
                CODE-TRUMOCRACY (docs/06-coding-and-ut.md)
 Last updated:  2026-08-10
-Changelog:     v1.1.1 (2026-08-10) — TC-3309 expected result updated to cite DES-068 party-switch exclusion (cycle-1 ISS-01); TS-CR1 Covers column corrected to include RISK-22..24 (ISS-02).
+Changelog:     v1.1.2 (2026-08-10) — TC-3343..TC-3345 added (SC-01 trust-anchor binding negatives for FR-069/070); TC-3323 updated to 5-signal arity (Doc 03 v1.1.2 SC-01 fix).
+               v1.1.1 (2026-08-10) — TC-3309 expected result updated to cite DES-068 party-switch exclusion (cycle-1 ISS-01); TS-CR1 Covers column corrected to include RISK-22..24 (ISS-02).
                v1.1.0 (2026-08-10) — TC-3300..TC-3342 minted for FR-062..073 (CR-v1.1.0); TS-CR1 suite added; RTM rows added in Doc 08.
 ```
 
@@ -142,10 +143,10 @@ TC ranges are the ones **reserved in Doc 04 §14**; the tester assigns the actua
 | `TS-ADV-01…16` | **Adversarial, one per RISK** | mixed | RISK-01…RISK-16 | TC-2600–TC-2752 | 43 | 24 | 19 |
 | `TS-EXPL` | Exploratory charters | L7 | one per EP-01…EP-10 | TC-3200–TC-3209 | 10 | 0 | 10 |
 | `TS-UAT` | User acceptance & usability | L7 | NFR-022, Doc 01 §B journey | TC-3250–TC-3253 | 4 | 0 | 4 |
-| `TS-CR1` | CR-v1.1.0 — FR-062..073; RISK-22..24 | L3–L6 | FR-062..073 · BR-013 · RISK-22..24 | TC-3300–TC-3342 | 43 | 0 | 43 |
-| | | | **Total** | | **298** | **143** | **155** |
+| `TS-CR1` | CR-v1.1.0 — FR-062..073; RISK-22..24 | L3–L6 | FR-062..073 · BR-013 · RISK-22..24 | TC-3300–TC-3345 | 46 | 0 | 46 |
+| | | | **Total** | | **301** | **143** | **158** |
 
-**143 of 298 cases have an implementing automated test.** (43 new TC-3300..TC-3342 are all Blocked — no implementing code in this drop.) Of those 143, **72 were executed and
+**143 of 301 cases have an implementing automated test.** (43 new TC-3300..TC-3342 are all Blocked — no implementing code in this drop.) Of those 143, **72 were executed and
 observed passing by the tester this session**; **55** are inherited-green contract cases; **16** are
 `apps/web` component cases that exist but were not executed this session.
 
@@ -699,7 +700,7 @@ Pass/fail rolls into release readiness (Doc 04 §10.2, Docs 09–10) and the RTM
 
 | TC | Title | Verifies | Expected result | Status |
 |---|---|---|---|---|
-| TC-3323 | First enrolment: Poseidon(stable_id_secret, enrolment_scope) derived in-circuit; four universal checks pass (issuer sig, freshness, region, correct derivation); only nullifier stored; identifier never leaves the circuit | US-0079 · FR-069 | Nullifier on record; no identifier in any store; all four in-circuit checks verified | **Blocked — Phase 2 (DES-069; personhood_enrol circuit not compiled, Doc 06 §7.2)** |
+| TC-3323 | First enrolment: Poseidon(stable_id_secret, enrolment_scope) derived in-circuit; five universal checks pass (issuer sig, freshness, region, correct derivation, trust-anchor hash: publicSignals[4] ≡ issuers[issuerId].trustAnchorHash per SC-01); only nullifier stored; identifier never leaves the circuit | US-0079 · FR-069 | Nullifier on record; no identifier in any store; all five in-circuit checks verified (including on-chain trust-anchor hash binding per DES-069 / SC-01) | **Blocked — Phase 2 (DES-069; personhood_enrol circuit not compiled, Doc 06 §7.2)** |
 | TC-3324 | Same credential re-used in second enrolment: derived nullifier matches existing record; enrolment rejected as duplicate | US-0079 · FR-069 | Refused with duplicate-nullifier reason; first record intact; no second identity | **Blocked — Phase 2** |
 | TC-3325 | Credential with tampered region attribute: in-circuit region check fails; rejected with region-attribute-invalid reason | US-0079 · FR-069 | Rejected; correct reason returned; no partial record created | **Blocked — Phase 2** |
 
@@ -739,3 +740,16 @@ Pass/fail rolls into release readiness (Doc 04 §10.2, Docs 09–10) and the RTM
 | TC-3340 | ADV-17 · RISK-22 | Stolen credential: attacker initiates recovery to seize victim party membership; victim vetoes via on-chain active-key path within 7-day window | State to RECOVERY_ABORTED; victim key and membership preserved | **Blocked — Phase 3 (DES-071 not implemented)** |
 | TC-3341 | ADV-18 · RISK-23 | Attacker suppresses victim notification channel; victim retains independent on-chain veto path via active key (no channel dependency) | On-chain veto succeeds even with channel suppressed; RECOVERY_ABORTED; accepted residual = complete device + channel compromise | **Blocked — Phase 3** |
 | TC-3342 | ADV-19 · RISK-24 | Attacker initiates recovery during active ballot; recovering credential attempts to vote; isInRecovery(nullifier) in vote() blocks it; active key votes normally | Recovering credential vote() reverts; active-key vote proceeds; no double-counting; FR-032 last-valid-ballot rule applies | **Blocked — Phase 3** |
+
+### TC-3343..TC-3345 — SC-01 trust-anchor binding negative cases (DES-069 · DES-070 · FR-069, FR-070)
+
+**Context.** Doc 03 v1.1.2 (SC-01 fix) requires: (1) `trustAnchorHash` as the fifth public signal
+in every enrolment proof, checked on-chain against `issuers[issuerId].trustAnchorHash`; (2) per-adapter-class
+verifier dispatch via `issuers[issuerId].verifierAddress`. These three cases verify rejection of attack paths
+identified in the security scan (SECURITY-SCAN-CR-v1.1.0-2026-08-10 §1 SC-01).
+
+| TC | Title | Verifies | Expected result | Status |
+|---|---|---|---|---|
+| TC-3343 | **[SC-01 attack path A]** Enrolment proof carries a `trustAnchorHash` value that does not match `issuers[issuerId].trustAnchorHash`; prover substitutes an attacker-chosen key | US-0079 · FR-069 | `enrol()` reverts: `publicSignals[4] != issuers[issuerId].trustAnchorHash` check fails on-chain; no nullifier minted; no identity registered | **Blocked — Phase 2 (DES-069; personhood_enrol_[class] circuit not compiled; no on-chain contract in this drop)** |
+| TC-3344 | **[SC-01 attack path B]** Proof generated for adapter class X (e.g. ICAO Doc 9303) submitted under an `issuerId` whose `credentialClass` is class Z (e.g. eIDAS 2.0); `verifierAddress` routes proof to class Z verifier | US-0080 · FR-070 | `enrol()` dispatches via `issuers[issuerId].verifierAddress`; proof generated for class X fails verification under class Z verifier; enrolment rejected; no nullifier minted | **Blocked — Phase 2 (DES-070; per-adapter-class verifier dispatch not deployed in this drop)** |
+| TC-3345 | **[SC-01 arity]** Legacy 4-signal enrolment proof `[Nᵢ, C, issuerId, namespaceId]` submitted to upgraded `enrol()` expecting five signals; `publicSignals[4]` is absent or zero | US-0079 · FR-069 | `enrol()` reverts on arity mismatch or `trustAnchorHash` check against zero/missing fifth signal; proof rejected; no nullifier minted; consistent with C-03 arity discipline | **Blocked — Phase 2 (DES-069; no circuit or contract in this drop)** |

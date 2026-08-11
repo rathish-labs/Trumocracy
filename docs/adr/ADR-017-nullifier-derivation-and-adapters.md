@@ -9,6 +9,16 @@ Source:        CR-v1.1.0 Change 6; GATE1-DECISION-2026-08-09.md
 Note:          OPEN-16 (stray "ADR-017" references in ADR-001 and ADR-002) was resolved by the
                engineer before this ADR was minted (docs/06-coding-and-ut.md §5 defect fixes).
                This ADR therefore does not inherit any prior meaning from that erroneous citation.
+Amendment:     2026-08-10 — SC-01 (SEC-TRUMOCRACY-CR-2026-08-10, critical finding): the
+               "Universal in-circuit checks" section below is amended to make explicit that
+               (1) the trust anchor public-key commitment IS A PUBLIC INPUT to each adapter
+               class's circuit — not a private witness — and the contract MUST verify it
+               on-chain against the registered issuer's trustAnchorHash; (2) each adapter
+               class has its OWN circuit and verifier (personhood_enrol_[class]) with its own
+               ceremony — there is NO shared CIRCUIT_ENROL constant; (3) the ceremony for
+               each class is conducted against the then-current trust anchor for that issuer
+               class. See Doc 03 §5.3 (trustAnchorHash, verifierAddress fields), §5.4
+               (enrol() 5-signal arity), §10.1 (SC-01 STRIDE row).
 ```
 
 ## Context

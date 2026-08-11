@@ -2,7 +2,7 @@
 
 ```
 Document ID:   SDD-TRUMOCRACY
-Version:       1.1.1
+Version:       1.1.2
 Status:        In Review
 Owner:         Ravi Deshmukh — Principal Architect
 Approvers:     Rafael Duarte (Security), Chen Wei (Reliability), Dr. Lena Kowalczyk (Privacy),
@@ -29,6 +29,18 @@ Changelog:     v1.1.0 (2026-08-10) — CR-v1.1.0 nine-requirement update; DES-06
                figure); DES-068 party-switch exclusion stated explicitly (FR-064 clock reset
                not excused by destination-party waiver); RFC 2119 keywords added throughout
                §10.3–§10.9.
+               v1.1.2 (2026-08-10) — SC-01 (critical; SEC-TRUMOCRACY-CR-2026-08-10): added
+               `trustAnchorHash` (bytes32) and `verifierAddress` (address) to issuer struct
+               (§5.3); enrol() signal vector expanded to 5 signals [Nᵢ, C, issuerId,
+               namespaceId, trustAnchorHash]; on-chain MUST check added:
+               `publicSignals[4] == issuers[issuerId].trustAnchorHash`; per-adapter-class
+               verifier dispatch via `issuers[issuerId].verifierAddress` replaces single
+               CIRCUIT_ENROL constant (`personhood_enrol_[class]`); DES-069 updated (trust-
+               anchor commitment is a public input, checked on-chain); DES-070 updated
+               (`verifierAddress` is the dispatch target for `enrol()`); Spoofing STRIDE row
+               added (enrolment proof with attacker-chosen trust anchor); ADR-017 amended
+               (per-class circuits/verifiers; trust anchor as public input to each adapter
+               class's circuit).
 ```
 
 > **Based on:** arc42 + C4 + Google design doc + IEEE 1016. **Produced in:** Design.
@@ -245,8 +257,8 @@ Six decisions carry the design; everything else follows from them.
 | DES-066 | candidate feedback scorer | per-candidate-per-election nullifier; upvote +3, downvote −1 (ADR-015); private votes; public tally | FR-065, ADR-015, SCR-23 | Elections; Solidity |
 | DES-067 | debate lifecycle | Elections contract: schedule 3 debates per candidate; off-chain content CID on-chain; attendance attestation; post-debate member vote determines candidacy | FR-066, FR-067, SCR-22 | Elections; IPFS |
 | DES-068 | tenure waiver flag for new parties | `newPartyWaiverActive(partyId)` = party age < 3 calendar months; waives one-month tenure check only; FR-023 surge defence + FR-028 snapshot remain active. **Party-switch exclusion (FR-064):** a tenure clock reset by a party switch is NOT excused by the destination party's waiver — the waiver covers a party's founding cohort only, not members arriving by switch; a member who leaves party A and joins party B MUST be rejected at `vote()` if fewer than one month has elapsed since joining, unconditionally regardless of party B's age. | FR-068 | Governor |
-| DES-069 | in-circuit enrolment nullifier | `Poseidon(stable_id_secret, enrolment_scope)`; universal in-circuit checks: issuer authenticity, freshness, region, correct derivation; no identifier leaves circuit (ADR-017) | FR-069, ADR-017 | circuits/personhood_enrol |
-| DES-070 | credential adapter interface + registry | `ICredentialAdapter`: credentialClass, namespaceId, verifierAddress; per-class in-circuit requirements (ADR-017); region-level config, not hardcoded | FR-070, ADR-017 | ICredentialAdapter; PersonhoodRegistry |
+| DES-069 | in-circuit enrolment nullifier | `Poseidon(stable_id_secret, enrolment_scope)`; universal in-circuit checks: issuer authenticity, freshness, region, correct derivation; trust-anchor commitment is a **public input** to the enrolment circuit and MUST be checked on-chain against `issuers[issuerId].trustAnchorHash` (SC-01); no identifier leaves circuit (ADR-017) | FR-069, ADR-017 | circuits/personhood_enrol_[class] |
+| DES-070 | credential adapter interface + registry | `ICredentialAdapter`: credentialClass, namespaceId, verifierAddress; `verifierAddress` is the dispatch target for `enrol()` — per-adapter-class verifier, not a shared CIRCUIT_ENROL constant (SC-01); per-class in-circuit requirements (ADR-017); region-level config, not hardcoded | FR-070, ADR-017 | ICredentialAdapter; PersonhoodRegistry |
 | DES-071 | nullifier-collision recovery state machine | RECOVERY_PENDING → veto or 7-day delay → KEY_ROTATED / ABORTED; `isInRecovery` blocks `vote()`; independent on-chain veto path; notification on initiation (ADR-018) | FR-071, FR-072, ADR-018 | PersonhoodRegistry |
 | DES-072 | government-eID class enforcement | `credentialClass == GOV_EID` checked at `enrol()`; AVAILABILITY_ONLY issuers reverted with `NotEnrolmentClass` (ADR-016) | FR-073, ADR-016 | PersonhoodRegistry |
 | DES-073 | name + emblem collision guard | `PartyRegistry.createPetition` rejects a name or emblem that collides (case-normalised) with any open petition or active party in the same jurisdiction; on-chain name registry | FR-010 | PartyRegistry |
@@ -278,9 +290,12 @@ PersonhoodRegistry
   nullifierUsed           keccak(scope,n) → bool // one action per human per scope
   commitmentTier          commitment → uint8     // 1..3 credential strength
   issuers                 issuerId → {active, credentialClass, stateOperated, tier,
-                                      operator, epochCap, metadataURI}
+                                      operator, epochCap, metadataURI,
+                                      trustAnchorHash, verifierAddress}
                                       //         ^^ GOV_EID | AVAILABILITY_ONLY (ADR-016)
                                       //                            ^^ authenticated caller for enrol()
+                                      //         trustAnchorHash: bytes32 — on-chain commitment to the issuer class's signing trust anchor (eIDAS trust-list key set / ICAO CSCA root / Aadhaar attestor key); populated at registerIssuer via the timelock-governed process (SC-01)
+                                      //         verifierAddress: address — per-adapter-class enrolment verifier contract for this issuer; dispatch target for enrol() (SC-01; DES-070)
   recoveries              enrolmentNullifier → {initiatedAt, completesAt, newKey, state}
                                       // state: PENDING | COMPLETE | ABORTED (ADR-018)
   isInRecovery            enrolmentNullifier → bool  // true when recovery.state == PENDING
@@ -369,7 +384,7 @@ Key entrypoints, with their proof requirements:
 
 | Call | Proof | Scope | Effect |
 |---|---|---|---|
-| `enrol(issuerId, π, [Nᵢ, C, issuerId, namespaceId])` | `personhood_enrol` | — | inserts `C`, burns `Nᵢ`; checks `credentialClass == GOV_EID` |
+| `enrol(issuerId, π, [Nᵢ, C, issuerId, namespaceId, trustAnchorHash])` | `personhood_enrol_[class]` (resolved via `issuers[issuerId].verifierAddress`; see DES-070) | — | inserts `C`, burns `Nᵢ`; checks `credentialClass == GOV_EID`; MUST check `publicSignals[4] == issuers[issuerId].trustAnchorHash` (SC-01) |
 | `endorse(petitionId, π, [root, R, tier, scope, Nₐ, C])` | `residency_member` | `keccak("endorse",petitionId)` | +1 endorsement |
 | `withdrawEndorsement(petitionId, π, [root, R, tier, scope, Nₐ, C])` | `residency_member` | `keccak("withdraw_endorse",petitionId)` | −1 endorsement; requires prior endorsement, jurisdiction match |
 | `activate(petitionId, charter)` | — | — | deploys Party+Governor iff count ≥ required |
@@ -604,6 +619,7 @@ fails the build.
 | **S**poof | fake person endorses/votes | ZK personhood, per-namespace nullifier, tiering, epoch caps (DES-001/002/003) | as strong as the weakest GOV_EID issuer — bounded by tiering (RISK-01/05) |
 | **S**poof | malicious frontend serves backdoored proving key | `zkeyHash` pinning + reproducible builds (DES-052, DES-050) | a user who ignores a warning |
 | **S**poof | attester impersonates a legitimate attestor; calls `issueResidency()` | `attesterAuthorised[caller]` check; `attester.operator` binding (DES-006; ISS-C3 fix) | an attester whose operator key is compromised |
+| **S**poof | enrolment proof verified against an attacker-chosen trust anchor; prover substitutes K_attack for the issuer's real trust anchor, enrolling unlimited synthetic identities (SC-01) | `trustAnchorHash` is a public signal (`publicSignals[4]`) bound on-chain to `issuers[issuerId].trustAnchorHash`; per-adapter verifier dispatch via `issuers[issuerId].verifierAddress` prevents cross-adapter-class proof substitution | a compromised or mis-registered trust anchor at `registerIssuer` time — mitigated by the timelock-governed registration process |
 | **T**amper | alter a tally | on-chain nullifier-gated votes; MACI tally proof | circuit bug (RISK-10) → two audits + negative tests |
 | **T**amper | rewrite a manifesto quietly | append-only version chain + content addressing (DES-031) | none material |
 | **R**epudiate | party denies a commitment | permanent public version history with timestamps | none material |
