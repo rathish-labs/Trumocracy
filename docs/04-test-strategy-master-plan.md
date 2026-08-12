@@ -2,7 +2,7 @@
 
 ```
 Document ID:   MTP-TRUMOCRACY
-Version:       1.0.0
+Version:       1.0.1
 Status:        In Review
 Owner:         Priya Raghunathan — Principal Architect
                (CLAUDE.md assigns Doc 04 to the architect; per-suite owners below are named individuals
@@ -14,7 +14,14 @@ Source:        SRS-TRUMOCRACY (docs/02-requirements-srs.md v1.0.0)
                ADR-001 … ADR-014 (docs/adr/)
                SDD-TRUMOCRACY (docs/03-architecture-design-sdd.md — authored concurrently; DES-###
                links are reconciled by the tester in Doc 08)
-Last updated:  2026-08-09
+Last updated:  2026-08-12
+Changelog:     2026-08-12 v1.0.1 — §14 TC-range reservation table: appended TS-CR1
+               (TC-3300–TC-3399) and TS-GOV2 (TC-3400–TC-3499) retroactively to
+               regularise ranges already in use by Doc 07 (minted 2026-08-10 and
+               2026-08-11 respectively). Trigger: Doc 07 v2.0.0 cycle-1 review ISS-04
+               (artifacts/reviews/07-test-cases-suites-v2.0.0-technical-cycle1.md).
+               Full Doc 04 v2.x refresh remains explicitly out of scope — recorded as
+               open item by the project-manager.
 ```
 
 > **Based on:** ISO/IEC/IEEE 29119 + IEEE 829. **Produced in:** Design (drafted before code).
@@ -1037,6 +1044,10 @@ here** so numbering does not collide; the tester assigns the actual IDs.
 | `TS-ADV-01` … `TS-ADV-16` | **Adversarial, one per RISK** | mixed | `RISK-01` … `RISK-16` (§8) | TC-2600–TC-3199 | per §8 |
 | `TS-EXPL` | Exploratory charters | L7 | one charter per epic `EP-01`…`EP-10` | TC-3200–TC-3249 | Tester |
 | `TS-UAT` | User acceptance & usability | L7 | `NFR-022`, Doc 01 §B journey | TC-3250–TC-3299 | Grace Mbeki |
+| `TS-CR1` | Change-request regression & new-FR | L0–L6 + regression | `FR-062`–`FR-073`, `RISK-22`–`RISK-24` | TC-3300–TC-3399 | Ji-woo Park (tester) |
+| `TS-GOV2` | v2 governance catch-up | L0–L7 | `FR-074`–`FR-120`, `NFR-027`, `NFR-028`, `SC-15`–`SC-21` closure, Guarded Layer property tests | TC-3400–TC-3499 | Ji-woo Park (tester) |
+
+> *TS-CR1 and TS-GOV2 rows reserved retroactively at v1.0.1: ranges TC-3300–TC-3399 and TC-3400–TC-3499 were already in use by Doc 07 (minted 2026-08-10 and 2026-08-11 respectively); this patch regularises them at source — recorded, not hidden. Trigger: Doc 07 v2.0.0 cycle-1 review ISS-04.*
 
 **`UT-####` ranges (engineer, Doc 06):** UT-0001–UT-0999 `packages/protocol` (UT-0001…UT-0040 already
 in use) · UT-1000–UT-1999 contracts · UT-2000–UT-2499 circuits · UT-2500–UT-2999 SDK ·

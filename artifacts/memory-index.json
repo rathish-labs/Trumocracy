@@ -402,7 +402,8 @@
         "Tester: Doc 07 v1.1.1 — depends on Doc 03 v1.1.1 first (TC-3309)",
         "Tester: Doc 08 v1.1.1 — fix ISS-01M (FR-063 obs. annotation), ISS-02M (risk count 16→19 in dashboard)",
         "OI-13 still open — Gate 1 re-affirmation required from Rathish"
-      ]
+      ],
+      "scope": "Technical-mode document-reviews of Doc 03 v1.1.0, Doc 07 v1.1.0, Doc 08 v1.1.0."
     },
     {
       "id": "technical-writer-2026-08-10T1300",
@@ -1230,8 +1231,14 @@
         "Doc 03 v2.0.0 requires technical-mode document-review (neutral non-architect reviewer).",
         "SC-05 rate-limit DES element deferred to pass 2 or next increment."
       ],
-      "OI_closed": ["OI-17", "OI-18"],
-      "SC_closed_at_design": ["SC-13", "SC-14"],
+      "OI_closed": [
+        "OI-17",
+        "OI-18"
+      ],
+      "SC_closed_at_design": [
+        "SC-13",
+        "SC-14"
+      ],
       "gate": "Gate 1 APPROVED 2026-08-11. Design phase open. Gate 2 NOT READY. Doc 03 v2.0.0 in review."
     },
     {
@@ -1364,6 +1371,402 @@
       },
       "gate": "Design advance BLOCKED by SC-15 (CRITICAL). Architect must resolve SC-15..SC-18 before backlog/test-design catch-up. Gate 2 NOT READY.",
       "next_role": "architect (Ravi Deshmukh) -- resolve SC-15 (CRITICAL): add ProtocolGovernance/StewardRegistry to IMMUTABLE CORE in ss5.1 and DES-087; resolve SC-16/17/18 (HIGH); record SC-19/20 (MEDIUM) for next increment. Project-manager holds design advance until SC-15 is resolved."
+    },
+    {
+      "id": "product-owner-2026-08-11T2200",
+      "role": "product-owner",
+      "file": "artifacts/product-owner-2026-08-11T2200.md",
+      "timestamp": "2026-08-11T22:00:00Z",
+      "phase": "Define — Doc 05 v2.0.0 Gate 1 re-entry backlog catch-up",
+      "product": "Trumocracy",
+      "summary": "Brought docs/05-product-backlog.md from v1.1.2 to v2.0.0 (Status: In Review). Seeded 47 new user stories US-0084..US-0130 implementing FR-074..FR-120 from SRS v2.2.0. Added EP-11, EP-12, FE-037..FE-056. Applied supersession annotations to US-0054 and US-0071. Updated §2, §3, §4, §5, §9, §12.",
+      "artifacts_written": [
+        "docs/05-product-backlog.md (v2.0.0)",
+        "artifacts/product-owner-2026-08-11T2200.md"
+      ],
+      "ids_touched": {
+        "EP_minted": "EP-11, EP-12",
+        "FE_minted": "FE-037..FE-056",
+        "US_minted": "US-0084..US-0130",
+        "US_annotated_superseded": "US-0054, US-0071"
+      },
+      "gate": "Gate 1 APPROVED 2026-08-11. Doc 05 v2.0.0 produced. Gate 2 NOT READY.",
+      "next_role": "Neutral reviewer (non-product-owner) to run document-review skill in business mode over docs/05-product-backlog.md v2.0.0."
+    },
+    {
+      "id": "technical-writer-2026-08-11T2230",
+      "role": "technical-writer",
+      "file": "artifacts/technical-writer-2026-08-11T2230.md",
+      "timestamp": "2026-08-11T22:30:00Z",
+      "phase": "Define (Gate 1 re-entry support — neutral review, cycle 1)",
+      "product": "Trumocracy",
+      "scope": "REVIEWER role. Business-mode cycle-1 review of Doc 05 v2.0.0. Not the document owner. Read-only on the document. No product code written.",
+      "summary": "Reviewed docs/05-product-backlog.md v2.0.0 in business mode (cycle 1 of 5). Verdict: FAIL — Score 93%, 0C/0H/1M/1L. ISS-01 (Medium): 7 §4 epic blocks missing new v2.0.0 feature IDs. ISS-02 (Low): US-0129 title drops 'unaudited' qualifier. All 47 new stories verified sound.",
+      "artifacts_written": [
+        "artifacts/reviews/05-product-backlog-v2.0.0-business-cycle1.md",
+        "artifacts/technical-writer-2026-08-11T2230.md"
+      ],
+      "review_verdicts": {
+        "05-product-backlog-v2.0.0": {
+          "score": 93,
+          "critical": 0,
+          "high": 0,
+          "medium": 1,
+          "low": 1,
+          "cycle": 1,
+          "verdict": "FAIL",
+          "routed_to": "product-owner (Priya Raghunathan) — v2.0.1 minimum"
+        }
+      },
+      "gate": "Doc 05 v2.0.0 FAIL (cycle 1). Routed to product-owner for v2.0.1 rework. Gate 2 NOT READY.",
+      "next_role": "product-owner (Priya Raghunathan) — rework Doc 05 to v2.0.1 fixing ISS-01 and ISS-02."
+    },
+    {
+      "id": "product-owner-2026-08-11T2245",
+      "role": "product-owner",
+      "file": "artifacts/product-owner-2026-08-11T2245.md",
+      "timestamp": "2026-08-11T22:45:00Z",
+      "phase": "Define — Doc 05 v2.0.1 cycle-1 business-review rework",
+      "product": "Trumocracy",
+      "summary": "Reworked docs/05-product-backlog.md v2.0.0 → v2.0.1 (Status: In Review). ISS-01 (Medium): added missing feature IDs to Features lines of 7 pre-existing §4 epic blocks — EP-01 += FE-037; EP-02 += FE-038; EP-04 += FE-039; EP-05 += FE-042; EP-07 += FE-043; EP-08 += FE-044; EP-09 += FE-040, FE-051, FE-053. ISS-02 (Low): corrected US-0129 title from 'no bespoke cryptography' to 'no bespoke unaudited cryptography' to match FR-119/CON-012; ACs unchanged. Header bumped to v2.0.1 with change-log entry citing cycle-1 review report.",
+      "artifacts_written": [
+        "docs/05-product-backlog.md (v2.0.1)",
+        "artifacts/product-owner-2026-08-11T2245.md"
+      ],
+      "ids_touched": {
+        "epic_features_lines_updated": "EP-01, EP-02, EP-04, EP-05, EP-07, EP-08, EP-09",
+        "story_title_fixed": "US-0129"
+      },
+      "gate": "Gate 1 APPROVED 2026-08-11. Doc 05 v2.0.1 produced. Gate 2 NOT READY.",
+      "next_role": "Neutral reviewer (non-product-owner) to run document-review skill in business mode (cycle 2) over docs/05-product-backlog.md v2.0.1."
+    },
+    {
+      "id": "technical-writer-2026-08-11T2315",
+      "role": "technical-writer",
+      "file": "artifacts/technical-writer-2026-08-11T2315.md",
+      "timestamp": "2026-08-11T23:15:00Z",
+      "phase": "Define (Gate 1 re-entry support — neutral review, cycle 2)",
+      "product": "Trumocracy",
+      "scope": "REVIEWER role. Business-mode cycle-2 review of Doc 05 v2.0.1. Not the document owner. Read-only on the document. No product code written.",
+      "summary": "Reviewed docs/05-product-backlog.md v2.0.1 in business mode (cycle 2 of 5). Verdict: PASS — Score 99%, 0C/0H/0M/0L. Both cycle-1 fixes confirmed resolved: ISS-01 (Medium) all seven §4 epic Features lines now correctly include the v2.0.0 feature IDs; ISS-02 (Low) US-0129 body text now reads 'no bespoke unaudited cryptography'. Regression check: rework was surgical; no other content changed beyond the header Change entry, the seven Features lines, and the one US-0129 phrase. No new issues found.",
+      "artifacts_written": [
+        "artifacts/reviews/05-product-backlog-v2.0.1-business-cycle2.md",
+        "artifacts/technical-writer-2026-08-11T2315.md",
+        "artifacts/memory-index.json (updated — entry 39 appended)"
+      ],
+      "review_verdicts": {
+        "05-product-backlog-v2.0.1": {
+          "score": 99,
+          "critical": 0,
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "cycle": 2,
+          "verdict": "PASS"
+        }
+      },
+      "ids_verified": {
+        "EP_features_lines_checked": "EP-01..EP-12 (all seven ISS-01 fixes confirmed)",
+        "US_checked": "US-0129 (ISS-02 fix confirmed)",
+        "regression_scope": "§2 counts, §3 WSJF, §5 feature table, §6-§9 stories, §12 traceability — all unchanged from v2.0.0"
+      },
+      "open_items": [
+        "Product-owner should update Doc 05 v2.0.1 Status from 'In Review' to 'Approved'.",
+        "SC-15..SC-18 on Doc 03 remain open — architect scope.",
+        "Gate 2 NOT READY (RTM gaps remain)."
+      ],
+      "gate": "Doc 05 v2.0.1 PASS (cycle 2). Document-review loop complete. SOP may advance. Gate 2 NOT READY.",
+      "next_role": "project-manager — record passing review; advance SOP. Product-owner — update Doc 05 Status to Approved."
+    },
+    {
+      "id": "tester-2026-08-11T2330",
+      "role": "tester",
+      "file": "artifacts/tester-2026-08-11T2330.md",
+      "timestamp": "2026-08-11T23:30:00Z",
+      "phase": "Verify — catch-up test design",
+      "product": "Trumocracy",
+      "scope": "Doc 07 (Test Cases) v2.0.0 + Doc 08 (RTM) v2.0.0. Documents only — no product code written.",
+      "summary": "Minted 67 new test cases TC-3400..TC-3466 in suite TS-GOV2 covering FR-074..FR-120, NFR-027/028, SC-15..SC-21 security closure, Guarded Layer property tests P1..P5, and FR-117 capability-absence suite. Updated Doc 08 with 49 new Must rows, supersession annotations on FR-062 and FR-046, recomputed all totals, updated §6 dashboard and §7 gap log (entries 65..113). Both documents advanced to v2.0.0 Status: In Review.",
+      "artifacts_written": [
+        "docs/07-test-cases-suites.md (v2.0.0)",
+        "docs/08-traceability-matrix.md (v2.0.0)",
+        "artifacts/tester-2026-08-11T2330.md"
+      ],
+      "counts": {
+        "tc_minted": 67,
+        "tc_range": "TC-3400..TC-3466",
+        "tc_total_doc07": 375,
+        "rtm_rows_total": 148,
+        "rtm_must_rows": 125,
+        "rtm_must_complete": 12,
+        "rtm_must_open": 113,
+        "completion_pct": "9.6%",
+        "gap_log_entries": 113
+      },
+      "ids_touched": {
+        "TC_minted": "TC-3400..TC-3466 (67 cases, suite TS-GOV2)",
+        "RTM_FR_rows_added": "FR-074..FR-120 (47 rows, §3.1)",
+        "RTM_NFR_rows_added": "NFR-027, NFR-028 (2 rows, §3.2)",
+        "RTM_supersession_annotations": "FR-062 (superseded by FR-082..FR-086), FR-046 (superseded by FR-094/FR-095)",
+        "gap_log_entries_added": "#65..#113 (49 entries)"
+      },
+      "security_tc_coverage": {
+        "SC-15": "TC-3449 (CRITICAL)",
+        "SC-16": "TC-3450 (HIGH)",
+        "SC-17": "TC-3451 (HIGH)",
+        "SC-18": "TC-3452 (HIGH)",
+        "SC-19": "TC-3453 (MEDIUM)",
+        "SC-20": "TC-3454 (MEDIUM)",
+        "SC-21": "TC-3455 (LOW)"
+      },
+      "gap_by_reason_deltas": {
+        "G-TRACE": "1 → 39 (+38 for FR-074..FR-111)",
+        "G-PHASE3": "25 → 36 (+11: FR-112..FR-120 + NFR-027 + NFR-028)",
+        "others": "unchanged"
+      },
+      "open_items": [
+        "Doc 07 v2.0.0 and Doc 08 v2.0.0 need technical-mode document-review (PM to orchestrate).",
+        "UT IDs for TC-3465/TC-3466 (FR-117 capability-absence): to be assigned by engineer in Phase 3.",
+        "113 of 125 Must rows remain OPEN — Gate 2 NOT READY (expected, correct).",
+        "SubagentStop hook: if blocked for RTM gaps or missing review reports, stop again — those are correct by design."
+      ],
+      "gate": "Gate 2 NOT READY. 113/125 Must rows open. Review loop to follow (PM scope).",
+      "next_role": "project-manager — orchestrate technical-mode document-review of Doc 07 v2.0.0 and Doc 08 v2.0.0."
+    },
+    {
+      "id": "architect-2026-08-11T2345",
+      "role": "architect (acting as neutral reviewer)",
+      "file": "artifacts/architect-2026-08-11T2345.md",
+      "timestamp": "2026-08-11T23:45:00Z",
+      "phase": "Verify — technical-mode document-review (cycle 1)",
+      "product": "Trumocracy",
+      "scope": "REVIEWER role. Technical-mode cycle-1 review of Doc 07 v2.0.0 and Doc 08 v2.0.0. Not the document owner (tester owns both). Read-only on reviewed documents. No product code written.",
+      "summary": "Completed technical-mode cycle-1 reviews of Doc 07 v2.0.0 and Doc 08 v2.0.0. Both FAIL. Doc 07: 78%, 1C/2H/2M/2L — root cause is nine Guarded Layer property tests (TC-3456..TC-3464) all citing wrong FR/US (FR-109..FR-111/US-0119..US-0121 instead of FR-119/US-0129); plus TC-3454 and TC-3450 also citing wrong FRs. Doc 08: 87%, 1C/1H/2M/1L — root cause is TC-3460..TC-3464 orphaned (not in FR-119 row or any Must FR row), TC-3454 in wrong FR row, and §9 gate verdict table stale (76/12/64 vs SUMMARY 125/12/113).",
+      "artifacts_written": [
+        "artifacts/reviews/07-test-cases-suites-v2.0.0-technical-cycle1.md",
+        "artifacts/reviews/08-traceability-matrix-v2.0.0-technical-cycle1.md",
+        "artifacts/architect-2026-08-11T2345.md"
+      ],
+      "review_verdicts": {
+        "07-test-cases-suites-v2.0.0": {
+          "score": 78,
+          "critical": 1,
+          "high": 2,
+          "medium": 2,
+          "low": 2,
+          "cycle": 1,
+          "verdict": "FAIL",
+          "routed_to": "tester (Ji-woo Park)"
+        },
+        "08-traceability-matrix-v2.0.0": {
+          "score": 87,
+          "critical": 1,
+          "high": 1,
+          "medium": 2,
+          "low": 1,
+          "cycle": 1,
+          "verdict": "FAIL",
+          "routed_to": "tester (Ji-woo Park)"
+        }
+      },
+      "key_issues": {
+        "doc07_critical": "TC-3456..TC-3464 Verifies fields cite FR-109/FR-110/FR-111/US-0119..US-0121 — should be FR-119/US-0129 (Guarded Layer super-process, DES-087). Confirmed by SDD §14+§15 and Doc 05 §12 backlog FR→US map.",
+        "doc07_high_1": "TC-3454 (SC-20 closure) Verifies FR-109 — should be FR-119.",
+        "doc07_high_2": "TC-3450 (SC-16 closure) Verifies FR-118 — should be FR-119 (per Doc 08 RTM which correctly places TC-3450 in FR-119 row).",
+        "doc08_critical": "TC-3460..TC-3464 (P4a/P4b/P4c/P5a/P5b) exist in Doc 07 but not cited in FR-119 row or any Must FR row — orphaned.",
+        "doc08_high": "TC-3454 in FR-109 row — should be in FR-119 row.",
+        "doc08_medium_1": "§9 gate verdict table stale: shows 76/12/64, SUMMARY shows 125/12/113.",
+        "doc08_medium_2": "§6 claims 148 TCs with passing evidence (104+44), Doc 07 §2 says 127 (72+55)."
+      },
+      "confirmed_correct": [
+        "SUMMARY arithmetic 125/12/113/9.6% verified",
+        "G-TRACE=39 (1+38), G-PHASE3=36 (25+11) verified",
+        "DES cells FR-112..FR-120 match SDD §15 exactly",
+        "FR-062 and FR-046 supersession annotations accurate",
+        "SC closure semantics correct (SC-17/SC-18/SC-20 key cases verified)",
+        "All 67 TS-GOV2 cases Blocked or No mechanism — no fabricated passing evidence",
+        "§7 gap log 113 entries, §6 BR=21/stories=130/TCs=375 correct"
+      ],
+      "open_items": [
+        "Tester (Ji-woo Park): rework Doc 07 → v2.1.0 (fix ISS-01..05) and Doc 08 simultaneously (fix ISS-01..04). Both reworks coupled — coordinate on FR-119 row additions.",
+        "Architect (self): when tester requests, produce Doc 04 §14 amendment to reserve TS-CR1 and TS-GOV2 TC ranges (Doc 07 ISS-04).",
+        "Project-manager: schedule cycle-2 reviews once tester rework complete. 4 cycles remain before ESCALATE cap."
+      ],
+      "gate": "Gate 2 NOT READY. Both Doc 07 and Doc 08 at v2.0.0 FAIL cycle-1 review. Tester must rework both.",
+      "next_role": "tester (Ji-woo Park) — rework Doc 07 and Doc 08 per review findings; then project-manager for cycle-2 review orchestration."
+    },
+    {
+      "id": "architect-2026-08-12T0010",
+      "role": "architect",
+      "file": "artifacts/architect-2026-08-12T0010.md",
+      "timestamp": "2026-08-12T00:10:00Z",
+      "phase": "Design — Doc 04 surgical patch",
+      "product": "Trumocracy",
+      "scope": "docs/04-test-strategy-master-plan.md ONLY — §14 TC-range reservation table and header block.",
+      "summary": "Patched Doc 04 v1.0.0 → v1.0.1. Appended TS-CR1 (TC-3300–TC-3399, FR-062..073, RISK-22..24) and TS-GOV2 (TC-3400–TC-3499, FR-074..120, NFR-027/028, SC-15..21 closure, Guarded Layer property tests) rows to §14 reservation table. Added retroactive-reservation note. Updated header: version, last-updated, changelog. Status left In Review. Trigger: Doc 07 v2.0.0 cycle-1 review ISS-04.",
+      "artifacts_written": [
+        "docs/04-test-strategy-master-plan.md (v1.0.1)",
+        "artifacts/architect-2026-08-12T0010.md"
+      ],
+      "ids_touched": {
+        "suites_reserved": "TS-CR1, TS-GOV2",
+        "TC_ranges_formalised": "TC-3300–TC-3399 (TS-CR1), TC-3400–TC-3499 (TS-GOV2)",
+        "covers": "FR-062..FR-073, FR-074..FR-120, NFR-027, NFR-028, RISK-22..RISK-24, SC-15..SC-21"
+      },
+      "open_items": [
+        "Doc 04 full v2.x refresh: stale source pins, §8 RISK-17..30, §14 new-FR suites, §16 milestones — out of scope of this patch, open item for PM.",
+        "Doc 04 review-loop pass (technical-mode document-review) not yet run — PM to orchestrate.",
+        "TS-ADV rows for RISK-17..RISK-30 not reserved — requires full v2.x refresh."
+      ],
+      "gate": "Gate 2 NOT READY. This patch closes Doc 07 v2.0.0 cycle-1 ISS-04 only."
+    },
+    {
+      "id": "tester-2026-08-12T0030",
+      "role": "tester",
+      "file": "artifacts/tester-2026-08-12T0030.md",
+      "timestamp": "2026-08-12T00:30:00Z",
+      "phase": "Verify — cycle-1 technical review rework",
+      "product": "Trumocracy",
+      "scope": "Doc 07 v2.0.0 → v2.0.1 + Doc 08 v2.0.0 → v2.0.1 coupled rework. Documents only. No product code written.",
+      "summary": "Reworked Doc 07 and Doc 08 from v2.0.0 to v2.0.1 addressing all seven issues from the cycle-1 technical reviews. Critical defect fixed: TC-3456..TC-3464 Verifies corrected from FR-109/FR-110/FR-111 to FR-119 (US-0129, DES-087/DES-091). RTM FR-119 row now contains all 12 relevant TCs. TC-3450 and TC-3454 also reattributed to FR-119. §9 gate verdict table, §6 passing-evidence count, §10 exit summary, and source pins all updated. SUMMARY totals unchanged at 125/12/113.",
+      "artifacts_written": [
+        "docs/07-test-cases-suites.md (v2.0.1)",
+        "docs/08-traceability-matrix.md (v2.0.1)",
+        "artifacts/tester-2026-08-12T0030.md"
+      ],
+      "doc07_fixes": {
+        "ISS-01_Critical": "TC-3456..TC-3464 Verifies: all nine corrected to US-0129 · FR-119 · DES-087 (+ DES-091 for TC-3456, TC-3457, TC-3464); context paragraph corrected",
+        "ISS-02_High": "TC-3454 Verifies: FR-109 → US-0129 · FR-119 · DES-087",
+        "ISS-03_High": "TC-3450 Verifies: FR-118 → US-0129 · FR-119 · DES-091",
+        "ISS-04_Medium": "Doc 04 source pin → v1.0.1 (RESOLVED AT SOURCE)",
+        "ISS-05_Medium": "§10: Cases designed 298→368; Blocked 140→169; No mechanism 10→48; percentage corrected; narrative updated",
+        "ISS-06_Low": "TC-3456 amended to test firstVote at 75% per SDD §14 spec",
+        "ISS-07_Low": "TC-count convention note added to §2 footer"
+      },
+      "doc08_fixes": {
+        "ISS-01_Critical": "TC-3460..TC-3464 added to FR-119 TC column",
+        "ISS-02_High": "TC-3454 moved from FR-109 to FR-119; TC-3456 removed from FR-110 (now FR-119 only)",
+        "ISS-03_Medium": "§9 gate verdict table: 76/12/64 → 125/12/113; stale sentence fixed; reviewer-qa note updated",
+        "ISS-04_Medium": "§6 Test cases row: 148 (104+44) → 127 (55+72) per Doc 07 §2; convention note rewritten",
+        "ISS-05_Low": "Subsumed by ISS-03"
+      },
+      "sanity_check": {
+        "FR-109_coverage": "TC-3435 only (US-0119, genuine transparency dashboard case) — correct",
+        "FR-110_coverage": "TC-3436 only (US-0120, genuine performance scorecard case) — correct",
+        "FR-111_coverage": "TC-3437 + TC-3447 (US-0121, genuine behavioural analytics case + NFR-027 mirror) — correct",
+        "no_wrong_US_citations": "US-0119/0120/0121 not cited outside their genuine cases — verified"
+      },
+      "counts_unchanged": {
+        "SUMMARY_Must_rows": 125,
+        "SUMMARY_COMPLETE": 12,
+        "SUMMARY_OPEN": 113,
+        "completion_pct": "9.6%"
+      },
+      "open_items": [
+        "Doc 07 v2.0.1 and Doc 08 v2.0.1 need cycle-2 technical review (PM to orchestrate).",
+        "SubagentStop hook: if blocked for RTM gaps or missing review reports, stop again.",
+        "Doc 04 v1.0.1 also needs technical review (architect produced it; PM to orchestrate)."
+      ],
+      "gate": "Gate 2 NOT READY. 113/125 Must rows open. Both docs at v2.0.1 Status: In Review.",
+      "next_role": "project-manager — orchestrate technical-mode document-review of Doc 07 v2.0.1 and Doc 08 v2.0.1 (cycle 2)."
+    },
+    {
+      "id": "architect-2026-08-12T0100",
+      "role": "architect (acting as neutral reviewer)",
+      "file": "artifacts/architect-2026-08-12T0100.md",
+      "timestamp": "2026-08-12T01:00:00Z",
+      "phase": "Verify — technical-mode document-review (cycle 2)",
+      "product": "Trumocracy",
+      "scope": "REVIEWER role. Technical-mode cycle-2 review of Doc 07 v2.0.1 and Doc 08 v2.0.1. Not the document owner (tester owns both). Read-only on reviewed documents. No product code written.",
+      "summary": "Completed technical-mode cycle-2 reviews of Doc 07 v2.0.1 and Doc 08 v2.0.1. Both PASS. Doc 07: 98%, 0C/0H/0M/1L — all seven cycle-1 issues confirmed fixed; one residual Low (§10 breakdown sums 372 vs stated 368, pre-existing four-case double-count). Doc 08: 100%, 0C/0H/0M/0L — all five cycle-1 issues confirmed fixed, no new issues. Document-review loop for both Doc 07 and Doc 08 at v2.0.1 is now complete.",
+      "artifacts_written": [
+        "artifacts/reviews/07-test-cases-suites-v2.0.1-technical-cycle2.md",
+        "artifacts/reviews/08-traceability-matrix-v2.0.1-technical-cycle2.md",
+        "artifacts/architect-2026-08-12T0100.md"
+      ],
+      "review_verdicts": {
+        "07-test-cases-suites-v2.0.1": {
+          "score": 98,
+          "critical": 0,
+          "high": 0,
+          "medium": 0,
+          "low": 1,
+          "cycle": 2,
+          "verdict": "PASS"
+        },
+        "08-traceability-matrix-v2.0.1": {
+          "score": 100,
+          "critical": 0,
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "cycle": 2,
+          "verdict": "PASS"
+        }
+      },
+      "confirmed_fixes": {
+        "doc07": [
+          "ISS-01 Critical RESOLVED: TC-3456..TC-3464 now US-0129 · FR-119 · DES-087[/DES-091]",
+          "ISS-02 High RESOLVED: TC-3454 now FR-119",
+          "ISS-03 High RESOLVED: TC-3450 now FR-119 / DES-091",
+          "ISS-04 Medium RESOLVED: Doc 04 §14 TS-CR1 and TS-GOV2 rows confirmed; source pin MTP v1.0.1",
+          "ISS-05 Medium RESOLVED (partial): §10 368 total, Blocked 169, No mechanism 48",
+          "ISS-06 Low RESOLVED: TC-3456 P1 tests firstVote at 75%",
+          "ISS-07 Low RESOLVED: §2 convention note added"
+        ],
+        "doc08": [
+          "ISS-01 Critical RESOLVED: TC-3460..TC-3464 in FR-119 row (12 TCs total)",
+          "ISS-02 High RESOLVED: TC-3454 in FR-119; TC-3456 removed from FR-110",
+          "ISS-03 Medium RESOLVED: §9 gate verdict table 125/12/113; trailing sentence 113",
+          "ISS-04 Medium RESOLVED: §6 127 passing evidence (55 inh. + 72 obs.) with basis note",
+          "ISS-05 Low RESOLVED: subsumed by ISS-03"
+        ]
+      },
+      "no_regressions": [
+        "FR-109 → TC-3435 only (US-0119)",
+        "FR-110 → TC-3436 only (US-0120)",
+        "FR-111 → TC-3437, TC-3447 (US-0121)",
+        "FR-118 → TC-3444, TC-3449, TC-3455",
+        "SUMMARY 125/12/113/9.6% unchanged",
+        "G-TRACE=39, G-PHASE3=36 unchanged"
+      ],
+      "open_items": [
+        "Doc 07/08 owners (Ji-woo Park): update Status from 'In Review' to 'Approved'.",
+        "Doc 07 §10 Low issue: breakdown sums to 372 vs 368 (four-case double-count); future patch.",
+        "Gate 2 NOT READY: 113/125 Must rows still open (correct by design).",
+        "Doc 04 v1.0.1 technical-mode review not yet run (PM open item from architect-2026-08-12T0010)."
+      ],
+      "gate": "Gate 2 NOT READY. Document-review loop COMPLETE for Doc 07 v2.0.1 and Doc 08 v2.0.1 (both PASS). 113/125 Must rows still open.",
+      "next_role": "project-manager — record both PASS verdicts; advance SOP. Tester — update Doc 07 and Doc 08 Status to Approved."
+    },
+    {
+      "id": "project-manager-2026-08-12T0130",
+      "role": "project-manager",
+      "file": "artifacts/project-manager-2026-08-12T0130.md",
+      "timestamp": "2026-08-12T01:30:00Z",
+      "phase": "Define/Verify catch-up",
+      "product": "Trumocracy",
+      "summary": "Orchestrated the backlog + test-design catch-up to SRS v2.2.0: Doc 05 v2.0.1 (PASS 99%), Doc 07 v2.0.1 (PASS 98%), Doc 08 v2.0.1 (PASS 100%), Doc 04 v1.0.1 surgical §14 reservation patch. Honest gap count: 125 Must rows, 12 COMPLETE, 113 OPEN (9.6%) — correct by design at this phase. Gate 2 NOT READY.",
+      "artifacts_written": [
+        "artifacts/project-manager-2026-08-12T0130.md"
+      ],
+      "ids_touched": {
+        "docs": "05 v2.0.1 Approved · 07 v2.0.1 Approved · 08 v2.0.1 Approved · 04 v1.0.1 In Review",
+        "US": "US-0084..US-0130 (via product-owner)",
+        "TC": "TC-3400..TC-3466 (via tester; TS-GOV2)",
+        "RTM": "125 Must rows / 12 COMPLETE / 113 OPEN"
+      },
+      "key_decisions": [
+        "Doc 04 fixed by surgical additive §14 patch only (v1.0.1); full v2.x refresh + first-ever review-loop pass recorded as open item for the next design increment — not dragged into this catch-up.",
+        "PM records PASS verdicts by flipping doc Status lines (review-loop bookkeeping per RACI A/R); all content edits stayed with owning roles.",
+        "Agents scheduled sequentially to avoid concurrent memory-index.json writes."
+      ],
+      "open_items": [
+        "Doc 04 full v2.x refresh + review-loop pass (owner: architect, next design increment).",
+        "Doc 03 next design increment: DES for FR-074..FR-111 closes the 38 G-TRACE Must rows.",
+        "Doc 07 §10 breakdown double-count (Low) — tester, next version.",
+        "Gate 2 NOT READY: 113/125 Must rows OPEN (honest, by design)."
+      ]
     }
   ]
 }
