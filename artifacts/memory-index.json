@@ -1767,6 +1767,104 @@
         "Doc 07 §10 breakdown double-count (Low) — tester, next version.",
         "Gate 2 NOT READY: 113/125 Must rows OPEN (honest, by design)."
       ]
+    },
+    {
+      "id": "tester-2026-08-12T1500",
+      "role": "tester",
+      "file": "artifacts/tester-2026-08-12T1500.md",
+      "timestamp": "2026-08-12T15:00:00Z",
+      "phase": "Verify",
+      "product": "Trumocracy",
+      "summary": "Applied 2026-08-12 follow-up audit fixes to Doc 07 v2.1.0 and Doc 08 v2.1.0. Fix 1: TC-3451/3453 amended (seated-but-inactive precondition); TC-3467/3468 minted (vacancy-immediate citizen fallback for publishAuditRef and issuer-onboarding). Fix 2: §10 arithmetic corrected (368→371 total, 169→172 Blocked, 4-case overlap convention stated). Fix 3: TC-3469 minted (anti-circularity direct attack). Doc 08 FR-117/FR-119 TC columns and §6 dashboard updated. Both docs Status: In Review.",
+      "docs_touched": ["docs/07-test-cases-suites.md", "docs/08-traceability-matrix.md"],
+      "ids_minted": ["TC-3467", "TC-3468", "TC-3469"],
+      "ids_amended": ["TC-3451", "TC-3453"],
+      "open_items": [
+        "Doc 07 v2.1.0 and Doc 08 v2.1.0 Status: In Review — document-review cycle pending.",
+        "Four automated-and-Blocked overlap cases remain un-named (not identifiable by suite-table inspection alone).",
+        "Gate 2 NOT READY: 113/125 Must rows OPEN (unchanged)."
+      ]
+    },
+    {
+      "id": "architect-2026-08-12T1530",
+      "role": "architect",
+      "file": "artifacts/architect-2026-08-12T1530.md",
+      "timestamp": "2026-08-12T15:30:00Z",
+      "phase": "Verify (document-review — neutral reviewer)",
+      "product": "Trumocracy",
+      "summary": "Technical-mode document-review Cycle 1 over Doc 07 v2.1.0 and Doc 08 v2.1.0. Doc 07: PASS 99%, 0C/0H/0M/1L (ISS-01 Low: §2 convention note '2-row' vs '7-case' difference between documents). Doc 08: PASS 100%, 0C/0H/0M/0L. All five v2.1.0 changes verified correct: TC-3451/3453 amendments (seated-but-inactive), TC-3467/3468 (vacancy-immediate citizen fallback for publishAuditRef and issuer-onboarding), TC-3469 (SC-16 anti-circularity direct attack), §10 overlap convention resolved. No documents edited.",
+      "artifacts_written": [
+        "artifacts/reviews/07-test-cases-suites-v2.1.0-technical-cycle1.md",
+        "artifacts/reviews/08-traceability-matrix-v2.1.0-technical-cycle1.md",
+        "artifacts/architect-2026-08-12T1530.md"
+      ],
+      "ids_touched": {
+        "TCs_verified_new": "TC-3467, TC-3468, TC-3469",
+        "TCs_verified_amended": "TC-3451, TC-3453",
+        "docs": "07 v2.1.0 PASS · 08 v2.1.0 PASS"
+      },
+      "open_items": [
+        "Doc 07 ISS-01 Low (§2 '2-row' convention note) — tester patch, does not block.",
+        "Doc 07/08 Status: In Review → Approved pending tester flip.",
+        "Gate 2 NOT READY: 113/125 Must rows OPEN."
+      ]
+    },
+    {
+      "id": "tester-2026-08-12T1600",
+      "role": "tester",
+      "file": "artifacts/tester-2026-08-12T1600.md",
+      "timestamp": "2026-08-12T16:00:00Z",
+      "phase": "Verify — owner status-flip (review-loop PASS bookkeeping)",
+      "product": "Trumocracy",
+      "summary": "Flipped Doc 07 v2.1.0 and Doc 08 v2.1.0 Status lines from In Review to Approved, per CLAUDE.md review-loop rule ('On PASS the owner sets Status: Approved'). Review verdicts cited: Doc 07 PASS 99% 0C/0H/0M/1L (artifacts/reviews/07-test-cases-suites-v2.1.0-technical-cycle1.md); Doc 08 PASS 100% 0C/0H/0M/0L (artifacts/reviews/08-traceability-matrix-v2.1.0-technical-cycle1.md). Corrects the prior PM-flip deviation recorded in project-manager-2026-08-12T0130.md — the owning role (tester) performs this flip, not the PM.",
+      "artifacts_written": [
+        "artifacts/tester-2026-08-12T1600.md"
+      ],
+      "docs_touched": [
+        "docs/07-test-cases-suites.md (Status: Approved)",
+        "docs/08-traceability-matrix.md (Status: Approved)"
+      ],
+      "ids_touched": {
+        "docs": "07 v2.1.0 → Approved · 08 v2.1.0 → Approved",
+        "minted": "none"
+      },
+      "open_items": [
+        "Doc 07 ISS-01 Low (§2 convention note '2-row' vs '7-case') — tester, next patch version.",
+        "Gate 2 NOT READY: 113/125 Must rows OPEN (unchanged).",
+        "Doc 04 full v2.x refresh + review-loop pass outstanding (architect, next design increment)."
+      ]
+    },
+    {
+      "id": "project-manager-2026-08-12T1630",
+      "role": "project-manager",
+      "file": "artifacts/project-manager-2026-08-12T1630.md",
+      "timestamp": "2026-08-12T16:30:00Z",
+      "phase": "Governance — gate-status update",
+      "product": "Trumocracy",
+      "summary": "Recorded two governance items in GATE-STATUS-2026-08-09.md: (1) Doc 04 review debt — technical-rubric document-review of v1.0.1 is a Gate-2 blocker (no 04-* review report exists at any version); (2) Status-flip authorship deviation — accepted by Rathish, practice corrected from 2026-08-12 forward. Also recorded Doc 07/08 v2.1.0 Approved (cycle-1 PASS 99% / 100%), TC-3467..TC-3469 minted, TC-3451/3453 amended, Gate 2 NOT READY (113/125 Must rows open).",
+      "artifacts_written": [
+        "artifacts/status/GATE-STATUS-2026-08-09.md (updated — 2026-08-12 section appended)",
+        "artifacts/project-manager-2026-08-12T1630.md",
+        "artifacts/memory-index.json (updated — this entry appended)"
+      ],
+      "ids_touched": {
+        "docs": "GATE-STATUS-2026-08-09.md (section appended — no prior text altered)",
+        "TC_minted_recorded": "TC-3467, TC-3468, TC-3469",
+        "TC_amended_recorded": "TC-3451, TC-3453",
+        "RTM": "125 Must rows / 12 COMPLETE / 113 OPEN"
+      },
+      "key_decisions": [
+        "Doc 04 technical-rubric document-review (v1.0.1) declared a Gate-2 blocker — no review at any version confirmed; required before Gate 2.",
+        "Status-flip authorship deviation accepted by Rathish; practice corrected to owning-role flip from 2026-08-12 forward.",
+        "Doc 07 v2.1.0 PASS 99% (1 Low) and Doc 08 v2.1.0 PASS 100% recorded; both Approved by tester (owner)."
+      ],
+      "open_items": [
+        "Doc 04 technical-mode review (v1.0.1, Gate-2 blocker) — owner: architect (Ravi Deshmukh); trigger: before Gate 2; rubric: technical.",
+        "Doc 04 full v2.x refresh + first-ever review-loop pass — owner: architect; trigger: next design increment.",
+        "Doc 03 next design increment: DES for FR-074..FR-111 closes 38 G-TRACE Must rows.",
+        "Doc 07 ISS-01 Low (§2 convention note '2-row' vs '7-case') — tester, next patch version.",
+        "Gate 2 NOT READY: 113/125 Must rows OPEN."
+      ]
     }
   ]
 }
