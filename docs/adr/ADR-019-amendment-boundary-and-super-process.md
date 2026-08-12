@@ -214,3 +214,17 @@ plausible fork cycle including coalition-building time.
   a named absolute. This is the cost of keeping implementation commitments evolvable.
 - The 30-day audit lead time is a process constraint, not a quality guarantee. Community
   diligence is the quality control; the design provides time, not judgment.
+
+## Amendment — 2026-08-11 (SC-17: citizen-initiated fallback for publishAuditRef)
+
+**Security scan finding:** SC-17 (HIGH) — a single steward vacancy or coordinated inaction could permanently stall the Guarded Layer super-process at Property 5 (audit publication before second vote), making the amendment pathway inaccessible to citizens.
+
+**Amendment to Property 5.** Property 5 as stated in this ADR assigns the audit publication step exclusively to a steward via `publishAuditRef()`. This creates a single point of progress that the citizen body cannot bypass. The amendment introduces a citizen-initiated fallback that preserves the audit substance guarantee while eliminating the single point of control:
+
+- After **STEWARD_INACTION_WINDOW** (60 days from `firstVoteClosedAt`, normative value set in Doc 03 §10.11) any enrolled citizen MAY call `publishAuditRef(issuerId, auditRef)`. The 30-day audit lead time before the second vote (`AUDIT_LEAD_TIME`) is UNCHANGED — it runs from the timestamp of the publication, regardless of who published.
+- **Steward vacancy** (no registered steward in `StewardRegistry`) triggers the citizen fallback IMMEDIATELY — no 60-day window applies. A vacant steward layer is a known operational condition, not an attack, and citizens must not be locked out of the amendment pathway indefinitely because of it.
+- Audit SUBSTANCE is unchanged: a citizen who publishes a trivial or bad-faith audit ref does not bypass the 30-day community-review window; the social/governance quality control described in this ADR applies equally to citizen-published refs.
+
+**Design element:** DES-092 (Doc 03 §5.2). The citizen-fallback pattern is also applied to the issuer-onboarding coordination trigger (SC-19, same inaction window and vacancy rule — Doc 03 §5.2 DES-092).
+
+**No other properties changed.** The two-vote requirement, 80%/25% thresholds, 180-day inter-vote window, growth-surge defence, and 30-day audit lead time are all unchanged by this amendment.

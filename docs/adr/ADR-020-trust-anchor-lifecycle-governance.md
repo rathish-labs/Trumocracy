@@ -158,10 +158,17 @@ explicit trade-off for maintaining operator-capability absence (CON-003).
     │  old anchor accepted until anchorOverlapEnd (60 days)
     │  new anchor accepted immediately
     │
-    ├─ block.timestamp >= anchorEffectiveAt
+    ├─ block.timestamp >= anchorEffectiveAt ──────────────────────────────▶ [ACTIVE] (new anchor; old no longer accepted after anchorOverlapEnd)
     │
-    ▼
-[ACTIVE] (new anchor; old no longer accepted after anchorOverlapEnd)
+    └─ abortRotation() via Governor.execute() (Open Layer bar; SC-18)
+           │
+           ▼
+       [ROTATION_ABORTED]
+           │  incumbent hash restored; pending anchor hash cleared
+           │  pending-anchor credentials rejected for new enrolments from enactment
+           │  no retroactive invalidation of enrolments completed during ROTATION_PENDING
+           │
+           └──────────────────────────────────────────────────────────────▶ [ACTIVE] (incumbent/pre-rotation hash)
 
 [ACTIVE]
     │
@@ -243,3 +250,21 @@ gives a comfortable margin. Sybil risk during the overlap is bounded by nullifie
 - The ordinary 30-day revocation timelock means a compromise that goes undetected for 30 days
   can result in substantial Sybil enrolment before the revocation takes effect. This is also
   an accepted residual; the per-issuer epoch cap is the primary blast-radius limiter.
+
+## Amendment — 2026-08-11 (SC-18: ROTATION_PENDING abort path)
+
+**Security scan finding:** SC-18 (HIGH) — a trust-anchor rotation that enters ROTATION_PENDING state with no abort mechanism forced the only recovery to a full revocation of the pending anchor. If the new anchor turns out to be incorrect or compromised before enactment, the community was forced to either let a bad rotation complete or trigger a 30-day revocation process, during which ALL new enrolments against the now-suspect anchor are blocked — a self-inflicted enrolment DoS of 30+ days.
+
+**Amendment: ROTATION_ABORTED state and abortRotation() call.**
+
+A new `abortRotation(issuerId)` governance call is added via `Governor.execute()` at the **Open Layer bar** (60% supermajority / 15% quorum — the same bar as ordinary governance actions). This is correct: rotation abort is a corrective governance action, not an amendment of a named absolute, so it does not require the Guarded Layer super-process.
+
+State machine addition (DES-090, Doc 03 §5.6):
+- `ROTATION_PENDING` → `ROTATION_ABORTED` → `ACTIVE` (restored to incumbent/pre-rotation trust-anchor hash)
+- The pre-rotation `trustAnchorHash` is restored in full; the pending anchor hash is cleared.
+- Credentials signed with the pending anchor are rejected for NEW enrolments from the point of abort (`enrol()` checks the current `trustAnchorHash`).
+- **No retroactive invalidation:** citizens who enrolled during the ROTATION_PENDING period (both old and new anchor accepted during that window) retain their enrolment. A separate revocation vote would be required to address those enrolments if the pending anchor was compromised.
+
+**Rationale for Open Layer bar.** An abort is a protective action taken when the community discovers the new anchor is incorrect or suspect. Requiring the Guarded Layer super-process (180 days) for an abort would mean the community must live with a suspected bad anchor for at least 180 days — which is worse than the problem the abort is solving. The Open Layer bar (ordinary vote speed) is proportionate and consistent with other corrective governance actions (emergency revocation).
+
+**No other lifecycle paths changed.** Ordinary rotation (ACTIVE → ROTATION_PENDING → ACTIVE with new anchor after 60-day overlap), ordinary revocation (ACTIVE → REVOCATION_PENDING → REVOKED), and emergency revocation (7-day path) are all unchanged by this amendment.
