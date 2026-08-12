@@ -2,14 +2,37 @@
 
 ```
 Document ID:   SRS-TRUMOCRACY
-Version:       2.0.1
-Status:        Approved (review loop, cycle 2 PASS 98%; Gate 1 re-entry decision pending)
+Version:       2.2.0
+Status:        Approved (review loop, cycle 1 PASS 97%; OI-18 applied — see OI-18-DECISION-2026-08-11.md)
 Owner:         Priya Raghunathan — Product Owner
 Approvers:     Gate 1 — Priya Raghunathan (Product Owner), Ana-Maria Petrescu (Project Manager),
                Rathish (Human Approver — Gate 1 re-entry, v2.0.0)
 Source:        PR-TRUMOCRACY (docs/01-press-release-prfaq.md)
-Last updated:  2026-08-10
-Change:        v2.0.1 — Cycle-1 business-review rework (2026-08-10): one-pilot correction
+Last updated:  2026-08-11
+Change:        v2.2.0 — OI-18 decision applied (2026-08-11, Rathish; OI-18-DECISION-2026-08-11.md):
+               two-tier core adopted. Tier 1 entrenched charter now SEVEN rules (CON-001 promoted —
+               scope boundary, not implementation commitment), unamendable by any vote, changeable
+               only by fork (FR-118 amended). Tier 2 named absolutes (BR-011/NFR-003, CON-002/
+               CON-008/NFR-010, CON-012, CON-013) amendable only via the Doc 03 super-process —
+               five minimum properties recorded (FR-119 amended). Tier 3 everything else, ordinary
+               tier. The FR-118 decision banner closed.
+               v2.1.1 — Cycle-1 business-review rework (2026-08-11): FR-092 pending-OI-14 residue
+               fixed (ISS-01); §2.5 CON range updated to CON-001..CON-014 (ISS-02); §15 Downstream
+               paragraph updated to current gate state (ISS-03); §15 v1.1.0 re-affirmation row
+               annotated as superseded (ISS-04); OI-16 Gherkin annotation comments added to
+               FR-085 and FR-107 §8 blocks (ISS-05); adversarial negative scenarios added to
+               FR-024 (Supporter blocked, Worker-declaration path offered) and FR-105 (Supporter
+               expulsion attempt refused, FR-005 the only remedy) §8 blocks (ISS-06).
+               v2.1.0 — Gate 1 v2.0.0 decision applied + steward-organisation requirement area
+               (2026-08-11, directed by Rathish; GATE1-DECISION-2026-08-11.md). OI-14 decided:
+               proposal authorship requires Worker tier or above (FR-024, FR-090 amended). OI-15
+               decided: expulsion applies to public tiers only; supporter-tier fraud handled by
+               FR-005 credential revocation (FR-105 amended). OI-16 decided: confidential-class
+               carve-out adopted — pre-nomination disclosure data never enters the governance
+               record and is destroyed on withdrawal (FR-085, FR-107 amended). BR-021 +
+               FR-114..FR-120 steward organisation (passes 2–3); TD-11; RISK-31/32; OI-18.
+               Gate 1 APPROVED conditional on this version landing before design.
+               v2.0.1 — Cycle-1 business-review rework (2026-08-10): one-pilot correction
                applied to §2.4 (ISS-01); CON-007 schedule made consistent with S-01 — launch
                2027-06-01 (ISS-02); FR-062 §8 Gherkin marked superseded/do-not-test (ISS-03);
                L2 budget noted in CON-007 (ISS-04); §1.4 Doc 05 pin corrected (Low).
@@ -159,6 +182,8 @@ emits a publicly verifiable record. No external system, and no internal role, ho
 20. Publish a real-time transparency dashboard and a factual performance scorecard.
 21. Support multi-country operation: verified identity → select legally eligible country →
     create or join a party; distinguish platform party-creation from legal registration.
+22. Platform-level stewardship: an elected, recallable, powers-enumerated steward body that
+    coordinates but cannot control (§4.39).
 
 ### 2.3 User classes & characteristics
 
@@ -176,6 +201,7 @@ emits a publicly verifiable record. No external system, and no internal role, ho
 | **Office-holder** | Elected representative of a region+office | Medium | Ongoing | Publicly identified; governance votes attributable |
 | **Independent Auditor / Journalist / Researcher** | Runs the verifier, re-computes tallies | High | Ad hoc | External; no account required |
 | **Trumocracy Operator (sre)** | Runs infrastructure | High | Continuous | **Holds no governance power by design** |
+| **Steward** | Elected platform-level coordinator; powers enumerated and exhaustive; no outcome power | Medium | Ongoing | Publicly identified by explicit informed consent at candidacy (three-tier model; stewards are a public-tier role) |
 
 ### 2.4 Operating environment
 Mobile web (evergreen mobile browsers) and a lightweight Android application; device floor **2 GB
@@ -185,7 +211,7 @@ jurisdiction planned post-launch once month-6 metrics are confirmed, per Gate 1 
 jurisdiction not yet named — see OI-04).
 
 ### 2.5 Design & implementation constraints
-See §9 (`CON-001` … `CON-012`).
+See §9 (`CON-001` … `CON-014`).
 
 ### 2.6 Assumptions & dependencies
 See §9.2.
@@ -237,6 +263,7 @@ See §9.2.
 | BR-018 | All removal and expulsion outcomes MUST require an affirmative quorum of members actively voting for the outcome — never silence, absence of a defender, or a human official's finding; investigation and recommendation functions publish records but hold no outcome power. | Must | 0 removal or expulsion outcomes that do not satisfy an affirmative quorum threshold; 100% of investigation/recommendation records published; 0 human-official unilateral removal or expulsion events | Daniel Okonkwo | Vision re-entry v2.0.0 (Rathish, 2026-08-10); Doc 01 v2.0.0 |
 | BR-019 | A party's constitution, manifesto commitments, finances, conflict-of-interest disclosures, audit reports, dispute records and performance scorecard MUST be public, append-only, and factual — informing members rather than concluding for them. | Must | 100% of required institutional records confirmed public and append-only at launch audit; 0 concluded verdicts substituted for factual records; scorecard data independently reproducible from source events | Erik Lindqvist | Vision re-entry v2.0.0 (Rathish, 2026-08-10); Doc 01 v2.0.0 |
 | BR-020 | The platform MUST support multiple countries from the outset (verified identity → select legally eligible country → create/join a party), deployed to one pilot jurisdiction first per the Gate-1 disposition; platform party-creation MUST be distinct from legal registration, which the platform cannot grant or override. | Must | Multi-country architecture confirmed in Doc 03; ≥ 1 test scenario validates country-eligibility scoping; platform registration flow confirmed to include explicit boundary statement that platform creation ≠ legal registration in 100% of country-creation flows | Sofia Marchetti | Vision re-entry v2.0.0 (Rathish, 2026-08-10); Doc 01 v2.0.0; OI-04 |
+| BR-021 | The platform MAY have a steward organisation for coordination — and MUST NOT need one: every citizen-facing capability (enrolment, party creation, voting, proposal submission, forking) MUST operate with zero dependency on any steward action, signature or liveness, so that the total disappearance of the steward body leaves the protocol operating unchanged. Steward powers are enumerated and exhaustive, bounded by the same test as every other body: nothing that changes who wins, who votes, or who is a member. | Must | 0 steward-dependency paths found by capability-absence testing in any citizen flow; steward-body vacancy (simulated) causes zero citizen-facing degradation | Rafael Duarte | GATE1-DECISION-2026-08-11.md Part B; design intent: the Bitcoin Foundation lesson (see §4.39 preamble) |
 
 ---
 
@@ -310,7 +337,7 @@ See §9.2.
 
 | ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
 |----|-------------------------------|-----------|----------|-------|-----------|
-| FR-024 | Allow any matured member to submit a proposal, declaring its tier, with no pre-screening, moderation or approval by any member, office-holder or platform actor. | BR-003, BR-008 | Must | Tomás Ferreira | T, D |
+| FR-024 | Allow any matured member to submit a proposal, declaring its tier, with no pre-screening, moderation or approval by any member, office-holder or platform actor. _(v2.1.0 per OI-14 decision: submitting a proposal — original or competing — requires Worker tier or above, because authorship is public (FR-090) and an anonymous Supporter cannot author without breaking their own anonymity. This is not a gate: Worker tier is self-declared (FR-080), so any member who wishes to author simply declares. Supporters retain full voting rights.)_ | BR-003, BR-008 | Must | Tomás Ferreira | T, D |
 | FR-025 | Enforce distinct, monotonically escalating quorum and supermajority requirements across at least four proposal tiers — ordinary, policy, charter, entrenched — and MUST reject the enactment of any proposal that fails either the quorum or the supermajority for its declared tier. | BR-008, BR-012 | Must | Tomás Ferreira | T |
 | FR-026 | Impose a mandatory timelock between a proposal passing and taking effect, of a duration that increases with tier, during which the pending change is public and no actor can shorten, waive or bypass it. | BR-008, BR-012 | Must | Tomás Ferreira | T, I |
 | FR-027 | Permit a charter to designate specific founding clauses as **entrenched**, and enforce for those clauses the highest tier, the longest timelock, and a quorum satisfiable only by members whose membership predates the proposal by a published minimum age. | BR-012 | Must | Rafael Duarte | T, A |
@@ -453,9 +480,9 @@ See §9.2.
 | FR-082 | Supporter-tier participants MUST be anonymous unconditionally: the system MUST store only a nullifier for a Supporter; no attributable record MUST exist for them; no profile surface MUST exist for a Supporter; NFR-001, NFR-002, and NFR-024 apply to the Supporter tier without exception. _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ | BR-017, BR-009 | Must | Dr. Lena Kowalczyk | T, I, A |
 | FR-083 | Worker- and Candidate-tier participants MUST have a public participation record beginning from the informed-consent event: the record MUST include role-relevant activity (work recorded, proposals authored in role, debates attended, candidacies held, and committee memberships); the record MUST NOT disclose ballot direction on any contested vote (FR-063 applies to every tier); votes cast by a holder of elected office in their office capacity MUST be attributed per FR-048. _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ | BR-017, BR-005 | Must | Erik Lindqvist | T, I, A |
 | FR-084 | The system MUST ensure that disclosure scales with the power sought; the platform MUST publish, before any declaration or nomination window opens, the exact disclosure schedule per role (Worker, Candidate, and Office-holder in ascending disclosure scope); no category of information not listed in the published disclosure schedule for a role MAY be demanded of a person in that role after their declaration or nomination event. _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ | BR-017 | Must | Dr. Lena Kowalczyk | I, D |
-| FR-085 | The informed-consent event MUST cover the entire campaign and any resulting term and is irrevocable for that term; withdrawal from candidacy before the nomination window closes is permitted and MUST cause the system to destroy the disclosure data submitted for that withdrawn candidacy. _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ | BR-017, BR-009 | Must | Sofia Marchetti | I, T |
+| FR-085 | The informed-consent event MUST cover the entire campaign and any resulting term and is irrevocable for that term; withdrawal from candidacy before the nomination window closes is permitted and MUST cause the system to destroy the disclosure data submitted for that withdrawn candidacy. _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ _(v2.1.0 per OI-16 decision: the confidential-class carve-out is ADOPTED — pre-nomination disclosure data is confidential-class (FR-106), never enters the append-only governance record, and is destroyed on withdrawal; the withdrawal right is honoured rather than excepted. Public records of completed actions remain append-only without exception (FR-107).)_ | BR-017, BR-009 | Must | Sofia Marchetti | I, T |
 
-> **⚠ v2.0.0 DECISION REQUIRED — FR-085 vs the append-only data rule:** the vision states both 'nothing is ever deleted; history is append-only' and 'withdrawal before nomination closes destroys submitted data.' The product-owner's proposed resolution — pre-nomination disclosure data is confidential-class, held off the governance record, and destroyable precisely because it never entered the append-only record — is NOT adopted silently; it is recorded as **OI-16 in §13** for the approver.
+> **✅ v2.1.0 — OI-16 DECIDED (Rathish, 2026-08-11):** confidential-class carve-out adopted. A withdrawn candidate's disclosures were submitted under a consent that never completed; destroying them honours the withdrawal right rather than excepting the append-only rule. See GATE1-DECISION-2026-08-11.md §3.
 
 | ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
 |----|-------------------------------|-----------|----------|-------|-----------|
@@ -468,16 +495,16 @@ See §9.2.
 | FR-087 | Parties MAY form committees, including a steering committee capped at 30 members and working groups; a committee's only permitted output is a proposal that enters the ordinary proposal lifecycle defined in §4.26 with no special status, precedence, or extra weight; committee composition and meeting minutes MUST be public. _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ | BR-015, BR-014 | Must | Tomás Ferreira | T, I |
 | FR-088 | Committees MAY hold only capabilities that cannot change who wins, who votes, or who is a member — specifically: event organisation, campaign coordination, facilitation, vendor management, and publishing; election administration, membership verification, vote counting, eligibility determination, and data-integrity operations MUST be executed by code with no committee or human path available; any configuration that grants a committee a capability that touches an election or membership outcome MUST be rejected by the system. _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ | BR-015, BR-008 | Must | Rafael Duarte | I, A, T |
 | FR-089 | Committee membership MUST expire mechanically at term end (contract expiry) with no human renewal path; continuation of a committee into a new term requires a fresh member vote; expiry MUST be code-enforced following the same discipline as office terms in FR-041. _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ | BR-015 | Must | Rafael Duarte | T, I |
-| FR-090 | Proposal authorship MUST be public; any member MAY submit a competing proposal on the same question; every competing proposal MUST be presented with equal standing and voted in the same decision window as the original proposal. _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ | BR-015, BR-003 | Must | Tomás Ferreira | T, D |
+| FR-090 | Proposal authorship MUST be public; any member MAY submit a competing proposal on the same question; every competing proposal MUST be presented with equal standing and voted in the same decision window as the original proposal. _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ _(v2.1.0 per OI-14 decision: authorship is public; authoring — original or competing — requires Worker tier or above; the right to submit a competing proposal is unchanged for any Worker-tier-or-above member; Supporters retain full voting rights on every proposal and may self-declare Worker at any time to author.)_ | BR-015, BR-003 | Must | Tomás Ferreira | T, D |
 
-> **⚠ v2.0.0 DECISION REQUIRED — FR-090 vs Supporter anonymity (BR-017/FR-082):** ruling 1 makes proposal authorship public as the agenda-setting counterweight; ruling 3 makes Supporters anonymous with nothing attributable. A Supporter who authors a proposal cannot satisfy both. Candidate resolutions — (a) proposing requires Worker tier or above; (b) supporter authorship is attributed to a stable per-party pseudonym; (c) supporter proposals are unattributed — each sacrifices something different. NOT reconciled here; recorded as **OI-14 in §13** for the approver. Until decided, the affected story is not Ready.
+> **✅ v2.1.0 — OI-14 DECIDED (Rathish, 2026-08-11):** Worker tier and above may author; authorship stays public; Supporters retain full voting rights and may self-declare Worker at any time to author. See GATE1-DECISION-2026-08-11.md §3.
 
 ### 4.26 Proposal lifecycle & the permanent decision trail
 
 | ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
 |----|-------------------------------|-----------|----------|-------|-----------|
 | FR-091 | Every proposal MUST move through the published lifecycle stages in sequence — proposal → review → discussion → debate → vote → decision → implementation → measurement — with stage transitions executed by code per published timelines; no stage MAY be skipped, reordered, or human-vetoed; the review, discussion, and debate stages are deliberative and produce records, never outcomes. _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ | BR-014, BR-008 | Must | Tomás Ferreira | T, I |
-| FR-092 | The system MUST maintain a permanent decision trail for every decision, comprising: the proposal and any competing proposals, authorship (per FR-090, pending OI-14), deliberation records, the vote result, the enacted consequence, implementation status, and measured outcome; the complete trail MUST be reconstructable end-to-end by any third party from public data alone. _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ | BR-014, BR-019 | Must | Erik Lindqvist | T, I, A |
+| FR-092 | The system MUST maintain a permanent decision trail for every decision, comprising: the proposal and any competing proposals, authorship (per FR-090; OI-14 decided 2026-08-11 — Worker tier and above), deliberation records, the vote result, the enacted consequence, implementation status, and measured outcome; the complete trail MUST be reconstructable end-to-end by any third party from public data alone. _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ | BR-014, BR-019 | Must | Erik Lindqvist | T, I, A |
 
 ### 4.27 Candidate selection — schedule and member questions
 
@@ -530,16 +557,16 @@ See §9.2.
 |----|-------------------------------|-----------|----------|-------|-----------|
 | FR-103 | Allow matured members to cast conduct votes (up/down) on public-tier participants using the same nullifier, privacy, and anti-capture mechanics as policy votes; individual conduct votes MUST be private, aggregates public; conduct votes on Supporter-tier participants MUST be impossible by construction — no addressable identity exists in that tier. _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ | BR-018, BR-012 | Must | Daniel Okonkwo | T, A |
 | FR-104 | Require removal from a role, team or committee to pass an affirmative quorum of members actively voting to remove, at a published bar; silence or absence MUST NOT remove; the accused MUST have a published statement on the record before the vote window closes — or the expiry with no statement MUST itself be recorded; the growth-surge defence (FR-023/FR-028 discipline; UT-0220) MUST apply to removal votes so that an influx cannot drive one. _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ | BR-018, BR-012 | Must | Daniel Okonkwo | T, I, A |
-| FR-105 | Treat expulsion from a party as a distinct action with a strictly higher bar than removal from any role, requiring its own published affirmative quorum and supermajority; the same statement right and surge defence MUST apply; expulsion MUST revoke membership with a state transition recorded, but MUST NOT alter any historical records. _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ | BR-018, BR-012 | Must | Daniel Okonkwo | T, I, A |
+| FR-105 | Treat expulsion from a party as a distinct action with a strictly higher bar than removal from any role, requiring its own published affirmative quorum and supermajority; the same statement right and surge defence MUST apply; expulsion MUST revoke membership with a state transition recorded, but MUST NOT alter any historical records. _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ _(v2.1.0 per OI-15 decision: expulsion applies to public-tier participants (Worker, Candidate, Office-holder, committee member) ONLY. Supporters are anonymous by design and cannot be expelled — building that capability would require deanonymising them, which is refused. Supporter-tier fraudulent enrolment is addressed by FR-005 credential revocation, which acts on the credential rather than the person.)_ | BR-018, BR-012 | Must | Daniel Okonkwo | T, I, A |
 
-> **⚠ v2.0.0 DECISION REQUIRED — FR-105 vs Supporter anonymity (BR-017/FR-082):** expulsion requires an addressable subject; a Supporter-tier member is anonymous by construction, so a conduct-based expulsion of a Supporter is impossible without deanonymising them. Candidate resolutions — (a) expulsion applies only to public-tier participants; supporter-tier misconduct is handled solely by code-detected fraud (FR-005 credential revocation); (b) a pseudonymous expulsion mechanism (expels a nullifier, no identity revealed) — each has different consequences for accountability and for privacy. NOT reconciled here; recorded as **OI-15 in §13** for the approver. Until decided, the affected story is not Ready.
+> **✅ v2.1.0 — OI-15 DECIDED (Rathish, 2026-08-11):** public-tiers-only expulsion; FR-005 credential revocation for supporter-tier fraud. See GATE1-DECISION-2026-08-11.md §3.
 
 ### 4.35 Data classification & the append-only lifecycle
 
 | ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
 |----|-------------------------------|-----------|----------|-------|-----------|
 | FR-106 | Ensure every data entity carries exactly one of three classifications — public, restricted, or confidential — assigned in the §7 inventory; classification governs storage, access, and publication; an unclassified entity MUST NOT be storable. _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ | BR-017, BR-009 | Must | Dr. Lena Kowalczyk | I, A |
-| FR-107 | Ensure nothing is deleted — every governed entity is active or inactive; state transitions MUST be appended with timestamp and cause; history MUST NOT be rewritten; the sole recorded exception candidate is pre-nomination disclosure data (FR-085), pending OI-16. _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ | BR-019, BR-008 | Must | Erik Lindqvist | T, I |
+| FR-107 | Ensure nothing is deleted — every governed entity is active or inactive; state transitions MUST be appended with timestamp and cause; history MUST NOT be rewritten; the sole recorded exception is pre-nomination disclosure data (FR-085), which is confidential-class and never enters the governance record — carve-out ADOPTED per OI-16 (2026-08-11). _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ | BR-019, BR-008 | Must | Erik Lindqvist | T, I |
 | FR-108 | Ensure the public verifiable record carries only proofs, timestamps, counts, and governance events; it MUST NOT be used as the application data store; restricted- and confidential-class data MUST NOT be written to any public chain in any form (CON-002/CON-008/NFR-010 discipline). _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ | BR-019, BR-009 | Must | Rafael Duarte | I, A |
 
 ### 4.36 Transparency dashboard & performance scorecard
@@ -563,6 +590,27 @@ See §9.2.
 |----|-------------------------------|-----------|----------|-------|-----------|
 | FR-112 | Treat revocation of a compromised trust anchor as a platform-governance action decided by member vote through the platform-wide tiered process (NFR-017) at its highest tier, with a published expedited emergency variant (shortened but non-zero timelock, published duration); on enactment, code MUST suspend new enrolments against the revoked anchor; no operator, funder or employee path MUST exist for revocation; already-enrolled credentials are unaffected except as a separately voted decision. _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ | BR-015, BR-006, BR-012 | Must | Rafael Duarte | T, I, A |
 | FR-113 | Require legitimate rotation of a trust anchor (issuer key lifecycle) to follow the same member-vote governance at a published tier; the platform MUST publish the rotation schedule constraint such that a compliant rotation never blocks new enrolments beyond a published maximum window; enrolments under the outgoing anchor MUST remain valid; tier values and windows are governance constants recorded in OI-17. _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ | BR-015, BR-006 | Must | Rafael Duarte | T, I |
+
+---
+
+### 4.39 The steward organisation — coordination without control
+
+> **Design intent — the Bitcoin Foundation lesson (recorded per the approver's direction, 2026-08-11):** The Bitcoin Foundation was founded in 2012 to be Bitcoin's official face and was effectively defunct within a few years — funding collapse, board departures, and a community that never accepted its authority. Bitcoin was unaffected, because the Foundation never controlled the protocol. The lesson is not 'have a foundation'; it is that Bitcoin survived because its foundation did not matter. The steward organisation below is designed to not matter in exactly that sense: it coordinates audits, ceremonies, funds and proposals because somebody must, and it is convenience infrastructure rather than a control point because the protocol MUST NOT need it (BR-021, FR-117). If the steward body collapses tomorrow, the record of that collapse will read like the Foundation's: the protocol did not notice.
+
+| ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
+|----|-------------------------------|-----------|----------|-------|-----------|
+| FR-114 | Elect a standing platform-level steward body by all enrolled citizens (platform scope, not party scope) using the existing anonymous one-person-one-vote ballot mechanics (FR-030..FR-035 discipline; scope-bound nullifiers); enforce fixed terms by contract expiry with no renewal path except a fresh election (FR-089/FR-041 discipline); make the body recallable mid-term by the same affirmative-quorum mechanism that governs any other removal (FR-104 discipline: published bar, active votes to remove, never silence; statement right; surge defence); treat steward candidacy as a public-tier role-taking event (BR-017, FR-084/FR-085 consent mechanics). _(Source: GATE1-DECISION-2026-08-11.md Part B; Rathish, 2026-08-11.)_ | BR-021, BR-015 | Must | Aisha Nkemdirim | T, I, A |
+| FR-115 | Grant stewards ONLY the following enumerated and exhaustive powers: (a) draft and publish protocol proposals with rationale; (b) coordinate independent audits, trusted-setup ceremonies, and credential-issuer onboarding; (c) hold funds and sign vendor contracts; (d) publish operational reports. The list is EXHAUSTIVE: anything not listed is not a steward capability, and any configuration granting a steward capability beyond the list MUST be rejected (FR-088 pattern at platform level). _(Source: GATE1-DECISION-2026-08-11.md Part B; Rathish, 2026-08-11.)_ | BR-021, BR-015 | Must | Rafael Duarte | I, A, T |
+| FR-116 | Prohibit stewards from exercising any power that can change who wins, who votes, or who is a member (the same test as every other body, BR-015); stewards MUST NOT approve, enact or veto a protocol change — they propose, and every enrolled citizen votes (FR-119); any citizen may submit a competing proposal on the same question with equal standing (FR-090 discipline at platform level), so stewards never hold a monopoly on the ballot; there is NO emergency override for stewards or anyone else (CON-003 reaffirmed; issuer onboarding they coordinate still executes only through the timelocked governance path — coordination is not enactment). _(Source: GATE1-DECISION-2026-08-11.md Part B; Rathish, 2026-08-11.)_ | BR-021, BR-015, BR-008 | Must | Rafael Duarte | I, A, T |
+| FR-117 | Guarantee that the protocol survives its stewards: no steward signature, action, approval or liveness MAY be required for enrolment, party creation, voting, proposal submission, or forking; the total absence of every steward MUST leave protocol operation unchanged for every citizen-facing capability. A dedicated capability-absence suite MUST verify zero steward-dependency paths in every citizen flow (the UT-0700/UT-0701 absence-verification pattern; TC seeded in Doc 07 at catch-up, UT IDs assigned by the engineer), and a steward-vacancy simulation MUST show zero citizen-facing degradation before Gate 2. _(Source: GATE1-DECISION-2026-08-11.md Part B; Rathish, 2026-08-11.)_ | BR-021 | Must | Chen Wei | T, A, I |
+| FR-118 | Entrench the following **seven** charter rules as unamendable by ANY vote at ANY tier and changeable only by fork: (1) one human one vote; (2) no transferable power; (3) no privileged role over outcomes; (4) the unconditional right to fork; (5) no behavioural surveillance; (6) anonymity by default with disclosure only by voluntary role-taking; (7) **CON-001 — parties only, never state elections** (promoted into the Tier-1 charter per OI-18: this is a scope boundary rather than an implementation commitment — a platform that could vote itself into running state elections becomes a categorically different and more dangerous system). Entrenchment reuses the existing mechanism (FR-027 discipline elevated to the platform charter; NFR-017 governs the process) — cited, not restated. Amendment proposals targeting ANY Tier-1 entrenched charter rule — including a proposal to permit the platform to conduct a state, municipal, or any binding government election — MUST be rejected by code at submission, regardless of the proposer's tier or the level of claimed support. _(Source: GATE1-DECISION-2026-08-11.md Part B; Rathish, 2026-08-11.)_ _(v2.2.0: amended per OI-18 decision, 2026-08-11.)_ | BR-021, BR-015 | Must | Rafael Duarte | I, A |
+
+> **✅ v2.2.0 — OI-18 DECIDED (Rathish, 2026-08-11): two-tier core.** Tier 1 (FR-118): seven entrenched rules incl. the promoted CON-001 — fork-only. Tier 2 (FR-119): the named absolutes — receipt-freeness & coercion resistance (BR-011, NFR-003), data minimisation (CON-002, CON-008, NFR-010), no bespoke unaudited cryptography (CON-012), non-violence (CON-013) — amendable only via the Doc 03 super-process (supermajority materially above the structural tier; fork-exercisable timelock; two consecutive affirmative votes separated by that window; growth-surge defence active throughout; independent audit published before the second vote; numbers set by the architect with rationale). Tier 3: everything else at its ordinary tier. Rationale preserved in OI-18-DECISION-2026-08-11.md: receipt-freeness must survive an ordinary majority — a majority voting it away votes to make everyone coercible — yet remain evolvable if a better coercion-resistance technique emerges. Tier 1 defines what the system is; Tier 2 protects people from a majority while remaining evolvable.
+
+| ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
+|----|-------------------------------|-----------|----------|-------|-----------|
+| FR-119 | Implement a three-tier amendment structure. **Tier 1** (FR-118 entrenched charter): not amendable by this or any process — code rejects proposals at submission. **Tier 2 — named absolutes**: receipt-freeness & coercion resistance (BR-011, NFR-003); data minimisation (CON-002, CON-008, NFR-010); no bespoke unaudited cryptography (CON-012); non-violence clause (CON-013) — amendable ONLY via the super-process specified in Doc 03, which MUST require at minimum: (a) a supermajority materially above the ordinary structural tier; (b) a timelock long enough that the fork right is genuinely exercisable before the change takes effect; (c) two consecutive affirmative votes separated by that window so no transient majority can carry it; (d) the growth-surge defence active throughout; (e) an independent audit of the proposed change published before the second vote — specific numbers set by the architect with rationale (OI-17 family). **Tier 3** — every other platform rule NOT enumerated in Tier 1 or Tier 2 — amendable by platform-wide citizen vote at its ordinary tier: quorum and supermajority per published constants (OI-08/OI-17 family), timelock at least as long as the highest party tier (NFR-017), the proposal channel open equally to stewards and any enrolled citizen; enactment is by code on close of the timelock, with no ratification step. _(Source: GATE1-DECISION-2026-08-11.md Part B; Rathish, 2026-08-11.)_ _(v2.2.0: amended per OI-18 decision, 2026-08-11.)_ | BR-021, BR-008 | Must | Tomás Ferreira | T, I |
+| FR-120 | Preserve the unconditional right to fork (FR-053 lineage mechanics; NFR-018 full-history export) as the capture backstop: even a captured citizen vote cannot trap anyone, because leaving is free and carries history intact; the fork right is entrenched (FR-118) and MUST remain available regardless of any steward action or protocol vote. Note: fork initiation is currently an open critical with the `fork` flag OFF above dev (§13); this requirement records the design posture, not a new capability. _(Source: GATE1-DECISION-2026-08-11.md Part B; Rathish, 2026-08-11.)_ | BR-021, BR-003 | Must | Erik Lindqvist | I, D |
 
 ---
 
@@ -828,9 +876,14 @@ When an open proposal is tallied
 Then none of those accounts is counted, because none had matured before the proposal's snapshot
 
 # FR-024 — any matured member may propose
+# v2.1.0 per OI-14: submitting requires Worker tier or above; a Supporter attempting to submit is prompted to self-declare Worker (public) first — voting rights unaffected
 Given a matured member
 When they submit a proposal with a declared tier
 Then it is accepted with no pre-screening, moderation or approval by any actor
+
+Given a Supporter-tier matured member who has not declared Worker tier
+When they attempt to submit a proposal
+Then the submission is refused and they are prompted to self-declare Worker tier (public) first; their voting rights are unaffected
 
 # FR-025 — tiered quorum and supermajority
 # (example — non-normative; quorum and supermajority values unset; story not Ready until OI-08 closes; owner: Tomás Ferreira)
@@ -1214,6 +1267,7 @@ When any actor or system attempts to demand a category not listed in the disclos
 Then the demand is refused
 
 # FR-085 — consent irrevocable for the term; withdrawal before close destroys pre-nomination data
+# v2.1.0 per OI-16: confidential-class carve-out adopted — pre-nomination disclosure data never enters the governance record; destroyed on withdrawal; completed-action records append-only without exception
 Given a candidate who withdraws before the nomination window closes
 When the withdrawal is processed
 Then the system destroys the disclosure data submitted for that withdrawn candidacy
@@ -1252,6 +1306,7 @@ When a direct renewal is attempted
 Then no such path exists; continuation requires a fresh member vote
 
 # FR-090 — proposal authorship public; competing proposals have equal standing
+# v2.1.0 per OI-14: submitting requires Worker tier or above; a Supporter attempting to submit is prompted to self-declare Worker (public) first — voting rights unaffected
 Given two proposals on the same question submitted by different members
 When both are presented in the decision window
 Then both appear with equal standing and are voted in the same window
@@ -1362,12 +1417,17 @@ When the removal vote closes
 Then the growth-surge defence (FR-023/FR-028; UT-0220) is applied; the influx cannot drive the removal outcome
 
 # FR-105 — expulsion bar strictly higher than removal bar; separate vote required
+# v2.1.0 per OI-15: expulsion targets public-tier participants only; no expulsion path exists for a Supporter — supporter-tier fraud is handled by FR-005 credential revocation
 Given a removal vote that passed its published bar
 When an expulsion vote on the same person is opened
 Then the expulsion requires its own affirmative quorum and supermajority strictly higher than the removal bar
 Given an expulsion vote that passes
 When the result is processed
 Then membership is revoked with a state transition recorded; no historical records are altered
+
+Given a Supporter-tier member accused of misconduct
+When any actor attempts to open an expulsion vote against them
+Then no expulsion path exists for a Supporter and the attempt is refused; FR-005 credential revocation is the only fraud remedy available
 
 # FR-106 — every data entity classified; unclassified entity not storable
 Given an entity with no assigned data classification
@@ -1378,6 +1438,7 @@ When it is stored
 Then only operations permitted by that classification succeed
 
 # FR-107 — append-only: hard-delete and overwrite attempts fail; transition appended with cause
+# v2.1.0 per OI-16: confidential-class carve-out adopted — pre-nomination disclosure data never enters the governance record; destroyed on withdrawal; completed-action records append-only without exception
 Given any governed entity whose state changes
 When the transition is processed
 Then the new state is appended with timestamp and cause; the prior state remains retrievable unchanged
@@ -1429,6 +1490,146 @@ Then new enrolments are unblocked within the published maximum window; credentia
 Given a rotation attempt that would block new enrolments beyond the published maximum window
 When submitted
 Then the system refuses the configuration until the window constraint is satisfied
+
+# FR-114 — steward body elected by all-enrolled ballot; fixed terms; recall by affirmative quorum
+# (term length, election cadence, recall bar are governance constants; values set at OI-17 closure)
+Given all enrolled citizens are eligible to vote in a platform-wide steward election
+When a steward election ballot closes with valid quorum and a candidate reaches the winning threshold
+Then the candidate is elected to the steward body with a fixed-term contract recorded on the verifiable record
+
+Given a steward seat whose published term has elapsed
+When the term-expiry event is processed by code
+Then the office is vacated automatically; no action by any actor is required; no renewal or extension path exists
+When any actor attempts to extend or renew a steward term without holding a fresh election
+Then no such capability exists and the attempt is refused
+
+Given an active recall petition against a sitting steward that closes with approval meeting the published affirmative quorum and supermajority
+When the result is processed
+Then the steward is recalled and the seat is vacated; a fresh election opens per the published schedule
+Given an active recall petition that closes below the published affirmative quorum
+When the result is processed
+Then the steward remains in office; the failing condition (quorum not met) is published
+
+Given any actor who attempts to renew or extend a steward term by direct action outside the election process
+When the attempt is submitted
+Then no such capability exists and no renewal is recorded
+
+# FR-115 — steward powers enumerated and exhaustive; unlisted action refused; extra capability configuration rejected
+Given a steward who performs one of the four listed powers: (a) drafting and publishing a protocol proposal; (b) coordinating an independent audit, trusted-setup ceremony, or credential-issuer onboarding; (c) holding funds and signing a vendor contract; (d) publishing an operational report
+When the action is submitted
+Then it is accepted and recorded
+
+Given a steward who attempts an action outside the four listed powers — for example flagging a ballot, reordering candidates on a live ballot, touching a vote count, or modifying any governance record
+When the attempt is submitted
+Then no such capability exists; the attempt is refused with the reason (action not in enumerated steward power list)
+
+Given a configuration that would grant a steward a capability beyond the four listed powers
+When the configuration is submitted for application
+Then it is rejected and the rejection is logged with the reason (steward capability configuration beyond enumerated list not permitted)
+
+# FR-116 — stewards propose; citizens decide; no emergency override; competing citizen proposals have equal standing
+Given a steward who attempts to directly enact a protocol change without a citizen vote — for example by writing the change to the governance record or activating a protocol-change transaction
+When the attempt is submitted
+Then no such capability exists; the attempt is refused; no protocol change is recorded
+
+Given a protocol-change proposal published by the steward body
+When it enters the governance process
+Then it is placed on the platform-wide citizen ballot with no special priority or pre-clearance; all enrolled citizens vote
+
+Given a citizen (non-steward) who submits a competing protocol-change proposal on the same question in the same decision window
+When both proposals are placed on the ballot
+Then both appear with equal standing; both are voted in the same window; neither receives priority over the other
+
+Given any actor — steward, operator, or Trumocracy staff — who attempts to invoke an emergency override to enact a protocol change without a citizen vote
+When the attempt is submitted
+Then no such path exists; CON-003 is reaffirmed; the attempt is refused and logged
+
+# FR-117 — zero steward dependency; all citizen-facing flows succeed with every steward seat vacant
+Given a platform simulation in which every steward seat is vacant (no steward holds office)
+When a citizen completes the enrolment flow
+Then enrolment succeeds with no steward action, signature, or liveness required
+
+Given the same steward-vacancy simulation
+When a citizen creates a new party, submits a petition endorsement, and activates a party
+Then the flow succeeds with no steward action, signature, or liveness required
+
+Given the same steward-vacancy simulation
+When a citizen casts a vote in any open ballot
+Then the vote is recorded and tallied with no steward action, signature, or liveness required
+
+Given the same steward-vacancy simulation
+When a citizen submits a proposal (Worker tier or above per FR-024)
+Then the proposal is accepted and enters the lifecycle with no steward action, signature, or liveness required
+
+Given the capability-absence test suite (UT-0700/UT-0701 pattern) run against all citizen flows in the steward-vacancy simulation
+When the suite completes
+Then zero steward-dependency paths are found in any citizen flow; the suite passes with zero violations; citizen-facing degradation is zero
+
+# FR-118 — entrenched charter rules (seven) unamendable; amendment proposals rejected by code at submission
+# v2.2.0 per OI-18: seven entrenched rules (CON-001 added); adversarial scenario for CON-001 added
+Given an enrolled citizen who submits a proposal to amend one of the seven entrenched charter rules — for example introducing vote weighting (violates one human one vote), making ballot direction transferable (violates no transferable power), restricting the unconditional right to fork, or permitting the platform to conduct a municipal or state election (violates CON-001 — parties only, never state elections)
+When the proposal is submitted regardless of the proposer's tier or the level of claimed support
+Then the system rejects the proposal at submission with the reason (targets an entrenched charter rule — not amendable); no governance record for this proposal is created
+
+Given an enrolled citizen who submits a proposal to amend a non-entrenched protocol rule
+When the proposal is submitted
+Then it is accepted and enters the amendment process per FR-119
+
+Given any actor — steward, operator, or citizen with supermajority support — who submits an amendment targeting an entrenched charter rule
+When the attempt is submitted
+Then it is rejected by code at submission; no path exists to place an entrenched-rule amendment on any ballot
+
+Given an adversarial actor who submits a proposal worded as "permit the platform to conduct a municipal election" (a CON-001 Tier-1 rule — scope boundary)
+When the proposal is submitted regardless of the claimed rationale or level of support
+Then the system recognises it as targeting the CON-001 entrenched charter rule and rejects it at submission; no ballot is opened; the proposer receives the reason (targets an entrenched charter rule — not amendable)
+
+# FR-119 — three-tier amendment structure: Tier-1 fork-only; Tier-2 named-absolutes super-process; Tier-3 ordinary citizen vote
+# v2.2.0 per OI-18: Tier-2 scenario added; Tier-3 ordinary scenario retained; Tier-1 handled by FR-118 block above
+# (example — non-normative; quorum Q%, supermajority S%, timelock T, super-supermajority SS% are governance constants set at OI-17 / Doc 03)
+
+# Tier-2: proposal to weaken a named absolute (receipt-freeness) — requires full super-process
+Given a proposal to weaken receipt-freeness (a Tier-2 named absolute, BR-011/NFR-003)
+When the proposal is submitted and the first vote closes with the required super-supermajority SS% and quorum
+Then the proposal enters the fork-exercisable timelock of duration T_super (set in Doc 03 with rationale)
+And during T_super the fork right remains fully available to every citizen
+And an independent audit of the proposed change must be published before the second vote window opens
+And the growth-surge defence is active throughout both votes and the timelock window
+When the second affirmative vote closes with the required super-supermajority SS%
+Then the change is enacted by code; if ANY of the five properties (super-supermajority on either vote, fork-exercisable timelock, published independent audit before second vote, growth-surge defence throughout) is absent, the change is NOT enacted
+
+Given a proposal to weaken receipt-freeness where the first vote closes above SS% but the independent audit is not published before the second vote window opens
+When the second vote window opens without the audit published
+Then the second vote does not proceed; the proposal lapses; no enactment occurs
+
+# Tier-3: ordinary citizen vote on a non-entrenched, non-named-absolute platform rule
+# (example — non-normative; quorum Q%, supermajority S%, and timelock T are governance constants set at OI-17 closure)
+Given a proposed platform rule change that is not in the FR-118 entrenched charter and not a Tier-2 named absolute
+When the proposal closes with turnout meeting the published highest-tier quorum Q% and approval meeting the published supermajority S%
+Then the proposal enters a timelock of duration at least as long as the highest party-tier timelock T
+And on timelock expiry the change is enacted by code with no ratification step required from any actor
+
+Given the same Tier-3 proposal type that closes below the published quorum Q% or below the supermajority S%
+When the result is processed
+Then the proposal fails; the specific failing condition (quorum shortfall or supermajority shortfall) is published on the governance record
+
+Given any actor who attempts to ratify, approve, block, or modify the enactment of a passed and timelocked Tier-3 protocol change
+When the attempt is submitted
+Then no such capability exists; enactment is by code on timelock close with no human ratification step
+
+# FR-120 — unconditional fork right regardless of steward action or protocol vote; fork flag OFF above dev (open critical)
+# Note: fork initiation is an open critical with the fork flag OFF above dev (§13); this Gherkin block records the design obligation.
+# When the flag is ON in the test environment the scenarios below must pass; in staging/production the flag status is the blocking item.
+Given any enrolled citizen or party in the test environment (fork flag ON)
+When they initiate a fork
+Then the fork proceeds with full history export regardless of any steward action or any outcome of any protocol vote; no steward consent or signature is required
+
+Given a scenario in which every steward opposes a fork initiated by a citizen (fork flag ON in the test environment)
+When the fork initiation is submitted
+Then it succeeds; steward opposition has no effect; the unconditional right to fork is preserved
+
+Given a scenario in which a passed protocol vote purports to restrict fork rights (an entrenched-rule violation per FR-118)
+When a citizen attempts to initiate a fork after that vote (fork flag ON in the test environment)
+Then the fork proceeds; the fork-restriction enactment is refused by code at the vote-closure step because the fork right is entrenched (FR-118) and cannot be amended
 ```
 
 ```gherkin
@@ -1626,7 +1827,7 @@ Then the transition is appended with timestamp and cause; the prior state is pre
 
 | ID | Constraint | Type | Owner |
 |----|-----------|------|-------|
-| CON-001 | Trumocracy organises **political parties only**. It MUST NOT conduct, tabulate, certify, replace or hold itself out as conducting any binding state election, referendum or plebiscite. Every public surface MUST state this boundary. **This is absolute and not negotiable at any gate.** | Legal / product | Sofia Marchetti |
+| CON-001 | Trumocracy organises **political parties only**. It MUST NOT conduct, tabulate, certify, replace or hold itself out as conducting any binding state election, referendum or plebiscite. Every public surface MUST state this boundary. **This is absolute and not negotiable at any gate.** _(v2.2.0 per OI-18: promoted into the Tier-1 entrenched charter (FR-118) — unamendable by any vote, changeable only by fork.)_ | Legal / product | Sofia Marchetti |
 | CON-002 | Trumocracy MUST NOT take custody of personal identity documents, biometric templates, or residential addresses at any point in any flow. | Legal / privacy | Dr. Lena Kowalczyk |
 | CON-003 | There MUST be no single trusted operator, administrative key, privileged role, pause switch or emergency override in any governance path — including for Trumocracy itself. | Architectural | Rafael Duarte |
 | CON-004 | All governance-critical logic MUST be open source under an OSI-approved licence with reproducible builds. | Openness | Rafael Duarte |
@@ -1666,6 +1867,7 @@ Then the transition is appended with timestamp and cause; the prior state is pre
 | TD-08 | **No behavioural telemetry vs product observability.** Aggregate-only analytics forfeits funnel visibility, individual A/B testing, and per-user UX research. | Accept: behavioural data deanonymises supporters and is a ready-made political-intelligence database for a hostile actor; aggregate-only analytics accepted as strictly worse for product iteration (FR-111, NFR-027). | We give up funnel analytics, individual A/B testing, and per-user UX research. Aggregate dashboards and consenting-panel usability studies (NFR-022) are the only permitted substitutes. | Dr. Lena Kowalczyk |
 | TD-09 | **Worker permanence vs recruitment.** Irrevocable-for-term public identity will deter some capable people from the Worker tier. | Accept: the alternative, revocable disclosure, would allow power to be sought without accountability; the deterrent effect is the deliberate price (FR-080/FR-084). | Some good people will not take the Worker tier because of it. We accept that and publish the participation rate rather than claim it away. | Grace Mbeki |
 | TD-10 | **Political neutrality vs the non-violence clause.** The platform imposes exactly one substantive political value on every party constitution. | Accept knowingly as a founding principle; code enforces presence-check only (FR-077); enforcement beyond presence is for members and law; disclosed on every party-creation surface (CON-013). | Critics will assert any mandatory clause is a political position; we accept this characterisation and defend it as the narrowest possible exception, disclosed in full. | Daniel Okonkwo |
+| TD-11 | **Standing steward body vs the no-standing-body instinct.** | Ruling 4 and FR-099/FR-101 deliberately use per-case sortition and forbid standing panels wherever a body could touch outcomes. The steward organisation IS a standing body — accepted because coordination work (audits, ceremonies, vendor contracts, fund custody) needs continuity and a legal counterparty, and because the body is stripped of outcome power (FR-115/FR-116), mechanically term-limited and recallable (FR-114), and structurally unnecessary (FR-117). | A standing body accretes soft authority even without formal power (RISK-31); the mitigation is that its irrelevance is a tested property, not a promise. | Rafael Duarte |
 
 > ✅ v2.0.0: the TD-02 vs FR-062 contradiction is resolved by the three-tier privacy ruling per BR-017 — see §4.19 and §4.24.
 
@@ -1703,17 +1905,19 @@ Then the transition is appended with timestamp and cause; the prior state is pre
 | RISK-28 | **Conduct and removal votes weaponised for harassment campaigns** — coordinated members flood conduct votes or removal votes against a targeted individual. | 3 | 4 | `FR-104` affirmative quorum with UT-0220 growth-surge defence; statement right mandatory before window closes; `NFR-024` harassment-rate metric; `FR-044`-style cooldowns as governance constants (OI-17). | Daniel Okonkwo |
 | RISK-29 | **Non-violence clause drags the platform toward content judgment** — enforcing one mandatory political value creates pressure to enforce others. | 2 | 4 | Code enforces presence-check only (`FR-077`); enforcement beyond presence belongs to members and law; `FR-056` jurisdiction-scoped display filtering boundary unchanged; TD-10 records the accepted tension. | Sofia Marchetti |
 | RISK-30 | **Trust-anchor governance latency** — member-vote revocation is slower than an operator kill-switch; a compromised anchor can mint Sybils during the emergency-variant timelock. | 2 | 5 | `FR-112` expedited emergency variant with published (shortened but non-zero) duration; `FR-004` attestor concentration cap limits Sybil yield per compromised anchor; `NFR-004` quarterly audit; residual accepted — cites SC-13/SC-14 from artifacts/reviews/SECURITY-RESCAN-SC-01-2026-08-10.md. | Rafael Duarte |
+| RISK-31 | **Steward soft-power accretion** — the community treats steward proposals as canonical, vendors treat steward signatures as authority, and de facto control accretes without any formal power changing. | 3 | 4 | `FR-115` exhaustive powers; `FR-116` competing proposals with equal standing; `FR-117` zero-dependency property tested; `FR-114` recall + term expiry; `FR-120` fork backstop; `NFR-019` operational reports public. | Rafael Duarte |
+| RISK-32 | **Steward-body collapse** — funding collapse, mass resignation or vacancy (the Bitcoin Foundation scenario) degrades coordination: audits and ceremonies slow, vendor contracts lapse. | 3 | 2 | `FR-117` guarantees zero citizen-facing impact; fresh election per `FR-114`; operational reports expose runway early. Residual accepted: coordination latency during vacancy — deliberately low impact BY DESIGN. | Chen Wei |
 
 ---
 
 ## 11. Requirements prioritization & release plan (MoSCoW)
 
-**Counts (v2.0.0).** 20 BR · 113 FR minted (111 active + 2 superseded: FR-046, FR-062) · 28 NFR · 14 CON · 25 RISK requirement-level rows listed in §10 (RISK-01..16 + RISK-22..30; RISK-17..21 live in Doc 13) · 10 recorded trade-offs.
-_(v1.1.0 baseline: 13 BR · 73 FR · 26 NFR · 12 CON · 19 RISK · 7 TDs. v1.0.0 baseline: 12 BR · 61 FR · 26 NFR · 12 CON · 16 RISK · 6 TDs. Added by CR-v1.1.0: 1 BR, 12 FR, 3 RISK, 1 TD. Added by v2.0.0 re-entry: 7 BR, 40 FR, 2 NFR, 2 CON, 9 RISK, 3 TDs; 2 FRs superseded.)_
+**Counts (v2.1.0).** 21 BR · 120 FR minted (118 active + 2 superseded: FR-046, FR-062) · 28 NFR · 14 CON · 27 requirement-level RISK rows in §10 (RISK-01..16 + RISK-22..32; RISK-17..21 live in Doc 13) · 11 TDs.
+_(v1.1.0 baseline: 13 BR · 73 FR · 26 NFR · 12 CON · 19 RISK · 7 TDs. v1.0.0 baseline: 12 BR · 61 FR · 26 NFR · 12 CON · 16 RISK · 6 TDs. Added by CR-v1.1.0: 1 BR, 12 FR, 3 RISK, 1 TD. Added by v2.0.0 re-entry: 7 BR, 40 FR, 2 NFR, 2 CON, 9 RISK, 3 TDs; 2 FRs superseded. Added by v2.1.0: 1 BR (BR-021), 7 FR (FR-114..FR-120), 2 RISK (RISK-31..32), 1 TD (TD-11).)_
 
 | Priority | FR count | FR IDs |
 |----------|----------|--------|
-| **Must** | **94** | FR-001, 002, 003, 004, 006, 007, 008, 009, 010, 011, 014, 016, 018, 020, 021, 022, 023, 024, 025, 026, 027, 028, 030, 031, 032, 033, 035, 036, 037, 039, 040, 042, 043, 045, 047, 050, 051, 054, 056, 058, 059, 060, 061, 063, 064, 065, 066, 067, 068, 069, 070, 071, 072, 073, 074, 075, 076, 077, 078, 079, 080, 081, 082, 083, 084, 085, 086, 087, 088, 089, 090, 091, 092, 093, 094, 095, 096, 097, 098, 099, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113 |
+| **Must** | **101** | FR-001, 002, 003, 004, 006, 007, 008, 009, 010, 011, 014, 016, 018, 020, 021, 022, 023, 024, 025, 026, 027, 028, 030, 031, 032, 033, 035, 036, 037, 039, 040, 042, 043, 045, 047, 050, 051, 054, 056, 058, 059, 060, 061, 063, 064, 065, 066, 067, 068, 069, 070, 071, 072, 073, 074, 075, 076, 077, 078, 079, 080, 081, 082, 083, 084, 085, 086, 087, 088, 089, 090, 091, 092, 093, 094, 095, 096, 097, 098, 099, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120 |
 | **Should** | 14 | FR-005, 012, 013, 015, 017, 019, 029, 034, 038, 041, 044, 048, 049, 055 |
 | **Could** | 3 | FR-052, 053, 057 |
 | **Won't (this release)** | — | Vote delegation; state elections; cross-jurisdiction parties; social features; staff moderation of political speech |
@@ -1723,7 +1927,7 @@ _Convention: superseded rows (FR-046, FR-062) are excluded from the active Must 
 
 NFR priorities: **Must** — NFR-001…007, 009…017, 020…025, 027…028 (24). **Should** — NFR-008, 018, 019, 026 (4).
 
-**On the size of the Must set.** The Must set grows from 54 to 94 with the v2.0.0 vision re-entry directed by the approver (Rathish, 2026-08-10). The 40 new Must FRs (FR-074..FR-113) cover party self-governance, participation tiers and privacy, committees, proposal lifecycle, candidate selection, manifesto, financial transparency, COI, audit, disputes, member rights, conduct votes, data classification, transparency dashboard, scorecard, and trust-anchor lifecycle governance. FR-050 is raised from Should to Must (financial transparency is now a business requirement, BR-019). FR-062 is superseded by §4.24 (FR-082..FR-086) and excluded from the active Must count. All v2.0.0 FRs are Must per the approver's direction. Gate 1 re-entry approves direction; Gate 2 still governs launch readiness.
+**On the size of the Must set.** The Must set grows from 54 to 94 with the v2.0.0 vision re-entry directed by the approver (Rathish, 2026-08-10). The 40 new Must FRs (FR-074..FR-113) cover party self-governance, participation tiers and privacy, committees, proposal lifecycle, candidate selection, manifesto, financial transparency, COI, audit, disputes, member rights, conduct votes, data classification, transparency dashboard, scorecard, and trust-anchor lifecycle governance. FR-050 is raised from Should to Must (financial transparency is now a business requirement, BR-019). FR-062 is superseded by §4.24 (FR-082..FR-086) and excluded from the active Must count. All v2.0.0 FRs are Must per the approver's direction. Gate 1 re-entry approves direction; Gate 2 still governs launch readiness. _v2.1.0: the Must set grows from 94 to 101 with seven steward-organisation FRs (FR-114..FR-120), all Must per the conditional Gate-1 approval directed by Rathish (2026-08-11); the condition is fulfilled by this version landing before Design._
 
 **Release shape.** One release at 2027-06-01 (following Gate 2 readiness 2027-05-14), delivered
 on trunk behind flags, rolled out 1 → 10 → 50 → 100% in the one approved pilot jurisdiction; a
@@ -1760,6 +1964,16 @@ per the refine loop; none exist at v1.0.0 or v1.1.0 (all v1.1.0 requirements sou
 
 **Session scope (approver instruction, 2026-08-10):** this session produces Docs 01 and 02 only and stops at Gate 1. US seeding (Doc 05) and TC design (Doc 07) for FR-074..FR-113 follow after the Gate 1 re-entry decision; until then the downstream columns for v2.0.0 FRs are OPEN by design — recorded here, not hidden. The RTM (Doc 08) closes the chains when Docs 05/07 catch up.
 
+**v2.1.0 additions (BR-021; steward organisation; Rathish, 2026-08-11):**
+- BR-021 → FR-114, FR-115, FR-116, FR-117, FR-118, FR-119, FR-120
+- BR-015 (equal standing, no outcome power) → FR-114, FR-115, FR-116, FR-118 _(existing BR; steward FRs add to its downstream set)_
+- BR-008 (no unilateral protocol change) → FR-116, FR-119 _(existing BR; steward FRs add to its downstream set)_
+- BR-003 (unconditional exit) → FR-120 _(existing BR; fork backstop adds to its downstream set)_
+
+**Part B requirement-7 check (non-violence, v2.1.0):** Part B item 7 (non-violence) minted no new requirement — confirmed already covered by CON-013 and FR-077 (v2.0.0); recorded here per the Change-9 precedent.
+
+**Session scope (v2.1.0 extension):** US (Doc 05) and TC (Doc 07) seeding for FR-114..FR-120 joins the existing v2.0.0 catch-up owed after this version lands (the RTM closes the chains); downstream columns are OPEN by design — recorded not hidden. The RTM will close the full chain BR-021 → FR-114..FR-120 → DES → US → TC when Docs 03/05/07 catch up post-Gate-1.
+
 ---
 
 ## 13. Open issues / TBD
@@ -1779,10 +1993,11 @@ per the refine loop; none exist at v1.0.0 or v1.1.0 (all v1.1.0 requirements sou
 | OI-11 | Whether office-holders' *ordinary member* votes must be separable in practice from their office-capacity votes (`FR-048`) without leaking either. | Design | Erik Lindqvist |
 | **OI-12** | **FR-073 vs ADR-003 issuer-plurality model.** ~~FR-073 mandates the government eID credential rail as the sole enrolment-nullifier-issuing class per region (aligning with OI-03 Phase-1 decision). ADR-003 describes an issuer-plurality model. The architect MUST confirm in Doc 03 whether these are reconcilable or whether ADR-003 requires amendment.~~ **Resolved by ADR-016 (amends ADR-003 for Phase 1; see Doc 03 §16 and docs/adr/ADR-016-enrolment-issuer-hierarchy.md). OI-12 is closed.** _(ISS-13.)_ | Design ✓ | Marcus Adeyemi |
 | **OI-13** | ~~**FR-062 (public participation profile) vs NFR-001, NFR-024, TD-02 (anonymity-always for ordinary members).** FR-062 makes party membership and participation records publicly visible on a user profile. NFR-001 and NFR-024 prohibit exactly this. TD-02 records the asymmetry as "members anonymous always." The conflict is flagged inline in §4.19 and §6. Resolution required at Gate 1 re-affirmation by the human approver (Rathish).~~ **RESOLVED at v2.0.0 by the approver's three-tier privacy ruling (BR-017, 2026-08-10): supporters anonymous unconditionally; workers/candidates public by informed consent at role-taking. FR-062 superseded by §4.24 requirements; NFR-001/002/024 tier-scoped; TD-02 extended. Decision recorded in the Gate 1 re-entry packet.** | Gate 1 re-entry ✓ | Priya Raghunathan |
-| **OI-14** | **Proposal authorship (FR-090, ruling 1) vs Supporter anonymity (BR-017/FR-082):** ruling 1 makes proposal authorship public as the agenda-setting counterweight; ruling 3 makes Supporters anonymous with nothing attributable. A Supporter who authors a proposal cannot satisfy both. Candidate resolutions — (a) proposing requires Worker tier or above; (b) supporter authorship is attributed to a stable per-party pseudonym; (c) supporter proposals are unattributed — each sacrifices something different. DECISION for the approver at Gate 1; story not Ready until decided. See ⚠ banner at §4.25. | Gate 1 | Priya Raghunathan |
-| **OI-15** | **Expulsion of an anonymous Supporter is impossible without deanonymisation (FR-105 banner):** expulsion requires an addressable subject; a Supporter is anonymous by construction. Candidate resolutions — (a) scope expulsion to public-tier participants only, with FR-005 fraud-revocation as the sole mechanism for Supporters; (b) build a pseudonymous expulsion mechanism (expels a nullifier, no identity revealed). Each has different consequences for accountability and for privacy. DECISION for the approver at Gate 1; story not Ready until decided. See ⚠ banner at §4.34. | Gate 1 | Priya Raghunathan |
-| **OI-16** | **Append-only rule (FR-107) vs withdrawal-destroys-data (FR-085):** the vision states both 'nothing is ever deleted; history is append-only' and 'withdrawal before nomination closes destroys submitted disclosure data.' The proposed resolution — pre-nomination disclosure data is confidential-class, held off the governance record, and destroyable precisely because it never entered the append-only record — is NOT adopted silently. Candidate resolutions — (a) adopt the confidential-class carve-out; (b) weaken destruction to deactivation (data retained confidential, never published). DECISION for the approver at Gate 1. See ⚠ banner at §4.24. | Gate 1 | Priya Raghunathan |
-| **OI-17** | **Governance constants minted by v2.0.0:** trust-anchor revocation and rotation governance tiers and maximum blocking windows (FR-112/FR-113); conduct-vote, removal, and expulsion affirmative quorum bars, supermajority thresholds, and cooldowns (FR-103..FR-105); founding-member count (FR-076); disclosure schedule per role (FR-084); dispute stage maximum timelines (FR-100) — all to be set in Design, analogous to OI-08. | Design | Tomás Ferreira |
+| **OI-14** | ~~**Proposal authorship (FR-090, ruling 1) vs Supporter anonymity (BR-017/FR-082):** ruling 1 makes proposal authorship public as the agenda-setting counterweight; ruling 3 makes Supporters anonymous with nothing attributable. A Supporter who authors a proposal cannot satisfy both. Candidate resolutions — (a) proposing requires Worker tier or above; (b) supporter authorship is attributed to a stable per-party pseudonym; (c) supporter proposals are unattributed — each sacrifices something different. DECISION for the approver at Gate 1; story not Ready until decided. See ⚠ banner at §4.25.~~ **DECIDED at Gate 1 (Rathish, 2026-08-11): Worker tier and above may author; authorship stays public; Supporters retain full voting rights and may self-declare Worker at any time to author. Recorded in GATE1-DECISION-2026-08-11.md §3; applied at v2.1.0 to FR-024, FR-090.** | Gate 1 ✓ | Priya Raghunathan |
+| **OI-15** | ~~**Expulsion of an anonymous Supporter is impossible without deanonymisation (FR-105 banner):** expulsion requires an addressable subject; a Supporter is anonymous by construction. Candidate resolutions — (a) scope expulsion to public-tier participants only, with FR-005 fraud-revocation as the sole mechanism for Supporters; (b) build a pseudonymous expulsion mechanism (expels a nullifier, no identity revealed). Each has different consequences for accountability and for privacy. DECISION for the approver at Gate 1; story not Ready until decided. See ⚠ banner at §4.34.~~ **DECIDED at Gate 1 (Rathish, 2026-08-11): expulsion scoped to public-tier participants only; FR-005 credential revocation handles supporter-tier fraudulent enrolment. Recorded in GATE1-DECISION-2026-08-11.md §3; applied at v2.1.0 to FR-105.** | Gate 1 ✓ | Priya Raghunathan |
+| **OI-16** | ~~**Append-only rule (FR-107) vs withdrawal-destroys-data (FR-085):** the vision states both 'nothing is ever deleted; history is append-only' and 'withdrawal before nomination closes destroys submitted disclosure data.' The proposed resolution — pre-nomination disclosure data is confidential-class, held off the governance record, and destroyable precisely because it never entered the append-only record — is NOT adopted silently. Candidate resolutions — (a) adopt the confidential-class carve-out; (b) weaken destruction to deactivation (data retained confidential, never published). DECISION for the approver at Gate 1. See ⚠ banner at §4.24.~~ **DECIDED at Gate 1 (Rathish, 2026-08-11): confidential-class carve-out adopted — pre-nomination disclosure data is confidential-class and never enters the governance record; destroyed on withdrawal; public records of completed actions remain append-only without exception. Recorded in GATE1-DECISION-2026-08-11.md §3; applied at v2.1.0 to FR-085, FR-107.** | Gate 1 ✓ | Priya Raghunathan |
+| **OI-17** | **Governance constants minted by v2.0.0:** trust-anchor revocation and rotation governance tiers and maximum blocking windows (FR-112/FR-113); conduct-vote, removal, and expulsion affirmative quorum bars, supermajority thresholds, and cooldowns (FR-103..FR-105); founding-member count (FR-076); disclosure schedule per role (FR-084); dispute stage maximum timelines (FR-100) — all to be set in Design, analogous to OI-08. _(v2.1.0: + steward term length, election cadence and recall bar (FR-114); protocol-tier quorum, supermajority and timelock (FR-119).)_ | Design | Tomás Ferreira |
+| **OI-18** | ~~**Entrenched-charter scope vs previously-absolute guarantees (FR-118/FR-119).** The approver's entrenched list has six rules; CON-001 (party-only boundary), BR-011/NFR-003 (receipt-freeness, coercion resistance), CON-002/CON-008/NFR-010 (data minimisation, no personal data on the record), CON-012 (no unaudited crypto) and CON-013 (non-violence) are not on it, and FR-119 makes everything off-list votable. Options: (a) extend the entrenched charter to include these named absolutes; (b) accept that they become amendable at the highest tier (a recorded weakening of guarantees this document currently states as absolute); (c) a two-tier core: the six charter rules unamendable, the named absolutes amendable only by a stricter super-process defined in Design. DECISION for the approver before the architect fixes the amendment boundary in Doc 03. See ⚠ banner at §4.39.~~ **DECIDED (Rathish, 2026-08-11): option (c) two-tier core, CON-001 promoted to Tier 1. Recorded in OI-18-DECISION-2026-08-11.md; applied at v2.2.0 to FR-118, FR-119, CON-001. Doc 03 v2 specifies the super-process numbers with rationale (OI-17 family).** | Gate 1 follow-up ✓ | Priya Raghunathan |
 
 **SC-13/SC-14 carry-forward status:** SC-13 (HIGH) and SC-14 (MEDIUM) from the SC-01 re-scan (artifacts/reviews/SECURITY-RESCAN-SC-01-2026-08-10.md §4): resolved IN PRINCIPLE at requirements level by FR-112/FR-113 under ruling 4 (trust-anchor lifecycle governance is a member-vote action executed by code). The Doc 03 design change implementing FR-112/FR-113 is owed after Gate 1 and remains open against the architect until then.
 
@@ -1832,6 +2047,12 @@ per the refine loop; none exist at v1.0.0 or v1.1.0 (all v1.1.0 requirements sou
 | **Steering committee** | A party committee capped at 30 members operating under the same deliberative-only constraints as all committees — no decisional power (`FR-087`). |
 | **Tier** | One of three self-assigned, descriptive participation labels per party — Supporter, Worker, Candidate — that record contribution context but confer no voting weight (`FR-079`). |
 | **Trust-anchor lifecycle** | The governance process for revoking or rotating an identity-issuer key; decided by member vote through the tiered process, with a published expedited emergency variant for revocation and a rotation-schedule constraint preventing enrolment blocking (`FR-112`, `FR-113`). |
+| **Steward** | Elected platform-level coordinator; powers are enumerated and exhaustive (four listed powers only); holds no outcome power — cannot change who wins, who votes, or who is a member (`FR-114`, `FR-115`). |
+| **Entrenched charter** | The **seven** platform rules that are unamendable by any vote at any tier and changeable only by fork: one human one vote; no transferable power; no privileged role over outcomes; the unconditional right to fork; no behavioural surveillance; anonymity by default with disclosure only by voluntary role-taking; and CON-001 (parties only, never state elections — promoted at v2.2.0 per OI-18 as a scope boundary rather than an implementation commitment). Amendment proposals targeting any of these seven rules are rejected by code at submission (`FR-118`). |
+| **Named absolutes (Tier 2)** | The four groups of platform guarantees that are amendable only via the Doc 03 super-process — not by ordinary citizen vote: receipt-freeness & coercion resistance (`BR-011`, `NFR-003`); data minimisation (`CON-002`, `CON-008`, `NFR-010`); no bespoke unaudited cryptography (`CON-012`); non-violence clause (`CON-013`). Distinct from the Tier-1 entrenched charter (fork-only) and from Tier-3 ordinary rules (`FR-119`). |
+| **Super-process** | The five-property amendment path required to change a Tier-2 named absolute. Must include at minimum: (1) a supermajority materially above the ordinary structural tier; (2) a timelock long enough that the fork right is genuinely exercisable before the change takes effect; (3) two consecutive affirmative votes separated by that window; (4) the growth-surge defence active throughout; (5) an independent audit of the proposed change published before the second vote. Specific numbers are set by the architect in Doc 03 with rationale (`FR-119`). |
+| **Amendable protocol** | Every platform rule that is NOT in the Tier-1 entrenched charter or the Tier-2 named absolutes (Tier 3); amendable by platform-wide citizen vote at the highest governance tier with published quorum, supermajority, and timelock — and enacted by code with no ratification step (`FR-119`). |
+| **Steward vacancy** | The tested state in which no steward holds office; the platform guarantee is that a complete steward vacancy causes zero citizen-facing degradation — enrolment, party creation, voting, proposal submission, and forking all proceed unchanged (`FR-117`). |
 
 ---
 
@@ -1841,11 +2062,12 @@ per the refine loop; none exist at v1.0.0 or v1.1.0 (all v1.1.0 requirements sou
 |------|------|----------|------|-------|
 | Product Owner (Accountable) | Priya Raghunathan | Approved v1.0.0; v1.1.0 submitted for re-affirmation | 2026-08-09 | v1.1.0 CR-v1.1.0 nine changes, Status: In Review |
 | Project Manager (Responsible) | Ana-Maria Petrescu | Approved v1.0.0 at Gate 1 | 2026-08-09 | Re-affirmation packet to be assembled for v1.1.0 |
-| **Human approver — Gate 1 re-affirmation** | Rathish | **Pending re-affirmation at v1.1.0** | _pending_ | Must confirm or revise OI-13 (profile vs anonymity) |
-| Human approver — Gate 1 (v2.0.0 re-entry) | Rathish | Pending — this version stops at Gate 1 | _pending_ | v2.0.0 supersedes the v1.1.0 re-affirmation question; OI-13 resolved by ruling |
+| **Human approver — Gate 1 re-affirmation** | Rathish | ~~**Pending re-affirmation at v1.1.0**~~ _(superseded)_ | 2026-08-11 | ~~Must confirm or revise OI-13 (profile vs anonymity)~~ Superseded by the v2.0.0 re-entry (Gate 1 approved 2026-08-11; OI-13 resolved at v2.0.0) |
+| Human approver — Gate 1 (v2.0.0 re-entry) | Rathish | **Gate 1 APPROVED** | 2026-08-11 | Approved Doc 01 v2.0.0 + Doc 02 v2.0.1; conditional on steward requirements (Doc 02 v2.1.0) landing before Design; condition fulfilled by this version |
+| Human approver — v2.1.0 condition | Rathish | Steward requirements landed this version; review loop pending | 2026-08-11 | OI-18 open (entrenched-charter scope) |
 
 ---
 
 ### Downstream
 Design (Doc 03) MUST address **every** FR and NFR and **every** RISK in this document. Coverage is
-verified in the RTM (Doc 08). Nothing is designed until Gate 1 re-affirmation clears for v1.1.0.
+verified in the RTM (Doc 08). Gate 1 was approved 2026-08-11 at Doc 01 v2.0.0 + Doc 02 v2.0.1, conditional on Doc 02 v2.1.0 (steward requirements) passing its business-mode review. Nothing is designed until the project-manager records that condition satisfied (GATE1-DECISION-2026-08-11.md §2). Once recorded, design proceeds per GATE1-DECISION-2026-08-11.md §5.

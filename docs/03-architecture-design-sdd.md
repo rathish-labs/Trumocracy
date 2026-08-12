@@ -2,14 +2,68 @@
 
 ```
 Document ID:   SDD-TRUMOCRACY
-Version:       1.1.2
-Status:        In Review
+Version:       2.1.1
+Status:        Approved (review loop, cycle 2 PASS 100%; SC-15..SC-21 CLOSED — re-scan CLEAR, SECURITY-RESCAN-SC15-21-2026-08-11.md)
 Owner:         Ravi Deshmukh — Principal Architect
 Approvers:     Rafael Duarte (Security), Chen Wei (Reliability), Dr. Lena Kowalczyk (Privacy),
                Aisha Nkemdirim (Elections & Voting)
-Source:        SRS-TRUMOCRACY v1.1.0
-Last updated:  2026-08-10
-Changelog:     v1.1.0 (2026-08-10) — CR-v1.1.0 nine-requirement update; DES-064..086 minted
+Source:        SRS-TRUMOCRACY v2.2.0
+Last updated:  2026-08-11
+Changelog:     v2.1.1 (2026-08-11) — Cycle-1 rework: ISS-01 §5.3 TrustAnchorLifecycle enum
+               adds ROTATION_ABORTED state; ISS-02 sweep table row 4 citation corrected from
+               publishOperationalReport §5.4 to FR-115(d)/NFR-019; ISS-03 DES-092 Tech column
+               submitCitizenAuditRef → publishAuditRef (single entry point); ISS-04 §12
+               ADR-019/020 rows note 2026-08-11 amendments; ISS-05 ADR-020 body state-machine
+               diagram adds ROTATION_PENDING → ROTATION_ABORTED → ACTIVE path.
+               v2.1.0 (2026-08-11) — Security-scan rework (SECURITY-SCAN-DOC03-V2-2026-08-11.md;
+               approver directives Rathish 2026-08-11): SC-15 ProtocolGovernance + StewardRegistry
+               designated IMMUTABLE CORE (§5.1, DES-087 general rule + routing surface exclusions);
+               SC-16 per-constant Amendment Layer column + anti-circularity rule + setter mechanism
+               (§10.11, DES-091); SC-17 citizen-initiated publishAuditRef fallback after
+               STEWARD_INACTION_WINDOW=60 days/vacancy-immediate (DES-092, §5.4, §5.6, ADR-019
+               amended); SC-18 abortRotation() + ROTATION_ABORTED state (DES-090, §5.4, §5.6,
+               ADR-020 amended); SC-19 issuer-onboarding coordination citizen fallback (DES-092);
+               SC-20 Guarded Layer quorum denominator = snapshotRoot enrolled count (DES-087,
+               §10.11); SC-21 STRIDE undiscovered-bypass residual updated with SC-15 general-rule
+               mitigation (§10.1); STEWARD_INACTION_WINDOW constant added to §10.11; single-
+               point-of-progress sweep table added (§11); §18 SC-15..SC-21 scan-response entries.
+               DES-092 minted.
+               v2.0.3 (2026-08-11) — Cycle-3 rework: NN-01 §10.11 ordinary-revocation-timelock
+               row corrected (enrol() continues until anchorEffectiveAt; not blocked at
+               enactment); exhaustive sweep — 12 hits reviewed, 1 non-conforming fixed.
+               v2.0.2 (2026-08-11) — Cycle-2 rework: NI-01 revocation-timing contradiction
+               fixed at §5.2 DES-090 and §11 FR-112 row (REVOCATION_PENDING at enactment is
+               on-chain signal; enrol() continues until anchorEffectiveAt; that window is
+               RISK-30 residual); NI-02 §14 P4-growth-surge sub-case (a) "token transfer"
+               corrected to "membership join/enrolment" (no tokens — ADR-007); NI-03 preamble
+               ADR count eighteen/ADR-001..018 → twenty/ADR-001..020.
+               v2.0.1 (2026-08-11) — Cycle-1 review rework (7 fixes): ISS-01 corrected
+               emergency revocation voting bar from Guarded Layer (80%/25%) to Open Layer
+               governance bar (60%/15%) in §10.1 DoS row and §10.11 emergency revocation row,
+               with ACTIONS-vs-AMENDMENTS disambiguation note; ISS-02 ADR-019 property list
+               renumbered to match OI-18's five verbatim-in-substance (growth-surge = P4,
+               inter-vote window = P2), quorum explicitly marked as additional design
+               requirement beyond OI-18 minimum, §14 growth-surge test hook added; ISS-03
+               added SC-13 post-registration compromise sub-entry to §10.1 STRIDE Spoof
+               (emergency revocation as mitigation, RISK-30 as residual); ISS-04 layer-naming
+               rename throughout: Charter Layer / Guarded Layer / Open Layer replaces bare
+               Tier-1/2/3 amendment-boundary labels across §5.2/5.3/5.4/5.6/10.1/10.11/
+               11/14/15/16/17/18 and both ADRs, with §10.11 disambiguation note and §17
+               Glossary entry distinguishing party T0..T3 tiers from platform amendment layers;
+               ISS-05 §1.1 Must count corrected 97 → 101; ISS-06 changelog stale phrasing
+               removed; ISS-07 anchor-rotation staleness SLA row added to §10.11 (30-day
+               maximum from issuing authority announcement to on-chain vote open).
+               v2.0.0 (2026-08-11) — Four-area increment directed by OI-18-DECISION-2026-08-11
+               and GATE1-DECISION-2026-08-11: (A) FR-118/FR-119 amendment boundary — Charter
+               Layer entrenched charter (seven rules, fork-only), Guarded Layer named-absolutes
+               super-process, Open Layer ordinary path; (B) SC-13/SC-14 trust-anchor lifecycle
+               — revocation and rotation specified, both findings closed at design level;
+               (C) OI-17 governance constants table (§10.11) — values set with rationale,
+               normative for Design; (D) DES elements for steward area FR-114..FR-120;
+               DES-087..DES-091 minted; ADR-019 and ADR-020 written. Next-increment scope
+               (recorded not hidden): full DES coverage of remaining v2.x requirement areas
+               (FR-074..FR-111 beyond existing DES-064..DES-086) is the next design increment.
+               v1.1.0 (2026-08-10) — CR-v1.1.0 nine-requirement update; DES-064..086 minted
                for FR-062..073 and 15 tester-identified RTM gaps; ADR-015..018 minted;
                ADR-003 amended by ADR-016 (cross-referenced in both files); §5.3 data model
                completed (proposal snapshotRoot, fork-initiation state, attester operator
@@ -44,7 +98,7 @@ Changelog:     v1.1.0 (2026-08-10) — CR-v1.1.0 nine-requirement update; DES-06
 ```
 
 > **Based on:** arc42 + C4 + Google design doc + IEEE 1016. **Produced in:** Design.
-> The eighteen decision records in `docs/adr/ADR-001..ADR-018` are normative and are
+> The twenty decision records in `docs/adr/ADR-001..ADR-020` are normative and are
 > summarised in §12; where this document and an ADR disagree, the ADR wins and this document
 > is the defect.
 
@@ -56,9 +110,9 @@ Changelog:     v1.1.0 (2026-08-10) — CR-v1.1.0 nine-requirement update; DES-06
 
 Trumocracy lets any verified citizen originate a political party, gather demonstrated public
 support, and — on reaching a coded threshold — operate that party under rules that no
-founder, financier or platform operator can override. The SRS v1.1.0 defines 13 `BR`, 73 `FR`
-(54 Must), 26 `NFR` (22 Must), 12 `CON` and 19 `RISK`. The requirements that shape this
-architecture more than any others:
+founder, financier or platform operator can override. The SRS v2.2.0 defines 21 `BR`, 120 `FR`
+(118 active + 2 superseded; 101 Must), 28 `NFR` (24 Must), 14 `CON`, and 27 `RISK`. The
+requirements that shape this architecture more than any others:
 
 | ID | Requirement | Architectural consequence |
 |---|---|---|
@@ -188,7 +242,9 @@ Six decisions carry the design; everything else follows from them.
 │  RegionRegistry            │  (issuer set)            │  Elections      │
 │  PartyRegistry             │  (attester set)          │  Recall         │
 │  Party                     │  (population oracle)     │  Treasury       │
-│  no admin · no pause · no proxy                       │  FeatureFlags   │
+│  ProtocolGovernance (SC-15)│                          │  FeatureFlags   │
+│  StewardRegistry  (SC-15)  │                          │                 │
+│  no admin · no pause · no proxy · no governance-vote replacement (ADR-010; SC-15 general rule) │
 └────────────────────────────────────────────────────────────────────────┘
         │ content hashes
         ▼
@@ -276,6 +332,17 @@ Six decisions carry the design; everything else follows from them.
 | DES-085 | UX writing + jargon filter | grade-8 reading level; no primary-flow occurrence of wallet/seed phrase/private key/gas/token/mint/chain/block/hash; CI scan enforces | NFR-023 | apps/web; packages/ui |
 | DES-086 | anti-harassment capability-absence | no identity/contact-detail/location-below-region/activity-pattern surface per member; recall and nomination flows designed without targeted individual notification; absence tested as first-class CI control | NFR-024 | apps/web; Solidity |
 
+**Platform governance & stewardship (v2.0.0 — OI-18 / FR-114..FR-120 / SC-13 / SC-14)**
+
+| ID | Component | Responsibility | Satisfies | Tech |
+|---|---|---|---|---|
+| DES-087 | `ProtocolGovernance` contract | Three-layer amendment boundary: (Charter Layer / Tier 1) immutable registry of the seven entrenched rules — code rejects any proposal targeting them at submission with no exception path; (Guarded Layer / Tier 2) super-process state machine (five-property enforcement — see §5.6); (Open Layer / Tier 3) ordinary citizen-vote path per NFR-017 and §10.11 constants. GENERAL RULE (SC-15): any contract that enforces a Charter Layer rule MUST itself be Charter Layer — otherwise the entrenchment is decorative. Accordingly, `ProtocolGovernance` and `StewardRegistry` are deployed as IMMUTABLE CORE (no admin, no pause, no proxy, non-upgradeable); they are listed in the §5.1 IMMUTABLE CORE box and inherit the ADR-010 guarantees. The `permittedActionClass` table for Open Layer and Guarded Layer MUST NOT include any selector that: (a) deploys a competing governance contract, (b) upgrades or replaces `ProtocolGovernance` or `StewardRegistry`, (c) redirects the `GovernanceConstants` reference pointer, or (d) calls any setter on `GovernanceConstants` without the layer-appropriate passed vote (see DES-091). No routing surface (proxy/upgrade path, registry pointer, `Governor.execute` action class) may circumvent these contracts. An unamendable contract that can be routed around is no better than an amendable one. QUORUM DENOMINATOR (SC-20): the Guarded Layer quorum denominator for BOTH votes is the enrolled citizen count at `snapshotRoot` time (fixed at `proposeAmendment()`), consistent with the P4 snapshot-immutability property; an organic enrolment surge during the 180-day inter-vote window does NOT raise the quorum target for the second vote. | FR-118, FR-119, BR-021, BR-008 | Solidity; state machine per §5.6 |
+| DES-088 | `StewardRegistry` contract | Steward election via existing ballot mechanics, platform-scoped; fixed terms and expiry per §10.11; affirmative-quorum recall per §10.11; term record (holder commitment, term start/expiry, recall state); no issuer-class function — the registry is platform-level only | FR-114, BR-021 | Solidity; Governor ballot |
+| DES-089 | `StewardPowers` boundary | The FR-115 enumerated-power allowlist is the ONLY set of functions the registry exposes on behalf of stewards: (a) draft/publish a protocol proposal; (b) coordinate an independent audit, trusted-setup ceremony, or credential-issuer onboarding; (c) hold funds and sign a vendor contract; (d) publish an operational report. No citizen-path contract imports or references `StewardRegistry` — the FR-117 capability-absence property is achieved BY CONSTRUCTION: zero citizen flow can be blocked by steward vacancy because no citizen flow calls the registry. CITIZEN-FALLBACK CAVEAT (SC-17 / SC-19): stewards COORDINATE, never gatekeep; the citizen-inaction fallback mechanism (DES-092) applies to power (b) for audit publication and issuer-onboarding initiation — steward inaction or vacancy cannot permanently block a citizen-entitled process. | FR-115, FR-116, FR-117, BR-021, CON-003 | Solidity ABI allowlist; CI capability-absence assertion |
+| DES-092 | Citizen-inaction fallback mechanism | Shared pattern applied in two contexts: (1) AUDIT PUBLICATION (SC-17) — after a steward-inaction window (value: §10.11) following a passed Guarded Layer first vote, ANY enrolled citizen may call `publishAuditRef(proposalId, auditRefHash)` to publish the audit reference; steward VACANCY triggers the fallback IMMEDIATELY (no window); the audit substance requirements (independence, scope, 30-day lead time) are UNCHANGED — the fallback changes who may publish, never what qualifies; (2) ISSUER ONBOARDING (SC-19) — after a steward-inaction window following a citizen petition for issuer-onboarding review (threshold: Open Layer quorum, 15%), a citizen-run coordination panel may open the onboarding technical review; stewards coordinate normally but cannot use inaction to suppress issuers serving specific demographic groups. Both fallbacks require a passed governance vote for final enactment (via `Governor.execute()`); the fallback changes only the coordination/publishing step. | FR-115, FR-116, BR-021 | Solidity; `ProtocolGovernance.publishAuditRef()`; citizen-petition tracking |
+| DES-090 | `TrustAnchorLifecycle` | Rotation: `rotateTrustAnchor(issuerId, newAnchorHash)` enacted only by a passed governance vote executed by code (ruling 4); activates a dual-anchor overlap window (old + new both accepted until `overlapEnd`) so a compliant rotation never blocks enrolment beyond the published window (closes SC-14). ROTATION ABORT (SC-18): `abortRotation(issuerId)` enacted by a passed governance vote at the same Open Layer bar (60%/15%) as the original rotation; transitions ROTATION_PENDING → ROTATION_ABORTED → ACTIVE (incumbent/pre-rotation hash restored as sole-accepted anchor); credentials signed with the pending anchor during the overlap window are rejected for new enrolments after abort enactment (no retroactive invalidation of already-completed enrolments). Rationale: without this path the only safe undo of a malicious rotation was full issuer revocation (REVOCATION_PENDING), which blocks ALL enrolments for 30+ days — a self-inflicted denial of service against legitimate users; ROTATION_ABORTED returns to ACTIVE with zero enrolment blocking. Revocation: `revokeTrustAnchor(issuerId)` enacted only by a passed governance vote executed by code; entering `REVOCATION_PENDING` at enactment is the public on-chain signal; `enrol()` against the affected anchor continues until `anchorEffectiveAt` (timelock expiry) and reverts `AnchorRevoked` from then on; the window between enactment and `anchorEffectiveAt` is the accepted RISK-30 residual (mitigated by per-issuer epoch cap); already-enrolled credentials untouched (closes SC-13). No operator or steward may call any lifecycle function directly — callable only from `Governor.execute()` with a validated `permittedActionClass` | FR-112, FR-113, DES-016, ADR-017, ADR-008 | Solidity; `Governor.execute()`; `permittedActionClass` binding |
+| DES-091 | `GovernanceConstants` module | OI-17 closure: publishes the full governance-constant table (§10.11 values). CLASSIFICATION (SC-16): each constant is normatively classified as Guarded Layer (requires Guarded Layer amendment to change) or Open Layer (requires Open Layer amendment to change); classification is listed in the §10.11 table's Amendment layer column. ANTI-CIRCULARITY RULE: the Guarded Layer super-process constants themselves (Tier-2 quorum, Tier-2 supermajority, inter-vote window, audit lead time, steward audit-inaction window) MUST be Guarded Layer minimum — an Open Layer coalition MUST NOT be able to lower the Guarded Layer bar by amending these constants at the Open Layer threshold; if the Guarded Layer quorum constant were lowered by an Open Layer vote, the Guarded Layer protection would be undermined at its foundation. SETTER MECHANISM (SC-16): "immutable-at-deployment" means the initial deployment values cannot be overridden by a constructor argument; the values are revisable post-deployment only by a `Governor.execute()` call carrying a passed vote at the constant's governing layer; the contract exposes a governance-controlled setter guarded by `onlyGovernor` — any call not routed through `Governor.execute()` reverts; this resolves the apparent tension between "immutable" and "revisable." | FR-119, NFR-017, BR-021 | Solidity; `onlyGovernor` setter guard; layer-keyed permittedActionClass |
+
 ### 5.3 Data model
 
 **Normative on-chain fields.** The fields below are the protocol's authoritative schema. A
@@ -355,6 +422,39 @@ Governor
   lastProposalAt    author → uint64  // rate limiting
 ```
 
+ProtocolGovernance
+  entrenched              ruleId → bytes32   // Charter Layer (Tier-1): hash-committed registry of seven rules;
+                                              //   populated at genesis; never mutable by any vote
+  superProcessState       proposalId → {
+                            firstVoteResult,        // passed | failed | pending
+                            firstVoteSnapshotAt,
+                            windowStart,            // Guarded Layer (Tier-2): inter-vote window start (block ts)
+                            windowEnd,              // windowStart + interVoteWindow (see §10.11)
+                            auditRefHash,           // bytes32 audit report hash
+                            auditPublishedAt,       // must satisfy: windowEnd - auditPublishedAt >= auditLeadTime
+                            secondVoteResult,       // passed | failed | pending
+                            enactedAt               // non-zero once enacted
+                          }
+
+StewardRegistry
+  seats                   seatId → {
+                            holderCommitment,   // bytes32 — Poseidon commitment of elected holder
+                            termStart,          // uint64
+                            termExpiry,         // uint64; termStart + STEWARD_TERM (§10.11)
+                            recallState         // NONE | RECALL_PENDING | RECALLED
+                          }
+  recallVotes             seatId → {initiatedAt, affirmativeCount, totalEligible, threshold}
+
+TrustAnchorLifecycle (fields added to PersonhoodRegistry issuer struct)
+  trustAnchorState        issuerId → enum { ACTIVE,
+                            ROTATION_PENDING,   // newHash and effectiveAt known; overlapEnd = effectiveAt + overlapWindow
+                            ROTATION_ABORTED,   // abort enacted via abortRotation(); incumbent hash restored; pending anchor rejected for new enrolments [DES-090, SC-18]
+                            REVOCATION_PENDING, // effectiveAt known (ordinary or emergency path)
+                            REVOKED }
+  pendingAnchorHash       issuerId → bytes32    // non-zero during ROTATION_PENDING
+  anchorEffectiveAt       issuerId → uint64     // block timestamp when new state takes effect
+  anchorOverlapEnd        issuerId → uint64     // ROTATION_PENDING only: old anchor accepted until this ts
+
 **Deliberately absent, everywhere:** name, address, postcode, coordinate, document number,
 document image, biometric template or hash, email, phone, IP, device id, and any mapping from
 a nullifier or commitment to any of the above. **A hashed address is still an address** — the
@@ -395,6 +495,16 @@ Key entrypoints, with their proof requirements:
 | `finalize(id)` / `execute(id)` | — | — | permissionless; `execute` checks `permittedActionClass` for the proposal's tier |
 | `openForkPetition(sourcePartyId, π, signals)` | `tenure_member` | `keccak("fork",sourcePartyId)` | records initiator; threshold ≥ 10% members; GUARDED by `fork` feature flag (off above dev) |
 | `vetoRecovery(enrolmentNullifier, proof)` | active-key signature | — | sets recovery.state = ABORTED |
+| `proposeAmendment(ruleId, callData, tier)` | `tenure_member` (Worker+) | `keccak("propose_amendment",ruleId)` | Charter Layer (Tier 1): revert `EntrenchedRule` at submission; Guarded Layer (Tier 2): opens super-process (firstVote scheduled); Open Layer (Tier 3): ordinary proposal path |
+| `firstVote(proposalId, choice, π, signals)` | `tenure_member` | `keccak("sp_first_vote",proposalId)` | Guarded Layer (Tier-2) only; precondition: `superProcessState[proposalId].firstVoteResult == pending`; records vote; on close checks Tier-2 quorum + supermajority |
+| `publishAuditRef(proposalId, auditRefHash)` | steward (primary); OR any enrolled citizen after steward-inaction window (DES-092; SC-17); citizen fallback is IMMEDIATE if steward vacancy | — | Guarded Layer (Tier-2) only; precondition: firstVote passed AND `block.timestamp >= windowStart`; for citizen fallback additionally requires `block.timestamp >= firstVoteClosedAt + STEWARD_INACTION_WINDOW` (or vacancy); records `auditRefHash` and `auditPublishedAt`; second vote cannot open until `auditPublishedAt + AUDIT_LEAD_TIME <= windowEnd`; audit substance requirements (independence, scope) UNCHANGED regardless of who publishes |
+| `abortRotation(issuerId)` | Governor.execute() only | `keccak("abort_rotation",issuerId)` | Open Layer bar (60%/15%); precondition: `trustAnchorState[issuerId] == ROTATION_PENDING`; transitions ROTATION_PENDING → ROTATION_ABORTED → ACTIVE (incumbent hash restored); pending-anchor credentials rejected for new enrolments from abort enactment; no retroactive invalidation of already-enrolled |
+| `secondVote(proposalId, choice, π, signals)` | `tenure_member` | `keccak("sp_second_vote",proposalId)` | Guarded Layer (Tier-2) only; precondition: auditRef published AND `block.timestamp >= auditPublishedAt + AUDIT_LEAD_TIME`; records vote; on close checks Tier-2 quorum + supermajority |
+| `enact(proposalId)` | permissionless | — | Guarded Layer (Tier-2): precondition: secondVote passed AND timelock elapsed; all five super-process properties enforced — missing any single one causes revert; Open Layer (Tier-3): ordinary timelock path |
+| `electSteward(seatId, π, signals)` | `tenure_member` | `keccak("steward_elect",seatId)` | opens platform-wide ballot for a vacant or expiring seat via Governor ballot mechanics |
+| `recallSteward(seatId, π, signals)` | `tenure_member` | `keccak("steward_recall",seatId)` | affirmative-quorum recall vote per §10.11; surge defence active; silence does not recall |
+| `rotateTrustAnchor(issuerId, newAnchorHash)` | code only — callable ONLY from `Governor.execute()` with `permittedActionClass` = TRUST_ANCHOR_MGMT | — | sets `trustAnchorState = ROTATION_PENDING`; records `pendingAnchorHash`, `anchorEffectiveAt` (block.ts + ordinary governance timelock), `anchorOverlapEnd` (effectiveAt + ANCHOR_OVERLAP_WINDOW); old anchor remains accepted until `anchorOverlapEnd`; enrol() checks: if ROTATION_PENDING AND `block.timestamp < anchorOverlapEnd`, accepts EITHER old OR new hash |
+| `revokeTrustAnchor(issuerId)` | code only — callable ONLY from `Governor.execute()` with `permittedActionClass` = TRUST_ANCHOR_MGMT | — | ordinary path: sets `REVOCATION_PENDING` with timelock per §10.11; emergency path: same call with `emergencyPath=true` flag validated by `permittedActionClass`, uses EMERGENCY_REVOCATION_TIMELOCK (§10.11); on timelock expiry suspends new enrolments (issuer.active remains true, enrolment reverts with `AnchorRevoked`); already-enrolled credentials unaffected |
 
 **Residency-root freshness (ISS-M4 fix):** A residency root MUST remain acceptable for at
 least **15 minutes** after insertion. The `rootHistory` ring size in `RegionRegistry` MUST be
@@ -468,6 +578,29 @@ CANDIDACY: nominated(self) ──3 debates completed──▶ post-debate member
 
 RECOVERY:  ACTIVE ──nullifier collision──▶ PENDING ──veto──▶ ABORTED
                                                 └──7 days, no veto──▶ KEY_ROTATED → ACTIVE (new key)
+
+GUARDED LAYER (TIER-2) SUPER-PROCESS (ProtocolGovernance — DES-087):
+  OPEN ──proposeAmendment(GuardedLayer)──▶ FIRST_VOTE_OPEN
+  FIRST_VOTE_OPEN ──firstVote closes; quorum+supermajority met──▶ WINDOW_OPEN (windowStart recorded)
+  FIRST_VOTE_OPEN ──firstVote closes; quorum or supermajority not met──▶ DEFEATED
+  WINDOW_OPEN ──publishAuditRef() by steward [primary path]──▶ AUDIT_PUBLISHED (auditPublishedAt recorded)
+  WINDOW_OPEN ──block.timestamp >= firstVoteClosedAt + STEWARD_INACTION_WINDOW; any enrolled citizen calls publishAuditRef() [fallback, DES-092/SC-17]──▶ AUDIT_PUBLISHED
+  WINDOW_OPEN ──steward vacancy detected; any enrolled citizen calls publishAuditRef() immediately [vacancy fallback, DES-092/SC-17]──▶ AUDIT_PUBLISHED
+  AUDIT_PUBLISHED ──block.timestamp >= auditPublishedAt + AUDIT_LEAD_TIME
+                   AND block.timestamp >= windowEnd──▶ SECOND_VOTE_OPEN
+  SECOND_VOTE_OPEN ──secondVote closes; quorum+supermajority met──▶ SECOND_PASSED (timelock begins)
+  SECOND_VOTE_OPEN ──secondVote closes; quorum or supermajority not met──▶ DEFEATED
+  SECOND_PASSED ──timelock elapsed──▶ ENACTABLE
+  ENACTABLE ──enact() called (permissionless)──▶ ENACTED
+  Any state ──Charter Layer (Tier-1) target detected at proposeAmendment()──▶ revert(EntrenchedRule) [no state created]
+
+TRUST_ANCHOR (DES-090):
+  ACTIVE ──rotateTrustAnchor() via Governor.execute()──▶ ROTATION_PENDING (newHash, effectiveAt, overlapEnd set)
+  ROTATION_PENDING ──block.timestamp >= effectiveAt──▶ ACTIVE (new hash; old accepted until overlapEnd)
+  ROTATION_PENDING ──abortRotation() via Governor.execute() (Open Layer bar)──▶ ROTATION_ABORTED──▶ ACTIVE (incumbent/pre-rotation hash; pending-anchor credentials rejected for new enrolments from abort; no retroactive invalidation) [SC-18]
+  ACTIVE ──revokeTrustAnchor() via Governor.execute() [ordinary]──▶ REVOCATION_PENDING (30d timelock)
+  ACTIVE ──revokeTrustAnchor() via Governor.execute() [emergency]──▶ REVOCATION_PENDING (7d timelock)
+  REVOCATION_PENDING ──timelock elapsed──▶ REVOKED (new enrolments suspended; enrolled credentials unaffected)
 ```
 
 ## 6. Runtime view
@@ -620,6 +753,7 @@ fails the build.
 | **S**poof | malicious frontend serves backdoored proving key | `zkeyHash` pinning + reproducible builds (DES-052, DES-050) | a user who ignores a warning |
 | **S**poof | attester impersonates a legitimate attestor; calls `issueResidency()` | `attesterAuthorised[caller]` check; `attester.operator` binding (DES-006; ISS-C3 fix) | an attester whose operator key is compromised |
 | **S**poof | enrolment proof verified against an attacker-chosen trust anchor; prover substitutes K_attack for the issuer's real trust anchor, enrolling unlimited synthetic identities (SC-01) | `trustAnchorHash` is a public signal (`publicSignals[4]`) bound on-chain to `issuers[issuerId].trustAnchorHash`; per-adapter verifier dispatch via `issuers[issuerId].verifierAddress` prevents cross-adapter-class proof substitution | a compromised or mis-registered trust anchor at `registerIssuer` time — mitigated by the timelock-governed registration process |
+| **S**poof | post-registration trust-anchor compromise (SC-13) — attacker obtains private key of a CORRECTLY registered issuer and uses it to sign synthetic credentials, enrolling Sybil identities with valid on-chain proofs | `revokeTrustAnchor(issuerId, emergencyPath=true)` via `Governor.execute()` (DES-090, ADR-020); 7-day emergency timelock at Open Layer governance bar (60% supermajority / 15% quorum); per-issuer epoch cap (DES-003) throttles enrolment during the revocation window; public governance vote creates an on-chain signal observable by parties and citizens | 7-day Sybil enrolment window before revocation takes effect — accepted residual RISK-30; epoch-cap-bounded; post-enrolment adjudication possible via NFR-004 audit |
 | **T**amper | alter a tally | on-chain nullifier-gated votes; MACI tally proof | circuit bug (RISK-10) → two audits + negative tests |
 | **T**amper | rewrite a manifesto quietly | append-only version chain + content addressing (DES-031) | none material |
 | **R**epudiate | party denies a commitment | permanent public version history with timestamps | none material |
@@ -632,8 +766,11 @@ fails the build.
 | **E**oP | flash-loan governance takeover | **no transferable power exists** (ADR-007) | none — attack class removed |
 | **E**oP | mob rewrites a charter | tiers + snapshot + adaptive quorum + entrenchment + fork (ADR-008) | a genuinely persuaded majority over a year |
 | **E**oP | operator/admin intervention | no admin, pause or proxy in the core (ADR-010) | registry governance capture → exit right |
-| **E**oP | `Governor.execute` calls arbitrary `target.call(callData)`; tier-0 proposal invokes high-authority action | `permittedActionClass` binding in proposal struct (DES-016); `execute()` reverts if `callData.selector` not in the tier's allowed set; CI assertion over the allowed-action table (ISS-H1 fix) | undiscovered bypass of the action-class table |
+| **E**oP | `Governor.execute` calls arbitrary `target.call(callData)`; tier-0 proposal invokes high-authority action | `permittedActionClass` binding in proposal struct (DES-016); `execute()` reverts if `callData.selector` not in the tier's allowed set; CI assertion over the allowed-action table (ISS-H1 fix) | undiscovered logic bypass within the immutable contract; SC-15 general rule (ProtocolGovernance IMMUTABLE CORE — no upgrade, no proxy, no governance-vote replacement) closes the bypass class of contract substitution or proxy redirection (SC-21); remaining residual is a logic bug inside the immutable code — mitigated by audit (DES-079) and the capability-absence CI scan |
 | **E**oP | stolen credential initiates recovery to seize account (RISK-22) | 7-day delay + active-key veto + independent on-chain veto path (DES-071, ADR-018) | complete device + channel compromise (RISK-23 accepted residual) |
+| **E**oP | steward soft-power elevation — community defers to steward proposals as if they have canonical authority; vendors treat steward signature as an operational override (RISK-31) | power allowlist DES-089 (only four enumerated functions exposed); citizen proposals have equal standing per FR-116; zero-dependency property FR-117 means steward vacancy causes no citizen-facing degradation, eliminating leverage; term expiry + recall (DES-088) cycles authority | perception gap between formal and informal power — accepted residual; mitigated by public operational reports (NFR-019) and fork backstop (FR-120) |
+| **T**amper | Guarded Layer (Tier-2) super-process bypass attempt — actor tries to call `enact()` on a Guarded Layer proposal without completing all five super-process properties (skips first vote, audit ref, or second vote) | `ProtocolGovernance.enact()` enforces all five preconditions in code; any missing property causes revert; the state machine in DES-087 and §5.6 is the single gate; there is no out-of-band execution path (CON-003; ADR-010) | undiscovered logic bypass in the state machine — mitigated by audit (DES-079) and capability-absence CI assertions |
+| **D**oS | trust-anchor revocation abuse — attacker obtains a governance seat or corrupts a vote to pass an emergency revocation of a major issuer, blocking new enrolments | emergency revocation still requires a passed governance vote at the ordinary platform governance voting bar (60% supermajority / 15% quorum — UNCHANGED from ordinary path; only the timelock is shortened per ADR-020); the Guarded Layer super-process (80%/25%/180-day two-vote) applies only to AMENDMENTS of named absolutes, NOT to governance actions such as revocation; growth-surge defence (DES-020) active throughout; ordinary enrolled citizens unaffected | a genuine coordinated-majority attack passes the vote — accepted residual bounded by the quorum bar and the fork backstop (RISK-30) |
 
 **Capability-absence is a security control here**, so it is tested as one: ABI-surface
 assertions, selector scans of deployed bytecode, and storage-layout assertions.
@@ -696,6 +833,64 @@ remain ≥ 90 days at p95 fees; a circuit breaker MUST engage at 3× p99 daily s
 Every governance action emits an event; independent verifier binary reproduces every tally;
 transparency report covers filtering actions and compulsion attempts (ADR-013 §4, DES-084).
 
+### 10.11 Governance constants (OI-17 closure)
+
+**Naming disambiguation.** This section uses "Charter Layer / Guarded Layer / Open Layer" for
+the platform amendment boundary. Doc 02 v2.2.0 calls these "Tier 1 / Tier 2 / Tier 3" — the
+labels map 1:1 (Charter Layer = Doc 02 Tier 1, Guarded Layer = Doc 02 Tier 2, Open Layer =
+Doc 02 Tier 3). The constant NAMES in the table below (e.g. "Tier-3 quorum", "Tier-2 quorum")
+are GovernanceConstants module identifiers that match the on-chain storage layout; they keep
+their names for code-level stability. Party-level governance tiers (T0 policy / T1
+organisational / T2 structural / T3 constitutional) are a SEPARATE namespace defined in the
+party charter rules and Doc 02 FR-103..FR-105; the identical 60%/15% bar shared by Open Layer
+and party T2 structural tier is coincidental, not definitional.
+
+**Status: CLOSED.** These values are the OI-17 closure, normative for Design and for the
+`GovernanceConstants` module (DES-091). They are revisable only through the amendment
+boundary itself (Guarded Layer for named-absolute-adjacent constants; Open Layer for all
+others).
+
+**Anti-circularity rule (SC-16).** A constant classified "Amendment Layer = Guarded Layer" in the table below MUST NOT be lowerable by an Open Layer (ordinary) vote. Any Open Layer proposal targeting a Guarded Layer constant MUST revert. This rule prevents an Open Layer coalition from eroding the Guarded Layer amendment bar by reducing the constants that define it.
+
+**Quorum denominator (SC-20).** The Guarded Layer quorum for both votes (proposeAmendment and castSecondVote) is computed over the enrolled citizen count at snapshotRoot time — the count fixed when proposeAmendment() is called — NOT the live enrolled count at vote time. This prevents an organic enrolment surge from raising the absolute headcount threshold mid-vote and stalling a legitimate amendment. The growth-surge defence (FR-023) applies to party-level votes only and does NOT override the snapshotRoot quorum denominator for Guarded Layer votes (DES-087).
+
+| Constant | Value | Rationale | Amendment Layer |
+|---|---|---|---|
+| **Open Layer — ordinary platform amendment (Doc 02 'Tier 3')** | | | |
+| Tier-3 quorum | 15% of enrolled citizens | Matches the highest party-tier quorum (FR-119 reference); sets the floor for platform-wide legitimacy without requiring a supermajority of all citizens to participate | Open Layer |
+| Tier-3 supermajority | 60% of votes cast | Materially above a simple majority; comparable to constitutional-amendment thresholds in small deliberative bodies; protects against narrow-majority swings | Open Layer |
+| Tier-3 timelock | 90 days | Long enough for a fork petition to reach threshold (10% + 30-day cooling-off) and for community scrutiny; proportional to the structural tier (ADR-008) | Open Layer |
+| **Guarded Layer — named-absolutes super-process (Doc 02 'Tier 2')** | | | |
+| Tier-2 quorum | 25% of enrolled citizens (denominator = enrolled count at snapshotRoot, SC-20) | Materially above Open Layer (10 percentage-point margin); requires broad platform participation before a fundamental protection can change | **Guarded Layer** (anti-circularity: SC-16) |
+| Tier-2 supermajority | 80% of votes cast | Materially above Open Layer (20 percentage-point margin); ensures no transient majority can carry a change that weakens receipt-freeness, data minimisation, cryptographic standards, or the non-violence clause | **Guarded Layer** (anti-circularity: SC-16) |
+| Inter-vote window | 180 days | The fork right (FR-120) requires 10% initiators + 30-day cooling-off + an activation petition (30-day minimum). A citizen who observes the first vote and wishes to fork before the second can complete the petition cycle within 180 days; this satisfies NFR-018's export guarantee and FR-053 petition mechanics. The window is the enforced gap between firstVote close and secondVote open | **Guarded Layer** (anti-circularity: SC-16) |
+| Audit publication lead time | 30 days before second-vote open | Gives the community at least 30 days to read and respond to the audit of the proposed change before the second vote; the second vote cannot open unless `windowEnd - auditPublishedAt >= 30 days` | **Guarded Layer** (anti-circularity: SC-16) |
+| Steward audit-publication inaction window (STEWARD_INACTION_WINDOW) | 60 days from firstVoteClosedAt; steward vacancy triggers citizen fallback immediately (no window) | One-third of the 180-day inter-vote window; long enough for stewards to coordinate and publish the audit reference after the first vote closes; short enough that steward inaction cannot stall the second vote past the halfway mark. Vacancy (no registered steward) triggers the DES-092 citizen fallback immediately with no delay. Same pattern applies to issuer-onboarding coordination trigger (SC-19). | **Guarded Layer** (anti-circularity: SC-16; extension via Open Layer vote would enable indefinite blocking of the super-process) |
+| **Steward organisation** | | | |
+| Steward term length | 2 years | Long enough to develop institutional competence; short enough that elections are a real check; staggered so the platform is never without experienced stewards | Open Layer |
+| Election cadence | Annual (staggered) | One cohort elected per year; at seat count 5, at most 3 seats turn over in any one election cycle, preserving continuity | Open Layer |
+| Seat count | 5 | Enough for coordination diversity; small enough that elections are meaningful; a single steward's absence never blocks a quorum for any listed power | Open Layer |
+| Steward recall bar | 20% affirmative quorum of enrolled citizens + 60% of recall-vote turnout | Affirmative-quorum recall ensures silence cannot remove a steward; 60% of turnout means a motivated minority cannot remove without a real majority; growth-surge defence (FR-023 mechanics) applies throughout | Open Layer |
+| **Conduct, removal, expulsion (FR-103..105)** | | | |
+| Conduct-vote minimum quorum | 10% of eligible party members | Sets a floor that prevents a tiny faction from stigmatising a member; individual votes are private, aggregate public (FR-103) | Open Layer |
+| Removal vote bar | T2 structural tier approval (60% of votes cast, 15% quorum) | Removal is more consequential than an ordinary policy vote and MUST require the structural tier with its adaptive quorum and surge defence (FR-104) | Open Layer |
+| Expulsion vote bar | T3 constitutional tier (80% of votes cast, 20% quorum) | Expulsion is the most severe action; the bar MUST exceed removal; the 20 pp supermajority margin ensures near-consensus is required (FR-105) | Open Layer |
+| Failed-recall cooldown | 6 months | Prevents harassment-campaign cycles; mirrors the recall-cooldown precedent from FR-044/FR-042 party-level recall mechanics | Open Layer |
+| **Founding parameters** | | | |
+| Founding member count minimum | 5 enrolled citizens | FR-076: five named co-founders must sign the founding constitution; low enough not to exclude small movements, high enough to prove non-trivial coordination | Open Layer |
+| Disclosure schedule lead time | 21 days before Worker declaration deadline | FR-084: published 3 weeks in advance; enough time for a prospective Worker to make an informed decision; no extra demands permitted after the deadline | Open Layer |
+| **Dispute stage timelines (FR-100)** | | | |
+| Intake acknowledgment | 48 hours from submission | Rapid enough to prevent strategic delay; automated on-chain acknowledgment | Open Layer |
+| Evidence window | 14 days | Time-bounded; ensures the dispute does not drag; panel receives all evidence before formation | Open Layer |
+| Panel formation | 7 days after evidence window closes | Sortition panel formed within one week; breach is recorded on the decision trail | Open Layer |
+| Recommendation publication | 14 days after panel formation | Panel must publish; breach recorded; no standing panel means no indefinite deferral | Open Layer |
+| Deciding member vote or code execution | 30 days after recommendation publication | Ensures members have time to read and vote; code executes automatically on window close | Open Layer |
+| **Trust-anchor lifecycle** | | | |
+| Anchor rotation staleness SLA (SRE) | 30 days from issuing authority's public rotation announcement to on-chain enactment-vote open | Bounds the window between an issuing authority announcing a new trust-anchor key and the community initiating the governance vote; the SRE MUST alert (Doc 11 SLO) if 30 days elapse without an open vote; 30 days is long enough for community awareness and proposal drafting, short enough that the on-chain record does not diverge from reality for more than one credential-renewal cycle before a vote is in progress | Open Layer |
+| Anchor rotation overlap window | 60 days | Both old and new anchor accepted for 60 days after rotation enactment; large enough to accommodate citizens who renew credentials at normal refresh cadence; Sybil window risk mitigated because both anchors MUST be registered via governance and enrol() deduplication by nullifier still applies | Open Layer |
+| Ordinary revocation timelock | 30 days | Enough time for the community to identify false alarms; `REVOCATION_PENDING` is entered at enactment (public on-chain signal); `enrol()` against the affected anchor CONTINUES until `anchorEffectiveAt` (30 days after enactment) and reverts `AnchorRevoked` from then on; the enactment-to-effectiveAt window is the accepted RISK-30 residual; existing enrolled credentials unaffected | Open Layer |
+| Emergency revocation timelock | 7 days | Shortened but non-zero; requires a passed governance vote at the ordinary platform governance voting bar (60% supermajority / 15% quorum — UNCHANGED from the ordinary revocation path per ADR-020); only the timelock is shortened, not the voting requirement; seven days allows false-alarm veto without enabling unilateral operator action. NOTE: revocation and rotation are governance ACTIONS governed at the ordinary platform governance bar; the Guarded Layer super-process (80% / 25% / 180-day two-vote) applies only to AMENDMENTS of named absolutes — it does not apply here. RISK-30 accepted residual: 7-day window is a Sybil enrolment opportunity if private key is compromised between enactment and emergency vote. | Open Layer |
+
 ## 11. Situation & failure-mode analysis (per requirement)
 
 | Requirement / DES | Normal | Edge | Failure → behaviour |
@@ -735,14 +930,36 @@ transparency report covers filtering actions and compulsion attempts (ADR-013 §
 | FR-071 / DES-071 | legitimate recovery via collision | nullifier already exists | → RECOVERY_PENDING; 7-day delay; notification; active-key veto window opens |
 | FR-072 / DES-071 | recovery pending | active key submits veto | → RECOVERY_ABORTED; existing key in control; recovery.state = ABORTED on-chain |
 | FR-073 / DES-072 | GOV_EID issuer enrols | AVAILABILITY_ONLY issuer calls `enrol()` | → **revert** `NotEnrolmentClass`; no nullifier minted |
+| FR-112 / DES-090 | trust-anchor revocation enacted by governance vote | anchor compromised during emergency timelock window (7 days) — attacker enrolls synthetic identities before `anchorEffectiveAt` | `REVOCATION_PENDING` is entered at vote enactment (public on-chain signal); `enrol()` against the affected anchor CONTINUES until `anchorEffectiveAt` (timelock expiry) and reverts `AnchorRevoked` from then on; the window between enactment and `anchorEffectiveAt` is precisely the accepted RISK-30 residual — mitigated by the per-issuer epoch cap (DES-003); accepted residual per §18 SC-13/SC-14 closure entry |
+| FR-113 / DES-090 | trust-anchor rotation with overlap window | rotation enacted; old-anchor credentials renewed after `anchorOverlapEnd` | enrol() rejects old-anchor proofs after `anchorOverlapEnd`; the 60-day window (§10.11) is the SLA the issuer must meet; no citizen locked out who renews within the window |
+| FR-114 / DES-088 | steward election with quorum | election-capture attempt: surge of new enrolments before the snapshot in order to dilute or capture the steward ballot | growth-surge defence (FR-023/FR-028; DES-015/DES-019) applies to the steward election ballot; snapshot eligibility frozen at `snapshotRoot`; post-snapshot enrolments confer no vote in that election |
+| FR-117 / DES-089 | all steward seats vacant | any citizen-facing flow attempted during complete steward vacancy | zero degradation BY CONSTRUCTION — no citizen-path contract imports or calls `StewardRegistry`; enrolment, party creation, voting, proposal submission, and forking all proceed independently of steward liveness; the vacancy simulation test (§14) verifies this |
+| FR-118 / DES-087 | Charter Layer (Tier-1) entrenched rule proposal submitted | actor submits a proposal targeting one of the seven entrenched rules with majority support or any governance layer | `ProtocolGovernance.proposeAmendment()` checks `entrenched[ruleId]` at submission and reverts `EntrenchedRule` regardless of layer, quorum, or claimed support; no ballot is opened; the check is pre-execution, not post-tally |
+| FR-119 / DES-087 | Guarded Layer (Tier-2) super-process — transient-majority attack | a majority forms transiently and tries to carry a named-absolute change before the fork window is realistically exercisable | defeated by two-vote window separated by 180-day inter-vote gap; a transient majority at first vote must persist through the full window to reach second vote; fork petition (FR-120, FR-053) is exercisable during the 180-day window |
+| FR-119 / DES-087 | Guarded Layer (Tier-2) super-process — audit suppression | steward or actor publishes a trivial or incomplete audit ref to open the second vote early | `secondVote()` precondition checks `publishAuditRef` was called AND `block.timestamp >= auditPublishedAt + AUDIT_LEAD_TIME`; the 30-day lead time is enforced in code; publishing a ref does not immediately allow the second vote |
 | NFR-014 / DES-041 | normal submission | sequencer censors | L1 force-inclusion; tested in CI |
 | RISK-22 / DES-071 | stolen credential; attacker initiates recovery | victim receives notification | victim vetoes via active key (on-chain) within 7-day window → ABORTED |
 | RISK-23 / DES-071 | attacker suppresses notification channel | victim cannot see veto alert | independent on-chain veto path available via active key WITHOUT notification channel; complete device + channel compromise is accepted residual |
 | RISK-24 / DES-071 | recovery initiated during live ballot | recovering credential attempts to vote | `isInRecovery(nullifier)` check in `vote()` → **reject**; active key still votes normally |
 
+### Single-point-of-progress sweep — steward powers (FR-115) and steward-touching §5.4 calls
+
+Directive from approver (Rathish, 2026-08-11): sweep all four FR-115 steward powers and all steward-touching §5.4 calls for citizen-entitled process stall risks (SC-15 consequence sweep). A power is a concern ONLY when its absence or inaction can prevent a citizen from exercising a right they are entitled to by a FR/NFR. Transparency obligations and administrative functions are noted but are not citizen-process blockers.
+
+| Power / Call | Citizen-entitled process at risk? | Risk before fix | Fix applied |
+|---|---|---|---|
+| publishAuditRef (FR-115; §5.4) — steward publishes the audit reference required before the Guarded Layer second vote | YES | Steward inaction or vacancy could stall the second vote and hence any Guarded Layer amendment indefinitely | DES-092 (SC-17): after STEWARD_INACTION_WINDOW (60 days from firstVoteClosedAt) ANY enrolled citizen may call publishAuditRef(); steward vacancy triggers the fallback immediately with no window; audit substance unchanged |
+| Issuer-onboarding coordination trigger (FR-115; §5.4) — steward performs the coordination step that initiates issuer onboarding into the trust list | YES | Steward inaction could delay or block the ability of a region's citizens to use a new legitimate issuer for enrolment | DES-092 (SC-19): same 60-day citizen-fallback pattern; any enrolled citizen may trigger the coordination step after the window; vacancy triggers immediately |
+| Fund custody / treasury operations (FR-115) — stewards administer the platform treasury | NO | Treasury spend or release is a steward-delegated administrative function; no citizen is entitled to require a specific treasury disbursement; enrolment, voting, party creation, forking, and all citizen-facing flows are independent of treasury operations | N/A — not a citizen-process blocker; zero-dependency property (FR-117, DES-089) verified by vacancy simulation test (§14) |
+| Operational reports (FR-115(d) / NFR-019) — stewards publish platform transparency reports | NO | A missing report delays public information but blocks no citizen transaction, vote, or enrolment; the reporting obligation is transparency-only | N/A — reputational only; addressed by Doc 11 SLO monitoring |
+| electSteward (§5.4) — initiates a steward election | NO — citizen-initiated | Any enrolled citizen or coalition meeting the petition bar may trigger an election; the outgoing steward cannot block their own replacement ballot | N/A — citizen-initiated; steward absence accelerates, not blocks |
+| recallSteward (§5.4) — initiates a steward recall ballot | NO — citizen-initiated | Any enrolled citizen coalition meeting the 20% affirmative quorum bar may trigger a recall; the steward cannot veto the ballot | N/A — citizen-initiated |
+
+**Sweep verdict:** two citizen-entitled stall risks found and fixed (publishAuditRef, issuer-onboarding coordination). The remaining four powers are either citizen-initiated (elections, recall) or non-blocking transparency/administrative functions. No further single-point-of-progress risk remains in the steward layer after DES-092 (SC-17 + SC-19).
+
 ## 12. Architecture Decision Records
 
-Full records in `docs/adr/`. Status of all eighteen: **Accepted**.
+Full records in `docs/adr/`. Status of all twenty ADRs: **Accepted**.
 
 | ADR | Decision | Chief consequence accepted |
 |---|---|---|
@@ -762,8 +979,10 @@ Full records in `docs/adr/`. Status of all eighteen: **Accepted**.
 | 014 | Non-authoritative indexer, replaceable relayer, Sybil-resistant sponsorship | our own services become a convenience monoculture unless diversity is funded |
 | 015 | Asymmetric candidate feedback (upvote +3, downvote −1; 25% approval floor) | critics note scoring flatters incumbents; asymmetry is the deliberate risk accepted to protect downvoters (ADR-015) |
 | 016 | Government eID sole enrolment-nullifier class per region (Phase 1); amends ADR-003 | accepted exclusion: no-doc citizens cannot enrol Phase 1; state compulsion risk concentrated (ADR-016) |
-| 017 | Deterministic in-circuit nullifier derivation + pluggable credential adapter interface | per-class circuit development cost; trust-list freshness operational dependency (ADR-017) |
+| 017 | Deterministic in-circuit nullifier derivation + pluggable credential adapter interface; **amended by ADR-020 (post-registration lifecycle)** | per-class circuit development cost; trust-list freshness operational dependency (ADR-017) |
 | 018 | Nullifier-collision recovery: 7-day delay, active-key veto, voting bar | complete device + channel compromise is accepted residual (ADR-018) |
+| 019 | Three-layer amendment boundary: Charter Layer (Tier-1) — seven entrenched rules fork-only; Guarded Layer (Tier-2) — named absolutes via five-property super-process (80%/25%, 180-day window, audit); Open Layer (Tier-3) — ordinary citizen vote; **amended 2026-08-11 (SC-17: citizen-inaction fallback for publishAuditRef)** | a sustained 80%/25% supermajority over 180+ days CAN weaken a named absolute — by design; fork right is the residual protection (ADR-019) |
+| 020 | Trust-anchor lifecycle: rotation via 60-day dual-anchor overlap (SC-14 closed); revocation ordinary 30-day / emergency 7-day timelock (SC-13 closed); both enacted only by passed governance vote via Governor.execute(); **amended 2026-08-11 (SC-18: ROTATION_PENDING abort path — ROTATION_ABORTED state added)** | 7-day emergency window remains a Sybil window — RISK-30 accepted; epoch cap bounds blast radius (ADR-020) |
 
 ## 13. Risks & technical debt
 
@@ -790,6 +1009,8 @@ not duplicated here. Architectural debt carried knowingly:
 - Capability-absence assertions over ABIs and deployed bytecode (DES-075, DES-077, DES-080, DES-086).
 - `snapshotRoot` binding in `vote()` must be tested with an adversarial tree root (ISS-C1 fix).
 - `isInRecovery` gate in `vote()` must be tested with a recovery-pending nullifier.
+- **FR-117 capability-absence suite (DES-089):** (a) *static* — `tools/dep-guard` asserts that no citizen-path module (`packages/contracts` core, `packages/sdk`, `apps/web`) imports or references `StewardRegistry`; the ABI allowlist snapshot includes no `StewardRegistry` selector in any citizen-path entrypoint; (b) *dynamic* — the vacancy simulation runs the full citizen E2E suite (enrol, join, endorse, vote, propose, fork-petition) with every steward seat in `StewardRegistry` explicitly set to vacant; every flow MUST complete without error; zero degradation is the pass criterion.
+- **Guarded Layer super-process property tests (DES-087):** Six tests corresponding to the five OI-18 properties (Property 3 and Property 5 each have two sub-cases) plus the additional quorum requirement; `enact()` MUST revert in each case. Property numbering matches ADR-019 and OI-18: (P1-supermajority) firstVote cast at 75% approval — enact() MUST revert `SupermajorityNotMet`; (P2-window) enact() called before `windowEnd` — MUST revert `WindowNotElapsed`; (P3-two-votes-a) enact() called before firstVote closes — MUST revert `VoteNotComplete`; (P3-two-votes-b) enact() called with secondVote not yet closed — MUST revert `VoteNotComplete`; (P4-growth-surge) snapshot committed at `proposeAmendment()` — (a) membership join/enrolment post-snapshot MUST NOT affect vote eligibility at firstVote or secondVote, (b) attempt to update `snapshotRoot` between firstVote and secondVote MUST revert `SnapshotImmutable`, (c) churn-limit check enforced during the entire inter-vote window — `enact()` MUST revert if churn limits were violated at any point; (P5-audit-a) enact() called with no audit ref published — MUST revert `AuditNotPublished`; (P5-audit-b) enact() called with audit published but `auditPublishedAt + AUDIT_LEAD_TIME > block.timestamp` — MUST revert `AuditLeadTimeNotSatisfied`. Each test confirms the specific revert reason from the `ProtocolGovernance` state machine.
 
 ## 15. Traceability
 
@@ -800,6 +1021,20 @@ Must rows; the DES additions in v1.1.0 close the 15 tester-identified DES-gap ro
 (FR-010, FR-011, FR-035, FR-039, FR-056, FR-060, NFR-006, NFR-009, NFR-010, NFR-011, NFR-012,
 NFR-013, NFR-015, NFR-023, NFR-024) once the tester updates Doc 08. The remaining gaps are
 pre-existing Phase-3, environment, external, or mechanism gaps per Doc 08 §gap-by-reason.
+
+**v2.0.0 FR/NFR → DES additions (FR-112..FR-120):**
+
+| Requirement | DES | Notes |
+|---|---|---|
+| FR-112 (trust-anchor revocation; member-vote only) | DES-090 (TrustAnchorLifecycle) | Ordinary + expedited emergency revocation paths; code-only enactment via `Governor.execute()`; normative design in ADR-020 |
+| FR-113 (trust-anchor rotation; overlap window) | DES-090 (TrustAnchorLifecycle) | 60-day dual-anchor overlap window; enrol() accepts old OR new during window; normative design in ADR-020 |
+| FR-114 (steward election; fixed terms; affirmative-quorum recall) | DES-088 (StewardRegistry) | Platform-scoped ballot; term record; recall with growth-surge defence |
+| FR-115 (steward powers enumerated; unlisted action refused) | DES-089 (StewardPowers boundary) | ABI allowlist; four enumerated powers; CI assertion |
+| FR-116 (stewards propose; citizens decide; no override) | DES-089 (StewardPowers boundary); DES-087 (ProtocolGovernance) | StewardRegistry has no enact path; only `Governor.execute()` can change protocol state |
+| FR-117 (zero steward dependency; vacancy causes zero degradation) | DES-089 (StewardPowers boundary) | No citizen-path contract references StewardRegistry BY CONSTRUCTION; vacancy simulation test (§14) |
+| FR-118 (seven entrenched rules; code rejection at submission) | DES-087 (ProtocolGovernance) | `entrenched` registry checked at `proposeAmendment()`; reverts `EntrenchedRule`; normative design in ADR-019 |
+| FR-119 (three-layer amendment structure; Guarded Layer / Tier-2 super-process) | DES-087 (ProtocolGovernance); DES-091 (GovernanceConstants) | Five-property state machine; constants from §10.11; normative design in ADR-019 |
+| FR-120 (unconditional fork right; fork flag off above dev) | DES-034 (fork with lineage) | Existing DES; no steward can block; fork flag status unchanged |
 
 ## 16. Open questions
 
@@ -818,7 +1053,17 @@ pre-existing Phase-3, environment, external, or mechanism gaps per Doc 08 §gap-
 
 **Resolved during design:** OI-05 (k ≥ 1000 vs ward-level governance) — ADR-004 §2 escalates
 scope to the nearest ancestor region meeting the floor. OI-12 (FR-073 vs ADR-003) — resolved
-by ADR-016 explicitly amending ADR-003 for Phase 1.
+by ADR-016 explicitly amending ADR-003 for Phase 1. **OI-17 (governance constants)** —
+CLOSED in §10.11 (v2.0.0, 2026-08-11); values normative for Design; revisable only through
+the amendment boundary. **OI-18 (entrenched-charter scope)** — CLOSED by Rathish
+2026-08-11, option (c) two-tier core (OI-18-DECISION-2026-08-11.md); amendment boundary
+designed in DES-087 and the Guarded Layer (Tier-2) super-process state machine.
+
+**Next-increment scope (recorded not hidden):** Full DES coverage of remaining v2.x
+requirement areas — FR-074..FR-111 beyond existing DES-064..DES-086 — is the next design
+increment after pass 2 (which adds ADR-019 and ADR-020). Until that increment is complete,
+those FR rows carry an open DES gap in the RTM. This is a deliberate phasing decision
+consistent with the session scope in GATE1-DECISION-2026-08-11.md §5.
 
 ## 17. Glossary
 
@@ -834,7 +1079,8 @@ by ADR-016 explicitly amending ADR-003 for Phase 1.
 **Receipt-freeness** a voter *cannot* prove how they voted, even if they want to.
 **Entrenched clause** a charter clause requiring a higher bar than its tier; **immutable clause** one that no majority can ever amend.
 **Fork** a new party inheriting a parent's charter, manifesto history and lineage, requiring nobody's permission.
-**Tier** T0 operational · T1 policy · T2 structural · T3 constitutional.
+**Tier (party governance)** T0 operational · T1 policy · T2 structural · T3 constitutional — the four party-level charter tiers defined in Doc 02 FR-025..FR-029 and enforced by the party charter contracts. DISTINCT from platform amendment boundary layers.
+**Tier (platform amendment boundary, legacy label)** Doc 02 v2.2.0 uses "Tier 1 / Tier 2 / Tier 3" for the platform amendment boundary; this SDD uses "Charter Layer / Guarded Layer / Open Layer" (see §10.11 disambiguation note). The two usages share the word "tier" but are INDEPENDENT namespaces: the coincidental identity of Open Layer (60%/15%) and party T2 structural bar (60%/15%) is not definitional.
 **permittedActionClass** the set of `callData` selectors a given proposal tier may invoke via `Governor.execute()`.
 
 ---
@@ -896,6 +1142,83 @@ The resolution choices are (for the human approver):
 
 **Until the human approver decides, the architecture holds FR-062 as a designed-but-dormant
 feature and treats NFR-001/NFR-024/TD-02 as the live privacy contract.**
+
+---
+
+### SC-13 / SC-14 — trust-anchor lifecycle (CLOSED at design level, v2.0.0)
+
+**Status:** CLOSED at design level. Both findings from SECURITY-RESCAN-SC-01-2026-08-10.md §4
+are addressed in this version. The design change was owed to the architect after Gate 1
+(GATE1-DECISION-2026-08-11.md §4).
+
+**SC-13 (HIGH) — No trust-anchor revocation/emergency-update path specified.**
+Design response: `rotateTrustAnchor()` and `revokeTrustAnchor()` are now specified in DES-090
+and §5.4. Both are callable ONLY from `Governor.execute()` (code executes; humans vote; ruling
+4 preserved). The STRIDE DoS row in §10.1 and the failure-mode row FR-112/DES-090 in §11 state
+the residual: an anchor compromised during the 7-day emergency timelock window allows Sybil
+enrolments for that window. This is accepted residual RISK-30 (recorded in Doc 13 §6). The
+window is non-zero by design — it is the false-alarm veto window — and its governance cost
+is the price of maintaining rule-4 (no operator action, humans vote).
+
+**SC-14 (MEDIUM) — Governance tier for trustAnchorHash UPDATE unspecified; enrolment blocked
+during rotation window.**
+Design response: the 60-day dual-anchor overlap window in DES-090 and §10.11 ensures a
+compliant rotation never blocks enrolment beyond the published window. The governance bar for
+rotation is Open Layer (Tier-3 ordinary citizen vote) with the 90-day timelock (§10.11),
+giving the issuer at least 90 days advance notice. Already-enrolled credentials are unaffected.
+
+**Residual (recorded, not hidden):** The 7-day emergency revocation window is an accepted design
+trade-off between operational response speed and the no-unilateral-operator-action guarantee
+(CON-003). It is recorded in the RISK register (RISK-30) in Doc 13.
+
+---
+
+### OI-18 applied — no contradiction between FR-118 (fork-only Charter Layer / Tier 1) and NFR-017 (amendment process)
+
+**Status:** Applied. OI-18-DECISION-2026-08-11.md (Rathish, 2026-08-11) resolved the potential
+conflict before design began.
+
+**The apparent conflict:** FR-118 declares seven charter rules unamendable by any vote.
+NFR-017 requires a defined amendment process. A strict reading could treat NFR-017 as
+requiring a path for every rule, which would conflict with FR-118's fork-only category.
+
+**Resolution (recorded):** NFR-017's "amendment process" governs the Guarded Layer (Tier 2)
+and Open Layer (Tier 3) only. The Charter Layer (Tier 1) is explicitly outside any process —
+it is unamendable by definition, and the fork right (FR-120) is the only legitimate path to
+change it. This is not a contradiction: NFR-017 defines how the AMENDABLE parts of the
+protocol change; FR-118 defines which parts are not amendable. The OI-18 decision records this
+as a deliberate three-layer structure, not an accidental gap. The design reflects this split
+cleanly: `ProtocolGovernance.proposeAmendment()` rejects Charter Layer (Tier-1) targets at
+submission; the super-process state machine governs the Guarded Layer (Tier-2); ordinary
+governance governs the Open Layer (Tier-3). The architect found no real contradiction here —
+this entry records the analysis so it is not re-litigated.
+
+---
+
+### SC-15..SC-21 — security scan responses (SECURITY-SCAN-DOC03-V2-2026-08-11.md; CLOSED at design level, v2.1.0)
+
+**Status:** All seven findings CLOSED at design level in v2.1.0. Each design response is normative and traced to its DES/ADR; no finding is open.
+
+**SC-15 (CRITICAL) — ProtocolGovernance and StewardRegistry not designated IMMUTABLE CORE; a governance vote could replace or redirect them, making Charter Layer entrenchment decorative.**
+Design response: Both contracts designated IMMUTABLE CORE in §5.1 and DES-087 (no admin, no pause, no proxy, non-upgradeable). GENERAL RULE in DES-087: any contract that enforces a Charter Layer rule MUST itself be Charter Layer. Routing surface exclusions stated: proxy/upgrade patterns, registry pointers, Governor.execute action classes, and GovernanceConstants setter are explicitly excluded from the immutable-core guarantee by their nature as non-enforcement-logic.
+
+**SC-16 (HIGH) — GovernanceConstants lacked per-constant Amendment Layer classification; no anti-circularity rule prevented an Open Layer vote from lowering Guarded Layer super-process constants.**
+Design response: DES-091 and §10.11 now classify every constant by Amendment Layer; Guarded Layer super-process constants (Tier-2 quorum, supermajority, inter-vote window, audit lead time, STEWARD_INACTION_WINDOW) are classified Guarded Layer minimum and cannot be lowered by an Open Layer vote; anti-circularity rule stated explicitly in §10.11 preamble; setter mechanism (Governor.execute() with onlyGovernor guard, initial values immutable at deployment) resolves the "immutable-at-deployment vs post-deployment revisability" tension.
+
+**SC-17 (HIGH) — publishAuditRef was steward-only; steward inaction or vacancy could stall the Guarded Layer second vote indefinitely.**
+Design response: DES-092 introduces citizen-initiated fallback: after STEWARD_INACTION_WINDOW (60 days from firstVoteClosedAt, set in §10.11) any enrolled citizen may call publishAuditRef(); steward vacancy triggers the fallback immediately with no window; audit substance and 30-day lead time unchanged; ADR-019 amended with dated note.
+
+**SC-18 (HIGH) — ROTATION_PENDING state had no abort path; the only recovery from a suspected-bad rotation was a full revocation, causing 30+ days of new-enrolment block.**
+Design response: DES-090 adds abortRotation(issuerId) via Governor.execute() at Open Layer bar (60%/15%); ROTATION_PENDING → ROTATION_ABORTED → ACTIVE with incumbent trust-anchor hash restored; pending-anchor credentials rejected for new enrolments from abort onward; no retroactive invalidation of already-enrolled citizens; ADR-020 amended with dated note.
+
+**SC-19 (MEDIUM) — Issuer-onboarding coordination trigger was steward-only; steward inaction could block a region from accessing a new legitimate issuer.**
+Design response: DES-092 applies the same citizen-fallback pattern (60-day inaction window from coordination trigger; immediate on steward vacancy) to the issuer-onboarding coordination step; both SC-17 and SC-19 are covered under the same DES-092 design element.
+
+**SC-20 (MEDIUM) — Guarded Layer quorum denominator was ambiguous; an organic enrolment surge between firstVote and secondVote could raise the absolute headcount floor and stall a legitimate in-flight amendment.**
+Design response: DES-087 and §10.11 now specify the quorum denominator as enrolled citizen count at snapshotRoot time (fixed at proposeAmendment(), not the live count at castSecondVote time); normative quorum denominator statement added to §10.11 preamble; growth-surge defence interaction clarified (growth-surge defence applies to party-level votes only and does not override the Guarded Layer snapshotRoot rule).
+
+**SC-21 (LOW) — "Undiscovered bypass" STRIDE residual for Governor.execute() action-class table did not reference SC-15's general rule as a mitigation.**
+Design response: §10.1 STRIDE table updated; SC-15 general rule (ProtocolGovernance IMMUTABLE CORE, no upgrade/proxy path) formally closes the bypass class of contract substitution or proxy redirection; remaining residual is a logic bug within the immutable contract itself, mitigated by audit (DES-079) and capability-absence CI scan.
 
 ---
 
