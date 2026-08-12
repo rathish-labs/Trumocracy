@@ -281,3 +281,77 @@ the FR-118/FR-119 amendment boundary and super-process numbers with rationale, t
 trust-anchor governance design (FR-112/FR-113), the OI-17 governance constants (Tomás Ferreira),
 and DES elements for FR-114..FR-120 including FR-117's capability-absence obligation. Gate 2
 unchanged — OPEN / NOT READY.
+
+---
+
+## Follow-up governance — 2026-08-12
+
+> This section records two governance items directed by Rathish on 2026-08-12 following the
+> audit of commit e116e15. All prior gate decisions and their wording are unchanged and intact.
+> This section is additive only.
+
+### Doc 07 / 08 follow-up fixes and v2.1.0 review outcomes
+
+The tester applied audit-directed fixes and produced Doc 07 v2.1.0 and Doc 08 v2.1.0:
+**TC-3451 and TC-3453 amended** (seated-but-inactive precondition added);
+**TC-3467, TC-3468, TC-3469 minted** (TC-3467: vacancy-immediate citizen fallback for
+publishAuditRef; TC-3468: vacancy-immediate fallback for issuer-onboarding; TC-3469:
+SC-16 anti-circularity direct-attack case).
+
+The architect ran a technical-mode cycle-1 review over both documents:
+
+| Document | Version | Score | Findings | Verdict |
+|----------|---------|-------|----------|---------|
+| Doc 07 — Test Cases & Suites | v2.1.0 | 99% | 0C/0H/0M/1L | **PASS** |
+| Doc 08 — Traceability Matrix | v2.1.0 | 100% | 0C/0H/0M/0L | **PASS** |
+
+Reports: `artifacts/reviews/07-test-cases-suites-v2.1.0-technical-cycle1.md` and
+`artifacts/reviews/08-traceability-matrix-v2.1.0-technical-cycle1.md`.
+Doc 07 Low issue (ISS-01: §2 convention note '2-row' vs '7-case') does not block.
+
+The **tester (as owner)** flipped both Status lines to **Approved** on 2026-08-12, consistent
+with CLAUDE.md's review-and-rework loop ("On PASS the owner sets `Status: Approved`").
+
+**Gate 2:** NOT READY. RTM (Doc 08 v2.1.0): 125 Must rows / 12 COMPLETE / **113 OPEN** — unchanged.
+
+---
+
+### Governance item 1 — Doc 04 review debt (Gate-2 blocker)
+
+`docs/04-test-strategy-master-plan.md` has **never received a document-review report at any
+version** — neither v1.0.0 nor the current v1.0.1. Confirmed: no `04-*` file exists in
+`artifacts/reviews/`. The v1.0.0 was written before the review loop was established;
+the v1.0.1 surgical patch (2026-08-12, §14 TC-range reservation rows added for TS-CR1
+TC-3300–3399 and TS-GOV2 TC-3400–3499) was legitimate architect work but also went
+unreviewed. Both Doc 07 v2.1.0 and Doc 08 v2.1.0 cite Doc 04 v1.0.1 as a source document.
+
+**Required before Gate 2:** a **technical-rubric document-review of Doc 04 (current version
+v1.0.1)** must be completed and produce a passing (or human-approved ESCALATED) report in
+`artifacts/reviews/`. This is a **Gate-2 blocker** — the SubagentStop hook will flag the
+absence of a passing Doc 04 review report until one exists.
+
+This item is recorded alongside — and does not supersede — the open item for a full Doc 04
+v2.x refresh and first-ever review-loop pass at the next design increment (see
+`artifacts/project-manager-2026-08-12T0130.md`, open item 1). The v1.0.1 technical review
+satisfies the minimum Gate-2 requirement; the v2.x refresh is the structural catch-up owed
+when the next design increment runs (also fixes stale SRS v1.0.0 pins and the
+"Priya Raghunathan — Principal Architect" owner-line).
+
+**Owner:** architect (Ravi Deshmukh). **Trigger:** before Gate 2. **Rubric:** technical.
+
+---
+
+### Governance item 2 — Status-flip authorship deviation (accepted, noted)
+
+During the 2026-08-11/12 catch-up (commit e116e15), the project-manager set `Status: Approved`
+on Docs 05, 07, and 08 immediately after PASS verdicts, as review-loop bookkeeping. This was
+recorded in `artifacts/project-manager-2026-08-12T0130.md` (key decision 2) as a RACI-grounded
+call: PM is A/R for document review in the RACI table. CLAUDE.md's review-and-rework loop text
+assigns the status flip to the **owning role** ("On PASS the owner sets `Status: Approved`").
+
+**Disposition: accepted deviation, noted.** Accepted by **Rathish** (human approver) per the
+2026-08-12 follow-up directive. The already-flipped `Status: Approved` lines on Docs 05, 07,
+and 08 (versions produced during the catch-up) stand unchanged. The practice is corrected from
+this session forward: the tester, as owner of Docs 07 and 08, performed the v2.1.0 Status
+flips on 2026-08-12 (see `artifacts/tester-2026-08-12T1600.md`). Future owning roles will
+perform their own flips on PASS.
