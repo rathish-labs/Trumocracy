@@ -1,15 +1,17 @@
-# Test Cases & Suites — Trumocracy
+﻿# Test Cases & Suites — Trumocracy
 
 ```
 Document ID:   TC-TRUMOCRACY
-Version:       1.1.2
-Status:        In Review
+Version:       2.0.1
+Status:        Approved (review loop, cycle 2 PASS 98% — artifacts/reviews/07-test-cases-suites-v2.0.1-technical-cycle2.md)
 Owner:         Ji-woo Park — Test Lead (tester)
-Source:        MTP-TRUMOCRACY (docs/04-test-strategy-master-plan.md) · BKLG-TRUMOCRACY (docs/05-product-backlog.md)
-               SRS-TRUMOCRACY §8 Gherkin (docs/02-requirements-srs.md) · SDD-TRUMOCRACY §5.2, §11 (docs/03-architecture-design-sdd.md)
-               CODE-TRUMOCRACY (docs/06-coding-and-ut.md)
-Last updated:  2026-08-10
-Changelog:     v1.1.2 (2026-08-10) — TC-3343..TC-3345 added (SC-01 trust-anchor binding negatives for FR-069/070); TC-3323 updated to 5-signal arity (Doc 03 v1.1.2 SC-01 fix).
+Source:        MTP-TRUMOCRACY v1.0.1 (docs/04-test-strategy-master-plan.md) · BKLG-TRUMOCRACY v2.0.1 (docs/05-product-backlog.md)
+               SRS-TRUMOCRACY v2.2.0 §8 Gherkin (docs/02-requirements-srs.md) · SDD-TRUMOCRACY v2.1.1 §5.2, §11, §14 (docs/03-architecture-design-sdd.md)
+               CODE-TRUMOCRACY (docs/06-coding-and-ut.md) · SECURITY-RESCAN-SC15-21-2026-08-11.md
+Last updated:  2026-08-12
+Changelog:     v2.0.0 (2026-08-11) — TC-3400..TC-3466 minted (67 cases): TS-GOV2 suite added covering FR-074..FR-120 (SRS v2.2.0), NFR-027/NFR-028, mandatory SC-15..SC-21 security-closure cases (SECURITY-RESCAN-SC15-21-2026-08-11.md), Guarded Layer property tests P1..P5 (Doc 03 §14 named reverts), and FR-117 capability-absence suite (static dep-guard TC-3465 + dynamic vacancy simulation TC-3466). Source pins updated: SRS v2.2.0, BKLG v2.0.1, SDD v2.1.1. Header bumped to In Review pending document-review cycle.
+               v2.0.1 (2026-08-12) — cycle-1 technical review rework (07-test-cases-suites-v2.0.0-technical-cycle1.md): ISS-01 Critical: TC-3456..TC-3464 Verifies corrected to US-0129 · FR-119 · DES-087 (DES-091 where GovernanceConstants exercised); ISS-02 High: TC-3454 Verifies corrected to US-0129 · FR-119 · DES-087; ISS-03 High: TC-3450 Verifies corrected to US-0129 · FR-119 · DES-091; ISS-04 Medium: Doc 04 source pin bumped to v1.0.1 (RESOLVED AT SOURCE — Doc 04 v1.0.1 reserves TS-CR1 and TS-GOV2 ranges); ISS-05 Medium: §10 exit summary counts updated (298→368, Blocked 140→169, No mechanism 10→48); ISS-06 Low: TC-3456 amended to match SDD §14 spec (firstVote at 75%); ISS-07 Low: TC-count convention note added to §2. Context paragraph for TC-3456..TC-3464 corrected from FR-109..FR-111 to FR-119.
+               v1.1.2 (2026-08-10) — TC-3343..TC-3345 added (SC-01 trust-anchor binding negatives for FR-069/070); TC-3323 updated to 5-signal arity (Doc 03 v1.1.2 SC-01 fix).
                v1.1.1 (2026-08-10) — TC-3309 expected result updated to cite DES-068 party-switch exclusion (cycle-1 ISS-01); TS-CR1 Covers column corrected to include RISK-22..24 (ISS-02).
                v1.1.0 (2026-08-10) — TC-3300..TC-3342 minted for FR-062..073 (CR-v1.1.0); TS-CR1 suite added; RTM rows added in Doc 08.
 ```
@@ -144,11 +146,14 @@ TC ranges are the ones **reserved in Doc 04 §14**; the tester assigns the actua
 | `TS-EXPL` | Exploratory charters | L7 | one per EP-01…EP-10 | TC-3200–TC-3209 | 10 | 0 | 10 |
 | `TS-UAT` | User acceptance & usability | L7 | NFR-022, Doc 01 §B journey | TC-3250–TC-3253 | 4 | 0 | 4 |
 | `TS-CR1` | CR-v1.1.0 — FR-062..073; RISK-22..24 | L3–L6 | FR-062..073 · BR-013 · RISK-22..24 | TC-3300–TC-3345 | 46 | 0 | 46 |
-| | | | **Total** | | **301** | **143** | **158** |
+| `TS-GOV2` | Governance v2.0 — FR-074..FR-120 · NFR-027/028 · SC-15..21 security closure · Guarded Layer P1..P5 · FR-117 capability-absence | L1–L6 | FR-074..FR-120 · NFR-027 · NFR-028 · SC-15..SC-21 · DES-087..DES-092 | TC-3400–TC-3466 | 67 | 0 | 67 |
+| | | | **Total** | | **368** | **143** | **225** |
 
-**143 of 301 cases have an implementing automated test.** (43 new TC-3300..TC-3342 are all Blocked — no implementing code in this drop.) Of those 143, **72 were executed and
+**143 of 368 cases have an implementing automated test.** (43 new TC-3300..TC-3342 are all Blocked; 67 new TC-3400..TC-3466 are all Blocked or No mechanism — no implementing contracts for TS-GOV2 exist in this drop.) Of those 143, **72 were executed and
 observed passing by the tester this session**; **55** are inherited-green contract cases; **16** are
 `apps/web` component cases that exist but were not executed this session.
+
+**TC-count conventions (ISS-07 resolution).** This suite table uses the **expanded row count** (368 total): the TS-EXPL suite rows TC-3200..TC-3209 are listed as 10 individual cases here. Doc 08 §6 uses the **anchor count** (366 anchors = 299 pre-TS-GOV2 + 67 TS-GOV2), treating TC-3200..TC-3209 as one collapsed anchor, then applies the expanded convention (366 − 1 + 10 = **375 designed test cases**). A 2-row counting difference between the two documents is expected and pre-existing; the 375 expanded total is used in the Doc 08 §6 coverage dashboard.
 
 ---
 
@@ -592,23 +597,23 @@ defect waiting to come back.**
 
 | Measure | Value |
 |---|---|
-| Cases designed | **298** |
-| Cases with an implementing automated test | **143** (56%) |
+| Cases designed | **368** (row-anchor count; see §2 convention note for the 375 expanded total) |
+| Cases with an implementing automated test | **143** (39%) — TS-CR1 and TS-GOV2 add zero automated tests in this drop |
 | Cases executed and observed passing this session | **72** |
 | Cases inherited green from Doc 06 (contract suite) | **55** |
 | Cases automated but not executed this session (`apps/web`) | **16** |
-| Cases **Blocked** (code, circuit, environment or instrument absent) | **140** |
-| Cases **No mechanism** (the product has nothing to test) | **10** |
+| Cases **Blocked** (code, circuit, environment or instrument absent) | **169** (140 pre-TS-GOV2 + 29 new from TS-GOV2: FR-112..FR-120, NFR-027/028, SC-15..SC-21, P1..P5, FR-117 absence suite) |
+| Cases **No mechanism** (the product has nothing to test) | **48** (10 pre-TS-GOV2 + 38 new from TS-GOV2: FR-074..FR-111 have no DES; Doc 03 §16 deliberate phasing) |
 | Cases **Manual — not run** | **12** |
 | Observed test failures | **0** |
 | Open defects raised by this document | **2** (TD-07-01 Medium, TD-07-02 Low — both documentation) |
 
-**Ten cases are "No mechanism". Each one is a requirement defect, not a testing defect**, and each
-is carried into the RTM gap log (Doc 08 §7): TC-0010/TC-1041 (`FR-010` name-collision), TC-0037/
+**Forty-eight cases are "No mechanism". Each one is a requirement defect, not a testing defect**, and each
+is carried into the RTM gap log (Doc 08 §7). The original 10 (pre-TS-GOV2): TC-0010/TC-1041 (`FR-010` name-collision), TC-0037/
 TC-1043 (`FR-008` residency cooldown), TC-1042 (`FR-018` dwell period), TC-1044 (`FR-023` churn
 limit), TC-0039/TC-2721 (`FR-056` filtering register), TC-2601 (`FR-001` cross-type residual),
 TC-2642 (`FR-004` per-region attestor cap, OPEN-02), TC-2715 (`FR-009` source independence,
-OPEN-12), TC-2426 (`NFR-020` open-ballot flag freeze, OPEN-03).
+OPEN-12), TC-2426 (`NFR-020` open-ballot flag freeze, OPEN-03). The 38 new TS-GOV2 cases (TC-3400..TC-3437) cover FR-074..FR-111 — no DES has been assigned to any of these requirements (Doc 03 §16 deliberate next-increment phasing); there is nothing to test until the design is produced.
 
 **What a green run of the executable subset does establish** (Doc 04 §5.5): the governance
 arithmetic is right, the reference implementation and the chain agree, the named capabilities are
@@ -753,3 +758,132 @@ identified in the security scan (SECURITY-SCAN-CR-v1.1.0-2026-08-10 §1 SC-01).
 | TC-3343 | **[SC-01 attack path A]** Enrolment proof carries a `trustAnchorHash` value that does not match `issuers[issuerId].trustAnchorHash`; prover substitutes an attacker-chosen key | US-0079 · FR-069 | `enrol()` reverts: `publicSignals[4] != issuers[issuerId].trustAnchorHash` check fails on-chain; no nullifier minted; no identity registered | **Blocked — Phase 2 (DES-069; personhood_enrol_[class] circuit not compiled; no on-chain contract in this drop)** |
 | TC-3344 | **[SC-01 attack path B]** Proof generated for adapter class X (e.g. ICAO Doc 9303) submitted under an `issuerId` whose `credentialClass` is class Z (e.g. eIDAS 2.0); `verifierAddress` routes proof to class Z verifier | US-0080 · FR-070 | `enrol()` dispatches via `issuers[issuerId].verifierAddress`; proof generated for class X fails verification under class Z verifier; enrolment rejected; no nullifier minted | **Blocked — Phase 2 (DES-070; per-adapter-class verifier dispatch not deployed in this drop)** |
 | TC-3345 | **[SC-01 arity]** Legacy 4-signal enrolment proof `[Nᵢ, C, issuerId, namespaceId]` submitted to upgraded `enrol()` expecting five signals; `publicSignals[4]` is absent or zero | US-0079 · FR-069 | `enrol()` reverts on arity mismatch or `trustAnchorHash` check against zero/missing fifth signal; proof rejected; no nullifier minted; consistent with C-03 arity discipline | **Blocked — Phase 2 (DES-069; no circuit or contract in this drop)** |
+
+---
+
+## 5. Governance v2.0 suite
+
+### 5.1 `TS-GOV2` — FR-074..FR-120 · NFR-027/028 · SC-15..SC-21 · Guarded Layer properties · FR-117 capability-absence (TC-3400–TC-3466)
+
+**Context.** This suite covers all requirements introduced in SRS v2.2.0 (Vision re-entry, Gate 1 re-entry 2026-08-11) and the security-closure rescan findings SC-15..SC-21 (SECURITY-RESCAN-SC15-21-2026-08-11.md). The trust-anchor lifecycle (FR-112/113, DES-090), StewardRegistry (FR-114, DES-088), steward powers boundary (FR-115..117, DES-089), ProtocolGovernance / GovernanceConstants (FR-118/119, DES-087/DES-091), and citizen fallback (DES-092) are all designed but **not deployed in this drop**. The 38 requirements FR-074..FR-111 have **no DES yet** (Doc 03 §16 records this as deliberate phasing — the chain link `FR → DES` is broken by design, not by error). **Nothing in this suite may be marked Pass.**
+
+**Shared precondition.** `governance_v2` flag OFF. ProtocolGovernance, StewardRegistry, GovernanceConstants, TrustAnchorLifecycle contracts are not deployed. No Phase-3 capability is active above dev in this drop.
+
+---
+
+#### TC-3400..TC-3437 — FR-074..FR-111 (no DES assigned — Doc 03 §16 deliberate phasing)
+
+Each row status: **No mechanism** — the FR has no DES in Doc 03 §5.2 (deliberate; see §16), and no implementation exists in this drop. The G-TRACE + G-PHASE3 gap is recorded in Doc 08 §3.1 and §7.
+
+| TC | Title | Verifies (US · FR) | Expected result | Status |
+|---|---|---|---|---|
+| TC-3400 | Country selection scopes party-political participation to exactly one jurisdiction | US-0084 · FR-074 | Exactly one country record accepted; second country refused; region tree and all residency-derived rights scoped to selection; change governed by FR-008 discipline | **No mechanism** — country-selection module and per-country eligibility rules not designed (Doc 03 §16) |
+| TC-3401 | Platform activation displayed as distinct from legal registration on every party-facing surface | US-0085 · FR-075 | Every party-facing surface states the distinction; no surface represents activation as legal registration; distinction displayed before any party action | **No mechanism** — legal-registration-status attestation and display surface not designed (Doc 03 §16) |
+| TC-3402 | Party creation refused when any mandatory constitution section is missing; every missing section named | US-0086 · FR-076 | Publication refused; every missing section named; no partial party record created; follows FR-011 pattern | **No mechanism** — digital constitution upload and machine-checkable section validation not designed (Doc 03 §16) |
+| TC-3403 | Non-violence clause verified by code; publication refused if absent or altered | US-0087 · FR-077 | Non-violence clause present and byte-identical to platform standard; alteration refused at submission; no human judgment in path | **No mechanism** — non-violence clause verifier not designed (Doc 03 §16) |
+| TC-3404 | Party constitution amendable only through tiered proposal process; direct overwrite refused | US-0088 · FR-078 | Amendment accepted only via FR-025/FR-026 tiered process; direct overwrite reverts; entrenchment per FR-027 honoured | **No mechanism** — constitution-amendment integration not designed (Doc 03 §16) |
+| TC-3405 | Exactly three participation tiers (Supporter, Worker, Candidate); none changes voting weight | US-0089 · FR-079 | Tier set on join; weight unchanged at all tiers; no tier carries extra vote, standing, or precedence | **No mechanism** — participation tier metadata model not designed (Doc 03 §16) |
+| TC-3406 | Worker declaration accepted with no human approval; informed-consent event recorded append-only | US-0090 · FR-080 | Worker tier set without approval; consent event appended with timestamp; no approval path exists | **No mechanism** — Worker self-declaration and consent recording not designed (Doc 03 §16) |
+| TC-3407 | Candidate tier determined solely by post-debate member vote; no auto-renomination of incumbents | US-0091 · FR-081 | Candidacy confirmed by vote result only; incumbency confers no automatic advancement; eligibility checked by code | **No mechanism** — candidacy-from-vote flow not designed (Doc 03 §16) |
+| TC-3408 | Supporter tier: only nullifier stored; no profile surface; no attributable record; NFR-001/002/024 apply unconditionally | US-0092 · FR-082 | No profile surface for Supporter; no attributable record under any query path; unlinkability invariants hold | **No mechanism** — Supporter-tier anonymity enforcement not designed (Doc 03 §16) |
+| TC-3409 | Worker/Candidate public participation record begins from consent event; ballot direction never disclosed for any tier | US-0093 · FR-083 | Role-relevant activity (work, proposals, debates, candidacies, committees) visible from consent event; ballot direction absent from every surface; FR-048 elected-representative exception applies | **No mechanism** — public participation record for public-tier roles not designed (Doc 03 §16) |
+| TC-3410 | Full disclosure schedule published before declaration window; no post-declaration demand outside the schedule | US-0094 · FR-084 | Disclosure schedule available before any declaration or nomination window opens; no undeclared information category added after declaration | **No mechanism** — disclosure schedule publication surface not designed (Doc 03 §16) |
+| TC-3411 | Informed consent covers full campaign and term; pre-nomination disclosures destroyed on withdrawal (OI-16 adopted) | US-0095 · FR-085 | Consent irrevocable for term; withdrawal before nomination-window close permitted; pre-nomination disclosure data (confidential-class) destroyed on withdrawal; no destruction of public governance records | **No mechanism** — consent lifecycle and confidential-class data destruction not designed (Doc 03 §16) |
+| TC-3412 | Prior Supporter-period activity remains anonymous permanently after public role is taken; no linkage path through any data or combination | US-0096 · FR-086 | No linkage between anonymous Supporter identity and subsequent public Worker/Candidate identity detectable through any data the system holds or emits, or through any combination of public outputs | **No mechanism** — cross-tier unlinkability guarantee for role-changers not designed (Doc 03 §16) |
+| TC-3413 | Committee output is proposals only; committee cannot directly change election, vote, or membership outcomes | US-0097 · FR-087 | Committee action produces only an ordinary-lifecycle proposal; no direct outcome effect; composition and minutes public | **No mechanism** — committee formation and capability-restriction model not designed (Doc 03 §16) |
+| TC-3414 | Committee configuration granting election- or membership-touching capability rejected by code | US-0098 · FR-088 | Configuration rejected at submission; allowlist confined to event organisation, coordination, facilitation, vendor management, publishing | **No mechanism** — committee ABI allowlist and configuration-rejection not designed (Doc 03 §16) |
+| TC-3415 | Committee membership expires at term end by code; continuation requires fresh member vote | US-0099 · FR-089 | Term expiry code-enforced; no human renewal path; continuation needs a new vote | **No mechanism** — committee term-expiry mechanics not designed (Doc 03 §16) |
+| TC-3416 | Proposal authorship public; competing proposal accepted with equal standing in same decision window (Worker+ per OI-14) | US-0100 · FR-090 | Author identity published; competing proposal in same window; equal standing confirmed; Supporters retain full voting rights | **No mechanism** — competing-proposal equal-standing enforcement not designed (Doc 03 §16) |
+| TC-3417 | Proposal advances through all lifecycle stages in sequence by code; no stage skipped or human-vetoed | US-0101 · FR-091 | Stage transitions code-enforced; no skip, reorder, or veto path; review/discussion/debate are deliberative only | **No mechanism** — proposal lifecycle stage machine not designed (Doc 03 §16) |
+| TC-3418 | Permanent decision trail reconstructable end-to-end from public data alone; trail includes all competing proposals | US-0102 · FR-092 | Trail contains proposal(s), authorship, deliberation records, vote result, enacted consequence, implementation status, measured outcome; reproducible by any third party | **No mechanism** — permanent decision trail data model not designed (Doc 03 §16) |
+| TC-3419 | Candidate selection runs on published code-enforced schedule; unanswered member questions visibly recorded | US-0103 · FR-093 | Nomination, question phase, debates (FR-066), post-debate vote (FR-067), and election on code-enforced clock; unanswered questions recorded as unanswered | **No mechanism** — candidate selection schedule and Q&A public record not designed (Doc 03 §16) |
+| TC-3420 | Manifesto is structured and machine-readable; publication refused when any mandatory field is missing | US-0104 · FR-094 | Every sector plan has baseline, target, budget, timeline, method, and named owner; missing field named and publication refused; follows FR-011 pattern | **No mechanism** — structured manifesto schema and publication gate not designed (Doc 03 §16) |
+| TC-3421 | Every manifesto commitment has a stable per-commitment ID; status updates are append-only; supersedes FR-046 | US-0105 · FR-095 | Commitment ID stable across versions; status transitions appended; history not rewritten; FR-046 traceability absorbed | **No mechanism** — manifesto commitment ID model and append-only status transitions not designed (Doc 03 §16) |
+| TC-3422 | Mechanical anomaly detection flags published on transparency dashboard; flags do not freeze funds or block governance | US-0106 · FR-096 | Velocity, structuring, concentration, round-trip flags published; no fund freeze; no governance action blocked by a flag | **No mechanism** — treasury anomaly detection and transparency dashboard not designed (Doc 03 §16) |
+| TC-3423 | Public-tier role-takers file COI disclosure on schedule; overdue disclosure flagged by code on participation record | US-0107 · FR-097 | Disclosure record created; overdue disclosure flagged visibly by code; no human discretion in flagging | **No mechanism** — COI disclosure filing and code-driven flag mechanism not designed (Doc 03 §16) |
+| TC-3424 | COI review is investigation-and-recommendation only; no reviewer holds outcome power; recusal voluntary or code-ruled | US-0108 · FR-098 | Sortition-selected reviewers publish findings only; recusal takes effect by voluntary compliance, member vote, or charter code rule; no enforcement outcome from reviewers | **No mechanism** — COI review mechanics (sortition, publication, recusal path) not designed (Doc 03 §16) |
+| TC-3425 | Independent internal audit by sortition; read-only access to all records; findings inform only; no enforcement power | US-0109 · FR-099 | Auditors drawn per-case from eligible members; read-only access confirmed; no standing body; reports on published schedule; no enforcement action path | **No mechanism** — sortition audit selection and record-access mechanism not designed (Doc 03 §16) |
+| TC-3426 | Dispute stage transitions enforced by code within published maximum timelines; timeline breach recorded on decision trail | US-0110 · FR-100 | Stage transitions within maxima; breach appended to decision trail; no human hold on transitions | **No mechanism** — dispute timeline enforcement not designed (Doc 03 §16) |
+| TC-3427 | Per-case appeal/review panels drawn by verifiable sortition from eligible members; no standing panel body; outputs are recommendations | US-0111 · FR-101 | Sortition selection reproducible by third party; no standing body; panel outputs go to member vote or code rules | **No mechanism** — verifiable sortition panel selection not designed (Doc 03 §16) |
+| TC-3428 | Machine-readable member-rights charter published; party charter reducing any right below platform floor rejected by code | US-0112 · FR-102 | Rights machine-readable; every right maps to a code-enforced capability; configuration reducing any right below floor rejected | **No mechanism** — member-rights charter schema and floor-enforcement not designed (Doc 03 §16) |
+| TC-3429 | Conduct votes use nullifier + privacy mechanics; individual votes private; Supporter-tier conduct vote impossible by construction | US-0113 · FR-103 | Conduct vote uses same nullifier scheme as policy votes; no individual vote revealed; Supporter has no addressable identity — conduct vote is impossible | **No mechanism** — conduct vote mechanics not designed (Doc 03 §16) |
+| TC-3430 | Removal requires affirmative active-vote quorum; silence does not remove; subject's statement right honoured; surge defence active | US-0114 · FR-104 | Removal passes only on active-vote quorum at published bar; no removal by default or silence; statement recorded before window closes; FR-023/FR-028 surge defence applies | **No mechanism** — removal vote mechanics not designed (Doc 03 §16) |
+| TC-3431 | Expulsion has strictly higher quorum+supermajority than removal; public-tier only (Supporter expulsion impossible); historical records unaltered | US-0115 · FR-105 | Expulsion bar higher than removal; Supporter expulsion impossible by construction (no addressable identity); membership state transitions appended, no overwrite; OI-15 adopted | **No mechanism** — expulsion mechanics not designed (Doc 03 §16) |
+| TC-3432 | Every data entity carries exactly one classification (public/restricted/confidential); unclassified entity not storable | US-0116 · FR-106 | Public / restricted / confidential classification enforced at write; unclassified entity rejected; classification governs storage, access, and publication | **No mechanism** — data classification enforcement model not designed (Doc 03 §16) |
+| TC-3433 | No hard-delete or overwrite in any governance store; state transitions appended with timestamp and cause; confidential-class carve-out honoured | US-0117 · FR-107 | Delete/overwrite reverts; every transition adds a record; pre-nomination disclosure data (confidential-class per OI-16) never enters the governance record; public records never overwritten | **No mechanism** — append-only governance store for v2.0 entities not designed (Doc 03 §16) |
+| TC-3434 | Public verifiable record contains only proofs, timestamps, counts, governance events; no restricted or confidential data in any form | US-0118 · FR-108 | Write of restricted/confidential entity to public chain rejected; chain inspection reveals only permitted classes; CON-002/CON-008/NFR-010 discipline maintained | **No mechanism** — public-record write discipline for v2.0 entities not designed (Doc 03 §16) |
+| TC-3435 | Transparency dashboard presents aggregate governance data with anomaly flags; no per-member drill-down | US-0119 · FR-109 | Dashboard shows governance activity, treasury summary with flags, participation aggregates, commitment progress, dispute-timeline compliance; no individual drill-down path exists | **No mechanism** — transparency dashboard aggregation not designed (Doc 03 §16) |
+| TC-3436 | Performance scorecard presents commitments vs measured progress factually; no ranking or editorial conclusion | US-0120 · FR-110 | Baselines, targets, evidence links displayed; no party-vs-party ranking; no editorial score or conclusion; methodology published | **No mechanism** — performance scorecard display not designed (Doc 03 §16) |
+| TC-3437 | Zero per-user behavioural events in any store or log for any v2.0 surface; UT-0525 and UT-0740 remain green on every release | US-0121 · FR-111 | No per-user click/view/dwell/session event in any log or export; UT-0525 (indexer) and UT-0740 (client beacon) pass on every release; guarantee extended to all v2.0 governance surfaces | **No mechanism** — extension of no-telemetry guarantee to v2.0 surfaces not yet implemented; UT-0525/UT-0740 cover existing surfaces only; new v2.0 surfaces (committee portal, proposal lifecycle, conduct vote UI, dashboard) not yet built (Doc 03 §16) |
+
+---
+
+#### TC-3438..TC-3446 — FR-112..FR-120 (DES assigned — not yet implemented in this drop)
+
+Each row status: **Blocked — Phase 3** — DES assigned in Doc 03 §5.2 (see column), but the implementing contracts (ProtocolGovernance, StewardRegistry, GovernanceConstants, TrustAnchorLifecycle) are not deployed in this drop.
+
+| TC | Title | Verifies (US · FR · DES) | Expected result | Status |
+|---|---|---|---|---|
+| TC-3438 | Trust-anchor revocation enacted through member vote at highest tier; no operator or unilateral path | US-0122 · FR-112 · DES-090 | Operator EOA call to revoke trust anchor reverts; revocation reachable only through an enacted highest-tier proposal; on enactment, new enrolments against revoked anchor suspended; already-enrolled credentials unaffected unless separately voted | **Blocked — Phase 3** (DES-090; TrustAnchorLifecycle contract not deployed in this drop) |
+| TC-3439 | After `abortRotation()`, pending anchor rejected for new enrolments; TrustAnchorLifecycle enters ROTATION_ABORTED state; incumbent hash restored | US-0123 · FR-113 · DES-090 | `abortRotation()` sets state ROTATION_ABORTED; enrolment call citing the pending anchor reverts; incumbent anchor hash restored; no retroactive invalidation of existing enrolments | **Blocked — Phase 3** (DES-090; TrustAnchorLifecycle state machine not deployed in this drop) |
+| TC-3440 | StewardRegistry IMMUTABLE CORE: ABI contains no upgrade proxy, no admin key, no self-destruct, no delegatecall to external address | US-0124 · FR-114 · DES-088 | ABI inspection finds no upgrade/proxy/self-destruct/external-delegatecall surface; CI build-fails on any such addition; SC-15 general rule satisfied for StewardRegistry | **Blocked — Phase 3** (DES-088; StewardRegistry not deployed; CI assertion not yet wired) |
+| TC-3441 | Steward powers ABI-allowlisted to exactly four categories; configuration beyond the list rejected by code | US-0125 · FR-115 · DES-089 | ABI allowlist covers: (a) draft/publish proposals, (b) coordinate audits/ceremonies/issuer-onboarding, (c) hold funds/sign vendor contracts, (d) publish operational reports; any additional capability configuration rejected at submission | **Blocked — Phase 3** (DES-089; steward powers ABI allowlist not implemented) |
+| TC-3442 | CI assertion build-fails when any new steward-facing function is added outside the ABI allowlist | US-0126 · FR-116 · DES-089 | CI dep-guard assertion triggers build failure on PR if steward ABI allowlist is violated; merge is blocked | **Blocked — Phase 3** (DES-089; CI assertion for steward ABI allowlist not yet wired) |
+| TC-3443 | No citizen-path module imports or references any steward-facing symbol from StewardRegistry | US-0127 · FR-117 · DES-089 | Static analysis confirms: no module in enrol, join, endorse, vote, propose, or fork citizen flows imports or calls StewardRegistry by any import path | **Blocked — Phase 3** (DES-089; StewardRegistry and citizen-path dep-guard not implemented) |
+| TC-3444 | GovernanceConstants per-constant Amendment Layer enforced; STEWARD_INACTION_WINDOW setter accessible only via `onlyGovernor`; no external setter | US-0128 · FR-118 · DES-087 | Call to `setGovernanceConstant(STEWARD_INACTION_WINDOW, …)` from non-Governor address reverts; constant change requires enacted proposal; each constant classified and floor/ceiling-guarded per DES-091 | **Blocked — Phase 3** (DES-087, DES-091; GovernanceConstants and ProtocolGovernance not deployed) |
+| TC-3445 | No bespoke unaudited cryptographic primitive in any governance path; only reviewed standard-library primitives | US-0129 · FR-119 · DES-087 | Code inspection and CI linter confirm zero custom cryptographic functions; all crypto primitives are from reviewed standard libraries (CON-012 discipline) | **Blocked — Phase 3** (DES-087; governance contracts not deployed; bespoke-crypto linter not yet wired to CI) |
+| TC-3446 | Fork right entrenched and exercisable regardless of steward action or protocol vote; full lineage preserved | US-0130 · FR-120 · DES-034 | Fork initiation succeeds; complete public history exported; fork right not removable by any proposal, vote, or steward action; entrenched by FR-118 | **Blocked — Phase 3** (DES-034; `fork` flag OFF above dev; FR-053 open critical; Phase-3 only) |
+
+---
+
+#### TC-3447..TC-3448 — NFR-027 and NFR-028
+
+| TC | Title | Verifies | Expected result | Status |
+|---|---|---|---|---|
+| TC-3447 | Every v2.0 governance surface produces zero per-user behavioural events; UT-0525 and UT-0740 remain green | NFR-027 (BR-017, BR-009) | Zero per-user behavioural events in any store, log, or export for all v2.0 surfaces (committee, proposal lifecycle, conduct vote, transparency dashboard, scorecard); UT-0525 and UT-0740 pass on every release | **Blocked — Phase 3** — UT-0525/UT-0740 cover existing surfaces and remain green; v2.0 governance surfaces not yet built; full guarantee requires all v2.0 surfaces deployed and verified |
+| TC-3448 | Zero hard-delete or overwrite operations in any v2.0 governance store; every state transition appended with timestamp and cause; verified by audit inspection | NFR-028 (BR-019, BR-008) | Audit inspection of every v2.0 governance store (committee records, dispute trail, COI disclosures, manifesto commitments, conduct votes) finds 0 hard-delete or overwrite operations; all transitions append-only | **Blocked — Phase 3** — v2.0 governance stores not yet implemented; no audit mechanism exists in this drop |
+
+---
+
+#### TC-3449..TC-3455 — SC-15..SC-21 mandatory security-closure cases
+
+**Context.** Findings SC-15..SC-21 were identified in the directed security scan SECURITY-SCAN-DOC03-V2-2026-08-11.md and all closed by the architect in SECURITY-RESCAN-SC15-21-2026-08-11.md. Each case below verifies the specific closure described in that rescan. All are blocked because the implementing contracts are not deployed in this drop.
+
+| TC | Title | SC finding (severity — status) | Verifies | Expected result | Status |
+|---|---|---|---|---|---|
+| TC-3449 | **[SC-15 closure]** ProtocolGovernance IMMUTABLE CORE enforced: no competitor governance contract accepted at any routing surface; no upgrade proxy; no admin setter | SC-15 (CRITICAL — CLOSED) | FR-118 · DES-087 | ABI contains no upgrade/proxy/admin-key/self-destruct surface; CI build-fails on any violation; routing surfaces (electSteward, recallSteward, proposeAmendment, publishAuditRef, enact) refuse any externally-supplied governance contract address | **Blocked — Phase 3** (DES-087; ProtocolGovernance not deployed in this drop) |
+| TC-3450 | **[SC-16 closure]** STEWARD_INACTION_WINDOW guarded by `onlyGovernor`; no external setter; constant guarded in both directions by Amendment Layer | SC-16 (HIGH — CLOSED) | US-0129 · FR-119 · DES-091 | `setGovernanceConstant(STEWARD_INACTION_WINDOW, …)` from non-Governor address reverts; `onlyGovernor` modifier present; constant classifiable under Amendment Layer; both floor- and ceiling-guarded | **Blocked — Phase 3** (DES-091, DES-087; GovernanceConstants and ProtocolGovernance not deployed) |
+| TC-3451 | **[SC-17 closure]** Citizen fallback for `publishAuditRef` activates after STEWARD_INACTION_WINDOW (60 days) with all seats vacant; vacancy-immediate fallback for `revokeTrustAnchor` | SC-17 (HIGH — CLOSED) | FR-117 · DES-092 | `publishAuditRef()` call from enrolled citizen succeeds after 60-day inaction window with 0 steward seats filled; `revokeTrustAnchor()` citizen fallback activates immediately on vacancy; audit substance unchanged by who published | **Blocked — Phase 3** (DES-092; ProtocolGovernance citizen-fallback path not deployed) |
+| TC-3452 | **[SC-18 closure]** `abortRotation()` passes at Open Layer bar; state transitions to ROTATION_ABORTED; incumbent hash restored; pending anchor rejected for NEW enrolments post-abort; no retroactive invalidation | SC-18 (HIGH — CLOSED) | FR-113 · DES-090 | `abortRotation()` meets Open Layer quorum/supermajority; TrustAnchorLifecycle state = ROTATION_ABORTED; incumbent hash restored; new enrolment citing the aborted pending anchor reverts; already-enrolled credentials unaffected | **Blocked — Phase 3** (DES-090; TrustAnchorLifecycle state machine not deployed) |
+| TC-3453 | **[SC-19 closure]** Citizen fallback for issuer-onboarding coordination after 60-day steward vacancy; steward coordination is convenience, not a control point | SC-19 (MEDIUM — CLOSED) | FR-117 · DES-092 | Issuer-onboarding coordination call from enrolled citizen succeeds after STEWARD_INACTION_WINDOW with all steward seats vacant; steward action is convenience infrastructure, never a required control point | **Blocked — Phase 3** (DES-092; citizen fallback for issuer-onboarding not deployed) |
+| TC-3454 | **[SC-20 closure]** Quorum denominator = enrolled-citizen count fixed at `snapshotRoot`; any update to `snapshotRoot` between `firstVote` and `enact()` reverts `SnapshotImmutable` | SC-20 (MEDIUM — CLOSED) | US-0129 · FR-119 · DES-087 | `proposeAmendment()` fixes `snapshotRoot` and enrolled count at that block; call attempting to update `snapshotRoot` between `firstVote` open and `enact()` reverts with `SnapshotImmutable`; quorum computed from original enrolled count throughout | **Blocked — Phase 3** (DES-087; ProtocolGovernance `proposeAmendment/firstVote/secondVote/enact` not deployed) |
+| TC-3455 | **[SC-21 closure]** STRIDE general rule satisfied: no routing surface accepts an externally-supplied address that could act as an alternative governance contract | SC-21 (LOW — CLOSED) | FR-118 · DES-087 | ABI inspection and STRIDE review confirm SC-15 general rule covers all routing surfaces; no externally-supplied governance-contract address accepted at any surface | **Blocked — Phase 3** (DES-087; ProtocolGovernance not deployed; STRIDE review is design-only in this drop) |
+
+---
+
+#### TC-3456..TC-3464 — Guarded Layer property tests P1..P5 (Doc 03 §14)
+
+**Context.** Doc 03 §14 specifies these property-based test cases with named revert conditions. They verify the invariants of the Guarded Layer super-process (FR-119, DES-087, DES-091). All constants: STEWARD_INACTION_WINDOW = 60 days, AUDIT_LEAD_TIME = 30 days, inter-vote window = 180 days, Tier-2 quorum = 25% of enrolled citizens at snapshotRoot, Tier-2 supermajority = 80% of votes cast (Doc 03 §10.11). All cases blocked until ProtocolGovernance deploys.
+
+| TC | Property | Title | Verifies (US · FR · DES) | Expected result (named revert) | Status |
+|---|---|---|---|---|---|
+| TC-3456 | **P1** | `firstVote` closed with 75% YES (below 80% Tier-2 supermajority bar); `enact()` reverts `SupermajorityNotMet` | US-0129 · FR-119 · DES-087, DES-091 | Vote tally = 75% YES at `firstVote` close; `enact()` reverts `SupermajorityNotMet`; confirms supermajority check fires at first-vote stage | **Blocked — Phase 3** (DES-087; ProtocolGovernance not deployed) |
+| TC-3457 | **P2** | `secondVote` called before 180-day inter-vote window elapses reverts `WindowNotElapsed` | US-0129 · FR-119 · DES-087, DES-091 | `secondVote()` submitted at day 179 since `firstVote` reverts `WindowNotElapsed` | **Blocked — Phase 3** (DES-087; ProtocolGovernance not deployed) |
+| TC-3458 | **P3a** | `enact()` before `firstVote` closes reverts `VoteNotComplete` | US-0129 · FR-119 · DES-087 | `enact()` called before `firstVote` window closes reverts `VoteNotComplete` | **Blocked — Phase 3** (DES-087; ProtocolGovernance not deployed) |
+| TC-3459 | **P3b** | `enact()` before `secondVote` closes reverts `VoteNotComplete` | US-0129 · FR-119 · DES-087 | `enact()` called before `secondVote` window closes reverts `VoteNotComplete` | **Blocked — Phase 3** (DES-087; ProtocolGovernance not deployed) |
+| TC-3460 | **P4a** | Post-snapshot-join has zero effect on eligibility for the in-flight proposal | US-0129 · FR-119 · DES-087 | Citizen enrolled after `snapshotRoot` is set for the in-flight proposal has no voting rights in that proposal; existing eligible-voter set unchanged | **Blocked — Phase 3** (DES-087; ProtocolGovernance not deployed) |
+| TC-3461 | **P4b** | Any call updating `snapshotRoot` between `firstVote` and `enact()` reverts `SnapshotImmutable` | US-0129 · FR-119 · DES-087 | State-modifying call that would update `snapshotRoot` between `firstVote` open and `enact()` reverts `SnapshotImmutable` | **Blocked — Phase 3** (DES-087; ProtocolGovernance not deployed) |
+| TC-3462 | **P4c** | Churn-rate violation between first and second vote causes `enact()` to revert | US-0129 · FR-119 · DES-087 | Voter-set churn beyond the published limit between first and second vote causes `enact()` to revert with the churn-violation error | **Blocked — Phase 3** (DES-087; ProtocolGovernance not deployed) |
+| TC-3463 | **P5a** | Tier-2 `enact()` without a published audit reference reverts `AuditNotPublished` | US-0129 · FR-119 · DES-087 | `enact()` on a Tier-2 amendment without a prior `publishAuditRef()` call reverts `AuditNotPublished` | **Blocked — Phase 3** (DES-087; ProtocolGovernance not deployed) |
+| TC-3464 | **P5b** | `enact()` when `publishAuditRef` timestamp is within AUDIT_LEAD_TIME (30 days) of `secondVote` open reverts `AuditLeadTimeNotSatisfied` | US-0129 · FR-119 · DES-087, DES-091 | `enact()` called when audit reference was published within 30 days before `secondVote` opened reverts `AuditLeadTimeNotSatisfied` | **Blocked — Phase 3** (DES-087; ProtocolGovernance not deployed) |
+
+---
+
+#### TC-3465..TC-3466 — FR-117 capability-absence suite (Doc 03 §14 hooks)
+
+**Context.** Doc 03 §14 mandates a two-part capability-absence test for FR-117: (a) a static dep-guard that CI build-fails if any citizen-path module imports StewardRegistry, and (b) a dynamic vacancy simulation running the full citizen E2E with all steward seats vacant and verifying zero citizen-facing degradation. Both are blocked because StewardRegistry is not deployed and the citizen E2E flows are not yet complete for a vacancy simulation.
+
+| TC | Title | Verifies | Expected result | Status |
+|---|---|---|---|---|
+| TC-3465 | **[FR-117 static dep-guard]** CI build-fails if any citizen-path module imports or references StewardRegistry | US-0127 · FR-117 · DES-089 | CI dep-guard assertion confirms: enrol, join, endorse, vote, propose, and fork citizen-path modules import zero steward-facing symbols from StewardRegistry; any violation causes build failure before merge | **Blocked — Phase 3** (DES-089; StewardRegistry contract not yet implemented; dep-guard CI assertion not yet written; Doc 04 §9 capability-absence pattern) |
+| TC-3466 | **[FR-117 dynamic vacancy simulation]** Full citizen E2E (enrol → join → endorse → vote → propose → fork-petition) with 0 of N steward seats filled; zero citizen-facing degradation | US-0127 · FR-117 · DES-089, DES-092 | All six citizen flows complete successfully with all steward seats vacant; no citizen-facing degradation; no action requires steward liveness; mirrors UT-0700/UT-0701 absence-verification pattern at E2E scope | **Blocked — Phase 3** (DES-089, DES-092; steward election, multi-seat vacancy simulation, and fork-petition citizen path not implemented; E2E harness for vacancy simulation not yet built)

@@ -2,12 +2,26 @@
 
 ```
 Document ID:   BKLG-TRUMOCRACY
-Version:       1.1.2
-Status:        In Review
+Version:       2.0.1
+Status:        Approved (review loop, cycle 2 PASS 99% — artifacts/reviews/05-product-backlog-v2.0.1-business-cycle2.md)
 Owner:         Priya Raghunathan — Product Owner
-Source:        SRS-TRUMOCRACY (docs/02-requirements-srs.md v1.1.1), PR-TRUMOCRACY (docs/01-press-release-prfaq.md)
-Last updated:  2026-08-10
-Change:        v1.1.2 — Cycle-2 business-review rework (2026-08-10).
+Source:        SRS-TRUMOCRACY (docs/02-requirements-srs.md v2.2.0), PR-TRUMOCRACY (docs/01-press-release-prfaq.md)
+Last updated:  2026-08-11
+Change:        v2.0.1 — Cycle-1 business-review rework (2026-08-11).
+               Addresses ISS-01 and ISS-02 from artifacts/reviews/05-product-backlog-v2.0.0-business-cycle1.md.
+               ISS-01 (Medium): Features lines in seven pre-existing §4 epic blocks updated to include features
+               added by v2.0.0 — EP-01 += FE-037; EP-02 += FE-038; EP-04 += FE-039; EP-05 += FE-042;
+               EP-07 += FE-043; EP-08 += FE-044; EP-09 += FE-040, FE-051, FE-053.
+               ISS-02 (Low): US-0129 title corrected — "no bespoke cryptography" → "no bespoke unaudited
+               cryptography" to match FR-119/CON-012 language; ACs unchanged.
+               v2.0.0 — Gate 1 re-entry backlog catch-up (2026-08-11).
+               Seeds US-0084..US-0130 (47 stories) implementing FR-074..FR-120 from SRS v2.2.0.
+               Adds EP-11 (Party institutional life & transparency) and EP-12 (Platform governance &
+               stewardship); adds FE-037..FE-056 (20 features). Supersession annotations applied to
+               US-0054 (FR-046→FR-094/FR-095) and US-0071 (FR-062→FR-082..FR-086). §2 counts,
+               §3 WSJF, §4 epics, §5 features, §9 estimation, and §12 traceability updated.
+               Source: GATE1-DECISION-2026-08-11.md and SRS v2.2.0 (docs/02-requirements-srs.md).
+               v1.1.2 — Cycle-2 business-review rework (2026-08-10).
                Addresses ISS-A..ISS-F from artifacts/reviews/05-product-backlog-v1.1.1-business-cycle2.md.
                ISS-A: EP-06 outcome hypothesis rewritten to align with Doc 02 v1.1.1 BR-011 (adversarial-audit
                properties; coercion rate as upper bound from incident reports, not operational observation);
@@ -59,9 +73,9 @@ early as possible.
 `Theme → Epic (EP-##) → Feature (FE-###) → User Story (US-####) → Task`.
 Non-functional work appears as **explicit backlog items**, never as an assumption — see §8.
 
-**Contents.** 10 epics · 36 features · 83 user stories · 9 explicit non-functional backlog items. (ISS-D: count corrected from 8 to 9 after NF-09 was added.)
-All 54 Must FRs in Doc 02 v1.1.1 are covered by at least one story; coverage is asserted in §12 and
-verified in the RTM. (ISS-E: source pin updated from v1.1.0 to v1.1.1.)
+**Contents.** 12 epics · 56 features · 130 user stories · 9 explicit non-functional backlog items. (ISS-D: count corrected from 8 to 9 after NF-09 was added at v1.1.1; v2.0.0 adds EP-11, EP-12, FE-037..FE-056, US-0084..US-0130.)
+All 101 Must FRs in Doc 02 v2.2.0 are covered by at least one story; coverage is asserted in §12 and
+verified in the RTM. (ISS-E: source pin updated from v1.1.0 to v1.1.1; v2.0.0: source pin updated to v2.2.0.)
 
 ## 3. Prioritization framework
 
@@ -82,6 +96,8 @@ guardrail retrofitted after launch is a breach, not a feature.
 | EP-08 Accountability: manifestos & recall | 9 | 6 | 6 | 8 | 2.63 | 8 |
 | EP-09 Public verifiability & moderation-by-code | 8 | 9 | 7 | 5 | 4.80 | 9 |
 | EP-10 Zero-friction access: cost, recovery, accessibility | 10 | 7 | 9 | 8 | 3.25 | 10 |
+| EP-11 Party institutional life & transparency | 8 | 9 | 7 | 13 | 1.85 | 11 |
+| EP-12 Platform governance & stewardship | 9 | 10 | 8 | 13 | 2.08 | 12 |
 
 > **Sequencing rule:** WSJF scores measure value density; the walking-skeleton dependency chain
 > determines the actual start sequence and overrides WSJF where dependency order requires it (e.g.,
@@ -105,7 +121,7 @@ In scope: enrolment, one-credential-per-human, per-scope action limits, cross-sc
   nullifier, pluggable credential adapter, government eID issuer hierarchy.
 Out of scope: any storage of identity documents; any identity issued by Trumocracy.
 Success metric: <=0.1% duplicate credentials; 0 identity fields at data inventory; >=2 attestors live per region.
-Features: FE-001, FE-002, FE-003, FE-004, FE-034, FE-036
+Features: FE-001, FE-002, FE-003, FE-004, FE-034, FE-036, FE-037
 Owner: Marcus Adeyemi            Status: Backlog
 ```
 ```
@@ -118,7 +134,7 @@ In scope: draft creation, name/emblem collision, eight-pillar completeness, char
   offline drafting.
 Out of scope: editorial judgement of political content; collaborative co-authoring.
 Success metric: >=50 published petitions in month 1; 0 human approvals in the publish path.
-Features: FE-005, FE-006
+Features: FE-005, FE-006, FE-038
 Owner: Tomás Ferreira            Status: Backlog
 ```
 ```
@@ -145,7 +161,7 @@ In scope: join, leave, equal standing, maturation period, churn rate limits, agg
   (with anti-capture active).
 Out of scope: membership tiers, dues, invitations, expulsion.
 Success metric: 0 approval steps; 0 weighted votes; churn-attack simulation defeated; 0 dual-memberships.
-Features: FE-010, FE-011, FE-012, FE-030, FE-033
+Features: FE-010, FE-011, FE-012, FE-030, FE-033, FE-039
 Owner: Grace Mbeki               Status: Backlog
 ```
 ```
@@ -158,7 +174,7 @@ In scope: proposal submission, four tiers, quorum + supermajority, timelocks, en
   eligibility snapshot, proposal rate limits.
 Out of scope: proposal moderation or pre-screening of any kind.
 Success metric: 0 successful simulated takeovers; 100% of enactments satisfy their tier's rules.
-Features: FE-013, FE-014, FE-015, FE-016
+Features: FE-013, FE-014, FE-015, FE-016, FE-042
 Owner: Tomás Ferreira            Status: Backlog
 ```
 ```
@@ -195,7 +211,7 @@ Out of scope: nomination of others; central candidate lists; appointment of any 
   renomination of incumbents.
 Success metric: 0 out-of-scope nominations or ballots accepted; 100% consented disclosures;
   100% of major-election ballots preceded by three completed debates per candidate.
-Features: FE-020, FE-021, FE-022, FE-031, FE-032
+Features: FE-020, FE-021, FE-022, FE-031, FE-032, FE-043
 Owner: Aisha Nkemdirim           Status: Backlog
 ```
 ```
@@ -209,7 +225,7 @@ In scope: manifesto publication, dated commitments, immutable version history an
   and by-election.
 Out of scope: performance scoring by Trumocracy; any editorial judgement of a commitment.
 Success metric: 100% of versions retrievable; recall exercised at least once by month 6.
-Features: FE-023, FE-024
+Features: FE-023, FE-024, FE-044
 Owner: Erik Lindqvist            Status: Backlog
 ```
 ```
@@ -220,11 +236,12 @@ Outcome hypothesis: We believe emitting a tamper-evident record of every governa
   the security audit finds 0 privileged governance paths.
 Business value / link: BR-005, BR-008, BR-009
 In scope: verifiable record emission, independent verifier, party history export, absence of
-  operator override, jurisdiction-scoped display filtering with a public log, public participation
-  profiles (FR-062), ballot-direction prohibition (FR-063).
+  operator override, jurisdiction-scoped display filtering with a public log, three-tier participation
+  records (FR-082..FR-086, superseding FR-062), ballot-direction prohibition (FR-063), data
+  classification (FR-106), append-only lifecycle (FR-107, FR-108), behavioural-analytics prohibition (FR-111).
 Out of scope: content moderation of political speech; any deletion from the record.
 Success metric: 0 privileged override paths at audit; 100% of filtering actions publicly logged.
-Features: FE-025, FE-026, FE-029
+Features: FE-025, FE-026, FE-029, FE-040, FE-051, FE-053
 Owner: Erik Lindqvist            Status: Backlog
 ```
 ```
@@ -240,6 +257,43 @@ Out of scope: desktop-optimised experience; any charge to a citizen, ever.
 Success metric: USD 0.00 citizen cost; >=80% unaided completion; 0 WCAG A/AA failures.
 Features: FE-027, FE-028, FE-035
 Owner: Hiroshi Tanaka            Status: Backlog
+```
+```
+EP-11  Party institutional life & transparency
+Outcome hypothesis: We believe that codifying deliberation bodies, financial transparency, conflict-
+  of-interest regimes, independent audit, dispute resolution, member rights, and conduct votes into
+  the protocol will achieve genuine accountability within parties without creating new power
+  concentrations; we'll know when 0 committee decisions bypass the proposal lifecycle and 0 COI
+  flagging events freeze any governance action.
+Business value / link: BR-014, BR-015, BR-018, BR-019
+In scope: committees (deliberation without decisional power), proposal lifecycle enhancements, financial
+  anomaly detection, COI disclosure and recusal, internal audit by sortition, dispute resolution with
+  timelines, member rights charter, conduct votes, removal from role, expulsion (public tier only),
+  transparency dashboard, performance scorecard.
+Out of scope: any enforcement power for committees, panels or audit bodies; any conduct action against
+  Supporter-tier participants (handled by FR-005 credential revocation); editorial scoring of parties.
+Success metric: 0 committee votes that change outcomes; 0 COI flags that freeze funds; 100% of dispute
+  stages completed within published timelines before Gate 2 red-team.
+Features: FE-041, FE-045, FE-046, FE-047, FE-048, FE-049, FE-050, FE-052
+Owner: Ingrid Bergqvist          Status: Backlog
+```
+```
+EP-12  Platform governance & stewardship
+Outcome hypothesis: We believe that electing a steward body with strictly enumerated powers, proving
+  zero citizen-flow dependency on that body, entrenching seven fork-only charter rules, and providing
+  a three-tier amendment path will achieve a protocol that cannot be captured at any level; we'll
+  know when the steward-vacancy simulation shows zero citizen-facing degradation and the entrenched-
+  rule suite confirms all seven rules are code-rejected at submission.
+Business value / link: BR-021, BR-015, BR-008
+In scope: trust-anchor lifecycle governance (revocation, rotation), steward organisation (election,
+  enumerated powers, prohibition, zero-dependency proof), three-tier amendment boundary, unconditional
+  fork right (FR-120 design posture — fork flag still OFF above dev per §13).
+Out of scope: any steward power that can change who wins, who votes, or who is a member; any emergency
+  override path for stewards or operators; any modification of the seven Tier-1 entrenched rules.
+Success metric: 0 steward-dependency paths in citizen flows; 100% of Tier-1 amendment proposals
+  rejected by code; steward-vacancy simulation shows zero degradation before Gate 2.
+Features: FE-054, FE-055, FE-056
+Owner: Rafael Duarte             Status: Backlog
 ```
 
 ## 5. Features
@@ -282,6 +336,26 @@ Owner: Hiroshi Tanaka            Status: Backlog
 | FE-034 | Deterministic enrolment nullifier (EP-01) | Duplicate detection by mathematics, not by matching names or faces | FR-069, FR-070 | US-0079–0080 | Marcus Adeyemi |
 | FE-035 | Nullifier-collision recovery (EP-10) | Losing your keys does not lose your history; a stolen credential cannot take your seat | FR-071, FR-072 | US-0081–0082 | Amara Diallo |
 | FE-036 | Government eID issuer hierarchy (EP-01) | One class of credential mints uniqueness; all others help but never grant new entries | FR-073 | US-0083 | Marcus Adeyemi |
+| FE-037 | Country selection & legal-registration boundary (EP-01) | Rights follow the country you chose; the platform never impersonates a registration authority | FR-074, FR-075 | US-0084–0085 | Marcus Adeyemi |
+| FE-038 | Party founding & the public digital constitution (EP-02) | A party must have a complete, code-verified constitution before it exists | FR-076, FR-077, FR-078 | US-0086–0088 | Tomás Ferreira |
+| FE-039 | Participation tiers — self-assigned, descriptive, never permissive (EP-04) | Tiers describe what you do, not what you're worth — no tier changes voting weight | FR-079, FR-080, FR-081 | US-0089–0091 | Grace Mbeki |
+| FE-040 | Three-tier privacy & tier-scoped participation record (EP-09) | Supporters are unconditionally anonymous; Workers and Candidates are public from consent; prior supporter period stays private forever | FR-082, FR-083, FR-084, FR-085, FR-086 | US-0092–0096 | Dr. Lena Kowalczyk |
+| FE-041 | Committees — deliberation without decisional power (EP-11) | Committees produce only proposals that enter the ordinary lifecycle; they change nothing directly | FR-087, FR-088, FR-089, FR-090 | US-0097–0100 | Tomás Ferreira |
+| FE-042 | Proposal lifecycle & permanent decision trail (EP-05) | Every decision moves through defined stages by code; the complete trail is reconstructable end-to-end | FR-091, FR-092 | US-0101–0102 | Tomás Ferreira |
+| FE-043 | Candidate selection schedule (EP-07) | Nomination, questions, debates, post-debate vote and election run on a published code-enforced clock | FR-093 | US-0103 | Aisha Nkemdirim |
+| FE-044 | Manifesto as measurable commitment set (EP-08) | A manifesto is structured data with baselines, targets, timelines and owners — not prose | FR-094, FR-095 | US-0104–0105 | Erik Lindqvist |
+| FE-045 | Financial anomaly detection (EP-11) | Mechanical flags inform; they never freeze funds or trigger enforcement | FR-096 | US-0106 | Erik Lindqvist |
+| FE-046 | Conflict-of-interest disclosure & recusal (EP-11) | Every public-tier role-taker files publicly; COI review is investigation-and-recommendation only | FR-097, FR-098 | US-0107–0108 | Ingrid Bergqvist |
+| FE-047 | Independent internal audit by sortition (EP-11) | Auditors drawn per-case, never a standing body; findings inform only | FR-099 | US-0109 | Ingrid Bergqvist |
+| FE-048 | Dispute resolution with defined timelines (EP-11) | Every stage has a maximum clock; breaches are themselves recorded on the decision trail | FR-100, FR-101 | US-0110–0111 | Ingrid Bergqvist |
+| FE-049 | Explicit member rights charter (EP-11) | Rights are machine-readable, code-enforced, and no party charter may reduce them below the platform floor | FR-102 | US-0112 | Grace Mbeki |
+| FE-050 | Conduct votes, removal & expulsion (EP-11) | Conduct votes use the same privacy mechanics as policy votes; expulsion is a higher bar, public-tier only | FR-103, FR-104, FR-105 | US-0113–0115 | Daniel Okonkwo |
+| FE-051 | Data classification & append-only lifecycle (EP-09) | Every entity is public, restricted or confidential; nothing is hard-deleted; public record carries only proofs | FR-106, FR-107, FR-108 | US-0116–0118 | Dr. Lena Kowalczyk |
+| FE-052 | Transparency dashboard & performance scorecard (EP-11) | Aggregate governance data; commitment progress vs evidence; factual, no editorial ranking | FR-109, FR-110 | US-0119–0120 | Yuki Sato |
+| FE-053 | Behavioural-analytics prohibition (EP-09) | Zero per-user events in any store or export; analytics aggregate-only; personalisation is client-side | FR-111 | US-0121 | Dr. Lena Kowalczyk |
+| FE-054 | Trust-anchor lifecycle governance (EP-12) | Revocation and rotation are member-voted governance actions; no operator path exists | FR-112, FR-113 | US-0122–0123 | Rafael Duarte |
+| FE-055 | Steward organisation (EP-12) | Elected, enumerated-power-only body; zero citizen-flow dependency provable by test suite | FR-114, FR-115, FR-116, FR-117 | US-0124–0127 | Aisha Nkemdirim |
+| FE-056 | Amendment boundary & unconditional fork right (EP-12) | Seven rules are fork-only; named absolutes need super-process; fork right is entrenched and always exercisable | FR-118, FR-119, FR-120 | US-0128–0130 | Rafael Duarte |
 
 ## 6. User stories
 
@@ -507,6 +581,48 @@ AC:
     When the request is processed
     Then liveness is confirmed without creating or modifying any enrolment record
 ```
+```
+US-0084  Select one country for party-political participation      (FE-037 · EP-01)
+As a newly enrolled citizen, I want to nominate exactly one country in which I am legally eligible
+to participate in party politics, so that my rights and region tree are scoped correctly.
+Owner: Marcus Adeyemi   Priority: Must   Points: 5   Implements: FR-074   Depends on: US-0001
+Note: Not Ready pending DES — FR-074 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: First country selection accepted
+    Given a citizen who has completed enrolment and holds no active country selection
+    When they select a country for which legal eligibility is confirmed by code against published rules
+    Then exactly one active country selection is recorded and their region tree is scoped to that country
+  Scenario (adversarial): Attempt to hold two active country selections
+    Given a citizen with one active country selection
+    When they attempt to add a second active country selection by any mechanism
+    Then no dual-selection state is created and the attempt is refused
+  Scenario: Country change follows residency-change discipline
+    Given a citizen who wishes to change their active country selection
+    When they submit a change request
+    Then the residency-change discipline of FR-008 is applied, legal eligibility is re-checked by code,
+      and the prior country selection is voided before the new one activates
+```
+```
+US-0085  See platform activation distinguished from legal registration on every surface      (FE-037 · EP-01)
+As a citizen or party founder, I want every platform surface to make clear that creating a party here
+is not the same as being legally registered in any jurisdiction, so that no one is misled about legal
+standing.
+Owner: Sofia Marchetti   Priority: Must   Points: 3   Implements: FR-075   Depends on: US-0084
+Note: Not Ready pending DES — FR-075 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Every party-facing surface states the distinction
+    Given any party-facing surface, notification, export or log in the system
+    When it is examined for language about platform status versus legal registration
+    Then it states plainly that platform activation is not legal registration in any jurisdiction
+  Scenario (adversarial): Operator attempts to configure legal-registration grant
+    Given an operator who attempts to configure the platform to grant, deny or override a party's
+      legal registration in any jurisdiction
+    When the configuration is submitted
+    Then no such capability exists and the attempt is refused and logged
+  Scenario (negative): Surface omits the distinction
+    When an automated content audit scans all surfaces that display party status
+    Then every such surface includes the platform-activation vs legal-registration distinction
+```
 
 ### EP-02 · Party drafting & the eight mandatory pillars
 
@@ -588,6 +704,69 @@ AC:
     When the standard is inspected
     Then it constrains only structure and substance, and contains no criterion based on the political
       position expressed
+```
+```
+US-0086  Found a party with a complete, code-verified digital constitution      (FE-038 · EP-02)
+As a group of citizens who want to form a party, we want the system to require a complete digital
+constitution with all mandatory sections before the party is created, so that there is no party
+without governance rules from day one.
+Owner: Tomás Ferreira   Priority: Must   Points: 8   Implements: FR-076   Depends on: US-0011
+Note: Not Ready pending DES — FR-076 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Complete constitution accepted, party created
+    Given a founding-member set that meets the published per-jurisdiction count
+    And a constitution containing all mandatory sections: governance rules, membership rules,
+      financial rules, COI rules, candidate-selection rules, leadership and term rules, and manifesto
+    When publication is attempted
+    Then the party is created with no human approval step
+  Scenario (negative): Missing section named and blocked
+    Given a constitution where the financial-rules section is absent
+    When publication is attempted
+    Then publication is refused and the financial-rules section is named as the missing element
+  Scenario (adversarial): Section present but empty
+    Given a constitution where the financial-rules section exists but contains only whitespace
+    When the machine-checkable presence test runs
+    Then the section is treated as absent and publication is refused
+```
+```
+US-0087  Have the non-violence clause verified by code, not by humans      (FE-038 · EP-02)
+As any member, I want to know that every party constitution contains the standard non-violence clause
+and that its integrity is checked automatically, so that political commitment to non-violence cannot
+be quietly removed.
+Owner: Daniel Okonkwo   Priority: Must   Points: 3   Implements: FR-077   Depends on: US-0086
+Note: Not Ready pending DES — FR-077 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Standard clause accepted
+    Given a new or amended constitution where the non-violence clause matches the platform-standard text exactly
+    When publication is attempted
+    Then publication succeeds (other conditions permitting)
+  Scenario (adversarial): Altered non-violence clause refused
+    Given a new or amended constitution where the non-violence clause has been altered from the standard text
+    When publication is attempted
+    Then publication is refused and the altered clause is named as the cause
+  Scenario (negative): Absent non-violence clause refused
+    Given a constitution with the non-violence section omitted entirely
+    When publication is attempted
+    Then publication is refused; no human judgment is in the path at any step
+```
+```
+US-0088  Amend the party constitution only through the tiered proposal process      (FE-038 · EP-02)
+As a member, I want the party constitution to be versioned immutably and amendable only by a member
+vote, so that the founding agreement cannot be quietly rewritten.
+Owner: Tomás Ferreira   Priority: Must   Points: 3   Implements: FR-078   Depends on: US-0086
+Note: Not Ready pending DES — FR-078 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Constitutional amendment goes through tiered proposal
+    Given a proposed amendment to any section of the party constitution
+    When it is submitted
+    Then it enters the proposal lifecycle (FR-025, FR-026) and cannot take effect outside that process
+  Scenario: Immutable version history
+    Given a constitution at version N
+    When a constitutional amendment passes and version N+1 is published
+    Then version N remains retrievable unchanged with a diff to version N+1
+  Scenario (adversarial): Direct constitution edit refused
+    When an actor attempts to modify any constitution section without a passed proposal
+    Then the modification is refused and the attempt is logged
 ```
 
 ### EP-03 · Petition, threshold & automatic activation
@@ -864,6 +1043,66 @@ AC:
     When a new member who joined during that period attempts to vote before their one-month mark
     Then the standard one-month tenure requirement applies and the action is refused with the date rights begin
 ```
+```
+US-0089  See exactly three participation tiers — Supporter, Worker, Candidate — each descriptive, never weighted      (FE-039 · EP-04)
+As a member, I want the platform to define exactly three named tiers that describe what I do without
+changing what my vote is worth, so that tiers are transparency labels, not power structures.
+Owner: Grace Mbeki   Priority: Must   Points: 5   Implements: FR-079   Depends on: US-0024
+Note: Not Ready pending DES — FR-079 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: New member auto-assigned Supporter
+    Given a citizen who has just joined a party
+    When their party record is inspected
+    Then their tier is Supporter and no further action was required of them
+  Scenario (adversarial): Tier cannot alter vote weight
+    Given a party with a mix of Supporter, Worker and Candidate tiers
+    When any vote is tallied
+    Then every ballot carries exactly equal weight regardless of the voter's tier
+  Scenario (negative): No fourth tier can be created
+    When an actor attempts to configure an additional tier or rename an existing one
+    Then the configuration is refused; exactly three tiers exist at all times
+```
+```
+US-0090  Declare myself a Worker without any approval required      (FE-039 · EP-04)
+As a member who wants to take a more active public role, I want to self-declare as a Worker with no
+human approval in the path, so that taking on responsibility is my choice and my action alone.
+Owner: Grace Mbeki   Priority: Must   Points: 5   Implements: FR-080   Depends on: US-0089
+Note: Not Ready pending DES — FR-080 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Worker declaration confirmed with informed consent
+    Given a member who initiates a Worker-tier declaration
+    When the declaration UI is shown
+    Then it states plainly that Worker status is permanent for the term and makes the participation
+      record public for the duration; the member must acknowledge before the declaration is confirmed
+  Scenario: Declaration confirmed with no human approval
+    Given an acknowledged declaration
+    When it is submitted
+    Then Worker status is recorded immediately with no human approval step anywhere in the path
+  Scenario (adversarial): Worker declaration revoked mid-term
+    Given a Worker-tier member within their active term
+    When any actor attempts to revert them to Supporter mid-term
+    Then the reversion is refused; the tier is permanent for the term
+```
+```
+US-0091  Be a Candidate after the post-debate member vote, not by approval      (FE-039 · EP-04)
+As a self-nominated member, I want candidacy to be decided by the member vote that follows my
+debates, with eligibility checked by code, so that no human can approve, reject or rank me.
+Owner: Aisha Nkemdirim   Priority: Must   Points: 5   Implements: FR-081   Depends on: US-0046, US-0090
+Note: Not Ready pending DES — FR-081 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Candidacy gate is the post-debate member vote
+    Given a self-nominated member who has completed all three required debates
+    When the post-debate member vote closes with a net positive result
+    Then Candidate-tier status is recorded automatically; no human decision is in the path
+  Scenario (adversarial): Human attempts to approve or reject candidacy
+    When any actor — party officer, committee, steward or operator — attempts to approve, reject or
+      rank a candidacy outside the post-debate vote
+    Then no such capability exists
+  Scenario: Tier transition appended to record
+    Given a member who transitions from Supporter → Worker → Candidate
+    When their tier history is inspected
+    Then every transition is recorded append-only with state (active/inactive) and never deleted
+```
 
 ### EP-05 · Proposals, charter amendment & governance stability
 
@@ -976,6 +1215,51 @@ AC:
     Given people who join, mature or change residency after T
     When they attempt to vote on that proposal
     Then they are refused as ineligible for that proposal
+```
+```
+US-0101  Move a proposal through defined lifecycle stages, enforced by code      (FE-042 · EP-05)
+As a member who submitted a proposal, I want it to move through all published stages — proposal →
+review → discussion → debate → vote → decision → implementation → measurement — by code on published
+timelines, so that no stage can be skipped, reordered or vetoed by any human.
+Owner: Tomás Ferreira   Priority: Must   Points: 8   Implements: FR-091   Depends on: US-0031
+Note: Not Ready pending DES — FR-091 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: All stages traversed in order
+    Given a submitted proposal
+    When it progresses from submission to decision
+    Then every stage — review, discussion, debate, vote, decision — is completed in order on the
+      published timelines; no stage is skipped or reordered
+  Scenario (adversarial): Human attempts to skip a stage
+    Given a proposal in the discussion stage
+    When any actor — officer, committee, steward or operator — attempts to advance it directly to
+      the vote stage skipping debate
+    Then the stage transition is refused; the proposal remains in discussion
+  Scenario: Deliberative stages produce records, not outcomes
+    Given a completed debate stage
+    When the debate record is inspected
+    Then it contains a deliberation record only; no outcome, ruling or decision is recorded in that stage
+```
+```
+US-0102  Have a permanent, third-party-reconstructable decision trail for every decision      (FE-042 · EP-05)
+As an auditor, I want every decision to have a permanent trail comprising the proposal, competing
+proposals, deliberation, vote result, enacted consequence, implementation status and measured outcome,
+so that any third party can reconstruct the full decision end-to-end from public data.
+Owner: Erik Lindqvist   Priority: Must   Points: 5   Implements: FR-092   Depends on: US-0101
+Note: Not Ready pending DES — FR-092 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Complete trail accessible to any third party
+    Given a decided proposal
+    When any third party downloads the public record
+    Then they can reconstruct: the proposal, every competing proposal, authorship, deliberation
+      records, vote result, enacted consequence, implementation status and measured outcome
+  Scenario (adversarial): Trail element missing
+    Given a decided proposal where the competing-proposal records are absent from the public export
+    When any third party attempts to reconstruct the trail
+    Then the gap is itself detectable as a gap (a present record of an absent entry)
+  Scenario: Authorship is attributed per FR-090 (Worker-tier and above)
+    Given a proposal authored by a Worker-tier member
+    When the decision trail is published
+    Then authorship is public and attributed to that member's Worker-tier identity
 ```
 
 ### EP-06 · Anonymous, receipt-free voting
@@ -1301,11 +1585,37 @@ AC:
     When an actor attempts to place any candidate on a ballot without a completed post-debate member vote
     Then the attempt is refused and logged
 ```
+```
+US-0103  Run candidate selection on a published code-enforced schedule      (FE-043 · EP-07)
+As any member, I want the candidate selection process — nomination, question phase, debates and
+post-debate vote — to run on a published, code-enforced schedule, so that no phase can be skipped
+or silently moved.
+Owner: Aisha Nkemdirim   Priority: Must   Points: 5   Implements: FR-093   Depends on: US-0076
+Note: Not Ready pending DES — FR-093 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Full schedule published before nomination window opens
+    Given a candidate selection cycle starting
+    When the nomination window opens
+    Then the published schedule — nomination, question phase, debates, post-debate vote, election —
+      is visible to any member before nominations are accepted
+  Scenario: Members may submit questions to any candidate during question phase
+    Given an open question phase
+    When any matured member submits a question to any candidate
+    Then the question is placed on the public record; the candidate's answer or its absence is
+      also recorded publicly
+  Scenario (adversarial): Unanswered question buried
+    Given a question submitted to a candidate who does not respond before the question phase closes
+    When the question phase ends
+    Then the question is visibly recorded as unanswered on the public record; it cannot be hidden
+```
 
 ### EP-08 · Accountability: manifestos, records & mid-term recall
 
 ```
 US-0054  Publish what my party promises      (FE-023 · EP-08)
+⚠ SOURCED FROM SUPERSEDED REQUIREMENT: FR-046 is superseded by FR-094 (structured manifesto) and
+FR-095 (commitment IDs with progress); successor stories are US-0104 and US-0105. This story is
+retained for traceability; do NOT implement FR-046 — implement FR-094/FR-095 via US-0104/US-0105.
 As a party, we want a public, machine-readable manifesto with dated commitments, so that citizens can
 hold us to specifics rather than slogans.
 Owner: Erik Lindqvist   Priority: Should   Points: 5   Implements: FR-046   Depends on: US-0022
@@ -1413,6 +1723,47 @@ AC:
     When the recalled office-holder or any actor attempts to retain, restore or delay revocation
     Then no such capability exists
 ```
+```
+US-0104  Publish a structured, machine-readable manifesto with explicit time horizons and named owners      (FE-044 · EP-08)
+As a party, we want to publish our manifesto as a structured commitment set with baselines, targets,
+budgets, timelines, measurement methods, and named owners per sector, so that every commitment is
+measurable and attributable.
+Owner: Erik Lindqvist   Priority: Must   Points: 8   Implements: FR-094   Depends on: US-0022
+Note: Not Ready pending DES — FR-094 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Complete manifesto accepted
+    Given a manifesto where every sector plan carries baseline, target, budget, timeline, measurement
+      method and named owner for each of the 1, 3, 5, 10 and 30-year horizons
+    When publication is attempted
+    Then publication succeeds with no human approval step
+  Scenario (negative): Incomplete sector plan named and blocked
+    Given a manifesto where the housing sector plan is missing a measurement method
+    When publication is attempted
+    Then publication is refused and the housing plan's missing measurement-method field is named
+  Scenario (adversarial): Machine-readable structure bypassed
+    When an actor attempts to submit an unstructured PDF or prose block as the manifesto
+    Then the submission is refused; only structured machine-readable data is accepted
+```
+```
+US-0105  Track every manifesto commitment with a stable ID, status and evidence links      (FE-044 · EP-08)
+As a citizen, I want every manifesto commitment to carry a stable ID, a progress status, and linked
+evidence, so that I can see exactly what was promised and how it is tracking.
+Owner: Erik Lindqvist   Priority: Must   Points: 5   Implements: FR-095   Depends on: US-0104
+Note: Not Ready pending DES — FR-095 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Stable ID and status assigned on publication
+    Given a manifesto commitment published in the structured format
+    When the commitment is inspected
+    Then it carries a stable per-commitment ID, an initial progress status, and at least one evidence link
+  Scenario: Status updates are append-only
+    Given a commitment with status "in progress"
+    When the party publishes an updated status of "met" with linked evidence
+    Then the transition is appended to the commitment record; the prior "in progress" status remains
+      in history and is not overwritten
+  Scenario (adversarial): Status history rewritten
+    When any actor attempts to overwrite or delete a prior status entry for any commitment
+    Then the operation is refused; the complete status history remains intact
+```
 
 ### EP-09 · Public verifiability & the moderation-by-code boundary
 
@@ -1494,6 +1845,10 @@ AC:
 ```
 ```
 US-0071  View my public participation profile      (FE-029 · EP-09)
+⚠ SOURCED FROM SUPERSEDED REQUIREMENT: FR-062 is superseded by FR-082..FR-086 (three-tier
+participation-record requirements) per BR-017 and the v2.0.0 vision re-entry; successor stories are
+US-0092..US-0096. This story is retained for traceability; do NOT implement FR-062 — implement
+FR-082..FR-086 via US-0092..US-0096.
 As any citizen or observer, I want to see a member's participation record, so that active engagement
 is visible and accountability extends beyond what a person says.
 Owner: Erik Lindqvist   Priority: Must   Points: 5   Implements: FR-062   Depends on: US-0061
@@ -1530,6 +1885,203 @@ AC:
     Given an elected representative who voted in official office capacity
     When that specific vote is inspected
     Then direction is publicly attributed — this is the sole permitted exception governed by FR-048
+```
+```
+US-0092  Be unconditionally anonymous as a Supporter — no profile, no attributable record      (FE-040 · EP-09)
+As a Supporter-tier member, I want the platform to store only a nullifier for me with no attributable
+record and no profile surface, so that supporting a party cannot expose me to any scrutiny.
+Owner: Dr. Lena Kowalczyk   Priority: Must   Points: 8   Implements: FR-082   Depends on: US-0089
+Note: Not Ready pending DES — FR-082 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Supporter profile surface does not exist
+    Given a Supporter-tier member
+    When any actor attempts to retrieve a participation profile for them
+    Then no profile surface is returned; only aggregate data referencing no individual is available
+  Scenario (adversarial): Combine all public data to surface a Supporter
+    Given a Supporter-tier member who has participated in ballots and petitions
+    When an adversary pools all public records, nullifier sets, timing data and attestor logs
+    Then no attributable record links back to the Supporter's identity; NFR-001, NFR-002 and NFR-024 apply
+  Scenario (negative): Supporter record stored beyond a nullifier
+    When any governance-path store is inspected for data tied to a Supporter beyond a nullifier
+    Then no such data exists; the data-inventory check confirms zero attributable Supporter fields
+```
+```
+US-0093  See a Worker's or Candidate's public participation record from their consent event forward      (FE-040 · EP-09)
+As any observer, I want to see the public participation record of a Worker or Candidate from the
+moment of their informed-consent declaration, so that public accountability is real and complete.
+Owner: Erik Lindqvist   Priority: Must   Points: 5   Implements: FR-083   Depends on: US-0090, US-0092
+Note: Not Ready pending DES — FR-083 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Public record covers role-relevant activity from consent event
+    Given a Worker who declared consent at time T
+    When their public participation record is viewed
+    Then it includes role-relevant activity from T onward: work recorded, proposals authored in role,
+      debates attended, candidacies held, committee memberships
+    And no ballot direction appears on any contested vote (FR-063 applies to every tier)
+  Scenario: Office-holder vote attribution per FR-048
+    Given a holder of elected office who cast a governance vote in their official capacity
+    When their record is inspected
+    Then that specific vote direction is publicly attributed to them as the FR-048 exception
+  Scenario (adversarial): Record truncated before consent event
+    Given a Worker whose record is inspected for activity before their consent event
+    When any actor attempts to retrieve pre-consent activity attributed to their Worker identity
+    Then no pre-consent attributed activity exists for their Worker or Candidate identity
+```
+```
+US-0094  See the full disclosure schedule before I declare — no post-declaration surprises      (FE-040 · EP-09)
+As a prospective Worker or Candidate, I want the platform to publish the exact disclosure schedule for
+my role before any declaration or nomination window opens, so that I know exactly what I am
+committing to and nothing can be demanded of me after the fact.
+Owner: Dr. Lena Kowalczyk   Priority: Must   Points: 5   Implements: FR-084   Depends on: US-0093
+Note: Not Ready pending DES — FR-084 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Disclosure schedule published before window opens
+    Given a nomination or Worker-declaration window about to open
+    When the window opens
+    Then the full disclosure schedule for that role (Worker, Candidate, Office-holder) is already
+      publicly visible at the platform level
+  Scenario (adversarial): Undisclosed category demanded after declaration
+    Given a Worker who has declared
+    When any actor — officer, committee or platform — demands a category of information not listed
+      in the published disclosure schedule for the Worker role
+    Then the demand is refused and the attempt is logged
+  Scenario: Disclosure scope ascends with power sought
+    When the disclosure schedule for Worker, Candidate and Office-holder are compared
+    Then each role's schedule is a superset of the role below it — disclosure scales with power
+```
+```
+US-0095  Have my consent cover the full term — and have pre-nomination disclosures destroyed if I withdraw      (FE-040 · EP-09)
+As a prospective candidate, I want my consent to cover the entire campaign and any resulting term,
+and if I withdraw before the nomination window closes, I want my submitted disclosure data destroyed,
+so that withdrawal is a genuine option without permanent consequence.
+Owner: Sofia Marchetti   Priority: Must   Points: 8   Implements: FR-085   Depends on: US-0094
+Note: Not Ready pending DES — FR-085 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Informed-consent event covers full campaign and term
+    Given a candidate who completes the consent event
+    When their consent record is inspected
+    Then it is recorded as irrevocable for the current campaign and any resulting term
+  Scenario: Withdrawal before nomination window close destroys disclosure data
+    Given a candidate who submitted pre-nomination disclosure data and withdraws before the nomination
+      window closes
+    When the withdrawal is confirmed
+    Then all disclosure data submitted for that withdrawn candidacy is destroyed; no disclosure data
+      for the withdrawn candidacy persists in any store, log or export (OI-16 carve-out)
+  Scenario (adversarial): Disclosure data retained after withdrawal
+    Given a candidate who has withdrawn within the window
+    When any store, log, cache or backup is inspected after the destruction
+    Then no pre-nomination disclosure data for that candidacy is present
+```
+```
+US-0096  Have my Supporter-period activity remain anonymous permanently, even after I take a public role      (FE-040 · EP-09)
+As a member who moves from Supporter to Worker, I want the platform to never link my anonymous
+Supporter history to my public Worker identity, so that taking a public role cannot retroactively
+expose my earlier private participation.
+Owner: Dr. Lena Kowalczyk   Priority: Must   Points: 8   Implements: FR-086   Depends on: US-0092, US-0093
+Note: Not Ready pending DES — FR-086 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario (adversarial): Retroactive linking attempt
+    Given a member who was a Supporter in party A and is now a Worker in party A
+    When an adversary holding all system data — logs, nullifier sets, public records, network timing —
+      attempts to link the Supporter-period nullifier to the Worker-tier identity
+    Then the adversary cannot establish the link; the test obligation is in the style of UT-0700/UT-0701
+  Scenario: Prior supporter activity remains aggregate only
+    Given a Worker whose public profile is viewed
+    When their profile is examined for any reference to their prior Supporter-period activity
+    Then no attributed Supporter-period record appears; their public record begins at the consent event
+  Scenario (negative): System emits combined record
+    When the system is audited for any data combination or output that joins a Supporter nullifier to a
+      Worker or Candidate identity
+    Then no such combination or output exists in any store, log or export
+```
+```
+US-0116  Ensure every data entity carries exactly one of three classifications      (FE-051 · EP-09)
+As the platform, I want every stored entity classified as public, restricted or confidential — with no
+unclassified entity storable — so that classification governs every storage, access and publication
+decision from the first write.
+Owner: Dr. Lena Kowalczyk   Priority: Must   Points: 5   Implements: FR-106   Depends on: US-0002
+Note: Not Ready pending DES — FR-106 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Classified entity stored
+    Given any governance-path entity submitted for storage
+    When it is written
+    Then it carries exactly one of: public, restricted, or confidential; the classification is recorded
+  Scenario (adversarial): Unclassified entity storage attempt
+    Given an entity submitted for storage without a classification tag
+    When the storage write is attempted
+    Then the write is refused; no unclassified entity exists in any governance-path store
+  Scenario: Classification governs access
+    Given a restricted-class entity
+    When any actor without restricted-access rights attempts to retrieve it
+    Then access is denied; the entity is not returned
+```
+```
+US-0117  Nothing is ever deleted — every entity is active or inactive with a timestamped cause      (FE-051 · EP-09)
+As an auditor, I want the platform to guarantee that no governance-path entity is ever hard-deleted or
+overwritten — only transitioned to inactive with an appended record of cause and timestamp — so that
+history is permanent and the OI-16 carve-out is the only recorded exception.
+Owner: Erik Lindqvist   Priority: Must   Points: 5   Implements: FR-107   Depends on: US-0116
+Note: Not Ready pending DES — FR-107 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: State transition is appended, not overwritten
+    Given any governance-path entity transitioning from active to inactive
+    When the transition occurs
+    Then a record is appended containing: entity ID, prior state, new state, timestamp, and cause;
+      the prior state record is not modified
+  Scenario (adversarial): Hard-delete attempted
+    Given any actor who attempts to hard-delete a governance-path entity by any mechanism
+    When the attempt is made
+    Then it is refused; no hard-delete path exists
+  Scenario: Pre-nomination disclosure data is the sole exception per OI-16
+    Given a withdrawn candidate's pre-nomination disclosure data (confidential-class, FR-085)
+    When the withdrawal destruction is executed
+    Then the disclosure data is destroyed; this is the sole exception; a record of the destruction event
+      (not the data) is appended to the decision trail
+```
+```
+US-0118  Keep the public verifiable record to proofs, timestamps, counts and events only      (FE-051 · EP-09)
+As a citizen who values privacy, I want the public verifiable record to contain only cryptographic
+proofs, timestamps, counts and governance events — never restricted- or confidential-class data in
+any form — so that publishing the record cannot expose private data.
+Owner: Rafael Duarte   Priority: Must   Points: 5   Implements: FR-108   Depends on: US-0116, US-0117
+Note: Not Ready pending DES — FR-108 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Public record contains only permitted data types
+    Given the full public verifiable record
+    When any third party inspects it
+    Then it contains only: cryptographic proofs, timestamps, counts, and governance events;
+      no restricted- or confidential-class data is present in any form
+  Scenario (adversarial): Restricted-class data written to public record
+    Given an actor who attempts to write any restricted- or confidential-class field to the public record
+    When the write is attempted
+    Then it is refused; the public record remains clean
+  Scenario: Public record is not used as the application data store
+    When the system architecture is audited
+    Then the public record and the application data store are separate; no application-only data
+      is stored solely on the public record
+```
+```
+US-0121  Produce zero per-user behavioural events in any store, log or export      (FE-053 · EP-09)
+As a citizen who values privacy, I want the platform to never record what pages I view, what sections
+I read, or how long I dwell — only aggregate analytics — so that my browsing behaviour cannot be
+profiled by anyone.
+Owner: Dr. Lena Kowalczyk   Priority: Must   Points: 8   Implements: FR-111   Depends on: US-0002
+Note: Not Ready pending DES — FR-111 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Per-user behavioural events absent from all stores
+    Given the full data inventory of every store, log and export in the system
+    When inspected for per-user behavioural events
+    Then zero per-user behavioural events (clicks, page views, dwell time, reading trails, or equivalents
+      tied to a person, credential, nullifier, session, or device) are present anywhere
+    And UT-0525 and UT-0740 pass on every release confirming absence of tracking
+  Scenario (adversarial): New surface introduces tracking
+    Given a new v2 surface deployed to production
+    When the UT-0525 and UT-0740 test suite runs
+    Then it fails if any per-user tracking event is introduced, blocking the release
+  Scenario: Personalisation is client-side only
+    Given any personalisation feature on any surface
+    When the personalisation state is inspected on the server side
+    Then no personalisation state for any user is stored, transmitted or held server-side
 ```
 
 ### EP-10 · Zero-friction access: cost, recovery, accessibility
@@ -1660,6 +2212,589 @@ AC:
     Then the vote is refused while recovery is active; the ballot-scope nullifier prevents double-counting
 ```
 
+### EP-11 · Party institutional life & transparency
+
+```
+US-0097  Form a party committee — its only permitted output is a proposal in the ordinary lifecycle      (FE-041 · EP-11)
+As a party, we want to form committees including a steering committee (capped at 30 members) and
+working groups, so that we can organise deliberation — knowing that any output must enter the
+ordinary proposal lifecycle with no special status.
+Owner: Tomás Ferreira   Priority: Must   Points: 5   Implements: FR-087   Depends on: US-0031
+Note: Not Ready pending DES — FR-087 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Committee formed; output enters ordinary proposal lifecycle
+    Given a party that forms a steering committee with 28 members
+    When the committee produces a recommendation
+    Then the recommendation enters the proposal lifecycle as an ordinary proposal with no special status,
+      precedence or extra weight; committee composition and minutes are publicly visible
+  Scenario (adversarial): Committee decides an outcome directly
+    Given a committee that attempts to enact a decision without a proposal vote
+    When the action is attempted
+    Then no such capability exists; the action is refused
+  Scenario (negative): Steering committee exceeds 30 members
+    Given a steering committee that attempts to add a 31st member
+    When the addition is attempted
+    Then it is refused; the cap is enforced by code
+```
+```
+US-0098  Guarantee that committees hold only capabilities that cannot change who wins, who votes, or who is a member      (FE-041 · EP-11)
+As any member, I want to know that a committee's authority is limited to event organisation,
+campaign coordination, facilitation, vendor management and publishing — and that any configuration
+granting a committee election or membership power is rejected by the system.
+Owner: Rafael Duarte   Priority: Must   Points: 5   Implements: FR-088   Depends on: US-0097
+Note: Not Ready pending DES — FR-088 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Committee holds only permitted capabilities
+    Given a committee and the published exhaustive capability list
+    When the committee's configuration is inspected
+    Then it holds only capabilities from the permitted list; nothing else is configurable
+  Scenario (adversarial): Committee granted election-administration capability
+    Given an attempt to configure a committee with election-administration access
+    When the configuration is submitted
+    Then it is rejected by code; the committee receives no election-administration capability
+  Scenario: Eligibility determination remains code-executed with no committee path
+    When the eligibility determination path for any election or membership action is audited
+    Then no committee or human path exists; every determination is executed by code
+```
+```
+US-0099  Have committee membership expire at term end with no human renewal path      (FE-041 · EP-11)
+As a member, I want committee membership to expire mechanically at term end, so that committees
+cannot perpetuate themselves without a fresh member vote.
+Owner: Rafael Duarte   Priority: Must   Points: 3   Implements: FR-089   Depends on: US-0097
+Note: Not Ready pending DES — FR-089 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Committee expires at term end
+    Given a committee whose term end date is reached
+    When the term end is processed by code
+    Then all committee memberships expire and the committee is inactive — no human renewal path exists
+  Scenario: Continuation requires a fresh member vote
+    Given a party that wants to continue a committee into a new term
+    When a fresh member vote passes to re-form it
+    Then the committee is recreated with a new term and new membership set; prior membership confers
+      no automatic continuation
+  Scenario (adversarial): Committee continues past term without vote
+    Given a committee whose term has expired
+    When any actor attempts to record an action by that committee after term expiry
+    Then the action is refused; the committee is treated as inactive
+```
+```
+US-0100  Author a proposal publicly — and submit a competing proposal with equal standing      (FE-041 · EP-11)
+As a Worker-tier member, I want proposal authorship to be public, and I want any other Worker-tier
+member to be able to submit a competing proposal on the same question with equal standing and the
+same decision window, so that no author holds a monopoly.
+Owner: Tomás Ferreira   Priority: Must   Points: 5   Implements: FR-090   Depends on: US-0031, US-0090
+Note: Not Ready pending DES — FR-090 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Proposal authorship is public
+    Given a submitted proposal
+    When any member views it
+    Then the author's Worker-tier identity is shown publicly alongside the proposal
+  Scenario: Competing proposal receives equal standing
+    Given an open proposal Q submitted by Worker A
+    When Worker B submits a competing proposal on the same question Q
+    Then both proposals are presented with equal standing and voted in the same decision window
+  Scenario (adversarial): Supporter-tier member attempts to author
+    Given a Supporter-tier member who attempts to submit a proposal
+    When the submission is processed
+    Then it is refused; the member is offered the Worker-declaration path to gain authoring eligibility
+    And Supporters retain full voting rights on all proposals
+```
+```
+US-0106  Run mechanical anomaly detection over treasury records and publish every flag — flags inform only      (FE-045 · EP-11)
+As a member or auditor, I want the platform to run automated anomaly detection over the public
+treasury record and publish every flag on the party's transparency dashboard, so that unusual
+patterns are visible without any flag triggering enforcement.
+Owner: Erik Lindqvist   Priority: Must   Points: 8   Implements: FR-096   Depends on: US-0061
+Note: Not Ready pending DES — FR-096 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Anomaly flag published on transparency dashboard
+    Given a treasury record that triggers the velocity-anomaly rule in the published rule set
+    When the detection runs
+    Then the flag is published on the party's transparency dashboard and is publicly readable
+  Scenario (adversarial): Flag freezes funds or blocks governance
+    Given a treasury flag published by the anomaly detector
+    When any actor examines what automatic consequences follow
+    Then no funds are frozen and no governance action is blocked; consequences flow only from member
+      votes or charter-declared code rules
+  Scenario: Round-tripping pattern detected and published
+    Given a treasury record containing a round-tripping pattern as defined in the published rule set
+    When the detection runs
+    Then the flag is published; auditors and members can see it; no enforcement pathway is triggered
+```
+```
+US-0107  File a conflict-of-interest disclosure on the published schedule — a missing disclosure is flagged publicly      (FE-046 · EP-11)
+As a Worker, Candidate, Office-holder or committee member, I want the platform to require me to file
+a COI disclosure on the published schedule and on any material change, so that conflicts are visible
+and a missing or overdue disclosure is flagged for members to see.
+Owner: Ingrid Bergqvist   Priority: Must   Points: 5   Implements: FR-097   Depends on: US-0090
+Note: Not Ready pending DES — FR-097 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Disclosure filed on schedule
+    Given a Worker-tier member at the published filing date
+    When they submit a COI disclosure
+    Then the disclosure is recorded as public-class data on the participation record
+  Scenario: Overdue disclosure visibly flagged
+    Given a Worker-tier member who has not filed by the published deadline
+    When the deadline passes
+    Then a visible flag is added by code to their participation record; no human judgment in the path
+  Scenario (adversarial): Material change not disclosed
+    Given an Office-holder who incurs a material COI change and does not file an updated disclosure
+    When the published material-change deadline passes
+    Then the flag is added automatically to their public record
+```
+```
+US-0108  Ensure COI review is investigation and recommendation only — no reviewer holds enforcement power      (FE-046 · EP-11)
+As a member, I want to know that COI reviewers can investigate and recommend, but cannot force a
+recusal or any outcome — consequences flow only from the subject's voluntary compliance, a member
+vote, or a charter rule — so that review cannot be weaponised.
+Owner: Ingrid Bergqvist   Priority: Must   Points: 5   Implements: FR-098   Depends on: US-0107
+Note: Not Ready pending DES — FR-098 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Reviewer publishes recommendation only
+    Given a sortition-selected COI reviewer who completes their review
+    When the review is published
+    Then it contains findings and a possible recusal recommendation; no binding ruling is issued
+  Scenario (adversarial): Reviewer attempts to enforce recusal
+    Given a reviewer panel that attempts to record a binding recusal order against the subject
+    When the action is attempted
+    Then no such capability exists; only the subject's recorded voluntary compliance, a member vote
+      or a charter rule can effect a recusal
+  Scenario: Recusal by member vote
+    Given a passed member vote to recuse an Office-holder
+    When the vote closes
+    Then the recusal takes effect by code on the vote result, not on any reviewer authority
+```
+```
+US-0109  Provide every active party with an independent internal audit by sortition — auditors inform, never enforce      (FE-047 · EP-11)
+As a member, I want auditors selected per-case by sortition from eligible members, with read-only
+access to all records and reports published on schedule, so that the audit function is independent
+and carries no enforcement power.
+Owner: Ingrid Bergqvist   Priority: Must   Points: 8   Implements: FR-099   Depends on: US-0061
+Note: Not Ready pending DES — FR-099 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Auditors selected by sortition, no standing body
+    Given an audit cycle for a party
+    When auditors are selected
+    Then they are drawn per-case by verifiable random selection from eligible members; no standing
+      audit body exists anywhere
+  Scenario: Auditors hold read-only access to all party records including restricted-class
+    Given an active auditor in their current audit cycle
+    When they access party records
+    Then they can read all party records including restricted-class; they cannot write, modify or
+      delete any record
+  Scenario (adversarial): Audit finding used to block governance
+    Given an audit finding published by auditors
+    When any actor attempts to block a governance action based solely on the finding
+    Then no such capability exists; findings inform and are publicly visible, but carry no enforcement power
+```
+```
+US-0110  Enforce published maximum timelines per dispute stage — a breached timeline is itself recorded      (FE-048 · EP-11)
+As a member in a dispute, I want every stage — intake acknowledgment, evidence window, panel
+formation, recommendation publication, deciding vote — to run within its published maximum timeline,
+and I want every breach to be recorded publicly on the decision trail.
+Owner: Ingrid Bergqvist   Priority: Must   Points: 5   Implements: FR-100   Depends on: US-0061
+Note: Not Ready pending DES — FR-100 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Stage completed within timeline
+    Given a dispute entering the evidence-window stage
+    When the evidence window closes on time
+    Then the stage completion is recorded on the decision trail with a timestamp
+  Scenario: Breached timeline recorded on decision trail
+    Given a dispute where the panel-formation stage exceeds its published maximum
+    When the breach occurs
+    Then the breach is recorded on the decision trail with the expected-by and actual-close timestamps;
+      the dispute continues; the breach itself is evidence available to members
+  Scenario (adversarial): Timeline breach suppressed
+    When any actor attempts to remove a recorded timeline breach from the decision trail
+    Then the removal is refused; the record is append-only
+```
+```
+US-0111  Draw appeal and review panels per case by verifiable sortition — panels recommend, never rule      (FE-048 · EP-11)
+As a party member involved in any appeal or review, I want the panel to be drawn per-case by
+verifiable random selection from the eligible member set, with the selection proof reproducible by
+any third party, so that no standing body ever holds panel power.
+Owner: Rafael Duarte   Priority: Must   Points: 8   Implements: FR-101   Depends on: US-0110
+Note: Not Ready pending DES — FR-101 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Panel drawn by verifiable sortition
+    Given a dispute requiring a review panel
+    When the panel is formed
+    Then members are drawn by verifiable random selection from the eligible set per the published
+      eligibility criteria; the selection proof is publicly reproducible by any third party
+  Scenario: No standing panel body exists
+    Given the party governance configuration
+    When it is inspected for a standing review panel body
+    Then no standing panel body is configured anywhere
+  Scenario (adversarial): Panel issues a binding ruling
+    Given a panel that attempts to record a binding ruling against a party member
+    When the ruling is submitted
+    Then no binding-ruling capability exists; the panel output is a recommendation to the membership
+      or an input to a charter code rule — never a ruling
+```
+```
+US-0112  Publish a machine-readable member-rights charter — no party may reduce rights below the platform floor      (FE-049 · EP-11)
+As a member, I want a machine-readable charter of my rights — covering join/leave, equal vote,
+propose, compete, stand, appeal, fork, record access and tier-appropriate anonymity — with each
+right enforced by code, so that no party charter can reduce any right below the platform floor.
+Owner: Grace Mbeki   Priority: Must   Points: 5   Implements: FR-102   Depends on: US-0024, US-0089
+Note: Not Ready pending DES — FR-102 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Machine-readable rights charter is published and accessible
+    Given the platform
+    When a member requests the member-rights charter
+    Then they receive a machine-readable document listing every right with its code-enforced capability mapping
+  Scenario (adversarial): Party charter reduces a right below the platform floor
+    Given a party that attempts to configure a charter rule that reduces the equal-vote right
+    When the configuration is submitted
+    Then it is rejected by code; no party charter may configure a right below the platform floor
+  Scenario: Fork right is listed (subject to flag status per §13)
+    Given the member-rights charter
+    When the fork right entry is inspected
+    Then it is listed and maps to FR-053 and FR-120; the current flag status (OFF above dev) is
+      noted inline per §13
+```
+```
+US-0113  Cast a conduct vote (up/down) on any public-tier participant using the same privacy mechanics as policy votes      (FE-050 · EP-11)
+As a matured member, I want to cast a conduct vote on a Worker, Candidate, Office-holder or
+committee member using the same nullifier, privacy and anti-capture mechanics as policy votes, so
+that individual votes are private and only aggregates are public.
+Owner: Daniel Okonkwo   Priority: Must   Points: 8   Implements: FR-103   Depends on: US-0089, US-0031
+Note: Not Ready pending DES — FR-103 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Conduct vote cast with full privacy
+    Given a matured member casting a conduct vote on a Worker
+    When the vote is submitted
+    Then it is private to the voter; only the aggregate result is public; the same nullifier and
+      anti-capture mechanics as policy votes are applied
+  Scenario (adversarial): Conduct vote attempted on Supporter-tier participant
+    Given a matured member who attempts to cast a conduct vote on a Supporter-tier participant
+    When the attempt is made
+    Then it is refused by construction — no addressable identity exists for Supporter-tier participants
+  Scenario: Individual vote remains private; aggregate is public
+    Given five members who have cast conduct votes on a Worker
+    When any actor inspects the record
+    Then no individual vote is attributable to any voter; only the aggregate up/down count is visible
+```
+```
+US-0114  Remove someone from a role only when an affirmative quorum actively votes to remove      (FE-050 · EP-11)
+As a role-holder, I want to know that removal requires active affirmative votes at the published bar
+— silence and absence do not remove — and that I have a right to place a statement on the record
+before the vote closes and that a growth-surge defence applies.
+Owner: Daniel Okonkwo   Priority: Must   Points: 8   Implements: FR-104   Depends on: US-0113, US-0089
+Note: Not Ready pending DES — FR-104 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Affirmative quorum required for removal
+    Given a removal vote that closes without reaching the published affirmative quorum
+    When the vote result is processed
+    Then the role-holder is not removed; silence and absence do not count as votes to remove
+  Scenario: Statement right exercised before vote closes
+    Given a role-holder whose removal is being voted on
+    When they submit a statement before the vote window closes
+    Then the statement is recorded on the public record before the vote closes
+  Scenario (adversarial): Growth-surge used to drive removal vote
+    Given a sudden flood of new members who join and immediately vote to remove a role-holder
+    When the growth-surge defence (FR-023/FR-028 discipline; UT-0220) evaluates the ballot
+    Then the removal vote fails the surge-defence check; the role-holder is not removed
+```
+```
+US-0115  Expel a member from a party only at a higher bar than role removal — public tiers only      (FE-050 · EP-11)
+As a member, I want to know that expulsion requires a strictly higher affirmative quorum and
+supermajority than removal from any role, that Supporter-tier participants cannot be expelled
+(Supporter fraud is handled by FR-005 credential revocation), and that expulsion revokes
+membership but does not alter any historical record.
+Owner: Daniel Okonkwo   Priority: Must   Points: 8   Implements: FR-105   Depends on: US-0114, US-0092
+Note: Not Ready pending DES — FR-105 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Expulsion bar is strictly higher than role-removal bar
+    Given a party whose published expulsion bar is compared to its role-removal bar
+    When both bars are inspected
+    Then the expulsion quorum and supermajority are strictly higher than those for role removal;
+      the same statement right and growth-surge defence apply
+  Scenario (adversarial): Supporter-tier expulsion attempted
+    Given a matured member who attempts to initiate an expulsion vote against a Supporter
+    When the attempt is made
+    Then it is refused by construction — Supporter-tier participants are anonymous and cannot be expelled;
+      Supporter fraud is addressed by FR-005 credential revocation acting on the credential
+  Scenario: Expulsion revokes membership without altering historical records
+    Given a passed expulsion vote
+    When the expulsion is processed
+    Then membership is revoked with a state transition recorded; no prior historical record is modified
+      or deleted; the expulsion state transition is itself appended append-only
+```
+```
+US-0119  View an aggregate-only party transparency dashboard — no per-member drill-down anywhere      (FE-052 · EP-11)
+As any citizen, I want to view a party's transparency dashboard covering governance activity,
+treasury summary with anomaly flags, participation aggregates and commitment progress, so that
+accountability is real — and I want assurance that no per-member drill-down is possible anywhere.
+Owner: Yuki Sato   Priority: Must   Points: 8   Implements: FR-109   Depends on: US-0061, US-0106, US-0105
+Note: Not Ready pending DES — FR-109 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Dashboard shows required aggregate data
+    Given any citizen viewing a party's transparency dashboard
+    When the dashboard loads
+    Then it shows: governance activity, treasury summary with anomaly flags, participation aggregates,
+      commitment progress (linked to FR-095 commitment IDs), and dispute-timeline compliance
+  Scenario (adversarial): Per-member drill-down attempted
+    Given any actor who attempts to drill down from any dashboard aggregate to individual member data
+    When the attempt is made
+    Then no per-member data surface exists; the drill-down returns only aggregates
+  Scenario: Data integrity
+    Given the dashboard's treasury summary
+    When it is compared against the public treasury record
+    Then every figure is derivable from public data; no figure is fabricated or estimated
+```
+```
+US-0120  Present the performance scorecard factually — no ranking, no editorial conclusions      (FE-052 · EP-11)
+As a citizen evaluating a party's track record, I want to see commitments versus measured progress
+with published methodology, baselines and evidence links — and I want assurance that the scorecard
+never ranks parties against each other or emits editorial conclusions.
+Owner: Yuki Sato   Priority: Must   Points: 5   Implements: FR-110   Depends on: US-0105, US-0119
+Note: Not Ready pending DES — FR-110 has no DES assigned yet (Doc 03 §16 next-increment scope).
+AC:
+  Scenario: Scorecard shows factual commitment progress with evidence
+    Given a party's performance scorecard
+    When any citizen views it
+    Then it shows: each commitment, its baseline, target, current status and linked evidence;
+      the published measurement methodology is shown alongside every figure
+  Scenario (adversarial): Scorecard ranks parties against each other
+    Given an operator who attempts to add a cross-party ranking or score to the scorecard
+    When the configuration is submitted
+    Then no cross-party ranking capability exists; the attempt is refused
+  Scenario: Scorecard does not emit editorial conclusions
+    When the scorecard content is audited
+    Then no editorial conclusion, grade, recommendation or qualitative rating is present;
+      the scorecard presents facts and lets viewers conclude
+```
+
+### EP-12 · Platform governance & stewardship
+
+```
+US-0122  Treat trust-anchor revocation as a member-voted governance action — no operator path exists      (FE-054 · EP-12)
+As any enrolled citizen, I want revocation of a compromised trust anchor to be decided by member
+vote through the platform-wide tiered process at its highest tier, with a published expedited
+emergency variant, so that no operator, funder or employee can unilaterally revoke an anchor.
+Owner: Rafael Duarte   Priority: Must   Points: 13   Implements: FR-112   Depends on: US-0001, US-0038
+Note: DES-090 (TrustAnchorLifecycle) is available from Doc 03 v2.x — re-confirm with architect
+  after Doc 03 is updated per Gate 1.
+AC:
+  Scenario: Revocation decided by member vote at highest tier
+    Given a trust anchor identified as compromised
+    When a revocation proposal enters the platform-wide governance process
+    Then it follows the tiered process at its highest tier; on enactment, code suspends new
+      enrolments against the revoked anchor; no other path exists
+  Scenario: Emergency expedited path exists but has a non-zero timelock
+    Given an acute compromise requiring expedited action
+    When an emergency revocation variant is initiated
+    Then the expedited path is available with a shortened but non-zero, published timelock;
+      the emergency variant is not zero-delay; no operator can reduce the timelock to zero
+  Scenario (adversarial): Operator unilaterally revokes anchor
+    Given an operator who attempts to revoke a trust anchor by any direct mechanism
+    When the attempt is made
+    Then no operator path exists for revocation; the attempt is refused and logged
+```
+```
+US-0123  Require trust-anchor rotation to follow member-vote governance at a published tier      (FE-054 · EP-12)
+As any enrolled citizen, I want legitimate rotation of a trust-anchor issuer key to go through the
+same member-vote governance at a published tier, with a rotation schedule that never blocks new
+enrolments beyond the published maximum, so that issuer-key lifecycle is governed, not operated.
+Owner: Rafael Duarte   Priority: Must   Points: 8   Implements: FR-113   Depends on: US-0122
+Note: DES-090 (TrustAnchorLifecycle) is available from Doc 03 v2.x — re-confirm with architect
+  after Doc 03 is updated per Gate 1.
+AC:
+  Scenario: Rotation follows member-vote governance
+    Given a trust-anchor issuer key due for rotation
+    When a rotation proposal is submitted
+    Then it follows the member-vote governance path at the published tier; enactment is by code on
+      vote close; enrolments under the outgoing anchor remain valid
+  Scenario: Rotation schedule never blocks new enrolments beyond published maximum
+    Given a rotation in progress
+    When the rotation window exceeds the published maximum
+    Then the platform flags this as a breach of the published rotation constraint; a compliant
+      rotation is designed to complete before new enrolments are blocked
+  Scenario (adversarial): Operator performs rotation without vote
+    Given an operator who attempts to rotate an issuer key directly
+    When the attempt is made
+    Then no operator rotation path exists; the attempt is refused and logged
+```
+```
+US-0124  Elect a platform-level steward body by all enrolled citizens — fixed terms, recallable mid-term      (FE-055 · EP-12)
+As an enrolled citizen, I want to elect a platform-level steward body using the same anonymous
+one-person-one-vote ballot mechanics as any other election, with fixed terms enforced by code,
+mid-term recall at the same affirmative-quorum bar as any other removal, and steward candidacy
+treated as a public-tier role-taking event.
+Owner: Aisha Nkemdirim   Priority: Must   Points: 13   Implements: FR-114   Depends on: US-0038, US-0091
+Note: DES-088 (StewardRegistry) is available from Doc 03 v2.x — re-confirm with architect
+  after Doc 03 is updated per Gate 1.
+AC:
+  Scenario: Steward election uses anonymous one-person-one-vote ballot
+    Given the platform-level steward election
+    When it runs
+    Then it uses the FR-030..FR-035 ballot discipline (scope-bound nullifiers, anonymous eligible
+      casting); every enrolled citizen participates regardless of party membership
+  Scenario: Fixed term enforced by code; no renewal path except fresh election
+    Given a steward body whose term end is reached
+    When the term expires
+    Then all steward mandates expire by contract-expiry mechanics (FR-089/FR-041 discipline);
+      no renewal path exists; continuation requires a fresh election
+  Scenario (adversarial): Steward attempts to extend their own term
+    Given a steward whose term expires next month
+    When any actor — including the steward — attempts to extend the term without a fresh election
+    Then no such capability exists
+  Scenario: Mid-term recall follows affirmative-quorum discipline
+    Given a mid-term recall vote on a steward
+    When it closes with an active affirmative quorum at the published bar
+    Then the steward's mandate is revoked; the statement right and surge defence apply per FR-104
+```
+```
+US-0125  Grant stewards only an exhaustive enumerated list of powers — anything else is refused      (FE-055 · EP-12)
+As any enrolled citizen, I want to know that stewards hold only four enumerated capabilities —
+drafting protocol proposals, coordinating audits/ceremonies/issuer-onboarding, holding funds and
+signing vendor contracts, and publishing operational reports — and that any configuration granting
+anything beyond this list is rejected by the system.
+Owner: Rafael Duarte   Priority: Must   Points: 8   Implements: FR-115   Depends on: US-0124
+Note: DES-088 (StewardRegistry) is available from Doc 03 v2.x — re-confirm with architect
+  after Doc 03 is updated per Gate 1.
+AC:
+  Scenario: Steward configuration inspected — only permitted capabilities present
+    Given the platform-level steward configuration
+    When it is inspected
+    Then it contains only the four exhaustive capabilities; nothing beyond the list is configurable
+  Scenario (adversarial): Configuration grants a fifth capability
+    Given an actor who attempts to configure a steward with the capability to approve a protocol change
+    When the configuration is submitted
+    Then it is rejected by code; the FR-088-pattern exhaustive-list enforcement operates at platform level
+  Scenario: Issuer onboarding coordination is not enactment
+    Given a steward who coordinates issuer onboarding
+    When the onboarding process is inspected
+    Then the steward's role is coordination only; enactment executes through the timelocked governance
+      path — coordination is not enactment
+```
+```
+US-0126  Prohibit stewards from any power that can change who wins, who votes, or who is a member — no emergency override exists      (FE-055 · EP-12)
+As any enrolled citizen, I want assurance that stewards cannot approve, enact or veto any protocol
+change, cannot monopolise the proposal ballot, and that no emergency override path exists for stewards
+or anyone else, so that governance capture at the steward level is provably impossible.
+Owner: Rafael Duarte   Priority: Must   Points: 8   Implements: FR-116   Depends on: US-0125
+Note: DES-089 (StewardPowers) and DES-092 (StewardCoordination) are available from Doc 03 v2.x —
+  re-confirm with architect after Doc 03 is updated per Gate 1.
+AC:
+  Scenario: Steward submits a protocol proposal; any citizen may submit a competing proposal
+    Given a steward who submits a platform governance proposal
+    When the proposal is submitted
+    Then it enters the ordinary proposal channel with equal standing to any other proposal;
+      any enrolled citizen may submit a competing proposal on the same question
+  Scenario (adversarial): Steward monopolises the ballot
+    Given a steward body that attempts to prevent a citizen's competing proposal from reaching the ballot
+    When the attempt is made
+    Then no such capability exists; citizens' proposals reach the ballot on equal terms
+  Scenario: No emergency override path exists
+    Given a steward or operator who claims an emergency requires overriding the governance path
+    When they attempt to enact any governance change outside the voted process
+    Then no emergency override capability exists; CON-003 is reaffirmed; the attempt is refused and logged
+```
+```
+US-0127  Prove that the protocol operates unchanged when all stewards are absent      (FE-055 · EP-12)
+As any enrolled citizen, I want a dedicated test suite to confirm that no citizen-facing capability
+depends on any steward signature, action, approval or liveness, so that a steward organisation that
+collapses does not affect any citizen's ability to enrol, join a party, vote, propose or fork.
+Owner: Chen Wei   Priority: Must   Points: 13   Implements: FR-117   Depends on: US-0126
+Note: DES-092 (StewardCoordination) is available from Doc 03 v2.x — re-confirm with architect
+  after Doc 03 is updated per Gate 1.
+AC:
+  Scenario: Citizen flows operate with all stewards absent
+    Given the platform running with every steward seat vacant (steward-vacancy simulation)
+    When every citizen-facing capability — enrolment, party creation, voting, proposal submission,
+      fork initiation — is exercised
+    Then zero citizen-facing capabilities are degraded or unavailable
+  Scenario (adversarial): Steward-dependency path introduced in new code
+    Given new feature code deployed to a citizen flow
+    When the steward-dependency absence suite runs (UT-0700/UT-0701 pattern)
+    Then any path that requires a steward signature, action or approval fails the suite and
+      blocks the release
+  Scenario: Steward-vacancy simulation confirms zero degradation before Gate 2
+    Given the full steward-vacancy simulation run before Gate 2
+    When results are published
+    Then zero citizen-facing degradation is recorded; the simulation output is a Gate 2 artefact
+```
+```
+US-0128  Entrench seven charter rules as unamendable — amendment proposals targeting any of them are rejected by code      (FE-056 · EP-12)
+As any enrolled citizen, I want seven rules — one human one vote; no transferable power; no
+privileged role over outcomes; unconditional fork right; no behavioural surveillance; anonymity by
+default; and CON-001 (parties only, never state elections) — to be entrenched as unamendable by
+any vote and changeable only by fork, so that no majority can vote away the foundations of the
+platform.
+Owner: Rafael Duarte   Priority: Must   Points: 8   Implements: FR-118   Depends on: US-0038, US-0121
+Note: DES-087 (ProtocolGovernance) and DES-091 (GovernanceConstants) are available from Doc 03
+  v2.x — re-confirm with architect after Doc 03 is updated per Gate 1.
+AC:
+  Scenario: Amendment proposal targeting Tier-1 rule rejected at submission
+    Given a proposal that targets any of the seven entrenched rules — including a proposal to permit
+      the platform to conduct state, municipal or other binding government elections
+    When the proposal is submitted
+    Then it is rejected by code at submission regardless of the proposer's tier or the level of
+      claimed support; no deliberation phase is entered
+  Scenario (adversarial): Supermajority attempts to amend an entrenched rule
+    Given a proposal supported by 99% of enrolled citizens that targets an entrenched rule
+    When the proposal is submitted
+    Then code rejects it at submission; citizen support does not override entrenchment
+  Scenario: All seven rules confirmed unamendable by the test suite
+    Given the entrenched-rule suite
+    When it runs against all seven rules including CON-001
+    Then all seven rules are confirmed code-rejected at submission; the suite is a Gate 2 artefact
+```
+```
+US-0129  Enforce a three-tier amendment structure — Tier 1 rejected by code, Tier 2 via super-process, Tier 3 ordinary      (FE-056 · EP-12)
+As any enrolled citizen, I want the platform to enforce a three-tier amendment structure where Tier 1
+proposals are code-rejected, Tier 2 (named absolutes — receipt-freeness, data minimisation, no
+bespoke unaudited cryptography, non-violence) require a super-process with at least five defined properties,
+and Tier 3 uses an ordinary platform-wide citizen vote, so that no rule can be changed at a lower
+level of scrutiny than its risk warrants.
+Owner: Tomás Ferreira   Priority: Must   Points: 13   Implements: FR-119   Depends on: US-0128
+Note: DES-087 (ProtocolGovernance) is available from Doc 03 v2.x — re-confirm with architect
+  after Doc 03 is updated per Gate 1.
+AC:
+  Scenario: Tier 2 proposal requires super-process
+    Given a proposal that targets a Tier-2 named absolute (e.g., a proposal to weaken receipt-freeness)
+    When the proposal is admitted as a Tier-2 proposal
+    Then it enters the super-process specified in Doc 03; it requires: (a) supermajority materially
+      above the ordinary tier, (b) a timelock long enough for the fork right to be exercisable, (c)
+      two consecutive affirmative votes separated by that window, (d) growth-surge defence active
+      throughout, and (e) an independent audit published before the second vote
+  Scenario (adversarial): Tier-2 proposal attempts to use ordinary tier
+    Given an actor who submits a proposal to weaken CON-013 (non-violence) through an ordinary vote
+    When the proposal is submitted
+    Then it is admitted as Tier-2 only; the ordinary proposal path is refused for Tier-2 proposals
+  Scenario: Tier 3 proposal uses ordinary citizen vote
+    Given a Tier-3 proposal (any platform rule not in Tier 1 or 2)
+    When it passes the platform-wide ordinary citizen vote at the published quorum and supermajority
+    Then it is enacted by code on close of the published timelock; no ratification step occurs
+```
+```
+US-0130  Have the unconditional right to fork remain always exercisable — the fork right is entrenched      (FE-056 · EP-12)
+As any enrolled citizen, I want the unconditional right to fork (export history and leave) to be
+entrenched in the Tier-1 charter (FR-118) and to remain available regardless of any steward action
+or protocol vote, so that even a captured majority cannot trap anyone.
+Owner: Erik Lindqvist   Priority: Must   Points: 5   Implements: FR-120   Depends on: US-0128
+Note: DES-034 (fork with lineage, from v1.x) and DES-087 (ProtocolGovernance) are available from
+  Doc 03 — re-confirm with architect after Doc 03 is updated per Gate 1.
+  OPEN CRITICAL: fork initiation flag is currently OFF above dev (§13 of Doc 02); this story
+  records the design posture and the entrenched right. Do not implement fork initiation until the
+  flag is cleared.
+AC:
+  Scenario: Fork right is entrenched and listed in member-rights charter
+    Given the member-rights charter (FR-102/US-0112)
+    When the fork right entry is inspected
+    Then it maps to FR-120 and FR-118; it is listed as entrenched (Tier-1) and unamendable
+  Scenario (adversarial): Protocol vote attempts to remove fork right
+    Given a passed platform-wide vote that proposes to remove the unconditional fork right
+    When the vote result is processed
+    Then code rejects the enactment; the fork right is code-entrenched and cannot be removed by any vote
+  Scenario: Steward action cannot limit fork right
+    Given a steward body that attempts to restrict or condition the fork right
+    When the attempt is made
+    Then no such steward capability exists; the fork right is available regardless of steward action
+```
+
 ## 7. Screen / UX inventory (provisional)
 
 > **Provisional and non-binding.** The architect confirms, splits or merges these in Doc 03; the
@@ -1715,7 +2850,7 @@ Modified Fibonacci (1, 2, 3, 5, 8, 13). **Reference story: US-0024 "Join a party
 Anything estimated above 13 must be split before it enters a sprint. Estimates are re-baselined once
 the architect publishes Doc 03, because several stories (US-0007, US-0038, US-0041, US-0042, US-0068)
 carry the bulk of the technical unknown and are deliberately estimated pessimistically until then.
-**Total (v1.1.1): 83 stories, approximately 499 points** (v1.0.0 was 70 stories at approximately 415 points (corrected from 396; prior ISS-07); 13 new stories from CR-v1.1.0 add approximately 84 points at preliminary estimates). _(ISS-07: v1.0.0 base corrected to actual point sum; total revised accordingly.)_
+**Total (v2.0.0): 130 stories, approximately 812 points** (v1.1.1 was 83 stories at approximately 499 points; 47 new stories from the v2.0.0 Gate-1-re-entry catch-up add approximately 313 points at preliminary estimates). _(ISS-07: v1.0.0 base corrected to actual point sum; total revised accordingly; v2.0.0 total subject to revision after Doc 03 is published and DES links assigned.)_
 
 ## 10. Backlog refinement cadence & WIP limits
 
@@ -1741,17 +2876,20 @@ reviewer-qa (the engineer never merges their own work).
 
 ## 12. Traceability
 
-Coverage assertion at v1.1.1 — to be independently verified by the tester in the RTM (Doc 08):
+Coverage assertion at v2.0.0 — to be independently verified by the tester in the RTM (Doc 08):
 
-- **All 54 Must FRs** in Doc 02 v1.1.1 are implemented by at least one story.
-- **Must-NFR → story/NF-item coverage map** (22 Must NFRs; ISS-01):
+- **All 101 Must FRs** in Doc 02 v2.2.0 are implemented by at least one story.
+- **Must-NFR → story/NF-item coverage map** (24 Must NFRs as of v2.2.0; ISS-01 base + v2.0.0 additions):
   NFR-001→US-0007, US-0038, NF-01 · NFR-002→US-0039, NF-01 · NFR-003→US-0041, US-0042 · NFR-004→US-0005, NF-01 ·
-  NFR-005→US-0066, NF-04 · NFR-006→NF-05 · NFR-007→NF-09 (**new**) · NFR-009→NF-02, NF-03 ·
+  NFR-005→US-0066, NF-04 · NFR-006→NF-05 · NFR-007→NF-09 · NFR-009→NF-02, NF-03 ·
   NFR-010→US-0002, NF-01 · NFR-011→US-0070, FE-028 · NFR-012→NF-05 · NFR-013→US-0070, FE-028 ·
   NFR-014→NF-06 · NFR-015→US-0003, SCR-01 · NFR-016→US-0068, FE-028 · NFR-017→US-0065 ·
   NFR-020→NF-07 · NFR-021→US-0062 · NFR-022→US-0070 · NFR-023→US-0066, US-0003 ·
-  NFR-024→US-0059, NF-08 · NFR-025→NF-06.
-- Must FR → story map (v1.0.0 carries forward unchanged, v1.1.x new FRs appended below): FR-001→US-0001 · FR-002→US-0006, US-0007 ·
+  NFR-024→US-0059, NF-08 · NFR-025→NF-06 ·
+  **NFR-027→US-0121, NF-01** (v2.0.0 new Must NFR: no per-user behavioural telemetry) ·
+  **NFR-028→US-0117** (v2.0.0 new Must NFR: append-only data lifecycle).
+- Must FR → story map (v1.0.0 carries forward unchanged, v1.1.x new FRs appended below; v2.0.0 additions follow):
+  FR-001→US-0001 · FR-002→US-0006, US-0007 ·
   FR-003→US-0002, US-0003 · FR-004→US-0004, US-0005 · FR-006→US-0008 · FR-007→US-0010 ·
   FR-008→US-0009 · FR-009→US-0019, US-0020 · FR-010→US-0011, US-0012 · FR-011→US-0014, US-0015 ·
   FR-014→US-0016 · FR-016→US-0019 · FR-018→US-0022 · FR-020→US-0024, US-0026 · FR-021→US-0027 ·
@@ -1761,22 +2899,49 @@ Coverage assertion at v1.1.1 — to be independently verified by the tester in t
   FR-037→US-0049, US-0050 · FR-039→US-0051, US-0052 · FR-040→US-0053 · FR-042→US-0057 ·
   FR-043→US-0058 · FR-045→US-0060 · FR-047→US-0055 · FR-051→US-0028 · FR-054→US-0061 ·
   FR-056→US-0064, US-0065 · FR-058→US-0068 · FR-059→US-0069 · FR-060→US-0066 · FR-061→US-0067.
-- **v1.1.0 additions (CR-v1.1.0):** FR-062→US-0071 · FR-063→US-0072 · FR-064→US-0073 ·
+- **v1.1.0 additions (CR-v1.1.0):** FR-062→US-0071 (superseded — see annotation) · FR-063→US-0072 · FR-064→US-0073 ·
   FR-065→US-0074, US-0075 · FR-066→US-0076 · FR-067→US-0077 · FR-068→US-0078 ·
   FR-069→US-0079 · FR-070→US-0080 · FR-071→US-0081 · FR-072→US-0082 · FR-073→US-0083.
+- **v2.0.0 additions (Gate 1 re-entry catch-up):**
+  FR-074→US-0084 · FR-075→US-0085 · FR-076→US-0086 · FR-077→US-0087 · FR-078→US-0088 ·
+  FR-079→US-0089 · FR-080→US-0090 · FR-081→US-0091 ·
+  FR-082→US-0092 · FR-083→US-0093 · FR-084→US-0094 · FR-085→US-0095 · FR-086→US-0096 ·
+  FR-087→US-0097 · FR-088→US-0098 · FR-089→US-0099 · FR-090→US-0100 ·
+  FR-091→US-0101 · FR-092→US-0102 · FR-093→US-0103 ·
+  FR-094→US-0104 · FR-095→US-0105 ·
+  FR-096→US-0106 · FR-097→US-0107 · FR-098→US-0108 · FR-099→US-0109 ·
+  FR-100→US-0110 · FR-101→US-0111 · FR-102→US-0112 ·
+  FR-103→US-0113 · FR-104→US-0114 · FR-105→US-0115 ·
+  FR-106→US-0116 · FR-107→US-0117 · FR-108→US-0118 ·
+  FR-109→US-0119 · FR-110→US-0120 · FR-111→US-0121 ·
+  FR-112→US-0122 · FR-113→US-0123 ·
+  FR-114→US-0124 · FR-115→US-0125 · FR-116→US-0126 · FR-117→US-0127 ·
+  FR-118→US-0128 · FR-119→US-0129 · FR-120→US-0130.
+- **DES links available for FR-112..FR-120** (Doc 03 v2.x; re-confirm with architect after Doc 03 updated):
+  FR-112, FR-113 → DES-090 (TrustAnchorLifecycle) ·
+  FR-114 → DES-088 (StewardRegistry) ·
+  FR-115, FR-116 → DES-089 (StewardPowers) + DES-092 (StewardCoordination) ·
+  FR-117 → DES-092 (StewardCoordination) ·
+  FR-118, FR-119 → DES-087 (ProtocolGovernance) + DES-091 (GovernanceConstants) ·
+  FR-120 → DES-034 (fork with lineage, from v1.x) + DES-087 (ProtocolGovernance).
 - Should/Could FRs covered: FR-005 (deferred — see gap note), FR-012→US-0013 · FR-013→US-0021 ·
   FR-015→US-0017 · FR-017→US-0018 · FR-019→US-0023 · FR-029→US-0032 · FR-034→US-0043 ·
-  FR-038→US-0048, US-0049 · FR-041→US-0053 · FR-044→US-0059 · FR-046→US-0054 · FR-048→US-0056 ·
+  FR-038→US-0048, US-0049 · FR-041→US-0053 · FR-044→US-0059 · FR-046→US-0054 (superseded) · FR-048→US-0056 ·
   FR-055→US-0062, US-0063 · FR-057→US-0065.
 - **Known gaps (carried from v1.0.0, declared, not hidden):** `FR-005` (credential revocation and
   appeal), `FR-049`/`FR-050`/`FR-052` (treasury caps, ledger, spend approval) and `FR-053` (party
   fork) have **no story yet**. All are Should or Could. They MUST be storied before their target
   sprint. Owner: **Priya Raghunathan**.
-- `DES-###` links: **not yet assigned** — added after Gate 1 when Doc 03 is updated.
+- **v2.0.0 DES readiness gap (declared):** FR-074..FR-111 have no DES assigned — deliberate, per
+  Doc 03 §16 (next-increment scope). Stories for FR-074..FR-111 are marked "Not Ready pending DES"
+  in §6 and will satisfy the Definition of Ready only after Gate 1 produces the updated Doc 03 and
+  DES links are confirmed. FR-112..FR-120 have provisional DES links (see DES map above) subject
+  to re-confirmation.
+- `DES-###` links for FR-074..FR-111: **not yet assigned** — added after architect updates Doc 03.
 - `TC-####` links: **not yet assigned** — added by the tester in Doc 07.
 
 ---
 
 ### Downstream
 Stories are built per Doc 06 (Coding & UT), verified by Doc 07 (Test Cases), and reconciled in
-Doc 08 (RTM). No story may be started before Gate 1 re-affirmation at v1.1.0 clears.
+Doc 08 (RTM). No story may be started before Gate 1 direction is confirmed.
