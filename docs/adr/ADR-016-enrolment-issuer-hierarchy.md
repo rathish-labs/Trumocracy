@@ -8,6 +8,8 @@ Owner:         Ravi Deshmukh — Principal Architect
 Traces:        BR-006, BR-012, FR-073, OI-03 (Gate 1 disposition), OI-12
 Source:        CR-v1.1.0 Change 8; GATE1-DECISION-2026-08-09.md §3 OI-03
 Amends:        ADR-003 (Phase 1 scope; see ADR-003 Status for cross-reference)
+Amendment:     2026-08-20 — Phase-1 pilot rail now named: India (Aadhaar offline paperless
+               KYC), adapter class (c), per FR-121 and CON-015; OI-04-PILOT closed (ADR-021).
 ```
 
 ## Context

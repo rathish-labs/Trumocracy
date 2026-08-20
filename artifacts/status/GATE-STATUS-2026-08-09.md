@@ -355,3 +355,117 @@ and 08 (versions produced during the catch-up) stand unchanged. The practice is 
 this session forward: the tester, as owner of Docs 07 and 08, performed the v2.1.0 Status
 flips on 2026-08-12 (see `artifacts/tester-2026-08-12T1600.md`). Future owning roles will
 perform their own flips on PASS.
+
+---
+
+## Pilot jurisdiction & verification decisions — 2026-08-20
+
+> This section records four approver decisions directed by Rathish on 2026-08-20. All prior
+> gate decisions and their wording are unchanged and intact. This section is additive only.
+> Full decision record: `artifacts/status/DECISIONS-2026-08-20-PILOT-VERIFICATION.md`.
+
+### OI-04-PILOT — CLOSED
+
+**OI-04-PILOT is closed by `artifacts/status/DECISIONS-2026-08-20-PILOT-VERIFICATION.md`
+(Decision 1), to be applied in Doc 02 v2.3.0 this session.**
+
+The pilot sequence, ordered by technical readiness of the identity rail (not market size):
+
+| Phase | Jurisdiction | Rail | Rationale |
+|-------|-------------|------|-----------|
+| **Phase 1** | **INDIA** | **Aadhaar offline paperless KYC** | One national issuer, near-universal coverage, signed XML provable in-circuit. First enrolment adapter — FR-070 adapter class (c). |
+| Phase 2 | EU | eIDAS 2.0 wallets (France + Nordic countries first) | Privacy-preserving by design. |
+| Phase 3 | USA | State-by-state mDL patchwork | Deferred: no national digital identity; low activation; optional "phone-home" privacy default conflicts with the non-correlation guarantee. |
+
+### New Gate-2 line item — Legal opinion (India / Aadhaar)
+
+**Status: NOT STARTED.**
+
+A **legal opinion for the lead jurisdiction (India / Aadhaar)** is a **REQUIRED Gate-2 line
+item** before the enrolment requirement is finalised against the Aadhaar rail. Aadhaar's use
+for anything resembling political or voter identification is legally sensitive in India. The
+enrolment requirement (FR-069 / FR-070 and the Aadhaar adapter specification) must not be
+marked implementation-ready until this legal opinion is obtained and recorded.
+
+This item sits alongside — and does not supersede — the Doc 04 review-debt Gate-2 blocker
+recorded in the "Follow-up governance — 2026-08-12" section above.
+
+**Owner:** product-owner (Priya Raghunathan) to commission; project-manager to track.
+**Trigger:** before FR-070 adapter class (c) is finalised and before Gate 2.
+
+### Decisions 2–4 pointer
+
+Decisions 2 (verification as a separate, optional step — verification gates COUNTING, never
+joining), 3 (on-device proof, nullifier-only, no stored identity — subpoena-test acceptance
+criterion), and 4 (two rejected designs recorded with rationale: persistent referral graph
+and encrypted identity registry) are recorded verbatim in
+`artifacts/status/DECISIONS-2026-08-20-PILOT-VERIFICATION.md §4`. They are to be applied
+in Doc 02 v2.3.0 (product-owner) and a new ADR (architect) this session.
+
+**Gate 2:** NOT READY. RTM (Doc 08 v2.1.0): 125 Must rows / 12 COMPLETE / 113 OPEN.
+Legal-opinion line item now also open (NOT STARTED).
+
+---
+
+### Outcomes — applied 2026-08-20
+
+> Decisions 1–4 were applied in this session by the product-owner (Doc 02 v2.3.0) and the
+> architect (Doc 03 v2.1.3 + ADR-021). Two tensions surfaced that the approver has not yet
+> decided; they are stated plainly below. All prior wording is unchanged.
+
+#### Document versions and review verdicts
+
+| Document | Version | Mode | Cycle | Score | Findings | Verdict |
+|----------|---------|------|-------|-------|----------|---------|
+| Doc 02 Requirements (`docs/02-requirements-srs.md`) | **v2.3.0** | business | 1 | 97% | 0C / 0H / 0M / 3L | **PASS** |
+| Doc 03 SDD (`docs/03-architecture-design-sdd.md`) | v2.1.2 | technical | 1 | 95% | 0C / 0H / 2M / 2L | FAIL → rework |
+| Doc 03 SDD (`docs/03-architecture-design-sdd.md`) | **v2.1.3** | technical | 2 | 100% | 0C / 0H / 0M / 0L | **PASS** |
+
+Review reports: `artifacts/reviews/02-requirements-srs-v2.3.0-business-cycle1.md`,
+`artifacts/reviews/03-architecture-design-sdd-v2.1.2-technical-cycle1.md`,
+`artifacts/reviews/03-architecture-design-sdd-v2.1.3-technical-cycle2.md`.
+
+Doc 02 v2.3.0 three Low issues (do not block): ISS-01 — §2.5 CON range not updated to
+include CON-015; ISS-02 — §15 approvals table OI-18 annotation stale (carry-forward from
+v2.2.0); ISS-03 — FR-020 annotation implicitly narrows normative scope without formally
+amending the text. These are logged for the next version.
+
+**What was applied.** FR-121..FR-128 minted (all Must); CON-015 (legal-opinion hard
+dependency) minted; TD-12 (two rejected designs) minted; OI-04-PILOT closed in §13;
+annotations added to FR-003, FR-004, FR-020, FR-021 without amending their normative text.
+ADR-021 registered: "Verification gates counting — on-device nullifier-only posture";
+confirms the existing C-03 / SC-01 trust-anchor circuit as the mechanism; records two
+rejected designs (persistent referral graph; encrypted identity registry) under Alternatives
+rejected. ADR-016 and ADR-017 carry amendment notes naming the Phase-1 Aadhaar rail.
+
+#### OI-19 — PENDING APPROVER DECISION (Rathish)
+
+**Invite-gating for the open tier vs FR-020's Must ban on invitation as an admission
+condition.** Decision 2 permits "invite-gating for spam control only" on the open tier;
+Decision 4 permits referral to gate entry (referral edge verified then discarded, never
+stored). FR-020 (Must) explicitly bans "approval, sponsorship, or invitation as an admission
+condition." The question is whether the open-tier / counted-membership scope distinction
+resolves the conflict or whether FR-020's normative text requires amendment. **FR-125 is
+DRAFT and is not implementation-ready until OI-19 closes.** Status: NOT DECIDED — awaiting
+Rathish.
+
+#### OI-20 — PENDING APPROVER DECISION (Rathish)
+
+**Single-rail India pilot vs FR-004's Must requirement of ≥ 2 mutually independent
+attestation paths per launch region (with a ≤ 50% attestor-plurality cap).** The Phase-1
+pilot names one rail (Aadhaar offline paperless KYC). FR-004's normative text has not been
+amended — the conflict between naming a single pilot rail and the ≥ 2-path requirement is
+recorded and left for the approver to resolve. Status: NOT DECIDED — awaiting Rathish.
+
+#### Catch-up debt — FR-121..FR-128 have no DES, US, TC, or RTM rows
+
+FR-121..FR-128 are in the recorded-phasing posture: minted in Doc 02, registered in Doc 03
+§16, but downstream columns (DES, US, TC, RTM rows) are open by design. These are not
+hidden; they are the next catch-up obligation.
+
+| Owner | Deliverable | Trigger |
+|-------|-------------|---------|
+| product-owner (Priya Raghunathan) | Doc 05 stories for FR-121..FR-128 | Next backlog catch-up; FR-125 stories must also wait for OI-19 to close before being marked Ready |
+| tester (Ji-woo Park) | Doc 07 test cases + Doc 08 RTM rows for FR-121..FR-128 | After Doc 05 stories land and OI-19/OI-20 resolve (FR-125 and FR-121's single-rail Gherkin gate on OI-20) |
+
+**Gate 2:** NOT READY. RTM (Doc 08 v2.1.0): 125 Must rows / 12 COMPLETE / 113 OPEN (FR-121..FR-128 RTM rows not yet added). Legal-opinion line item (India/Aadhaar): NOT STARTED. OI-19 and OI-20: NOT DECIDED.
