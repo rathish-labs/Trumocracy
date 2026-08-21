@@ -229,3 +229,41 @@ Per CLAUDE.md review-loop rule, the owning role (product-owner) sets the Status 
 - ISS-03 (Low): FR-020 annotation clarity (phrasing could be tighter)
 
 These are open items for the next Doc 02 amendment. No edits made to Doc 02 for these issues now.
+
+---
+
+## Addendum — v2.3.1 work (approver ruling: FR-124 verified-status visibility)
+
+**Date:** 2026-08-20 (same session, coordinator-transmitted approver ruling)
+**Version bump:** v2.3.0 (Approved) → v2.3.1 (Status: In Review)
+
+### Ruling applied
+
+Approver ruling, Rathish, 2026-08-20, transmitted via coordinator (labelled "Resolve OI-19" by the approver — see mislabelling note below): verified status is PRIVATE TO THE HOLDER, expressed as eligibility, never a public marker on a Supporter. The ruling grants every verified participant including Supporters a private self-view in their own authenticated session; public sees only aggregate counts; Worker/Candidate badge permitted (disclosure line already crossed by voluntary role-taking); MUST-NOT: no persistent public attribute may reveal a specific Supporter is verified.
+
+### Mislabelling note (surfaced to approver via coordinator)
+
+The approver's transmitted message labelled this ruling "Resolve OI-19". The register's OI-19 is the **invite-gating vs FR-020 admission ban** tension (pending since v2.3.0). This ruling does NOT address that tension. Its scope is exclusively FR-124 verified-status visibility composition. OI-19, FR-125, and OI-20 are completely untouched. The mislabelling is factually recorded here; the coordinator is surfacing this to the approver for confirmation.
+
+### Edits applied to docs/02-requirements-srs.md (v2.3.0 → v2.3.1)
+
+1. **Header:** Version 2.3.1, Status: In Review; v2.3.1 changelog entry added (FIRST, above v2.3.0 entry) describing FR-124 amendment and three Low fixes.
+2. **§2.5 ISS-01:** CON range `CON-001..CON-014` → `CON-001..CON-015` with v2.3.1 ISS-01 inline note.
+3. **FR-020 annotation ISS-03:** Scoping sentence added: "Scope of this annotation: open-tier (non-counted) joining only. The normative text of FR-020 applies in full and without amendment to COUNTED membership." Existing annotation text preserved and clarified.
+4. **FR-124 ruling banner (✅) + table restructure:** Banner blockquote added before FR-124 row (ruling quoted verbatim; composition check vs FR-082/083/086/NFR-001/NFR-002/TD-02 — no genuine conflict found). Table broken so FR-124 is in its own table block after the banner.
+5. **FR-124 normative text:** Original v2.3.0 clause (b) annotated as superseded with verbatim quotation for traceability; new six-point normative text (clauses a–f) implementing all ruling elements: private self-view, aggregate-only public, Worker/Candidate badge, MUST-NOT persistent attribute, no retroactive linkage, absence-test obligation.
+6. **§8 FR-124 Gherkin:** Four scenarios now: (1) Supporter private self-view (new); (2) absence from all other-actor views (strengthened); (3) Worker/Candidate badge on public record; (4) adversarial aggregate-inference attempt (strengthened).
+7. **§14 glossary 'Verified status':** Updated to match v2.3.1 four-point amended composition.
+8. **§15 ISS-02:** Stale "OI-18 open" note replaced with "OI-18 RESOLVED at v2.2.0" with pointer to OI-18-DECISION-2026-08-11.md.
+
+### OI-19 / FR-125 / OI-20 — untouched
+
+All three are confirmed untouched. No edit was made to OI-19 (§4.41 banner or §13 row), FR-125, or OI-20 (§4.1 banner or §13 row). These remain pending Rathish decision.
+
+### No new IDs minted in v2.3.1
+
+No FR, CON, OI, or TD IDs minted. High-water marks unchanged from v2.3.0.
+
+### Status flip — v2.3.1 review PASS
+
+v2.3.1 cycle-1 business review: PASS 100%, 0C/0H/0M/0L (report: artifacts/reviews/02-requirements-srs-v2.3.1-business-cycle1.md). Status set to Approved. Edit: header Status line → `Approved (review loop, cycle 1 PASS 100% — artifacts/reviews/02-requirements-srs-v2.3.1-business-cycle1.md)`.

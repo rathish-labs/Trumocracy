@@ -68,3 +68,46 @@ coordinator instruction. Reviewed the four Pilot/Verification decision impact ar
 The reviewer does not edit the reviewed document. All rework is routed to the owning role
 (product-owner, Priya Raghunathan) if required. Since verdict is PASS, no rework is required for
 the three Low issues to advance the SOP; they are optional quality improvements.
+
+---
+
+## Addendum — v2.3.1 cycle-1 review (same session, new loop)
+
+```
+Scope:     Business-mode cycle-1 review of Doc 02 v2.3.1 (new review loop — v2.3.0 loop closed PASS).
+           FR-124 verified-status visibility ruling (Rathish, 2026-08-20) + ISS-01/02/03 fixes.
+           Read-only on the document. No documents edited. No product code touched.
+```
+
+### Verdict
+
+**PASS: 100%, 0C/0H/0M/0L.**
+
+### Decisions confirmed
+
+- FR-124 amendment applies the approver ruling verbatim: six clauses (a)–(f) covering
+  private self-view, aggregate-only public, Worker/Candidate badge, MUST-NOT persistent
+  attribute, no retroactive linkage, and absence-test obligation.
+- Original v2.3.0 FR-124 clause (b) retained with SUPERSEDED annotation and pointer — audit trail intact.
+- Supporter anonymity NOT weakened: self-view explicitly scoped to "the member's own
+  authenticated-session view only and MUST NOT be accessible to any other actor" — consistent with FR-082.
+- All four scope guards intact:
+  - FR-020 normative text UNCHANGED ✓
+  - FR-004 normative text UNCHANGED ✓
+  - OI-19 PENDING ("Do NOT mark OI-19 decided") ✓
+  - OI-20 PENDING ("Do NOT mark OI-20 decided") ✓
+  - FR-125 still draft "(pending OI-19 resolution)" ✓
+- ISS-01 RESOLVED: §2.5 now reads "CON-001…CON-015" with inline v2.3.1 ISS-01 annotation.
+- ISS-02 RESOLVED: §15 OI-18 stale note corrected with inline v2.3.1 ISS-02 annotation.
+- ISS-03 RESOLVED: FR-020 annotation opens with explicit "Scope of this annotation: open-tier
+  (non-counted) joining only" scoping sentence; counted-membership normative text confirmed unchanged.
+- §8 FR-124 Gherkin updated with 4 scenarios including adversarial aggregate-inference test ✓
+- §14 "Verified status" glossary entry updated to match amended FR-124 clauses ✓
+
+### Issues found (v2.3.1)
+
+None. Zero issues at any severity.
+
+### Artifacts written (addendum)
+
+- `artifacts/reviews/02-requirements-srs-v2.3.1-business-cycle1.md` (review report — PASS 100%)

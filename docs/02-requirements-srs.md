@@ -2,14 +2,30 @@
 
 ```
 Document ID:   SRS-TRUMOCRACY
-Version:       2.3.0
-Status:        Approved (review loop, cycle 1 PASS 97% — artifacts/reviews/02-requirements-srs-v2.3.0-business-cycle1.md)
+Version:       2.3.1
+Status:        Approved (review loop, cycle 1 PASS 100% — artifacts/reviews/02-requirements-srs-v2.3.1-business-cycle1.md)
 Owner:         Priya Raghunathan — Product Owner
 Approvers:     Gate 1 — Priya Raghunathan (Product Owner), Ana-Maria Petrescu (Project Manager),
                Rathish (Human Approver — Gate 1 re-entry, v2.0.0)
 Source:        PR-TRUMOCRACY (docs/01-press-release-prfaq.md)
 Last updated:  2026-08-20
-Change:        v2.3.0 — Pilot jurisdiction decisions applied (Rathish, 2026-08-20;
+Change:        v2.3.1 — FR-124 verified-status visibility amendment (approver ruling, Rathish,
+               2026-08-20, recorded in the FR-124 banner, §4.41): verified status is private to
+               the holder, expressed as eligibility; every verified participant including Supporters
+               sees their own status in their own authenticated session; the public sees only
+               aggregate verified counts, never a per-Supporter badge; Worker/Candidate visible
+               badge permitted (voluntary role-taking already crossed the disclosure line);
+               MUST-NOT: no persistent public attribute may reveal a specific Supporter is verified;
+               absence-test obligation added (UT-0700/UT-0701 style). Original v2.3.0 clause (b)
+               annotated as superseded with pointer (retained for traceability). §8 FR-124 Gherkin
+               updated: Supporter private self-view scenario added; absence and adversarial scenarios
+               strengthened. §14 glossary 'Verified status' updated to match amended composition.
+               Three Low issues from v2.3.0 cycle-1 review
+               (artifacts/reviews/02-requirements-srs-v2.3.0-business-cycle1.md) fixed: ISS-01 §2.5
+               CON range updated CON-001..CON-014 → CON-001..CON-015; ISS-02 §15 OI-18 note updated
+               (OI-18 resolved at v2.2.0, stale note corrected); ISS-03 FR-020 annotation scoping
+               sentence added (open-tier scope only; counted-membership normative text unchanged).
+               v2.3.0 — Pilot jurisdiction decisions applied (Rathish, 2026-08-20;
                DECISIONS-2026-08-20-PILOT-VERIFICATION.md). Decision 1: pilot jurisdiction
                sequence recorded in §4.40 (FR-121); India/Aadhaar offline paperless KYC named as
                Phase-1 adapter; EU/eIDAS 2.0 Phase-2; USA Phase-3 deferred (fragmented mDL
@@ -228,7 +244,7 @@ Phase-1 pilot jurisdiction: **India** — Aadhaar offline paperless KYC; FR-070 
 OI-04-PILOT resolved 2026-08-20 — see DECISIONS-2026-08-20-PILOT-VERIFICATION.md and §4.40).
 
 ### 2.5 Design & implementation constraints
-See §9 (`CON-001` … `CON-014`).
+See §9 (`CON-001` … `CON-015`). _(v2.3.1 ISS-01: range updated to reflect CON-015 minted at v2.3.0.)_
 
 ### 2.6 Assumptions & dependencies
 See §9.2.
@@ -343,7 +359,7 @@ See §9.2.
 
 | ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
 |----|-------------------------------|-----------|----------|-------|-----------|
-| FR-020 | Admit any verified citizen to any active party on request, with no approval, sponsorship, interview, invitation, fee or veto available to any existing member, office-holder, drafter or platform actor. _(v2.3.0 per Decision 2 (DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Rathish, 2026-08-20): admission is no longer preconditioned on personhood verification — the open (unverified) tier may join the platform for non-counted participation (FR-122). The no-approval / no-sponsorship / no-interview / no-invitation / no-fee / no-veto properties are retained in full and extended to open-tier entry; these admission properties apply without exception to COUNTED membership. Verified personhood is required only for counted actions (FR-123); it is not a gate on joining. The original FR-020 text stands in full for counted membership.)_ | BR-003, BR-008 | Must | Grace Mbeki | T, D |
+| FR-020 | Admit any verified citizen to any active party on request, with no approval, sponsorship, interview, invitation, fee or veto available to any existing member, office-holder, drafter or platform actor. _(v2.3.0 per Decision 2 (DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Rathish, 2026-08-20); v2.3.1 ISS-03: scoping sentence added. **Scope of this annotation: open-tier (non-counted) joining only.** The normative text of FR-020 — 'Admit any verified citizen to any active party on request, with no approval, sponsorship, interview, invitation, fee or veto' — applies in full and without amendment to COUNTED membership. This annotation records the Decision 2 extension to open-tier joining only: a citizen may join the platform for non-counted (open-tier) participation (FR-122) without first completing personhood verification. The no-approval / no-sponsorship / no-interview / no-invitation / no-fee / no-veto properties are retained in full and extended to open-tier entry; these admission properties apply without exception to COUNTED membership. Verified personhood is required only for counted actions (FR-123); it is not a gate on open-tier joining.)_ | BR-003, BR-008 | Must | Grace Mbeki | T, D |
 | FR-021 | Grant every member of a party exactly one vote of identical weight in every party ballot, and MUST NOT expose any mechanism by which standing, weight, precedence or privilege can differ between members on grounds of seniority, office, tenure, contribution or any other attribute. _(v2.3.0 per Decision 2 (DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Rathish, 2026-08-20): one-member-one-vote applies to binding ballots, which are personhood-gated under FR-123 (counted actions require verified personhood, also FR-002 per-scope nullifier). Verification gates whether an action COUNTS; it does NOT create weight differences among verified members. FR-021 applies in full to all verified (counted) members — no tier multiplier, no seniority weight, no other differentiation.)_ | BR-003, BR-010 | Must | Grace Mbeki | T, I, A |
 | FR-022 | Allow a member to leave a party at any time, taking immediate effect on their rights, with no exit approval, penalty or notice period. | BR-003 | Must | Grace Mbeki | T |
 | FR-023 | Withhold governance rights (proposing, voting, nominating, endorsing a nomination, initiating or signing a recall) from a new member until a published maturation period has elapsed since joining; and rate-limit each person's join/leave transitions per party and in aggregate per period. | BR-012 | Must | Rafael Duarte | T, A |
@@ -657,7 +673,19 @@ See §9.2.
 |----|-------------------------------|-----------|----------|-------|-----------|
 | FR-122 | Allow any citizen — without completing personhood verification — to access the platform for open-tier participation: reading, following, watching, and other low-stakes actions that do not count toward any official total; no verification requirement may be imposed as a condition of open-tier access; the open tier MUST NOT be counted toward any party's official strength number, any binding ballot eligibility, or any candidacy eligibility under any configuration. _(Source: DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Decision 2; Rathish, 2026-08-20.)_ | BR-003, BR-016 | Must | Grace Mbeki | T, I |
 | FR-123 | Require proof of unique personhood (the FR-069 enrolment nullifier) for every action that COUNTS: (a) contributing to a party's official strength number; (b) voting in a binding decision; (c) standing as a candidate. A party's published strength number MUST count verified persons only; open-tier (unverified) participation MUST NOT be added to or used to inflate the strength number by any path or configuration. This is the normative boundary of Decision 2: verification gates COUNTING, never joining. _(Source: DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Decision 2; Rathish, 2026-08-20.)_ | BR-006, BR-010, BR-016 | Must | Marcus Adeyemi | T, A |
-| FR-124 | Completing personhood verification (FR-069 nullifier enrolment) grants a **"verified" status**. The composition of verified status with the three-tier privacy model (§4.24) is as follows and MUST be enforced without exception: (a) for Worker- and Candidate-tier participants (FR-083), the verified marker is visible on the member's own private account view and on the public participation record, since that record already exists by explicit informed consent at role-taking; (b) for Supporter-tier participants (FR-082), no profile surface exists for a Supporter by design — the verified status exists ONLY as the Supporter's nullifier being counted in the aggregate strength number; no per-person public verified marker MUST exist for a Supporter on any surface; (c) no retroactive linkage between an anonymous Supporter's verified status and their identity is permitted through any data the system holds or emits (FR-086 applies); (d) no verified-status marker MUST appear on any public surface that would allow association of a Supporter's nullifier with any attributable record. _(Source: DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Decision 2; Rathish, 2026-08-20.)_ | BR-009, BR-017, BR-006 | Must | Dr. Lena Kowalczyk | T, I, A |
+
+> ✅ **FR-124 RULING — Verified-status visibility (Rathish, 2026-08-20; recorded here per approver ruling transmitted via coordinator, 2026-08-20):**
+> "RULING: verified status is PRIVATE TO THE HOLDER, expressed as eligibility, never a public marker on a supporter.
+> - A verified user sees their own verified status and knows their counting/voting eligibility.
+> - The public sees only AGGREGATE verified counts (e.g. 'N verified members'), never a per-supporter badge.
+> - For workers and candidates — already public by voluntary role-taking — a visible verified badge is permitted, because they have already crossed the disclosure line.
+> - MUST-NOT: no persistent public attribute may reveal that a specific supporter is verified. This is consistent with NFR-001/002 and TD-02, and with the rule that disclosure follows voluntary role-taking, which verification is not."
+>
+> **Composition check (v2.3.1):** consistent with FR-082 (no public Supporter profile surface — the self-view is the member's own authenticated-session view, not a public profile; FR-082 prohibits public surfaces, not the holder's own session view), FR-083 (Worker/Candidate public participation record begins at the FR-080 informed-consent event; role-taking already crosses the disclosure line), FR-086 (no retroactive linkage — the self-view is visible only to the authenticated session holder and does not expose any Supporter to any other actor), NFR-001 (no actor other than the holder can determine a Supporter's verified status from any data the system holds, emits, or logs), NFR-002 (Supporter-tier anonymity set floor holds unconditionally; no per-participant signal is derivable from aggregate counts), TD-02 (members anonymous publicly; disclosure follows voluntary role-taking; verification is not role-taking and therefore does not cross the disclosure line for public visibility). **No genuine conflict found.** FR-124 normative text amended at v2.3.1 — original v2.3.0 clause (b) annotated as superseded in the row below with pointer; remaining clauses retained and restated.
+
+| ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
+|----|-------------------------------|-----------|----------|-------|-----------|
+| FR-124 | Completing personhood verification (FR-069 nullifier enrolment) grants a **"verified" status** that is PRIVATE TO THE HOLDER and expressed as eligibility — never a persistent public marker on a Supporter. _(v2.3.1 per approver ruling, Rathish, 2026-08-20, quoted verbatim in banner above; original v2.3.0 clause (b) superseded — see supersession note below.)_ The composition of verified status with the three-tier privacy model (§4.24) is as follows and MUST be enforced without exception: **(a) Private self-view for all verified participants including Supporters:** every verified participant — Supporter, Worker, and Candidate — MUST be able to see their own verified status and know their counting/voting eligibility in their own authenticated session; this self-view is the member's own authenticated-session view only and MUST NOT be accessible to any other actor; it is NOT a public profile surface and is consistent with FR-082 (which prohibits public Supporter profile surfaces, not the authenticated holder's own session view); **(b) Public sees only aggregate verified counts:** the public MUST see only aggregate verified counts for a party (e.g. 'N verified members'); no per-participant 'verified' badge, field, or derivable signal MUST appear on any public surface, log, or export that would reveal whether a specific Supporter is verified; **(c) Worker/Candidate visible badge permitted:** for Worker- and Candidate-tier participants (FR-083), a visible verified marker is permitted on the public participation record and on their own private account view — they have already crossed the disclosure line by voluntary role-taking (FR-080 informed-consent event; FR-083); **(d) MUST-NOT — no persistent public attribute:** no persistent public attribute, field, tag, or derivable signal MUST reveal that a specific Supporter is verified; **(e) No retroactive linkage:** no retroactive linkage between an anonymous Supporter's verified status and their identity is permitted through any data the system holds or emits (FR-086 applies); **(f) Absence-test obligation:** a test in the style of UT-0700/UT-0701 (absence-of-path verification per FR-086) MUST verify that a verified Supporter's verified status is absent from every public view, log, export, and derivable system output with no path available to any actor other than the authenticated holder. Rationale: disclosure follows voluntary role-taking; verification is not role-taking (NFR-001, NFR-002, TD-02). _(v2.3.0 ORIGINAL TEXT — clause (b) SUPERSEDED at v2.3.1: the v2.3.0 formulation 'the verified status exists ONLY as the Supporter's nullifier being counted in the aggregate strength number' is replaced by clause (a) above, which grants every verified participant including Supporters a private self-view in their own authenticated session. Clauses (c) and (d) of the original are retained and restated as points (e) and (f). Original v2.3.0 clause (b) verbatim for traceability: 'for Supporter-tier participants (FR-082), no profile surface exists for a Supporter by design — the verified status exists ONLY as the Supporter's nullifier being counted in the aggregate strength number; no per-person public verified marker MUST exist for a Supporter on any surface.' Original v2.3.0 clause (c): 'no retroactive linkage between an anonymous Supporter's verified status and their identity is permitted through any data the system holds or emits (FR-086 applies).' Original v2.3.0 clause (d): 'no verified-status marker MUST appear on any public surface that would allow association of a Supporter's nullifier with any attributable record.' Retained per CLAUDE.md ID-scheme rule — do not delete.)_ _(Sources: DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Decision 2 (v2.3.0 basis); approver ruling, Rathish, 2026-08-20 (v2.3.1 amendment).)_ | BR-009, BR-017, BR-006 | Must | Dr. Lena Kowalczyk | T, I, A |
 
 > ⚠ **OI-19 — Invite-gating vs FR-020 admission ban: PENDING APPROVER DECISION (Rathish).**
 > Decision 2 (DECISIONS-2026-08-20-PILOT-VERIFICATION.md) permits "invite-gating for spam control
@@ -1743,18 +1771,26 @@ Given an adversary who attempts to inflate a party's strength number by register
 When the strength computation runs
 Then the 10,000 open-tier accounts are not counted; the strength number reflects only verified (nullifier-enrolled) members; the attack produces zero numerical benefit
 
-# FR-124 — verified status composition with three-tier privacy; Supporter marker only in aggregate
+# FR-124 (v2.3.1) — verified status private to holder; Supporter self-view in authenticated session only; aggregate-only public; absence-test obligation
+# Scenario 1: Supporter private self-view (new in v2.3.1 per ruling clause (a))
 Given a Supporter-tier participant who has completed personhood verification (nullifier enrolled)
-When any interface, log, export, or public record is examined by any actor
-Then no per-person "verified" marker is visible for that Supporter; the verification manifests only as their nullifier being counted in the aggregate strength number; no retroactive linkage to their identity exists (FR-086 applies)
+When that Supporter views their own authenticated-session account view
+Then they see their own verified status and know their counting/voting eligibility; the verified status is visible to that participant in their own authenticated session only; no other actor has access to this view
 
-Given a Worker-tier participant who has completed personhood verification and whose participation record is public by consent
-When their public participation record is viewed
+# Scenario 2: absence from all public surfaces and other-actor views (FR-082, FR-124 clause (b) and (d))
+Given a Supporter-tier participant who has completed personhood verification (nullifier enrolled)
+When any interface, log, export, or public record is examined by any actor OTHER THAN the authenticated Supporter themselves
+Then no per-person "verified" marker is visible for that Supporter on any public surface; the absence-of-path test passes: no path exists for any actor to determine this Supporter's verified status; the verification manifests only as the Supporter's nullifier being counted in the aggregate strength number; no retroactive linkage to their identity exists (FR-086 applies)
+
+# Scenario 3: Worker/Candidate verified badge permitted (FR-124 clause (c))
+Given a Worker-tier participant who has completed personhood verification and whose participation record is public by consent (FR-080 role-taking event)
+When their public participation record is viewed by any actor
 Then a "verified" marker is visible on their participation record and on their own private account view; no ballot direction is disclosed on any contested vote (FR-063 applies)
 
-Given an adversary attempting to derive a Supporter's identity from the "verified" count change in the strength number
-When the strength number is examined before and after a Supporter verifies
-Then the aggregation provides no per-person marker; the adversary cannot determine which Supporter verified nor link the verification to any identity or pseudonym
+# Scenario 4: adversarial aggregate-inference attempt (FR-124 clause (b), NFR-001, NFR-002)
+Given an adversary attempting to derive a Supporter's identity from the "verified" count change in the aggregate strength number
+When the strength number is examined before and after a Supporter completes verification
+Then the aggregation provides no per-person marker; the adversary cannot determine which Supporter verified nor link the verification event to any identity, pseudonym, or nullifier; the aggregate count changes but no Supporter-to-count association is derivable by any actor from any system output
 
 # FR-125 — open-tier spam-control invite-gating; referral edge verified then discarded, never stored
 # ⚠ OI-19 is live — this Gherkin block is a design-intent record pending the approver's decision (OI-19: invite-gating vs FR-020 admission ban). Do NOT derive finalised test cases until OI-19 resolves.
@@ -2250,7 +2286,7 @@ per the refine loop; none exist at v1.0.0 or v1.1.0 (all v1.1.0 requirements sou
 | **mDL** | Mobile Driver's Licence; a state-issued digital driving licence in mobile-credential format (ISO 18013-5). Referenced in `FR-121` as the fragmented credential landscape that defers the USA to Phase 3 of the pilot sequence; an optional "phone-home" privacy default in current mDL specifications conflicts with the platform's non-correlation guarantee (`FR-002`, `FR-069`). |
 | **Open tier** | The unverified participation tier available to any citizen without completing personhood verification; permits reading, following, watching, and other low-stakes actions but excludes all counted actions (`FR-122`). Contrast: counted action. |
 | **Subpoena test** | The acceptance criterion for `FR-128`: if a court orders the platform to disclose who belongs to a party, the platform must be technically unable to comply — not merely legally entitled to decline. Encrypted-but-decryptable identity storage fails this test. The test is the architecturally enforced form of the non-correlation guarantee. |
-| **Verified status** | The marker indicating that a participant has completed personhood verification (FR-069 nullifier enrolment). Composition with the three-tier privacy model (`FR-124`): visible on the member's own private account view and on the public participation record of Worker/Candidate-tier participants (`FR-083`); for anonymous Supporters, manifests only in the aggregate strength number (no per-person public marker); no retroactive linkage is permitted (`FR-086`). |
+| **Verified status** | The marker indicating that a participant has completed personhood verification (FR-069 nullifier enrolment). Verified status is PRIVATE TO THE HOLDER, expressed as eligibility (`FR-124` v2.3.1 per approver ruling, Rathish, 2026-08-20): **(a)** every verified participant — including Supporters — sees their own verified status and knows their counting/voting eligibility in their own authenticated session only; **(b)** the public sees only aggregate verified counts (e.g. 'N verified members'), never a per-participant badge for Supporters; **(c)** Worker/Candidate verified badge is visible on the public participation record — voluntary role-taking (FR-080) already crossed the disclosure line (`FR-083`); **(d)** MUST-NOT: no persistent public attribute may reveal that a specific Supporter is verified; absence-test obligation applies (UT-0700/UT-0701 style). No retroactive linkage is permitted (`FR-086`). Rationale: disclosure follows voluntary role-taking; verification is not role-taking (NFR-001, NFR-002, TD-02). |
 
 ---
 
@@ -2262,7 +2298,7 @@ per the refine loop; none exist at v1.0.0 or v1.1.0 (all v1.1.0 requirements sou
 | Project Manager (Responsible) | Ana-Maria Petrescu | Approved v1.0.0 at Gate 1 | 2026-08-09 | Re-affirmation packet to be assembled for v1.1.0 |
 | **Human approver — Gate 1 re-affirmation** | Rathish | ~~**Pending re-affirmation at v1.1.0**~~ _(superseded)_ | 2026-08-11 | ~~Must confirm or revise OI-13 (profile vs anonymity)~~ Superseded by the v2.0.0 re-entry (Gate 1 approved 2026-08-11; OI-13 resolved at v2.0.0) |
 | Human approver — Gate 1 (v2.0.0 re-entry) | Rathish | **Gate 1 APPROVED** | 2026-08-11 | Approved Doc 01 v2.0.0 + Doc 02 v2.0.1; conditional on steward requirements (Doc 02 v2.1.0) landing before Design; condition fulfilled by this version |
-| Human approver — v2.1.0 condition | Rathish | Steward requirements landed this version; review loop pending | 2026-08-11 | OI-18 open (entrenched-charter scope) |
+| Human approver — v2.1.0 condition | Rathish | Steward requirements landed this version; review loop pending | 2026-08-11 | ~~OI-18 open~~ **OI-18 RESOLVED at v2.2.0** (two-tier entrenched-charter scope decided; OI-18-DECISION-2026-08-11.md applied at v2.2.0). _(v2.3.1 ISS-02: stale 'OI-18 open' note corrected.)_ |
 
 ---
 
