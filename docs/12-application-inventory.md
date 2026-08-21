@@ -2,15 +2,16 @@
 
 ```
 Document ID:   INV-TRUMOCRACY
-Version:       1.0.0
+Version:       1.0.1
 Status:        In Review  (becomes Living, reviewed quarterly, at Gate 2)
 Owner:         Chen Wei — Reliability Lead (sre), Doc 13 §7.1
 Source:        Doc 03 §5.2, §7, §8 · packages/* · docs/adr/ADR-001…ADR-014 · package.json
-Last updated:  2026-08-09
+Last updated:  2026-08-21
 ```
 
 > **Based on:** CMDB / Common Service Data Model + Production Readiness. **Produced in:** Operate (living).
 > _The authoritative inventory for audits, DR planning, cost and on-call routing._
+> **Document history — v1.0.1 (2026-08-21):** Corrected ceremony contributor-count figures in §2.5 (lines ~149, ~173) — replaced "≥500 independent contributors each / per circuit" convention with "contributor sets meeting the ADR-022 assurance-based target" per `DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md` REC-1. No other content changed.
 
 > **⚠ Status.** No production deployment exists. Every **address**, **CID**, **endpoint** and
 > **measured figure** below is `N/A — not yet deployed` or `N/A — not yet measured`. The **structure**
@@ -146,7 +147,7 @@ Source circuits present today: `packages/circuits/circuits/residency_member.circ
 |---|---|---|---|---|---|---|---|
 | **IPFS pinning cluster** | `ADR-009` | Chen Wei | **T1** | PUB | infra (Kubo, Apache-2.0/MIT) | **RTO 15 min · RPO 0** (content is content-addressed and mirrored) | **≥3 geographically separate, independent operators.** Falling to **2 = Sev-2; 1 = Sev-1** (S-13). Pins: client bundles (all historical), manifestos, charters, proposal bodies, region maps, **ceremony transcripts**. Pins are **additive — never unpinned**, which is precisely why client rollback is fast and certain |
 | **Arweave mirror** | `ADR-009` | Chen Wei | **T1** | PUB | Arweave network | **permanent by construction** · RPO 0 | The durability backstop for everything in the pinning cluster. Records the transaction id per artefact. Survives us: if Trumocracy ceases to exist, the client and the ceremony evidence remain retrievable |
-| **⭐ Ceremony transcripts (phase-2 trusted setup)** | `ADR-005 §5–6` | Rafael Duarte | **T0** | PUB | published transcript | **irreplaceable — permanence IS the control** | **Six ceremonies, ≥500 independent contributors each**, on Perpetual Powers of Tau (Doc 13 MS-07/MS-08). Each produces a `.zkey` whose hash is frozen on-chain in `VerifierRegistry.zkeyHash` and whose transcript URI is published. **Any third party must be able to run `snarkjs zkey verify` and reproduce the binding.** Losing a transcript does not break the running system, but it **destroys the ability to prove the setup was honest** — which is the entire value of the ceremony. Store on IPFS **and** Arweave **and** with ≥2 independent external archivists. Status: `N/A — not yet produced` |
+| **⭐ Ceremony transcripts (phase-2 trusted setup)** | `ADR-005 §5–6` | Rafael Duarte | **T0** | PUB | published transcript | **irreplaceable — permanence IS the control** | **Six ceremonies, contributor sets meeting the ADR-022 assurance-based target each**, on Perpetual Powers of Tau (Doc 13 MS-07/MS-08). Each produces a `.zkey` whose hash is frozen on-chain in `VerifierRegistry.zkeyHash` and whose transcript URI is published. **Any third party must be able to run `snarkjs zkey verify` and reproduce the binding.** Losing a transcript does not break the running system, but it **destroys the ability to prove the setup was honest** — which is the entire value of the ceremony. Store on IPFS **and** Arweave **and** with ≥2 independent external archivists. Status: `N/A — not yet produced` |
 | **Proving keys (`.zkey`) served to clients** | `DES-052` | Rafael Duarte | **T0** | PUB | ceremony output | re-fetch from IPFS/Arweave; hash-checked | The client **refuses to prove against a key whose hash is not the one registered on-chain**. A mismatch is a Sev-1, not a cache miss |
 | **Client bundle CIDs (all historical)** | `DES-050` | Nadia Hassan | T1 | PUB | AGPL-3.0-or-later | permanent | The rollback inventory. **Never unpin a previous bundle** — the previous CID *is* the rollback |
 | **ENS name + content-hash record** | Doc 03 §7.2 | Chen Wei | T1 | PUB | ENS | minutes | The pointer that rollback moves. Multi-sig controlled; two-person change |
@@ -170,7 +171,7 @@ of them appears in a conventional CMDB.
 | **Emergency disabler** | `ADR-010`, `DES-037` | Chen Wei | **T0** | **2 holders in different jurisdictions**, hardware-backed, either can act alone | **`immutable` — NOT rotatable.** Losing both = the kill switch is gone permanently; response is migration | Quarterly proof-of-possession. Power is **purely subtractive** — a compromise is annoying, not catastrophic |
 | **Independent auditors (×2)** | `NFR-009`, `CON-012` | Rafael Duarte | **T0** | One protocol audit, one circuits audit, independent firms | re-engage | **Zero critical and zero high open at Gate 2**, plus a signed remediation re-review. `KC-P1`: if not met, **the gate is not presented** |
 | **Per-jurisdiction legal counsel** | `CON-005`, `NFR-015` | Sofia Marchetti | **T0** | One per pilot jurisdiction, before enablement | re-engage | Features are independently gateable per jurisdiction |
-| **Ceremony contributors** | `ADR-005` | Rafael Duarte | **T0** | **≥500 independent per circuit**, including named public figures | **re-run the ceremony** (`KC-P2`) | An outreach programme, not a script run — 11 weeks of recruitment (Doc 13 §3.4) |
+| **Ceremony contributors** | `ADR-005` | Rafael Duarte | **T0** | **contributor sets meeting the ADR-022 assurance-based target per circuit**, including named public figures | **re-run the ceremony** (`KC-P2`) | An outreach programme, not a script run — 11 weeks of recruitment (Doc 13 §3.4) |
 
 ---
 

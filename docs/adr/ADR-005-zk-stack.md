@@ -7,6 +7,27 @@ Owner:         Ravi Deshmukh (Principal Architect)
 Traces:        NFR-001, NFR-005, NFR-006, FR-001..FR-005, FR-030..FR-035, RISK-10
 ```
 
+## Amendment — 2026-08-21 (REC-1: Rathish — DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md)
+
+**Decision 2 — "≥ 500 contributors" convention superseded.**
+
+The "MUST have ≥ 500 independent contributors" clause in Decision 2 was a convention,
+not a security requirement. Groth16 phase-2 is secure with a single honest contributor;
+contributor counts above one are set by **target assurance**, not by convention.
+
+**What changes:** the ≥ 500 contributor count in Decision 2 is superseded. Contributor
+counts for all phase-2 ceremonies are now set by assurance-based sizing with rationale as
+specified in **ADR-022** (Groth16 Phase-1 commitment, 2026-08-21).
+
+**What does not change:** all other ceremony obligations in Decision 2 remain in full
+force — attestations published for every contribution, public randomness beacon, ceremony
+transcript published permanently (ADR-009), every contribution verifiable with
+`snarkjs zkey verify`, on-chain `zkeyHash` frozen in the verifier registry (DES-052),
+client refuses to prove against an unrecognised `zkeyHash` (Decision 5; DES-052).
+
+The Decision 2 body text is not altered; it is a historical record. Read it with this
+amendment applied.
+
 ## Context
 
 Every privacy property in this system reduces to one on-chain question: *"is this proof valid?"*
