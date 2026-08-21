@@ -2017,6 +2017,9 @@
         "artifacts/reviews/02-requirements-srs-v2.3.0-business-cycle1.md",
         "artifacts/reviews/02-requirements-srs-v2.3.1-business-cycle1.md",
         "artifacts/reviews/02-requirements-srs-v2.4.0-business-cycle1.md",
+        "artifacts/reviews/13-project-plan-v2.0.0-business-cycle1.md",
+        "artifacts/reviews/13-project-plan-v2.0.1-business-cycle2.md",
+        "artifacts/reviews/13-project-plan-v2.0.2-business-cycle3.md",
         "artifacts/technical-writer-2026-08-20T0900.md"
       ],
       "review_verdicts": {
@@ -2055,6 +2058,47 @@
           "verdict": "PASS",
           "issues": [],
           "notes": "OI-19 and OI-20 rulings applied (Rathish 2026-08-20). FR-125 finalised — 6 invariant clauses; separating test recorded; non-invite fallback always-open enforced. FR-129 minted — Charter-layer guard; WHICH-tier deferred to architect. FR-020 and FR-004 normative texts unchanged. §8 Gherkin complete for FR-125 (5 scenarios) and FR-129 (2 scenarios). §11 Must 110, minted 129. OI-19 and OI-20 RESOLVED in §13."
+        },
+        "13-project-plan-v2.0.0": {
+          "score": 84,
+          "critical": 0,
+          "high": 0,
+          "medium": 4,
+          "low": 0,
+          "cycle": 1,
+          "verdict": "FAIL",
+          "first_ever_review": true,
+          "issues": [
+            "ISS-01 (Medium, B4, §14 KC-P2): Kill criterion KC-P2 trigger still reads 'contributor count falls below 500' — ceremony threshold not updated per REC-1; since 5-15 < 500, KC-P2 would perpetually fire",
+            "ISS-02 (Medium, B4, §6 RISK-19): RISK-19 description still references '~USD 0.35M shortfall' — §8.3 corrected to ~−245,000 (~−5.8%); cascade not applied to risk register",
+            "ISS-03 (Medium, B4, §13.1): Gate-1 readiness packet cross-reference still reads '§8.3 — −USD 0.35M' — stale after §8.3 corrected shortfall to ~−USD 245,000",
+            "ISS-04 (Medium, B4, §13.3 L1): Lever table L1 still states '−USD 0.35M over appetite' — decision-support table stale; correct figure is ~−USD 245,000 per §8.3"
+          ],
+          "notes": "FIRST-EVER Doc 13 review. Primary re-plan decisions correct (MS-08 corrected, ceremonies off critical path, Gate-2 2027-05-14 unchanged, six circuits, 5-15 contributors, §8.3 budget arithmetic correct). Four Medium findings share one root cause: ceremony budget correction applied in §8.3 but not cascaded to RISK-19, §13.1, §13.3; KC-P2 also missed. Endorsement-floor 500 untouched; UT-05xx untouched. MS-13 derivation confirmed against v1.0.0 (audits were already binding constraint). Routed to project-manager for v2.0.1."
+        },
+        "13-project-plan-v2.0.1": {
+          "score": 96,
+          "critical": 0,
+          "high": 0,
+          "medium": 1,
+          "low": 0,
+          "cycle": 2,
+          "verdict": "FAIL",
+          "issues": [
+            "ISS-01 (Medium, B4, exec banner line 30): Still reads '~USD 0.35M shortfall' — the only remaining instance of the pre-correction figure; all four corrected sections (RISK-19, §13.1, §13.3 L1, §11 v2.0.1 entry) now say ~245k. Pre-existing from v2.0.0; cycle-1 reviewer oversight. Single-line fix required."
+          ],
+          "notes": "All four cycle-1 Mediums (ISS-01..04) confirmed resolved: KC-P2 restated with non-vacuous ADR-022 assurance triggers; RISK-19/§13.1/§13.3 L1 all corrected to ~245k. Diff scope confirmed — v2.0.1 changes limited to four fix sites + header + §11 changelog. Exec banner still has stale 0.35M figure (was in v2.0.0; missed in cycle-1). Routed to PM for v2.0.2 single-line fix."
+        },
+        "13-project-plan-v2.0.2": {
+          "score": 100,
+          "critical": 0,
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "cycle": 3,
+          "verdict": "PASS",
+          "issues": [],
+          "notes": "Exec banner corrected: '~USD 0.35M shortfall' → '~USD 245,000 (~−5.8%) shortfall'. Grep confirmed: zero normative instances of 0.35M remain; sole match is §11 v2.0.2 changelog row (legitimate historical reference). Diff scope: banner line + header (v2.0.2) + §11 changelog only. All prior strengths intact. Loop closed — PM may set Status: Approved."
         }
       },
       "independent_counts_verified": {
@@ -2079,7 +2123,7 @@
         "Tester: RTM catch-up covers FR-121..128 after DES and US are available.",
         "Project-manager: GATE-STATUS record should reflect CON-015 Gate-2 line item and OI-04-PILOT closure."
       ],
-      "gate": "Gate 1 APPROVED (unconditional, 2026-08-11). Gate 2 NOT READY. Doc 02 v2.3.0 cycle-1 business review: PASS 97%. Doc 02 v2.3.1 cycle-1 business review: PASS 100%. Doc 02 v2.4.0 cycle-1 business review: PASS 100%."
+      "gate": "Gate 1 APPROVED (unconditional, 2026-08-11). Gate 2 NOT READY. Doc 02 v2.3.0 cycle-1 business review: PASS 97%. Doc 02 v2.3.1 cycle-1 business review: PASS 100%. Doc 02 v2.4.0 cycle-1 business review: PASS 100%. Doc 13 v2.0.0 cycle-1 business review: FAIL 84% (0C/0H/4M/0L) — routed to project-manager for v2.0.1. Doc 13 v2.0.1 cycle-2 business review: FAIL 96% (0C/0H/1M/0L) — one new Medium (exec banner stale shortfall figure; cycle-1 reviewer oversight); routed to PM for v2.0.2 single-line fix. Doc 13 v2.0.2 cycle-3 business review: PASS 100% (0C/0H/0M/0L) — loop closed."
     },
     {
       "id": "engineer-2026-08-20T1400",
@@ -2136,6 +2180,151 @@
         "Pre-existing stop-hook tokens for RTM gap and Doc 04 review are unchanged."
       ],
       "gate": "Gate 1 APPROVED. Gate 2 NOT READY. Doc 03 v2.1.3 review: PASS (cycle 2, 100%, 0C/0H/0M/0L). Doc 03 v2.1.4 review: PASS (cycle 1, 99.5%, 0C/0H/0M/1L). Architect may set Status: Approved on v2.1.4. Pre-existing stops: RTM gap + Doc 04 no-review."
+    },
+    {
+      "id": "project-manager-2026-08-21T0734",
+      "role": "project-manager",
+      "file": "artifacts/project-manager-2026-08-21T0734.md",
+      "timestamp": "2026-08-21T07:34:00Z",
+      "phase": "Governance — ceremony contributor-count correction + proving-system decision + Doc 13 v2.0.0 re-plan + v2.0.1/v2.0.2 rework",
+      "product": "Trumocracy",
+      "summary": "Recorded two approver decisions by Rathish (2026-08-21) arising from the architect's Powers-of-Tau ceremony analysis: REC-1 — correct the contributor-count error ('six ceremonies at ≥500 contributors' was never a security requirement; PPoT Hermez reused at ~$0; per-circuit phase-2 takes days; contributor counts set by assurance not convention; applies to all six Gate-2 circuits); REC-2 — Groth16 for Phase 1 (near-irreversible/Charter-adjacent; rationale: PPoT reuse, cheapest on-chain verification, most auditor availability, existing SC-01 binding already Groth16-shaped; accepted trade-off: per-circuit phase-2 vs universal-setup amortisation; revisit trigger: Phase 2+ circuit-count growth; recorded as ADR-022). Clarification recorded/not-reconciled: REC-1 'Phase 1 needs one circuit' is exact for the enrolment family; Gate-2 transcript set is six circuits (Aadhaar enrolment + residency_member + party_member + tenure_member + two MACI circuits); five non-enrolment circuits NOT cancelled; one-vs-six reading surfaced to Rathish. Note: prior invocation terminated by session usage limit before writing anything — no partial artifacts; this is the clean first record.",
+      "artifacts_written": [
+        "artifacts/status/DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md (created)",
+        "artifacts/project-manager-2026-08-21T0734.md (created; addendum appended 2026-08-21)",
+        "artifacts/memory-index.json (updated — entry in-place updated 2026-08-21)",
+        "docs/13-project-plan.md (updated to v2.0.0, v2.0.1, v2.0.2, Status: In Review, 2026-08-21)",
+        "artifacts/status/GATE-STATUS-2026-08-09.md (additive corrections: S-01 pointer row; Ceremonies corrected-posture row; new section 2026-08-21)"
+      ],
+      "ids_touched": {
+        "decision_record_created": "DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md",
+        "ADR_to_be_minted": "ADR-022 (architect, this session — confirmed minted)",
+        "ADR_to_be_amended": "ADR-005 Decision-2 (architect, this session)",
+        "doc_13_version": "2.0.0 (was 1.0.0)",
+        "MS_updated": "MS-07 (date 2027-01-08→2027-01-15), MS-08 (date 2027-03-05→2027-01-25, off critical path)",
+        "MS_unchanged": "MS-13 Gate 2 2027-05-14 — audits were binding constraint",
+        "RISK_revised": "RISK-17 (L4/I4/16 → L2/I4/8; corrected per ADR-022)",
+        "DEP_corrected": "DEP-02 (≥500 → 5–15 institutional contributors)",
+        "budget_delta": "ceremony line USD 120,000 → ~USD 15,000; total ~USD 4,445,000; variance ~−USD 245,000 (−5.8%)",
+        "scope_rebaselined": "Must set 42 FR (Gate 1) → 110 Must FR (SRS v2.4.0, FR-001..FR-129)",
+        "gate2_line_items_added": "CON-015 (NOT STARTED), Doc 04 review debt, FR-121..129 RTM catch-up"
+      },
+      "key_decisions": [
+        "REC-1 DECIDED: contributor-count error corrected; PPoT Hermez reused at ~$0; assurance-based contributor counts; applies to all six Gate-2 circuits; five non-enrolment circuits not cancelled.",
+        "REC-2 DECIDED: Groth16 for Phase 1; near-irreversible/Charter-adjacent commitment; recorded as ADR-022; revisit trigger: Phase 2+ circuit-count growth.",
+        "Clarification surfaced to Rathish: 'Phase 1 needs one circuit' is exact for enrolment family, not the whole programme."
+      ],
+      "open_items": [
+        "DONE: Doc 13 re-plan → v2.0.0 (2026-08-21).",
+        "DONE: Gate-status additive corrections (2026-08-21).",
+        "ADR-005 Decision-2 amendment — architect (Ravi Deshmukh); confirmed in ADR-022.",
+        "Doc 04 §Z6 ceremony-burden correction — architect; OPEN.",
+        "Doc 09 / Doc 10 exec-figure alignment — sre; OPEN (docs not yet written).",
+        "One-vs-six circuit clarification — awaiting Rathish confirmation; surfaced in DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md §3.",
+        "CON-015 legal opinion (India/Aadhaar) — Sofia Marchetti; NOT STARTED; Gate-2 blocker.",
+        "FR-121..FR-129 RTM catch-up (DES/US/TC) — Architect+PO+Tester; Gate-2 blocker.",
+        "Doc 04 technical-mode review debt — PM to assign; Gate-2 blocker.",
+        "FR-129 tier-determination (FR-118 Tier-1 vs FR-119 Tier-2) — architect, next DES increment.",
+        "ADR-016 ISS-01 fix (citizen-exclusion sentence item (c)) — architect, next DES increment."
+      ],
+      "gate": "Gate 1 APPROVED (unconditional). All OIs through OI-20 closed. Gate 2 NOT READY. RTM (Doc 08 v2.1.0): 125 Must rows / 12 COMPLETE / 113 OPEN. Doc 13 v2.0.2 APPROVED (PASS 100%, cycle 3) — first-ever passing review; hook-noise cleared. Doc 03 v2.1.5 APPROVED (PASS 99.5%, 1L). Doc 04 v1.0.2 In Review (review debt open). Gate-status ceremony-correction section + outcomes subsection applied 2026-08-21. Gate-2 date 2027-05-14 UNCHANGED (audit-paced)."
+    },
+    {
+      "id": "architect-2026-08-21T0738",
+      "role": "architect",
+      "file": "artifacts/architect-2026-08-21T0738.md",
+      "timestamp": "2026-08-21T07:38:00Z",
+      "phase": "Design — ceremony-burden correction + proving-system commitment",
+      "product": "Trumocracy",
+      "summary": "Ceremony-burden correction session (REC-1/REC-2, DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md, directed by Rathish). Four artifacts written/amended in interruption-resilience order: (1) ADR-022 CREATED (Groth16-for-Phase-1: near-irreversible Charter-adjacent; PPoT Hermez reused at ~$0; assurance-based per-circuit phase-2 — 5-15 mutually-independent institution contributors, design guidance NOT a MUST convention; Gate-2 six-circuit set; NFR-009 unchanged; alternatives rejected). (2) ADR-005 header amendment block added (Decision-2 ≥500 contributor convention superseded; contributor count now per ADR-022 assurance-based sizing; ceremony transparency/transcripts/beacon all MUST unchanged). (3) Doc 04 §Z6 corrected v1.0.1→v1.0.2 (ceremony-burden line references ADR-022 assurance-based target; endorsement-floor 500s at lines 566/572/702-703 NOT touched). (4) Doc 03 registered v2.1.4→v2.1.5 In Review (§12 count twenty-one→twenty-two; ADR-022 row added; ADR-005 row dated amendment note; §1.1 counts unchanged — already SRS v2.4.0). Conflict duty: no Must conflicts; NFR-009 explicitly unchanged in ADR-022.",
+      "artifacts_written": [
+        "docs/adr/ADR-022-groth16-phase1-commitment.md (CREATED)",
+        "docs/adr/ADR-005-zk-stack.md (amendment block added)",
+        "docs/04-test-strategy-master-plan.md (§Z6 corrected; v1.0.2)",
+        "docs/03-architecture-design-sdd.md (§12 updated; v2.1.5 In Review)",
+        "artifacts/architect-2026-08-21T0738.md (this note)"
+      ],
+      "ids_touched": {
+        "adr_created": "ADR-022",
+        "adr_amended": "ADR-005 (Decision-2 convention superseded)",
+        "docs_bumped": "Doc 03 v2.1.5, Doc 04 v1.0.2",
+        "code_written": "none"
+      },
+      "open_items": [
+        "ISS-01 (Low): ADR-016 amendment item (c) omits citizen-exclusion sentence — deferred to next DES increment.",
+        "Doc 04 technical-mode review (v1.0.2) — Gate-2 blocker, NOT STARTED.",
+        "FR-129 tier-determination (FR-118 Tier-1 vs FR-119 Tier-2) — next DES increment.",
+        "FR-121..FR-129 DES/US/TC RTM rows — recorded-phasing posture.",
+        "One-vs-six circuit clarification — awaiting Rathish confirmation.",
+        "Legal opinion India/Aadhaar — Gate-2 blocker, NOT STARTED.",
+        "Doc 13 re-plan + gate-status additive correction — project-manager.",
+        "Doc 09/10 exec-figure alignment — sre."
+      ],
+      "gate": "Gate 1 APPROVED (unconditional, 2026-08-11). Gate 2 NOT READY. Doc 03 v2.1.5: Approved (review loop, cycle 1 PASS 99.5% — artifacts/reviews/03-architecture-design-sdd-v2.1.5-technical-cycle1.md). Surviving Low ISS-01: ADR-022 six-circuit confirmation overstated — logged for next ADR-022 touch. Doc 04 v1.0.2: In Review (technical-mode review NOT YET DONE — Gate-2 blocker)."
+    },
+    {
+      "id": "engineer-2026-08-21T0900",
+      "role": "engineer (neutral reviewer)",
+      "file": "artifacts/engineer-2026-08-21T0900.md",
+      "timestamp": "2026-08-21T09:00Z",
+      "phase": "Design — document-review",
+      "product": "Trumocracy",
+      "scope": "Technical-mode document-review of Doc 03 v2.1.5, ADR-022 (new), ADR-005 amendment, and Doc 04 v1.0.2 §Z6 fidelity. Reviewer capacity only — no documents edited, no product code written.",
+      "summary": "Cycle 1 (v2.1.5, ceremony-burden registration patch REC-1/REC-2): diff scope registration-only confirmed (3 hunks); no body ceremony figure to correct. ADR-022 fidelity to REC-2 and REC-1 all substantive elements confirmed. ADR-005 amendment scope correct (superseded ≥500 only; obligations retained; body untouched). Doc 04 v1.0.2 §Z6 correctly reworded; endorsement-floor 500s untouched. One LOW issue (ISS-01): ADR-022 attributes six-circuit count as confirmed by §3 clarification when §3 says proceeding pending approver confirmation. Score 99.5%. PASS. SOP advances.",
+      "artifacts_written": [
+        "artifacts/reviews/03-architecture-design-sdd-v2.1.5-technical-cycle1.md",
+        "artifacts/engineer-2026-08-21T0900.md"
+      ],
+      "review_verdicts": {
+        "03-architecture-design-sdd-v2.1.5": {
+          "score": 99.5,
+          "critical": 0,
+          "high": 0,
+          "medium": 0,
+          "low": 1,
+          "cycle": 1,
+          "verdict": "PASS",
+          "note": "ISS-01 (LOW): ADR-022 §Gate-2-circuit-set attribution says confirmed by §3 clarification; §3 actually says pending approver confirmation. Substance correct; attribution imprecise."
+        }
+      },
+      "ids_touched": {
+        "review_reports_created": "03-v2.1.5-technical-cycle1",
+        "adr_reviewed": "ADR-022 (new, full fidelity), ADR-005 amendment block fidelity",
+        "doc04_fidelity": "Doc 04 v1.0.2 §Z6 line (fidelity only; review debt unchanged)",
+        "code_written": "none",
+        "docs_modified": "none"
+      },
+      "open_items": [
+        "Pre-existing stop-hook tokens unchanged: RTM gap (open Must rows block Gate 2) and Doc 04 review debt (no passing review for any Doc 04 version)."
+      ],
+      "gate": "Gate 1 APPROVED. Gate 2 NOT READY. Doc 03 v2.1.5 review: PASS (cycle 1, 99.5%, 0C/0H/0M/1L). Architect may set Status: Approved on v2.1.5. Pre-existing stops: RTM gap + Doc 04 no-review."
+    },
+    {
+      "id": "sre-2026-08-21T0852",
+      "role": "sre",
+      "file": "artifacts/sre-2026-08-21T0852.md",
+      "timestamp": "2026-08-21T08:52Z",
+      "phase": "Launch (pre-Gate 2) — exec-figure alignment",
+      "product": "Trumocracy",
+      "scope": "Docs 09 and 10 ONLY — header bumps + named-site corrections per REC-1",
+      "summary": "Corrected stale MS-08 ceremony milestone date (2027-03-05 → 2027-01-25) in Doc 09 §0 and §5, and replaced '≥500 contributors each' with 'contributor sets meeting the ADR-022 assurance-based target each' in Doc 10 §3.1 Gate-2 checklist. Also corrected Doc 12 §2.5 (~line 149) and §2.6 (~line 173) ceremony contributor-count figures per PM directive (REC-1 applies everywhere; sre owns Doc 12). All three docs bumped from v1.0.0 to v1.0.1 with dated changelog annotations. Sources: DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md REC-1 and Doc 13 v2.0.2. Doc 11 confirmed clean (no stale ceremony figures).",
+      "artifacts_written": [
+        "docs/09-release-notes.md (v1.0.1)",
+        "docs/10-deployment-runbook.md (v1.0.1)",
+        "docs/12-application-inventory.md (v1.0.1)",
+        "artifacts/sre-2026-08-21T0852.md"
+      ],
+      "corrections_applied": {
+        "doc09_line29_site1": "MS-08 target date 2027-03-05 → 2027-01-25 with ADR-022 annotation",
+        "doc09_line278_site2": "Deprecation table MS-08 target date 2027-03-05 → 2027-01-25",
+        "doc10_line131_site3": "≥500 contributors each → contributor sets meeting the ADR-022 assurance-based target each",
+        "doc12_line149_site4": "≥500 independent contributors each → contributor sets meeting the ADR-022 assurance-based target each",
+        "doc12_line173_site5": "≥500 independent per circuit → contributor sets meeting the ADR-022 assurance-based target per circuit"
+      },
+      "open_items": [
+        "Pre-existing stop-hook tokens unchanged: RTM gap (open Must rows) and Doc 04 no passing review."
+      ],
+      "gate": "Gate 1 APPROVED (unconditional, 2026-08-11). Gate 2 NOT READY — pre-existing blockers unchanged."
     }
   ]
 }

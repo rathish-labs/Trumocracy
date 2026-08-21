@@ -2,16 +2,17 @@
 
 ```
 Document ID:   REL-trumocracy-0.1.0
-Version:       1.0.0            (document version; SemVer)
+Version:       1.0.1            (document version; SemVer)
 Release:       0.1.0            (Phase-1 walking skeleton, public testnet)
 Status:        In Review
 Owner:         Chen Wei — Reliability Lead (sre), Doc 13 §7.1
 Source:        packages/protocol/src/flags.js · packages/contracts/src/core/* · Doc 03 §5.2, §7 · Doc 13 §3.1, §9
-Last updated:  2026-08-09
+Last updated:  2026-08-21
 ```
 
 > **Based on:** Keep a Changelog + Semantic Versioning. **Produced in:** Launch. **Approved at:** Gate 2.
 > Customer-facing section is plain language; the internal record carries the facts and traceability.
+> **Document history — v1.0.1 (2026-08-21):** Corrected MS-08 ceremony milestone date from 2027-03-05 to 2027-01-25 in §0 (release-gate status table) and §5 (deprecation schedule) per `DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md` REC-1 and Doc 13 v2.0.2 re-plan (assurance-based phase-2 campaign per ADR-022). No other content changed.
 
 ---
 
@@ -26,7 +27,7 @@ Last updated:  2026-08-09
 | Coding & UT record (Doc 06) | Present at v1.0.0, `Status: In Review` — not yet review-passed |
 | User Guide published (Doc 14) | Present at v1.0.0, `Status: In Review` — not yet published |
 | Two independent audits, 0 critical/high open (`NFR-009`) | **Not met** — MS-09/MS-10 target 2027-03-12 / 2027-04-16 |
-| Six ceremony transcripts, `zkeyHash` frozen | **Not met** — MS-08 target 2027-03-05; verifiers are mocks |
+| Six ceremony transcripts, `zkeyHash` frozen | **Not met** — MS-08 target 2027-01-25 (Doc 13 v2.0.2; batched assurance-sized phase-2 campaign per ADR-022); verifiers are mocks |
 | Rollback drilled < 15 min (`NFR-020`) | **Not met** — drill defined in Doc 10 §8.6, not yet executed |
 | MACI 5-of-7 committee constituted (`ADR-006`) | **Not met** — MS-12 target 2027-05-07 |
 | Passing `document-review` reports | **Not met** — only `01-press-release-prfaq-v1.0.0-business-cycle1` exists; Docs 02–14 unreviewed |
@@ -275,7 +276,7 @@ For this release specifically:
 
 | Deprecated | Replacement | Deprecated in | Removed in (date) |
 |------------|-------------|---------------|-------------------|
-| `MockVerifier` (all circuits) | Ceremony-bound Groth16 verifiers registered with a frozen `zkeyHash` | 0.1.0 | Phase 2 — target **2027-03-05** (MS-08). Blocked in prod from day one by the Doc 10 §3.2 deployment-safety gate |
+| `MockVerifier` (all circuits) | Ceremony-bound Groth16 verifiers registered with a frozen `zkeyHash` | 0.1.0 | Phase 2 — target **2027-01-25** (MS-08; Doc 13 v2.0.2). Blocked in prod from day one by the Doc 10 §3.2 deployment-safety gate |
 | Public-tally vote path (`Governor.vote`) | MACI receipt-free ballot path (`ADR-006`) | 0.1.0 | Phase 3 — target **2027-07-09** (MS-14), at the instant `maci_voting` is enabled |
 | Flag `petitions` | none — capability becomes unconditional core | 0.1.0 | GA **v1.0.0** (`flags.js` `removeBy`) |
 | Flag `party_governance` | none — capability becomes unconditional core | 0.1.0 | GA **v1.0.0** (`flags.js` `removeBy`) |

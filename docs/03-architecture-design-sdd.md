@@ -2,14 +2,25 @@
 
 ```
 Document ID:   SDD-TRUMOCRACY
-Version:       2.1.4
-Status:        Approved (review loop, cycle 1 PASS 99.5% — artifacts/reviews/03-architecture-design-sdd-v2.1.4-technical-cycle1.md)
+Version:       2.1.5
+Status:        Approved (review loop, cycle 1 PASS 99.5% — artifacts/reviews/03-architecture-design-sdd-v2.1.5-technical-cycle1.md)
 Owner:         Ravi Deshmukh — Principal Architect
 Approvers:     Rafael Duarte (Security), Chen Wei (Reliability), Dr. Lena Kowalczyk (Privacy),
                Aisha Nkemdirim (Elections & Voting)
 Source:        SRS-TRUMOCRACY v2.4.0
-Last updated:  2026-08-20
-Changelog:     v2.1.4 (2026-08-20) — Registration-only: OI-19 and OI-20 closed (Rathish,
+Last updated:  2026-08-21
+Changelog:     v2.1.5 (2026-08-21) — Ceremony-burden correction per REC-1/REC-2
+               (DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md): ADR-022
+               (Groth16-Phase-1 commitment — near-irreversible Charter-adjacent;
+               PPoT Hermez reused at ~$0; assurance-based per-circuit phase-2; Gate-2
+               six-circuit set) registered in §12; ADR-005 §12 row amended (Decision-2
+               "≥ 500 contributors" convention superseded by assurance-based sizing per
+               ADR-022; ceremony transparency/transcripts/beacon unchanged). §12 preamble
+               ADR count twenty-one → twenty-two; ADR-001..ADR-021 → ADR-001..ADR-022.
+               Doc 04 §Z6 ceremony-burden line corrected (v1.0.1 → v1.0.2). No DES
+               additions; no §1.1 count change (already SRS v2.4.0; 129 FR / 127 active /
+               110 Must).
+               v2.1.4 (2026-08-20) — Registration-only: OI-19 and OI-20 closed (Rathish,
                2026-08-20; DECISIONS-2026-08-20-OI19-OI20.md). ADR-016 amended (OI-20
                ruling: FR-004 satisfied at architecture level; Phase-1 single-rail dated
                deployment limitation with Phase-2/eIDAS exit; 50% cap inoperative Phase-1;
@@ -121,7 +132,7 @@ Changelog:     v2.1.4 (2026-08-20) — Registration-only: OI-19 and OI-20 closed
 ```
 
 > **Based on:** arc42 + C4 + Google design doc + IEEE 1016. **Produced in:** Design.
-> The twenty-one decision records in `docs/adr/ADR-001..ADR-021` are normative and are
+> The twenty-two decision records in `docs/adr/ADR-001..ADR-022` are normative and are
 > summarised in §12; where this document and an ADR disagree, the ADR wins and this document
 > is the defect.
 
@@ -982,7 +993,7 @@ Directive from approver (Rathish, 2026-08-11): sweep all four FR-115 steward pow
 
 ## 12. Architecture Decision Records
 
-Full records in `docs/adr/`. Status of all twenty-one ADRs: **Accepted**.
+Full records in `docs/adr/`. Status of all twenty-two ADRs: **Accepted**.
 
 | ADR | Decision | Chief consequence accepted |
 |---|---|---|
@@ -990,7 +1001,7 @@ Full records in `docs/adr/`. Status of all twenty-one ADRs: **Accepted**.
 | 002 | ERC-4337 + passkeys + social recovery; no platform key | passkey vendor dependency; mitigated by multi-device, hardware keys, recovery |
 | 003 | Issuer-agnostic personhood, 1-of-N, tiered, scope-bound nullifiers; **amended by ADR-016 for Phase 1** | Sybil resistance equals weakest accepted issuer; Phase-1 class restriction per ADR-016 |
 | 004 | Hierarchical regions, per-region credential trees, median population oracle with floors | attesters learn a region request; boundary redraws are a governance surface |
-| 005 | Circom + Groth16 on bn254, Poseidon LeanIMT | trusted setup exists — failure mode is forgery, **not** deanonymisation |
+| 005 | Circom + Groth16 on bn254, Poseidon LeanIMT; **amended 2026-08-21 (REC-1: Decision-2 "≥ 500 contributors" convention superseded — contributor count now set by assurance-based sizing per ADR-022; ceremony transparency/transcripts/beacon unchanged — DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md)** | trusted setup exists — failure mode is forgery, **not** deanonymisation |
 | 006 | MACI + 5-of-7 threshold coordinator | large engineering cost; tally latency; committee liveness dependency |
 | 007 | No transferable power; 1p1v; capped, influence-free treasury | no token-funded growth; 1p1v makes personhood load-bearing |
 | 008 | Tiers, snapshots, adaptive quorum, entrenchment, fork rights | tenure gates constitutional votes for new members; forks can fragment movements |
@@ -1007,6 +1018,7 @@ Full records in `docs/adr/`. Status of all twenty-one ADRs: **Accepted**.
 | 019 | Three-layer amendment boundary: Charter Layer (Tier-1) — seven entrenched rules fork-only; Guarded Layer (Tier-2) — named absolutes via five-property super-process (80%/25%, 180-day window, audit); Open Layer (Tier-3) — ordinary citizen vote; **amended 2026-08-11 (SC-17: citizen-inaction fallback for publishAuditRef)** | a sustained 80%/25% supermajority over 180+ days CAN weaken a named absolute — by design; fork right is the residual protection (ADR-019) |
 | 020 | Trust-anchor lifecycle: rotation via 60-day dual-anchor overlap (SC-14 closed); revocation ordinary 30-day / emergency 7-day timelock (SC-13 closed); both enacted only by passed governance vote via Governor.execute(); **amended 2026-08-11 (SC-18: ROTATION_PENDING abort path — ROTATION_ABORTED state added)** | 7-day emergency window remains a Sybil window — RISK-30 accepted; epoch cap bounds blast radius (ADR-020) |
 | 021 | Verification gates COUNTING, never joining; on-device nullifier-only identity posture; pilot sequence (Phase 1: India/Aadhaar offline KYC; Phase 2: EU/eIDAS 2.0; Phase 3: USA deferred); subpoena test as design invariant; two rejected designs recorded — persistent referral graph and encrypted identity registry (2026-08-20, directed by Rathish; DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Decisions 1–4); **amended 2026-08-20 (OI-19 CLOSED: FR-125 finalised, non-invite fallback mandatory, FR-020 unamended; OI-20 CLOSED: FR-004 satisfied at architecture level, Phase-1 dated limitation, Charter-layer guard FR-129)** | CON-015 Gate-2 legal-opinion dependency; OI-19 and OI-20 both CLOSED 2026-08-20 (DECISIONS-2026-08-20-OI19-OI20.md); open-tier account farms accepted (zero counted impact) |
+| 022 | Groth16 stays for Phase 1; near-irreversible Charter-adjacent commitment; PPoT Hermez reused at ~$0 for phase-1 setup; assurance-based per-circuit phase-2 (not convention count); Gate-2 six-circuit transcript set batchable into a campaign of days; accepted trade-off over universal-setup; revisit trigger: Phase 2+ circuit-count dominance; NFR-009 (two independent audits before Gate 2) unchanged (2026-08-21, directed by Rathish; DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md REC-2) | per-circuit phase-2 cost grows with circuit count — growth is the revisit trigger; migration is a verifier swap by design (`IProofVerifier` seam) but a full re-audit in practice |
 
 ## 13. Risks & technical debt
 

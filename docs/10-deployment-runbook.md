@@ -2,18 +2,19 @@
 
 ```
 Document ID:   DEPLOY-TRUMOCRACY
-Version:       1.0.0
+Version:       1.0.1
 Status:        In Review
 Owner:         Chen Wei — Reliability Lead (sre), Doc 13 §7.1
 Source:        packages/contracts/src/core/* · packages/contracts/test/fixture.mjs ·
                packages/protocol/src/flags.js · Doc 03 §7 · Doc 13 §9 · ADR-001, ADR-010, ADR-014
-Last updated:  2026-08-09
+Last updated:  2026-08-21
 ```
 
 > **Based on:** Google SRE + AWS Well-Architected (Operational Excellence). **Produced in:** Launch.
 > **Approved at:** Gate 2.
 > _So any on-call engineer can run a release safely: pre-checks, deterministic deploy order, staged
 > rollout, verification, and a rollback whose limits are stated honestly rather than assumed away._
+> **Document history — v1.0.1 (2026-08-21):** Corrected Gate-2 checklist ceremony entry (§3.1) — replaced "≥500 contributors each" convention with "contributor sets meeting the ADR-022 assurance-based target each" per `DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md` REC-1. No other content changed.
 
 > **⚠ GATE STATUS — 2026-08-09.** **Gate 2 (MS-13, target 2027-05-14) is NOT approved.** This runbook
 > is a Gate-2 *input*, not an authorisation. §3 lists the preconditions; several are **failing**, not
@@ -128,7 +129,7 @@ a core release** — record both. Release `0.1.0` is the Phase-1 walking skeleto
 - [ ] Release notes published (Doc 09) — drafted, `Status: In Review`
 - [ ] Maintenance window / comms scheduled — see §10
 - [ ] Two independent audits, 0 critical/high open (`NFR-009`, `CON-012`) — **FAIL**
-- [ ] Six ceremony transcripts, ≥500 contributors each, `zkeyHash` frozen — **FAIL**
+- [ ] Six ceremony transcripts, contributor sets meeting the ADR-022 assurance-based target each, `zkeyHash` frozen — **FAIL**
 - [ ] MACI 5-of-7 committee constituted and DKG rehearsed (`ADR-006`, MS-12) — **FAIL**
 - [ ] Legal sign-off per pilot jurisdiction (`NFR-015`, `CON-005`) — **FAIL**
 - [ ] Passing `document-review` report for each major doc — **FAIL: only Doc 01 cycle 1 exists in `artifacts/reviews/`**

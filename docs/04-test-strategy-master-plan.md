@@ -2,7 +2,7 @@
 
 ```
 Document ID:   MTP-TRUMOCRACY
-Version:       1.0.1
+Version:       1.0.2
 Status:        In Review
 Owner:         Priya Raghunathan — Principal Architect
                (CLAUDE.md assigns Doc 04 to the architect; per-suite owners below are named individuals
@@ -14,8 +14,12 @@ Source:        SRS-TRUMOCRACY (docs/02-requirements-srs.md v1.0.0)
                ADR-001 … ADR-014 (docs/adr/)
                SDD-TRUMOCRACY (docs/03-architecture-design-sdd.md — authored concurrently; DES-###
                links are reconciled by the tester in Doc 08)
-Last updated:  2026-08-12
-Changelog:     2026-08-12 v1.0.1 — §14 TC-range reservation table: appended TS-CR1
+Last updated:  2026-08-21
+Changelog:     2026-08-21 v1.0.2 — §Z6 ceremony-burden line: replaced "Contributor count
+               (≥ 500)" with assurance-based-target wording per ADR-022 (REC-1;
+               DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md). Version bump only —
+               no structural change.
+               2026-08-12 v1.0.1 — §14 TC-range reservation table: appended TS-CR1
                (TC-3300–TC-3399) and TS-GOV2 (TC-3400–TC-3499) retroactively to
                regularise ranges already in use by Doc 07 (minted 2026-08-10 and
                2026-08-11 respectively). Trigger: Doc 07 v2.0.0 cycle-1 review ISS-04
@@ -505,8 +509,9 @@ of `TS-DIFF` and it is the only class here that can catch a *correct-looking but
 **Z6 — Ceremony binding.** `snarkjs zkey verify` against the published `.r1cs`; the on-chain
 `VerifierRegistry.current(circuitId).zkeyHash` must equal the hash of the published zkey; the client
 must **refuse to prove** against an artifact whose hash is not the registered one (ADR-012 §3,
-`DES-052`). Contributor count (≥ 500) and beacon presence are verified by **transcript inspection**,
-which is an audit activity, not a test.
+`DES-052`). Contributor count — verified against the ADR-022 assurance-based target recorded
+for that ceremony — and beacon presence are verified by **transcript inspection**, which is an
+audit activity, not a test.
 
 **Z7 — Verifier lifecycle.** `SUPERSEDE_GRACE = 30 days`: a proof against a superseded key verifies at
 `retiredAt − 1s` and fails at `retiredAt`; `DuplicateZkey` is rejected; `UnknownCircuit` reverts;

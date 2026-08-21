@@ -157,3 +157,127 @@ None. Zero issues at any severity.
 ### Artifacts written (addendum 2)
 
 - `artifacts/reviews/02-requirements-srs-v2.4.0-business-cycle1.md` (review report — PASS 100%)
+
+---
+
+## Addendum 3 — Doc 13 v2.0.0 cycle-1 review (same session, new document, new loop)
+
+```
+Scope:     Business-mode cycle-1 review of docs/13-project-plan.md v2.0.0.
+           FIRST-EVER document review for Doc 13 — clears standing hook-noise item.
+           Ceremony-correction re-plan (ADR-022 / REC-1 / REC-2; Rathish, 2026-08-21).
+           Scope re-baselined to SRS v2.4.0 (110 Must FRs).
+           Read-only on the document. No documents edited. No product code touched.
+```
+
+### Verdict
+
+**FAIL: 84%, 0C/0H/4M/0L.**
+
+### Decisions confirmed
+
+- MS-08 corrected 2027-03-05 → 2027-01-25 ✓
+- Ceremonies off critical path; audits binding constraint (MS-09 2027-03-12) ✓
+- Gate-2 / MS-13 2027-05-14 UNCHANGED ✓ (derivation confirmed against v1.0.0:
+  audits completed 2027-03-12 vs ceremonies 2027-03-05 in v1.0.0 — audits were
+  already the binding constraint; ceremony correction does not move Gate 2)
+- Six transcripts / six circuits, one batched campaign ✓
+- 5–15 independent contributors per circuit (ADR-022) ✓
+- Scope: SRS v2.4.0, 110 Must FRs, §2.1 ✓
+- Budget §8.3: ceremony line ~USD 15,000 (from ~USD 120,000); total ~USD 4,445,000;
+  variance ~−USD 245,000 (~−5.8%); zero contingency ✓
+- Gate-2 items 11/12/13 (CON-015 NOT STARTED; Doc 04 review OPEN; RTM catch-up NOT STARTED) ✓
+- §11 re-plan log: complete, well-structured, five sub-items ✓
+- Endorsement-floor 500 (governance constant) UNTOUCHED ✓
+- UT-05xx IDs UNTOUCHED ✓
+- Historical records not rewritten (correction pointer added at §3.3 note) ✓
+
+### Issues found (Doc 13 v2.0.0)
+
+- **ISS-01 (Medium, B4, §14 KC-P2):** Kill criterion KC-P2 trigger still reads "contributor
+  count falls below 500" — ceremony threshold not updated per REC-1; 5-15 < 500, so KC-P2
+  would fire perpetually, making it operationally vacuous.
+- **ISS-02 (Medium, B4, §6 RISK-19):** RISK-19 description still references "~USD 0.35M
+  shortfall" — §8.3 corrected to ~−245,000 (~−5.8%); cascade not applied to the risk register.
+- **ISS-03 (Medium, B4, §13.1):** Gate-1 readiness packet cross-reference still reads
+  "§8.3 — −USD 0.35M" — stale after §8.3 corrected shortfall to ~−USD 245,000.
+- **ISS-04 (Medium, B4, §13.3 L1):** Lever table L1 still states "−USD 0.35M over appetite"
+  — decision-support table stale; correct figure is ~−USD 245,000 per §8.3.
+
+Root cause: ceremony budget correction applied correctly in §8.3 but not cascaded to
+RISK-19, §13.1, and §13.3; KC-P2 was also missed in the "correct everywhere" sweep.
+
+### Open items (Doc 13 loop)
+
+- Project-manager to produce v2.0.1: fix ISS-01 (KC-P2 threshold), ISS-02 (RISK-19),
+  ISS-03 (§13.1 cross-ref), ISS-04 (§13.3 L1 lever amount).
+- Cycle-2 review required before Doc 13 can advance.
+
+### Artifacts written (addendum 3)
+
+- `artifacts/reviews/13-project-plan-v2.0.0-business-cycle1.md` (review report — FAIL 84%)
+
+---
+
+## Addendum 4 — Doc 13 v2.0.1 cycle-2 review
+
+```
+Scope:     Business-mode cycle-2 review of docs/13-project-plan.md v2.0.1.
+           PM reworked the four cycle-1 Mediums (ISS-01..04). Verify each fix + regression check.
+           Read-only on the document. No documents edited. No product code touched.
+```
+
+### Verdict
+
+**FAIL: 96%, 0C/0H/1M/0L.**
+
+### Cycle-1 fix verification (all four confirmed resolved)
+
+- ISS-01 (KC-P2): RESOLVED — trigger restated with three real ADR-022 assurance conditions
+  (`snarkjs zkey verify` failure; fewer than 5 independent institutions; independence
+  unconfirmable). Non-vacuous; cites ADR-022.
+- ISS-02 (RISK-19): RESOLVED — now "~USD 245,000 (~−5.8%) shortfall."
+- ISS-03 (§13.1): RESOLVED — now "~−USD 245,000 (~−5.8%), zero contingency (RISK-19)."
+- ISS-04 (§13.3 L1): RESOLVED — now "~−USD 245,000 (~−5.8%) over appetite."
+
+### New finding (cycle-1 reviewer oversight)
+
+- **ISS-01 (Medium, B4, exec banner line 30):** "~USD 0.35M shortfall" — the only remaining
+  instance of the pre-correction figure. All four corrected sections (RISK-19, §13.1, §13.3 L1,
+  §11 v2.0.1 entry) now state ~245k; exec banner is the last holdout. This was present in
+  v2.0.0 and was NOT caught in cycle-1 (reviewer oversight). PM followed cycle-1 routing
+  correctly. Single-line fix: change to "~USD 245,000 (~−5.8%) shortfall."
+
+### Diff-scope
+
+Confirmed: v2.0.1 changes limited to four fix sites + header (v2.0.1, 2026-08-21) + §11
+changelog entry. No other content changed vs v2.0.0. Exec banner inconsistency is pre-existing
+from v2.0.0 (not introduced by v2.0.1).
+
+### Artifacts written (addendum 4)
+
+- `artifacts/reviews/13-project-plan-v2.0.1-business-cycle2.md` (review report — FAIL 96%)
+
+---
+
+## Addendum 5 — Doc 13 v2.0.2 cycle-3 review
+
+```
+Scope:     Business-mode cycle-3 review of docs/13-project-plan.md v2.0.2.
+           PM applied single-line exec-banner fix. Verify + grep confirmation.
+           Read-only. No documents edited. No product code touched.
+```
+
+### Verdict
+
+**PASS: 100%, 0C/0H/0M/0L.**
+
+### Fix confirmed
+
+- Exec banner line 30: "~USD 0.35M shortfall" → "~USD 245,000 (~−5.8%) shortfall" ✓
+- Grep "0.35M|USD 0.35": one match — §11 v2.0.2 changelog row only (historical; legitimate). Zero normative instances. ✓
+- Diff scope: exec banner line + header (v2.0.2) + §11 changelog entry. No other changes. ✓
+
+### Artifacts written (addendum 5)
+
+- `artifacts/reviews/13-project-plan-v2.0.2-business-cycle3.md` (review report — PASS 100%)

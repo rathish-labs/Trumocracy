@@ -2,14 +2,15 @@
 
 ```
 Document ID:   PLAN-TRUMOCRACY
-Version:       1.0.0
-Status:        In Review
+Version:       2.0.2
+Status:        Approved (review loop, cycle 3 PASS 100% — artifacts/reviews/13-project-plan-v2.0.2-business-cycle3.md)
 Owner:         Ana-Maria Petrescu — Project Manager
 Source:        PR-TRUMOCRACY (docs/01-press-release-prfaq.md),
-               SRS-TRUMOCRACY (docs/02-requirements-srs.md),
+               SRS-TRUMOCRACY v2.4.0 (docs/02-requirements-srs.md),
                BKLG-TRUMOCRACY (docs/05-product-backlog.md),
-               ADR-001 … ADR-014 (docs/adr/)
-Last updated:  2026-08-09
+               ADR-001 … ADR-022 (docs/adr/),
+               DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md (REC-1, REC-2)
+Last updated:  2026-08-21
 ```
 
 > **Based on:** Shape Up (appetite, fixed-time/flex-scope) + Rolling-wave planning + the VEKTOR
@@ -19,12 +20,21 @@ Last updated:  2026-08-09
 > register — not a Gantt — drives the plan._
 
 > **Read this first.** This plan reports **one material variance** against the appetite recorded in
-> `CON-007`. The cryptography critical path — six public phase-2 ceremonies at ≥ 500 contributors
-> each, plus two independent audits and their remediation — cannot be compressed into a Gate 2 on
-> **2027-02-15**. The plan's evidence-based Gate-2 date is **2027-05-14** (+13 weeks), and the
-> 10-month run-rate at 18 FTE consumes the whole USD 4.2M with **no contingency and a ~USD 0.35M
-> shortfall**. Sections §3.4 (critical path), §8.3 (resourcing) and §13 (Gate-1 packet) set out the
-> three levers. **The project-manager does not decide this. The Gate-1 approver does.**
+> `CON-007`. The cryptography critical path — **one batched phase-2 ceremony campaign across six
+> circuits** (5–15 independent contributors per circuit, days not weeks — corrected per `ADR-022` /
+> REC-1 2026-08-21) **plus two independent audits and their remediation** — cannot be compressed
+> into a Gate 2 on **2027-02-15**. The plan's evidence-based Gate-2 date is **2027-05-14** (+13
+> weeks), and this date is **audit-paced, not ceremony-paced** (the audits were already the binding
+> constraint before the ceremony correction; removing the ceremony bulk from the critical path does
+> not move Gate 2). The 10-month run-rate at 18 FTE consumes the whole USD 4.2M with **no
+> contingency and a ~USD 245,000 (~−5.8%) shortfall**; the ceremony logistics budget line drops to near-zero
+> (see §8.3). The scope has re-baselined to **SRS v2.4.0 (110 Must requirements)**. Sections §3.4
+> (critical path), §8.3 (resourcing) and §13 (Gate-1 packet) set out the three levers. **The
+> project-manager does not decide this. The Gate-1 approver does.**
+>
+> **v2.0.0 re-plan (2026-08-21):** cryptography path corrected per REC-1 / REC-2 (`ADR-022`);
+> scope re-baselined to SRS v2.4.0; ceremony logistics budget to near-zero; Gate-2 date unchanged.
+> See §11 re-plan log for the full entry.
 
 ---
 
@@ -61,8 +71,11 @@ without spending more than the appetite in `CON-007` allows.
 
 ### 2.1 In scope (this release)
 
-The 42 **Must** functional requirements (`FR-001`…`FR-061`, Doc 02 §11) and the 22 **Must**
-non-functional requirements, delivered across four phases (§3.1) as designed in `ADR-001`…`ADR-014`:
+The 110 **Must** functional requirements (`FR-001`…`FR-129`, SRS v2.4.0 §11) and the 22 **Must**
+non-functional requirements, delivered across four phases (§3.1) as designed in `ADR-001`…`ADR-022`
+_(scope re-baselined 2026-08-21: was 42 Must FRs per Doc 02 v1.0.0 at Gate 1; grown by v2.0.0
+through v2.4.0 additions including FR-118 charter promotion, FR-121…FR-129 pilot and charter-guard
+requirements — see SRS v2.4.0 §11)_:
 
 - Verified personhood (issuer-agnostic adapter registry, scope-bound nullifiers — `ADR-003`) and
   regional residency (versioned hierarchical region codes, per-region credential trees, ZK
@@ -77,9 +90,10 @@ non-functional requirements, delivered across four phases (§3.1) as designed in
 - Zero-cost citizen actions via sponsored ERC-4337 transactions with an L1 force-inclusion escape
   hatch (`ADR-001`, `ADR-002`); seedless recovery; WCAG 2.2 AA; 8 launch locales incl. RTL.
 - The engineering programme those require: monorepo with CI-enforced dependency direction
-  (`ADR-011`), Circom circuits and six public phase-2 ceremonies (`ADR-005`), **two independent
-  audits — one protocol, one circuits** (`ADR-005`, `NFR-009`), issuer + attester onboarding, and a
-  staged 1 → 10 → 50 → 100% production rollout.
+  (`ADR-011`), Circom circuits with **one batched phase-2 ceremony campaign across six circuits**
+  (assurance-sized per `ADR-022`; `ADR-005`), **two independent audits — one protocol, one
+  circuits** (`ADR-005`, `NFR-009`), issuer + attester onboarding, and a staged 1 → 10 → 50 → 100%
+  production rollout.
 
 ### 2.2 Explicit out-of-scope (and when, if ever, later)
 
@@ -109,7 +123,7 @@ scope moves — §13 names the two candidate scope cuts and their price.
 |---|---|---|---|---|
 | **Phase 0 — Foundations** | Monorepo with CI-enforced dependency direction (`ADR-011`); EVM test harness; **pure protocol reference implementation** (`packages/protocol` — threshold maths, tier rules, state transitions, ID derivation, no I/O); `ADR-001`…`ADR-014` written | n/a | local / CI | **In progress**, complete by 2026-09-14 |
 | **Phase 1 — Walking skeleton on testnet** | Personhood + residency registries against a **mock verifier**; petition → threshold → activation; join/leave; tiered proposals + voting with a **public tally**; timelocks. End-to-end, one citizen journey, nothing real about the cryptography yet | elections **OFF** · recall **OFF** · treasury **OFF** · fork **OFF** · MACI **OFF** | public testnet | 2026-09-14 → 2026-11-27 |
-| **Phase 2 — Real cryptography** | Circom circuits per `ADR-005`; **six public phase-2 ceremonies, ≥ 500 independent contributors each** on Perpetual Powers of Tau; Groth16 verifiers frozen by hash in the verifier registry; client-side proving on the reference device; **two independent audits — one protocol, one circuits** (`NFR-009`, `CON-012`); issuer + attester onboarding for the pilot region(s) through the 30-day registry timelock (`ADR-003`, `ADR-010`) | MACI still **OFF**; mock verifier retired | testnet, then mainnet dark | 2026-10-05 → 2027-04-19 |
+| **Phase 2 — Real cryptography** | Circom circuits per `ADR-005`; **one batched phase-2 ceremony campaign, six transcripts**, 5–15 independent contributors per circuit on Perpetual Powers of Tau (`ADR-022` — corrected 2026-08-21); Groth16 verifiers frozen by hash in the verifier registry; client-side proving on the reference device; **two independent audits — one protocol, one circuits** (`NFR-009`, `CON-012`); issuer + attester onboarding for the pilot region(s) through the 30-day registry timelock (`ADR-003`, `ADR-010`) | MACI still **OFF**; mock verifier retired | testnet, then mainnet dark | 2026-10-05 → 2027-04-19 |
 | **Phase 3 — Coercion resistance & representation** | MACI with the **5-of-7 threshold coordinator committee** (`ADR-006`); elections; recall; treasury guardrail; fork. **This is the first phase real citizens use.** Staged **1 → 10 → 50 → 100%** | all five flags progressively **ON**, metric-gated | production (lead pilot) | 2027-04-19 → 2027-07-09 |
 | **Phase 4 — Sovereignty** | `renounceProtocolKeys()` — irreversible protocol-key renunciation (`ADR-010`); sovereign OP Stack rollup evaluation (`ADR-001b`); transparent-setup proving system evaluation (Noir/UltraHonk or STARK, `ADR-005` §6); hardened native client for high-risk jurisdictions (`ADR-012`) | — | production | from 2027-09-03 (entry review) |
 
@@ -125,11 +139,11 @@ therefore a **dark** mainnet phase, not a launch.
 | MS-01 | **Direction approved** | **Gate** | **Gate 1** | **2026-08-22** | Doc 01 + Doc 02 + Doc 05 + Doc 13 at v1.0.0 with passing `document-review` reports; named owner on every requirement; `OI-01`…`OI-05` decided | **Human approver** (Product **A** · Eng **C** · Design **C**) |
 | MS-02 | Design baselined | Checkpoint | — | 2026-09-11 | Doc 03 SDD (incl. §9 repo structure) + Doc 04 Test Strategy; `ADR-001`…`ADR-014` re-confirmed against the Gate-1 decisions | Architect |
 | MS-03 | Repo scaffolded · coding starts | Checkpoint | — | 2026-09-14 | Monorepo built from SDD §9 / `ADR-011`; CI dependency check green; UT standard live (Doc 06); `FeatureFlags` registry deployed | Eng Lead |
-| MS-04 | **Long-lead trigger:** both audit firms contracted; ceremony programme opened | Checkpoint | — | **2026-10-15** | Signed audit engagements with January start dates; ceremony coordinator appointed; contributor recruitment live | PM · Head of Security |
+| MS-04 | **Long-lead trigger:** both audit firms contracted; ceremony coordinator appointed | Checkpoint | — | **2026-10-15** | Signed audit engagements with January start dates; ceremony coordinator appointed; no large-scale contributor outreach programme (`ADR-022` — corrected 2026-08-21) | PM · Head of Security |
 | MS-05 | Phase-1 walking skeleton green on testnet | Checkpoint | — | 2026-11-27 | One citizen journey end to end against the mock verifier; differential tests `protocol` vs contract passing; five flags OFF and proven OFF | Eng Lead · Test Lead |
 | MS-06 | **Circuit specification freeze** | Checkpoint | — | 2026-12-11 | All six circuits' public/private inputs frozen; `r1cs` hashes reproducible; no further circuit scope accepted | Architect |
-| MS-07 | ≥ 500 contributors pledged per circuit | Checkpoint | — | 2027-01-08 | Signed pledges incl. named civil-society figures; beacon procedure published | Ceremony coordinator |
-| MS-08 | **All six phase-2 ceremonies complete** | Checkpoint | — | 2027-03-05 | Transcripts published permanently (`ADR-009`); `snarkjs zkey verify` reproducible by any third party; `zkeyHash` frozen in the verifier registry | Architect · Head of Security |
+| MS-07 | **Ceremony logistics confirmed** — contributors engaged, beacon procedure ready | Checkpoint | — | 2027-01-15 _(corrected from 2027-01-08; large-scale pledge campaign retired per ADR-022)_ | 5–15 independent contributors per circuit confirmed from mutually-independent institutions (`ADR-022`); beacon procedure published; ceremony run-book ready | Architect · Head of Security |
+| MS-08 | **Batched phase-2 ceremony campaign complete** — six transcripts published | Checkpoint | — | **2027-01-25** _(corrected from 2027-03-05; ceremonies now a days-long campaign per ADR-022 — MS-08 is **off the critical path**; audits govern from here)_ | Six transcripts published permanently (`ADR-009`); every attestation and beacon published; `snarkjs zkey verify` reproducible by any third party; `zkeyHash` frozen in the verifier registry | Architect · Head of Security |
 | MS-09 | **Both independent audits reported** | Checkpoint | — | 2027-03-12 | Protocol audit report + circuits audit report delivered | Head of Security |
 | MS-10 | Audit remediation closed | Checkpoint | — | 2027-04-16 | **Zero critical and zero high open** (`NFR-009`); re-review signed by both firms | Head of Security |
 | MS-11 | Issuer + attester registries live for the pilot region(s) | Checkpoint | — | 2027-04-19 | ≥ 2 accepted issuers incl. ≥ 1 non-state (`ADR-003` invariant); ≥ 2 residency attesters; 30-day registry timelock cleared | Identity PM · Architect |
@@ -173,8 +187,10 @@ rollout.** The approver must be shown, and must be able to check, all of:
    positive test, so positive tests prove nothing).
 3. **Two independent audit reports — one protocol, one circuits — with zero critical and zero high
    findings open** (`NFR-009`, `CON-012`), plus the signed remediation re-review.
-4. **Six published ceremony transcripts**, each with ≥ 500 independent contributors, verifiable by
-   any third party, with the `zkeyHash` of each circuit frozen in the on-chain verifier registry.
+4. **Six published ceremony transcripts** — assurance-sized (5–15 independent contributors per
+   circuit from mutually-independent institutions, per `ADR-022`; corrected 2026-08-21 from ≥ 500
+   convention), verifiable by any third party, every attestation and beacon published, with the
+   `zkeyHash` of each circuit frozen in the on-chain verifier registry.
 5. **Rollback proven, not asserted** — a live drill restoring the previous version in **< 15 minutes**
    (`NFR-020`, `NF-07`), including proof that a flag governing an **open ballot** cannot be changed
    while that ballot is open.
@@ -188,6 +204,16 @@ rollout.** The approver must be shown, and must be able to check, all of:
 9. **The MACI 5-of-7 committee constituted and rehearsed**, with the documented last-resort fallback
    (re-run under a fresh committee — **never** a fallback to a plaintext tally).
 10. **Doc 14 User Guide published**, and Docs 09/10/11/12 drafted by the sre.
+11. **`CON-015` legal opinion cleared** — independent legal opinion on Aadhaar API usage within the
+    project's data-minimisation posture (Gate-2 line item opened 2026-08-20 per
+    DECISIONS-2026-08-20-PILOT-VERIFICATION.md). Status: **NOT STARTED**. Owner: Sofia Marchetti.
+    Must be in hand ≥ 8 weeks before Gate 2 (≥ 2027-03-19).
+12. **Doc 04 (Test Strategy) `document-review` debt cleared** — a passing review report (≥ 95%, zero
+    C/H/M) for the current Doc 04 version. Status: **OPEN**. Owner: PM to assign neutral reviewer.
+13. **RTM (Doc 08) catch-up for `FR-121`…`FR-129`** — traceability rows (`FR/NFR → DES → US → TC`)
+    for all nine pilot-and-charter requirements minted in SRS v2.3.0–v2.4.0. None have DES/US/TC
+    rows as of 2026-08-21. Status: **NOT STARTED**. Unblocked after Architect assigns DES IDs and
+    Backlog adds US rows.
 
 If any one of these is missing, **the gate is not presented.** The project-manager emits
 `<missing_information>` naming the blocker and routes the work back to the owning role.
@@ -205,8 +231,8 @@ Gate 1 (2026-08-22)
       → Phase-1 walking skeleton green on testnet (2026-11-27)
         → ▲ CIRCUIT SPEC FREEZE (2026-12-11)
           → circuits implemented; circomspect + differential + negative tests (→ 2027-01-15)
-            → ▲ SIX PHASE-2 CEREMONIES, ≥500 contributors each (2027-01-18 → 2027-03-05)   [7 weeks, external]
-            ∥ ▲ TWO INDEPENDENT AUDITS, protocol + circuits, in parallel (2027-01-25 → 2027-03-12)  [7 weeks, external]
+            → BATCHED PHASE-2 CEREMONY CAMPAIGN, 6 circuits, 5–15 contributors each (2027-01-18 → 2027-01-25)   [~1 week; corrected per ADR-022 — OFF THE CRITICAL PATH]
+            ∥ ▲ TWO INDEPENDENT AUDITS, protocol + circuits, in parallel (2027-01-25 → 2027-03-12)  [7 weeks, external — BINDING CONSTRAINT]
               → ▲ AUDIT REMEDIATION + RE-REVIEW to zero critical/high (2027-03-15 → 2027-04-16)   [5 weeks]
                 → ▲ verifier registry frozen; issuer/attester registry 30-day timelock clears (2027-04-19)  [external]
                   → MACI Phase-3 integration + 5-of-7 committee DKG rehearsal (2027-04-19 → 2027-05-07)
@@ -220,17 +246,17 @@ Gate 1 (2026-08-22)
 | Long-lead item | Duration | Must start by | Why it cannot be compressed |
 |---|---|---|---|
 | Audit-firm engagement (both) | 7 wks execution | **2026-10-15** | Credible protocol/circuit audit firms book 3+ months ahead. Miss this booking and the January slot is gone until March — a **10-week** slip, not a 2-week one |
-| Ceremony contributor recruitment | 11 wks | **2026-11-02** | 500 *independent* contributors per circuit, including named public figures, is an outreach programme, not a script run |
-| Six phase-2 ceremonies | 7 wks | 2027-01-18 | Contributions are sequential per circuit and each must be independently verifiable; parallelising across circuits is already assumed |
+| Ceremony contributor engagement | 2 wks | **2027-01-04** | 5–15 independent contributors per circuit from mutually-independent institutions; no large-scale outreach programme required (`ADR-022` — corrected 2026-08-21) |
+| Batched phase-2 ceremony campaign (six circuits) | ~1 wk | 2027-01-18 | Per-circuit phase-2 is a small campaign of days, batchable across the six circuits (`ADR-022`); **OFF the critical path** — audits govern |
 | Audit remediation + re-review | 5 wks | 2027-03-15 | An under-constrained circuit finding may require a **circuit change and a re-run ceremony** — the contingency below covers one such event |
 | Issuer/attester registry additions | 30 days | 2027-03-15 | `ADR-003`/`ADR-010` impose a **30-day timelock** on registry additions. This is a deliberate design property, not a queue we can jump |
 | Per-jurisdiction legal review | 8 wks | 2027-02-15 | `CON-005`, `NFR-015`; external counsel per jurisdiction |
 
 **Float.** Phases 1 and 2 carry ~3 weeks of float in feature workstreams (WS-02, WS-04, WS-08).
 The critical path itself carries **2 weeks** of contingency, sized to absorb exactly **one** circuit
-re-ceremony, and nothing else. Recall deferral (`OI-02`) buys ~3 weeks — but on the *feature* path,
-which is not the critical path. **Cutting features does not buy time here. Only starting the crypto
-programme earlier does.**
+re-ceremony (now a matter of days per `ADR-022`) or an audit remediation overshoot. Recall deferral
+(`OI-02`) buys ~3 weeks — but on the *feature* path, which is not the critical path. **Cutting
+features does not buy time here. Only starting the audit programme earlier does.**
 
 **The variance.** `CON-007` targets Gate 2 on 2027-02-15 and launch on 2027-03-01. The evidence-based
 dates are **Gate 2 on 2027-05-14** and 100% rollout on **2027-07-09**. See §13.3.
@@ -255,7 +281,7 @@ dates are **Gate 2 on 2027-05-14** and 100% rollout on **2027-07-09**. See §13.
 | WS-08 | Accountability: manifestos, records & mid-term recall | `EP-08` · `ADR-009` | Erik Lindqvist (recall: Aisha Nkemdirim) | Later (P3) | Not started |
 | WS-09 | Public verifiability & the moderation-by-code boundary | `EP-09` · `ADR-009`, `ADR-013` | Erik Lindqvist (boundary: Daniel Okonkwo) | Now (P1) → Next (P2) | Not started |
 | WS-10 | Zero-friction access: cost, recovery, accessibility | `EP-10` · `ADR-001`, `ADR-002`, `ADR-012` | Hiroshi Tanaka (recovery: Amara Diallo; a11y/i18n: Nadia Hassan) | Now (P1) → Next (P2) | Not started |
-| WS-11 | **Enabling — cryptography programme**: circuits, six ceremonies, two independent audits | *no epic*; enables `EP-01`, `EP-06` · `NF-01`, `NF-02`, `NF-03` · `ADR-005` | Rafael Duarte (audits) · Architect (circuits/ceremonies) | Next (P2) — **on the critical path** | Not started |
+| WS-11 | **Enabling — cryptography programme**: circuits, one batched phase-2 ceremony campaign (six transcripts), two independent audits (`ADR-022`) | *no epic*; enables `EP-01`, `EP-06` · `NF-01`, `NF-02`, `NF-03` · `ADR-005`, `ADR-022` | Rafael Duarte (audits) · Architect (circuits/ceremonies) | Next (P2) — **on the critical path (audit-paced)** | Not started |
 | WS-12 | **Enabling — platform & operations**: monorepo, CI, indexer, relayer, paymaster, rollout, rollback | *no epic*; `NF-04`…`NF-08` · `ADR-011`, `ADR-014` | Chen Wei | Now (P0/P1) → all waves | In progress (P0) |
 | WS-13 | **Enabling — legal & jurisdiction enablement**: per-jurisdiction review, feature gating, transparency posture | *no epic*; `CON-005`, `NFR-015` · `ADR-013` | Sofia Marchetti | Now → Next | In progress |
 
@@ -266,7 +292,7 @@ dates are **Gate 2 on 2027-05-14** and 100% rollout on **2027-07-09**. See §13.
 | ID | Dependency / assumption | Type | On whom | Needed by | Status | Fallback if it slips |
 |----|-------------------------|------|---------|-----------|--------|----------------------|
 | DEP-01 | **Two independent audit firms contracted** — one protocol, one circuits (`NFR-009`, `CON-012`) | Vendor | Rafael Duarte | **2026-10-15** | Not started | Sequential audits instead of parallel → **+7 weeks** on the critical path. There is no acceptable "skip" |
-| DEP-02 | **≥ 500 independent phase-2 ceremony contributors per circuit**, incl. named civil-society figures (`ADR-005`) | External community | Architect + Head of Security | 2027-01-08 pledges | Not started | Reduce the circuit set by merging `tenure_member` into `party_member`; **never** reduce the contributor floor — the floor *is* the security argument |
+| DEP-02 | **5–15 independent phase-2 ceremony contributors per circuit**, drawn from mutually-independent institutions (`ADR-022`; corrected 2026-08-21 from v1.0.0 ≥ 500 convention — see DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md REC-1) | External community | Architect + Head of Security | 2027-01-15 | Not started | Contributor count above 1 is assurance-based, not a security floor; reduce count only if institutional independence across contributors is preserved |
 | DEP-03 | **≥ 2 accepted personhood issuers per pilot region, ≥ 1 of them non-state** (`ADR-003` on-chain invariant; `A-01`) | Vendor / partner | Marcus Adeyemi | 2027-03-15 (for the 30-day timelock) | Not started | That jurisdiction **cannot launch** (`A-01`). Fall back to the lead pilot only |
 | DEP-04 | **≥ 2 independent residency attesters per pilot region**, staked and slashable (`ADR-004` §3) | Vendor / partner | Marcus Adeyemi | 2027-03-15 | Not started | Enable the civic-notary + peer-attestation tiers first, hard-capped at 5% per epoch |
 | DEP-05 | **≥ 5 independent population-statistics sources** per region with ≤ published tolerance disagreement (`FR-009`, `ADR-004` §4; `A-02`) | Data | Yuki Sato | 2027-02-15 | Not started | Re-scope thresholds to a coarser region tier; the verified-resident floor still holds |
@@ -306,16 +332,16 @@ here except where they carry a dependency above. Two plan-local assumptions are 
 | RISK-07 | **State compulsion** — a government orders disclosure of the member list or a voter's ballot | 3 | 5 | 15 | The data does not exist to disclose: no identity data at rest, no member list anywhere, threshold committee spanning jurisdictions so no single court order reaches 5-of-7; transparency reporting. **Residual risk accepted and disclosed** (Doc 01 §E3) | `ADR-003`, `ADR-009`, `ADR-013`, `ADR-006` | Sofia Marchetti | Open — accepted |
 | RISK-08 | **State-level blocking** — the platform is blocked at network or app-store level | 4 | 4 | 16 | ≥ 2 independent access paths verified under blocking simulation (`NF-06`); PWA-first so no single store dependency; IPFS/Arweave mirrors | `ADR-012`, `ADR-009` | Chen Wei | Open |
 | RISK-09 | **Ordering/settlement liveness failure** — the sequencer stalls or censors | 3 | 4 | 12 | L1 force-inclusion wired into the SDK as a real fallback transport, not a theoretical property; ≥ 72h voting windows so a 12–24h force-inclusion round trip cannot disenfranchise; degrade-by-delay never denial | `ADR-001`, `ADR-014` | Chen Wei | Open |
-| RISK-10 | **Compromise of the proving system or its setup ceremony** — a flaw or compromised setup silently breaks anonymity or forges eligibility | 2 | 5 | 10 | No bespoke constructions; ≥ 500 independent contributors per phase-2 ceremony with a beacon and public transcript; **two** independent audits; `circomspect`, differential and negative tests; reproducible builds. **Bounded:** the failure mode is forgery, not deanonymisation | `ADR-005` | Rafael Duarte | Open |
+| RISK-10 | **Compromise of the proving system or its setup ceremony** — a flaw or compromised setup silently breaks anonymity or forges eligibility | 2 | 5 | 10 | No bespoke constructions; 5–15 independent contributors per circuit from mutually-independent institutions (`ADR-022`; assurance-based — security requires only one honest contributor) with a beacon, published attestations, permanent transcript, and on-chain `zkeyHash` freeze; **two** independent audits; `circomspect`, differential and negative tests; reproducible builds. **Bounded:** the failure mode is forgery, not deanonymisation | `ADR-005`, `ADR-022` | Rafael Duarte | Open |
 | RISK-11 | **Key loss at population scale** — citizens lose access and cannot participate | 4 | 4 | 16 | Passkey/enclave keys with no seed phrase to lose; seedless recovery with timelock, notification and cancellation window; ≥ 99% recovery success within 14 days as a launch SLO | `ADR-002` | Amara Diallo | Open |
 | RISK-12 | **Oracle manipulation of the population denominator** — thresholds computed against a wrong, stale or manipulated number | 3 | 5 | 15 | ≥ 5 independent sources, **median not mean**; ±5% per-quarter change rate-limit; 7-day dispute window; **verified-resident floor** so deflation gains an attacker nothing; denominator snapshotted at petition creation | `ADR-004` §4 | Yuki Sato | Open |
 | RISK-13 | **Reputational and misuse risk** — parties formed for unlawful, violent or extremist purposes are hosted and attributed to us | 4 | 4 | 16 | Member-voted `retracted` flag honoured by conforming clients; opt-in, publicly auditable, jurisdiction-scoped gateway denylist — filtering is **visible, never silent**; never a deletion. **Residual risk accepted** | `ADR-009`, `ADR-013` | Daniel Okonkwo | Open — accepted |
 | RISK-14 | **Regulatory reclassification** — a regulator deems the platform an electoral body, a political-finance vehicle, or a controller of political-opinion data | 3 | 5 | 15 | `CON-001` boundary stated on every public surface; the protocol *produces evidence* for a party's statutory filing, a human officer files it under their own name; per-jurisdiction gating; treasury off by default | `ADR-013` | Sofia Marchetti | Open |
 | RISK-15 | **Adoption failure** — thresholds are never reached and the platform looks like a graveyard of dead petitions | 4 | 4 | 16 | Field enrolment programme; threshold calibration reviewed against month-3 enrolment (`OI-01`); petition expiry and archiving; read-path performance so browsing is instant. **Trigger:** < 25,000 in the lead pilot at month 6 → KC-3 | `ADR-014` | Grace Mbeki | Open |
 | RISK-16 | **Trumocracy itself becomes the gatekeeper** — via code authorship, funding conditions, or an operational lever added under pressure | 3 | 5 | 15 | Immutable core with no proxy, no admin, no pause; registries timelocked at 30 days; funders hold no governance rights; guaranteed party exit tested in CI (`TC-EXIT-*`); `renounceProtocolKeys()` as a Gate-2-equivalent Phase-4 milestone | `ADR-010`, `ADR-007` | Rafael Duarte | Open |
-| **RISK-17** | **Ceremony recruitment shortfall** — fewer than 500 independent contributors materialise for one or more of the six circuits, on the date the critical path needs them | 4 | 4 | 16 | Recruitment opens **2026-11-02**, 11 weeks ahead; civil-society partner outreach begins at Gate 1; circuit-set reduction (merge `tenure_member` into `party_member`) held as the scope lever. **The contributor floor is never lowered.** **Trigger:** < 60% of pledges at 2026-12-11 | `ADR-005` | Rafael Duarte | **Open — new** |
-| **RISK-18** | **Audit capacity slip** — audit firms are not contracted by 2026-10-15, or a finding forces a circuit change and a **re-run ceremony** | 3 | 5 | 15 | Both engagements signed at MS-04 with January starts; audits run in parallel (`A-PLAN-02`); **2 weeks of critical-path contingency sized to exactly one re-ceremony**. **Trigger:** either engagement unsigned at 2026-10-15 → escalate to the human approver same week | `ADR-005` | Rafael Duarte | **Open — new** |
-| **RISK-19** | **Appetite overrun** — `CON-007` (USD 4.2M / 18 FTE) is insufficient for a Gate 2 on the evidence-based date; §8.3 shows a ~USD 0.35M shortfall with zero contingency | 4 | 4 | 16 | Presented to the Gate-1 approver as a decision with three costed levers (§13.3); monthly burn tracked in the WBR against a published plan line; the pilot-count lever is reversible up to 2027-02-15 | — (plan) | Ana-Maria Petrescu | **Open — new** |
+| **RISK-17** | **Ceremony contributor independence insufficient** — contributors for one or more circuits are not sufficiently independent (same institution or coordinated network) | 2 | 4 | 8 | ~~Recruitment opens 2026-11-02, 11 weeks ahead~~ _(corrected 2026-08-21 per ADR-022 / REC-1: the ≥ 500 convention was retired)_. **Revised mitigation:** require institutional diversity — all contributors drawn from mutually-independent institutions (`ADR-022`); 5–15 contributors is the assurance range; independence is the asset, not headcount. **Trigger:** fewer than 5 distinct independent institutions contributing to any circuit | `ADR-005`, `ADR-022` | Rafael Duarte | **Revised — corrected 2026-08-21** |
+| **RISK-18** | **Audit capacity slip** — audit firms are not contracted by 2026-10-15, or a finding forces a circuit change and a **re-run ceremony** | 3 | 5 | 15 | Both engagements signed at MS-04 with January starts; audits run in parallel (`A-PLAN-02`); **2 weeks of critical-path contingency** (a re-ceremony for a single circuit now takes days per `ADR-022` — contingency absorbs the re-run overhead and leaves a buffer for audit remediation overshoot). **Trigger:** either engagement unsigned at 2026-10-15 → escalate to the human approver same week | `ADR-005`, `ADR-022` | Rafael Duarte | **Open** |
+| **RISK-19** | **Appetite overrun** — `CON-007` (USD 4.2M / 18 FTE) is insufficient for a Gate 2 on the evidence-based date; §8.3 shows a ~USD 245,000 (~−5.8%) shortfall with zero contingency | 4 | 4 | 16 | Presented to the Gate-1 approver as a decision with three costed levers (§13.3); monthly burn tracked in the WBR against a published plan line; the pilot-count lever is reversible up to 2027-02-15 | — (plan) | Ana-Maria Petrescu | **Open — new** |
 | **RISK-20** | **MACI Phase-3 complexity underestimated** — circuits, message queue, batched tally and a per-election committee ceremony are, in the architect's own words, "the single largest engineering cost in this design" | 4 | 5 | **20** | Phase-1 ships public-tally governance behind a flag so the governance surface is proven before MACI lands; MACI integration is scheduled **after** audits so it is built against frozen, audited circuits; committee DKG rehearsed on testnet at MS-12; documented last-resort fallback is re-run under a fresh committee, **never** a plaintext tally | `ADR-006` | Aisha Nkemdirim | **Open — new** |
 | **RISK-21** | **Role-separation defect** — the Product Owner and the Principal Architect are the same person (Priya Raghunathan signs Doc 02 as PO and `ADR-001`…`ADR-014` as Principal Architect), so the role **Accountable** for direction is also the role **Accountable** for the design that direction is meant to constrain | 5 | 3 | 15 | Raised as governance exception `E-02` for a Gate-1 decision (§13.4); until resolved, `document-review` on Doc 03 MUST be run by a reviewer neutral to **both** hats, and Gate-1 `OI-05` confirmation must be recorded by the PO explicitly *as PO* | — (plan) | Ana-Maria Petrescu | **Open — new** |
 
@@ -444,16 +470,16 @@ weeks. It is stated here rather than absorbed into optimism.
 |---|---|---:|
 | Personnel | 18 FTE × 10 months × USD 16,500 | 2,970,000 |
 | Two independent audits (protocol + circuits) incl. remediation re-review | `NFR-009`, `CON-012`, `DEP-01` | 550,000 |
-| Ceremony programme — 6 circuits, coordination, beacons, permanent transcript archival | `ADR-005`, `ADR-009` | 120,000 |
+| Ceremony programme — 6 circuits, batched per-circuit phase-2s; 5–15 contributors each; beacons and permanent transcript archival (corrected per `ADR-022`: PPoT phase-1 reuse at ~$0; contributor outreach programme retired; logistics cost drops to **near-zero** — formal re-estimate not yet produced) | `ADR-005`, `ADR-022`, `ADR-009` | **~15,000** |
 | Per-jurisdiction legal review × 3 pilots + external counsel | `CON-005`, `NFR-015`, `DEP-06` | 210,000 |
 | Infrastructure: L2 gas sponsorship pool (90-day p95 buffer), blobs/DA, IPFS pinning + Arweave permanence | `ADR-001`, `ADR-009`, `DEP-10` | 180,000 |
 | Field enrolment programme + issuer/attester onboarding across 3 pilots | `DEP-03`, `DEP-04`, `RISK-15` | 240,000 |
 | Localisation (8 locales incl. RTL) + independent accessibility audit | `NFR-011`, `NFR-013` | 130,000 |
 | Adversarial privacy audit + red-team (`NF-01`, `NF-03`), separate from the two audits | `BR-012` | 90,000 |
 | Load, censorship and operator-censorship simulation infrastructure (`NF-06`) | `NFR-008`, `NFR-014`, `NFR-025` | 60,000 |
-| **Total** | | **4,550,000** |
+| **Total** | | **~4,445,000** _(ceremony line corrected; all other lines unchanged)_ |
 | **Appetite (`CON-007`)** | | **4,200,000** |
-| **Variance** | | **−350,000 (−8.3%), and zero contingency** |
+| **Variance** | | **~−245,000 (~−5.8%), and zero contingency** _(improved from −350k by ceremony logistics correction; remains in deficit)_ |
 
 **The single-pilot lever.** Launching Phase 3 in **one** pilot jurisdiction and rolling the other two
 post-launch saves ≈ **USD 420,000** (two legal reviews deferred −140k, field programme −160k, five of
@@ -501,7 +527,7 @@ the plan's recommended lever, and it is the Gate-1 approver's decision, not the 
 | Delivery team (18) | Wave plan, WIP, blockers | Weekly WBR; wave review at each milestone | Repo + WBR |
 | Funders / grantors | Burn vs the USD 4.2M appetite; no governance strings (`A-05`) | Monthly | WBR extract; published funding record (`ADR-007`) |
 | Audit firms (2) | Scope, freeze dates, remediation windows | Fortnightly from MS-04 | Engagement channel |
-| Ceremony contributors + civil-society partners | Ceremony dates, contribution instructions, transcript verification | From 2026-11-02, then weekly through MS-08 | Public ceremony page + transcripts |
+| Ceremony contributors (5–15 per circuit, institutional) | Contribution instructions, attestation process, transcript verification | From 2027-01-04 (two weeks before campaign start), then as needed through MS-08 | Ceremony coordinator + public transcript page |
 | Identity issuers & residency attesters | Onboarding, 30-day timelock windows, concentration caps | Monthly from Gate 1 | Partner channel; public per-issuer statistics |
 | MACI committee operators (7) | Selection, DKG rehearsal, liveness attestations | Weekly from MS-11 | Committee channel |
 | Pilot-jurisdiction counsel | Per-jurisdiction review status, feature gating | Monthly | Legal channel |
@@ -513,8 +539,11 @@ the plan's recommended lever, and it is the Gate-1 approver's decision, not the 
 
 | Date | Wave | What changed | Why (signal from gate / production) | By |
 |------|------|--------------|-------------------------------------|----|
+| 2026-08-21 | Next (P2) | **v2.0.2 — banner correction.** Cycle-2 review (`artifacts/reviews/13-project-plan-v2.0.1-business-cycle2.md`): FAIL 96%, 0C/0H/1M/0L. One fix: "Read this first" banner "~USD 0.35M shortfall" → "~USD 245,000 (~−5.8%) shortfall" — last remaining pre-correction figure. | `artifacts/reviews/13-project-plan-v2.0.1-business-cycle2.md` (FAIL cycle-2) | Ana-Maria Petrescu |
+| 2026-08-21 | Next (P2) | **v2.0.1 — business review rework.** Cycle-1 document review (`artifacts/reviews/13-project-plan-v2.0.0-business-cycle1.md`): FAIL 84%, 0C/0H/4M/0L. Root cause: §8.3 ceremony-budget correction (~USD 120k → ~USD 15k) not cascaded to three downstream references. Four surgical fixes: ISS-01 — KC-P2 trigger restated in ADR-022 assurance terms (non-vacuous); ISS-02 — RISK-19 shortfall "~USD 0.35M" → "~USD 245,000 (~−5.8%)"; ISS-03 — §13.1 resourcing row corrected to same figure; ISS-04 — §13.3 L1 lever "−USD 0.35M" → "~−USD 245,000 (~−5.8%)". No other changes. | `artifacts/reviews/13-project-plan-v2.0.0-business-cycle1.md` (FAIL cycle-1) | Ana-Maria Petrescu |
+| 2026-08-21 | Next (P2) | **v2.0.0 re-plan.** (1) Cryptography path corrected per ADR-022 / REC-1/REC-2: six-ceremony-at-≥500 critical-path assumption retired; corrected to one batched phase-2 campaign, six transcripts, 5–15 independent contributors per circuit, days not weeks. MS-08 date: 2027-03-05 → 2027-01-25 (ceremonies now off the critical path; audits govern). MS-07 revised: large-scale pledge campaign retired. Gate-2 date unchanged — 2027-05-14 — audits were already the binding constraint. (2) Scope re-baselined: SRS v2.4.0, 110 Must requirements (FR-001…FR-129), up from 42 Must FRs at Gate 1. (3) Budget: ceremony logistics line drops from USD 120,000 to ~USD 15,000 (near-zero; PPoT phase-1 at ~$0; outreach programme retired). Total ~USD 4,445,000; variance ~−USD 245,000 (~−5.8%), zero contingency. (4) Gate-2 line items added: CON-015 legal opinion (NOT STARTED), Doc 04 review debt, FR-121…129 RTM catch-up. (5) ADR-022 and DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md added to sources. RISK-17 revised (L4/I4 → L2/I4). DEP-02 corrected. WS-11, MS-04 updated. | ADR-022 (Accepted 2026-08-21); DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md (REC-1, REC-2; Rathish 2026-08-21); Doc 02 v2.4.0; Doc 08 v2.1.0 | Ana-Maria Petrescu |
 | 2026-08-09 | Now | Plan created at v1.0.0. Four phases derived from `ADR-001`…`ADR-014`; Gate 2 re-based from 2027-02-15 to **2027-05-14**; `RISK-17`…`RISK-21` opened; governance exceptions `E-01`/`E-02` raised | Doc 02 + Doc 05 at v1.0.0; 14 ADRs Accepted; cryptography critical path costed against `CON-007` for the first time | Ana-Maria Petrescu |
-| _(next entry at Gate 1)_ | | | | |
+| _(next entry at Gate 2)_ | | | | |
 
 ---
 
@@ -558,9 +587,9 @@ Sign-off is at the **gates** (MS-01 / MS-13), not on every plan revision.
 | Backlog seeded `EP` ▸ `FE` ▸ `US` with Gherkin, owner and `FR` trace | ✅ Ready | `docs/05-product-backlog.md` v1.0.0 — 10 / 28 / 70 |
 | **Project plan with milestones, risk register of record, RACI, rollout/rollback** | ✅ Ready | **This document, v1.0.0** |
 | Named owner per workstream | ✅ Ready | §4 — 13 workstreams, all owned |
-| Resourcing costed against `CON-007` | ⚠ Ready **with a variance** | §8.3 — −USD 0.35M, zero contingency (`RISK-19`) |
+| Resourcing costed against `CON-007` | ⚠ Ready **with a variance** | §8.3 — ~−USD 245,000 (~−5.8%), zero contingency (`RISK-19`) |
 | Gate-2 date achievable as stated in `CON-007` | ❌ **Not achievable** | §3.4 — evidence-based Gate 2 is 2027-05-14, +13 weeks |
-| **Passing `document-review` reports for Docs 01, 02, 05, 13 v1.0.0** | ❌ **N/A — not yet produced** | `artifacts/reviews/` is empty. **Gate 1 cannot be presented until these exist**, business mode, neutral non-owning reviewer, ≥ 95% and zero critical/high/medium. Doc 13 in particular MUST be reviewed by a role that is **not** the project-manager |
+| **Passing `document-review` reports for Docs 01, 02, 05, 13** | ⚠ **Partially cleared** | **Doc 13 v2.0.2: ✅ PASS 100%** — business mode, technical-writer (neutral), cycle 3 (`artifacts/reviews/13-project-plan-v2.0.2-business-cycle3.md`). Docs 01, 02, 05: ❌ passing business-mode review reports not yet produced. **Gate 1 cannot be presented until Docs 01, 02 and 05 are also reviewed and passed.** |
 | Four declared non-Must backlog coverage gaps closed | ⚠ Declared, not closed | Doc 05 §12 — `FR-005`, `FR-049`, `FR-050`, `FR-052`, `FR-053`. Non-blocking; owned by the PO |
 
 ### 13.2 The five open items requiring a Gate-1 decision
@@ -609,12 +638,16 @@ small-region governance) either weaken a Must NFR or cut objective 4.
 
 `CON-007` targets Gate 2 on **2027-02-15** and launch on **2027-03-01**. The plan's evidence-based
 Gate 2 is **2027-05-14**. The gap is **13 weeks**, and every week of it sits on the externally paced
-cryptography path (§3.4): six ceremonies at ≥ 500 contributors, two independent audits, remediation,
-and a 30-day on-chain registry timelock.
+cryptography path (§3.4): two independent audits, their remediation, MACI Phase-3, and a 30-day
+on-chain registry timelock. _(Note 2026-08-21: the v1.0.0 text named "six ceremonies at ≥ 500
+contributors" as a critical-path driver. Per `ADR-022` / REC-1, the ceremony burden has collapsed
+to a batched campaign of days. The Gate-2 date does not move — the audits were already the binding
+constraint before the correction, completing 2027-03-12 vs ceremonies completing 2027-03-05; see
+§3.4.)_
 
 | Lever | Effect on date | Effect on budget | PM assessment |
 |---|---|---|---|
-| **L1 — Move Gate 2 to 2027-05-14; hold 3 pilots** | Gate 2 +13 wks; 100% rollout 2027-07-09 | **−USD 0.35M over** appetite, no contingency | Honest schedule, unfunded. Not viable without more money |
+| **L1 — Move Gate 2 to 2027-05-14; hold 3 pilots** | Gate 2 +13 wks; 100% rollout 2027-07-09 | **~−USD 245,000 (~−5.8%) over** appetite, no contingency | Honest schedule, unfunded. Not viable without more money |
 | **L2 — Move Gate 2 to 2027-05-14; launch in 1 pilot, roll the other 2 post-launch** | Gate 2 +13 wks | ≈ **USD 4.13M**, ~1.7% contingency | **Recommended.** Keeps every Must requirement and every guardrail; defers only jurisdictional breadth, which is already `CON-005`-gated per jurisdiction |
 | **L3 — Hold 2027-02-15; cut scope to fit** | Gate 2 on time | Within appetite | **Not offered.** The only scope that fits is Phase 2 — a mainnet launch with **MACI OFF**, i.e. voting without coercion resistance. That violates Must requirements `BR-011` and `NFR-003`. The PM will not present this as viable |
 
@@ -670,7 +703,7 @@ recorded rather than asserted away), and the architecture is genuinely responsiv
 | ID | Condition | Trigger | Action |
 |----|-----------|---------|--------|
 | **KC-P1** | **Audit gate cannot be met** | Any critical or high finding still open from either audit at **2027-04-16** (MS-10) | **Do not present Gate 2.** `NFR-009` is a Must with a zero-tolerance bar. Re-plan the wave; the launch date moves, the bar does not |
-| **KC-P2** | **Ceremony integrity compromised** | Any phase-2 ceremony fails independent verification, or a circuit's contributor count falls below **500** | **Re-run that ceremony.** Consumes the 2-week critical-path contingency (`RISK-18`). A second occurrence re-plans Phase 2 and returns to the approver |
+| **KC-P2** | **Ceremony integrity compromised** | Any phase-2 ceremony fails independent verification (`snarkjs zkey verify`), or a circuit's attested contributor set fails the `ADR-022` assurance criteria — fewer than 5 independent institutions represented, or contributor independence cannot be confirmed from published attestations | **Re-run that ceremony.** Consumes the 2-week critical-path contingency (`RISK-18`). A second occurrence re-plans Phase 2 and returns to the approver |
 | **KC-P3** | **Appetite exhausted without a decision** | Burn reaches **90%** of the approved budget before MS-10 | **Freeze new scope**, harden what exists, and return to the human approver with a re-costed plan. Per CLAUDE.md's governance signal: *budget exhausted → freeze and harden* |
 
 **A stop-the-line signal that is not a kill criterion but behaves like one:** any single identity

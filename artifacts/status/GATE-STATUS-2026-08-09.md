@@ -58,6 +58,7 @@ Gherkin acceptance criteria.
 | E-02 | RACI defect: one named individual originally owned both Doc 02 and all fourteen ADRs | **Fixed** — architecture ownership was reassigned to a distinct named architect. Confirm the fix. | **Confirmed.** Fix accepted. See `GATE1-DECISION-2026-08-09.md §4`. |
 | B-01 | Budget: **USD 4.55M against a USD 4.2M appetite**, zero contingency | The project-manager offers three costed levers and recommends launching in one pilot, rolling the other two post-launch (≈USD 4.13M). | **L2 accepted** — one pilot, roll two post-launch, ~USD 4.13M against the 4.2M appetite (~1.7% contingency). See `GATE1-DECISION-2026-08-09.md §5`. |
 | S-01 | Schedule: Gate 2 moves **2027-02-15 → 2027-05-14** | Every week of the slip sits on externally-paced cryptography: six phase-2 ceremonies at ≥500 contributors each, and two independent audits. Cutting features does not buy this time back. | **Accepted.** Gate 2 (MS-13) set at 2027-05-14. Ceremony- and audit-paced. See `GATE1-DECISION-2026-08-09.md §5`. |
+| S-01 — correction pointer (2026-08-21) | ↑ The "ceremony-and-audit-paced" rationale above carries a corrected reading: the ≥500 contributor count was a convention, not a security requirement (ADR-022/REC-1). The ceremony burden has collapsed to a batched campaign of days. **Gate-2 date 2027-05-14 is unchanged** — the audits were already the binding constraint before the correction (audits complete 2027-03-12 vs ceremonies completing 2027-03-05). | Rationale now reads: **audit-paced, not ceremony-paced.** See `DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md` and Doc 13 v2.0.0 §3.4. Historical S-01 acceptance record preserved above. |
 
 ---
 
@@ -73,6 +74,7 @@ and the specifics matter more than the verdict:
 | Rollback proven | **No.** Not drilled. And the drill is unusual here: the core is immutable with no pause switch, so rollback means disabling flags, reverting the client and re-pointing off-chain services — it explicitly **cannot** halt a running vote or reverse an on-chain decision. Doc 10 says so plainly. |
 | Independent audits | **Not started.** Two are on the critical path (protocol + circuits). |
 | Ceremonies | **Not started.** Six phase-2 ceremonies at ≥500 contributors each. |
+| Ceremonies — corrected posture (2026-08-21) | **Not started.** ↑ Correction per ADR-022/REC-1: one batched phase-2 campaign, **six transcripts**, 5–15 independent contributors per circuit from mutually-independent institutions, days not months. PPoT phase-1 reused at ~$0. MS-08 date: 2027-01-25 (off the critical path — audits govern). See `DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md` and `ADR-022`. |
 | Verifiers | **Development mocks.** A mock accepts every proof. The promotion gate in `script/deploy.mjs` refuses testnet/staging/production while any circuit is wired to one, and a test asserts the gate itself works. |
 
 **The honest one-line summary:** what exists is a complete, tested Phase-1 walking skeleton
@@ -531,3 +533,96 @@ yet. An additional open item is registered:
 writing anything and was cleanly re-run; no partial artifacts exist.
 
 **Gate 2:** NOT READY. RTM (Doc 08 v2.1.0): 125 Must rows / 12 COMPLETE / 113 OPEN (FR-121..FR-129 RTM rows not yet added). Legal-opinion line item (India/Aadhaar): NOT STARTED. OI-19: CLOSED 2026-08-20. OI-20: CLOSED 2026-08-20.
+
+---
+
+## Ceremony correction & proving-system commitment — 2026-08-21
+
+**Signal:** Architect's Powers-of-Tau ceremony analysis, 2026-08-21, routed by PM.
+**Approver decisions:** Rathish, 2026-08-21. See `DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md`.
+
+### REC-1 — Correct the convention error
+
+**Verbatim (Rathish, 2026-08-21):**
+> "The ≥ 500 contributor count in ADR-005 was an error in categorisation — it was a convention,
+> not a security requirement. Groth16 phase-2 is secure with a single honest contributor.
+> Correct it everywhere it appears as a stated requirement: ADR-005, the project plan, and the
+> gate status. The assurance argument — why we want more than one — should be stated in design
+> terms, not as a pseudo-requirement with a magic number."
+
+**Applied 2026-08-21:**
+- ADR-005 Decision 2 amended (see ADR-005 header).
+- ADR-022 written: assurance-based sizing guidance (5–15 independent contributors from
+  mutually-independent institutions); security requires one honest contributor.
+- Doc 13 v2.0.0: MS-07, MS-08, §3.4, §3.3, WS-11, DEP-02, RISK-17, RISK-10, budget all
+  corrected. MS-08 date: 2027-03-05 → 2027-01-25. Ceremony logistics budget: ~USD 120,000
+  → ~USD 15,000 (near-zero).
+- Gate-status S-01 correction pointer and Ceremonies corrected-posture row added above
+  (additive only — historical records preserved).
+
+**Clarification on circuit count (surfaced to Rathish; not yet resolved):**
+REC-1 states "Phase 1 needs one circuit (Aadhaar enrolment)." The Gate-2 transcript set is
+six circuits. These are not contradictory: REC-1 is exact for the enrolment family (FR-121
+dividend collapses three adapter-class variants to one concrete circuit for Phase 1); the five
+non-enrolment circuits (`residency_member`, `party_member`, `tenure_member`, `vote_message`,
+`tally`) are not cancelled — their phase-2 ceremonies are corrected in scale (small campaigns),
+not eliminated. See ADR-022 §Gate-2 transcript set.
+
+### REC-2 — Commit to Groth16 for Phase 1
+
+**Verbatim (Rathish, 2026-08-21):**
+> "Confirmed. Groth16 stays for Phase 1. The ceremony cost argument for switching has
+> collapsed — if the ceremony burden is days not months, the original motivation for a
+> universal-setup switch doesn't apply at Phase-1 scale. ADR-005 stands. Record a new ADR
+> that this is a near-irreversible commitment and names the revisit trigger."
+
+**Applied 2026-08-21:**
+- ADR-022 written and Accepted: Groth16 on bn254 confirmed for Phase 1; near-irreversibility
+  stated; revisit trigger defined (Phase 2+ circuit-count growth); IProofVerifier seam
+  (ADR-005 Decision 5) is the designed migration path.
+
+### Gate-2 line items added
+
+| Item | Status | Owner | Deadline |
+|------|--------|-------|---------|
+| `CON-015` legal opinion — independent legal opinion on Aadhaar API usage within data-minimisation posture | NOT STARTED | Sofia Marchetti | ≥ 8 wks before Gate 2 (≥ 2027-03-19) |
+| Doc 04 (Test Strategy) document-review debt | OPEN | PM to assign neutral reviewer | Before Gate 2 |
+| RTM catch-up: `FR-121`…`FR-129` traceability rows | NOT STARTED | Tester (after Architect + PO add DES/US) | Before Gate 2 |
+
+### What directs
+
+- `DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md` — decision record (REC-1, REC-2; Rathish).
+- `ADR-022` — Groth16 Phase-1 commitment, ceremony burden correction, revisit trigger.
+- Doc 13 v2.0.0 — project plan re-plan (Status: In Review). Doc 09/10: SRE to note the
+  ceremony programme correction when those documents are written.
+
+**Caution (do not act on):** endorsement-floor `max(..., 500)` constants in contract code and
+`UT-05xx` unit-test IDs are completely unrelated to the ceremony contributor count correction.
+They MUST NOT be altered.
+
+### Outcomes — applied 2026-08-21
+
+**Document verdicts (verified against artifacts):**
+
+| Document | Version | Verdict | Evidence |
+|----------|---------|---------|---------|
+| Doc 03 Architecture (SDD) | v2.1.5 | ✅ **Approved** — technical c1 PASS 99.5%, 0C/0H/0M/1L | `artifacts/reviews/03-architecture-design-sdd-v2.1.5-technical-cycle1.md`; Low issue: ADR-022 six-circuit confirmation-level wording — architect open item (next DES increment) |
+| Doc 13 Project Plan | v2.0.2 | ✅ **Approved** — business c1 FAIL 84% → v2.0.1 c2 FAIL 96% → v2.0.2 c3 PASS 100%, 0C/0H/0M/0L | `artifacts/reviews/13-project-plan-v2.0.2-business-cycle3.md`; **Doc 13's first-ever passing review** — pre-existing hook-noise item for Doc 13 review debt is now cleared |
+| Doc 04 Test Strategy | v1.0.2 | ⚠ **In Review** — §Z6 ceremony-burden figure corrected this session; review debt unchanged | No passing review report yet; Gate-2 line item remains open |
+
+**Headline outcomes of this session's ceremony correction:**
+
+- **MS-08** date: 2027-03-05 → **2027-01-25** (ceremonies now a days-long batched campaign per ADR-022 — MS-08 is off the critical path)
+- **Critical path:** audits govern from 2027-01-25 (TWO INDEPENDENT AUDITS, 2027-01-25 → 2027-03-12 — unchanged, binding constraint before and after correction)
+- **Gate 2 / MS-13: UNCHANGED at 2027-05-14** (audits were already the binding constraint; ceremony compression does not move Gate 2)
+- **Budget:** ceremony logistics line −USD 105,000 (USD 120,000 → ~USD 15,000); plan total ~USD 4,445,000; variance ~−USD 245,000 (~−5.8%), zero contingency
+
+**Still pending:**
+
+| Item | Owner | Status |
+|------|-------|--------|
+| Six-vs-one transcript-set reading (surfaced in DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md §3) | Rathish (approver) | Awaiting confirmation |
+| Doc 09 / Doc 10 exec-figure alignment for ceremony correction | sre | In progress this session |
+| CON-015 legal opinion (India/Aadhaar) | Sofia Marchetti | NOT STARTED — Gate-2 blocker |
+| FR-121…129 DES/US/TC catch-up | Architect + PO + Tester | NOT STARTED — Gate-2 blocker |
+| Doc 04 technical-mode review (v1.0.2) | PM to assign neutral reviewer | OPEN — Gate-2 blocker |
