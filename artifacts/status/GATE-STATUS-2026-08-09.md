@@ -626,3 +626,68 @@ They MUST NOT be altered.
 | CON-015 legal opinion (India/Aadhaar) | Sofia Marchetti | NOT STARTED — Gate-2 blocker |
 | FR-121…129 DES/US/TC catch-up | Architect + PO + Tester | NOT STARTED — Gate-2 blocker |
 | Doc 04 technical-mode review (v1.0.2) | PM to assign neutral reviewer | OPEN — Gate-2 blocker |
+
+---
+
+## Budget-appetite ruling & RISK-014 inquiry — 2026-08-21 (second entry this date)
+
+> Two approver rulings received 2026-08-21, transmitted via coordinator. All prior text
+> unchanged. Full decision record: `artifacts/status/DECISIONS-2026-08-21-BUDGET-APPETITE-AND-RISK014.md`.
+> This section is additive only.
+
+### Ruling 1 — Budget appetite (APPLIED on record-derived figures)
+
+**Applied in substance.** Appetite held at USD 4.2M (unchanged); ≈ USD 175K headroom on the
+accepted L2 basis recorded as an explicit audit-remediation contingency. Doc 13 v2.0.2 →
+v2.0.3 (Status: In Review); §8.3 lever paragraph corrected; §13.3 L2 row corrected;
+RISK-18 and RISK-19 updated; §11 re-plan log entry added.
+
+**Discrepancy surfaced — approver confirmation requested:**
+
+| Cited in ruling | Record shows | Gap |
+|---|---|---|
+| ~$3.836M (corrected cost estimate) | ≈ USD 4,025,000 (record-derived: 4,445,000 − 420,000) | ~$3.836M matches no artifact; no formal L2 re-estimate exists |
+| ~$294K (difference to contingency) | ≈ USD 175,000 (record-derived: 4,200,000 − 4,025,000) | ~$294K matches no artifact |
+| "Gate 2 date move to 2027-03-15" | Gate 2 is and remains 2027-05-14; 2027-03-15 is the audit-remediation + registry-timelock start (§3.4) — has never been a Gate-2 date | No Gate-2 date has ever been 2027-03-15; no date was changed |
+
+The endorsement "earned — audit sequencing, not cut safety work" is recorded as applying to
+the evidence-based **2027-05-14 date** already in the plan. Approver confirmation that
+2027-05-14 (not 2027-03-15) is the intended referent is requested.
+
+**Gate 2: NOT READY. Gate-2 date 2027-05-14 UNCHANGED.**
+
+### Ruling 2 — RISK-014 contradiction (HELD — no referent)
+
+No document changed. No architect dispatched. No technical review run. Evidence:
+
+- `RISK-014` (four digits) does not exist — the scheme uses two-digit IDs (`RISK-01`..`RISK-30`).
+- `RISK-14` (closest match) is "Regulatory reclassification" (owner Sofia Marchetti) — no MACI content, no threshold language.
+- `ADR-006` decides the 5-of-7 threshold with recorded rationale; all downstream citations (Doc 03 DES-024 / §5 / failure-mode table; Doc 04; Doc 11 PB-MACI; Doc 12; Doc 13 MS-12/RISK-07/RISK-20; ADR-013) are consistent at 5-of-7 with no "undecided" language.
+- Repo-wide sweep for "undecided"/"TBD"/"open" near threshold language: no matches for the MACI committee threshold.
+
+Awaiting approver re-direction with a specific referent (different risk ID, different document, or different threshold construct).
+
+### Doc 13 v2.0.3 review outcome — PASS 97%, 0C/0H/0M/2L
+
+Report: `artifacts/reviews/13-project-plan-v2.0.3-business-cycle1.md`. Status flipped to
+**Approved**. Two surviving Low issues — not fixed now; reviewer recommended folding into
+the next substantive re-plan:
+
+| ID | Severity | Issue |
+|---|---|---|
+| ISS-01 | Low | §13.3 L2 row states "~4%" for the contingency percentage; 175,000 / 4,200,000 = ~4.17% — should read ~4.2% |
+| ISS-02 | Low | §8.3 discrepancy paragraph surfaces the figure discrepancy (~$3.836M / ~$294K) but does not surface the Gate-2-date no-referent note (2027-03-15); that note lives only in the decision record §3.5 (`DECISIONS-2026-08-21-BUDGET-APPETITE-AND-RISK014.md`) and is not visible to a reader of §8.3 alone |
+
+Neither Low blocks Gate 1 or Gate 2.
+
+### Follow-up debt (out of this directive's scope — NOT edited)
+
+The following stale citations carry the same "≈ USD 4.13M / ~1.7%" figure and need the same
+cascade correction once the product-owner picks them up:
+
+| Document | Location | Stale figure | Action owner |
+|---|---|---|---|
+| Doc 01 PR-FAQ (`docs/01-press-release-prfaq.md`) | Banner and §E2 | "≈ USD 4.13M" / "~1.7% contingency" | product-owner (Priya Raghunathan) |
+| Doc 02 SRS (`docs/02-requirements-srs.md`) | CON-007 accepted-budget parenthetical | "~USD 4.13M" | product-owner (Priya Raghunathan) |
+
+These are not edited in this directive — they are the product-owner's cascade obligation.
