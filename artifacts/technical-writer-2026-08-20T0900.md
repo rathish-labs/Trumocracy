@@ -111,3 +111,49 @@ None. Zero issues at any severity.
 ### Artifacts written (addendum)
 
 - `artifacts/reviews/02-requirements-srs-v2.3.1-business-cycle1.md` (review report — PASS 100%)
+
+---
+
+## Addendum 2 — v2.4.0 cycle-1 review (same session, new loop)
+
+```
+Scope:     Business-mode cycle-1 review of Doc 02 v2.4.0 (new review loop).
+           OI-19 and OI-20 rulings applied (Rathish, 2026-08-20;
+           artifacts/status/DECISIONS-2026-08-20-OI19-OI20.md).
+           Read-only on the document. No documents edited. No product code touched.
+```
+
+### Verdict
+
+**PASS: 100%, 0C/0H/0M/0L.**
+
+### Decisions confirmed
+
+- OI-19 DECIDED banner in §4.41 quotes ruling verbatim. FR-125 finalised with 6 invariant clauses:
+  (a) rate-limiter only; (b) non-invite fallback ALWAYS available, not closeable by config/default,
+  no fee, leads to full counted membership; (c) no refusal for lack of invite; (d) separating test
+  recorded as mandatory AC — "a determined real person can always join without an invite";
+  (e) referral edge verified-then-discarded intact; (f) counted-membership path ungated.
+- FR-020 normative text UNCHANGED; v2.4.0 annotation confirms FR-125 composition.
+- OI-20 DECIDED banner on FR-004 quotes ruling verbatim. FR-004 normative text UNCHANGED
+  ("FR-004 normative text is NOT amended" stated explicitly).
+- Phase-1 limitation stated honestly: (a) no-Aadhaar exclusion in pilot region; (b) 50% cap
+  inoperative, sole rail carries 100% share — explicitly stated as "dated, accepted, findable
+  limitation recorded not hidden."
+- Exit condition: Phase 2/eIDAS 2.0 (FR-121). Charter guard: FR-129 minted (Must, §4.43).
+- WHICH-tier question (FR-118 vs FR-119) explicitly deferred to architect, not invented.
+- §13 OI-19 RESOLVED, §13 OI-20 RESOLVED — both entries retained with struck-through PENDING text.
+- §8 FR-125 Gherkin: 5 scenarios incl. separating test (Scenario 3) and adversarial
+  fallback-closure attempt (Scenario 4, rejected). §8 FR-129 Gherkin: 2 scenarios incl.
+  adversarial config-extension (rejected). All falsifiable.
+- §11 Must 110, FR minted 129 — verified correct; convention note updated (FR-125 no longer draft).
+- §12 traces: FR-125 updated, FR-129 added. TD-12 updated noting FR-125 finalised at v2.4.0.
+- No softening, no scope creep, no silent reconciliation.
+
+### Issues found (v2.4.0)
+
+None. Zero issues at any severity.
+
+### Artifacts written (addendum 2)
+
+- `artifacts/reviews/02-requirements-srs-v2.4.0-business-cycle1.md` (review report — PASS 100%)

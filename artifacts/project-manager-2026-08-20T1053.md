@@ -132,3 +132,63 @@ launch region, ≤ 50% attestor cap) has not been amended. NOT DECIDED.
 
 - **Gate 1:** APPROVED (unconditional; OI-04-PILOT now closed; OI-18 decided 2026-08-11).
 - **Gate 2:** NOT READY. RTM (Doc 08 v2.1.0): 125 Must rows / 12 COMPLETE / 113 OPEN (FR-121..FR-128 rows not yet added). Legal-opinion line item: NOT STARTED. OI-19 / OI-20: NOT DECIDED.
+
+---
+
+## OI-19 / OI-20 addendum — decided 2026-08-20 (appended after ruling)
+
+Rathish ruled on both open tensions in the same session. Decision record:
+`artifacts/status/DECISIONS-2026-08-20-OI19-OI20.md`.
+
+### OI-19 — CLOSED
+
+Invite-gating is a spam-control rate-limiter, never an admission condition. FR-125
+finalised: invite-based onboarding is the fast default path; a non-invite fallback is
+mandatory and must always remain open (slower/higher-friction is acceptable, closed is not).
+FR-020 is unamended and absolute. Test obligation minted: a determined real person must
+always be able to complete membership without an invite. Applied in Doc 02 v2.4.0 and
+ADR-021 amendment note.
+
+### OI-20 — CLOSED
+
+Design stays plural; Phase-1 deploys one rail (Aadhaar). FR-004 unamended — satisfied at
+architecture level (Aadhaar is one implementation of the pluggable adapter interface).
+Phase-1 single-rail recorded as a dated deployment limitation with explicit exit condition:
+Phase 2 adds eIDAS. New Charter-layer-guard requirement minted in Doc 02 v2.4.0: making
+single-issuer operation permanent requires Gate-1 re-entry, never a deployment default.
+Applied in Doc 02 v2.4.0 and ADR-016 amendment block.
+
+### Artifact
+
+- `artifacts/status/DECISIONS-2026-08-20-OI19-OI20.md` — created this addendum
+
+### Gate status (final for 2026-08-20)
+
+- **Gate 1:** APPROVED (unconditional). OI-04-PILOT CLOSED. OI-18 CLOSED 2026-08-11. OI-19 CLOSED 2026-08-20. OI-20 CLOSED 2026-08-20.
+- **Gate 2:** NOT READY. RTM (Doc 08 v2.1.0): 125 Must rows / 12 COMPLETE / 113 OPEN (FR-121..FR-128 rows not yet added). Legal-opinion line item (India/Aadhaar): NOT STARTED.
+
+---
+
+## v2.4.0 / v2.1.4 outcomes addendum — applied 2026-08-20/21 (appended after completion)
+
+Facts verified against review reports before recording.
+
+| Document | Version | Review outcome |
+|----------|---------|---------------|
+| Doc 02 Requirements | **v2.4.0** | business cycle-1 PASS 100%, 0C/0H/0M/0L — Approved |
+| Doc 03 SDD | **v2.1.4** | technical cycle-1 PASS 99.5%, 0C/0H/0M/1L — Approved |
+
+**IDs minted / changed:** FR-125 finalised (no longer DRAFT); FR-129 minted (Must —
+Charter-layer permanence guard); OI-19 and OI-20 marked RESOLVED in Doc 02 §13. Must count
+109 → 110. FR-020 and FR-004 normative text unamended.
+
+**Catch-up debt extended:** FR-129 joins FR-121..FR-128 in recorded-phasing posture (no
+DES/US/TC/RTM rows). FR-129 tier-determination (FR-118 Tier-1 vs FR-119 Tier-2) registered
+in Doc 03 §16 for next DES increment. ADR-016 ISS-01 Low (citizen-exclusion sentence
+missing from amendment block item (c)) — owner: architect, next DES increment.
+
+**Process note:** one reviewer invocation terminated by session usage limit before writing
+anything; cleanly re-run; no partial artifacts.
+
+**Gate 2 (final):** NOT READY. RTM 125 Must rows / 12 COMPLETE / 113 OPEN (FR-121..FR-129
+rows not yet added). Legal-opinion (India/Aadhaar): NOT STARTED.

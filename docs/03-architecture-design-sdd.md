@@ -2,14 +2,25 @@
 
 ```
 Document ID:   SDD-TRUMOCRACY
-Version:       2.1.3
-Status:        Approved (review loop, cycle 2 PASS 100% — artifacts/reviews/03-architecture-design-sdd-v2.1.3-technical-cycle2.md)
+Version:       2.1.4
+Status:        Approved (review loop, cycle 1 PASS 99.5% — artifacts/reviews/03-architecture-design-sdd-v2.1.4-technical-cycle1.md)
 Owner:         Ravi Deshmukh — Principal Architect
 Approvers:     Rafael Duarte (Security), Chen Wei (Reliability), Dr. Lena Kowalczyk (Privacy),
                Aisha Nkemdirim (Elections & Voting)
-Source:        SRS-TRUMOCRACY v2.3.0
+Source:        SRS-TRUMOCRACY v2.4.0
 Last updated:  2026-08-20
-Changelog:     v2.1.3 (2026-08-20) — Cycle-1 review rework
+Changelog:     v2.1.4 (2026-08-20) — Registration-only: OI-19 and OI-20 closed (Rathish,
+               2026-08-20; DECISIONS-2026-08-20-OI19-OI20.md). ADR-016 amended (OI-20
+               ruling: FR-004 satisfied at architecture level; Phase-1 single-rail dated
+               deployment limitation with Phase-2/eIDAS exit; 50% cap inoperative Phase-1;
+               permanence requires Charter-layer re-entry — FR-129). ADR-021 amended (OI-19
+               closed: FR-125 finalised, non-invite fallback mandatory; OI-20 closed:
+               FR-004 architecture-level satisfaction, FR-129). §12 ADR-016 and ADR-021
+               rows updated with dated amendment notes. §16 next-increment scope extended
+               to FR-121..FR-129; tier-determination debt for FR-129 registered. §1.1
+               counts updated to SRS v2.4.0 (129 FR / 127 active / 110 Must). No DES
+               additions.
+               v2.1.3 (2026-08-20) — Cycle-1 review rework
                (03-architecture-design-sdd-v2.1.2-technical-cycle1.md): ISS-01 preamble ADR
                count twenty/ADR-001..ADR-020 → twenty-one/ADR-001..ADR-021; ISS-02 §1.1 SRS
                citation updated to v2.3.0 counts (128 FR / 126 active / 109 Must / 15 CON);
@@ -122,8 +133,8 @@ Changelog:     v2.1.3 (2026-08-20) — Cycle-1 review rework
 
 Trumocracy lets any verified citizen originate a political party, gather demonstrated public
 support, and — on reaching a coded threshold — operate that party under rules that no
-founder, financier or platform operator can override. The SRS v2.3.0 defines 21 `BR`, 128 `FR`
-(126 active + 2 superseded; 109 Must), 28 `NFR` (24 Must), 15 `CON`, and 27 `RISK`. The
+founder, financier or platform operator can override. The SRS v2.4.0 defines 21 `BR`, 129 `FR`
+(127 active + 2 superseded; 110 Must), 28 `NFR` (24 Must), 15 `CON`, and 27 `RISK`. The
 requirements that shape this architecture more than any others:
 
 | ID | Requirement | Architectural consequence |
@@ -990,12 +1001,12 @@ Full records in `docs/adr/`. Status of all twenty-one ADRs: **Accepted**.
 | 013 | Parties not elections; erasure by non-collection; powerlessness by design | "you can't stop bad actors" is a permanent, accepted criticism |
 | 014 | Non-authoritative indexer, replaceable relayer, Sybil-resistant sponsorship | our own services become a convenience monoculture unless diversity is funded |
 | 015 | Asymmetric candidate feedback (upvote +3, downvote −1; 25% approval floor) | critics note scoring flatters incumbents; asymmetry is the deliberate risk accepted to protect downvoters (ADR-015) |
-| 016 | Government eID sole enrolment-nullifier class per region (Phase 1); amends ADR-003; **amended 2026-08-20 (Phase-1 pilot rail named: India/Aadhaar offline KYC; OI-04-PILOT closed — ADR-021)** | accepted exclusion: no-doc citizens cannot enrol Phase 1; state compulsion risk concentrated (ADR-016) |
+| 016 | Government eID sole enrolment-nullifier class per region (Phase 1); amends ADR-003; **amended 2026-08-20 (Phase-1 pilot rail named: India/Aadhaar offline KYC; OI-04-PILOT closed — ADR-021)**; **amended 2026-08-20 (OI-20 CLOSED: FR-004 satisfied at architecture level; Phase-1 single-rail is dated deployment limitation, exit Phase 2/eIDAS 2.0; 50% cap inoperative Phase-1 duration; permanence requires Charter-layer re-entry — FR-129)** | accepted exclusion: no-doc citizens cannot enrol Phase 1; state compulsion risk concentrated (ADR-016) |
 | 017 | Deterministic in-circuit nullifier derivation + pluggable credential adapter interface; **amended by ADR-020 (post-registration lifecycle)**; **amended 2026-08-20 (Phase-1 first-production adapter named: India/Aadhaar offline KYC, class (c); OI-04-PILOT closed — ADR-021)** | per-class circuit development cost; trust-list freshness operational dependency (ADR-017) |
 | 018 | Nullifier-collision recovery: 7-day delay, active-key veto, voting bar | complete device + channel compromise is accepted residual (ADR-018) |
 | 019 | Three-layer amendment boundary: Charter Layer (Tier-1) — seven entrenched rules fork-only; Guarded Layer (Tier-2) — named absolutes via five-property super-process (80%/25%, 180-day window, audit); Open Layer (Tier-3) — ordinary citizen vote; **amended 2026-08-11 (SC-17: citizen-inaction fallback for publishAuditRef)** | a sustained 80%/25% supermajority over 180+ days CAN weaken a named absolute — by design; fork right is the residual protection (ADR-019) |
 | 020 | Trust-anchor lifecycle: rotation via 60-day dual-anchor overlap (SC-14 closed); revocation ordinary 30-day / emergency 7-day timelock (SC-13 closed); both enacted only by passed governance vote via Governor.execute(); **amended 2026-08-11 (SC-18: ROTATION_PENDING abort path — ROTATION_ABORTED state added)** | 7-day emergency window remains a Sybil window — RISK-30 accepted; epoch cap bounds blast radius (ADR-020) |
-| 021 | Verification gates COUNTING, never joining; on-device nullifier-only identity posture; pilot sequence (Phase 1: India/Aadhaar offline KYC; Phase 2: EU/eIDAS 2.0; Phase 3: USA deferred); subpoena test as design invariant; two rejected designs recorded — persistent referral graph and encrypted identity registry (2026-08-20, directed by Rathish; DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Decisions 1–4) | CON-015 Gate-2 legal-opinion dependency; OI-19 (invite-gating vs FR-020) and OI-20 (single-rail pilot vs FR-004) pending approver; open-tier account farms accepted (zero counted impact) |
+| 021 | Verification gates COUNTING, never joining; on-device nullifier-only identity posture; pilot sequence (Phase 1: India/Aadhaar offline KYC; Phase 2: EU/eIDAS 2.0; Phase 3: USA deferred); subpoena test as design invariant; two rejected designs recorded — persistent referral graph and encrypted identity registry (2026-08-20, directed by Rathish; DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Decisions 1–4); **amended 2026-08-20 (OI-19 CLOSED: FR-125 finalised, non-invite fallback mandatory, FR-020 unamended; OI-20 CLOSED: FR-004 satisfied at architecture level, Phase-1 dated limitation, Charter-layer guard FR-129)** | CON-015 Gate-2 legal-opinion dependency; OI-19 and OI-20 both CLOSED 2026-08-20 (DECISIONS-2026-08-20-OI19-OI20.md); open-tier account farms accepted (zero counted impact) |
 
 ## 13. Risks & technical debt
 
@@ -1073,15 +1084,19 @@ the amendment boundary. **OI-18 (entrenched-charter scope)** — CLOSED by Rathi
 designed in DES-087 and the Guarded Layer (Tier-2) super-process state machine.
 
 **Next-increment scope (recorded not hidden):** Full DES coverage of remaining v2.x
-requirement areas — FR-074..FR-111 beyond existing DES-064..DES-086, **and FR-121..FR-128
+requirement areas — FR-074..FR-111 beyond existing DES-064..DES-086, **and FR-121..FR-129
 (pilot sequence, tiered verification, on-device nullifier-only posture, subpoena-test
-invariant; directed by Rathish 2026-08-20; ADR-021 records the decision)** — is the next
-design increment. Until that increment is complete, those FR rows carry an open DES gap in
-the RTM. This is a deliberate phasing decision consistent with the session scope in
-GATE1-DECISION-2026-08-11.md §5. Two approver-pending inputs must resolve before the
-FR-121..FR-128 DES increment can close: **OI-19** (invite-gating vs FR-020 admission ban)
-and **OI-20** (single-rail Phase-1 pilot vs FR-004 attestor plurality) — both pending
-Rathish; FR-125 and FR-004 text are not finalised until those decisions land.
+invariant, Charter-layer guard for issuer-plurality permanence; ADR-021 records Decisions
+1–4; OI-19 and OI-20 CLOSED 2026-08-20)** — is the next design increment. Until that
+increment is complete, those FR rows carry an open DES gap in the RTM. This is a deliberate
+phasing decision consistent with the session scope in GATE1-DECISION-2026-08-11.md §5.
+OI-19 and OI-20 are closed (Rathish, 2026-08-20; DECISIONS-2026-08-20-OI19-OI20.md);
+FR-125 is finalised (non-invite fallback mandatory) and FR-004 is satisfied at architecture
+level. **One tier-determination question is owed for the FR-121..FR-129 DES increment:**
+FR-129 (Charter-layer guard — making single-issuer operation permanent) defers to the
+architect the determination of WHICH amendment tier (FR-118 Tier-1 entrenched charter /
+FR-119 Tier-2 named absolutes) governs issuer-plurality permanence; this question must be
+resolved and recorded in the DES element for FR-129 before that DES row can close.
 
 ## 17. Glossary
 

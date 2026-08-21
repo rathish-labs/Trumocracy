@@ -449,6 +449,8 @@ resolves the conflict or whether FR-020's normative text requires amendment. **F
 DRAFT and is not implementation-ready until OI-19 closes.** Status: NOT DECIDED — awaiting
 Rathish.
 
+**DECIDED 2026-08-20 (Rathish)** — see `artifacts/status/DECISIONS-2026-08-20-OI19-OI20.md`; applied in Doc 02 v2.4.0 this session. Invite-gating is a spam-control rate-limiter, never an admission condition; non-invite fallback is mandatory and must always remain open; FR-020 unamended and absolute.
+
 #### OI-20 — PENDING APPROVER DECISION (Rathish)
 
 **Single-rail India pilot vs FR-004's Must requirement of ≥ 2 mutually independent
@@ -456,6 +458,8 @@ attestation paths per launch region (with a ≤ 50% attestor-plurality cap).** T
 pilot names one rail (Aadhaar offline paperless KYC). FR-004's normative text has not been
 amended — the conflict between naming a single pilot rail and the ≥ 2-path requirement is
 recorded and left for the approver to resolve. Status: NOT DECIDED — awaiting Rathish.
+
+**DECIDED 2026-08-20 (Rathish)** — see `artifacts/status/DECISIONS-2026-08-20-OI19-OI20.md`; applied in Doc 02 v2.4.0 this session. Dated Phase-1 deployment limitation; exit condition is Phase 2 (eIDAS); FR-004 unamended (satisfied at architecture level); making single-issuer operation permanent requires Charter-layer re-entry, never a deployment default.
 
 #### Catch-up debt — FR-121..FR-128 have no DES, US, TC, or RTM rows
 
@@ -465,7 +469,65 @@ hidden; they are the next catch-up obligation.
 
 | Owner | Deliverable | Trigger |
 |-------|-------------|---------|
-| product-owner (Priya Raghunathan) | Doc 05 stories for FR-121..FR-128 | Next backlog catch-up; FR-125 stories must also wait for OI-19 to close before being marked Ready |
-| tester (Ji-woo Park) | Doc 07 test cases + Doc 08 RTM rows for FR-121..FR-128 | After Doc 05 stories land and OI-19/OI-20 resolve (FR-125 and FR-121's single-rail Gherkin gate on OI-20) |
+| product-owner (Priya Raghunathan) | Doc 05 stories for FR-121..FR-128 | Next backlog catch-up; FR-125 stories may now proceed (OI-19 closed) |
+| tester (Ji-woo Park) | Doc 07 test cases + Doc 08 RTM rows for FR-121..FR-128 | After Doc 05 stories land |
 
-**Gate 2:** NOT READY. RTM (Doc 08 v2.1.0): 125 Must rows / 12 COMPLETE / 113 OPEN (FR-121..FR-128 RTM rows not yet added). Legal-opinion line item (India/Aadhaar): NOT STARTED. OI-19 and OI-20: NOT DECIDED.
+**Gate 2:** NOT READY. RTM (Doc 08 v2.1.0): 125 Must rows / 12 COMPLETE / 113 OPEN (FR-121..FR-128 RTM rows not yet added). Legal-opinion line item (India/Aadhaar): NOT STARTED. OI-19: CLOSED 2026-08-20. OI-20: CLOSED 2026-08-20.
+
+---
+
+### Outcomes — applied 2026-08-20/21
+
+> Rulings applied by product-owner (Doc 02 v2.4.0) and architect (Doc 03 v2.1.4). Facts
+> verified against review reports before recording. Additive only; prior text unchanged.
+
+#### Document versions and review verdicts
+
+| Document | Version | Mode | Cycle | Score | Findings | Verdict |
+|----------|---------|------|-------|-------|----------|---------|
+| Doc 02 Requirements (`docs/02-requirements-srs.md`) | **v2.4.0** | business | 1 | 100% | 0C / 0H / 0M / 0L | **PASS** |
+| Doc 03 SDD (`docs/03-architecture-design-sdd.md`) | **v2.1.4** | technical | 1 | 99.5% | 0C / 0H / 0M / 1L | **PASS** |
+
+Review reports: `artifacts/reviews/02-requirements-srs-v2.4.0-business-cycle1.md`,
+`artifacts/reviews/03-architecture-design-sdd-v2.1.4-technical-cycle1.md`.
+
+**What was applied — Doc 02 v2.4.0.** FR-125 finalised: no longer DRAFT; invite-based
+onboarding is the fast default path; the non-invite fallback is mandatory and must always
+remain open; the separating-test obligation is recorded as a must-pass acceptance criterion
+(a determined real person can always join without an invite). FR-129 minted (Must, §4.43):
+Charter-layer permanence guard — making single-issuer operation permanent requires the
+Charter-layer amendment process with Gate-1 re-entry, never a deployment default. OI-19 and
+OI-20 marked RESOLVED in §13. FR-020 and FR-004 normative text unamended. Must count:
+109 → 110.
+
+**What was applied — Doc 03 v2.1.4 (registration-only patch).** ADR-016 amended: Phase-1
+deployment limitation with Phase-2/eIDAS 2.0 exit condition; FR-004 satisfied at
+architecture level; permanence guard cites FR-129; 50% attestor-share cap noted inoperative
+for Phase-1 single-rail duration. ADR-021 amended: OI-19 and OI-20 resolution notes added;
+FR-125 finalised; FR-020 unamended; FR-004 architecture-level satisfaction recorded.
+Doc 03 §16 scope note extended to FR-121..FR-129; OI-19/OI-20 marked CLOSED 2026-08-20;
+FR-129 tier-determination question registered as outstanding for the next DES increment.
+
+**Doc 03 v2.1.4 surviving Low issue (does not block).** ISS-01: ADR-016 amendment block
+item (c) omits the citizen-exclusion sentence — "in Phase 1 a person without Aadhaar cannot
+enrol in the pilot region" — in favour of the related-but-distinct 50%-cap-inoperative
+statement. The exclusion fact is present in the ADR body (§Context) and in the §12 row
+Consequences column; the document is not misleading. Owner: architect (Ravi Deshmukh).
+Fix at next DES increment.
+
+#### Catch-up debt extended
+
+FR-129 joins FR-121..FR-128 in the recorded-phasing posture: no DES, US, TC, or RTM rows
+yet. An additional open item is registered:
+
+| Owner | Deliverable | Trigger |
+|-------|-------------|---------|
+| architect (Ravi Deshmukh) | FR-129 tier-determination: FR-118 (Tier-1 Charter) vs FR-119 (Tier-2 super-process) for issuer-plurality permanence guard — registered in Doc 03 §16 | Next DES increment; NOT decided in v2.1.4 |
+| architect (Ravi Deshmukh) | ADR-016 amendment block ISS-01 fix (citizen-exclusion sentence) | Next DES increment |
+| product-owner (Priya Raghunathan) | Doc 05 stories for FR-121..FR-129 | Next backlog catch-up |
+| tester (Ji-woo Park) | Doc 07 test cases + Doc 08 RTM rows for FR-121..FR-129 | After Doc 05 stories land |
+
+**Process note.** One reviewer invocation was terminated by a session usage limit before
+writing anything and was cleanly re-run; no partial artifacts exist.
+
+**Gate 2:** NOT READY. RTM (Doc 08 v2.1.0): 125 Must rows / 12 COMPLETE / 113 OPEN (FR-121..FR-129 RTM rows not yet added). Legal-opinion line item (India/Aadhaar): NOT STARTED. OI-19: CLOSED 2026-08-20. OI-20: CLOSED 2026-08-20.

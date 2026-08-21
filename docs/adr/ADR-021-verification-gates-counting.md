@@ -13,6 +13,17 @@ Source:        DECISIONS-2026-08-20-PILOT-VERIFICATION.md (Decisions 1–4; Rath
 Lineage:       ADR-003 (personhood, issuer-agnostic); ADR-016 (Phase-1 GOV_EID-class
                restriction); ADR-017 (nullifier derivation + adapter interface, incl.
                SC-01 amendment); ADR-018 (nullifier-collision recovery)
+Amendment:     2026-08-20 — OI-19 and OI-20 both resolved (Rathish, 2026-08-20;
+               DECISIONS-2026-08-20-OI19-OI20.md). OI-19: invite-gating is a spam-control
+               rate-limiter with a mandatory always-open non-invite fallback (FR-125
+               finalised, no longer draft); FR-020 unamended and absolute; test obligation —
+               a determined real person can always join without an invite. OI-20: Phase-1
+               single-rail deployment is a dated limitation with Phase-2/eIDAS 2.0 exit
+               condition (FR-121); FR-004 satisfied at the architecture level (Aadhaar is
+               one implementation of the pluggable adapter interface, not a hardcoded
+               dependency); making single-issuer operation permanent requires the Charter-
+               layer amendment process with Gate-1 re-entry, never a deployment default
+               (FR-129). See §"Open tensions" below for the resolved-status pointer.
 ```
 
 ## Context
@@ -227,7 +238,11 @@ from any combination of stored data — anywhere in the platform.
 
 ## Open tensions this ADR does not resolve
 
-**OI-19 — Invite-gating vs FR-020 admission ban (PENDING Rathish).** Decision 2 permits
+> **Resolved 2026-08-20 — see header amendment.** Both OI-19 and OI-20 were decided by
+> the approver (Rathish, 2026-08-20; DECISIONS-2026-08-20-OI19-OI20.md). Original tension
+> statements retained below for traceability.
+
+**OI-19 — Invite-gating vs FR-020 admission ban (RESOLVED 2026-08-20).** Decision 2 permits
 invite-gating for spam control at the open tier; Decision 4 permits referral to gate entry
 (edge discarded after check); FR-020 (Must) bans "approval, sponsorship, interview,
 invitation, fee or veto" as admission conditions. Whether the scope distinction (open-tier
@@ -235,7 +250,7 @@ spam control vs counted-membership admission) resolves the conflict, or whether 
 text requires amendment, is a pending approver decision. This ADR takes no position and
 records OI-19 as live.
 
-**OI-20 — Single-rail Phase-1 pilot vs FR-004 attestor plurality (PENDING Rathish).**
+**OI-20 — Single-rail Phase-1 pilot vs FR-004 attestor plurality (RESOLVED 2026-08-20).**
 FR-004 requires at least two independent attestors per launch region. Phase-1 India uses
 Aadhaar — one national government issuer, one rail. Whether this is a formal Phase-1 waiver
 of FR-004's text, or whether FR-004 requires amendment to accommodate the single-rail pilot

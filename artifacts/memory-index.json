@@ -1776,9 +1776,19 @@
       "phase": "Verify",
       "product": "Trumocracy",
       "summary": "Applied 2026-08-12 follow-up audit fixes to Doc 07 v2.1.0 and Doc 08 v2.1.0. Fix 1: TC-3451/3453 amended (seated-but-inactive precondition); TC-3467/3468 minted (vacancy-immediate citizen fallback for publishAuditRef and issuer-onboarding). Fix 2: §10 arithmetic corrected (368→371 total, 169→172 Blocked, 4-case overlap convention stated). Fix 3: TC-3469 minted (anti-circularity direct attack). Doc 08 FR-117/FR-119 TC columns and §6 dashboard updated. Both docs Status: In Review.",
-      "docs_touched": ["docs/07-test-cases-suites.md", "docs/08-traceability-matrix.md"],
-      "ids_minted": ["TC-3467", "TC-3468", "TC-3469"],
-      "ids_amended": ["TC-3451", "TC-3453"],
+      "docs_touched": [
+        "docs/07-test-cases-suites.md",
+        "docs/08-traceability-matrix.md"
+      ],
+      "ids_minted": [
+        "TC-3467",
+        "TC-3468",
+        "TC-3469"
+      ],
+      "ids_amended": [
+        "TC-3451",
+        "TC-3453"
+      ],
       "open_items": [
         "Doc 07 v2.1.0 and Doc 08 v2.1.0 Status: In Review — document-review cycle pending.",
         "Four automated-and-Blocked overlap cases remain un-named (not identifiable by suite-table inspection alone).",
@@ -1873,20 +1883,23 @@
       "timestamp": "2026-08-20T10:53:00Z",
       "phase": "Governance — pilot jurisdiction & verification decision recording",
       "product": "Trumocracy",
-      "summary": "Recorded four approver decisions by Rathish (2026-08-20) and recorded session outcomes. Decisions: (1) pilot jurisdiction sequence — India Phase 1 / EU Phase 2 / USA Phase 3, ordered by technical readiness of identity rail; (2) verification as a separate optional step, tiered — verification gates COUNTING, never joining; (3) on-device proof, nullifier-only, no stored identity — existing C-03 circuit / SC-01 trust-anchor binding; subpoena test as acceptance criterion; (4) two rejected designs recorded with rationale — persistent referral graph and encrypted identity registry. OI-04-PILOT CLOSED. New Gate-2 line item: legal opinion for India/Aadhaar rail required before enrolment requirement finalised. Outcomes applied: Doc 02 v2.3.0 PASS (97%, 0C/0H/0M/3L); Doc 03 v2.1.3 PASS (100%, after cycle-1 FAIL at v2.1.2); ADR-021 registered; FR-121..FR-128, CON-015, TD-12 minted; OI-19 and OI-20 surfaced as open tensions pending Rathish.",
+      "summary": "Recorded four approver decisions by Rathish (2026-08-20) and recorded all session outcomes. Decisions: (1) pilot jurisdiction sequence — India Phase 1 / EU Phase 2 / USA Phase 3; (2) verification as a separate optional step, tiered — verification gates COUNTING, never joining; (3) on-device proof, nullifier-only, no stored identity; (4) two rejected designs. OI-04-PILOT CLOSED. New Gate-2 line item: legal opinion for India/Aadhaar. Applied: Doc 02 v2.3.0 PASS 97%; Doc 03 v2.1.3 PASS 100%; ADR-021 registered; FR-121..FR-128, CON-015, TD-12 minted; OI-19 and OI-20 surfaced then decided by Rathish same session — OI-19 CLOSED (invite-gating rate-limiter, non-invite fallback mandatory, FR-020 unamended); OI-20 CLOSED (dated Phase-1 deployment limitation, FR-004 unamended, Charter-layer-guard FR-129 minted, eIDAS exit condition). Rulings applied: Doc 02 v2.4.0 PASS 100%; Doc 03 v2.1.4 PASS 99.5% (1 Low — ADR-016 ISS-01, architect, next DES increment); FR-125 finalised; FR-129 minted; OI-19/OI-20 RESOLVED in §13. Full records: DECISIONS-2026-08-20-PILOT-VERIFICATION.md and DECISIONS-2026-08-20-OI19-OI20.md.",
       "artifacts_written": [
         "artifacts/status/DECISIONS-2026-08-20-PILOT-VERIFICATION.md (created)",
-        "artifacts/status/GATE-STATUS-2026-08-09.md (updated — 2026-08-20 section + Outcomes subsection appended)",
-        "artifacts/project-manager-2026-08-20T1053.md (this note, incl. outcomes addendum)",
+        "artifacts/status/DECISIONS-2026-08-20-OI19-OI20.md (created)",
+        "artifacts/status/GATE-STATUS-2026-08-09.md (updated — 2026-08-20 section + Outcomes + OI-19/OI-20 resolution lines + v2.4.0/v2.1.4 outcomes subsection appended)",
+        "artifacts/project-manager-2026-08-20T1053.md (this note, incl. all addenda)",
         "artifacts/memory-index.json (updated — this entry updated in place)"
       ],
       "ids_touched": {
-        "OI_closed": "OI-04-PILOT",
-        "OI_minted": "OI-19, OI-20 (both PENDING APPROVER DECISION)",
-        "FR_minted_recorded": "FR-121..FR-128 (8 Must; no DES/US/TC/RTM rows yet)",
+        "OI_closed": "OI-04-PILOT, OI-19, OI-20",
+        "OI_minted_then_closed": "OI-19, OI-20 (surfaced during v2.3.0 application; closed same session by Rathish)",
+        "FR_minted_recorded": "FR-121..FR-128 (8 Must; v2.3.0); FR-129 (1 Must Charter-layer guard; v2.4.0); all FR-121..FR-129 have no DES/US/TC/RTM rows yet",
+        "FR_finalised": "FR-125 (no longer DRAFT; v2.4.0)",
         "CON_minted_recorded": "CON-015",
         "TD_minted_recorded": "TD-12",
-        "ADR_minted_recorded": "ADR-021"
+        "ADR_minted_recorded": "ADR-021",
+        "ADR_amended": "ADR-016 (Phase-1 limitation + permanence guard); ADR-021 (OI-19/OI-20 resolution notes)"
       },
       "key_decisions": [
         "OI-04-PILOT CLOSED — Phase 1 pilot: India, Aadhaar offline paperless KYC, FR-070 adapter class (c).",
@@ -1894,17 +1907,17 @@
         "Verification gates COUNTING, never joining — two tiers (open, verified).",
         "On-device proof only; nullifier-only transmission; no stored raw or reversible identity data at any time; subpoena test is the acceptance criterion.",
         "Two rejected designs recorded: persistent referral graph; encrypted identity registry.",
-        "OI-19 OPEN: invite-gating vs FR-020 admission ban — FR-125 DRAFT, not implementation-ready until OI-19 closes.",
-        "OI-20 OPEN: single-rail pilot (India/Aadhaar) vs FR-004 ≥ 2 independent attestation paths — FR-004 normative text NOT amended."
+        "OI-19 CLOSED: invite-gating is a rate-limiter, never admission condition; non-invite fallback mandatory; FR-125 finalised; FR-020 unamended.",
+        "OI-20 CLOSED: dated Phase-1 deployment limitation (Aadhaar only); FR-004 unamended (satisfied at architecture level); FR-129 Charter-layer-guard minted; Phase-2 eIDAS is the exit condition."
       ],
       "open_items": [
-        "OI-19 PENDING RATHISH: invite-gating vs FR-020 admission ban; FR-125 not implementation-ready until decided.",
-        "OI-20 PENDING RATHISH: single-rail India pilot vs FR-004 ≥ 2 attestation paths; FR-004 normative text not amended.",
         "Legal opinion — India/Aadhaar: NOT STARTED; Gate-2 blocker; product-owner to commission.",
-        "Doc 05 stories for FR-121..FR-128 — product-owner (Priya Raghunathan); FR-125 story not Ready until OI-19 closes.",
-        "Doc 07 test cases + Doc 08 RTM rows for FR-121..FR-128 — tester (Ji-woo Park); after Doc 05 lands.",
+        "Doc 05 stories for FR-121..FR-129 — product-owner (Priya Raghunathan).",
+        "Doc 07 test cases + Doc 08 RTM rows for FR-121..FR-129 — tester (Ji-woo Park); after Doc 05 lands.",
+        "FR-129 tier-determination (FR-118 Tier-1 vs FR-119 Tier-2) — architect, next DES increment.",
+        "ADR-016 ISS-01 Low (citizen-exclusion sentence missing from amendment block item (c)) — architect, next DES increment.",
         "Doc 04 technical-mode review (v1.0.1, Gate-2 blocker) — owner: architect; trigger: before Gate 2.",
-        "Gate 2 NOT READY: 113/125 Must rows OPEN (FR-121..FR-128 RTM rows not yet added); legal-opinion and OI-19/OI-20 also open."
+        "Gate 2 NOT READY: 113/125 Must rows OPEN (FR-121..FR-129 RTM rows not yet added); legal-opinion also open."
       ],
       "gate": "Gate 1 APPROVED (unconditional, 2026-08-11). OI-04-PILOT closed. Gate 2 NOT READY."
     },
@@ -1915,7 +1928,7 @@
       "timestamp": "2026-08-20T12:00:00Z",
       "phase": "Define — Doc 02 v2.3.0 amendment (pilot jurisdiction + verification + on-device proof)",
       "product": "Trumocracy",
-      "summary": "Updated docs/02-requirements-srs.md v2.2.0 → v2.3.0 → v2.3.1 (Status: Approved — v2.3.1 cycle-1 PASS 100%, 0C/0H/0M/0L). v2.3.0: minted FR-121..128, CON-015, OI-19/OI-20, TD-12; annotated FR-003/004/020/021; closed OI-04-PILOT; passed cycle-1 business review (97%). v2.3.1: FR-124 verified-status visibility amended per approver ruling (Rathish, 2026-08-20): private-to-holder, Supporter self-view in authenticated session, aggregate-only public, Worker/Candidate badge permitted, MUST-NOT persistent attribute, absence-test obligation; ISS-01/02/03 fixed. OI-19/FR-125/OI-20 untouched. Mislabelling (approver labelled ruling 'Resolve OI-19'; scope is FR-124 only) recorded and surfaced.",
+      "summary": "Updated docs/02-requirements-srs.md v2.2.0 → v2.3.0 → v2.3.1 → v2.4.0 (Status: Approved — v2.4.0 cycle-1 PASS 100%, 0C/0H/0M/0L). v2.3.0: minted FR-121..128, CON-015, OI-19/OI-20; closed OI-04-PILOT. v2.3.1: FR-124 ruling applied; ISS-01/02/03 fixed; 100% cycle-1 PASS. v2.4.0: OI-19 DECIDED (FR-125 finalised); OI-20 DECIDED (FR-129 minted — Charter-layer guard; Phase-1 limitation recorded; both OIs CLOSED). High-water mark: FR-129, CON-015, OI-20.",
       "artifacts_written": [
         "docs/02-requirements-srs.md (v2.3.0)",
         "artifacts/product-owner-2026-08-20T1200.md"
@@ -1963,7 +1976,7 @@
       "phase": "Design — ADR-021 registration + Doc 03 v2.1.2 patch",
       "product": "Trumocracy",
       "scope": "ADR-021 (new); Doc 03 v2.1.1 → v2.1.2 (header/§12/§16 only); ADR-016 and ADR-017 (one-line amendment notes in header only). DOCUMENTS ONLY — no DES additions, no product code.",
-      "summary": "Minted ADR-021 (verification-gates-counting; Accepted, 2026-08-20) recording Rathish Decisions 1–4 from DECISIONS-2026-08-20-PILOT-VERIFICATION.md: (1) pilot jurisdiction sequence (India Phase 1, EU Phase 2, USA Phase 3 deferred; CON-015 Gate-2 hard dependency; OI-04-PILOT closed); (2) verification gates COUNTING, never joining; open tier never counted; verified status mapped onto existing enrol() circuit with three-tier privacy composition; (3) existing C-03/SC-01 circuit confirmed as mechanism — three normative additions: raw credential on-device and discarded (FR-126), nullifier-collision-only duplicate detection (FR-127), subpoena test as design invariant (FR-128); (4) two rejected designs recorded (persistent referral graph, encrypted identity registry). OI-19/OI-20 recorded as pending and ADR takes no position. DES coverage deferred to next increment. Doc 03 bumped to v2.1.2 (In Review): ADR-021 row added to §12 (count now 21), §16 next-increment scope note extended to include FR-121..FR-128 and OI-19/OI-20. ADR-016 and ADR-017 received one-line amendment notes naming the Phase-1 India/Aadhaar class-(c) rail. ADDENDUM (v2.1.3 rework): four cycle-1 issues fixed — ISS-01 preamble ADR count corrected (twenty-one/ADR-001..ADR-021); ISS-02 §1.1 SRS citation updated to v2.3.0 counts (128 FR/126 active/109 Must/15 CON); ISS-03 §12 ADR-016/017 rows annotated with 2026-08-20 amendment notes; ISS-04 ADR-021 'Decision 4' section retitled 'Alternatives rejected' per house style. Doc 03 now at v2.1.3 (In Review). STATUS FLIP: cycle-2 technical review PASS 100% 0C/0H/0M/0L — Doc 03 Status set to Approved (03-architecture-design-sdd-v2.1.3-technical-cycle2.md).",
+      "summary": "Minted ADR-021 (verification-gates-counting; Accepted, 2026-08-20) recording Rathish Decisions 1–4 from DECISIONS-2026-08-20-PILOT-VERIFICATION.md: (1) pilot jurisdiction sequence (India Phase 1, EU Phase 2, USA Phase 3 deferred; CON-015 Gate-2 hard dependency; OI-04-PILOT closed); (2) verification gates COUNTING, never joining; open tier never counted; verified status mapped onto existing enrol() circuit with three-tier privacy composition; (3) existing C-03/SC-01 circuit confirmed as mechanism — three normative additions: raw credential on-device and discarded (FR-126), nullifier-collision-only duplicate detection (FR-127), subpoena test as design invariant (FR-128); (4) two rejected designs recorded (persistent referral graph, encrypted identity registry). OI-19/OI-20 recorded as pending and ADR takes no position. DES coverage deferred to next increment. Doc 03 bumped to v2.1.2 (In Review): ADR-021 row added to §12 (count now 21), §16 next-increment scope note extended to include FR-121..FR-128 and OI-19/OI-20. ADR-016 and ADR-017 received one-line amendment notes naming the Phase-1 India/Aadhaar class-(c) rail. ADDENDUM (v2.1.3 rework): four cycle-1 issues fixed — ISS-01 preamble ADR count corrected (twenty-one/ADR-001..ADR-021); ISS-02 §1.1 SRS citation updated to v2.3.0 counts (128 FR/126 active/109 Must/15 CON); ISS-03 §12 ADR-016/017 rows annotated with 2026-08-20 amendment notes; ISS-04 ADR-021 'Decision 4' section retitled 'Alternatives rejected' per house style. Doc 03 now at v2.1.3 (In Review). STATUS FLIP: cycle-2 technical review PASS 100% 0C/0H/0M/0L — Doc 03 Status set to Approved. OI-19/OI-20 CLOSED (Rathish, 2026-08-20): ADR-016 new amendment block (FR-004 architecture-level satisfaction; Phase-1 dated deployment limitation; 50% cap inoperative; Charter-layer permanence guard FR-129); ADR-021 amendment note + pointer in open-tensions section; Doc 03 bumped to v2.1.4 (In Review) with SRS pin v2.4.0, §1.1 counts updated (129 FR/127 active/110 Must), §12 ADR-016/ADR-021 rows annotated, §16 scope extended to FR-121..FR-129 with tier-determination debt for FR-129 registered. STATUS FLIP v2.1.4: cycle-1 PASS 99.5% 0C/0H/0M/1L — Doc 03 Status set to Approved. Open Low ISS-01 (ADR-016 amendment (c) omits citizen-exclusion sentence) deferred to next DES increment.",
       "artifacts_written": [
         "docs/adr/ADR-021-verification-gates-counting.md",
         "docs/03-architecture-design-sdd.md (v2.1.2)",
@@ -2003,6 +2016,7 @@
       "artifacts_written": [
         "artifacts/reviews/02-requirements-srs-v2.3.0-business-cycle1.md",
         "artifacts/reviews/02-requirements-srs-v2.3.1-business-cycle1.md",
+        "artifacts/reviews/02-requirements-srs-v2.4.0-business-cycle1.md",
         "artifacts/technical-writer-2026-08-20T0900.md"
       ],
       "review_verdicts": {
@@ -2030,6 +2044,17 @@
           "verdict": "PASS",
           "issues": [],
           "notes": "Patch applying FR-124 verified-status visibility ruling (Rathish 2026-08-20). All three v2.3.0 Low issues resolved (ISS-01/02/03). OI-19/OI-20 scope guards intact. FR-020 and FR-004 normative texts unchanged. FR-082 Supporter-anonymity consistency confirmed — self-view scoped to authenticated session only."
+        },
+        "02-requirements-srs-v2.4.0": {
+          "score": 100,
+          "critical": 0,
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "cycle": 1,
+          "verdict": "PASS",
+          "issues": [],
+          "notes": "OI-19 and OI-20 rulings applied (Rathish 2026-08-20). FR-125 finalised — 6 invariant clauses; separating test recorded; non-invite fallback always-open enforced. FR-129 minted — Charter-layer guard; WHICH-tier deferred to architect. FR-020 and FR-004 normative texts unchanged. §8 Gherkin complete for FR-125 (5 scenarios) and FR-129 (2 scenarios). §11 Must 110, minted 129. OI-19 and OI-20 RESOLVED in §13."
         }
       },
       "independent_counts_verified": {
@@ -2054,7 +2079,7 @@
         "Tester: RTM catch-up covers FR-121..128 after DES and US are available.",
         "Project-manager: GATE-STATUS record should reflect CON-015 Gate-2 line item and OI-04-PILOT closure."
       ],
-      "gate": "Gate 1 APPROVED (unconditional, 2026-08-11). Gate 2 NOT READY. Doc 02 v2.3.0 cycle-1 business review: PASS 97%. Doc 02 v2.3.1 cycle-1 business review: PASS 100%."
+      "gate": "Gate 1 APPROVED (unconditional, 2026-08-11). Gate 2 NOT READY. Doc 02 v2.3.0 cycle-1 business review: PASS 97%. Doc 02 v2.3.1 cycle-1 business review: PASS 100%. Doc 02 v2.4.0 cycle-1 business review: PASS 100%."
     },
     {
       "id": "engineer-2026-08-20T1400",
@@ -2064,10 +2089,11 @@
       "phase": "Design — document-review",
       "product": "Trumocracy",
       "scope": "Technical-mode document-review of Doc 03 v2.1.2 and ADR-021 (cycle 1). Reviewer capacity only — no documents edited, no product code written.",
-      "summary": "Cycle 1 (v2.1.2): Ran technical-mode review. ADR-021 substantive content sound. Two medium issues (preamble count stale, §1.1 SRS version/count inconsistency) and two low issues (§12 ADR-016/017 amendment notes, ADR-021 Alternatives-rejected section). FAIL — routed to architect. Cycle 2 (v2.1.3): All four issues confirmed fixed; no new issues. Score 100%. PASS — architect may set Status: Approved.",
+      "summary": "Cycle 1 (v2.1.2): Ran technical-mode review. ADR-021 substantive content sound. Two medium issues (preamble count stale, §1.1 SRS version/count inconsistency) and two low issues (§12 ADR-016/017 amendment notes, ADR-021 Alternatives-rejected section). FAIL — routed to architect. Cycle 2 (v2.1.3): All four issues confirmed fixed; no new issues. Score 100%. PASS — architect may set Status: Approved. Cycle 1 (v2.1.4, registration-only patch, OI-19/OI-20): diff scope confirmed registration-only; §1.1 counts verified against SRS v2.4.0; ADR-016 amendment 3/4 bullets verbatim, item (c) partial (LOW); ADR-021 amendment and open-tensions section fully faithful. Score 99.5%. PASS.",
       "artifacts_written": [
         "artifacts/reviews/03-architecture-design-sdd-v2.1.2-technical-cycle1.md",
-        "artifacts/engineer-2026-08-20T1400.md"
+        "artifacts/engineer-2026-08-20T1400.md",
+        "artifacts/reviews/03-architecture-design-sdd-v2.1.4-technical-cycle1.md"
       ],
       "review_verdicts": {
         "03-architecture-design-sdd-v2.1.2": {
@@ -2088,18 +2114,28 @@
           "low": 0,
           "cycle": 2,
           "verdict": "PASS"
+        },
+        "03-architecture-design-sdd-v2.1.4": {
+          "score": 99.5,
+          "critical": 0,
+          "high": 0,
+          "medium": 0,
+          "low": 1,
+          "cycle": 1,
+          "verdict": "PASS",
+          "note": "ISS-01 (LOW): ADR-016 amendment item (c) omits explicit citizen-exclusion sentence from ruling bullet 3; fact present in ADR body. SOP advances; fix SHOULD go in next DES increment."
         }
       },
       "ids_touched": {
-        "review_reports_created": "03-v2.1.2-technical-cycle1, 03-v2.1.3-technical-cycle2",
-        "adr_reviewed": "ADR-021 (new), ADR-016 header note, ADR-017 header note",
+        "review_reports_created": "03-v2.1.2-technical-cycle1, 03-v2.1.3-technical-cycle2, 03-v2.1.4-technical-cycle1",
+        "adr_reviewed": "ADR-021 (new at v2.1.2), ADR-016 (header note v2.1.2, amendment block v2.1.4), ADR-017 (header note v2.1.2)",
         "code_written": "none",
         "docs_modified": "none"
       },
       "open_items": [
         "Pre-existing stop-hook tokens for RTM gap and Doc 04 review are unchanged."
       ],
-      "gate": "Gate 1 APPROVED. Gate 2 NOT READY. Doc 03 v2.1.3 review: PASS (cycle 2, 100%, 0C/0H/0M/0L). Architect may set Status: Approved."
+      "gate": "Gate 1 APPROVED. Gate 2 NOT READY. Doc 03 v2.1.3 review: PASS (cycle 2, 100%, 0C/0H/0M/0L). Doc 03 v2.1.4 review: PASS (cycle 1, 99.5%, 0C/0H/0M/1L). Architect may set Status: Approved on v2.1.4. Pre-existing stops: RTM gap + Doc 04 no-review."
     }
   ]
 }

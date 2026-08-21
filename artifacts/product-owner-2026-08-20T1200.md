@@ -267,3 +267,48 @@ No FR, CON, OI, or TD IDs minted. High-water marks unchanged from v2.3.0.
 ### Status flip — v2.3.1 review PASS
 
 v2.3.1 cycle-1 business review: PASS 100%, 0C/0H/0M/0L (report: artifacts/reviews/02-requirements-srs-v2.3.1-business-cycle1.md). Status set to Approved. Edit: header Status line → `Approved (review loop, cycle 1 PASS 100% — artifacts/reviews/02-requirements-srs-v2.3.1-business-cycle1.md)`.
+
+---
+
+## Addendum — v2.4.0 work (OI-19 and OI-20 rulings applied)
+
+**Date:** 2026-08-20 (same session, coordinator-transmitted approver rulings)
+**Version bump:** v2.3.1 (Approved) → v2.4.0 (Status: In Review)
+**Source of authority:** artifacts/status/DECISIONS-2026-08-20-OI19-OI20.md
+
+### Rulings applied
+
+**OI-19 DECIDED:** invite-gating is a spam-control RATE-LIMITER, never an admission condition; the two compose only if a non-invite path always remains open. FR-020 stays absolute and unamended. FR-125 finalised (no longer draft).
+
+**OI-20 DECIDED:** FR-004 satisfied at architecture level (Aadhaar is one implementation of the pluggable adapter interface, not a hardcoded dependency). Phase-1 single-rail deployment is a dated limitation with explicit exit condition (Phase 2 adds eIDAS 2.0). FR-004 normative text unchanged.
+
+### IDs minted in v2.4.0
+
+| ID | Description |
+|----|-------------|
+| FR-129 | Charter-layer guard (§4.43): making single-issuer operation permanent requires Charter-level amendment process, never a deployment default; amendment machinery tier (FR-118 vs FR-119) owed to architect |
+
+### Edits applied to docs/02-requirements-srs.md (v2.3.1 → v2.4.0)
+
+1. **Header:** Version 2.4.0, Status: In Review; v2.4.0 changelog entry added FIRST.
+2. **FR-004 inline note:** ⚠ OI-20 note → ✅ OI-20 DECIDED inline note (ruling quoted verbatim; Phase-1 limitation recorded: person without Aadhaar cannot enrol in Phase-1 pilot region; 50% cap inoperative; exit condition Phase 2/eIDAS 2.0; pointer to FR-129/§4.43); FR-004 normative text unchanged.
+3. **FR-020 annotation:** one sentence added citing OI-19 ruling (composition confirmed — invite-gating is rate-limiter; FR-020 admission guarantee discharged by always-open non-invite fallback; FR-020 unamended and absolute); normative text unchanged.
+4. **OI-19 ⚠ banner → ✅ DECIDED banner (§4.41):** ruling quoted verbatim.
+5. **FR-125 finalised:** Draft marker and trailing live-OI annotation removed; normative text amended per ruling — six-point structure: (a) rate-limiter only; (b) non-invite fallback ALWAYS available, no fee; (c) no refusal for lack of invite; (d) test obligation — "a determined real person can always join without an invite"; (e) referral edge verified and discarded; (f) counted-membership path ungated.
+6. **New §4.43 with FR-129:** Charter-layer guard; Phase-1 limitation context; architect to determine amendment tier (FR-118 vs FR-119).
+7. **§8 FR-125 Gherkin:** ⚠ guard comment removed; five scenarios now: (1) invite fast-path/discard; (2) adversarial data persistence; (3) non-invite fallback → full counted membership (separating test); (4) adversarial operator closes fallback → rejected; (5) counted-membership path ungated.
+8. **§8 FR-129 Gherkin:** new block after FR-128 — adversarial config-flag attempt → rejected; valid Charter-layer amendment → permitted.
+9. **§11 counts:** 128 → 129 FR minted; Must 109 → 110; convention line updated (FR-125 no longer draft); Must-set paragraph updated.
+10. **§12 traceability:** FR-125 trace note updated (finalised; story Ready once DES/US assigned); FR-129 trace added (BR-006/BR-012/BR-021); session-scope note updated.
+11. **§13 OI-19 and OI-20:** both RESOLVED with ✅ banners (entries not deleted).
+12. **TD-12:** stale "pending OI-19" reference updated to "finalised at v2.4.0; OI-19 RESOLVED".
+
+### Conflict duty check
+
+No new Must/NFR/CON/TD conflicts surfaced by either ruling. The architect's tier-determination gap for FR-129 (FR-118 Tier 1 vs FR-119 Tier 2) is noted as a design-increment open item, not minted as an OI (it is not a requirement conflict but an architecture specification gap).
+
+### OI-19 / OI-20 status: both CLOSED at v2.4.0
+
+### Status flip — v2.4.0 review PASS
+
+v2.4.0 cycle-1 business review: PASS 100%, 0C/0H/0M/0L (report: artifacts/reviews/02-requirements-srs-v2.4.0-business-cycle1.md). Status set to Approved.
