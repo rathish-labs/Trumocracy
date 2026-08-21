@@ -2,14 +2,15 @@
 
 ```
 Document ID:   PLAN-TRUMOCRACY
-Version:       2.0.2
-Status:        Approved (review loop, cycle 3 PASS 100% — artifacts/reviews/13-project-plan-v2.0.2-business-cycle3.md)
+Version:       2.0.3
+Status:        Approved (review loop, cycle 1 PASS 97% — artifacts/reviews/13-project-plan-v2.0.3-business-cycle1.md)
 Owner:         Ana-Maria Petrescu — Project Manager
 Source:        PR-TRUMOCRACY (docs/01-press-release-prfaq.md),
                SRS-TRUMOCRACY v2.4.0 (docs/02-requirements-srs.md),
                BKLG-TRUMOCRACY (docs/05-product-backlog.md),
                ADR-001 … ADR-022 (docs/adr/),
-               DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md (REC-1, REC-2)
+               DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md (REC-1, REC-2),
+               DECISIONS-2026-08-21-BUDGET-APPETITE-AND-RISK014.md (Ruling 1 — budget appetite)
 Last updated:  2026-08-21
 ```
 
@@ -28,7 +29,10 @@ Last updated:  2026-08-21
 > constraint before the ceremony correction; removing the ceremony bulk from the critical path does
 > not move Gate 2). The 10-month run-rate at 18 FTE consumes the whole USD 4.2M with **no
 > contingency and a ~USD 245,000 (~−5.8%) shortfall**; the ceremony logistics budget line drops to near-zero
-> (see §8.3). The scope has re-baselined to **SRS v2.4.0 (110 Must requirements)**. Sections §3.4
+> (see §8.3). On the Gate-1-accepted L2 basis (decision B-01) the corrected budget is ≈ USD 4.03M against
+> the unchanged USD 4.2M appetite, with the ≈ USD 175K difference held as an explicit audit-remediation
+> contingency per the approver ruling of 2026-08-21 (see §8.3, RISK-18, RISK-19). The scope has
+> re-baselined to **SRS v2.4.0 (110 Must requirements)**. Sections §3.4
 > (critical path), §8.3 (resourcing) and §13 (Gate-1 packet) set out the three levers. **The
 > project-manager does not decide this. The Gate-1 approver does.**
 >
@@ -340,8 +344,8 @@ here except where they carry a dependency above. Two plan-local assumptions are 
 | RISK-15 | **Adoption failure** — thresholds are never reached and the platform looks like a graveyard of dead petitions | 4 | 4 | 16 | Field enrolment programme; threshold calibration reviewed against month-3 enrolment (`OI-01`); petition expiry and archiving; read-path performance so browsing is instant. **Trigger:** < 25,000 in the lead pilot at month 6 → KC-3 | `ADR-014` | Grace Mbeki | Open |
 | RISK-16 | **Trumocracy itself becomes the gatekeeper** — via code authorship, funding conditions, or an operational lever added under pressure | 3 | 5 | 15 | Immutable core with no proxy, no admin, no pause; registries timelocked at 30 days; funders hold no governance rights; guaranteed party exit tested in CI (`TC-EXIT-*`); `renounceProtocolKeys()` as a Gate-2-equivalent Phase-4 milestone | `ADR-010`, `ADR-007` | Rafael Duarte | Open |
 | **RISK-17** | **Ceremony contributor independence insufficient** — contributors for one or more circuits are not sufficiently independent (same institution or coordinated network) | 2 | 4 | 8 | ~~Recruitment opens 2026-11-02, 11 weeks ahead~~ _(corrected 2026-08-21 per ADR-022 / REC-1: the ≥ 500 convention was retired)_. **Revised mitigation:** require institutional diversity — all contributors drawn from mutually-independent institutions (`ADR-022`); 5–15 contributors is the assurance range; independence is the asset, not headcount. **Trigger:** fewer than 5 distinct independent institutions contributing to any circuit | `ADR-005`, `ADR-022` | Rafael Duarte | **Revised — corrected 2026-08-21** |
-| **RISK-18** | **Audit capacity slip** — audit firms are not contracted by 2026-10-15, or a finding forces a circuit change and a **re-run ceremony** | 3 | 5 | 15 | Both engagements signed at MS-04 with January starts; audits run in parallel (`A-PLAN-02`); **2 weeks of critical-path contingency** (a re-ceremony for a single circuit now takes days per `ADR-022` — contingency absorbs the re-run overhead and leaves a buffer for audit remediation overshoot). **Trigger:** either engagement unsigned at 2026-10-15 → escalate to the human approver same week | `ADR-005`, `ADR-022` | Rafael Duarte | **Open** |
-| **RISK-19** | **Appetite overrun** — `CON-007` (USD 4.2M / 18 FTE) is insufficient for a Gate 2 on the evidence-based date; §8.3 shows a ~USD 245,000 (~−5.8%) shortfall with zero contingency | 4 | 4 | 16 | Presented to the Gate-1 approver as a decision with three costed levers (§13.3); monthly burn tracked in the WBR against a published plan line; the pilot-count lever is reversible up to 2027-02-15 | — (plan) | Ana-Maria Petrescu | **Open — new** |
+| **RISK-18** | **Audit capacity slip** — audit firms are not contracted by 2026-10-15, or a finding forces a circuit change and a **re-run ceremony** | 3 | 5 | 15 | Both engagements signed at MS-04 with January starts; audits run in parallel (`A-PLAN-02`); **2 weeks of critical-path contingency** (a re-ceremony for a single circuit now takes days per `ADR-022` — contingency absorbs the re-run overhead and leaves a buffer for audit remediation overshoot). **Budget cover (added 2026-08-21):** the ≈ USD 175K audit-remediation contingency line (ruling 2026-08-21; see §8.3 and RISK-19) now provides explicit budget cover for the re-audit / re-ceremony event — previously the contingency was schedule-only (2 weeks). **Trigger:** either engagement unsigned at 2026-10-15 → escalate to the human approver same week | `ADR-005`, `ADR-022` | Rafael Duarte | **Open** |
+| **RISK-19** | **Appetite overrun** — `CON-007` (USD 4.2M / 18 FTE) showed a ~USD 245,000 (~−5.8%) shortfall on the three-pilot basis. **On the accepted L2 basis (B-01, 2026-08-09) the corrected cost is ≈ USD 4,025,000**, within the USD 4.2M appetite with a ≈ USD 175,000 explicit audit-remediation contingency (ruling 2026-08-21). **Residual exposure:** (1) the three-pilot basis remains ~−USD 245,000 in deficit if the pilot-count decision is reversed — reversible up to 2027-02-15; (2) `A-PLAN-01`'s ±10% rate sensitivity (±USD 0.30M) still exceeds the ≈ USD 175K contingency | 4 | 4 | 16 | L2 lever accepted as B-01 (Gate 1 2026-08-09); monthly burn tracked in the WBR against a published plan line; pilot-count lever reversible up to 2027-02-15. The ≈ USD 175K audit-remediation contingency is banked as headroom against audit risk — not removed from the plan (approver ruling 2026-08-21; see §8.3 and RISK-18) | — (plan) | Ana-Maria Petrescu | **Open** |
 | **RISK-20** | **MACI Phase-3 complexity underestimated** — circuits, message queue, batched tally and a per-election committee ceremony are, in the architect's own words, "the single largest engineering cost in this design" | 4 | 5 | **20** | Phase-1 ships public-tally governance behind a flag so the governance surface is proven before MACI lands; MACI integration is scheduled **after** audits so it is built against frozen, audited circuits; committee DKG rehearsed on testnet at MS-12; documented last-resort fallback is re-run under a fresh committee, **never** a plaintext tally | `ADR-006` | Aisha Nkemdirim | **Open — new** |
 | **RISK-21** | **Role-separation defect** — the Product Owner and the Principal Architect are the same person (Priya Raghunathan signs Doc 02 as PO and `ADR-001`…`ADR-014` as Principal Architect), so the role **Accountable** for direction is also the role **Accountable** for the design that direction is meant to constrain | 5 | 3 | 15 | Raised as governance exception `E-02` for a Gate-1 decision (§13.4); until resolved, `document-review` on Doc 03 MUST be run by a reviewer neutral to **both** hats, and Gate-1 `OI-05` confirmation must be recorded by the PO explicitly *as PO* | — (plan) | Ana-Maria Petrescu | **Open — new** |
 
@@ -483,9 +487,29 @@ weeks. It is stated here rather than absorbed into optimism.
 
 **The single-pilot lever.** Launching Phase 3 in **one** pilot jurisdiction and rolling the other two
 post-launch saves ≈ **USD 420,000** (two legal reviews deferred −140k, field programme −160k, five of
-eight locales deferred −80k, issuer/attester onboarding −40k), landing at ≈ **USD 4.13M with ~1.7%
-contingency**. It buys **no time** — the critical path is cryptographic, not jurisdictional. This is
-the plan's recommended lever, and it is the Gate-1 approver's decision, not the PM's.
+eight locales deferred −80k, issuer/attester onboarding −40k), landing at ≈ **USD 4,025,000** _(corrected
+2026-08-21: the prior figure "≈ USD 4.13M with ~1.7% contingency" was computed off the pre-correction
+three-pilot total of USD 4,550,000; the ADR-022/REC-1 ceremony saving of USD 105,000 was not cascaded
+when the total was corrected to USD 4,445,000 — same defect class as ISS-01..ISS-04 in the v2.0.0
+cycle-1 review)_. It buys **no time** — the critical path is cryptographic, not jurisdictional. This is
+the plan's recommended lever; it was **accepted as B-01 by the Gate-1 approver on 2026-08-09** (see §13.3
+and `GATE1-DECISION-2026-08-09.md §5`).
+
+**Audit-remediation contingency — ≈ USD 175,000** (appetite held at USD 4.2M; approver ruling
+2026-08-21). On the accepted L2 basis the corrected cost is ≈ USD 4,025,000 against the unchanged
+USD 4.2M appetite, leaving ≈ USD 175,000 of headroom. Per the approver's ruling, this difference is
+held as an **explicit named contingency line** against audit risk — not removed from the plan. The
+approver's recorded rationale: _the re-plan itself flags the contingency as under-provisioned; this
+project's defect-discovery rate (eleven critical/high found in own work, a critical caught after a 98%
+review) makes an audit finding requiring a re-audit a live scenario; a re-audit is the specific
+unbudgeted event; the saving is banked as headroom against that risk, not removed from the plan._
+Cross-references: `RISK-18` (audit capacity slip; re-ceremony event — budget cover now added);
+`RISK-19` (appetite overrun — L2 basis now within appetite; residual exposures stated).
+
+**Discrepancy to surface:** the approver's cited figures (~$3.836M and ~$294K) match no artifact in
+the repository. Record-derived figures (≈ USD 4,025,000 / ≈ USD 175,000 contingency) are applied
+here. Approver confirmation of magnitude is pending — see
+`DECISIONS-2026-08-21-BUDGET-APPETITE-AND-RISK014.md §3`.
 
 ---
 
@@ -539,6 +563,7 @@ the plan's recommended lever, and it is the Gate-1 approver's decision, not the 
 
 | Date | Wave | What changed | Why (signal from gate / production) | By |
 |------|------|--------------|-------------------------------------|----|
+| 2026-08-21 | Next (P2) | **v2.0.3 — budget-appetite ruling + stale-L2 cascade correction.** Approver ruling (Rathish, 2026-08-21): appetite held at USD 4.2M (not reduced); ≈ USD 175K headroom on the accepted L2 basis held as an explicit audit-remediation contingency — not removed from the plan. Cascade correction applied: "≈ USD 4.13M with ~1.7% contingency" in §8.3 and §13.3 L2 row was computed off the pre-correction 4.55M total; corrected to ≈ USD 4,025,000 / ≈ USD 175K contingency. RISK-18 updated: explicit budget cover added for re-audit/re-ceremony event (previously schedule-only). RISK-19 updated: on accepted L2 basis now within appetite; residual exposures (pilot-count reversal; A-PLAN-01 rate sensitivity) stated. Ruling 2 (RISK-014 contradiction): HELD — no referent in repository (`RISK-014` nonexistent; `RISK-14` is regulatory reclassification; ADR-006 decides 5-of-7 with rationale and all downstream citations consistent; no undecided language anywhere). No dates changed. No other substantive changes. **Discrepancy:** approver's cited ~$3.836M and ~$294K match no artifact — record-derived figures applied; magnitude confirmation pending from approver. | Decision record `DECISIONS-2026-08-21-BUDGET-APPETITE-AND-RISK014.md`; `GATE1-DECISION-2026-08-09.md §5` (B-01); ADR-022 (ceremony-correction basis for cascade recalculation) | Ana-Maria Petrescu |
 | 2026-08-21 | Next (P2) | **v2.0.2 — banner correction.** Cycle-2 review (`artifacts/reviews/13-project-plan-v2.0.1-business-cycle2.md`): FAIL 96%, 0C/0H/1M/0L. One fix: "Read this first" banner "~USD 0.35M shortfall" → "~USD 245,000 (~−5.8%) shortfall" — last remaining pre-correction figure. | `artifacts/reviews/13-project-plan-v2.0.1-business-cycle2.md` (FAIL cycle-2) | Ana-Maria Petrescu |
 | 2026-08-21 | Next (P2) | **v2.0.1 — business review rework.** Cycle-1 document review (`artifacts/reviews/13-project-plan-v2.0.0-business-cycle1.md`): FAIL 84%, 0C/0H/4M/0L. Root cause: §8.3 ceremony-budget correction (~USD 120k → ~USD 15k) not cascaded to three downstream references. Four surgical fixes: ISS-01 — KC-P2 trigger restated in ADR-022 assurance terms (non-vacuous); ISS-02 — RISK-19 shortfall "~USD 0.35M" → "~USD 245,000 (~−5.8%)"; ISS-03 — §13.1 resourcing row corrected to same figure; ISS-04 — §13.3 L1 lever "−USD 0.35M" → "~−USD 245,000 (~−5.8%)". No other changes. | `artifacts/reviews/13-project-plan-v2.0.0-business-cycle1.md` (FAIL cycle-1) | Ana-Maria Petrescu |
 | 2026-08-21 | Next (P2) | **v2.0.0 re-plan.** (1) Cryptography path corrected per ADR-022 / REC-1/REC-2: six-ceremony-at-≥500 critical-path assumption retired; corrected to one batched phase-2 campaign, six transcripts, 5–15 independent contributors per circuit, days not weeks. MS-08 date: 2027-03-05 → 2027-01-25 (ceremonies now off the critical path; audits govern). MS-07 revised: large-scale pledge campaign retired. Gate-2 date unchanged — 2027-05-14 — audits were already the binding constraint. (2) Scope re-baselined: SRS v2.4.0, 110 Must requirements (FR-001…FR-129), up from 42 Must FRs at Gate 1. (3) Budget: ceremony logistics line drops from USD 120,000 to ~USD 15,000 (near-zero; PPoT phase-1 at ~$0; outreach programme retired). Total ~USD 4,445,000; variance ~−USD 245,000 (~−5.8%), zero contingency. (4) Gate-2 line items added: CON-015 legal opinion (NOT STARTED), Doc 04 review debt, FR-121…129 RTM catch-up. (5) ADR-022 and DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md added to sources. RISK-17 revised (L4/I4 → L2/I4). DEP-02 corrected. WS-11, MS-04 updated. | ADR-022 (Accepted 2026-08-21); DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md (REC-1, REC-2; Rathish 2026-08-21); Doc 02 v2.4.0; Doc 08 v2.1.0 | Ana-Maria Petrescu |
@@ -589,7 +614,7 @@ Sign-off is at the **gates** (MS-01 / MS-13), not on every plan revision.
 | Named owner per workstream | ✅ Ready | §4 — 13 workstreams, all owned |
 | Resourcing costed against `CON-007` | ⚠ Ready **with a variance** | §8.3 — ~−USD 245,000 (~−5.8%), zero contingency (`RISK-19`) |
 | Gate-2 date achievable as stated in `CON-007` | ❌ **Not achievable** | §3.4 — evidence-based Gate 2 is 2027-05-14, +13 weeks |
-| **Passing `document-review` reports for Docs 01, 02, 05, 13** | ⚠ **Partially cleared** | **Doc 13 v2.0.2: ✅ PASS 100%** — business mode, technical-writer (neutral), cycle 3 (`artifacts/reviews/13-project-plan-v2.0.2-business-cycle3.md`). Docs 01, 02, 05: ❌ passing business-mode review reports not yet produced. **Gate 1 cannot be presented until Docs 01, 02 and 05 are also reviewed and passed.** |
+| **Passing `document-review` reports for Docs 01, 02, 05, 13** | ⚠ **Partially cleared** | **Doc 13 v2.0.3: ✅ PASS 97%** — business mode, cycle 1 (`artifacts/reviews/13-project-plan-v2.0.3-business-cycle1.md`); 0C/0H/0M/2L — two Lows surviving (ISS-01: §13.3 L2 row "~4%" should be ~4.2%; ISS-02: §8.3 discrepancy paragraph omits the Gate-2-date no-referent note). _(Prior: Doc 13 v2.0.2: ✅ PASS 100%, cycle 3, `artifacts/reviews/13-project-plan-v2.0.2-business-cycle3.md`.)_ Docs 01, 02, 05: ❌ passing business-mode review reports not yet produced. **Gate 1 cannot be presented until Docs 01, 02 and 05 are also reviewed and passed.** |
 | Four declared non-Must backlog coverage gaps closed | ⚠ Declared, not closed | Doc 05 §12 — `FR-005`, `FR-049`, `FR-050`, `FR-052`, `FR-053`. Non-blocking; owned by the PO |
 
 ### 13.2 The five open items requiring a Gate-1 decision
@@ -648,7 +673,7 @@ constraint before the correction, completing 2027-03-12 vs ceremonies completing
 | Lever | Effect on date | Effect on budget | PM assessment |
 |---|---|---|---|
 | **L1 — Move Gate 2 to 2027-05-14; hold 3 pilots** | Gate 2 +13 wks; 100% rollout 2027-07-09 | **~−USD 245,000 (~−5.8%) over** appetite, no contingency | Honest schedule, unfunded. Not viable without more money |
-| **L2 — Move Gate 2 to 2027-05-14; launch in 1 pilot, roll the other 2 post-launch** | Gate 2 +13 wks | ≈ **USD 4.13M**, ~1.7% contingency | **Recommended.** Keeps every Must requirement and every guardrail; defers only jurisdictional breadth, which is already `CON-005`-gated per jurisdiction |
+| **L2 — Move Gate 2 to 2027-05-14; launch in 1 pilot, roll the other 2 post-launch** _(B-01: accepted by Gate-1 approver 2026-08-09)_ | Gate 2 +13 wks | ≈ **USD 4.03M**; ≈ USD 175K (~4%) banked as an explicit audit-remediation contingency (approver ruling 2026-08-21) — _corrected from "≈ USD 4.13M, ~1.7%" which was computed off the pre-correction 4.55M total_ | **Recommended. Accepted (B-01 2026-08-09).** Keeps every Must requirement and every guardrail; defers only jurisdictional breadth, which is already `CON-005`-gated per jurisdiction. Note: B-01 already accepted this lever — the budget note now reflects the cascade-corrected figure (§8.3) |
 | **L3 — Hold 2027-02-15; cut scope to fit** | Gate 2 on time | Within appetite | **Not offered.** The only scope that fits is Phase 2 — a mainnet launch with **MACI OFF**, i.e. voting without coercion resistance. That violates Must requirements `BR-011` and `NFR-003`. The PM will not present this as viable |
 
 **Recommendation: L2.** The decision belongs to the human approver.
