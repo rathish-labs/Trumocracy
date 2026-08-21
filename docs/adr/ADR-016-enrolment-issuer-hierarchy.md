@@ -8,6 +8,21 @@ Owner:         Ravi Deshmukh — Principal Architect
 Traces:        BR-006, BR-012, FR-073, OI-03 (Gate 1 disposition), OI-12
 Source:        CR-v1.1.0 Change 8; GATE1-DECISION-2026-08-09.md §3 OI-03
 Amends:        ADR-003 (Phase 1 scope; see ADR-003 Status for cross-reference)
+Amendment:     2026-08-20 — Phase-1 pilot rail now named: India (Aadhaar offline paperless
+               KYC), adapter class (c), per FR-121 and CON-015; OI-04-PILOT closed (ADR-021).
+Amendment:     2026-08-20 — OI-20 ruling (Rathish, 2026-08-20;
+               DECISIONS-2026-08-20-OI19-OI20.md): (a) FR-004's plural-issuer requirement is
+               satisfied at the ARCHITECTURE LEVEL — Aadhaar is one implementation of the
+               pluggable IPersonhoodAdapter interface (ADR-017 lineage), not a hardcoded
+               dependency; the interface itself is plural and the Phase-1 deployment exercises
+               one implementation of it. (b) Phase-1 single-rail deployment is a dated
+               DEPLOYMENT limitation, exit condition Phase 2/eIDAS 2.0 per FR-121 — a
+               deployment fact, not an architecture property, and never a Charter amendment.
+               (c) FR-004's 50% attestor-share cap is inoperative for the Phase-1 single-rail
+               duration (sole rail carries 100% share) — accepted, recorded explicitly.
+               (d) Permanence guard: extending single-issuer operation beyond the published
+               Phase-1 scope requires the Charter-layer amendment process with Gate-1 re-entry,
+               never a deployment default (FR-129). OI-20 CLOSED.
 ```
 
 ## Context

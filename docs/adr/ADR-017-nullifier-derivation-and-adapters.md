@@ -22,6 +22,9 @@ Amendment:     2026-08-10 — SC-01 (SEC-TRUMOCRACY-CR-2026-08-10, critical find
 Amendment:     2026-08-11 — post-registration trust-anchor lifecycle (rotation/revocation
                governance) specified in ADR-020; this ADR's registration-time binding is
                unchanged.
+Amendment:     2026-08-20 — Phase-1 first-production adapter named: India (Aadhaar offline
+               paperless KYC), class (c) of §Per-class in-circuit requirements, per FR-121
+               and CON-015; OI-04-PILOT closed (ADR-021).
 ```
 
 ## Context

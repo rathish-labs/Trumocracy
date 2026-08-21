@@ -2,14 +2,63 @@
 
 ```
 Document ID:   SRS-TRUMOCRACY
-Version:       2.2.0
-Status:        Approved (review loop, cycle 1 PASS 97%; OI-18 applied — see OI-18-DECISION-2026-08-11.md)
+Version:       2.4.0
+Status:        Approved (review loop, cycle 1 PASS 100% — artifacts/reviews/02-requirements-srs-v2.4.0-business-cycle1.md)
 Owner:         Priya Raghunathan — Product Owner
 Approvers:     Gate 1 — Priya Raghunathan (Product Owner), Ana-Maria Petrescu (Project Manager),
                Rathish (Human Approver — Gate 1 re-entry, v2.0.0)
 Source:        PR-TRUMOCRACY (docs/01-press-release-prfaq.md)
-Last updated:  2026-08-11
-Change:        v2.2.0 — OI-18 decision applied (2026-08-11, Rathish; OI-18-DECISION-2026-08-11.md):
+Last updated:  2026-08-20
+Change:        v2.4.0 — OI-19 and OI-20 rulings applied (Rathish, 2026-08-20;
+               artifacts/status/DECISIONS-2026-08-20-OI19-OI20.md). OI-19 DECIDED: invite-gating
+               is a spam-control rate-limiter, never an admission condition; FR-125 finalised (no
+               longer draft) — mandatory non-invite fallback ALWAYS open, leads to full counted
+               membership, no fee, no refusal for lack of invite; test obligation — "a determined
+               real person can always join without an invite"; ✅ OI-19 DECIDED banner applied in
+               §4.41; FR-020 unamended and absolute; OI-19 RESOLVED in §13. OI-20 DECIDED: FR-004
+               satisfied at architecture level (Aadhaar is one implementation of the pluggable
+               adapter interface, not a hardcoded dependency); Phase-1 single-rail deployment
+               limitation recorded (person without Aadhaar cannot enrol in Phase-1 pilot region;
+               FR-004's 50% attestor-share cap inoperative for Phase-1 duration; exit condition:
+               Phase 2 adds eIDAS 2.0 per FR-121); FR-129 minted (Must, §4.43) — Charter-layer
+               guard: making single-issuer operation permanent requires Charter-layer amendment
+               process, never a deployment default; ✅ OI-20 DECIDED banner on FR-004; OI-20
+               RESOLVED in §13. §11: Must count 109 → 110 (FR-129); FR-125 convention note
+               updated (no longer draft). §12 traceability updated (FR-129 trace added; FR-125
+               trace note updated).
+               v2.3.1 — FR-124 verified-status visibility amendment (approver ruling, Rathish,
+               2026-08-20, recorded in the FR-124 banner, §4.41): verified status is private to
+               the holder, expressed as eligibility; every verified participant including Supporters
+               sees their own status in their own authenticated session; the public sees only
+               aggregate verified counts, never a per-Supporter badge; Worker/Candidate visible
+               badge permitted (voluntary role-taking already crossed the disclosure line);
+               MUST-NOT: no persistent public attribute may reveal a specific Supporter is verified;
+               absence-test obligation added (UT-0700/UT-0701 style). Original v2.3.0 clause (b)
+               annotated as superseded with pointer (retained for traceability). §8 FR-124 Gherkin
+               updated: Supporter private self-view scenario added; absence and adversarial scenarios
+               strengthened. §14 glossary 'Verified status' updated to match amended composition.
+               Three Low issues from v2.3.0 cycle-1 review
+               (artifacts/reviews/02-requirements-srs-v2.3.0-business-cycle1.md) fixed: ISS-01 §2.5
+               CON range updated CON-001..CON-014 → CON-001..CON-015; ISS-02 §15 OI-18 note updated
+               (OI-18 resolved at v2.2.0, stale note corrected); ISS-03 FR-020 annotation scoping
+               sentence added (open-tier scope only; counted-membership normative text unchanged).
+               v2.3.0 — Pilot jurisdiction decisions applied (Rathish, 2026-08-20;
+               DECISIONS-2026-08-20-PILOT-VERIFICATION.md). Decision 1: pilot jurisdiction
+               sequence recorded in §4.40 (FR-121); India/Aadhaar offline paperless KYC named as
+               Phase-1 adapter; EU/eIDAS 2.0 Phase-2; USA Phase-3 deferred (fragmented mDL
+               patchwork, non-correlation conflict); CON-015 legal-opinion Gate-2 line item minted;
+               OI-04-PILOT closed (§13); §2.4 updated to name the pilot. Decision 2: verification
+               as a separate, optional step — §4.41 minted (FR-122..125); verification gates
+               COUNTING, never joining; FR-020 annotated (open-tier entry without precondition);
+               FR-021 annotated (personhood-gated counted ballots); two tensions surfaced as OI-19
+               (invite-gating vs FR-020 admission ban) and OI-20 (single-rail pilot vs FR-004
+               attestor plurality) — both pending Rathish decision, not resolved here. Decision 3:
+               on-device proof, nullifier-only, no stored identity — §4.42 minted (FR-126..128);
+               FR-003 annotated with pointer to FR-126; subpoena test Gherkin added to §8. TD-12
+               records Decision 4 rejected designs. New FRs (FR-121..128) have no DES or US yet —
+               same recorded-phasing posture as FR-074..FR-111 (Doc 03 §16); tester's next RTM
+               catch-up covers FR-121..128.
+               v2.2.0 — OI-18 decision applied (2026-08-11, Rathish; OI-18-DECISION-2026-08-11.md):
                two-tier core adopted. Tier 1 entrenched charter now SEVEN rules (CON-001 promoted —
                scope boundary, not implementation commitment), unamendable by any vote, changeable
                only by fork (FR-118 amended). Tier 2 named absolutes (BR-011/NFR-003, CON-002/
@@ -208,10 +257,11 @@ Mobile web (evergreen mobile browsers) and a lightweight Android application; de
 RAM, Android 9**; network floor **2G-class (64 kbit/s), intermittent**; eight launch languages
 including at least one right-to-left script; one pilot jurisdiction at launch (one additional
 jurisdiction planned post-launch once month-6 metrics are confirmed, per Gate 1 Lever L2 decision;
-jurisdiction not yet named — see OI-04).
+Phase-1 pilot jurisdiction: **India** — Aadhaar offline paperless KYC; FR-070 adapter class (c);
+OI-04-PILOT resolved 2026-08-20 — see DECISIONS-2026-08-20-PILOT-VERIFICATION.md and §4.40).
 
 ### 2.5 Design & implementation constraints
-See §9 (`CON-001` … `CON-014`).
+See §9 (`CON-001` … `CON-015`). _(v2.3.1 ISS-01: range updated to reflect CON-015 minted at v2.3.0.)_
 
 ### 2.6 Assumptions & dependencies
 See §9.2.
@@ -279,8 +329,8 @@ See §9.2.
 |----|-------------------------------|-----------|----------|-------|-----------|
 | FR-001 | Issue at most one active personhood credential per real human being, and reject a second enrolment attempt by the same human with an explanatory, non-identifying result. | BR-006 | Must | Marcus Adeyemi | T, A |
 | FR-002 | Enforce, for every action scope (petition, membership, proposal, ballot, nomination, recall), that a given person may act at most once, while making two actions by the same person in two different scopes indistinguishable from actions by two different people. | BR-006, BR-009 | Must | Marcus Adeyemi | T, A |
-| FR-003 | MUST NOT persist, transmit onward, or make retrievable any identity document image, document number, biometric template, date of birth, or residential address after an enrolment check completes; only a non-identifying eligibility result may be retained. | BR-009 | Must | Dr. Lena Kowalczyk | I, A |
-| FR-004 | Support at least two mutually independent identity-attestation paths per launch region, publish each attestor's share of credentials issued per region, and refuse further issuance from any attestor whose share would exceed 50% in that region. | BR-006, BR-012 | Must | Marcus Adeyemi | T, I |
+| FR-003 | MUST NOT persist, transmit onward, or make retrievable any identity document image, document number, biometric template, date of birth, or residential address after an enrolment check completes; only a non-identifying eligibility result may be retained. _(v2.3.0: FR-126 (§4.42) strengthens this requirement by specifying that raw credential material MUST be processed exclusively on the user's device and discarded before any network transmission — see §4.42 for the on-device posture; FR-003 continues to govern the prohibition on persistent storage.)_ | BR-009 | Must | Dr. Lena Kowalczyk | I, A |
+| FR-004 | Support at least two mutually independent identity-attestation paths per launch region, publish each attestor's share of credentials issued per region, and refuse further issuance from any attestor whose share would exceed 50% in that region. _(✅ OI-20 DECIDED (Rathish, 2026-08-20; artifacts/status/DECISIONS-2026-08-20-OI19-OI20.md). Ruling verbatim: "the design stays plural; the pilot deploys one rail (Aadhaar); the gap is a dated Phase-1 limitation, never a Charter amendment. FR-004's plural-pluggable-issuer requirement is satisfied at the ARCHITECTURE level — Aadhaar is one implementation of the pluggable adapter interface, not a hardcoded dependency. Record the single-rail pilot as a Phase-1 DEPLOYMENT limitation with an explicit exit condition: Phase 2 adds eIDAS. No Charter guarantee is amended. State honestly, as an accepted pilot limitation: in Phase 1 a person without Aadhaar cannot enrol in the pilot region. MUST: making single-issuer operation permanent would be a Charter-layer change requiring re-entry, never a deployment default. Record it. Close OI-20." **FR-004 normative text is NOT amended.** Phase-1 deployment limitation recorded honestly: (a) in Phase 1 a person without Aadhaar cannot enrol in the pilot region — accepted exclusion per TD-05/ADR-016; (b) FR-004's 50% attestor-share cap is inoperative during the Phase-1 single-rail deployment — the sole rail carries 100% share for the pilot's duration; this is a dated, accepted, findable limitation recorded not hidden. Exit condition: Phase 2 adds eIDAS 2.0 as the second rail (FR-121). Charter guard: making single-issuer operation permanent requires Charter-layer amendment process — see FR-129 (§4.43) and OI-20 resolution in §13.)_ | BR-006, BR-012 | Must | Marcus Adeyemi | T, I |
 | FR-005 | Revoke a personhood credential proven fraudulent, invalidate its future actions without altering the historical record, and provide a rejected or revoked applicant an appeal that requires no more personal data than the original check. | BR-006 | Should | Amara Diallo | T, D |
 | FR-069 | Derive a deterministic nullifier from a stable personal identifier within the enrolment credential using a published derivation, such that the nullifier is computed without revealing the underlying identifier; store only the derived nullifier on the verifiable record; and MUST reject any enrolment attempt whose derived nullifier matches an existing record. The derivation MUST verify: (a) the credential was signed by a recognised issuer, (b) the credential has not expired, (c) the region attribute establishes the person's residency in the claimed region tree, (d) the nullifier was correctly derived. No name matching, biometric data storage, or administrative review is used for duplicate detection. _(Extends the enrolment circuit addressed in the C-03 security finding. Source: CR-v1.1.0; GATE1-DECISION-2026-08-09.md, Change 6.)_ | BR-006, BR-009 | Must | Marcus Adeyemi | T, A |
 | FR-070 | Present the credential source as a pluggable adapter interface with no single implementation hardcoded. The platform MUST support at minimum the following three CANDIDATE adapter types (non-exhaustive; none is hardcoded as the only supported path; region-level adapter selection is a configuration decision; Doc 03 confirms final specifications): **(a) eIDAS 2.0 wallet adapters** — government-issued digital-identity wallets conforming to the eIDAS 2.0 EUDI wallet framework or any equivalent national digital-identity regulation. The adapter MUST supply to the FR-069 derivation: (i) a qualified electronic attestation of attributes bearing a valid qualified trust-anchor signature, verified against the issuing member-state's trust anchor published in the applicable national or supra-national trust list; (ii) the stable personal identifier designated by the issuing state (e.g. the natural-person identifier in the Personal Identification Data attestation); (iii) a residency attribute placing the person in the claimed region tree. The derivation operates on field (ii). **(b) ICAO Doc 9303 NFC chip adapters** — biometric passports and NFC-enabled identity cards conforming to ICAO Doc 9303. The adapter MUST supply to the FR-069 derivation: (i) the Document Security Object (SOD) verifiable against the issuing state's Document Signer Certificate obtained from the ICAO public key directory; (ii) the stable identifier field — MRZ DocumentNumber or chip-resident pseudonymous identifier as designated by the issuing state; (iii) an attested residency claim from a recognised attestor. The derivation operates on field (ii). **(c) Offline paper KYC adapters** — government-signed offline identity verification flows for jurisdictions where digital wallets are not yet available (e.g. Aadhaar offline XML, Aadhaar paperless eKYC, or any equivalent government-signed offline assertion scheme). The adapter MUST supply to the FR-069 derivation: (i) a digitally signed or verifier-attested assertion carrying a government-assigned stable identifier; (ii) a residency attribute established by the attestor; (iii) evidence of the attestor's authorisation to operate in the region. The derivation operates on the stable identifier in field (i); no biometric data is retained after the attestor check. _(Source: CR-v1.1.0; GATE1-DECISION-2026-08-09.md, Change 6.)_ | BR-006, CON-005 | Must | Marcus Adeyemi | I, A |
@@ -326,8 +376,8 @@ See §9.2.
 
 | ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
 |----|-------------------------------|-----------|----------|-------|-----------|
-| FR-020 | Admit any verified citizen to any active party on request, with no approval, sponsorship, interview, invitation, fee or veto available to any existing member, office-holder, drafter or platform actor. | BR-003, BR-008 | Must | Grace Mbeki | T, D |
-| FR-021 | Grant every member of a party exactly one vote of identical weight in every party ballot, and MUST NOT expose any mechanism by which standing, weight, precedence or privilege can differ between members on grounds of seniority, office, tenure, contribution or any other attribute. | BR-003, BR-010 | Must | Grace Mbeki | T, I, A |
+| FR-020 | Admit any verified citizen to any active party on request, with no approval, sponsorship, interview, invitation, fee or veto available to any existing member, office-holder, drafter or platform actor. _(v2.3.0 per Decision 2 (DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Rathish, 2026-08-20); v2.3.1 ISS-03: scoping sentence added. **Scope of this annotation: open-tier (non-counted) joining only.** The normative text of FR-020 — 'Admit any verified citizen to any active party on request, with no approval, sponsorship, interview, invitation, fee or veto' — applies in full and without amendment to COUNTED membership. This annotation records the Decision 2 extension to open-tier joining only: a citizen may join the platform for non-counted (open-tier) participation (FR-122) without first completing personhood verification. The no-approval / no-sponsorship / no-interview / no-invitation / no-fee / no-veto properties are retained in full and extended to open-tier entry; these admission properties apply without exception to COUNTED membership. Verified personhood is required only for counted actions (FR-123); it is not a gate on open-tier joining. _(v2.4.0 per OI-19 ruling (Rathish, 2026-08-20; DECISIONS-2026-08-20-OI19-OI20.md): composition confirmed — invite-gating in FR-125 is a rate-limiter on the default open-tier path, never an admission condition; FR-020's admission guarantee is discharged by the always-open non-invite fallback mandated in FR-125; FR-020 is unamended and absolute.)_ | BR-003, BR-008 | Must | Grace Mbeki | T, D |
+| FR-021 | Grant every member of a party exactly one vote of identical weight in every party ballot, and MUST NOT expose any mechanism by which standing, weight, precedence or privilege can differ between members on grounds of seniority, office, tenure, contribution or any other attribute. _(v2.3.0 per Decision 2 (DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Rathish, 2026-08-20): one-member-one-vote applies to binding ballots, which are personhood-gated under FR-123 (counted actions require verified personhood, also FR-002 per-scope nullifier). Verification gates whether an action COUNTS; it does NOT create weight differences among verified members. FR-021 applies in full to all verified (counted) members — no tier multiplier, no seniority weight, no other differentiation.)_ | BR-003, BR-010 | Must | Grace Mbeki | T, I, A |
 | FR-022 | Allow a member to leave a party at any time, taking immediate effect on their rights, with no exit approval, penalty or notice period. | BR-003 | Must | Grace Mbeki | T |
 | FR-023 | Withhold governance rights (proposing, voting, nominating, endorsing a nomination, initiating or signing a recall) from a new member until a published maturation period has elapsed since joining; and rate-limit each person's join/leave transitions per party and in aggregate per period. | BR-012 | Must | Rafael Duarte | T, A |
 | FR-064 | Enforce that a verified person holds active membership in at most one party at a time; joining a new party MUST automatically void membership in the current party; switching parties MUST reset the membership tenure clock to zero. This constraint MUST be enforced by a global membership-scope nullifier that cannot be bypassed by leaving and re-joining within the same session. _(Source: CR-v1.1.0; GATE1-DECISION-2026-08-09.md, Change 2.)_ | BR-003, BR-012 | Must | Rafael Duarte | T, A |
@@ -611,6 +661,97 @@ See §9.2.
 |----|-------------------------------|-----------|----------|-------|-----------|
 | FR-119 | Implement a three-tier amendment structure. **Tier 1** (FR-118 entrenched charter): not amendable by this or any process — code rejects proposals at submission. **Tier 2 — named absolutes**: receipt-freeness & coercion resistance (BR-011, NFR-003); data minimisation (CON-002, CON-008, NFR-010); no bespoke unaudited cryptography (CON-012); non-violence clause (CON-013) — amendable ONLY via the super-process specified in Doc 03, which MUST require at minimum: (a) a supermajority materially above the ordinary structural tier; (b) a timelock long enough that the fork right is genuinely exercisable before the change takes effect; (c) two consecutive affirmative votes separated by that window so no transient majority can carry it; (d) the growth-surge defence active throughout; (e) an independent audit of the proposed change published before the second vote — specific numbers set by the architect with rationale (OI-17 family). **Tier 3** — every other platform rule NOT enumerated in Tier 1 or Tier 2 — amendable by platform-wide citizen vote at its ordinary tier: quorum and supermajority per published constants (OI-08/OI-17 family), timelock at least as long as the highest party tier (NFR-017), the proposal channel open equally to stewards and any enrolled citizen; enactment is by code on close of the timelock, with no ratification step. _(Source: GATE1-DECISION-2026-08-11.md Part B; Rathish, 2026-08-11.)_ _(v2.2.0: amended per OI-18 decision, 2026-08-11.)_ | BR-021, BR-008 | Must | Tomás Ferreira | T, I |
 | FR-120 | Preserve the unconditional right to fork (FR-053 lineage mechanics; NFR-018 full-history export) as the capture backstop: even a captured citizen vote cannot trap anyone, because leaving is free and carries history intact; the fork right is entrenched (FR-118) and MUST remain available regardless of any steward action or protocol vote. Note: fork initiation is currently an open critical with the `fork` flag OFF above dev (§13); this requirement records the design posture, not a new capability. _(Source: GATE1-DECISION-2026-08-11.md Part B; Rathish, 2026-08-11.)_ | BR-021, BR-003 | Must | Erik Lindqvist | I, D |
+
+---
+
+### 4.40 Pilot jurisdiction sequence and enrolment adapter schedule
+
+> **Ordering criterion: technical readiness of the identity rail, not market size.**
+> Source: DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Decision 1 (Rathish, 2026-08-20).
+> OI-04-PILOT is closed by this section — see §13.
+> **Hard dependency:** CON-015 must be satisfied before the Phase-1 adapter is marked implementation-ready.
+
+| ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
+|----|-------------------------------|-----------|----------|-------|-----------|
+| FR-121 | Deploy enrolment adapters in the following sequence, determined by technical readiness of the identity rail and not by market size. **Phase 1 — India (Aadhaar offline paperless KYC):** the FR-070 adapter class (c) (offline paper KYC) is the first and only enrolment adapter at Gate 2; Aadhaar provides a single national issuer, near-universal coverage, and a government-signed XML that is provable in-circuit, satisfying all four FR-069 universal in-circuit checks (issuer authenticity, credential freshness, region membership, correct derivation); Phase-1 uses ADR-016's single-issuer-class posture (GOV_EID class only) and ADR-017's on-device derivation. **Phase 2 — EU (eIDAS 2.0 wallets):** the FR-070 adapter class (a) (eIDAS 2.0 wallet adapters); first targets France and the Nordic countries, whose national implementations are privacy-preserving by design; Phase 2 does not require a separate Gate 2 and follows the adapter-certification process governed by CON-005. **Phase 3 — USA (deferred):** the USA has no national digital identity; the state-by-state mobile-driver's-licence (mDL) landscape is fragmented, activation is low, and an optional "phone-home" privacy default conflicts with the non-correlation guarantee (FR-002, FR-069); the USA is deferred to Phase 3 and requires its own ADR with a threat model and independent audit before any mDL adapter mints enrolment nullifiers. **Hard dependency:** CON-015 must be satisfied (legal opinion obtained and recorded) before the Phase-1 adapter is marked implementation-ready. _(Source: DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Decision 1; Rathish, 2026-08-20.)_ | BR-020, BR-006 | Must | Marcus Adeyemi | I, A |
+
+---
+
+### 4.41 Tiered participation — verification gates counting, never joining
+
+> **Design rule (Decision 2, Rathish, 2026-08-20):** Verification is a distinct optional step,
+> not a precondition for joining. **Verification gates COUNTING, never joining.** This
+> reconciles open participation with a truthful strength number — the open (unverified) tier
+> cannot inflate any count because it does not count toward anything that matters.
+> Source: DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Decision 2.
+> FR-020 is annotated (not superseded) to record the open-tier extension — see §4.6.
+
+| ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
+|----|-------------------------------|-----------|----------|-------|-----------|
+| FR-122 | Allow any citizen — without completing personhood verification — to access the platform for open-tier participation: reading, following, watching, and other low-stakes actions that do not count toward any official total; no verification requirement may be imposed as a condition of open-tier access; the open tier MUST NOT be counted toward any party's official strength number, any binding ballot eligibility, or any candidacy eligibility under any configuration. _(Source: DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Decision 2; Rathish, 2026-08-20.)_ | BR-003, BR-016 | Must | Grace Mbeki | T, I |
+| FR-123 | Require proof of unique personhood (the FR-069 enrolment nullifier) for every action that COUNTS: (a) contributing to a party's official strength number; (b) voting in a binding decision; (c) standing as a candidate. A party's published strength number MUST count verified persons only; open-tier (unverified) participation MUST NOT be added to or used to inflate the strength number by any path or configuration. This is the normative boundary of Decision 2: verification gates COUNTING, never joining. _(Source: DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Decision 2; Rathish, 2026-08-20.)_ | BR-006, BR-010, BR-016 | Must | Marcus Adeyemi | T, A |
+
+> ✅ **FR-124 RULING — Verified-status visibility (Rathish, 2026-08-20; recorded here per approver ruling transmitted via coordinator, 2026-08-20):**
+> "RULING: verified status is PRIVATE TO THE HOLDER, expressed as eligibility, never a public marker on a supporter.
+> - A verified user sees their own verified status and knows their counting/voting eligibility.
+> - The public sees only AGGREGATE verified counts (e.g. 'N verified members'), never a per-supporter badge.
+> - For workers and candidates — already public by voluntary role-taking — a visible verified badge is permitted, because they have already crossed the disclosure line.
+> - MUST-NOT: no persistent public attribute may reveal that a specific supporter is verified. This is consistent with NFR-001/002 and TD-02, and with the rule that disclosure follows voluntary role-taking, which verification is not."
+>
+> **Composition check (v2.3.1):** consistent with FR-082 (no public Supporter profile surface — the self-view is the member's own authenticated-session view, not a public profile; FR-082 prohibits public surfaces, not the holder's own session view), FR-083 (Worker/Candidate public participation record begins at the FR-080 informed-consent event; role-taking already crosses the disclosure line), FR-086 (no retroactive linkage — the self-view is visible only to the authenticated session holder and does not expose any Supporter to any other actor), NFR-001 (no actor other than the holder can determine a Supporter's verified status from any data the system holds, emits, or logs), NFR-002 (Supporter-tier anonymity set floor holds unconditionally; no per-participant signal is derivable from aggregate counts), TD-02 (members anonymous publicly; disclosure follows voluntary role-taking; verification is not role-taking and therefore does not cross the disclosure line for public visibility). **No genuine conflict found.** FR-124 normative text amended at v2.3.1 — original v2.3.0 clause (b) annotated as superseded in the row below with pointer; remaining clauses retained and restated.
+
+| ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
+|----|-------------------------------|-----------|----------|-------|-----------|
+| FR-124 | Completing personhood verification (FR-069 nullifier enrolment) grants a **"verified" status** that is PRIVATE TO THE HOLDER and expressed as eligibility — never a persistent public marker on a Supporter. _(v2.3.1 per approver ruling, Rathish, 2026-08-20, quoted verbatim in banner above; original v2.3.0 clause (b) superseded — see supersession note below.)_ The composition of verified status with the three-tier privacy model (§4.24) is as follows and MUST be enforced without exception: **(a) Private self-view for all verified participants including Supporters:** every verified participant — Supporter, Worker, and Candidate — MUST be able to see their own verified status and know their counting/voting eligibility in their own authenticated session; this self-view is the member's own authenticated-session view only and MUST NOT be accessible to any other actor; it is NOT a public profile surface and is consistent with FR-082 (which prohibits public Supporter profile surfaces, not the authenticated holder's own session view); **(b) Public sees only aggregate verified counts:** the public MUST see only aggregate verified counts for a party (e.g. 'N verified members'); no per-participant 'verified' badge, field, or derivable signal MUST appear on any public surface, log, or export that would reveal whether a specific Supporter is verified; **(c) Worker/Candidate visible badge permitted:** for Worker- and Candidate-tier participants (FR-083), a visible verified marker is permitted on the public participation record and on their own private account view — they have already crossed the disclosure line by voluntary role-taking (FR-080 informed-consent event; FR-083); **(d) MUST-NOT — no persistent public attribute:** no persistent public attribute, field, tag, or derivable signal MUST reveal that a specific Supporter is verified; **(e) No retroactive linkage:** no retroactive linkage between an anonymous Supporter's verified status and their identity is permitted through any data the system holds or emits (FR-086 applies); **(f) Absence-test obligation:** a test in the style of UT-0700/UT-0701 (absence-of-path verification per FR-086) MUST verify that a verified Supporter's verified status is absent from every public view, log, export, and derivable system output with no path available to any actor other than the authenticated holder. Rationale: disclosure follows voluntary role-taking; verification is not role-taking (NFR-001, NFR-002, TD-02). _(v2.3.0 ORIGINAL TEXT — clause (b) SUPERSEDED at v2.3.1: the v2.3.0 formulation 'the verified status exists ONLY as the Supporter's nullifier being counted in the aggregate strength number' is replaced by clause (a) above, which grants every verified participant including Supporters a private self-view in their own authenticated session. Clauses (c) and (d) of the original are retained and restated as points (e) and (f). Original v2.3.0 clause (b) verbatim for traceability: 'for Supporter-tier participants (FR-082), no profile surface exists for a Supporter by design — the verified status exists ONLY as the Supporter's nullifier being counted in the aggregate strength number; no per-person public verified marker MUST exist for a Supporter on any surface.' Original v2.3.0 clause (c): 'no retroactive linkage between an anonymous Supporter's verified status and their identity is permitted through any data the system holds or emits (FR-086 applies).' Original v2.3.0 clause (d): 'no verified-status marker MUST appear on any public surface that would allow association of a Supporter's nullifier with any attributable record.' Retained per CLAUDE.md ID-scheme rule — do not delete.)_ _(Sources: DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Decision 2 (v2.3.0 basis); approver ruling, Rathish, 2026-08-20 (v2.3.1 amendment).)_ | BR-009, BR-017, BR-006 | Must | Dr. Lena Kowalczyk | T, I, A |
+
+> ✅ **OI-19 DECIDED (Rathish, 2026-08-20; artifacts/status/DECISIONS-2026-08-20-OI19-OI20.md).**
+> Ruling verbatim: "invite-gating is a spam-control RATE-LIMITER, never an admission condition,
+> and the two compose only if a non-invite path always remains open.
+> - FR-020 stays absolute: no person may be refused membership for lack of an invite.
+> - Finalise FR-125 so invite-based onboarding is the fast default path, with a non-invite
+>   fallback that is ALWAYS available — slower and higher-friction is fine, closed is not.
+> - MUST: the non-invite fallback exists. Without it FR-125 violates FR-020. Add a test
+>   obligation that a person with no invite can still complete membership.
+> - The test that separates the two: a determined real person can always join without an
+>   invite. Record it. Close OI-19."
+> FR-020 unamended and absolute. FR-125 finalised below (no longer draft). OI-19 RESOLVED in §13.
+
+| ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
+|----|-------------------------------|-----------|----------|-------|-----------|
+| FR-125 | Permit spam-control invite-gating **only** at the open (unverified) tier entry, with the following invariants: **(a) Rate-limiter, never admission condition:** invite-based onboarding MAY be the default fast path for open-tier entry; a referral token from an existing participant MAY be required on the fast path; invite-gating is a spam-control RATE-LIMITER only — never an admission condition and never the sole door; **(b) Non-invite fallback ALWAYS available:** a non-invite fallback path MUST ALWAYS be available for open-tier registration; the fallback MAY be slower or higher-friction than the invite path and MAY impose additional verification steps; the fallback MUST remain permanently open and MUST NOT be closeable by any operator configuration or deployment default; the fallback MUST charge no fee (FR-020's no-fee admission property is absolute and applies to this fallback without exception); **(c) No refusal for lack of invite:** a person MUST NOT be refused open-tier or counted membership for lack of an invite token — FR-020 stays absolute and unamended; **(d) Test obligation — the separating test:** a determined real person can always join without an invite; this is the mandatory acceptance criterion: the non-invite fallback MUST successfully lead to full counted membership (FR-069 enrolment nullifier + FR-123 counted-action eligibility) for any person who completes it; **(e) Referral edge verified and discarded:** the referral edge MUST be verified for authenticity and MUST be discarded immediately after the gate-check completes — it MUST NOT be stored, recorded, or associated with either the referrer or the new entrant in any form; the referral relationship MUST NOT be available to any actor at any time after gate-check completes (Decision 4 persistent-referral-graph rejection; TD-12); **(f) Counted-membership path ungated:** invite-gating MUST apply only to open-tier (unverified) entry fast path and MUST NOT apply to any path toward counted membership (counted actions under FR-123); the admissions properties of FR-020 — no approval, sponsorship, interview, invitation, fee or veto — apply in full to counted membership regardless of this open-tier spam-control mechanism. _(Sources: OI-19 ruling, Rathish, 2026-08-20, DECISIONS-2026-08-20-OI19-OI20.md §2; DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Decisions 2 and 4, Rathish, 2026-08-20.)_ | BR-003, BR-006 | Must | Grace Mbeki | T, I |
+
+---
+
+### 4.42 On-device proof, nullifier-only identity posture (Decision 3)
+
+> **Design principle (Decision 3, Rathish, 2026-08-20):** The credential is read and proven ON
+> THE USER'S DEVICE. Only a zero-knowledge proof and a one-way uniqueness nullifier are
+> transmitted. This is the EXISTING enrolment circuit (C-03 design with the SC-01 trust-anchor
+> binding, per ADR-017; confirmed by artifacts/reviews/SECURITY-RESCAN-SC-01-2026-08-10.md) —
+> not a new component. FR-126..128 record the confirmed design posture as normative requirements
+> and add the subpoena test as a verifiable acceptance criterion.
+> Source: DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Decision 3.
+
+| ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
+|----|-------------------------------|-----------|----------|-------|-----------|
+| FR-126 | Read and prove the enrolment credential exclusively ON the user's device: raw credential material — Aadhaar offline XML, eIDAS 2.0 wallet attributes, ICAO Doc 9303 chip data, mDL data — MUST be used locally on the device to generate the zero-knowledge proof and to derive the enrolment nullifier (per ADR-017: `prepareWitness` runs in the on-device WASM prover; the `stable_id_secret` is a private input that never crosses the device boundary); the raw credential material MUST then be discarded; it MUST NOT be transmitted to the platform or to any intermediary, in any encoding, at any point in the enrolment flow; only the generated ZK proof and the derived nullifier are transmitted. This requirement strengthens FR-003 (pointer: §4.1) without superseding it; FR-003 governs the prohibition on persistent storage and FR-126 governs the on-device-only processing boundary. _(Source: DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Decision 3; Rathish, 2026-08-20.)_ | BR-009, BR-006 | Must | Dr. Lena Kowalczyk | I, A |
+| FR-127 | Detect duplicate enrolment by NULLIFIER COLLISION ONLY: a second enrolment attempt by the same person produces the same deterministic nullifier (FR-069), which collides with the existing on-chain record and is rejected; the platform MUST NOT compare, store, or process identity records to detect duplicates; no name-matching, biometric comparison, document-number lookup, or administrative review MUST exist in any duplicate-detection path under any configuration. This is the existing enrolment circuit — the C-03 design with the SC-01 trust-anchor binding confirmed by ADR-017 and by artifacts/reviews/SECURITY-RESCAN-SC-01-2026-08-10.md — not a new component; this FR records the confirmed design posture as a normative requirement. _(Source: DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Decision 3; Rathish, 2026-08-20.)_ | BR-006, BR-009 | Must | Marcus Adeyemi | T, A |
+| FR-128 | MUST NOT store any raw or reversible identity data in any form — not in any database, cache, log, message queue, backup, or ephemeral store, and not even in encrypted form. The acceptance test is the **subpoena test**: if a court orders the platform to disclose who belongs to a party, the platform MUST be technically unable to comply — not merely legally entitled to decline. Encrypted-but-decryptable identity storage FAILS this test because it creates a data-set that can be produced under sufficient legal compulsion, converting "we cannot deanonymise you" into "we promise not to" (this is the second rejected design in Decision 4; see TD-12 in §9.3). The Gherkin block in §8 for this requirement includes an adversarial subpoena scenario. **Verify-by includes A (independent audit) and T (automated absence-of-data test).** _(Source: DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Decision 3; Rathish, 2026-08-20.)_ | BR-009, BR-006 | Must | Dr. Lena Kowalczyk | T, I, A |
+
+---
+
+### 4.43 Attestor-plurality Charter guard (OI-20 ruling)
+
+> **Context (OI-20 DECIDED, Rathish, 2026-08-20; artifacts/status/DECISIONS-2026-08-20-OI19-OI20.md):**
+> FR-004's plural-pluggable-issuer requirement is satisfied at the architecture level — Aadhaar is
+> one implementation of the pluggable adapter interface (FR-070), not a hardcoded dependency. The
+> Phase-1 single-rail deployment is a dated, explicit pilot limitation (Phase-1 limitation recorded
+> on FR-004 annotation in §4.1 and in FR-121 in §4.40); the exit condition is Phase 2 (eIDAS 2.0).
+> FR-129 closes the governance loop against normalising the Phase-1 limitation without re-entry.
+
+| ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
+|----|-------------------------------|-----------|----------|-------|-----------|
+| FR-129 | Making single-issuer operation permanent — or extending it beyond the published, dated Phase-1 scope (FR-121) — MUST NOT be achievable as a deployment or configuration default; it MUST require the Charter-layer amendment process with re-entry through the two human gates (CLAUDE.md re-entry rule). Amendment machinery reference: FR-118 (entrenched-charter Tier 1, unamendable by any vote, changeable only by fork) and FR-119 (named-absolutes Tier 2, amendable only via the Doc 03 super-process) define the two-tier amendment system; the question of WHICH tier governs issuer-plurality requirements is not answered in this version and MUST NOT be assumed — that determination is owed to the architect in the next Doc 03 increment and MUST be recorded in the RTM when settled. What is normative here regardless of tier: (a) any path that makes single-rail operation permanent without going through the Charter-level amendment process and the two gates MUST be rejected by the system; (b) an attempt to extend the single-issuer deployment via configuration flag or deployment default MUST be blocked; (c) only the Amendment path (re-entry through Gate 1 and Gate 2 per CLAUDE.md) can modify the scope of the Phase-1 deployment limitation. Phase-1 accepted limitation: in Phase 1 a person without Aadhaar cannot enrol in the pilot region (accepted exclusion per TD-05/ADR-016; FR-004's 50% attestor-share cap is inoperative for the Phase-1 single-rail duration); exit condition is Phase 2 / eIDAS 2.0 (FR-121). _(Source: OI-20 ruling, Rathish, 2026-08-20, DECISIONS-2026-08-20-OI19-OI20.md §2.)_ | BR-006, BR-012, BR-021 | Must | Marcus Adeyemi | T, A |
 
 ---
 
@@ -1630,6 +1771,133 @@ Then it succeeds; steward opposition has no effect; the unconditional right to f
 Given a scenario in which a passed protocol vote purports to restrict fork rights (an entrenched-rule violation per FR-118)
 When a citizen attempts to initiate a fork after that vote (fork flag ON in the test environment)
 Then the fork proceeds; the fork-restriction enactment is refused by code at the vote-closure step because the fork right is entrenched (FR-118) and cannot be amended
+
+# FR-121 — pilot jurisdiction sequence; Phase-1 India/Aadhaar; Phase-3 USA deferred
+Given the Phase-1 India pilot with the Aadhaar offline paperless KYC adapter (FR-070 class (c)) deployed
+When a citizen presents a valid Aadhaar offline XML credential
+Then the adapter verifies the government-signed document, derives the enrolment nullifier on-device (FR-126), and processes enrolment per FR-069; all four universal in-circuit checks pass; no credential data is transmitted
+
+Given a USA mDL credential presented to the Phase-1 enrolment system
+When the adapter checks the credential class and jurisdiction configuration
+Then the enrolment is refused; the Phase-3 USA mDL adapter is not live; the refusal message cites the deferred Phase-3 status and exposes no identity data from the credential
+
+# FR-122 — open-tier access without verification; open tier never counted in strength number
+Given a citizen who has not completed personhood verification (no nullifier enrolled)
+When they access the platform for open-tier participation — reading party information, following a petition, watching governance updates
+Then access is granted; no verification gate is in the path; no count, ballot eligibility, or candidacy right is acquired
+
+Given the same citizen's open-tier activity recorded in any store or log
+When the party's official strength number is computed
+Then the open-tier citizen is not counted; only verified (nullifier-enrolled) members contribute to the strength number; no open-tier activity inflates any official count by any path
+
+# FR-123 — verified personhood required for counted actions; party strength counts verified persons only; adversarial inflation attempt refused
+Given a citizen who has not completed personhood verification (no nullifier enrolled)
+When they attempt to contribute to a party's official strength number, cast a ballot in a binding decision, or stand as a candidate
+Then the action is refused with the reason (verification required for counted actions); no counted-action record is created
+
+Given a party with 500 verified members and 200 open-tier (unverified) participants
+When the party's official strength number is published
+Then the strength number is 500; the 200 open-tier participants are not added to the total by any path or configuration
+
+Given an adversary who attempts to inflate a party's strength number by registering 10,000 open-tier (unverified) accounts
+When the strength computation runs
+Then the 10,000 open-tier accounts are not counted; the strength number reflects only verified (nullifier-enrolled) members; the attack produces zero numerical benefit
+
+# FR-124 (v2.3.1) — verified status private to holder; Supporter self-view in authenticated session only; aggregate-only public; absence-test obligation
+# Scenario 1: Supporter private self-view (new in v2.3.1 per ruling clause (a))
+Given a Supporter-tier participant who has completed personhood verification (nullifier enrolled)
+When that Supporter views their own authenticated-session account view
+Then they see their own verified status and know their counting/voting eligibility; the verified status is visible to that participant in their own authenticated session only; no other actor has access to this view
+
+# Scenario 2: absence from all public surfaces and other-actor views (FR-082, FR-124 clause (b) and (d))
+Given a Supporter-tier participant who has completed personhood verification (nullifier enrolled)
+When any interface, log, export, or public record is examined by any actor OTHER THAN the authenticated Supporter themselves
+Then no per-person "verified" marker is visible for that Supporter on any public surface; the absence-of-path test passes: no path exists for any actor to determine this Supporter's verified status; the verification manifests only as the Supporter's nullifier being counted in the aggregate strength number; no retroactive linkage to their identity exists (FR-086 applies)
+
+# Scenario 3: Worker/Candidate verified badge permitted (FR-124 clause (c))
+Given a Worker-tier participant who has completed personhood verification and whose participation record is public by consent (FR-080 role-taking event)
+When their public participation record is viewed by any actor
+Then a "verified" marker is visible on their participation record and on their own private account view; no ballot direction is disclosed on any contested vote (FR-063 applies)
+
+# Scenario 4: adversarial aggregate-inference attempt (FR-124 clause (b), NFR-001, NFR-002)
+Given an adversary attempting to derive a Supporter's identity from the "verified" count change in the aggregate strength number
+When the strength number is examined before and after a Supporter completes verification
+Then the aggregation provides no per-person marker; the adversary cannot determine which Supporter verified nor link the verification event to any identity, pseudonym, or nullifier; the aggregate count changes but no Supporter-to-count association is derivable by any actor from any system output
+
+# FR-125 (v2.4.0 FINALISED — OI-19 DECIDED, Rathish, 2026-08-20) — open-tier invite-gating; rate-limiter only; non-invite fallback ALWAYS open; referral edge verified then discarded
+# Scenario 1: invite fast-path — referral edge verified and discarded
+Given an open-tier registration flow where invite-gating is enabled for spam control
+When a new citizen submits a valid referral token from an existing participant
+Then the token is verified for authenticity, the gate-check passes, and the referral edge is immediately discarded with no record retained
+When the complete store, log, cache, and export are inspected after gate-check completes
+Then no referral relationship data exists anywhere; no referrer identity is associated with the new entrant; no referral graph node is persisted
+
+# Scenario 2: adversarial referral-data persistence attempt
+Given an adversary who requests all stored data after the gate-check
+When the platform responds
+Then no referral relationship, referrer identity, or referral token is retrievable; the discard is architectural, not a deletion from a store
+
+# Scenario 3: person with no invite completes full path to counted membership via non-invite fallback (the separating test — OI-19 ruling)
+Given a citizen who has no referral token from any existing participant
+When they attempt to register for the platform and proceed through the non-invite fallback path to full counted membership
+Then the non-invite fallback path is available and open; it may be slower or higher-friction than the invite path but is not closed or refused; no fee is charged at any step on the fallback path (FR-020 no-fee property applies without exception); the citizen successfully completes enrolment (FR-069 nullifier minted) and gains counted-action eligibility (FR-123); they are not refused membership for lack of an invite
+
+# Scenario 4: adversarial — operator attempts to close the non-invite fallback
+Given an operator who attempts to configure the platform so that the non-invite fallback path is disabled, closed, or redirected to a dead end
+When the configuration is applied
+Then the system rejects the configuration; the non-invite fallback path cannot be closed by any operator configuration, deployment flag, or default; only the Charter-layer amendment process (FR-129; FR-118/FR-119; re-entry through both gates) can modify this requirement
+
+# Scenario 5: counted-membership path is ungated — no invite required
+Given a citizen attempting to register for COUNTED membership (verified personhood path) who does not have a referral token
+When the path toward counted membership is examined
+Then no invite-gate applies to the counted-membership path; FR-020 and FR-123 govern that path without exception; the referral token fast-path requirement applies only to the open-tier entry gate
+
+# FR-126 — on-device credential processing; raw credential never transmitted to platform
+Given a citizen completing the enrolment flow using an Aadhaar offline XML credential (Phase-1 adapter)
+When the WASM prover generates the ZK proof and derives the enrolment nullifier on-device
+Then the raw Aadhaar XML, stable identifier, and all intermediate credential material are discarded on-device before any data leaves the device
+
+Given an adversary intercepting all network traffic during and after the enrolment flow
+When the intercepted traffic is fully inspected
+Then only the ZK proof and the derived nullifier are transmitted; no Aadhaar XML, eIDAS attribute, ICAO chip data, mDL data, or stable identifier is present in any network payload
+
+Given the complete data inventory of every Trumocracy store, log, cache, queue, and backup inspected at any point during or after enrolment
+When every field is examined
+Then no raw credential material — Aadhaar XML, eIDAS attributes, ICAO chip data, mDL data — is present in any form; only the derived nullifier appears on any record
+
+# FR-127 — duplicate detection by nullifier collision only; no identity record comparison
+Given a person who has already enrolled (nullifier N exists on the verifiable record)
+When they attempt a second enrolment using the same physical credential
+Then the same nullifier N is derived on-device, the collision is detected on-chain by matching against the existing record, and the enrolment is rejected as duplicate
+
+Given an inspection of all duplicate-detection code paths in the system
+When every path is examined
+Then no name-matching, biometric comparison, document-number lookup, administrative review, or identity-record comparison exists in any path; all duplicate detection operates exclusively by nullifier collision
+
+# FR-128 — no stored identity data in any form; subpoena test as the acceptance criterion
+Given the complete data inventory of every Trumocracy store, log, cache, message queue, backup, and ephemeral store
+When inspected for raw or reversible identity data
+Then zero identity documents, raw stable identifiers, biometric templates, date-of-birth fields, address fields, or any data from which the underlying stable identifier could be recovered are present — whether in plaintext or in encrypted form
+
+Given a court order requiring the platform to disclose who belongs to a named political party (the subpoena test)
+When a technically capable actor with full platform access attempts to comply with the order
+Then the platform is technically unable to produce any identity-to-member mapping; no such mapping can be assembled from any combination of stored data; the enforcement is architectural and not a policy promise
+
+Given an adversarial scenario in which an operator has stored identity data in encrypted form (a rejected design per Decision 4 / TD-12)
+When the subpoena test is applied to that configuration
+Then the encrypted store can be produced in response to legal compulsion; this configuration FAILS the subpoena test; the system MUST reject any configuration that stores raw or reversible identity data, even in encrypted form
+```
+
+```gherkin
+# FR-129 — Charter-layer guard: making single-issuer operation permanent requires Charter-level amendment process, not a deployment default
+# Adversarial: attempt to extend single-rail deployment via configuration flag
+Given an operator or maintainer who attempts to extend the Phase-1 single-rail (Aadhaar-only) deployment beyond the published dated Phase-1 scope by applying a configuration flag, environment variable, or deployment default
+When the configuration is applied
+Then the system rejects the configuration; no deployment flag or default may make single-issuer operation permanent or extend it beyond Phase-1 scope; only the Charter-layer amendment process (FR-118/FR-119 — tier determination owed to the architect; re-entry through Gate 1 and Gate 2 per CLAUDE.md) can do so
+
+Given a valid Charter-layer amendment that has re-entered through Gate 1 (direction approved) and Gate 2 (launch readiness confirmed) per CLAUDE.md, and whose approved scope includes modifying the Phase-1 issuer-plurality limitation
+When the amendment is applied
+Then the issuer-plurality scope restriction may be extended or modified per the amendment's approved outcome
 ```
 
 ```gherkin
@@ -1841,6 +2109,7 @@ Then the transition is appended with timestamp and cause; the prior state is pre
 | CON-012 | No bespoke, unaudited cryptographic construction may be used for any privacy, personhood or ballot property; every such property MUST rest on independently audited work. | Security | Rafael Duarte |
 | CON-013 | Non-violence is a founding principle of the platform: the standard non-violence clause is mandatory in every party constitution (FR-077); this is the platform's single deliberate exception to political-content neutrality, recorded as such. | Values / product | Daniel Okonkwo |
 | CON-014 | The platform cannot grant, deny or override legal party registration; platform status and legal status are distinct on every surface (FR-075). | Legal | Sofia Marchetti |
+| CON-015 | A **legal opinion** for the Phase-1 lead jurisdiction (India) MUST be obtained and recorded before the enrolment requirement (FR-069/FR-070/FR-121) is finalised against the Aadhaar rail and before the Phase-1 adapter is marked implementation-ready. Aadhaar's use for anything resembling political or voter identification is legally sensitive in India; the legal opinion MUST address this specifically and MUST be on record before Gate 2. This is a **Gate-2 line item** — no Gate-2 checklist may show the Phase-1 enrolment adapter as ready without a recorded legal sign-off. _(Source: DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Decision 1; Rathish, 2026-08-20.)_ | Legal / regulatory | Sofia Marchetti |
 
 ### 9.2 Assumptions & dependencies
 
@@ -1868,6 +2137,7 @@ Then the transition is appended with timestamp and cause; the prior state is pre
 | TD-09 | **Worker permanence vs recruitment.** Irrevocable-for-term public identity will deter some capable people from the Worker tier. | Accept: the alternative, revocable disclosure, would allow power to be sought without accountability; the deterrent effect is the deliberate price (FR-080/FR-084). | Some good people will not take the Worker tier because of it. We accept that and publish the participation rate rather than claim it away. | Grace Mbeki |
 | TD-10 | **Political neutrality vs the non-violence clause.** The platform imposes exactly one substantive political value on every party constitution. | Accept knowingly as a founding principle; code enforces presence-check only (FR-077); enforcement beyond presence is for members and law; disclosed on every party-creation surface (CON-013). | Critics will assert any mandatory clause is a political position; we accept this characterisation and defend it as the narrowest possible exception, disclosed in full. | Daniel Okonkwo |
 | TD-11 | **Standing steward body vs the no-standing-body instinct.** | Ruling 4 and FR-099/FR-101 deliberately use per-case sortition and forbid standing panels wherever a body could touch outcomes. The steward organisation IS a standing body — accepted because coordination work (audits, ceremonies, vendor contracts, fund custody) needs continuity and a legal counterparty, and because the body is stripped of outcome power (FR-115/FR-116), mechanically term-limited and recallable (FR-114), and structurally unnecessary (FR-117). | A standing body accretes soft authority even without formal power (RISK-31); the mitigation is that its irrelevance is a tested property, not a promise. | Rafael Duarte |
+| TD-12 | **Two rejected identity-posture designs (Decision 4, Rathish, 2026-08-20).** Two designs were considered and explicitly rejected: (1) **Persistent referral graph / referrer-liability / association-based tracing** — rejected because it deanonymises Supporters through the social graph, enables guilt-by-association purges, and contradicts the non-behavioural-surveillance and sacred-user-space guarantees (FR-111, NFR-027). Referral MAY gate open-tier entry, but the referral edge is verified and then discarded, never stored (FR-125 — finalised at v2.4.0; OI-19 RESOLVED). (2) **Encrypted identity registry for later comparison** — rejected because a decryptable identity registry recreates the subpoena, operator-override, and capture risks the platform exists to eliminate; it converts "we cannot deanonymise you" into "we promise not to" (FR-128, subpoena test). Both rejected designs are the architect's to record in a new ADR as considered-and-rejected with rationale; this note provides the Doc 02 reference trail. _(Source: DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Decision 4; Rathish, 2026-08-20.)_ | Decision 2/3 preserve the guarantee while accepting that referral-edge spam control and on-device-only processing impose UX and operational costs. | Dr. Lena Kowalczyk |
 
 > ✅ v2.0.0: the TD-02 vs FR-062 contradiction is resolved by the three-tier privacy ruling per BR-017 — see §4.19 and §4.24.
 
@@ -1912,22 +2182,22 @@ Then the transition is appended with timestamp and cause; the prior state is pre
 
 ## 11. Requirements prioritization & release plan (MoSCoW)
 
-**Counts (v2.1.0).** 21 BR · 120 FR minted (118 active + 2 superseded: FR-046, FR-062) · 28 NFR · 14 CON · 27 requirement-level RISK rows in §10 (RISK-01..16 + RISK-22..32; RISK-17..21 live in Doc 13) · 11 TDs.
-_(v1.1.0 baseline: 13 BR · 73 FR · 26 NFR · 12 CON · 19 RISK · 7 TDs. v1.0.0 baseline: 12 BR · 61 FR · 26 NFR · 12 CON · 16 RISK · 6 TDs. Added by CR-v1.1.0: 1 BR, 12 FR, 3 RISK, 1 TD. Added by v2.0.0 re-entry: 7 BR, 40 FR, 2 NFR, 2 CON, 9 RISK, 3 TDs; 2 FRs superseded. Added by v2.1.0: 1 BR (BR-021), 7 FR (FR-114..FR-120), 2 RISK (RISK-31..32), 1 TD (TD-11).)_
+**Counts (v2.4.0).** 21 BR · 129 FR minted (127 active + 2 superseded: FR-046, FR-062) · 28 NFR · 15 CON · 27 requirement-level RISK rows in §10 (RISK-01..16 + RISK-22..32; RISK-17..21 live in Doc 13) · 12 TDs.
+_(v1.1.0 baseline: 13 BR · 73 FR · 26 NFR · 12 CON · 19 RISK · 7 TDs. v1.0.0 baseline: 12 BR · 61 FR · 26 NFR · 12 CON · 16 RISK · 6 TDs. Added by CR-v1.1.0: 1 BR, 12 FR, 3 RISK, 1 TD. Added by v2.0.0 re-entry: 7 BR, 40 FR, 2 NFR, 2 CON, 9 RISK, 3 TDs; 2 FRs superseded. Added by v2.1.0: 1 BR (BR-021), 7 FR (FR-114..FR-120), 2 RISK (RISK-31..32), 1 TD (TD-11). Added by v2.3.0: 8 FR (FR-121..FR-128, all Must), 1 CON (CON-015), 1 TD (TD-12); OI-19/OI-20 minted. No new BR or NFR. Added by v2.4.0: 1 FR (FR-129, Must — Charter-layer guard); OI-19 and OI-20 CLOSED; FR-125 finalised (no longer draft). New FRs have no DES/US yet — recorded-phasing posture, RTM catches up.)_
 
 | Priority | FR count | FR IDs |
 |----------|----------|--------|
-| **Must** | **101** | FR-001, 002, 003, 004, 006, 007, 008, 009, 010, 011, 014, 016, 018, 020, 021, 022, 023, 024, 025, 026, 027, 028, 030, 031, 032, 033, 035, 036, 037, 039, 040, 042, 043, 045, 047, 050, 051, 054, 056, 058, 059, 060, 061, 063, 064, 065, 066, 067, 068, 069, 070, 071, 072, 073, 074, 075, 076, 077, 078, 079, 080, 081, 082, 083, 084, 085, 086, 087, 088, 089, 090, 091, 092, 093, 094, 095, 096, 097, 098, 099, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120 |
+| **Must** | **110** | FR-001, 002, 003, 004, 006, 007, 008, 009, 010, 011, 014, 016, 018, 020, 021, 022, 023, 024, 025, 026, 027, 028, 030, 031, 032, 033, 035, 036, 037, 039, 040, 042, 043, 045, 047, 050, 051, 054, 056, 058, 059, 060, 061, 063, 064, 065, 066, 067, 068, 069, 070, 071, 072, 073, 074, 075, 076, 077, 078, 079, 080, 081, 082, 083, 084, 085, 086, 087, 088, 089, 090, 091, 092, 093, 094, 095, 096, 097, 098, 099, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129 |
 | **Should** | 14 | FR-005, 012, 013, 015, 017, 019, 029, 034, 038, 041, 044, 048, 049, 055 |
 | **Could** | 3 | FR-052, 053, 057 |
 | **Won't (this release)** | — | Vote delegation; state elections; cross-jurisdiction parties; social features; staff moderation of political speech |
 | **Could (non-FR features, v2 candidates)** | — | Party dormancy/deactivation lifecycle; treasury splitting on fork; personal blocklists — deferred to v2, contingent on month-6 metrics per Doc 01 §D and FAQ §E3. Classified as Could in Doc 01 §D; not permanently excluded. _(ISS-08: aligned with Doc 01 §D.)_ |
 
-_Convention: superseded rows (FR-046, FR-062) are excluded from the active Must set and from implementation; they are retained for traceability only._
+_Convention: superseded rows (FR-046, FR-062) are excluded from the active Must set and from implementation; they are retained for traceability only. FR-125 is a finalised Must requirement (OI-19 RESOLVED at v2.4.0; no longer draft; implementation-ready)._
 
 NFR priorities: **Must** — NFR-001…007, 009…017, 020…025, 027…028 (24). **Should** — NFR-008, 018, 019, 026 (4).
 
-**On the size of the Must set.** The Must set grows from 54 to 94 with the v2.0.0 vision re-entry directed by the approver (Rathish, 2026-08-10). The 40 new Must FRs (FR-074..FR-113) cover party self-governance, participation tiers and privacy, committees, proposal lifecycle, candidate selection, manifesto, financial transparency, COI, audit, disputes, member rights, conduct votes, data classification, transparency dashboard, scorecard, and trust-anchor lifecycle governance. FR-050 is raised from Should to Must (financial transparency is now a business requirement, BR-019). FR-062 is superseded by §4.24 (FR-082..FR-086) and excluded from the active Must count. All v2.0.0 FRs are Must per the approver's direction. Gate 1 re-entry approves direction; Gate 2 still governs launch readiness. _v2.1.0: the Must set grows from 94 to 101 with seven steward-organisation FRs (FR-114..FR-120), all Must per the conditional Gate-1 approval directed by Rathish (2026-08-11); the condition is fulfilled by this version landing before Design._
+**On the size of the Must set.** The Must set grows from 54 to 94 with the v2.0.0 vision re-entry directed by the approver (Rathish, 2026-08-10). The 40 new Must FRs (FR-074..FR-113) cover party self-governance, participation tiers and privacy, committees, proposal lifecycle, candidate selection, manifesto, financial transparency, COI, audit, disputes, member rights, conduct votes, data classification, transparency dashboard, scorecard, and trust-anchor lifecycle governance. FR-050 is raised from Should to Must (financial transparency is now a business requirement, BR-019). FR-062 is superseded by §4.24 (FR-082..FR-086) and excluded from the active Must count. All v2.0.0 FRs are Must per the approver's direction. Gate 1 re-entry approves direction; Gate 2 still governs launch readiness. _v2.1.0: the Must set grows from 94 to 101 with seven steward-organisation FRs (FR-114..FR-120), all Must per the conditional Gate-1 approval directed by Rathish (2026-08-11); the condition is fulfilled by this version landing before Design. v2.3.0: the Must set grows from 101 to 109 with eight FRs (FR-121..FR-128) covering pilot jurisdiction sequence, tiered participation (verification gates counting, never joining), and on-device proof / nullifier-only identity posture — all Must per Decision 1–3 (Rathish, 2026-08-20). New FRs have no DES/US yet — same recorded-phasing posture as FR-074..FR-111; tester's next RTM catch-up covers FR-121..128. v2.4.0: the Must set grows from 109 to 110 with FR-129 (Charter-layer guard — making single-issuer operation permanent requires Charter-level re-entry, never a deployment default; OI-20 ruling, Rathish, 2026-08-20). FR-125 finalised (OI-19 RESOLVED). FR-129 has no DES/US yet — same recorded-phasing posture._
 
 **Release shape.** One release at 2027-06-01 (following Gate 2 readiness 2027-05-14), delivered
 on trunk behind flags, rolled out 1 → 10 → 50 → 100% in the one approved pilot jurisdiction; a
@@ -1974,6 +2244,20 @@ per the refine loop; none exist at v1.0.0 or v1.1.0 (all v1.1.0 requirements sou
 
 **Session scope (v2.1.0 extension):** US (Doc 05) and TC (Doc 07) seeding for FR-114..FR-120 joins the existing v2.0.0 catch-up owed after this version lands (the RTM closes the chains); downstream columns are OPEN by design — recorded not hidden. The RTM will close the full chain BR-021 → FR-114..FR-120 → DES → US → TC when Docs 03/05/07 catch up post-Gate-1.
 
+**v2.3.0 additions (Decision 1–3, Rathish, 2026-08-20; DECISIONS-2026-08-20-PILOT-VERIFICATION.md):**
+- BR-020 (multi-country, pilot jurisdiction) → FR-121 _(pilot sequence; extends existing BR-020 downstream set)_
+- BR-003 (open membership), BR-016 (tiers self-assigned) → FR-122 _(open-tier access without verification)_
+- BR-006 (unique personhood), BR-010 (wealth not convertible to influence), BR-016 → FR-123 _(personhood required for counted actions)_
+- BR-009 (no identity exposure), BR-017 (tier-scoped anonymity), BR-006 → FR-124 _(verified status and privacy composition)_
+- BR-003, BR-006 → FR-125 _(open-tier invite-gating; finalised at v2.4.0 — OI-19 RESOLVED; story now Ready per DoR once DES/US assigned)_
+- BR-009, BR-006 → FR-126 _(on-device credential processing; strengthens FR-003)_
+- BR-006, BR-009 → FR-127 _(nullifier-collision duplicate detection only)_
+- BR-009, BR-006 → FR-128 _(no stored identity data; subpoena test)_
+
+**Session scope (v2.3.0/v2.4.0):** DES (Doc 03) and US (Doc 05) seeding for FR-121..FR-129 is owed after the next Design/Backlog catch-up. Downstream columns are OPEN by design — recorded not hidden. The RTM will close the chains when Docs 03/05/07 catch up. FR-125 is now implementation-ready (OI-19 RESOLVED at v2.4.0); its story may be marked Ready in Doc 05 once DES/US are assigned. FR-129 joins the recorded-phasing set awaiting DES/US; the architect MUST determine which amendment tier (FR-118 Tier 1 or FR-119 Tier 2) governs issuer-plurality requirements in the next Doc 03 increment.
+
+- BR-006, BR-012, BR-021 → FR-129 _(Charter-layer guard — single-issuer permanence requires Charter-level re-entry; OI-20 ruling, Rathish, 2026-08-20; DES/US owed at next Design increment)_
+
 ---
 
 ## 13. Open issues / TBD
@@ -1983,7 +2267,7 @@ per the refine loop; none exist at v1.0.0 or v1.1.0 (all v1.1.0 requirements sou
 | **OI-01** | **What activation threshold percentage is right?** The whole product hinges on this number and we do not have it. Too high and no party ever activates (kill criterion 4); too low and the network fills with noise. It must also survive `RISK-12` denominator error. Proposal: a jurisdiction-specific range calibrated against month-3 enrolment, fixed publicly before any petition opens. **Requires a Gate-1 decision on the calibration method, not the number.** | Gate 1 | Tomás Ferreira |
 | **OI-02** | **Is the Must set of 42 FRs accepted, or must a walking-skeleton capability be deferred?** See §11. Recall (FR-042/043/045) is the only coherent deferral candidate. Guardrails are not offered for deferral. _(Decided at Gate 1: Must set accepted in full; recall kept.)_ | Gate 1 ✓ | Priya Raghunathan |
 | **OI-03** | **What exclusion rate from personhood enrolment is acceptable, and what is the non-document-based attestation path?** `TD-05` — the people most likely to fail a document check are the people the product exists to serve. Needs a target and a named alternative path per pilot jurisdiction. _(Decided at Gate 1: Phase 1 = government eID sole anchor, exclusion accepted and documented. Phase 3 = non-document path needs own ADR, threat model, and audit.)_ | Gate 1 ✓ | Marcus Adeyemi |
-| **OI-04** | **Which three pilot jurisdictions?** Selection gates `CON-005`, `A-01`, `A-02`, `A-03` and the whole legal posture. No requirement below can be finally validated until they are named. _(Decided at Gate 1: one pilot; jurisdiction not yet named; eID rail as pluggable adapter. OPEN: name jurisdiction and eID rail before enrolment implemented.)_ | Gate 1 / enrolment | Sofia Marchetti |
+| **OI-04** | ~~**Which pilot jurisdictions?**~~ **✅ OI-04-PILOT RESOLVED (Rathish, 2026-08-20; DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Decision 1).** Phase-1 pilot: **India** — Aadhaar offline paperless KYC; FR-070 adapter class (c); first and only enrolment adapter at Gate 2. Phase-2: EU — eIDAS 2.0 wallets; first targets France and the Nordic countries. Phase-3: USA — deferred; fragmented state-by-state mDL patchwork; low activation; optional phone-home privacy default conflicts with the non-correlation guarantee (FR-002, FR-069); requires own ADR, threat model and audit. Pilot sequence recorded in §4.40 (FR-121). Hard dependency: **CON-015** — legal-opinion Gate-2 line item; Phase-1 adapter not implementation-ready until legal opinion obtained and recorded. §2.4 updated to name the pilot. _(Decision applied at v2.3.0.)_ | ✓ Resolved 2026-08-20 | Sofia Marchetti |
 | **OI-05** | **Does `NFR-002` (k ≥ 1,000 anonymity floor) make small-region governance impossible?** _(Resolved at Gate 1: confirmed as designed per ADR-004 §2.)_ | Gate 1 ✓ | Dr. Lena Kowalczyk |
 | OI-06 | Funding sustainability beyond month 18, given `NFR-005` (citizen pays nothing) and `CON-006` (no fundraising instrument). | Gate 2 | Priya Raghunathan |
 | OI-07 | Whether ISO 27001 / SOC 2 certification is required by any pilot jurisdiction or major partner, or whether the independent audit suffices. | Design | Rafael Duarte |
@@ -1998,6 +2282,9 @@ per the refine loop; none exist at v1.0.0 or v1.1.0 (all v1.1.0 requirements sou
 | **OI-16** | ~~**Append-only rule (FR-107) vs withdrawal-destroys-data (FR-085):** the vision states both 'nothing is ever deleted; history is append-only' and 'withdrawal before nomination closes destroys submitted disclosure data.' The proposed resolution — pre-nomination disclosure data is confidential-class, held off the governance record, and destroyable precisely because it never entered the append-only record — is NOT adopted silently. Candidate resolutions — (a) adopt the confidential-class carve-out; (b) weaken destruction to deactivation (data retained confidential, never published). DECISION for the approver at Gate 1. See ⚠ banner at §4.24.~~ **DECIDED at Gate 1 (Rathish, 2026-08-11): confidential-class carve-out adopted — pre-nomination disclosure data is confidential-class and never enters the governance record; destroyed on withdrawal; public records of completed actions remain append-only without exception. Recorded in GATE1-DECISION-2026-08-11.md §3; applied at v2.1.0 to FR-085, FR-107.** | Gate 1 ✓ | Priya Raghunathan |
 | **OI-17** | **Governance constants minted by v2.0.0:** trust-anchor revocation and rotation governance tiers and maximum blocking windows (FR-112/FR-113); conduct-vote, removal, and expulsion affirmative quorum bars, supermajority thresholds, and cooldowns (FR-103..FR-105); founding-member count (FR-076); disclosure schedule per role (FR-084); dispute stage maximum timelines (FR-100) — all to be set in Design, analogous to OI-08. _(v2.1.0: + steward term length, election cadence and recall bar (FR-114); protocol-tier quorum, supermajority and timelock (FR-119).)_ | Design | Tomás Ferreira |
 | **OI-18** | ~~**Entrenched-charter scope vs previously-absolute guarantees (FR-118/FR-119).** The approver's entrenched list has six rules; CON-001 (party-only boundary), BR-011/NFR-003 (receipt-freeness, coercion resistance), CON-002/CON-008/NFR-010 (data minimisation, no personal data on the record), CON-012 (no unaudited crypto) and CON-013 (non-violence) are not on it, and FR-119 makes everything off-list votable. Options: (a) extend the entrenched charter to include these named absolutes; (b) accept that they become amendable at the highest tier (a recorded weakening of guarantees this document currently states as absolute); (c) a two-tier core: the six charter rules unamendable, the named absolutes amendable only by a stricter super-process defined in Design. DECISION for the approver before the architect fixes the amendment boundary in Doc 03. See ⚠ banner at §4.39.~~ **DECIDED (Rathish, 2026-08-11): option (c) two-tier core, CON-001 promoted to Tier 1. Recorded in OI-18-DECISION-2026-08-11.md; applied at v2.2.0 to FR-118, FR-119, CON-001. Doc 03 v2 specifies the super-process numbers with rationale (OI-17 family).** | Gate 1 follow-up ✓ | Priya Raghunathan |
+
+| **OI-19** | ~~**Invite-gating vs FR-020 admission ban — PENDING APPROVER DECISION (Rathish).**~~ **✅ OI-19 RESOLVED (Rathish, 2026-08-20; artifacts/status/DECISIONS-2026-08-20-OI19-OI20.md).** Ruling: invite-gating is a spam-control RATE-LIMITER, never an admission condition; the two compose only if a non-invite path always remains open. FR-020 stays absolute: no person may be refused membership for lack of an invite. FR-125 finalised: invite-based onboarding is the fast default path; a non-invite fallback is ALWAYS available — slower and higher-friction is fine, closed is not; test obligation recorded — "a determined real person can always join without an invite." FR-020 unamended. See ✅ banner at §4.41. _(Decision applied at v2.4.0.)_ | ✓ Resolved 2026-08-20 | Grace Mbeki |
+| **OI-20** | ~~**Single-rail pilot vs FR-004 attestor-plurality requirement — PENDING APPROVER DECISION (Rathish).**~~ **✅ OI-20 RESOLVED (Rathish, 2026-08-20; artifacts/status/DECISIONS-2026-08-20-OI19-OI20.md).** Ruling: the design stays plural; the pilot deploys one rail (Aadhaar); the gap is a dated Phase-1 limitation, never a Charter amendment. FR-004's plural-pluggable-issuer requirement is satisfied at the ARCHITECTURE level (Aadhaar is one implementation of the pluggable adapter interface, not a hardcoded dependency). Phase-1 deployment limitation recorded honestly: in Phase 1 a person without Aadhaar cannot enrol in the pilot region (TD-05/ADR-016); FR-004's 50% attestor-share cap is inoperative during the single-rail Phase-1 deployment. Exit condition: Phase 2 adds eIDAS 2.0 (FR-121). FR-129 minted (§4.43) — Charter-layer guard: making single-issuer operation permanent requires Charter-level re-entry, never a deployment default. FR-004 unamended. See ✅ banner on FR-004 in §4.1. _(Decision applied at v2.4.0.)_ | ✓ Resolved 2026-08-20 | Marcus Adeyemi |
 
 **SC-13/SC-14 carry-forward status:** SC-13 (HIGH) and SC-14 (MEDIUM) from the SC-01 re-scan (artifacts/reviews/SECURITY-RESCAN-SC-01-2026-08-10.md §4): resolved IN PRINCIPLE at requirements level by FR-112/FR-113 under ruling 4 (trust-anchor lifecycle governance is a member-vote action executed by code). The Doc 03 design change implementing FR-112/FR-113 is owed after Gate 1 and remains open against the architect until then.
 
@@ -2053,6 +2340,11 @@ per the refine loop; none exist at v1.0.0 or v1.1.0 (all v1.1.0 requirements sou
 | **Super-process** | The five-property amendment path required to change a Tier-2 named absolute. Must include at minimum: (1) a supermajority materially above the ordinary structural tier; (2) a timelock long enough that the fork right is genuinely exercisable before the change takes effect; (3) two consecutive affirmative votes separated by that window; (4) the growth-surge defence active throughout; (5) an independent audit of the proposed change published before the second vote. Specific numbers are set by the architect in Doc 03 with rationale (`FR-119`). |
 | **Amendable protocol** | Every platform rule that is NOT in the Tier-1 entrenched charter or the Tier-2 named absolutes (Tier 3); amendable by platform-wide citizen vote at the highest governance tier with published quorum, supermajority, and timelock — and enacted by code with no ratification step (`FR-119`). |
 | **Steward vacancy** | The tested state in which no steward holds office; the platform guarantee is that a complete steward vacancy causes zero citizen-facing degradation — enrolment, party creation, voting, proposal submission, and forking all proceed unchanged (`FR-117`). |
+| **Counted action** | An action that contributes to an official count or eligibility outcome: contributing to a party's strength number, voting in a binding decision, or standing as a candidate. Requires proof of unique personhood (the FR-069 enrolment nullifier) per `FR-123`. Contrast: open-tier participation. |
+| **mDL** | Mobile Driver's Licence; a state-issued digital driving licence in mobile-credential format (ISO 18013-5). Referenced in `FR-121` as the fragmented credential landscape that defers the USA to Phase 3 of the pilot sequence; an optional "phone-home" privacy default in current mDL specifications conflicts with the platform's non-correlation guarantee (`FR-002`, `FR-069`). |
+| **Open tier** | The unverified participation tier available to any citizen without completing personhood verification; permits reading, following, watching, and other low-stakes actions but excludes all counted actions (`FR-122`). Contrast: counted action. |
+| **Subpoena test** | The acceptance criterion for `FR-128`: if a court orders the platform to disclose who belongs to a party, the platform must be technically unable to comply — not merely legally entitled to decline. Encrypted-but-decryptable identity storage fails this test. The test is the architecturally enforced form of the non-correlation guarantee. |
+| **Verified status** | The marker indicating that a participant has completed personhood verification (FR-069 nullifier enrolment). Verified status is PRIVATE TO THE HOLDER, expressed as eligibility (`FR-124` v2.3.1 per approver ruling, Rathish, 2026-08-20): **(a)** every verified participant — including Supporters — sees their own verified status and knows their counting/voting eligibility in their own authenticated session only; **(b)** the public sees only aggregate verified counts (e.g. 'N verified members'), never a per-participant badge for Supporters; **(c)** Worker/Candidate verified badge is visible on the public participation record — voluntary role-taking (FR-080) already crossed the disclosure line (`FR-083`); **(d)** MUST-NOT: no persistent public attribute may reveal that a specific Supporter is verified; absence-test obligation applies (UT-0700/UT-0701 style). No retroactive linkage is permitted (`FR-086`). Rationale: disclosure follows voluntary role-taking; verification is not role-taking (NFR-001, NFR-002, TD-02). |
 
 ---
 
@@ -2064,7 +2356,7 @@ per the refine loop; none exist at v1.0.0 or v1.1.0 (all v1.1.0 requirements sou
 | Project Manager (Responsible) | Ana-Maria Petrescu | Approved v1.0.0 at Gate 1 | 2026-08-09 | Re-affirmation packet to be assembled for v1.1.0 |
 | **Human approver — Gate 1 re-affirmation** | Rathish | ~~**Pending re-affirmation at v1.1.0**~~ _(superseded)_ | 2026-08-11 | ~~Must confirm or revise OI-13 (profile vs anonymity)~~ Superseded by the v2.0.0 re-entry (Gate 1 approved 2026-08-11; OI-13 resolved at v2.0.0) |
 | Human approver — Gate 1 (v2.0.0 re-entry) | Rathish | **Gate 1 APPROVED** | 2026-08-11 | Approved Doc 01 v2.0.0 + Doc 02 v2.0.1; conditional on steward requirements (Doc 02 v2.1.0) landing before Design; condition fulfilled by this version |
-| Human approver — v2.1.0 condition | Rathish | Steward requirements landed this version; review loop pending | 2026-08-11 | OI-18 open (entrenched-charter scope) |
+| Human approver — v2.1.0 condition | Rathish | Steward requirements landed this version; review loop pending | 2026-08-11 | ~~OI-18 open~~ **OI-18 RESOLVED at v2.2.0** (two-tier entrenched-charter scope decided; OI-18-DECISION-2026-08-11.md applied at v2.2.0). _(v2.3.1 ISS-02: stale 'OI-18 open' note corrected.)_ |
 
 ---
 
