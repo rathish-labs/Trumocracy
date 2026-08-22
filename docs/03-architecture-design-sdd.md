@@ -2,14 +2,42 @@
 
 ```
 Document ID:   SDD-TRUMOCRACY
-Version:       2.1.5
-Status:        Approved (review loop, cycle 1 PASS 99.5% — artifacts/reviews/03-architecture-design-sdd-v2.1.5-technical-cycle1.md)
+Version:       2.2.1
+Status:        Approved
 Owner:         Ravi Deshmukh — Principal Architect
 Approvers:     Rafael Duarte (Security), Chen Wei (Reliability), Dr. Lena Kowalczyk (Privacy),
                Aisha Nkemdirim (Elections & Voting)
 Source:        SRS-TRUMOCRACY v2.4.0
-Last updated:  2026-08-21
-Changelog:     v2.1.5 (2026-08-21) — Ceremony-burden correction per REC-1/REC-2
+Last updated:  2026-08-22
+Changelog:     v2.2.1 (2026-08-22) — Rework (review cycle 1 FAIL, 84%/0C/0H/2M/3L):
+               ISS-01 §10.12.1(b) SCR coverage corrected (16 of 23 covered / 7
+               uncovered, not 8/8); ISS-02 §10.12.4 Wireframe→SCR row for screen 3.4
+               corrected to SCR-14 (partial) and §10.12.5 class (i) row revised (SCR-14
+               partial coverage; remaining DES-063/FR-055 debt noted); ISS-03 changelog
+               §18 entry count corrected to three (C-01..C-03); ISS-04 §10.12.3
+               leak-check extended with 14th inline `.privacy pub` element on screen 3.6
+               (wireframe line 450; self-view preview, not a component instance); ISS-05
+               DES-094 normative binding clause 6 added (FR-124(e) no retroactive
+               linkage, FR-086). No DES/ADR additions; no §15/§16/§18 structural changes.
+               v2.2.0 (2026-08-22) — Design-system formalisation (approver directive
+               Rathish, 2026-08-22; wireframe design/wireframes/index.html): §10.12
+               added — assessment verdict, design token set (DES-093), privacy-status
+               component (DES-094, three states, normative FR-124 privacy binding +
+               leak-check PASS), SCR↔wireframe mapping table (15 screens × 23 SCRs),
+               design-debt register (class i: 5 screens; class ii: 3 required absent
+               screens), conflict register (C-01..C-04). ADR-023 registered in §12
+               (design system & privacy-status signature element for packages/ui). §15
+               DES-093/DES-094 traceability rows added. §16 Q11–Q14 open questions
+               added. §18 three new entries (C-01 Aadhaar button hardcoding; C-02
+               100-member cap unbacked; C-03 finance ledger screen absent); C-04
+               ("illustrative threshold") is a confirmed-no-conflict disposition in
+               §10.12.6 only, not a §18 contradiction. Referent correction applied: approver attributed
+               verified-status-privacy ruling to "OI-19" — corrected to FR-124 ruling
+               (Doc 02 v2.3.1, Rathish, 2026-08-20); OI-19 is the invite-gating ruling
+               (FR-125); mislabel noted in architect memory note. §12 preamble ADR count
+               twenty-two → twenty-three; ADR-001..ADR-022 → ADR-001..ADR-023. No
+               changes to §1.1 counts; no changes to §9 repository structure.
+               v2.1.5 (2026-08-21) — Ceremony-burden correction per REC-1/REC-2
                (DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md): ADR-022
                (Groth16-Phase-1 commitment — near-irreversible Charter-adjacent;
                PPoT Hermez reused at ~$0; assurance-based per-circuit phase-2; Gate-2
@@ -132,7 +160,7 @@ Changelog:     v2.1.5 (2026-08-21) — Ceremony-burden correction per REC-1/REC-
 ```
 
 > **Based on:** arc42 + C4 + Google design doc + IEEE 1016. **Produced in:** Design.
-> The twenty-two decision records in `docs/adr/ADR-001..ADR-022` are normative and are
+> The twenty-three decision records in `docs/adr/ADR-001..ADR-023` are normative and are
 > summarised in §12; where this document and an ADR disagree, the ADR wins and this document
 > is the defect.
 
@@ -925,6 +953,222 @@ others).
 | Ordinary revocation timelock | 30 days | Enough time for the community to identify false alarms; `REVOCATION_PENDING` is entered at enactment (public on-chain signal); `enrol()` against the affected anchor CONTINUES until `anchorEffectiveAt` (30 days after enactment) and reverts `AnchorRevoked` from then on; the enactment-to-effectiveAt window is the accepted RISK-30 residual; existing enrolled credentials unaffected | Open Layer |
 | Emergency revocation timelock | 7 days | Shortened but non-zero; requires a passed governance vote at the ordinary platform governance voting bar (60% supermajority / 15% quorum — UNCHANGED from the ordinary revocation path per ADR-020); only the timelock is shortened, not the voting requirement; seven days allows false-alarm veto without enabling unilateral operator action. NOTE: revocation and rotation are governance ACTIONS governed at the ordinary platform governance bar; the Guarded Layer super-process (80% / 25% / 180-day two-vote) applies only to AMENDMENTS of named absolutes — it does not apply here. RISK-30 accepted residual: 7-day window is a Sybil enrolment opportunity if private key is compromised between enactment and emergency vote. | Open Layer |
 
+### 10.12 Design system & screen inventory
+
+**Source:** Approver directive, Rathish, 2026-08-22. Wireframe input: `design/wireframes/index.html` (15 phone screens, 3 flows). **Referent correction (applied):** The approver attributed the verified-status-privacy ruling to "OI-19"; that is a mislabel. OI-19 is the invite-gating ruling (FR-125; DECISIONS-2026-08-20-OI19-OI20.md). The verified-status-privacy ruling is the **FR-124 ruling** (Doc 02 v2.3.1, Rathish, 2026-08-20; FR-124 normative text and ruling banner near line 694 of Doc 02). All citations in this section use FR-124. The mislabel is noted in the architect memory note (artifacts/architect-2026-08-22T1120.md) and does not affect any requirement; no silent referent swap was made.
+
+---
+
+#### 10.12.1 Assessment verdict
+
+**(a) Against the three-tier privacy model (FR-082..086, FR-124): SOUND.** The wireframe's privacy-status element renders in three states corresponding exactly to the three participation tiers (anonymous / verified-private / public). Every instance of the element in the wireframe appears in an authenticated self-view context — the holder's own screen — consistent with FR-124(a) (private self-view for all verified participants) and FR-082 (Supporter anonymous unconditionally). Other-actor views in the wireframe show only aggregate member counts (e.g. "12,480 verified members") or Worker/Candidate public-tier data ("Public" pill on candidate rows), consistent with FR-124(b) (aggregate-only public counts) and FR-124(c) (Worker/Candidate badge permitted). Full leak-check results are in §10.12.3.
+
+**One normative invariant required (not a current wireframe defect — a design constraint on the built component):** The privacy-status component's `ver` state MUST NOT render on any screen or route accessible without authentication, or on any surface displaying another actor's data. The wireframe as-drawn satisfies this; the component spec in §10.12.3 makes it normative.
+
+**(b) Against the SCR stubs (SCR-01..SCR-23): PARTIALLY SOUND.** The 15 wireframe screens cover 16 of the 23 SCRs with full or partial coverage. 7 SCRs have no wireframe screen at all. The full mapping is tabulated in §10.12.4. Gaps are design debt, not conflicts.
+
+**(c) Against ADR-011 (packages/ui designation): SOUND.** ADR-011 designates `packages/ui` as "design system (accessible components, i18n primitives)". The token set and privacy-status component formalised here are precisely the design-system foundation ADR-011 anticipated. ADR-023 (registered in §12) records the adoption decision.
+
+**Caveats and conflicts:** Four items in §10.12.6 require attention before build. Three are clear conflicts; one is an illustrative value that must not become a constant.
+
+---
+
+#### 10.12.2 Design tokens — DES-093
+
+| DES | Element | Purpose | Traces | Implementation location |
+|---|---|---|---|---|
+| DES-093 | Design token set for `packages/ui` | Formalises the visual language for all citizen-facing surfaces | FR-082..086, FR-124, NFR-011, NFR-013, DES-081, DES-083, DES-085 | `packages/ui/tokens.css` (not yet created — Coding phase) |
+
+**Colour tokens (verbatim from wireframe `:root`):**
+
+| Token | Hex | Semantic role |
+|---|---|---|
+| `--navy` | `#1E2761` | Primary public/party territory fill |
+| `--navy2` | `#2E3D7E` | Card fill on navy surfaces |
+| `--navy3` | `#3F4E96` | Avatar fill; accent on navy surfaces |
+| `--amber` | `#F2B134` | Primary CTA; petition/active pill; amber privacy-dot (pub state) |
+| `--amber-deep` | `#D9971C` | Eyebrow text on navy; amber hover |
+| `--ice` | `#CADCFC` | Secondary text on navy surfaces |
+| `--ice-deep` | `#AEC0E8` | Sub-text on navy surfaces |
+| `--paper` | `#F7F5EF` | Primary private/user territory fill |
+| `--paper2` | `#EFEBE0` | Progress bar track; secondary fills on paper surfaces |
+| `--ink` | `#1B2440` | Primary text on all surfaces |
+| `--grey` | `#5A6685` | Secondary text on paper surfaces |
+| `--grey-soft` | `#8892AE` | Tertiary text; anonymous privacy-dot |
+| `--green` | `#2C7A5B` | Verified state; "on track" pill; success icons |
+| `--green-soft` | `#E7F1EC` | Verified privacy-status background; "good" note fill |
+| `--red` | `#B4483C` | Against-vote bar in tally; error states |
+| `--line` | `#E4E1D6` | Borders; dividers; progress track on paper |
+
+**Typography:**
+- `--serif: 'Fraunces', Georgia, serif` — display and title text (h1, h2, card headings, avatar initials)
+- `--sans: 'Inter', system-ui, sans-serif` — body, labels, buttons, captions
+
+**Radii and shadow conventions (from wireframe CSS, no separate token):** Phone shell 42 px; screen 32 px; card 16 px; button 14 px; pill 20 px; privacy-status element 12 px; avatar 11 px. Card shadow: `0 2px 6px rgba(30,39,97,.05)`. Button active: `scale(0.98)`.
+
+**Note — typeface bundle risk:** Fraunces is a variable font with significant GSUB tables. The engineer MUST verify the combined font bundle (Fraunces + Inter) meets the 15 MB install floor (DES-082) and evaluate self-hosting versus Google Fonts CDN. The Google Fonts CDN is blocked by the strict CSP in the PWA shell (ADR-012); self-hosting is the default requirement.
+
+**Territory rule (normative):** Surfaces representing public party territory (readable by any citizen, anonymous or authenticated) use the `body.navy` class. Surfaces representing a private authenticated user session use the `body.paper` class. This rule is semantic, not stylistic:
+- **Navy territory:** 1.1 Welcome (public promise screen), 3.5 Accountability dashboard (public party performance), and any future public-party overview or discovery surface.
+- **Paper territory:** 1.2 Browse (authenticated personal context), 1.3..1.6 (enrolment and join flows), 2.1..2.3 (creation and petition flows), 3.1..3.4 (personal governance), 3.6 (one-way door to public role).
+- A screen that violates this assignment (e.g. a private authenticated flow rendered on a navy surface) is a design defect detectable at review.
+
+---
+
+#### 10.12.3 Privacy-status component — DES-094
+
+| DES | Element | Purpose | Traces | Implementation location |
+|---|---|---|---|---|
+| DES-094 | Privacy-status component | Persistent authenticated-holder self-view element; renders one of three states; normatively binds FR-124 at the component level | FR-082..086, FR-124, NFR-001, NFR-002, NFR-024 | `packages/ui/PrivacyStatus` (not yet created — Coding phase) |
+
+**Three states — exact wireframe copy and colour bindings:**
+
+| State | CSS class | Dot colour | Background | Text colour | Title | Subtitle |
+|---|---|---|---|---|---|---|
+| `anon` | `privacy anon` | `--grey-soft` (#8892AE) | #ECEEF5 | #41496b | "Anonymous" | "Nothing you do here is linked to you" |
+| `ver` | `privacy ver` | `--green` (#2C7A5B) | `--green-soft` (#E7F1EC) | #1f5a42 | "Verified — private" | "Your vote counts. Your identity is not stored" |
+| `pub` | `privacy pub` | `--amber` (#F2B134) | #FDF3E0 | #8a5b10 | "Public" | "You chose a public role. Your record is visible" |
+
+**Normative privacy binding (FR-124 — these constraints are component-level requirements, not just policies):**
+
+1. **Self-view only (FR-124(a)):** The component MUST render only the authenticated holder's own state in their own authenticated session. It MUST NOT render on any route accessible without authentication, and MUST NOT render on any surface displaying data belonging to another actor.
+2. **No other-actor render (FR-082, FR-124(a)/(b)):** The component MUST NOT render on a Supporter's public profile (no public Supporter profile exists by design — FR-082), on any other party member's page, or on any aggregate-only public view.
+3. **Supporter `ver` state absence (FR-124(b)/(d)/(f)):** A Supporter's verified state MUST be absent from all public surfaces, all other-actor views, all logs, and all exports with no path available to any actor other than the authenticated holder. The `ver` state is never rendered in a context visible to anyone other than the authenticated holder. The FR-124(f) absence-test obligation applies: a test in the style of UT-0700/UT-0701 MUST verify this absence.
+4. **Worker/Candidate `pub` state (FR-124(c)):** The `pub` state corresponds to voluntary role-taking. A separate static "Public" badge on the Worker/Candidate public participation record is permitted by FR-124(c). That badge is NOT a PrivacyStatus component instance; it is a distinct static label on the public-tier participation record.
+5. **Aggregate counts (FR-124(b)):** Aggregate verified counts (e.g. "12,480 verified members") on public party pages are plain text derived from on-chain aggregate data. They are not PrivacyStatus component instances and do not reveal any individual's state.
+6. **No retroactive linkage (FR-124(e), FR-086):** The PrivacyStatus component MUST NOT write, emit, or trigger any log entry or export that associates the holder's rendered state with any persistent record accessible to any other actor. FR-086 applies: no retroactive linkage between an anonymous Supporter's verified status and their identity is permitted through any data the system holds or emits. This obligation is particularly relevant at screen 3.6, whose copy ("What you've done as an anonymous supporter stays anonymous forever. It is never linked to your new public identity") makes the no-retroactive-linkage guarantee explicit to the user — the component rendering MUST be consistent with that guarantee.
+
+**Leak-check verdict (FR-124 applied to entire wireframe):**
+
+Review scope: all 15 wireframe screens examined for (a) every `privacy(...)` component instance and (b) every place another person or aggregate is rendered.
+
+| Category | Instances | Finding |
+|---|---|---|
+| Privacy pill on authenticated self-view screens | 1.2, 1.3, 1.4, 1.5, 1.6, 2.1, 2.2, 2.3, 3.1, 3.2, 3.3, 3.4, 3.6 | All self-view; holder sees their own state only. SAFE. |
+| Privacy pill on unauthenticated or public screen | 1.1 (Welcome — no pill), 3.5 (Accountability dashboard — no pill) | No pill on public surfaces. SAFE. |
+| Other-actor aggregate counts | 1.2 "12,480 verified members"; 2.3 "6,120 endorsements" | Aggregate-only, consistent with FR-124(b). SAFE. |
+| Other-actor named data | 3.1 "Proposed by a Worker" (avatar "R") | Worker role is public by FR-124(c). SAFE. |
+| Other-actor with Public pill | 3.2 Candidates "Ayesha K." / "Daniel M." with "Public" pill | Candidate tier; voluntary role-taking per FR-124(c). SAFE. |
+| Party-level performance data | 3.5 Accountability dashboard | Aggregate party promises/progress; no per-member data. SAFE. |
+| Screen 1.5 "Only you see this" pill | 1.5 `pill green` "Only you see this" on the Verified confirmation card | Explicit confirmation that the mark is private; self-view; consistent with FR-124(a). SAFE. |
+| Screen 3.6 inline `privacy pub` element (wireframe line 450) | One `<div class="privacy pub">` in the one-way door screen body — not a `privacy()` function call; a static one-off holder self-view preview of the future `pub` state after crossing to a public role. | Self-view; holder's own future state; not a component instance; not a privacy leak. SAFE. The engineer MUST NOT implement this as a PrivacyStatus component call — it is a one-off static preview element. |
+
+**LEAK-CHECK VERDICT: PASS.** 13 `privacy()` component function calls (3 `anon`, 10 `ver`, 0 `pub`-via-function) — all authenticated-holder self-view. One additional inline `<div class="privacy pub">` on screen 3.6 (wireframe line 450) is a holder self-view preview and not a component instance (noted in table above). No Supporter verified-status leak found in the wireframe as-drawn. The normative invariant in clause 1 above (no `ver` pill on unauthenticated routes or other-actor views) must be enforced at the component level to maintain this pass through build.
+
+---
+
+#### 10.12.4 SCR ↔ Wireframe mapping
+
+**Wireframe → SCR (15 screens):**
+
+| Wireframe screen | SCR | Coverage / notes |
+|---|---|---|
+| 1.1 Welcome | None | Pre-consent unauthenticated landing. No SCR. Design debt — see §10.12.5 class (i). |
+| 1.2 Browse anonymously | SCR-06 (partial), SCR-10 (partial) | Shows petitions (SCR-06) and party listing with aggregate membership (SCR-10); no single-screen exact match. |
+| 1.3 Verify — the offer | SCR-01 (partial), SCR-02 (partial) | Pre-enrolment disclosure (SCR-01) combined with attestor intro (SCR-02); no dedicated "offer" screen in SCR set. **Conflict C-01 — button hardcodes "Aadhaar"; see §10.12.6.** |
+| 1.4 Verify — on your device | SCR-02 (partial) | On-device ZK proof generation step is part of the SCR-02 enrolment flow. |
+| 1.5 Verified | None | No SCR covers post-enrolment confirmation. Design debt — see §10.12.5 class (i). |
+| 1.6 Join a party | SCR-10 (partial), SCR-11 | Party home join context (SCR-10) + join action (SCR-11). **Conflict C-03 — "Finances" row links to undesigned screen; see §10.12.6.** |
+| 2.1 Create a party — vision | SCR-04 | Full coverage — eight-pillar editor. |
+| 2.2 Create — constitution | None | No SCR covers constitution authoring as a distinct step. SCR-04 is eight pillars only. Design debt — see §10.12.5 class (i). |
+| 2.3 Petition — live onboarding | SCR-06 (partial), SCR-08 (partial), SCR-09 (partial) | Petition detail + threshold explainer + activation status combined in one screen. **Conflict C-02 — "caps at 100" unbacked; see §10.12.6.** |
+| 3.1 Proposal lifecycle | SCR-12 | Full coverage — proposal detail with lifecycle stages. |
+| 3.2 Candidate selection | SCR-22 (partial), SCR-23 (partial) | Candidate rows with scores (SCR-22) + debate schedule context (SCR-23); neither SCR is fully covered. |
+| 3.3 Cast a vote | SCR-13 | Full coverage — ballot booth. |
+| 3.4 Vote confirmed | SCR-14 (partial) | Post-vote tally present (consistent with SCR-14 result surface); independent-verifier flow (verify-it-yourself) absent. DES-063 confirmation treatment and FR-055 independent-verifier aspect absent from wireframe. See §10.12.5 class (i). |
+| 3.5 Accountability dashboard | SCR-20 (partial), SCR-17 (partial) | Transparency dashboard (SCR-20) + commitment tracking (SCR-17) combined; filtering log and manifesto version history absent. |
+| 3.6 The one-way door | SCR-15 (partial) | SCR-15 covers candidacy nomination disclosure; Worker self-declaration (FR-080) is related but distinct. Design debt — see §10.12.5 class (i). |
+
+**SCR → Wireframe (23 SCRs):**
+
+| SCR | Name | Wireframe screen | Coverage |
+|---|---|---|---|
+| SCR-01 | Pre-enrolment disclosure & consent | 1.3 (partial) | Partial — disclosure present; combined with attestor offer |
+| SCR-02 | Attestor choice & enrolment | 1.3 (partial), 1.4 (partial) | Partial — two screens cover different sub-steps; no dedicated choice step |
+| SCR-03 | Residency attestation | None | No wireframe screen |
+| SCR-04 | Party draft editor (eight pillars) | 2.1 | Full |
+| SCR-05 | Publish check & deficiency report | None | No wireframe screen |
+| SCR-06 | Petition browser & detail | 1.2 (partial), 2.3 (partial) | Partial — browse in 1.2; petition detail in 2.3 |
+| SCR-07 | Endorse / withdraw | None | No wireframe screen |
+| SCR-08 | Threshold & denominator explainer | 2.3 (partial) | Partial — threshold inline in 2.3 only |
+| SCR-09 | Activation record | 2.3 (partial) | Partial — onboarding status inline in 2.3 only |
+| SCR-10 | Party home & aggregate membership | 1.2 (partial), 1.6 (partial) | Partial — aggregate data in 1.2; join context in 1.6 |
+| SCR-11 | Join / leave (single-party enforcement) | 1.6 | Full |
+| SCR-12 | Proposal list & detail | 3.1 | Full |
+| SCR-13 | Ballot booth (cast / re-cast) | 3.3 | Full |
+| SCR-14 | Result & verify-it-yourself | 3.4 (partial) | Partial — post-vote tally shown; independent-verifier flow absent |
+| SCR-15 | Nomination & disclosure consent | 3.6 (partial) | Partial — Worker declaration shares the consent pattern; candidacy nomination is distinct |
+| SCR-16 | Election & office record | None | No wireframe screen |
+| SCR-17 | Manifesto, commitments & version history | 3.5 (partial) | Partial — commitment progress bars present; manifesto and version history absent |
+| SCR-18 | Recall initiation & ballot | None | No wireframe screen — see design-debt §10.12.5 class (ii) |
+| SCR-19 | Account recovery (seedless + collision) | None | No wireframe screen |
+| SCR-20 | Public transparency dashboard & filtering log | 3.5 (partial) | Partial — dashboard present; filtering log absent |
+| SCR-21 | Public participation profile | None | No wireframe screen (DES-064 dormant pending OI-13 resolution — §18) |
+| SCR-22 | Candidate feedback widget | 3.2 (partial) | Partial — feedback scores shown; widget interaction mechanics absent |
+| SCR-23 | Debate schedule, attendance & post-debate vote | 3.2 (partial) | Partial — debate list shown; schedule/attendance/voting mechanics absent |
+
+---
+
+#### 10.12.5 Design-debt register
+
+Kept in two distinct classes per the approver directive; the classes capture different kinds of debt.
+
+**Class (i) — Wireframe screens lacking a backing DES and/or US row:**
+
+| Screen | Missing layers | Required action before build |
+|---|---|---|
+| 1.1 Welcome | No SCR, no DES, no US. | Requirement gap: the welcome screen UX has no backing FR/DES/US. Must be specified (FR, DES, SCR, US) before engineering can build it. |
+| 1.5 Verified (post-enrolment confirmation) | No SCR; no dedicated DES for the confirmation UI state. DES-001 covers enrolment mechanics; the "Verified · private / Only you see this" confirmation screen is not designed. | DES gap: mint a DES for the post-enrolment success-state UI, including the FR-124(a) self-view copy obligation. |
+| 2.2 Create — constitution | No SCR, no DES. FR-076 (mandatory constitution sections) and FR-077 (non-violence clause presence check) are backed requirements but no screen-level design exists. SCR-04 covers eight pillars only. | SCR and DES gap: constitution-authoring screen needs its own SCR (with FR-076 + FR-077 traces) and DES element. |
+| 3.4 Vote confirmed | SCR-14 partial coverage exists (post-vote tally present). DES-063 covers coercion-safe confirmation at architecture level. FR-055 independent-verifier flow absent from wireframe. | Remaining design debt: confirmation-screen coercion-safe treatment (DES-063 UX detail) and the independent-verifier flow (FR-055) are not wireframed. Note as DES gap under SCR-14. |
+| 3.6 One-way door (Worker self-declaration) | SCR-15 covers candidacy nomination disclosure (FR-037..038). Worker self-declaration (FR-080) has no dedicated SCR, no DES surface element, and no US explicitly covering the "permanent / public from here on" UI treatment. | DES and SCR gap: Worker self-declaration informed-consent UI (FR-080) needs a dedicated surface element and SCR. |
+
+**Class (ii) — Required screens absent from the wireframe entirely:**
+
+**Recall / removal (affirmative quorum):**
+- WHAT EXISTS: SCR-18 stub (FE-024, FR-042..045); US-0057..US-0060 (two-stage recall); DES-030 (two-stage recall at architecture level); US-0114 (FR-104 affirmative-quorum role removal); US-0124 scenario (mid-term steward recall at FR-114 / DES-088). The wireframe constitution screen (2.2) includes "Removal of a representative — Recall by affirmative member vote" as a pre-filled constitution clause but no recall-flow screen exists anywhere in the wireframe.
+- WHAT IS MISSING: No wireframe screen for recall initiation. No wireframe screen for the recall ballot. No DES for FR-104 (conduct-vote removal — Doc 05 US-0114 notes "Not Ready pending DES"). The affirmative-quorum semantics from the v2 ruling (FR-104, Rathish, 2026-08-10) are not yet designed at screen level for the party-level removal vote UI. The two-stage recall flow (SCR-18) has a stub but no design.
+
+**FR-125 non-invite fallback join path:**
+- WHAT EXISTS: FR-125 finalised per OI-19 ruling (Rathish, 2026-08-20); the non-invite fallback is a MUST; FR-020 unamended and absolute; mandate that "a determined real person can always join without an invite."
+- WHAT IS MISSING: The wireframe 1.1 Welcome screen shows only "Explore — no account needed" and "I have an invite". The non-invite fallback path is entirely absent from the wireframe. No US rows exist for FR-121..FR-129 (catch-up debt recorded in Doc 05 and in §16 of this document). No SCR for the fallback join path. No DES covering the FR-125 non-invite fallback UI flow. All four design layers (DES, SCR, US, wireframe screen) are open for this mandatory path.
+
+**Party public finance ledger:**
+- WHAT EXISTS: FR-050 (Must — itemised, publicly readable, independently verifiable treasury record); FR-051 (Must — no governance advantage from payments); FR-096 (Must — mechanical anomaly detection with public flags); DES-033 (treasury caps + ledger — on-chain mechanism: per-person cap by nullifier, itemised public record); SCR-20 (Public transparency dashboard includes "treasury summary with anomaly flags"). The wireframe 1.6 Join a party screen lists "Finances — every rupee in and out" as a navigation row.
+- WHAT IS MISSING: No wireframe screen for the itemised finance ledger. DES-033 covers the on-chain mechanism; the UI for browsing the itemised inflow/outflow record (FR-050) is not designed. The 1.6 "Finances" navigation row links to an undesigned screen. No dedicated FE, US, or SCR for the ledger UI. SCR-20 is a dashboard summary view, not the itemised ledger. Required additions: ledger SCR (building on DES-033), DES surface element, FE, US.
+
+---
+
+#### 10.12.6 Conflict register
+
+Conflicts are surfaced, not reconciled. Dispositions are recommendations; resolution requires Product Owner (C-02) or engineer build-time decision (C-01, C-04). No silent edits were made to Doc 02 or to the wireframe.
+
+**C-01 — "Verify with Aadhaar" hardcoded button vs adapter-driven design (SCR-02 / FR-004 / OI-20 / DES-070)**
+
+- Screens: 1.3 ("Verify with Aadhaar" primary button), 1.4 (copy "Your Aadhaar data is being read and proven right here on your phone").
+- Conflict: The wireframe treats "Aadhaar" as a hardcoded design constant. The normative record requires adapter-driven UI: SCR-02 is titled "Attestor choice & enrolment" (a choice surface, not a hardcoded single option); FR-004 requires ≥ 2 mutually independent attestation paths at architecture level; OI-20 ruling (Rathish, 2026-08-20): "Aadhaar is one implementation of the pluggable adapter interface, not a hardcoded dependency"; DES-070: "region-level config, not hardcoded"; ADR-016 (amended) and ADR-021 confirm Aadhaar as the Phase-1 deployment rail string, not a design constant.
+- Required disposition (wireframe-copy fix at build time): The button label and on-device copy strings MUST be adapter-driven — fetched from region-level config or an i18n string resolved at deployment time. "Verify with Aadhaar" is the correct Phase-1 India deployment string; it is not a fixed design constant. The button element and interaction pattern are sound. No requirement change needed. This must not be built as a literal string.
+
+**C-02 — "Membership caps at 100 until legal verification completes" — unbacked requirement**
+
+- Screen: 2.3 (Petition — live onboarding), warning note: "Membership caps at 100 until legal verification completes — so an unverified party can't gather false strength."
+- Conflict: No backing FR, DES, or US exists for a "cap at 100 members" during the pre-legal-registration petition phase. FR-013 (petition state), FR-075 (distinguish platform vs legal registration), FR-076 (founding member count ≥ 5), FR-016 (activation threshold by formula) — none authorise a provisional membership cap. The 100-member cap is a new design concept with no normative footing.
+- Required disposition (requirement gap): This screen element MUST NOT be built until a FR is minted, reviewed, and approved through the SOP. The Product Owner must decide: accept and mint an FR, or reject (and the wireframe copy is revised). The architect does not resolve this silently. Both the conflict register and the design-debt register (class ii is the correct class once confirmed as a required capability; class i applies if subsequently scoped out) record the gap.
+
+**C-03 — Wireframe finance ledger screen absent; 1.6 "Finances" row links to undesigned surface**
+
+- Screen: 1.6 (Join a party), "Finances — every rupee in and out" navigation row.
+- Conflict: FR-050 (Must) requires an itemised, publicly readable, independently verifiable treasury record. The wireframe's 1.6 screen implies a "Finances" screen exists as a navigation target but no finance-ledger wireframe screen is provided. The design of the linked screen is entirely absent. DES-033 covers the on-chain mechanism; no UI-level design exists.
+- Required disposition (wireframe-scope gap): The finance ledger screen must be designed (SCR, DES surface element, FE, US) before the 1.6 navigation row can be implemented. The navigation row itself is sound; the target is not. Recorded in design-debt class (ii) above and as a conflict here because the wireframe implies completeness while the design is incomplete.
+
+**C-04 — "9,000 to activate" — illustrative threshold must not become an implementation constant**
+
+- Screens: 1.2 ("Threshold: 9,000"), 2.3 ("9,000 endorsements", "9,000 to activate").
+- Potential conflict: The wireframe shows a concrete threshold number. FR-016 (Must) requires the threshold computed entirely in code as a published percentage of the jurisdiction's eligible-population denominator. DES-010 specifies `max(pct×pop, pct×verified, 500)`.
+- Disposition (illustrative placeholder — no normative conflict): "9,000" is a plausible concrete example for a mid-size ward in the prototype. It does not contradict the formula. Per the approver directive: "is illustrative but MUST NOT be read as contradicting the endorsement-floor rule." Confirmed no conflict. The UI MUST compute and display the value from DES-010 at runtime; "9,000" MUST NOT appear as a constant in any implementation. No requirement change needed.
+
+---
+
 ## 11. Situation & failure-mode analysis (per requirement)
 
 | Requirement / DES | Normal | Edge | Failure → behaviour |
@@ -993,7 +1237,7 @@ Directive from approver (Rathish, 2026-08-11): sweep all four FR-115 steward pow
 
 ## 12. Architecture Decision Records
 
-Full records in `docs/adr/`. Status of all twenty-two ADRs: **Accepted**.
+Full records in `docs/adr/`. Status of all twenty-three ADRs: **Accepted**.
 
 | ADR | Decision | Chief consequence accepted |
 |---|---|---|
@@ -1019,6 +1263,7 @@ Full records in `docs/adr/`. Status of all twenty-two ADRs: **Accepted**.
 | 020 | Trust-anchor lifecycle: rotation via 60-day dual-anchor overlap (SC-14 closed); revocation ordinary 30-day / emergency 7-day timelock (SC-13 closed); both enacted only by passed governance vote via Governor.execute(); **amended 2026-08-11 (SC-18: ROTATION_PENDING abort path — ROTATION_ABORTED state added)** | 7-day emergency window remains a Sybil window — RISK-30 accepted; epoch cap bounds blast radius (ADR-020) |
 | 021 | Verification gates COUNTING, never joining; on-device nullifier-only identity posture; pilot sequence (Phase 1: India/Aadhaar offline KYC; Phase 2: EU/eIDAS 2.0; Phase 3: USA deferred); subpoena test as design invariant; two rejected designs recorded — persistent referral graph and encrypted identity registry (2026-08-20, directed by Rathish; DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Decisions 1–4); **amended 2026-08-20 (OI-19 CLOSED: FR-125 finalised, non-invite fallback mandatory, FR-020 unamended; OI-20 CLOSED: FR-004 satisfied at architecture level, Phase-1 dated limitation, Charter-layer guard FR-129)** | CON-015 Gate-2 legal-opinion dependency; OI-19 and OI-20 both CLOSED 2026-08-20 (DECISIONS-2026-08-20-OI19-OI20.md); open-tier account farms accepted (zero counted impact) |
 | 022 | Groth16 stays for Phase 1; near-irreversible Charter-adjacent commitment; PPoT Hermez reused at ~$0 for phase-1 setup; assurance-based per-circuit phase-2 (not convention count); Gate-2 six-circuit transcript set batchable into a campaign of days; accepted trade-off over universal-setup; revisit trigger: Phase 2+ circuit-count dominance; NFR-009 (two independent audits before Gate 2) unchanged (2026-08-21, directed by Rathish; DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md REC-2) | per-circuit phase-2 cost grows with circuit count — growth is the revisit trigger; migration is a verifier swap by design (`IProofVerifier` seam) but a full re-audit in practice |
+| 023 | Design system token set (DES-093) + privacy-status signature element (DES-094) adopted as the normative foundation for `packages/ui`; territory rule (navy = public-party / paper = private-user) is normative; PrivacyStatus component's normative privacy binding enforces FR-124 at component level; four wireframe conflicts recorded (§10.12.6) as engineer and PO disposition guidance; ADR-011 packages/ui designation is now concretely specified (2026-08-22, directed by Rathish; design/wireframes/index.html) | Fraunces font bundle risk: engineer must verify 15 MB install floor and self-host (Google Fonts CDN blocked by CSP); token values are specific hex, not a semantic system — any brand change is a DES amendment; three open conflicts (C-01 adapter-driven strings; C-02 unbacked 100-member cap; C-03 missing finance ledger screen) require PO/engineer action before build |
 
 ## 13. Risks & technical debt
 
@@ -1072,6 +1317,13 @@ pre-existing Phase-3, environment, external, or mechanism gaps per Doc 08 §gap-
 | FR-119 (three-layer amendment structure; Guarded Layer / Tier-2 super-process) | DES-087 (ProtocolGovernance); DES-091 (GovernanceConstants) | Five-property state machine; constants from §10.11; normative design in ADR-019 |
 | FR-120 (unconditional fork right; fork flag off above dev) | DES-034 (fork with lineage) | Existing DES; no steward can block; fork flag status unchanged |
 
+**v2.2.0 design-system additions (§10.12, 2026-08-22):**
+
+| Requirement | DES | Notes |
+|---|---|---|
+| FR-082..086 (three-tier privacy), FR-124 (verified-status privacy, v2.3.1 ruling), NFR-001, NFR-002, NFR-011, NFR-013 | DES-093 (design token set) | 16 colour tokens + 2 typefaces + territory rule; normative foundation for `packages/ui/tokens.css`; ADR-023. US layer: owed — in the FR-121..FR-129 next-increment and in the design-debt items (§10.12.5). |
+| FR-082..086, FR-124, NFR-001, NFR-002, NFR-024 | DES-094 (privacy-status component) | Three states (anon / ver / pub); normative FR-124 privacy binding (self-view only; no Supporter badge; absence-test obligation); normative for `packages/ui/PrivacyStatus`; ADR-023. US layer: owed — no US yet; the component underpins every flow that shows a privacy state, which spans US-0001..US-0130 range once built. Leak-check PASS recorded (§10.12.3). |
+
 ## 16. Open questions
 
 | # | Question | Owner | Needed by |
@@ -1086,6 +1338,10 @@ pre-existing Phase-3, environment, external, or mechanism gaps per Doc 08 §gap-
 | Q8 | **Cross-namespace double enrolment.** Now bounded by Phase-1 GOV_EID-class restriction (ADR-016). Re-assess at Phase 3 when 1-of-N resumes, with a new ADR and threat model. | Marcus Adeyemi | Phase 3 |
 | Q9 | **NFR-004's 0.1% duplicate rate is not internally measurable** by design. Requires out-of-band consented audited sample. | Yuki Sato | before Gate 2 |
 | Q10 | **OI-13: FR-062 vs NFR-001/NFR-024/TD-02.** Participation profiles making party membership public directly conflicts with the no-linkage guarantee. Resolution required from Rathish at Gate 1 re-affirmation. See §18 for design-side consequence. | Priya Raghunathan | Gate 1 re-affirmation |
+| Q11 | **Welcome screen (1.1) design specification needed.** The wireframe 1.1 Welcome screen has no backing FR, DES, SCR, or US. It is a pre-consent unauthenticated landing screen. Before engineering, a requirement and design element must be minted. What is the normative UX obligation for the landing screen, and who owns it? | Priya Raghunathan (PO) | Before Coding sprint 1 |
+| Q12 | **100-member provisional cap (wireframe 2.3) — accept or reject?** The wireframe note "Membership caps at 100 until legal verification completes" has no backing FR. The Product Owner must decide: mint a new FR defining the provisional cap (and its enforcement mechanism, relation to the petition lifecycle, and the "legal verification" trigger), or reject the concept and revise the wireframe copy. This must not be built without a decision. | Priya Raghunathan (PO) | Before design of petition-live screen |
+| Q13 | **FR-125 non-invite fallback — design all four layers.** The mandatory non-invite fallback path (OI-19 ruling; FR-125(b) non-invite fallback ALWAYS available) has no wireframe screen, no DES, no SCR, no US. The Welcome screen (1.1) shows only "Explore" and "I have an invite". The fallback flow must be designed end-to-end. Owner of the DES and SCR: architect (next increment). Owner of the US: product-owner. | Ravi Deshmukh (architect) + Priya Raghunathan (PO) | Before Coding sprint covering FR-125 |
+| Q14 | **Party finance ledger screen — design owed.** The wireframe 1.6 "Finances — every rupee in and out" navigation row links to an undesigned screen. FR-050 (Must) requires the itemised public treasury record. DES-033 covers the on-chain mechanism; the UI is not designed. A ledger SCR, DES surface element, FE, and US are all owed. | Ravi Deshmukh (architect) + Priya Raghunathan (PO) | Before Coding sprint covering FR-050 |
 
 **Resolved during design:** OI-05 (k ≥ 1000 vs ward-level governance) — ADR-004 §2 escalates
 scope to the nearest ancestor region meeting the floor. OI-12 (FR-073 vs ADR-003) — resolved
@@ -1264,6 +1520,36 @@ Design response: DES-087 and §10.11 now specify the quorum denominator as enrol
 
 **SC-21 (LOW) — "Undiscovered bypass" STRIDE residual for Governor.execute() action-class table did not reference SC-15's general rule as a mitigation.**
 Design response: §10.1 STRIDE table updated; SC-15 general rule (ProtocolGovernance IMMUTABLE CORE, no upgrade/proxy path) formally closes the bypass class of contract substitution or proxy redirection; remaining residual is a logic bug within the immutable contract itself, mitigated by audit (DES-079) and capability-absence CI scan.
+
+---
+
+### C-01 — Wireframe hardcodes "Verify with Aadhaar" vs adapter-driven design (v2.2.0)
+
+**Status:** Open — wireframe-copy fix required at build time. Not a design defect; a build-time parameterisation obligation.
+
+**The conflict:** The wireframe screens 1.3 ("Verify with Aadhaar" button) and 1.4 ("Your Aadhaar data is being read and proven right here on your phone") treat "Aadhaar" as a hardcoded design constant. The normative record requires adapter-driven UI strings: SCR-02 is "Attestor choice & enrolment" (implying a choice surface); FR-004 requires ≥ 2 attestation paths at architecture level; OI-20 ruling designates Aadhaar as the Phase-1 deployment rail string, not a design constant; DES-070 requires "region-level config, not hardcoded"; ADR-016 (amended) and ADR-021 confirm the Phase-1 deployment limitation posture.
+
+**Required disposition:** Button label and on-device copy MUST be adapter-driven at build time — resolved from region-level config or i18n string. "Verify with Aadhaar" is the correct Phase-1 India string and is factually accurate; it is not a fixed design constant. The wireframe element and interaction pattern are sound. No requirement change needed. The engineer must not use the literal string.
+
+---
+
+### C-02 — Wireframe "caps at 100 until legal verification" has no backing requirement (v2.2.0)
+
+**Status:** Open — Product Owner must decide: mint a FR or reject the concept.
+
+**The conflict:** Wireframe 2.3 note: "Membership caps at 100 until legal verification completes — so an unverified party can't gather false strength." No backing FR, DES, or US exists. FR-013 (petition state), FR-075 (platform vs legal registration distinction), FR-076 (founding member count ≥ 5), FR-016 (activation threshold by formula) — none authorise a provisional membership cap of any kind. This is a new design concept with no normative footing.
+
+**Required disposition:** This screen element MUST NOT be built until a FR is minted, reviewed, and approved. The Product Owner must decide whether the concept is accepted (mint FR) or rejected (revise wireframe copy). The architect does not determine this; it is a product decision. Recorded in §10.12.5 class (ii) as design debt and here as a conflict.
+
+---
+
+### C-03 — Wireframe 1.6 "Finances" row links to undesigned screen; FR-050 (Must) requires it (v2.2.0)
+
+**Status:** Open — design owed before the 1.6 navigation row can be built.
+
+**The conflict:** The wireframe 1.6 Join a party screen presents "Finances — every rupee in and out" as a navigation target. No wireframe finance-ledger screen exists. FR-050 (Must) requires an itemised, publicly readable, independently verifiable treasury record. DES-033 covers the on-chain mechanism. The UI screen is entirely undesigned (no SCR, no DES surface element, no FE, no US).
+
+**Required disposition:** Design the finance ledger screen (SCR, DES, FE, US) before implementing the 1.6 navigation row. The navigation row itself is sound; the target is not. The absence of the ledger screen is a design-completeness defect in the wireframe scope, not an architectural conflict with the token set or privacy model.
 
 ---
 
