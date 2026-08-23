@@ -2,14 +2,37 @@
 
 ```
 Document ID:   SRS-TRUMOCRACY
-Version:       2.5.0
-Status:        In Review
+Version:       2.7.0
+Status:        Approved
 Owner:         Priya Raghunathan — Product Owner
 Approvers:     Gate 1 — Priya Raghunathan (Product Owner), Ana-Maria Petrescu (Project Manager),
                Rathish (Human Approver — Gate 1 re-entry, v2.0.0)
 Source:        PR-TRUMOCRACY (docs/01-press-release-prfaq.md)
-Last updated:  2026-08-22
-Change:        v2.5.0 — C-02 ruling applied (Rathish, 2026-08-22;
+Last updated:  2026-08-23
+Change:        v2.7.0 — Rework against c1 business-mode review (FAIL 94%, 0C/0H/1M/1L;
+               artifacts/reviews/02-requirements-srs-v2.6.0-business-cycle1.md). ISS-01
+               (Medium): §16 Source block citation corrected — decision record
+               DECISIONS-2026-08-23-V1-V2-SPLIT.md now exists; removed provisional
+               "(being written by the project-manager this session)" qualifier; Doc 03
+               alignment reference updated to v2.3.1 (Approved). ISS-02 (Low): honesty
+               register H-07..H-14 added — closes all H?=Y gaps in §16.3 without a §16.4
+               entry (FR-002, FR-034, FR-048, FR-059, FR-063, FR-103, FR-124, NFR-024).
+               No other changes.
+               v2.6.0 — v1/v2 delivery-phasing classification (§16 new section; approver
+               directive 2026-08-23, DECISIONS-2026-08-23-V1-V2-SPLIT.md). FR-131 minted
+               (Must, §4.45, Nadia Hassan; traces BR-005, BR-009; design DES-098; §8 Gherkin
+               added; §11 Must count 111 → 112; §12 trace and §13 session-scope note updated).
+               CON-007 accepted-budget parenthetical corrected from stale ~USD 4.13M to
+               record-derived ≈ USD 4.03M on the L2 basis (Ruling 1 cascade, 2026-08-21,
+               DECISIONS-2026-08-21-BUDGET-APPETITE-AND-RISK014.md §3.2; ≈ USD 175K held as
+               explicit audit-remediation contingency against the unchanged USD 4.2M appetite).
+               FR-131 recorded-phasing posture: DES-098 minted by architect in Doc 03 v2.3.0
+               §10.13.6; US and TC/RTM rows owed at next catch-up (same posture as
+               FR-121..FR-130); Doc 03 v2.3.0 §12 trace table cites "FR-130" for DES-098 —
+               this is a pre-allocation error (FR-130 was minted at v2.5.0 for the
+               provisional-party membership cap); the honesty-notice FR is FR-131; cascade
+               annotation owed to Doc 03 at the next architect increment.
+               v2.5.0 — C-02 ruling applied (Rathish, 2026-08-22;
                artifacts/status/DECISIONS-2026-08-22-WIREFRAME-C01-C02.md). C-02 DECIDED:
                provisional-party membership cap is an anti-capture control, not display copy —
                an unverified party (platform-activated but not yet legally registered per FR-075)
@@ -790,6 +813,32 @@ See §9.2.
 | ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
 |----|-------------------------------|-----------|----------|-------|-----------|
 | FR-130 | A provisional party — one that has been platform-activated per FR-018 but whose legal registration has not yet been externally verified and recorded per FR-075 — MUST be capped at 100 members; the cap MUST lift automatically, by code, on verified legal registration being recorded on the platform per FR-075; no operator or manual path may lift the cap before that event. This requirement is an anti-capture control: it prevents an unverified party accumulating membership strength before it is legally real. **Distinction:** this cap is wholly distinct from the endorsement threshold (FR-014, FR-016) and from the endorsement-floor constants (DES-010: max(byPopulation, byVerified, 500)) — those govern petition legitimacy; FR-130 governs post-activation provisional membership, a separate anti-capture layer. _(Source: C-02 ruling, Rathish, 2026-08-22; Doc 03 §10.12.6 C-02; artifacts/status/DECISIONS-2026-08-22-WIREFRAME-C01-C02.md. DES owed at next Doc 03 increment — same recorded-phasing posture as FR-121..FR-129. TC OPEN — Phase 3.)_ | BR-002, BR-012 | Must | Sofia Marchetti | T, I |
+
+### 4.45 v1 honesty notice — voting authentication posture (DES-098)
+
+> **Rationale:** The Definition-A (v1) deployment uses conventional database-backed
+> authentication for ballot casting. The Definition-B (v2) private receipt-free ballot
+> (MACI, FR-030, FR-031, NFR-003) is deferred. A member voting in v1 cannot be assumed
+> to know this; the UI MUST state it plainly before they vote. This requirement follows
+> the disclosed-limitation pattern established in Doc 03 §13 ("Public tallies in Phase 1")
+> and DES-063 (the v2 coercion-safe confirmation surface is its successor). DES-098 was
+> minted by the architect in Doc 03 v2.3.0 §10.13.6 and awaited its backing FR — that FR
+> is FR-131.
+>
+> _(Source: approver directive 2026-08-23, Rathish; decision record
+> artifacts/status/DECISIONS-2026-08-23-V1-V2-SPLIT.md; Design: DES-098, Doc 03
+> §10.13.6, v2.3.0 session. Note: Doc 03 v2.3.0 §12 trace table references "FR-130"
+> for DES-098 — pre-allocation error; FR-130 was minted at v2.5.0 for the
+> provisional-party membership cap; the honesty-notice FR is FR-131. Cascade
+> annotation owed to Doc 03 at the next architect increment. DES-098 minted;
+> US/TC/RTM owed at the next catch-up — same recorded-phasing posture as
+> FR-121..FR-130. TC OPEN — Phase 3.)_
+
+| ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
+|----|-------------------------------|-----------|----------|-------|-----------|
+| FR-131 | Wherever a vote is cast in a Definition-A (v1) deployment, the UI MUST display a plain-language honesty notice (designed as DES-098) before the ballot is confirmed. The notice MUST state: **(a)** this ballot uses conventional authentication and is NOT anonymous, NOT receipt-free, and NOT coercion-resistant; **(b)** the platform database CAN see vote direction and party membership in v1; **(c)** the cryptographic private ballot — where the platform is technically unable to see vote direction or party membership — is available when the platform upgrades to the Definition-B (v2) privacy layer. The notice MUST be: visible before confirmation; non-dismissable (the voter MUST acknowledge the notice to proceed); WCAG 2.2 AA compliant (DES-081); screen-reader accessible. The notice MUST appear on SCR-13 (ballot booth) and SCR-14 (post-vote confirmation). The v1 product — its UI, README, and all public-facing materials — MUST NOT use the words "private", "anonymous", "receipt-free", or "secure" to describe v1 voting behaviour, and MUST NOT present itself as providing the Definition-B (v2) cryptographic guarantees. _(Source: approver directive 2026-08-23, Rathish; DECISIONS-2026-08-23-V1-V2-SPLIT.md. Follows the disclosed-limitation pattern: Doc 03 §13 Phase-1 public-tally disclosure; DES-063 (v2 coercion-safe confirmation surface is the v2 successor to DES-098). DES-098 minted; US/TC/RTM owed at next catch-up — same recorded-phasing posture as FR-121..FR-130. TC OPEN — Phase 3.)_ | BR-005, BR-009 | Must | Nadia Hassan | T, I |
+
+_BR trace rationale: **BR-005** — "Manifestos, commitments and office-holders' governance votes MUST be publicly verifiable." Platform honesty about the properties of the voting mechanism is the complement of verifiability; in v1 the tally result IS on the audit record (FR-033/FR-054) but the mechanism is not private, and FR-131 ensures that distinction is stated plainly. **BR-009** — "Proving personhood and residency MUST NOT expose a member's real-world identity or make them targetable." The honesty notice protects members by ensuring informed consent about what v1 cannot guarantee before they vote, enabling them to make an informed decision about their exposure._
 
 ---
 
@@ -1965,6 +2014,37 @@ And the cap remains in place until legal registration is code-verified
 ```
 
 ```gherkin
+# FR-131 — v1 honesty notice: UI MUST state voting is NOT anonymous/receipt-free/coercion-resistant before ballot confirmation
+# Design: DES-098 (Doc 03 §10.13.6). Follows disclosed-limitation pattern: Doc 03 §13 Phase-1 public-tally disclosure.
+
+# Scenario 1: Honesty notice displayed before ballot confirmation (SCR-13 ballot booth)
+Given a Definition-A (v1) deployment of Trumocracy
+And a member who has navigated to the ballot booth (SCR-13) and is about to cast a vote
+When the member is presented with the ballot before confirming their choice
+Then a plain-language honesty notice is displayed
+And the notice states that this ballot uses conventional authentication and is NOT anonymous, NOT receipt-free, and NOT coercion-resistant
+And the notice states that the platform database CAN see vote direction and party membership
+And the notice states that the cryptographic private ballot (where the platform is technically unable to see direction or membership) is available in the v2 upgrade
+And the notice is non-dismissable: the member MUST acknowledge the notice before the ballot can be submitted
+And the notice is accessible to screen-readers and meets WCAG 2.2 Level AA
+
+# Scenario 2: Post-vote confirmation screen (SCR-14) also carries the honesty notice
+Given the same member in a v1 deployment who has successfully cast a ballot
+When the post-vote confirmation screen (SCR-14) is displayed
+Then the honesty notice is present on that screen as well
+
+# Scenario 3: v1 product materials do not present voting as anonymous or receipt-free
+Given any surface of a v1 deployment — UI, README, public documentation, or marketing material
+When the text is searched for any claim that v1 voting is "private", "anonymous", "receipt-free", "secure" (in the context of ballot privacy), or equivalent descriptions of Definition-B guarantees
+Then zero such claims are found describing v1 voting behaviour
+
+# Scenario 4: Absence test — no path around the honesty notice (UT-style)
+Given a member in a v1 deployment who has navigated to the ballot booth
+When any code path is tested for a route that submits a ballot without the honesty notice acknowledgement
+Then no such path exists; every ballot submission code path requires prior notice acknowledgement
+```
+
+```gherkin
 # NFR-001 — privacy: no actor determines party membership or vote from system data
 # Adversary model per §6 NFR-001: holds all operator logs, all attestor credential hashes, full public verifiable record, network timing at 1-second granularity
 # ε and collusion bound provisional until OI-10 closes (Design, owner: Dr. Lena Kowalczyk)
@@ -2165,7 +2245,7 @@ Then the transition is appended with timestamp and cause; the prior state is pre
 | CON-004 | All governance-critical logic MUST be open source under an OSI-approved licence with reproducible builds. | Openness | Rafael Duarte |
 | CON-005 | Electoral, party-registration, political-finance and association law differ per jurisdiction. Each launch jurisdiction MUST pass legal review before enablement, and features MUST be independently gateable per jurisdiction. | Legal | Sofia Marchetti |
 | CON-006 | No transferable token, coin, security, membership sale, subscription or fundraising instrument for the platform may exist. Governance rights MUST NOT be represented by anything transferable. | Anti-corruption | Erik Lindqvist |
-| CON-007 | Appetite: **USD 4.2M** (accepted budget ~USD 4.13M — Lever L2: one pilot at launch; see Gate 1 decision B-01 and Doc 01 §E2) and a team of **18** through launch. Gate 1 re-entry target 2026-08-15 (this packet); Gate 2 target 2027-05-14 (per S-01); launch **2027-06-01** (fictional press-release dateline per Doc 01 v2.0.0; actual launch follows Gate 2 readiness 2027-05-14). Scope, not date, absorbs overrun. _(v2.0.1: launch re-dated per S-01; v2 scope schedule/appetite re-estimated in Doc 13 after Gate 1 — open item.)_ | Budget / schedule | Priya Raghunathan |
+| CON-007 | Appetite: **USD 4.2M** (accepted budget ≈ USD 4.03M on the accepted L2 basis — record-derived figure; Ruling 1 cascade 2026-08-21, DECISIONS-2026-08-21-BUDGET-APPETITE-AND-RISK014.md §3.2; ≈ USD 175K held as explicit audit-remediation contingency; appetite unchanged at USD 4.2M; supersedes the stale ~USD 4.13M figure from Doc 13 v1.0.0 / Gate-1 decision B-01 — Lever L2: one pilot at launch; see Doc 01 §E2) and a team of **18** through launch. Gate 1 re-entry target 2026-08-15 (this packet); Gate 2 target 2027-05-14 (per S-01); launch **2027-06-01** (fictional press-release dateline per Doc 01 v2.0.0; actual launch follows Gate 2 readiness 2027-05-14). Scope, not date, absorbs overrun. _(v2.0.1: launch re-dated per S-01; v2 scope schedule/appetite re-estimated in Doc 13 after Gate 1 — open item.)_ | Budget / schedule | Priya Raghunathan |
 | CON-008 | The public record is immutable, which is irreconcilable with an unrestricted right of erasure. The constraint therefore is: **no personal data may ever be written to it.** | Legal / architectural | Sofia Marchetti |
 | CON-009 | Threshold denominators depend on third-party population statistics whose accuracy, granularity and update cadence Trumocracy does not control and MUST NOT modify. | External dependency | Yuki Sato |
 | CON-010 | Mobile application-store policies restrict political and election-related applications; distribution MUST NOT depend on a single store or domain. | Distribution | Hiroshi Tanaka |
@@ -2246,12 +2326,12 @@ Then the transition is appended with timestamp and cause; the prior state is pre
 
 ## 11. Requirements prioritization & release plan (MoSCoW)
 
-**Counts (v2.5.0).** 21 BR · 130 FR minted (128 active + 2 superseded: FR-046, FR-062) · 28 NFR · 15 CON · 27 requirement-level RISK rows in §10 (RISK-01..16 + RISK-22..32; RISK-17..21 live in Doc 13) · 12 TDs.
-_(v1.1.0 baseline: 13 BR · 73 FR · 26 NFR · 12 CON · 19 RISK · 7 TDs. v1.0.0 baseline: 12 BR · 61 FR · 26 NFR · 12 CON · 16 RISK · 6 TDs. Added by CR-v1.1.0: 1 BR, 12 FR, 3 RISK, 1 TD. Added by v2.0.0 re-entry: 7 BR, 40 FR, 2 NFR, 2 CON, 9 RISK, 3 TDs; 2 FRs superseded. Added by v2.1.0: 1 BR (BR-021), 7 FR (FR-114..FR-120), 2 RISK (RISK-31..32), 1 TD (TD-11). Added by v2.3.0: 8 FR (FR-121..FR-128, all Must), 1 CON (CON-015), 1 TD (TD-12); OI-19/OI-20 minted. No new BR or NFR. Added by v2.4.0: 1 FR (FR-129, Must — Charter-layer guard); OI-19 and OI-20 CLOSED; FR-125 finalised (no longer draft). New FRs have no DES/US yet — recorded-phasing posture, RTM catches up. Added by v2.5.0: 1 FR (FR-130, Must — provisional-party membership cap, anti-capture control; C-02 ruling, Rathish, 2026-08-22; US-0131 minted in Doc 05 v2.1.0; DES owed — same recorded-phasing posture; TC OPEN — Phase 3).)_
+**Counts (v2.6.0).** 21 BR · 131 FR minted (129 active + 2 superseded: FR-046, FR-062) · 28 NFR · 15 CON · 27 requirement-level RISK rows in §10 (RISK-01..16 + RISK-22..32; RISK-17..21 live in Doc 13) · 12 TDs.
+_(v1.1.0 baseline: 13 BR · 73 FR · 26 NFR · 12 CON · 19 RISK · 7 TDs. v1.0.0 baseline: 12 BR · 61 FR · 26 NFR · 12 CON · 16 RISK · 6 TDs. Added by CR-v1.1.0: 1 BR, 12 FR, 3 RISK, 1 TD. Added by v2.0.0 re-entry: 7 BR, 40 FR, 2 NFR, 2 CON, 9 RISK, 3 TDs; 2 FRs superseded. Added by v2.1.0: 1 BR (BR-021), 7 FR (FR-114..FR-120), 2 RISK (RISK-31..32), 1 TD (TD-11). Added by v2.3.0: 8 FR (FR-121..FR-128, all Must), 1 CON (CON-015), 1 TD (TD-12); OI-19/OI-20 minted. No new BR or NFR. Added by v2.4.0: 1 FR (FR-129, Must — Charter-layer guard); OI-19 and OI-20 CLOSED; FR-125 finalised (no longer draft). New FRs have no DES/US yet — recorded-phasing posture, RTM catches up. Added by v2.5.0: 1 FR (FR-130, Must — provisional-party membership cap, anti-capture control; C-02 ruling, Rathish, 2026-08-22; US-0131 minted in Doc 05 v2.1.0; DES owed — same recorded-phasing posture; TC OPEN — Phase 3). Added by v2.6.0: 1 FR (FR-131, Must — v1 honesty notice; approver directive 2026-08-23; DES-098 minted by architect in Doc 03 v2.3.0 §10.13.6; US/TC/RTM owed at next catch-up; same recorded-phasing posture as FR-121..FR-130; TC OPEN — Phase 3).)_
 
 | Priority | FR count | FR IDs |
 |----------|----------|--------|
-| **Must** | **111** | FR-001, 002, 003, 004, 006, 007, 008, 009, 010, 011, 014, 016, 018, 020, 021, 022, 023, 024, 025, 026, 027, 028, 030, 031, 032, 033, 035, 036, 037, 039, 040, 042, 043, 045, 047, 050, 051, 054, 056, 058, 059, 060, 061, 063, 064, 065, 066, 067, 068, 069, 070, 071, 072, 073, 074, 075, 076, 077, 078, 079, 080, 081, 082, 083, 084, 085, 086, 087, 088, 089, 090, 091, 092, 093, 094, 095, 096, 097, 098, 099, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130 |
+| **Must** | **112** | FR-001, 002, 003, 004, 006, 007, 008, 009, 010, 011, 014, 016, 018, 020, 021, 022, 023, 024, 025, 026, 027, 028, 030, 031, 032, 033, 035, 036, 037, 039, 040, 042, 043, 045, 047, 050, 051, 054, 056, 058, 059, 060, 061, 063, 064, 065, 066, 067, 068, 069, 070, 071, 072, 073, 074, 075, 076, 077, 078, 079, 080, 081, 082, 083, 084, 085, 086, 087, 088, 089, 090, 091, 092, 093, 094, 095, 096, 097, 098, 099, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131 |
 | **Should** | 14 | FR-005, 012, 013, 015, 017, 019, 029, 034, 038, 041, 044, 048, 049, 055 |
 | **Could** | 3 | FR-052, 053, 057 |
 | **Won't (this release)** | — | Vote delegation; state elections; cross-jurisdiction parties; social features; staff moderation of political speech |
@@ -2261,7 +2341,7 @@ _Convention: superseded rows (FR-046, FR-062) are excluded from the active Must 
 
 NFR priorities: **Must** — NFR-001…007, 009…017, 020…025, 027…028 (24). **Should** — NFR-008, 018, 019, 026 (4).
 
-**On the size of the Must set.** The Must set grows from 54 to 94 with the v2.0.0 vision re-entry directed by the approver (Rathish, 2026-08-10). The 40 new Must FRs (FR-074..FR-113) cover party self-governance, participation tiers and privacy, committees, proposal lifecycle, candidate selection, manifesto, financial transparency, COI, audit, disputes, member rights, conduct votes, data classification, transparency dashboard, scorecard, and trust-anchor lifecycle governance. FR-050 is raised from Should to Must (financial transparency is now a business requirement, BR-019). FR-062 is superseded by §4.24 (FR-082..FR-086) and excluded from the active Must count. All v2.0.0 FRs are Must per the approver's direction. Gate 1 re-entry approves direction; Gate 2 still governs launch readiness. _v2.1.0: the Must set grows from 94 to 101 with seven steward-organisation FRs (FR-114..FR-120), all Must per the conditional Gate-1 approval directed by Rathish (2026-08-11); the condition is fulfilled by this version landing before Design. v2.3.0: the Must set grows from 101 to 109 with eight FRs (FR-121..FR-128) covering pilot jurisdiction sequence, tiered participation (verification gates counting, never joining), and on-device proof / nullifier-only identity posture — all Must per Decision 1–3 (Rathish, 2026-08-20). New FRs have no DES/US yet — same recorded-phasing posture as FR-074..FR-111; tester's next RTM catch-up covers FR-121..128. v2.4.0: the Must set grows from 109 to 110 with FR-129 (Charter-layer guard — making single-issuer operation permanent requires Charter-level re-entry, never a deployment default; OI-20 ruling, Rathish, 2026-08-20). FR-125 finalised (OI-19 RESOLVED). FR-129 has no DES/US yet — same recorded-phasing posture. v2.5.0: the Must set grows from 110 to 111 with FR-130 (provisional-party membership cap — a provisional party is capped at 100 members until verified legal registration; the cap lifts automatically by code; anti-capture control; C-02 ruling, Rathish, 2026-08-22). FR-130 has no DES yet — same recorded-phasing posture; US-0131 minted in Doc 05 v2.1.0; TC OPEN — Phase 3._
+**On the size of the Must set.** The Must set grows from 54 to 94 with the v2.0.0 vision re-entry directed by the approver (Rathish, 2026-08-10). The 40 new Must FRs (FR-074..FR-113) cover party self-governance, participation tiers and privacy, committees, proposal lifecycle, candidate selection, manifesto, financial transparency, COI, audit, disputes, member rights, conduct votes, data classification, transparency dashboard, scorecard, and trust-anchor lifecycle governance. FR-050 is raised from Should to Must (financial transparency is now a business requirement, BR-019). FR-062 is superseded by §4.24 (FR-082..FR-086) and excluded from the active Must count. All v2.0.0 FRs are Must per the approver's direction. Gate 1 re-entry approves direction; Gate 2 still governs launch readiness. _v2.1.0: the Must set grows from 94 to 101 with seven steward-organisation FRs (FR-114..FR-120), all Must per the conditional Gate-1 approval directed by Rathish (2026-08-11); the condition is fulfilled by this version landing before Design. v2.3.0: the Must set grows from 101 to 109 with eight FRs (FR-121..FR-128) covering pilot jurisdiction sequence, tiered participation (verification gates counting, never joining), and on-device proof / nullifier-only identity posture — all Must per Decision 1–3 (Rathish, 2026-08-20). New FRs have no DES/US yet — same recorded-phasing posture as FR-074..FR-111; tester's next RTM catch-up covers FR-121..128. v2.4.0: the Must set grows from 109 to 110 with FR-129 (Charter-layer guard — making single-issuer operation permanent requires Charter-level re-entry, never a deployment default; OI-20 ruling, Rathish, 2026-08-20). FR-125 finalised (OI-19 RESOLVED). FR-129 has no DES/US yet — same recorded-phasing posture. v2.5.0: the Must set grows from 110 to 111 with FR-130 (provisional-party membership cap — a provisional party is capped at 100 members until verified legal registration; the cap lifts automatically by code; anti-capture control; C-02 ruling, Rathish, 2026-08-22). FR-130 has no DES yet — same recorded-phasing posture; US-0131 minted in Doc 05 v2.1.0; TC OPEN — Phase 3. v2.6.0: the Must set grows from 111 to 112 with FR-131 (v1 honesty notice — wherever a vote is cast in a v1 deployment the UI MUST state plainly that voting is NOT anonymous, NOT receipt-free, and NOT coercion-resistant; approver directive 2026-08-23; design DES-098). FR-131 has no US yet — same recorded-phasing posture as FR-121..FR-130; TC OPEN — Phase 3._
 
 **Release shape.** One release at 2027-06-01 (following Gate 2 readiness 2027-05-14), delivered
 on trunk behind flags, rolled out 1 → 10 → 50 → 100% in the one approved pilot jurisdiction; a
@@ -2326,6 +2406,11 @@ per the refine loop; none exist at v1.0.0 or v1.1.0 (all v1.1.0 requirements sou
 - BR-002 (party gains full party status only by demonstrated support — a provisional / not-yet-legal party MUST NOT accumulate disproportionate strength before legal legitimacy is established), BR-012 (platform MUST resist governance attacks — mob capture of an existing party's founding charter by a sudden membership flood) → FR-130 _(provisional-party membership cap — 100-member anti-capture invariant until verified legal registration; US-0131 minted in Doc 05 v2.1.0; DES owed at next Doc 03 increment; TC OPEN — Phase 3)_
 
 **v2.5.0 session scope:** FR-130 is in the recorded-phasing posture. US-0131 (Doc 05 v2.1.0) is NOT Ready per DoR until a DES is assigned by the architect in the next Doc 03 increment. TC to be minted in Phase 3. The RTM (Doc 08) will close the chain BR-002/BR-012 → FR-130 → DES → US-0131 → TC when Docs 03 and 07 catch up. Open cascade item: Doc 03 §18/§10.12.6 C-02 entry currently shows "PO must decide — accept (mint FR) or reject" — closure annotation is owed at the next Doc 03 version (architect-owned; no Doc 03 edit made in this session per the approver's directive). The DECISIONS-2026-08-22-WIREFRAME-C01-C02.md record is the bridge until that annotation lands.
+
+**v2.6.0 addition (approver directive 2026-08-23; DECISIONS-2026-08-23-V1-V2-SPLIT.md):**
+- BR-005 (publicly verifiable platform; honest reporting of mechanism properties), BR-009 (member identity not exposed; informed disclosure of privacy limits) → FR-131 _(v1 honesty notice — DES-098; non-dismissable ballot-confirmation UI notice in v1 deployments; US/TC owed at next catch-up; TC OPEN — Phase 3)_
+
+**v2.6.0 session scope:** FR-131 is in the recorded-phasing posture. DES-098 was minted by the architect in Doc 03 v2.3.0 §10.13.6 and awaited its backing FR (now FR-131). US and TC are OWED at the next catch-up session. Note: Doc 03 v2.3.0 §12 trace table cites "FR-130" for DES-098 — this is a pre-allocation error (FR-130 was already minted at v2.5.0 for the provisional-party membership cap); the honesty-notice FR is FR-131. Cascade annotation owed to Doc 03 at the next architect increment. The RTM (Doc 08) will close the chain BR-005/BR-009 → FR-131 → DES-098 → US → TC when Docs 05 and 07 catch up. The v1/v2 phasing classification (§16) is the comprehensive record of which FRs and NFRs are IN-v1, PARTIAL, DEFERRED-v2, or SUPERSEDED; that section is the canonical reference for the architect, engineer, and tester when scoping v1 deliverables.
 
 ---
 
@@ -2432,3 +2517,271 @@ per the refine loop; none exist at v1.0.0 or v1.1.0 (all v1.1.0 requirements sou
 ### Downstream
 Design (Doc 03) MUST address **every** FR and NFR and **every** RISK in this document. Coverage is
 verified in the RTM (Doc 08). Gate 1 was approved 2026-08-11 at Doc 01 v2.0.0 + Doc 02 v2.0.1, conditional on Doc 02 v2.1.0 (steward requirements) passing its business-mode review. Nothing is designed until the project-manager records that condition satisfied (GATE1-DECISION-2026-08-11.md §2). Once recorded, design proceeds per GATE1-DECISION-2026-08-11.md §5.
+
+---
+
+## 16. Delivery phasing — Definition A (v1) and Definition B (v2)
+
+> **Source:** Approver directive 2026-08-23, Rathish — transmitted via coordinator.
+> Decision record: `artifacts/status/DECISIONS-2026-08-23-V1-V2-SPLIT.md`. Architect
+> alignment: Doc 03 v2.3.1 (Approved) §10.13 (DES-095..DES-098) + ADR-024. This
+> section is the canonical reference for the engineer, tester, and architect when
+> scoping v1 deliverables.
+
+### 16.1 Definitions
+
+#### 16.1.1 Definition A — v1 (transparent party platform)
+
+A real, production-grade, shareable application: create a party (eight-pillar vision, constitution, non-violence clause), petition → threshold → activation, join freely with no approval (one party at a time), propose / discuss / debate, self-nominate and select candidates by member vote, manifesto with tracked commitments and evidence, and public dashboards for finances, promises and performance. **Voting WORKS in v1** but uses conventional authentication, NOT the zero-knowledge private ballot. v1 is built in months, shared on GitHub, and open to community contribution.
+
+Identity backing: `IEligibilityVerifier` conventional implementation — account lookup, database duplicate-prevention, conventional session auth (DES-095). No ZK proof verified.
+
+Ballot backing: `IBallotService` conventional implementation — authenticated write to database; `computeTally()` = SQL COUNT aggregate; tally result hash published to the lightweight on-chain audit contract (DES-096, DES-097). `getTallyProperties()` returns `{ receiptFree: false, coercionOverride: false, zeroKnowledge: false, publiclyVerifiable: true }`.
+
+Blockchain role in v1: public transparent-audit record ONLY. The `packages/contracts` subset deployed is the lightweight audit-record contract; full on-chain governance contracts are v2-only (DES-097, ADR-024).
+
+Guardrail: **nothing built in the Design phase is discarded**. v1 reuses requirements, flows, design system, and wireframes. v2 is an implementation swap behind the stable seam interfaces (DES-095, DES-096), never a rewrite.
+
+#### 16.1.2 Definition B — v2 (full cryptographic guarantees)
+
+The same platform PLUS the hard cryptographic guarantees: ZK anonymous enrolment, private receipt-free ballots (MACI, ADR-006), the trusted-setup ceremony (ADR-022), the coordinator committee (DES-024), and the heavy external audits. Deferred — to be built later, in the open, with the community, after v1 is live and the community can contribute. v2 is an implementation swap behind the DES-095 (`IEligibilityVerifier`) and DES-096 (`IBallotService`) seam interfaces; it never requires a rewrite of the application layer, design system, or package topology above those seams.
+
+### 16.2 Classification test (normative)
+
+A requirement's delivery-phase disposition is determined by this test, applied to its normative text:
+
+| Disposition | Rule |
+|---|---|
+| **IN-v1** | The requirement is fully deliverable in Definition A using conventional authentication and the v1 package disposition. Nothing cryptographic is required to satisfy it. |
+| **PARTIAL** | The requirement has both a conventional-auth v1 form (satisfying the core purpose with conventional enforcement) and a cryptographic v2 form (providing the full guarantee). The v1 form is the implementation scope for Definition A; the v2 form is the upgrade. |
+| **DEFERRED-v2** | The requirement exists ONLY to provide anonymity, private ballots, coercion-resistance, or hostile-state safety. It cannot be meaningfully satisfied in conventional-auth v1. |
+| **SUPERSEDED-n/a** | The requirement has been superseded by a later requirement; retained for traceability only. |
+
+**Examples of the intended pattern:** FR-001 (one credential per human) is PARTIAL — v1: one verified account per person via conventional identity check and database duplicate prevention; v2: ZK nullifier-based credential with on-chain uniqueness. FR-030 (ballot unlinkability) is DEFERRED-v2 — it exists only to provide anonymity. FR-018 (automatic activation) is IN-v1 — nothing cryptographic about code-executing a party-state transition.
+
+**Standing Musts:** requirements classified PARTIAL or DEFERRED-v2 remain **Must FOR DEFINITION B**. They are NOT weakened or deleted — they are phased, with the v1 posture disclosed under FR-131 (§4.45, DES-098). The honesty register (§16.4) and the contradiction surface (§16.5) document what this means for v1 users.
+
+### 16.3 Classification table
+
+#### 16.3.1 Functional Requirements (FR-001..FR-131)
+
+Columns: **ID** · **Short name** · **Priority** · **v1 disposition** · **v1 form** (for PARTIAL rows and IN-v1 rows whose mechanism changes; "—" where the normative text applies identically) · **v2 form** (for PARTIAL and DEFERRED rows) · **Honesty item** (Y = a v1 user might assume the v2 guarantee; the absence MUST be disclosed).
+
+| ID | Short name | Pri | Disposition | v1 form | v2 form | H? |
+|----|-----------|-----|-------------|---------|---------|-----|
+| FR-001 | One credential per human | Must | PARTIAL | One verified account per person; conventional identity check + DB duplicate prevention | ZK nullifier-based credential; on-chain nullifier uniqueness | N |
+| FR-002 | Per-scope single action, cross-scope unlinkability | Must | PARTIAL | DB-enforced one-action-per-scope; cross-scope linkability NOT prevented (same account used across scopes) | ZK scope-bound nullifiers; cross-scope unlinkability technical guarantee | Y |
+| FR-003 | No identity data at rest | Must | IN-v1 | Credential discarded after check; only eligibility result stored; no identity doc, biometric, DOB, address in any store | Same guarantee; ZK circuit ensures discard on-device (FR-126 strengthens) | N |
+| FR-004 | Attestor plurality and concentration cap | Must | IN-v1 | Plural adapter interface; Phase-1 single-rail limitation dated and recorded (OI-20, FR-121, FR-129) | Same; pluggable adapter interface unchanged | N |
+| FR-005 | Revoke fraudulent credential | Should | IN-v1 | Conventional revocation; DB invalidates future actions | Same | N |
+| FR-006 | Residency without address | Must | IN-v1 | Region-level attested claim; no address stored at any stage | Same | N |
+| FR-007 | Versioned region registry, non-retroactive | Must | IN-v1 | Registry versioned in DB; boundary change creates new version | Same | N |
+| FR-008 | One residency, 180-day cooldown | Must | IN-v1 | DB constraint | Same | N |
+| FR-009 | Denominator from independent sources | Must | IN-v1 | Two-source oracle with disagreement tolerance and dispute window | Same | N |
+| FR-010 | Party draft creation, name collision check | Must | IN-v1 | Conventional draft creation in DB | Same | N |
+| FR-011 | Eight mandatory pillars | Must | IN-v1 | Code-checked field completeness | Same | N |
+| FR-012 | Charter amendment tiers accepted within bounds | Should | IN-v1 | DB-enforced tier rules | Same | N |
+| FR-013 | Petition lifecycle with expiry and cooldown | Should | IN-v1 | Conventional petition state machine | Same | N |
+| FR-014 | One endorsement per person, non-transferable | Must | PARTIAL | DB-enforced one endorsement per petition scope | ZK nullifier per petition scope | N |
+| FR-015 | Withdraw endorsement, count decrements | Should | IN-v1 | DB decrement; no endorser identity revealed | Same | N |
+| FR-016 | Code-computed threshold, no override | Must | IN-v1 | Code-computed (protocol package or smart contract); no override path | Same | N |
+| FR-017 | Live petition progress, no endorser identity | Should | IN-v1 | Aggregate count; no endorser identity published | Same | N |
+| FR-018 | Automatic activation | Must | IN-v1 | Code-executed state transition; permissionless call | Same | N |
+| FR-019 | Jurisdiction lock post-activation | Should | IN-v1 | DB constraint on party jurisdiction after activation | Same | N |
+| FR-020 | Join without approval | Must | IN-v1 | Open membership; no gate, no invite required | Same | N |
+| FR-021 | One member, one equal vote | Must | PARTIAL | DB constraint: one ballot entry per member per election | ZK nullifier per election scope; on-chain weight equality | N |
+| FR-022 | Leave at will | Must | IN-v1 | Conventional membership removal; DB update | Same | N |
+| FR-023 | Maturation and churn rate limit | Must | IN-v1 | Tenure clock and churn-rate checks enforced in DB | Same | N |
+| FR-024 | Any matured Worker+ may propose | Must | IN-v1 | Tier check in DB; Supporter prompted to declare Worker | Same | N |
+| FR-025 | Tiered quorum and supermajority | Must | IN-v1 | Code-computed vote tallying with tier and quorum rules | Same | N |
+| FR-026 | Timelock | Must | IN-v1 | Smart contract or DB-enforced delay before execution | Same | N |
+| FR-027 | Entrenched founding clauses | Must | IN-v1 | Code-enforced charter amendment tiers | Same | N |
+| FR-028 | Eligibility snapshot at proposal open | Must | IN-v1 | DB snapshot captured at proposal open time | Same | N |
+| FR-029 | (amendment prerequisites / charter state) | Should | IN-v1 | Conventional charter-state enforcement | Same | N |
+| FR-030 | Ballot unlinkability | Must | DEFERRED-v2 | — | ZK encrypted ballots (MACI); no linkability between voter and ballot mathematically | Y |
+| FR-031 | Receipt-freeness | Must | DEFERRED-v2 | — | MACI receipt-free ballots; PPT adversary cannot distinguish vote | Y |
+| FR-032 | Invisible coerced-vote override | Must | PARTIAL | Last-ballot-counts (DB overwrite); re-vote is visible in DB and operator logs | MACI: re-vote indistinguishable from original; coercion-resistance per NFR-003 | Y |
+| FR-033 | Independently reproducible tally | Must | PARTIAL | SQL COUNT aggregate; tally result hash published to on-chain audit contract; verifier trusts DB count | ZK tally proof (MACI + DKG); independently verifiable by anyone from public data alone | N |
+| FR-034 | No interim tallies published | Should | PARTIAL | Platform API never serves interim tallies; DB operator can see ballot DB at any time | Technically impossible: MACI encrypted ballots make interim tallies computationally infeasible | Y |
+| FR-035 | No transfer or delegation of a vote | Must | IN-v1 | DB constraint; no transfer path exists in the schema | ZK nullifier non-transferable by construction | N |
+| FR-036 | Self-nomination scoped to region and office | Must | IN-v1 | DB-enforced region and office scope check | Same | N |
+| FR-037 | Informed consent to public identity | Must | IN-v1 | Explicit consent flow before Worker/Candidate declaration | Same | N |
+| FR-038 | (election timetable / nomination process) | Should | IN-v1 | Conventional timetable and process constraints | Same | N |
+| FR-039 | Election scoped, timetable immutable post-open | Must | IN-v1 | Smart contract or DB immutable timetable after open | Same | N |
+| FR-040 | Automatic office assignment | Must | IN-v1 | Code-executed assignment on election result | Same | N |
+| FR-041 | (ballot window / election timing constraints) | Should | IN-v1 | Conventional constraints | Same | N |
+| FR-042 | Member-initiated recall | Must | IN-v1 | Conventional recall petition in DB | Same | N |
+| FR-043 | Two-stage recall with higher bar | Must | IN-v1 | Two-stage voting logic with affirmative quorum | Same | N |
+| FR-044 | (recall cooldown / grace window) | Should | IN-v1 | Conventional cooldown after failed recall | Same | N |
+| FR-045 | Automatic revocation and by-election | Must | IN-v1 | Code-executed revocation and election trigger | Same | N |
+| FR-046 | SUPERSEDED | — | SUPERSEDED-n/a | — | — | — |
+| FR-047 | Immutable version history | Must | IN-v1 | Append-only on-chain audit record | Same; stronger in v2 (ZK-proof anchored) | N |
+| FR-048 | (office-holder vote separation) | Should | PARTIAL | Policy separation: DB records role votes separately; API does not link role-capacity and member votes for same person | ZK: separate nullifier derivations make mathematical linkage impossible | Y |
+| FR-049 | (treasury contribution cap) | Should | IN-v1 | DB-enforced cap per account | ZK: cap enforced per nullifier | N |
+| FR-050 | Treasury: every inflow and outflow published | Must | IN-v1 | Append-only public audit record | Same | N |
+| FR-051 | Money buys no governance advantage | Must | IN-v1 | Platform rule: no token weighting, no purchasable votes | Same | N |
+| FR-052 | (treasury / contribution related) | Could | IN-v1 | Conventional | Same | N |
+| FR-053 | Party fork and split | Could | IN-v1 | Fork right; conventional fork petition; threshold enforced by code | Same; ZK proofs for on-chain fork count in v2 | N |
+| FR-054 | Publicly verifiable record of every governance action | Must | IN-v1 | On-chain audit contract publishes petition milestones, tally hashes, manifesto hashes, activation events (DES-097) | Full ZK-proof-based governance record in v2 | N |
+| FR-055 | (unauthenticated public read interface) | Should | IN-v1 | Unauthenticated rate-limited public API for third-party verification | Same | N |
+| FR-056 | No operator discretion | Must | IN-v1 | Code-only governance; no override path; no pause switch | Same | N |
+| FR-057 | (transparency reporting) | Could | IN-v1 | Transparency register | Same | N |
+| FR-058 | Recovery without seed phrases | Must | IN-v1 | Passkey + social guardian recovery with delay and veto | Same | N |
+| FR-059 | Recovery reveals nothing about identity | Must | PARTIAL | Conventional recovery with privacy constraints on the notification channel | ZK-based recovery: no link between recovery event and nullifier | Y |
+| FR-060 | No token, no gas, no jargon | Must | IN-v1 | UI/UX policy; platform-borne cost; no crypto jargon in primary flows | Same | N |
+| FR-061 | Sponsorship degrades, never denies | Must | IN-v1 | Queue-with-explanation mechanism; never charge, never deny | Same | N |
+| FR-062 | SUPERSEDED | — | SUPERSEDED-n/a | — | — | — |
+| FR-063 | Ballot-direction prohibition | Must | PARTIAL | Platform API never exposes ballot direction; DB holds direction (operator CAN see it); UT-0700/UT-0701 absence tests apply | MACI: ballot direction technically unavailable to any actor including operator | Y |
+| FR-064 | Single party membership constraint | Must | IN-v1 | DB constraint: one active party per account | Same; on-chain nullifier in v2 | N |
+| FR-065 | Candidate feedback scoring | Must | IN-v1 | DB aggregate (asymmetric +3/−1); aggregate public | Same | N |
+| FR-066 | Mandatory pre-election debates | Must | IN-v1 | On-chain CID attestation; attendance attestation preserved | Same | N |
+| FR-067 | Candidacy from post-debate member vote | Must | IN-v1 | Post-debate vote determines candidacy eligibility | Same | N |
+| FR-068 | Tenure waiver for new parties | Must | IN-v1 | Tenure-waiver logic; FR-023 churn limits remain active | Same | N |
+| FR-069 | Deterministic enrolment nullifier | Must | PARTIAL | Conventional duplicate prevention via DB; hash of stable ID as DB key | ZK in-circuit nullifier derivation (ADR-017, DES-069); on-chain nullifier uniqueness | N |
+| FR-070 | Pluggable credential adapter | Must | IN-v1 | Adapter interface for conventional credential validation (three adapter classes); DES-070 region-level config | Same interface; v2 adds ZK circuit per adapter class | N |
+| FR-071 | Enrolment-collision recovery | Must | PARTIAL | DB-based collision detection and recovery with delay + veto | ZK nullifier collision recovery on-chain; recovery state machine (DES-071) | N |
+| FR-072 | Recovery delay (7-day) and veto guard | Must | IN-v1 | 7-day timelock + active-key veto; notification on initiation | Same | N |
+| FR-073 | Government eID issuer hierarchy | Must | IN-v1 | Issuer-class policy applied at adapter validation layer | Same | N |
+| FR-074 | Country selection: single active, FR-008 governs changes | Must | IN-v1 | Conventional country selection with cooldown | Same | N |
+| FR-075 | Platform activation ≠ legal registration; boundary stated | Must | IN-v1 | State machine boundary; stated on every surface | Same | N |
+| FR-076 | Party founding: complete digital constitution required | Must | IN-v1 | Code-checked field completeness and minimum substance | Same | N |
+| FR-077 | Non-violence clause mandatory, integrity-checked | Must | IN-v1 | Hash-verified presence check; altered clause refused | Same | N |
+| FR-078 | Constitution versioned immutably | Must | IN-v1 | Append-only versioned record | Same | N |
+| FR-079 | Participation tiers: self-assigned, no weight differential | Must | IN-v1 | No admin approval; tier stored in DB; no weight multiplication | Same | N |
+| FR-080 | Worker tier: self-declared, informed consent required | Must | IN-v1 | Explicit consent flow; DB stores declaration | Same | N |
+| FR-081 | Candidate tier: self-nominated, code-checked | Must | IN-v1 | Code-checked eligibility; no human approval | Same | N |
+| FR-082 | Supporter: unconditionally anonymous | Must | DEFERRED-v2 | — | ZK nullifier-only identity; no account↔party link exists anywhere; FR-082 cannot be technically satisfied in v1 where DB holds member↔party mapping | Y |
+| FR-083 | Worker/Candidate participation record: starts at consent | Must | IN-v1 | Consent-based public record begins at role-taking | Same | N |
+| FR-084 | Disclosure schedule published before window opens | Must | IN-v1 | Immutable schedule; no extra demands post role-taking | Same | N |
+| FR-085 | Consent irrevocable for term; withdrawal destroys pre-nomination data | Must | IN-v1 | DB-enforced irrevocability; confidential-class carve-out (OI-16) | Same | N |
+| FR-086 | Prior Supporter-period activity permanently anonymous post role-transition | Must | DEFERRED-v2 | — | ZK: no period-link exists; role-transition cannot retrospectively link prior activity to an identity | Y |
+| FR-087 | Committees: deliberative only; minutes public | Must | IN-v1 | Power restrictions in code; minutes append-only | Same | N |
+| FR-088 | Committee capability limits; outcome capability rejected | Must | IN-v1 | Code-enforced capability limits | Same | N |
+| FR-089 | Committee membership expires mechanically | Must | IN-v1 | Mechanical expiry; no human renewal path | Same | N |
+| FR-090 | Proposal authorship public; equal standing | Must | IN-v1 | Authorship stored and displayed; no ranking of proposals | Same | N |
+| FR-091 | Eight-stage proposal lifecycle; stage-skip refused | Must | IN-v1 | State machine in code; stage-skip rejected | Same | N |
+| FR-092 | Permanent decision trail reconstructable from public data | Must | IN-v1 | Blockchain-anchored audit record (DES-097); public data only | Same; ZK-proof trail in v2 | N |
+| FR-093 | Candidate selection schedule; unanswered questions recorded | Must | IN-v1 | Immutable schedule; unanswered Qs visibly recorded | Same | N |
+| FR-094 | Manifesto: structured, machine-readable, complete-or-refused | Must | IN-v1 | Conventional structured format; incomplete refused | Same | N |
+| FR-095 | Manifesto commitment: stable ID, append-only status history | Must | IN-v1 | DB append-only status history per commitment | Same | N |
+| FR-096 | Financial anomaly flag: information only; no fund freeze | Must | IN-v1 | Flag published; no freeze capability by construction | Same | N |
+| FR-097 | COI disclosure: mandatory for public-tier roles; overdue flag | Must | IN-v1 | Mandatory disclosure with overdue flag | Same | N |
+| FR-098 | COI review: investigation-and-recommendation only | Must | IN-v1 | Investigation panel; no binding power | Same | N |
+| FR-099 | Internal audit: sortition, read-only, no enforcement | Must | IN-v1 | Sortition selection; read-only access; no enforcement | Same | N |
+| FR-100 | Dispute timelines: stage max enforced | Must | IN-v1 | Stage maximums code-enforced | Same | N |
+| FR-101 | Sortition panels: verifiable random; no standing body | Must | IN-v1 | Verifiable random selection; per-case only | Same | N |
+| FR-102 | Member rights charter: machine-readable, code-enforced | Must | IN-v1 | Code-enforced floor; charter may not reduce it | Same | N |
+| FR-103 | Conduct votes: individual private, aggregate public | Must | PARTIAL | DB: individual votes not exposed through platform API; aggregate published; DB operator can see individual votes | ZK: individual conduct votes cryptographically private | Y |
+| FR-104 | Removal: affirmative quorum; silence does not remove | Must | IN-v1 | Code-computed affirmative quorum requirement | Same | N |
+| FR-105 | Expulsion bar strictly higher than removal | Must | IN-v1 | Separate vote required; higher quorum | Same | N |
+| FR-106 | Every data entity classified; unclassified not storable | Must | IN-v1 | Classification system in DB schema; write rejected if unclassified | Same | N |
+| FR-107 | Append-only: hard-delete and overwrite refused | Must | IN-v1 | DB append-only constraints; confidential-class carve-out (OI-16) | Same | N |
+| FR-108 | Public record: proofs, timestamps, counts only | Must | IN-v1 | On-chain audit contract publishes only permitted fields per DES-097 | Same; broader ZK-proof set in v2 | N |
+| FR-109 | Transparency dashboard: aggregate-only, no per-member drill-down | Must | IN-v1 | Aggregate-only UI; per-member drill-down refused | Same | N |
+| FR-110 | Scorecard: factual, informs but never concludes | Must | IN-v1 | Factual scorecard; verdicts and rankings refused | Same | N |
+| FR-111 | No per-user behavioural event recorded anywhere | Must | IN-v1 | No telemetry; UT-0525/UT-0740 absence tests | Same | N |
+| FR-112 | Trust-anchor revocation: member-vote only | Must | IN-v1 | Governance vote executes revocation; operator revocation refused | Same | N |
+| FR-113 | Trust-anchor rotation: compliant rotation never blocks enrolment | Must | IN-v1 | Overlap-window governance; 60-day SLA | Same | N |
+| FR-114 | Steward body elected by all-enrolled ballot; fixed terms | Must | PARTIAL | Conventional election with conventional auth; DB ballot | ZK anonymous ballot for steward election | N |
+| FR-115 | Steward powers enumerated and exhaustive | Must | IN-v1 | Exhaustive enumeration; unlisted action refused | Same | N |
+| FR-116 | Stewards propose; citizens decide; no emergency override | Must | IN-v1 | Equal-standing competing proposals; no override path | Same | N |
+| FR-117 | Zero steward dependency | Must | IN-v1 | Zero-dependency property; citizen flows independent | Same | N |
+| FR-118 | Seven entrenched charter rules; amendment refused by code | Must | IN-v1 | Code checks at proposal submission; reverts EntrenchedRule | Same | N |
+| FR-119 | Three-tier amendment structure | Must | IN-v1 | Amendment tier logic in code | Same | N |
+| FR-120 | Unconditional fork right (flag OFF above dev — open critical) | Must | IN-v1 | Fork right; flag carry-forward | Same | N |
+| FR-121 | Pilot jurisdiction sequence and enrolment adapter schedule | Must | IN-v1 | Phase-1 India/Aadhaar adapter; Phase-2 EU/eIDAS 2.0 | Same | N |
+| FR-122 | Open-tier access without verification; counting requires verification | Must | IN-v1 | Open join; verification gates counting only | Same | N |
+| FR-123 | Verified personhood required for counted actions | Must | PARTIAL | Conventional verification (adapter) gates counting; DB-enforced | ZK personhood proof gates counting; on-chain nullifier | N |
+| FR-124 | Verified status private to holder; aggregate-only public | Must | PARTIAL | DB holds verified status; private by policy (API does not expose); aggregate-only public | ZK proves personhood without revealing status attribute | Y |
+| FR-125 | Non-invite fallback always open; FR-020 absolute | Must | IN-v1 | Non-invite join always available; invite is fast path only | Same | N |
+| FR-126 | On-device credential processing; raw credential discarded | Must | PARTIAL | On-device conventional verification; discard before transmission enforced by app design and API contract | ZK on-device circuit; credential never leaves device by cryptographic construction | N |
+| FR-127 | Nullifier-collision duplicate detection only | Must | PARTIAL | DB-based duplicate detection by hash of stable ID; no name-match or biometric | On-chain nullifier collision detection | N |
+| FR-128 | No stored identity; subpoena test | Must | PARTIAL | No identity documents stored in any form; operator DB CAN be compelled to disclose member↔party mapping and vote direction — subpoena test NOT met in v1 | ZK: operator technically cannot comply; no mapping exists | Y |
+| FR-129 | Attestor-plurality Charter guard | Must | IN-v1 | Single-issuer permanence requires Charter-level re-entry; config flag attempt refused | Same | N |
+| FR-130 | Provisional-party membership cap (100; anti-capture) | Must | IN-v1 | 100-member cap code-enforced; lifts automatically on verified legal registration | Same | N |
+| FR-131 | v1 honesty notice (DES-098) | Must | IN-v1 | Non-dismissable plain-language UI notice before each ballot in v1; states NOT anonymous, NOT receipt-free, NOT coercion-resistant | — (v1-only requirement; v2 replaces with FR-030/031/NFR-003 cryptographic guarantees + DES-063 coercion-safe confirmation surface) | N |
+
+#### 16.3.2 Non-Functional Requirements (NFR-001..NFR-028)
+
+| ID | Category | Priority | Disposition | v1 form | v2 form | H? |
+|----|----------|----------|-------------|---------|---------|-----|
+| NFR-001 | Privacy: no actor determines party membership or vote | Must | PARTIAL | Platform API does not expose member↔party or vote direction; DB operator CAN determine these by direct DB access; ε-advantage guarantee NOT met in v1 | ZK: no mapping exists; ε-advantage guarantee met by construction | Y |
+| NFR-002 | Anonymity set floor k≥1000 | Must | PARTIAL | Aggregate-only publication with k threshold enforced; DB operator can see individual-level data; indistinguishability within anonymity set NOT technically guaranteed | ZK: indistinguishability within k-anonymity set technically enforced | Y |
+| NFR-003 | Coercion resistance / receipt-freeness (PPT security) | Must | DEFERRED-v2 | — | MACI receipt-free ballot; PPT adversary with λ≥128 bits cannot distinguish vote; re-vote indistinguishable | Y |
+| NFR-004 | Sybil resistance: ≤0.1% duplicates, ≤50% attestor share | Must | IN-v1 | Conventional duplicate rate audited quarterly; attestor concentration cap enforced by adapter | Same; ZK adds on-chain nullifier uniqueness guarantee | N |
+| NFR-005 | Cost: median < USD 0.01; citizen charged USD 0.00 | Must | IN-v1 | Same cost targets; ZK proving excluded from v1 | Same | N |
+| NFR-006 | Performance on reference device | Must | IN-v1 | Same targets; no ZK proving latency in v1 | Same | N |
+| NFR-007 | Reliability / availability SLOs | Must | IN-v1 | Same SLOs | Same | N |
+| NFR-008 | Scalability / capacity | Should | IN-v1 | Same targets | Same | N |
+| NFR-009 | Security audit: zero open critical/high at Gate 2 | Must | IN-v1 | Audits required in both; v1 audit scope excludes ZK circuits and ceremony | Same; broader scope in v2 covers ZK circuits and trusted setup | N |
+| NFR-010 | Data minimisation by construction | Must | IN-v1 | No identity on public record or governance-path stores; restricted stores enumerated in §7 | Same | N |
+| NFR-011 | Accessibility: WCAG 2.2 AA | Must | IN-v1 | Same in both; FR-131 notice also WCAG AA per DES-081 | Same | N |
+| NFR-012 | Portability: reference device / bandwidth floor | Must | IN-v1 | Same floor; v1 omits ZK proving from install and latency budget | Same | N |
+| NFR-013 | Localisation: 8 launch languages | Must | IN-v1 | Same in both | Same | N |
+| NFR-014 | Censorship resistance: ≥2 independent access paths | Must | IN-v1 | Same in both | Same | N |
+| NFR-015 | Compliance / legal: erasure by design, legal review | Must | IN-v1 | Legal review per jurisdiction required in both; erasure-by-design posture same | Same | N |
+| NFR-016 | Key recovery: ≥99% success, ≤0.01% fraud | Must | IN-v1 | Same SLOs in both | Same | N |
+| NFR-017 | Upgradeability without unilateral control | Must | IN-v1 | Governed upgrades with timelock in both | Same | N |
+| NFR-018 | (party export / exit rights) | Should | IN-v1 | Same in both | Same | N |
+| NFR-019 | (operational transparency reporting) | Should | IN-v1 | Same in both | Same | N |
+| NFR-020 | Rollback: 15-minute restore | Must | IN-v1 | Same in both | Same | N |
+| NFR-021 | Open source and reproducible builds | Must | IN-v1 | Same in both | Same | N |
+| NFR-022 | Usability: ≥80% unaided completion, SUS ≥75 | Must | IN-v1 | Same targets | Same | N |
+| NFR-023 | Content: grade-8 reading level, no jargon | Must | IN-v1 | Same; v1 also avoids ZK jargon in primary flows | Same | N |
+| NFR-024 | Anti-harassment: no identity exposure, mechanical metric | Must | PARTIAL | Policy constraint: platform API does not expose identity; DB operator can access data that could enable targeted harassment | ZK anonymity: even aggregate extraction is privacy-preserving; no individual-level data exists | Y |
+| NFR-025 | Operator cannot censor individual within 60 min | Must | IN-v1 | Alternative inclusion paths required | Same | N |
+| NFR-026 | (accessibility reporting / other) | Should | IN-v1 | Same in both | Same | N |
+| NFR-027 | No per-user behavioural telemetry | Must | IN-v1 | No telemetry in both; UT-0525/UT-0740 absence tests | Same | N |
+| NFR-028 | Append-only data lifecycle | Must | IN-v1 | DB append-only constraints; confidential-class carve-out (OI-16) | Same | N |
+
+**Tally — FRs (FR-001..FR-131, excluding superseded):** 129 active FRs classified: **IN-v1 106** · **PARTIAL 19** · **DEFERRED-v2 4** · **SUPERSEDED-n/a 2** (FR-046, FR-062).
+
+**Tally — NFRs (NFR-001..NFR-028):** 28 NFRs classified: **IN-v1 24** · **PARTIAL 3** · **DEFERRED-v2 1**.
+
+### 16.4 Honesty register for the v1 README
+
+The following guarantees are ones that v1 users might reasonably assume the transparent party platform provides. Each item that v1 DOES NOT provide MUST be stated plainly in the v1 README, in the onboarding documentation, and — for items marked in FR-131 — in the UI at the point of action. These are disclosures, not bugs.
+
+| ID | Guarantee v1 users might assume | v1 reality | Deferred FRs / NFRs | Architect tensions |
+|----|-------------------------------|------------|--------------------|--------------------|
+| H-01 | **Votes are secret ballots** | v1 voting is conventionally authenticated. The platform database records vote direction linked to the member's account. The platform API does not expose this, but the database operator CAN determine who voted how. This is disclosed via FR-131 (DES-098) at every ballot. | FR-030, FR-031, FR-032 (partial), NFR-003 | T-02, T-04 |
+| H-02 | **Party membership is anonymous** | v1 has a database. The operator database links member accounts to parties. FR-082 (Supporter unconditional anonymity) and FR-086 (prior Supporter-period activity permanently anonymous) cannot be technically satisfied in v1; the "membership list the v2 design exists to make impossible" DOES exist in v1 as database records. | FR-082, FR-086, NFR-001, NFR-002 | T-01, T-03 |
+| H-03 | **No receipt-freeness; no coercion resistance** | There is no coercion-resistant re-vote in v1. A coercer with access to a voter's session or device after the fact CAN determine how they voted. Re-voting (last-ballot-counts, FR-032 partial form) overwrites the DB record but the original choice may be recoverable from logs or direct DB access. NFR-003 (PPT security parameter λ≥128 bits) is not met. | FR-031, FR-032 (partial), NFR-003 | T-04 |
+| H-04 | **Cryptographic subpoena-proofness** | FR-128's "we do not have it" subpoena test is a v2-only property. In v1, the operator holds member↔party mapping and vote direction in a conventional database and CAN be legally compelled to disclose them. v1's posture is "we do not store identity documents" — not "we cannot disclose membership or vote direction." | FR-128, NFR-001 | T-02 |
+| H-05 | **Tallies are independently verifiable without trusting the operator** | In v1, tally result hashes are published to the on-chain audit contract (FR-033 partial form, FR-054, DES-097). Verifying the tally requires trusting that the SQL COUNT aggregate matches the DB state — the operator is the source of truth. In v2, MACI ZK tally proofs are independently verifiable by anyone from public data alone without trusting the operator. | FR-033 (partial) | DES-097 |
+| H-06 | **Anonymity set floor (k≥1000) is technically enforced** | NFR-002's k≥1000 indistinguishability guarantee is a PARTIAL in v1. The platform enforces aggregate-only publication (actions withheld until k actors present), but the underlying DB holds individual-level associations that make the mathematical indistinguishability guarantee (not just policy) unachievable in v1. | NFR-002 | T-01 |
+| H-07 | **Cross-scope activity is unlinkable** | In v1 the same account is used across party, petition, and governance scopes. The DB operator CAN correlate a member's activity across those scopes via the common account record. v2 ZK nullifiers are derived per-scope, making cross-scope linkage mathematically impossible. | FR-002 (partial) | T-01, T-03 |
+| H-08 | **Interim tallies are technically suppressed for all actors** | In v1 the platform API never serves interim tallies (policy constraint), but the DB operator CAN observe the ballot table at any time and compute a running count. v2 MACI encrypted ballots make interim tallies computationally infeasible for all actors, including the operator. | FR-034 (partial) | T-02 |
+| H-09 | **Office-holder votes and member votes for the same person are mathematically unlinkable** | In v1 role-capacity votes and member votes for the same account are stored separately by policy; the DB operator CAN link them via the common account identifier. v2 ZK separate-nullifier derivation makes the linkage mathematically impossible. | FR-048 (partial) | T-02 |
+| H-10 | **Account recovery reveals nothing about identity or membership** | In v1 conventional recovery (e.g. email/phone notification) is used with privacy constraints on the channel; the recovery event is associated with the account in the DB and can be correlated with membership. v2 ZK-based recovery produces no link between the recovery event and the member's nullifier. | FR-059 (partial) | T-01, T-03 |
+| H-11 | **Ballot direction is unavailable even to the operator** | In v1 the platform API never exposes ballot direction (policy constraint); the DB operator CAN read individual ballot direction by direct DB access. v2 MACI encrypted ballots make ballot direction technically unavailable to all actors, including the operator. | FR-063 (partial) | T-02 |
+| H-12 | **Individual conduct votes are cryptographically private** | In v1 individual conduct votes are not exposed through the platform API (policy); the DB operator CAN read individual conduct vote records. v2 ZK conduct-vote proofs make individual votes cryptographically private even from the operator. | FR-103 (partial) | T-02 |
+| H-13 | **Verified status is private even from the operator** | In v1 verified status is stored in the DB and kept private by policy (API returns aggregate-only); the DB operator CAN read individual verified-status records. v2 ZK proof-of-personhood reveals only that a valid credential exists, nothing about the underlying status attribute. | FR-124 (partial) | T-01, T-03 |
+| H-14 | **No individual-level identity data is available even to the operator (anti-harassment)** | In v1 the platform API does not expose identity; however individual-level data (membership, activity, verified status) exists in the DB and COULD enable targeted harassment by a malicious operator or under legal compulsion. v2 ZK anonymity means no individual-level data exists anywhere in the system. | NFR-024 (partial) | T-01, T-03 |
+
+### 16.5 Contradiction surface — for approver decision, not reconciled
+
+The following existing Must / BR / NFR / Charter-tenet statements in this document and the broader project record are directly contradicted by the v1/v2 delivery split directed by the approver (Rathish, 2026-08-23). These contradictions are surfaced for the approver's decision and are recorded here in full. They are NOT reconciled silently.
+
+**Standing statement:** Requirements in the DEFERRED-v2 or PARTIAL rows of §16.3 remain **Must FOR DEFINITION B**. They are NOT weakened, removed, or demoted. They are phased. Definition-A (v1) products are governed by FR-131 (the honesty notice) and the v1 README (§16.4) rather than by the deferred requirements — which is the approver's stated intent. The architect's seam design (DES-095, DES-096) ensures v2 fulfils them without a rewrite.
+
+| ID | What it says | What the split does to it | Status |
+|----|-------------|--------------------------|--------|
+| BR-009 | "Proving personhood and residency MUST NOT expose a member's real-world identity or make them targetable; candidates for office publicly disclose identity by explicit choice." Success measure: "0 confirmed deanonymisations of an ordinary member." | In v1, the operator DB links member account to party membership. An operator-side breach or legal compulsion could expose party membership of ordinary members (Supporters). The "0 confirmed deanonymisations" success measure is aspirational in v1, not technically enforced. | AWAITING APPROVER CONFIRMATION |
+| BR-011 | "Voting MUST be receipt-free and coercion-resistant: a voter MUST be unable to prove to a third party how they voted, and MUST be able to invisibly override a coerced vote." Success measure: "(a) Adversarial audit... finds no receipt construction; (b) 0 externally detectable override events." | Neither (a) nor (b) can be technically satisfied in v1. The v1 DB holds vote direction linked to member account; re-voting (FR-032 partial) is visible in operator logs. This is the exact property BR-011 was written to prevent. Cite: T-04. | AWAITING APPROVER CONFIRMATION |
+| NFR-001 | "no actor... can determine which party a given person belongs to, or how they voted, from any data the system holds, emits or logs... 0 confirmed linkages at advantage > ε over random guessing." | In v1 the DB operator CAN determine both. The ε-advantage guarantee cannot be met. The normative text of NFR-001 (a Must) is technically unsatisfiable in a v1 conventional-auth deployment. Cite: T-01, T-03. | AWAITING APPROVER CONFIRMATION |
+| NFR-002 | "Every published action MUST be indistinguishable among at least k=1,000 eligible actors." | v1 enforces aggregate-only publication (k threshold on the API); the k=1,000 mathematical indistinguishability guarantee is not technically enforced (DB holds individual-level data). Cite: T-01. | AWAITING APPROVER CONFIRMATION |
+| NFR-003 | "Voting MUST be receipt-free: no PPT adversary... can distinguish the voter's actual choice from any other admissible choice with advantage greater than negligible in λ." | NFR-003 is technically unsatisfiable in v1 (no MACI, no ZK ballot). This is a Must in the current document. Cite: T-04. | AWAITING APPROVER CONFIRMATION |
+| FR-030 | Must. "Ensure that no information derivable from the public record can link a given member's nullifier to their ballot in a specific election." | FR-030 is DEFERRED-v2. In v1, the DB holds vote direction linked to member account. This Must requirement cannot be satisfied in v1. | AWAITING APPROVER CONFIRMATION |
+| FR-031 | Must. "Ensure that receipt-free ballots are used, such that no PPT adversary can construct a receipt." | FR-031 is DEFERRED-v2. In v1 there is no ZK ballot and no MACI; this Must cannot be satisfied. | AWAITING APPROVER CONFIRMATION |
+| FR-082 | Must. "Supporter: unconditionally anonymous; no profile surface exists for a Supporter." | FR-082 is DEFERRED-v2. In v1, the operator DB links member account to party. A Supporter's party membership IS knowable by the operator and is NOT unconditionally anonymous. Cite: T-01, T-03. | AWAITING APPROVER CONFIRMATION |
+| FR-128 | Must. "No stored identity... subpoena test as the acceptance criterion... the platform is technically unable to produce any identity-to-member mapping." | FR-128 is PARTIAL. In v1, the "technically unable to comply" part fails: the operator holds member↔party mapping and vote direction in a conventional DB and CAN be compelled to produce it. The "no stored identity documents" part holds. Cite: T-02. | AWAITING APPROVER CONFIRMATION |
+| Doc 01 §C kill-criterion metrics | Kill criteria include "zero deanonymisation events" and Doc 01 §C references "receipt-free override" metrics. | In a v1 deployment with conventional auth, "zero deanonymisation events" is a policy aspiration (platform does not expose) rather than a technical guarantee (operator cannot expose). The kill criterion reads against the technical guarantee; in v1 it applies only to platform-initiated exposure, not operator-side access. | AWAITING APPROVER CONFIRMATION |
+| Doc 13 §3.1 recorded argument | The project plan records: "a production rollout with MACI OFF is a product the Doc 02 Must set does not permit" (as the basis for Gate-2 sequencing before Phase-3 launch). | The v1/v2 split directed by the approver (2026-08-23) supersedes this constraint at the approver's direction. The PM re-plans Doc 13 as a separate session deliverable. Cite: This record is not editing Doc 13 — the PM does that. | AWAITING APPROVER CONFIRMATION; PM re-plans Doc 13 |
+| Charter Rule 6 — anonymity by default (T-01) | The Charter layer records anonymity by default as an entrenched value. | In v1, the conventional DB links account to party; operator can comply with a subpoena; anonymity by default is not technically enforced. Architect tension T-01 in Doc 03 §10.13.7 documents this conflict. Does the approver accept v1 as a disclosed non-anonymous product? | AWAITING APPROVER CONFIRMATION (T-01) |
+| Charter Rule 3 — no privileged role over outcomes (T-05) | The Charter layer records that no party holds a privileged role over outcomes. | In v1, the platform operator's database IS the source of truth for vote tallies; tamper-evidence (on-chain hash) is detectable but not tamper-prevention. The operator can in principle alter the DB before publishing the hash. MACI in v2 eliminates this. Architect tension T-05 in Doc 03 §10.13.7 documents this conflict. Is Charter Rule 3 accepted as a v2-only property? | AWAITING APPROVER CONFIRMATION (T-05) |
+| FR-128 subpoena test — Charter tension (T-02) | FR-128 states the platform is "technically unable" to comply with a member-list subpoena. In v1 the operator CAN comply. Architect tension T-02 in Doc 03 §10.13.7 documents this. | Is the subpoena test deferred in full to v2? | AWAITING APPROVER CONFIRMATION (T-02) |
+| BR-009/FR-082 anonymity guarantee (T-03) | FR-082 and BR-009 state anonymity for Supporters unconditionally. In v1 the DB holds member↔party. Architect tension T-03 in Doc 03 §10.13.7. | Are FR-082 and BR-009 accepted as v2-only properties whose v1 equivalent is "policy + honest disclosure"? | AWAITING APPROVER CONFIRMATION (T-03) |
+| NFR-003 receipt-freeness — named absolute in the Guarded Layer (T-04) | NFR-003 is a Guarded-Layer named absolute (BR-011, amendable only via the Doc 03 super-process per FR-119). It cannot be waived in v1 unilaterally. Architect tension T-04 in Doc 03 §10.13.7. | Is deferral-with-disclosure (FR-131 + §16.4) acceptable for v1, with NFR-003 remaining a named absolute for Definition B? | AWAITING APPROVER CONFIRMATION (T-04) |
+
+_Note on the five architect tensions (T-01..T-05): these are documented in Doc 03 §10.13.7 / ADR-024 §(c). The above contradiction-surface table cross-references them by ID; the architect's analysis in §10.13.7 is the primary source. This table does not duplicate or contradict that analysis — it applies it at the requirements level._

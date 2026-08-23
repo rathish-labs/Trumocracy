@@ -2,16 +2,17 @@
 
 ```
 Document ID:   PLAN-TRUMOCRACY
-Version:       2.0.3
-Status:        Approved (review loop, cycle 1 PASS 97% — artifacts/reviews/13-project-plan-v2.0.3-business-cycle1.md)
+Version:       2.2.0
+Status:        Approved (c2 business-mode review PASS 95%, 0C/0H/0M/2L — `artifacts/reviews/13-project-plan-v2.2.0-business-cycle2.md`; 2026-08-23)
 Owner:         Ana-Maria Petrescu — Project Manager
 Source:        PR-TRUMOCRACY (docs/01-press-release-prfaq.md),
-               SRS-TRUMOCRACY v2.4.0 (docs/02-requirements-srs.md),
+               SRS-TRUMOCRACY v2.7.0 (docs/02-requirements-srs.md),
                BKLG-TRUMOCRACY (docs/05-product-backlog.md),
-               ADR-001 … ADR-022 (docs/adr/),
+               ADR-001 … ADR-024 (docs/adr/),
                DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md (REC-1, REC-2),
-               DECISIONS-2026-08-21-BUDGET-APPETITE-AND-RISK014.md (Ruling 1 — budget appetite)
-Last updated:  2026-08-21
+               DECISIONS-2026-08-21-BUDGET-APPETITE-AND-RISK014.md (Ruling 1 — budget appetite),
+               DECISIONS-2026-08-23-V1-V2-SPLIT.md (v1/v2 delivery split, Definition A/B)
+Last updated:  2026-08-23
 ```
 
 > **Based on:** Shape Up (appetite, fixed-time/flex-scope) + Rolling-wave planning + the VEKTOR
@@ -39,6 +40,18 @@ Last updated:  2026-08-21
 > **v2.0.0 re-plan (2026-08-21):** cryptography path corrected per REC-1 / REC-2 (`ADR-022`);
 > scope re-baselined to SRS v2.4.0; ceremony logistics budget to near-zero; Gate-2 date unchanged.
 > See §11 re-plan log for the full entry.
+>
+> **v2.1.0 re-plan (2026-08-23):** v1/v2 delivery split applied per Rathish directive (transmitted
+> 2026-08-23); Definition A (v1 — conventional-auth platform) delivery plan added at §3.5;
+> Definition B (v2 — guarantee layer) re-entry noted; §3.1 supersession annotation applied; scope
+> re-baselined to SRS v2.6.0 (112 Must requirements); RISK-31..RISK-34 added (v1-specific risks).
+> Gate-2 date 2027-05-14 UNCHANGED — attaches to Definition B; v1 gate date NOT SET, AWAITING
+> APPROVER CONFIRMATION. See §11 re-plan log and `DECISIONS-2026-08-23-V1-V2-SPLIT.md`.
+>
+> **v2.2.0 re-plan (2026-08-23):** Cycle-1 business-mode review rework (FAIL 84%, 0C/1H/2M/2L). Five
+> issues fixed: RISK-22..30 inserted in §6 (ISS-H1); v1 Must-set corrected to 108 (ISS-M1); honesty
+> register updated H-01..H-14 in MS-V1-09 / PR-7 (ISS-M2); SRS pin updated to v2.7.0 Approved
+> (ISS-L1); §13.1 review-status row updated (ISS-L2). See §11 re-plan log.
 
 ---
 
@@ -75,11 +88,12 @@ without spending more than the appetite in `CON-007` allows.
 
 ### 2.1 In scope (this release)
 
-The 110 **Must** functional requirements (`FR-001`…`FR-129`, SRS v2.4.0 §11) and the 22 **Must**
-non-functional requirements, delivered across four phases (§3.1) as designed in `ADR-001`…`ADR-022`
-_(scope re-baselined 2026-08-21: was 42 Must FRs per Doc 02 v1.0.0 at Gate 1; grown by v2.0.0
-through v2.4.0 additions including FR-118 charter promotion, FR-121…FR-129 pilot and charter-guard
-requirements — see SRS v2.4.0 §11)_:
+The **112 Must** functional requirements (`FR-001`…`FR-131`, SRS v2.7.0 §11) and the 22 **Must**
+non-functional requirements, delivered across four phases (§3.1) as designed in `ADR-001`…`ADR-024`
+_(scope re-baselined 2026-08-23: was 42 Must FRs per Doc 02 v1.0.0 at Gate 1; grown to 110 at
+v2.4.0, then FR-130 (provisional-party cap) and FR-131 (v1 honesty notice) added at v2.5.0/v2.6.0
+— see SRS v2.6.0 §11 and §16; the v1/v2 split classifies the Must set into IN-v1 / PARTIAL /
+DEFERRED-v2 per the 2026-08-23 directive — see §3.5 and `DECISIONS-2026-08-23-V1-V2-SPLIT.md`)_:
 
 - Verified personhood (issuer-agnostic adapter registry, scope-bound nullifiers — `ADR-003`) and
   regional residency (versioned hierarchical region codes, per-region credential trees, ZK
@@ -135,6 +149,17 @@ scope moves — §13 names the two candidate scope cuts and their price.
 A production rollout to real citizens with MACI OFF would be a voting platform without coercion
 resistance — a different and worse product, and one the Doc 02 Must set does not permit. Phase 2 is
 therefore a **dark** mainnet phase, not a launch.
+
+> **⚠ Supersession annotation — 2026-08-23 (Rathish directive, `DECISIONS-2026-08-23-V1-V2-SPLIT.md`).**
+> The argument above now applies to **Definition B (v2)** only. Per the 2026-08-23 directive,
+> **Definition A (v1)** launches with conventional-authentication voting under `FR-131` disclosure
+> ("NOT anonymous, NOT receipt-free, NOT coercion-resistant — database CAN see vote direction").
+> v1 voting works without MACI; the absence of MACI is disclosed at every vote-cast surface by
+> `FR-131` (Must), not concealed. The original text is preserved intact — it correctly describes
+> why the full-guarantee programme (Definition B) cannot launch from Phase 2. The supersession
+> is additive: Definition A adds a distinct, earlier launch path; Definition B's programme
+> (Phase 2 → Phase 3) is unchanged. See §3.5 for the v1 delivery plan and `ADR-024` for the
+> `IEligibilityVerifier` / `IBallotService` seam definitions that make v2 an implementation swap.
 
 ### 3.2 Milestones
 
@@ -222,6 +247,14 @@ rollout.** The approver must be shown, and must be able to check, all of:
 If any one of these is missing, **the gate is not presented.** The project-manager emits
 `<missing_information>` naming the blocker and routes the work back to the owning role.
 
+> **⚠ v1/v2 split annotation — 2026-08-23.** The twelve conditions above describe the
+> **Definition B (v2)** Gate-2 posture (audit-paced, 2027-05-14). **Definition A (v1)** uses a
+> lighter, separately stated production-readiness bar — see **§3.5**. The v1 bar replaces items 3
+> (two heavy ZK audits), 4 (six ceremony transcripts), and 9 (MACI 5-of-7 committee) for the v1
+> launch-readiness gate. All other items (RTM zero gaps for the v1 Must set, suites green, rollback
+> proven, a11y, legal, Doc 04 review debt, FR-121..FR-131 catch-up) apply to both Definitions.
+> The v1 gate date is NOT SET — AWAITING APPROVER CONFIRMATION. See `DECISIONS-2026-08-23-V1-V2-SPLIT.md §4(d)`.
+
 ### 3.4 Critical path
 
 The critical path runs through **cryptography, not features**. Every long-lead item below is
@@ -264,6 +297,155 @@ features does not buy time here. Only starting the audit programme earlier does.
 
 **The variance.** `CON-007` targets Gate 2 on 2027-02-15 and launch on 2027-03-01. The evidence-based
 dates are **Gate 2 on 2027-05-14** and 100% rollout on **2027-07-09**. See §13.3.
+
+---
+
+### 3.5 v1 Delivery Plan — Definition A
+
+> **Authority:** Rathish (human approver), 2026-08-23, transmitted via coordinator.
+> Full directive: `artifacts/status/DECISIONS-2026-08-23-V1-V2-SPLIT.md`.
+> This section is the plan's recommendation. Items marked AWAITING APPROVER CONFIRMATION
+> require Rathish's decision before the PM presents the v1 launch-readiness gate.
+
+#### 3.5.1 What ships in v1 (Definition A)
+
+**In scope for v1:**
+- **108 Must FRs in the v1 Must set** — derived as: 112 total Must (SRS v2.7.0 §11) minus
+  4 DEFERRED-v2 Must FRs (FR-030, FR-031, FR-082, FR-086) = **108**. The four deferred FRs exist
+  solely for ZK anonymity / private-ballot / coercion-resistance and are structurally excluded
+  from v1. All remaining 108 Must FRs are IN-v1 or have a defined PARTIAL v1 form (including FR-131).
+- **24 IN-v1 NFRs** + **3 PARTIAL NFRs** (NFR-001, NFR-002, NFR-024 in v1 policy-enforcement forms).
+- **Wireframes and design system** per `ADR-023` (DES-093/DES-094); all SCR screens remain in scope.
+- **DES-097 package disposition**: blockchain serves ONLY as the public transparent-audit record
+  (hash publication to audit contract for verifiable transparency); conventional application +
+  database sits on top. v1 reuses: `packages/protocol` (governance rules, threshold maths, tier
+  rules — no change); `packages/contracts` (audit-anchoring subset — hash publication only; registry
+  contracts remain but no ZK verifier calls); `apps/web` + `packages/ui` (wireframe components,
+  design system). **New in v1:** conventional auth + user account layer; relational database for
+  membership, ballot, and manifesto data; `IEligibilityVerifier` v1 implementation (conventional
+  auth/DB backing per DES-095); `IBallotService` v1 implementation (DB-backed ballot per DES-096).
+
+**Not in scope for v1:**
+- **4 DEFERRED-v2 FRs:** FR-030 (ballot unlinkability), FR-031 (receipt-freeness), FR-082 (Supporter
+  unconditional anonymity), FR-086 (prior-period activity permanently anonymous).
+- **1 DEFERRED-v2 NFR:** NFR-003 (coercion resistance — MACI receipt-freeness).
+- **Everything that exists only to serve the DEFERRED items:** Circom circuit compilation
+  (`ADR-005` posture unchanged for Definition B); the batched phase-2 ceremony campaign (`ADR-022`);
+  MACI message queue and tally; the 5-of-7 coordinator committee (`ADR-006`); the two heavy
+  independent cryptographic audits (NFR-009 Definition B path, one protocol + one circuits).
+- **2 SUPERSEDED FRs:** FR-046, FR-062 (retained for traceability only).
+
+#### 3.5.2 Build order — stage-sequenced plan
+
+Milestones follow the existing MS- scheme; new v1-specific milestones use the `MS-V1-##` prefix
+to avoid collision with existing MS-01..MS-15 (Definition B programme).
+
+| Stage | MS ID | What it delivers | Anchors to | Reuse / New |
+|-------|-------|-----------------|------------|-------------|
+| **S-1 Foundations** | MS-V1-01 | Monorepo scaffolded (same as MS-03); `IEligibilityVerifier` + `IBallotService` interface definitions committed (`DES-095`, `DES-096`, `ADR-024`); v1 conventional-auth + DB schema bootstrapped; `FR-131` honesty-notice component (DES-098) scaffolded; CI green | `ADR-011`, `ADR-024`, `DES-095`, `DES-096`, `DES-097`, `DES-098`, `FR-131` | Reuse: protocol, monorepo scaffold. New: auth layer, DB schema, seam interfaces |
+| **S-2 Identity & eligibility (v1)** | MS-V1-02 | `IEligibilityVerifier` v1 implementation (conventional auth — account registration, login, session, one-person-one-account enforcement via DB uniqueness constraint); residency / region code assignment; Phase-1 Aadhaar adapter stub (`DES-070`) behind a flag | `FR-001`..`FR-005` (v1 forms), `FR-121`..`FR-128` (v1 PARTIAL forms), `DES-095`, `ADR-016`, `ADR-021` | New: conventional auth backend. Reuse: protocol eligibility rules |
+| **S-3 Party lifecycle** | MS-V1-03 | Party draft across eight mandatory pillars (`FR-006`..`FR-012`); digital constitution (`FR-074`..`FR-080`); non-violence clause (`FR-009`); petition → threshold → automatic activation (`FR-014`..`FR-018`); provisional-party membership cap (`FR-130`); DES-097 audit-record anchor on activation | `EP-02`, `EP-03`, `FR-006`..`FR-018`, `FR-074`..`FR-080`, `FR-130`, `DES-097` | Reuse: protocol threshold/activation rules, contracts (petition + party registries). New: DB party store |
+| **S-4 Membership & proposals** | MS-V1-04 | Open membership join/leave (`FR-019`..`FR-025`); participation tiers (`FR-083`..`FR-089`); tiered proposals and supermajorities (`FR-035`..`FR-041`); timelocks (`FR-042`..`FR-044`) | `EP-03`, `EP-04`, `FR-019`..`FR-025`, `FR-035`..`FR-044`, `FR-083`..`FR-089` | Reuse: protocol tier/timelock rules, contracts. New: DB membership store |
+| **S-5 Voting (v1) + FR-131** | MS-V1-05 | `IBallotService` v1 implementation (DB-backed ballot — vote stored and counted in DB, last-ballot-counts logic, public tally); **`FR-131` honesty notice** displayed at every vote-cast surface (SCR-13 non-dismissable pre-vote notice, SCR-14 post-vote notice) per DES-098; no MACI, no ZK — fully disclosed per FR-131 | `FR-026`..`FR-034` (v1 PARTIAL/IN-v1 forms), `FR-131`, `DES-096`, `DES-098`, `SCR-13`, `SCR-14` | Reuse: protocol tally rules. New: DB ballot store, IBallotService v1 |
+| **S-6 Candidate selection, debates & recall** | MS-V1-06 | Self-nomination and candidate profiles (`FR-059`..`FR-061`, `FR-096`..`FR-102`); member-vote candidate selection (`FR-103`..`FR-110`); committee proposals (`FR-091`..`FR-095`); recall (`FR-042`/`FR-043`/`FR-045`); debate moderation boundary (`FR-056`) | `EP-05`, `EP-06`, `EP-07`, `FR-056`, `FR-059`..`FR-061`, `FR-091`..`FR-110` | Reuse: protocol recall rules. New: DB candidate store |
+| **S-7 Manifesto commitments + dashboards** | MS-V1-07 | Measurable manifesto commitments with tracked evidence (`FR-111`..`FR-115`); public finance dashboards (FR-049..FR-052 v1 forms); promise-vs-performance dashboard; DES-097 audit-record anchoring for manifesto entries and financial summaries | `EP-08`, `EP-09`, `FR-049`..`FR-052`, `FR-111`..`FR-115`, `DES-097` | New: manifesto DB, dashboard backend |
+| **S-8 Public audit-record anchoring** | MS-V1-08 | Hash publication to the audit contract for all major state transitions (party activation, ballot close, manifesto update) per DES-097; standalone verifier integration for audit-record verification; IPFS/Arweave mirror of audit hashes | `FR-054`, `FR-055`, `DES-097`, `ADR-009` | Reuse: contracts (audit-anchoring subset), verifier |
+| **S-9 Hardening & beta** | MS-V1-09 | v1 production-readiness bar (§3.5.4); open-source readiness items (README honesty register H-01..H-14, contribution docs, licence); staged rollout infrastructure (1→10→50→100%) | NFR-006, NFR-007, NFR-011, NFR-020, `FR-131`, H-01..H-14 | — |
+
+**Sequencing note.** Stages S-1..S-3 are strictly sequential (foundations → identity → party lifecycle).
+S-4 and S-5 can proceed in parallel once S-3 is complete. S-6 and S-7 are parallel after S-4/S-5.
+S-8 runs concurrently from S-3 onward. S-9 is the hardening pass on the completed feature set.
+
+#### 3.5.3 Honest effort range
+
+> **No formal v1 re-estimate has been produced for the v1-only scope.** The following is a
+> reasoning-from-record range; it is not a plan commitment. Any appetite change is for the approver.
+
+**Assumptions (sourced from existing artifacts):**
+
+| Assumption | Basis |
+|------------|-------|
+| Team: 18 FTE per CON-007 (no budget re-ruling) | `CON-007`, Doc 13 §8.3 |
+| Effective engineering capacity: ~9.0 FTE | Doc 13 §8.3 ("Effective hands-on engineering capacity: ~9.0 FTE") |
+| No cryptography critical path in v1 | `ADR-024`; DEFERRED-v2 list above |
+| Phase 0 + Phase 1 feature work (S-1..S-3 basis) largely reusable; coding start: 2026-09-14 | MS-03 (Doc 13 §3.2) |
+| v2 seam interfaces (DES-095/096) must be committed before any v1 auth/ballot code — no bypass | `ADR-024`, RISK-34 |
+| v1-specific tech stack (database vendor, auth provider) not yet decided — no artifact basis | N/A — not yet produced |
+| Lightweight security review scheduling: typically 4–8 weeks lead time; duration 2–4 weeks | N/A — not yet produced; analogous to audit-firm booking precedent |
+
+**Effort range:** **5–9 months from coding start (2026-09-14)**, contingent on:
+- v1 tech-stack decision (database + auth provider) — if delayed, range shifts right.
+- Lightweight security review scheduling (see §3.5.4) — 4–8 week booking lead time.
+- Degree of reuse of Phase-1 walking-skeleton components; if the Phase-1 testnet skeleton
+  is reused as the v1 base (likely), S-1..S-5 compress significantly.
+- No structured v1 re-estimate artifact exists; this range is a first-principles derivation
+  consistent with the approver's stated goal of "a working v1 in months."
+
+**What is reused vs new:**
+
+| Component | Status |
+|-----------|--------|
+| `packages/protocol` (governance rules, threshold maths, tier rules) | **Reused unchanged** |
+| `packages/contracts` — petition, party, registry contracts | **Reused** (audit-anchoring subset) |
+| `apps/web` + `packages/ui` (wireframe components, design system ADR-023) | **Reused** |
+| Phase-1 testnet walking skeleton (party lifecycle, proposals, public tally) | **Reused as base** |
+| Circom circuits, ZK verifier, MACI, ceremony tooling | **Not built in v1** |
+| Conventional auth + account layer | **New** |
+| Relational database schema (membership, ballot, manifesto) | **New** |
+| `IEligibilityVerifier` v1 implementation | **New** |
+| `IBallotService` v1 implementation | **New** |
+| FR-131 honesty-notice component (DES-098, SCR-13/SCR-14) | **New** |
+
+#### 3.5.4 v1 production-readiness bar
+
+v1 is exempt from the ceremony, the coordinator committee, and the two heavy ZK audits (NFR-009
+Definition B path). v1 DOES need the following before it is production-grade and public:
+
+| # | Item | Standard | Owner | Status |
+|---|------|----------|-------|--------|
+| PR-1 | **Lightweight independent security review / penetration test** — OWASP-class web / API / authn / authz scope. NOT circuit cryptography. Covers: session management, CSRF/XSS/injection, broken access control, authentication bypass, API authorisation. | OWASP Top 10 + API Security Top 10 | Head of Security (Rafael Duarte) to engage external firm | NOT STARTED |
+| PR-2 | **Accessibility audit** — WCAG 2.2 AA conformance on all primary flows (`NFR-011`, Must; not DEFERRED). Zero Level A or AA failures at v1 launch. | `NFR-011` | Nadia Hassan | NOT STARTED |
+| PR-3 | **Load / performance verification** — p95 write-path latency < 2s (`NFR-006`); availability 99.5% monthly (`NFR-007`); test at v1-applicable `NFR-008` user volume (scaled for v1 pilot scope — no formal v1 target yet) | `NFR-006`, `NFR-007`, `NFR-008` (v1-scoped) | Chen Wei (SRE) | NOT STARTED |
+| PR-4 | **Rollback drill** — v1 conventional infrastructure rollback (previous version restored in < 15 min, `NFR-020`); evidenced before v1 gate. Note: v1 does not have an immutable core; rollback is a standard deployment rollback. | `NFR-020` | Chen Wei (SRE) | NOT STARTED |
+| PR-5 | **Staged rollout** — 1 → 10 → 50 → 100% in the lead pilot jurisdiction, each stage metric-gated. Minimum 5 days at each stage. | Doc 13 §9 | Chen Wei (SRE) | NOT STARTED |
+| PR-6 | **FR-131 honesty-notice verification in the release checklist** — confirm that every ballot submission code path triggers the SCR-13 non-dismissable notice and the SCR-14 post-vote notice; confirm that no product material uses the words "private", "anonymous", "receipt-free", or "secure" to describe v1 voting. | `FR-131` (Must), `DES-098` | Nadia Hassan (notice); Ji-woo Park (checklist) | NOT STARTED |
+| PR-7 | **Open-source readiness** — README honesty register (`H-01`..`H-14` from Doc 02 §16.4); contribution docs (CONTRIBUTING.md, CODE_OF_CONDUCT.md); LICENCE file; GitHub issue templates. | Doc 02 §16.4 H-01..H-14 | product-owner (Priya Raghunathan) + engineer (Samuel Oyelaran) | NOT STARTED |
+| PR-8 | **Legal review** — `CON-015` (independent legal opinion on Aadhaar API usage within the data-minimisation posture) remains a Gate-2 line item; it applies to both Definitions. Per-jurisdiction legal review required for any jurisdiction where v1 is deployed (`CON-005`, `NFR-015`). | `CON-015`, `CON-005`, `NFR-015` | Sofia Marchetti | NOT STARTED — Gate-2 blocker |
+| PR-9 | **Doc 04 (Test Strategy) review debt** — a passing technical-mode document-review of Doc 04 v1.0.2. Applies to both Definitions. | VEKTOR review loop | PM to assign neutral reviewer | OPEN — Gate-2 blocker |
+| PR-10 | **RTM zero gaps in v1-scoped Must rows** — `BR → FR/NFR → DES → US → TC` closed for all Must FRs in the v1 Must set (108 = 112 total Must − 4 DEFERRED-v2 Must FRs: FR-030, FR-031, FR-082, FR-086); verified independently by reviewer-qa. | Doc 08 / VEKTOR DoD | Ji-woo Park (tester); Rafael Duarte (reviewer-qa) | NOT STARTED — 114 open Must rows currently |
+
+**On NFR-009 re-reading for v1:** NFR-009 specifies two independent audits (protocol + circuits)
+as Must requirements. The v1 production-readiness bar (PR-1 above) substitutes a lighter,
+OWASP-class web/API/authn/authz security review. This is a **re-reading of what NFR-009's
+Gate-2 conditions mean for Definition A**. It is stated here as a **plan recommendation; only
+the approver can ratify the re-reading.** NFR-009's two heavy audits remain binding for
+Definition B, and the v1 bar is a DIFFERENT, lighter, explicitly stated bar — not a silent
+weakening. See `DECISIONS-2026-08-23-V1-V2-SPLIT.md §4(e)`. AWAITING APPROVER CONFIRMATION.
+
+#### 3.5.5 Where v2 re-enters
+
+Per the VEKTOR SOP: a promoted bet re-enters at the top and passes through both gates. Definition
+B is not an exception.
+
+**Programme disposition:**
+- The existing **Phase 2 (circuits / ceremony / audits)** and **Phase 3 (MACI / elections-crypto)**
+  content becomes the **Definition-B programme**, re-entering design→build **after v1 launch** (not
+  before). The design artifacts (ADR-005, ADR-006, ADR-022, Doc 03 §10.x, the six Circom circuit
+  specs) are preserved intact — nothing is discarded.
+- **`DES-095` / `DES-096` seams** (ADR-024) make v2 an implementation swap: the `IEligibilityVerifier`
+  and `IBallotService` interfaces are the stable contracts; the v1 conventional-auth / DB backing is
+  replaced by the ZK nullifier circuit / MACI message queue backing. This is one implementation
+  swap at two points, never a rewrite of the full application.
+- **Gate-2 date 2027-05-14** (audit-paced, MS-13) attaches to **Definition B**. The existing critical
+  path (MS-06 circuit freeze → MS-07 ceremony logistics → MS-08 batched ceremony → MS-09/MS-10
+  audits → MS-11/MS-12 MACI integration → MS-13 Gate 2) is the **Definition-B programme** unchanged.
+- **v1 launch-readiness gate (MS-V1-LRG):** v1 aims for its own earlier launch-readiness gate
+  against the v1-scoped Must set. The specific date is NOT SET — it is the plan's recommendation
+  to establish this gate after the v1 tech-stack decision and the PR-1 security-review scheduling
+  are complete. **AWAITING APPROVER CONFIRMATION.** See `DECISIONS-2026-08-23-V1-V2-SPLIT.md §4(d)`.
+- **Gate-2 re-dating:** The existing 2027-05-14 is proposed to remain as the Definition-B Gate-2
+  date. No date has been changed. This re-scoping of which definition the date attaches to is a
+  **plan recommendation AWAITING APPROVER CONFIRMATION.**
 
 ---
 
@@ -322,8 +504,11 @@ here except where they carry a dependency above. Two plan-local assumptions are 
 > **reference** these `RISK-##` IDs; they do not keep competing copies. `L` and `I` are on Doc 02's
 > 1–5 scale. **Exposure = L × I.** Reviewed every wave; a realized risk re-plans the wave.
 > `RISK-01`…`RISK-16` are carried across from Doc 02 §10 unchanged in meaning.
+> `RISK-22`…`RISK-30` are also carried from Doc 02 §10 (minted at v1.1.0 and v2.0.0 era
+> respectively); recovered and added to this register at v2.2.0 (ISS-H1 — absent at v2.1.0 in error).
 > `RISK-17`…`RISK-21` are **new at Doc 13 v1.0.0** — delivery and schedule risks that are the
 > project-manager's to own and did not belong in a requirements document. No ID is reused.
+> `RISK-31`…`RISK-34` are **new at Doc 13 v2.1.0** — v1-specific delivery risks.
 
 | ID | Risk | L | I | Exposure | Mitigation / trigger | Carried by | Owner | Status |
 |----|------|---|---|----------|----------------------|-----------|-------|--------|
@@ -348,10 +533,30 @@ here except where they carry a dependency above. Two plan-local assumptions are 
 | **RISK-19** | **Appetite overrun** — `CON-007` (USD 4.2M / 18 FTE) showed a ~USD 245,000 (~−5.8%) shortfall on the three-pilot basis. **On the accepted L2 basis (B-01, 2026-08-09) the corrected cost is ≈ USD 4,025,000**, within the USD 4.2M appetite with a ≈ USD 175,000 explicit audit-remediation contingency (ruling 2026-08-21). **Residual exposure:** (1) the three-pilot basis remains ~−USD 245,000 in deficit if the pilot-count decision is reversed — reversible up to 2027-02-15; (2) `A-PLAN-01`'s ±10% rate sensitivity (±USD 0.30M) still exceeds the ≈ USD 175K contingency | 4 | 4 | 16 | L2 lever accepted as B-01 (Gate 1 2026-08-09); monthly burn tracked in the WBR against a published plan line; pilot-count lever reversible up to 2027-02-15. The ≈ USD 175K audit-remediation contingency is banked as headroom against audit risk — not removed from the plan (approver ruling 2026-08-21; see §8.3 and RISK-18) | — (plan) | Ana-Maria Petrescu | **Open** |
 | **RISK-20** | **MACI Phase-3 complexity underestimated** — circuits, message queue, batched tally and a per-election committee ceremony are, in the architect's own words, "the single largest engineering cost in this design" | 4 | 5 | **20** | Phase-1 ships public-tally governance behind a flag so the governance surface is proven before MACI lands; MACI integration is scheduled **after** audits so it is built against frozen, audited circuits; committee DKG rehearsed on testnet at MS-12; documented last-resort fallback is re-run under a fresh committee, **never** a plaintext tally | `ADR-006` | Aisha Nkemdirim | **Open — new** |
 | **RISK-21** | **Role-separation defect** — the Product Owner and the Principal Architect are the same person (Priya Raghunathan signs Doc 02 as PO and `ADR-001`…`ADR-014` as Principal Architect), so the role **Accountable** for direction is also the role **Accountable** for the design that direction is meant to constrain | 5 | 3 | 15 | Raised as governance exception `E-02` for a Gate-1 decision (§13.4); until resolved, `document-review` on Doc 03 MUST be run by a reviewer neutral to **both** hats, and Gate-1 `OI-05` confirmation must be recorded by the PO explicitly *as PO* | — (plan) | Ana-Maria Petrescu | **Open — new** |
+| **RISK-22** | **Stolen-credential takeover (Change 7)** — an attacker who obtains a victim's credential (e.g., a stolen document or cloned eID) initiates the nullifier-collision recovery flow (`FR-071`) to seize the victim's party membership and voting rights | 3 | 5 | 15 | `FR-072` seven-day delay + active-key veto; `NFR-016` ≥ 99% legitimate recovery success within 14 days; notification to registered channel at initiation; veto window equal to delay. _(Source: CR-v1.1.0; GATE1-DECISION-2026-08-09.md, Change 7.)_ | `ADR-018`, `DES-071` | Rafael Duarte | Open |
+| **RISK-23** | **Veto suppression (Change 7)** — an attacker simultaneously compromises the victim's registered notification channel to suppress the recovery veto notification, preventing the legitimate holder from cancelling before key rotation completes | 2 | 5 | 10 | `FR-072` active-key veto independent of notification channel where feasible; secondary out-of-band notification required; `NFR-016` fraud rate ≤ 0.01%. _(Source: CR-v1.1.0; GATE1-DECISION-2026-08-09.md, Change 7.)_ | `ADR-018`, `DES-071` | Rafael Duarte | Open |
+| **RISK-24** | **Recovery raced against a live ballot (Change 7)** — an attacker initiates recovery during an active ballot window, briefly holding dual control of an active credential, and attempts to cast a replacement ballot under the original key before rotation completes | 2 | 5 | 10 | `FR-072` voting barred for the recovering credential during the seven-day delay; active-key veto; `FR-032` only the last valid ballot counted; ballot-scope nullifiers prevent double-counting. _(Source: CR-v1.1.0; GATE1-DECISION-2026-08-09.md, Change 7.)_ | `ADR-018`, `DES-071` | Rafael Duarte | Open |
+| **RISK-25** | **Public-tier disclosure enables targeting and harassment** — workers, candidates, and office-holders whose identities are public may be targeted in the physical world | 3 | 4 | 12 | `FR-084` disclosure schedule limits what is demanded; `FR-063` ballot direction never disclosed; `NFR-024` harassment-rate metric (mechanical, no human discretion); `FR-103` individual conduct votes private | `FR-084`, `FR-063`, `NFR-024` | Daniel Okonkwo | Open |
+| **RISK-26** | **Analytics prohibition slows UX iteration and masks funnel failures** — with no per-user telemetry, product teams cannot detect individual drop-off points or run A/B tests | 4 | 2 | 8 | `NFR-019` aggregate-only governance dashboards; `NFR-022` usability studies on consenting panels; TD-08 records the deliberate trade-off | `NFR-019`, `NFR-022` | Yuki Sato | Open |
+| **RISK-27** | **Committee soft power — agenda capture despite no formal power** — a steering committee that sets meeting agendas and controls facilitation can steer outcomes without holding decisional power | 3 | 3 | 9 | `FR-090` public proposal authorship with equal standing for competing proposals; `FR-087` public committee composition and minutes; `FR-089` mechanical expiry with no standing renewal path | `FR-090`, `FR-087`, `FR-089` | Tomás Ferreira | Open |
+| **RISK-28** | **Conduct and removal votes weaponised for harassment campaigns** — coordinated members flood conduct votes or removal votes against a targeted individual | 3 | 4 | 12 | `FR-104` affirmative quorum with UT-0220 growth-surge defence; statement right mandatory before window closes; `NFR-024` harassment-rate metric; `FR-044`-style cooldowns as governance constants | `FR-104`, `NFR-024` | Daniel Okonkwo | Open |
+| **RISK-29** | **Non-violence clause drags the platform toward content judgment** — enforcing one mandatory political value creates pressure to enforce others | 2 | 4 | 8 | Code enforces presence-check only (`FR-077`); enforcement beyond presence belongs to members and law; `FR-056` jurisdiction-scoped display filtering boundary unchanged; TD-10 records the accepted tension | `FR-077`, `FR-056` | Sofia Marchetti | Open |
+| **RISK-30** | **Trust-anchor governance latency** — member-vote revocation is slower than an operator kill-switch; a compromised anchor can mint Sybils during the emergency-variant timelock | 2 | 5 | 10 | `FR-112` expedited emergency variant with published (shortened but non-zero) duration; `FR-004` attestor concentration cap limits Sybil yield per compromised anchor; `NFR-004` quarterly audit; residual accepted — cites SC-13/SC-14 from `artifacts/reviews/SECURITY-RESCAN-SC-01-2026-08-10.md`. _(ADR-020 §4: epoch cap bounds blast radius.)_ | `FR-112`, `ADR-020` | Rafael Duarte | Open — accepted |
+
+| **RISK-31** | **Operator-trust concentration in the v1 conventional database** — v1 stores member↔party mapping, vote direction, and ballot data in a conventional database; a database administrator or any sufficiently privileged operator can see individual member affiliations and votes at the application layer. In ZK designs (Definition B), this data does not exist to query; in v1 it does. | 4 | 4 | 16 | `FR-131` requires a non-dismissable honesty notice at every vote-cast surface stating the DB can see vote direction and membership; `H-01`/`H-02` honesty-register items are required in the public README. Organisational access controls (least privilege on DB credentials). The `IBallotService`/`IEligibilityVerifier` seams (`ADR-024`) ensure v2 removes this data from the DB path without a rewrite. **Trigger:** any confirmed DB-level access to vote or membership data by an unauthorised party → stop-the-line escalation | `ADR-024`, `DES-095`, `DES-096`, `FR-131` | Rafael Duarte | **Open — new (v1)** |
+| **RISK-32** | **Credential / auth-path compromise in v1** — v1 uses conventional authentication (password, passkey, or OAuth) rather than ZK nullifiers; a credential-stuffing attack, auth-path compromise, or session-fixation vulnerability could allow fake votes or impersonation that ZK nullifiers structurally prevent in Definition B | 3 | 5 | 15 | OWASP auth hardening (rate limiting, MFA option, session expiry, PKCE for OAuth); the PR-1 lightweight security review / pen test covers the auth path specifically; `NFR-016` secure coding standard applied throughout. **Trigger:** any confirmed auth-path compromise → immediate flag kill on the affected ballot surface and incident escalation | `ADR-024`, `DES-095`, `NFR-016` | Rafael Duarte | **Open — new (v1)** |
+| **RISK-33** | **v1 mistaken for the guarantee product** — v1 lacks ZK anonymity, receipt-freeness, and coercion-resistance; if press, partners, or users describe v1 as providing these guarantees, trust in the political process and the brand is damaged, and the platform may attract use-cases it cannot safely serve | 4 | 4 | 16 | `FR-131` (Must): non-dismissable plain-language honesty notice at every vote-cast surface, stating "NOT anonymous, NOT receipt-free, NOT coercion-resistant"; MUST NOT use the words "private", "anonymous", "receipt-free", or "secure" to describe v1 voting in any product material. `H-01`..`H-06` honesty register in the public README (PR-7). All partner onboarding materials must repeat the disclosure. PR-6 release checklist verifies no false claims in shipped materials. **Trigger:** any confirmed false representation of v1 as providing ZK guarantees → immediate public correction and PR-6 re-audit | `FR-131`, `DES-098`, Doc 02 §16.4 H-01..H-06 | Nadia Hassan | **Open — new (v1)** |
+| **RISK-34** | **v1 conventional code ossifying against the v2 swap** — if the engineer builds v1 auth/ballot logic directly into components, bypassing the `IEligibilityVerifier` and `IBallotService` seam interfaces (`DES-095`/`DES-096`), v2 ceases to be an implementation swap and becomes a rewrite; the approver's reuse guardrail is violated and the v2 programme cost and risk increase materially | 3 | 5 | 15 | `ADR-024` mandates the seam interfaces as the stable contracts; no auth or ballot logic may bypass them. CI coverage of the interface contracts (integration tests verifying that only the seam interface is called, never the concrete implementation directly). MS-V1-01 commit of the interface definitions before any v1 implementation code is merged. **Trigger:** any pull request adding auth or ballot logic that calls a concrete implementation class directly (bypassing the seam interface) is a merge blocker — reviewer-qa must catch this at code review | `ADR-024`, `DES-095`, `DES-096` | Samuel Oyelaran | **Open — new (v1)** |
 
 **Top 5 by exposure:** `RISK-01`, `RISK-02`, `RISK-04`, `RISK-06`, `RISK-20` (all at 20). Four of the
 five are adversarial-integrity risks and one is delivery. Every one of them has at least one
 mitigation that is **verified at Gate 2 by evidence, not by assertion** (§3.3).
+
+**v1-specific risks (RISK-31..RISK-34):** added 2026-08-23 per the v1/v2 delivery split directive.
+Top v1 risks by exposure: RISK-31 and RISK-33 (16 each — operator trust and mistaken-guarantee
+risks); RISK-32 and RISK-34 (15 each — auth compromise and seam ossification). All four are
+mitigated by a combination of disclosure (`FR-131`, H-register), the seam architecture (`ADR-024`),
+and the PR-1 lightweight security review.
 
 ---
 
@@ -563,6 +768,8 @@ here. Approver confirmation of magnitude is pending — see
 
 | Date | Wave | What changed | Why (signal from gate / production) | By |
 |------|------|--------------|-------------------------------------|----|
+| 2026-08-23 | Delivery split | **v2.2.0 — ISS-H1/M1/M2/L1/L2 rework.** Cycle-1 business-mode document review (`artifacts/reviews/13-project-plan-v2.1.0-business-cycle1.md`): FAIL 84%, 0C/1H/2M/2L. Five surgical fixes applied: **ISS-H1** — RISK-22..RISK-30 recovered from Doc 02 §10 and inserted in §6 in ordinal position (were absent at v2.1.0 — register jumped RISK-21 → RISK-31); §6 header note updated to document provenance. **ISS-M1** — v1 Must-set arithmetic corrected in §3.5.1 and PR-10: the claim "106 IN-v1 + 19 PARTIAL + FR-131 = 112" was arithmetically impossible (126, not 112); correct derivation: 112 total Must (SRS v2.7.0 §11) minus 4 DEFERRED-v2 Must FRs (FR-030, FR-031, FR-082, FR-086) = **108**. **ISS-M2** — MS-V1-09 (§3.5.2) and PR-7 (§3.5.4) honesty-register citation updated H-01..H-06 → H-01..H-14 (Doc 02 v2.7.0 §16.4 expanded register). **ISS-L1** — Header Source and §2.1 SRS pin updated v2.6.0 → v2.7.0 (Approved). **ISS-L2** — §13.1 document-review row updated: Doc 02 v2.7.0 Approved c2 PASS 98%; Doc 13 v2.1.0 FAIL c1 recorded; v2.2.0 pending c2. No other changes. | `artifacts/reviews/13-project-plan-v2.1.0-business-cycle1.md` (FAIL cycle-1, 0C/1H/2M/2L); Doc 02 v2.7.0 (Approved, c2 PASS 98%) | Ana-Maria Petrescu |
+| 2026-08-23 | Delivery split | **v2.1.0 — v1/v2 delivery split.** Approver directive (Rathish, 2026-08-23): delivery splits into Definition A (v1 — conventional-auth transparent party platform, voting works, ZK deferred) and Definition B (v2 — same platform plus ZK/MACI guarantee layer, implementation swap via ADR-024 seams). Applied: header bumped 2.0.3 → 2.1.0; source list extended (SRS v2.6.0, ADR-024, DECISIONS-2026-08-23-V1-V2-SPLIT.md); §2.1 Must count corrected (110 → 112, SRS v2.6.0 §11/§16); §3.1 supersession annotation added (the "Why Phase 3 is the launch" argument now applies to Definition B only; Definition A launches with conventional-auth voting under FR-131 disclosure); §3.3 v1-gate annotation added (Definition A uses §3.5 bar, not the §3.3 12-item list); §3.5 v1 delivery plan added (MS-V1-01..MS-V1-09 build-order stages, 5–9 month reasoning-from-record effort range, production-readiness bar PR-1..PR-10, v2 re-entry disposition); §6 RISK-31..RISK-34 added (v1-specific risks: operator-trust concentration, auth-path compromise, v1 mistaken for guarantee product, seam ossification); §11 this entry prepended. Key items AWAITING APPROVER CONFIRMATION: v1 stack recommendation (DES-097), 16 contradiction-surface items + T-01..T-05, re-scoped Gate-2 (v1 gate date NOT SET; 2027-05-14 attaches to Definition B), NFR-009 v1 re-reading. Gate-2 date 2027-05-14: UNCHANGED. | Decision record `DECISIONS-2026-08-23-V1-V2-SPLIT.md`; Doc 03 v2.3.1 (Approved — ADR-024, DES-095..DES-098, §10.13 v1/v2 architecture, T-01..T-05); Doc 02 v2.6.0 (In Review — §16, FR-131, CON-007 correction); `artifacts/reviews/02-requirements-srs-v2.6.0-business-cycle1.md` (FAIL c1, ISS-01 resolved by DECISIONS-2026-08-23-V1-V2-SPLIT.md) | Ana-Maria Petrescu |
 | 2026-08-21 | Next (P2) | **v2.0.3 — budget-appetite ruling + stale-L2 cascade correction.** Approver ruling (Rathish, 2026-08-21): appetite held at USD 4.2M (not reduced); ≈ USD 175K headroom on the accepted L2 basis held as an explicit audit-remediation contingency — not removed from the plan. Cascade correction applied: "≈ USD 4.13M with ~1.7% contingency" in §8.3 and §13.3 L2 row was computed off the pre-correction 4.55M total; corrected to ≈ USD 4,025,000 / ≈ USD 175K contingency. RISK-18 updated: explicit budget cover added for re-audit/re-ceremony event (previously schedule-only). RISK-19 updated: on accepted L2 basis now within appetite; residual exposures (pilot-count reversal; A-PLAN-01 rate sensitivity) stated. Ruling 2 (RISK-014 contradiction): HELD — no referent in repository (`RISK-014` nonexistent; `RISK-14` is regulatory reclassification; ADR-006 decides 5-of-7 with rationale and all downstream citations consistent; no undecided language anywhere). No dates changed. No other substantive changes. **Discrepancy:** approver's cited ~$3.836M and ~$294K match no artifact — record-derived figures applied; magnitude confirmation pending from approver. | Decision record `DECISIONS-2026-08-21-BUDGET-APPETITE-AND-RISK014.md`; `GATE1-DECISION-2026-08-09.md §5` (B-01); ADR-022 (ceremony-correction basis for cascade recalculation) | Ana-Maria Petrescu |
 | 2026-08-21 | Next (P2) | **v2.0.2 — banner correction.** Cycle-2 review (`artifacts/reviews/13-project-plan-v2.0.1-business-cycle2.md`): FAIL 96%, 0C/0H/1M/0L. One fix: "Read this first" banner "~USD 0.35M shortfall" → "~USD 245,000 (~−5.8%) shortfall" — last remaining pre-correction figure. | `artifacts/reviews/13-project-plan-v2.0.1-business-cycle2.md` (FAIL cycle-2) | Ana-Maria Petrescu |
 | 2026-08-21 | Next (P2) | **v2.0.1 — business review rework.** Cycle-1 document review (`artifacts/reviews/13-project-plan-v2.0.0-business-cycle1.md`): FAIL 84%, 0C/0H/4M/0L. Root cause: §8.3 ceremony-budget correction (~USD 120k → ~USD 15k) not cascaded to three downstream references. Four surgical fixes: ISS-01 — KC-P2 trigger restated in ADR-022 assurance terms (non-vacuous); ISS-02 — RISK-19 shortfall "~USD 0.35M" → "~USD 245,000 (~−5.8%)"; ISS-03 — §13.1 resourcing row corrected to same figure; ISS-04 — §13.3 L1 lever "−USD 0.35M" → "~−USD 245,000 (~−5.8%)". No other changes. | `artifacts/reviews/13-project-plan-v2.0.0-business-cycle1.md` (FAIL cycle-1) | Ana-Maria Petrescu |
@@ -614,7 +821,7 @@ Sign-off is at the **gates** (MS-01 / MS-13), not on every plan revision.
 | Named owner per workstream | ✅ Ready | §4 — 13 workstreams, all owned |
 | Resourcing costed against `CON-007` | ⚠ Ready **with a variance** | §8.3 — ~−USD 245,000 (~−5.8%), zero contingency (`RISK-19`) |
 | Gate-2 date achievable as stated in `CON-007` | ❌ **Not achievable** | §3.4 — evidence-based Gate 2 is 2027-05-14, +13 weeks |
-| **Passing `document-review` reports for Docs 01, 02, 05, 13** | ⚠ **Partially cleared** | **Doc 13 v2.0.3: ✅ PASS 97%** — business mode, cycle 1 (`artifacts/reviews/13-project-plan-v2.0.3-business-cycle1.md`); 0C/0H/0M/2L — two Lows surviving (ISS-01: §13.3 L2 row "~4%" should be ~4.2%; ISS-02: §8.3 discrepancy paragraph omits the Gate-2-date no-referent note). _(Prior: Doc 13 v2.0.2: ✅ PASS 100%, cycle 3, `artifacts/reviews/13-project-plan-v2.0.2-business-cycle3.md`.)_ Docs 01, 02, 05: ❌ passing business-mode review reports not yet produced. **Gate 1 cannot be presented until Docs 01, 02 and 05 are also reviewed and passed.** |
+| **Passing `document-review` reports for Docs 01, 02, 05, 13** | ⚠ **Partially cleared** | **Doc 02 v2.7.0: ✅ PASS 98%** — business mode, cycle 2 (`artifacts/reviews/02-requirements-srs-v2.7.0-business-cycle2.md`; Approved 2026-08-23). **Doc 13 v2.1.0: ❌ FAIL 84%** — business mode, cycle 1 (`artifacts/reviews/13-project-plan-v2.1.0-business-cycle1.md`); 0C/1H/2M/2L — five issues; v2.2.0 rework applied 2026-08-23, pending cycle 2. _(Prior Doc 13 pass: v2.0.3 ✅ PASS 97%, cycle 1.)_ Docs 01, 05: ❌ passing business-mode review reports not yet produced. **Gate 1 cannot be presented until Docs 01, 02 and 05 are also reviewed and passed.** |
 | Four declared non-Must backlog coverage gaps closed | ⚠ Declared, not closed | Doc 05 §12 — `FR-005`, `FR-049`, `FR-050`, `FR-052`, `FR-053`. Non-blocking; owned by the PO |
 
 ### 13.2 The five open items requiring a Gate-1 decision

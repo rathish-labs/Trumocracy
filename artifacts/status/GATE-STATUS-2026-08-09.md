@@ -748,3 +748,111 @@ Both documents require a passing business-mode document-review before Status fli
 **Gate 2:** NOT READY. RTM (Doc 08 v2.1.0): 125 Must rows / 12 COMPLETE / 113 OPEN (FR-121..FR-130
 RTM rows not yet added; FR-130 row will be added when DES and TC are available). Must count
 now 111 (FR-130 added). Legal-opinion line item (India/Aadhaar): NOT STARTED — Gate-2 blocker.
+
+---
+
+## v1/v2 delivery split (Definition A / Definition B) — 2026-08-23
+
+> Approver directive received 2026-08-23, transmitted via coordinator. All prior gate decisions
+> and their wording are unchanged and intact. Full decision record:
+> `artifacts/status/DECISIONS-2026-08-23-V1-V2-SPLIT.md`. This section is additive only.
+
+**Decision pointer:** Rathish (human approver), 2026-08-23. Recorded by project-manager
+(Ana-Maria Petrescu). Transmitted via coordinator.
+
+**What was decided:** The delivery programme splits into two definitions:
+
+- **Definition A (v1):** the transparent party platform — real, production-grade, shareable;
+  eight-pillar party creation, petition→threshold→activation, free membership, proposals and
+  debates, candidate selection by member vote, manifesto + commitment tracking, public finance
+  and performance dashboards. **Voting works in v1** under conventional authentication; the
+  ZK private ballot is deferred. Goal: a working v1 in months, shared on GitHub.
+- **Definition B (v2):** the same platform plus the hard cryptographic guarantees — ZK
+  anonymous enrolment, MACI private receipt-free ballots, trusted-setup ceremony, coordinator
+  committee, two heavy independent audits. v2 is an implementation swap behind stable seam
+  interfaces (DES-095/DES-096), never a rewrite.
+
+**Classification test (normative):** DEFERRED-v2 iff a requirement exists ONLY to provide
+anonymity, private ballots, coercion-resistance, or hostile-state safety.
+
+**Honesty requirement:** v1 must state plainly at every vote-cast surface that it is not the
+private ballot. Deferrals that weaken assumed guarantees become README honesty items, never
+silent omissions.
+
+**Reuse guardrail:** nothing from the design phase is discarded; v2 is an implementation swap
+(ADR-024), never a rewrite.
+
+**v1 exemptions:** ceremony, coordinator committee, two heavy ZK audits (NFR-009 Definition B
+path). The plan states what v1 DOES need (see §3.5 / Doc 13 v2.1.0).
+
+---
+
+### Document versions and review verdicts
+
+| Document | Version | Status | Review verdict |
+|----------|---------|--------|----------------|
+| Doc 03 Architecture (SDD) | **v2.3.1** | **Approved** | Technical c1 FAIL 90% (v2.3.0) → rework → c2 PASS 97% (v2.3.1), 0C/0H/0M/0L |
+| Doc 02 Requirements | **v2.6.0** | In Review | Business c1 FAIL 94%, 0C/0H/1M/1L — **rework to v2.7.0 owed** (ISS-01 now resolved by DECISIONS-2026-08-23-V1-V2-SPLIT.md) |
+| Doc 13 Project Plan | **v2.1.0** | In Review | c1 review pending assignment |
+
+Review reports:
+- `artifacts/reviews/03-architecture-design-sdd-v2.3.0-technical-cycle1.md` (FAIL c1)
+- `artifacts/reviews/03-architecture-design-sdd-v2.3.1-technical-cycle2.md` (PASS c2)
+- `artifacts/reviews/02-requirements-srs-v2.6.0-business-cycle1.md` (FAIL c1)
+
+---
+
+### What the split does to the Gate-2 posture
+
+The v1/v2 split creates two distinct launch-readiness profiles:
+
+**Definition A (v1) launch-readiness gate** — an earlier gate against the v1-scoped Must set
+(112 Must requirements with DEFERRED-v2 items deferred). v1 Gate-2 conditions replace the
+ceremony/committee/two-ZK-audit path with a lighter production-readiness bar (see Doc 13
+§3.5). The specific v1 gate date is a **plan recommendation AWAITING APPROVER CONFIRMATION**
+(see Doc 13 §3.5 — no date has been set or changed).
+
+**Definition B (v2) Gate-2** — the existing 2027-05-14 audit-paced date attaches to
+Definition B. The existing Phase 2 (circuits/ceremony/audits) and Phase 3 (MACI/elections-
+crypto) content becomes the Definition-B programme, re-entering design→build after v1 launch.
+DES-095/096 seams make v2 an implementation swap. **Gate-2 date 2027-05-14 is UNCHANGED
+until the approver confirms the re-scoping.**
+
+---
+
+### Pending items
+
+| # | Item | Owner | Priority |
+|---|------|-------|----------|
+| **P-1** | **PO rework Doc 02 to v2.7.0** — ISS-01 (resolved: cite this record); ISS-02 (H-07..H-12 or umbrella note) | product-owner (Priya Raghunathan) | Immediate — unblocked by this record |
+| **P-2** | **Doc 02 c2 business-mode re-review** | PM to assign neutral reviewer | After v2.7.0 produced |
+| **P-3** | **Doc 13 v2.1.0 c1 business-mode review** | PM to assign neutral reviewer | After this record committed |
+| **P-4** | **Approver confirmations (a)–(f)** — v1 stack (DES-097); 16 contradiction-surface items; T-01..T-05; re-scoped Gate-2; NFR-009 v1 re-reading; 2027-05-14 referent | Rathish (human approver) | Before v1 implementation begins |
+| **P-5** | **CON-015 legal opinion** — independent legal opinion on Aadhaar API usage | Sofia Marchetti | Gate-2 blocker (both Definitions); NOT STARTED; ≥ 8 wks before Gate 2 |
+| **P-6** | **Doc 04 (Test Strategy) review debt** — technical-mode review of v1.0.2 | PM to assign neutral reviewer | Gate-2 blocker (both Definitions); OPEN |
+| **P-7** | **FR-121..FR-131 US/TC/RTM catch-up** — traceability rows for all 11 minted requirements | Architect (DES) → PO (US) → Tester (TC/RTM) | Gate-2 blocker (both Definitions); NOT STARTED |
+| **P-8** | **Doc 05 v2.1.0 c1 business-mode review debt** (carry-forward from 2026-08-22; no review report exists) | PM to assign neutral reviewer | Outstanding — not yet reviewed |
+| **P-9** | **Doc 03 cascade annotation for FR-131/DES-098** (pre-allocation error: §12 references "FR-130" for DES-098; FR-131 is the correct ID) | architect (Ravi Deshmukh) — next increment | Before RTM can be complete for FR-131 |
+| **P-10** | **DES for FR-130** (provisional-party cap) | architect (Ravi Deshmukh) | Next DES increment |
+| **P-11** | **FR-129 tier-determination** (FR-118 Tier-1 vs FR-119 Tier-2) | architect (Ravi Deshmukh) | Next DES increment |
+
+**Pre-existing Gate-2 blockers that remain** (not affected by the v1/v2 split decision):
+
+| Blocker | Applies to | Status |
+|---------|-----------|--------|
+| CON-015 legal opinion (India/Aadhaar) | Both Definitions | NOT STARTED |
+| Doc 04 review debt (technical-mode, v1.0.2) | Both Definitions | OPEN |
+| RTM zero gaps — 114 open Must rows (Doc 08 v2.1.0) | Both Definitions | OPEN (v1 Must set is a subset; v1 gate requires zero gaps in v1-scoped rows) |
+| Rollback drill (NFR-020) | Both Definitions | NOT DRILLED |
+
+---
+
+**Gate 2 (Definition B / v2):** NOT READY. Date 2027-05-14 UNCHANGED pending approver
+confirmation of re-scoping. RTM (Doc 08 v2.1.0): 125 Must rows (pre-FR-131) / 12 COMPLETE /
+113+ OPEN. Must count now 112 (FR-131 added). Legal-opinion: NOT STARTED. FR-121..FR-131
+RTM rows: NOT STARTED.
+
+**v1 launch-readiness gate (Definition A):** date NOT SET — plan recommendation AWAITING
+APPROVER CONFIRMATION. v1 production-readiness bar defined in Doc 13 §3.5.
+
+> **Correction 2026-08-23 (appended after document-review results):** Doc 02 is now **v2.7.0 (Approved; c2 PASS 98%**, `artifacts/reviews/02-requirements-srs-v2.7.0-business-cycle2.md`). Doc 13 is now **v2.2.0 (In Review; pending c2** business-mode review; v2.1.0 c1 FAIL 84%, 0C/1H/2M/2L resolved by rework — `artifacts/reviews/13-project-plan-v2.1.0-business-cycle1.md`).

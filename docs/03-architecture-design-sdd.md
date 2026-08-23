@@ -2,14 +2,40 @@
 
 ```
 Document ID:   SDD-TRUMOCRACY
-Version:       2.2.1
+Version:       2.3.1
 Status:        Approved
 Owner:         Ravi Deshmukh — Principal Architect
 Approvers:     Rafael Duarte (Security), Chen Wei (Reliability), Dr. Lena Kowalczyk (Privacy),
                Aisha Nkemdirim (Elections & Voting)
-Source:        SRS-TRUMOCRACY v2.4.0
-Last updated:  2026-08-22
-Changelog:     v2.2.1 (2026-08-22) — Rework (review cycle 1 FAIL, 84%/0C/0H/2M/3L):
+Source:        SRS-TRUMOCRACY v2.6.0
+Last updated:  2026-08-23
+Changelog:     v2.3.1 (2026-08-23) — Rework (review cycle 1 FAIL, 90%/0C/1H/1M/1L;
+               artifacts/reviews/03-architecture-design-sdd-v2.3.0-technical-cycle1.md):
+               ISS-01 (High) §15 DES-098 row corrected — FR-130 was wrong (FR-130 = provisional-
+               party membership cap; FR-131 = v1 honesty notice MUST, minted by PO, Doc 02
+               v2.6.0, 2026-08-23); §15 DES-095 row FR range corrected (FR-121..130 →
+               FR-121..129; FR-130 has no logical connection to IEligibilityVerifier seam);
+               ADR-024 Traces section corrected (FR-121..FR-129, FR-131 in place of
+               FR-121..FR-130); ISS-02 (Medium) §10.13.6 DES-098 "Backs" placeholder replaced
+               with actual FR-131 reference; §18 C-02 closure note corrected — removed incorrect
+               claim that "FR-130 backs the SCR-13/SCR-14 disclosure obligation" (FR-130 = cap,
+               FR-131 = honesty notice, separate mintings); ISS-03 (Low) §10.13.7 legend added
+               defining (i)/(ii)/(iii) notation. Source-pin: v2.5.0 → v2.6.0; §1.1 counts
+               updated to SRS v2.6.0 (131 FR / 129 active / 112 Must). No other content changed.
+               v2.3.0 (2026-08-23) — v1/v2 delivery-architecture split (approver directive
+               Rathish, 2026-08-23): §10.13 added — v1/v2 architecture split, abstraction
+               seams (IEligibilityVerifier DES-095, IBallotService DES-096), v1 conventional-
+               auth backing (DES-097), v1 package disposition table, v1 honesty notice
+               (DES-098, backs "FR — to be minted by PO this session"); Charter-layer conflict
+               table (T-01..T-05, for approver's decision); ADR-024 registered in §12 (ADR
+               count twenty-three → twenty-four; ADR-001..ADR-023 → ADR-001..ADR-024); §15
+               DES-095..DES-098 traceability rows added. Two cascade items: (i) §18 C-02
+               closure annotation applied — PO decided: accept, FR-130 minted (Doc 02 v2.5.0,
+               DECISIONS-2026-08-22-WIREFRAME-C01-C02.md); (ii) ADR-016 amendment-block item
+               (c) citizen-exclusion sentence added (ISS-01 from v2.1.4 deferred review
+               cycle). §1.1 counts updated to SRS v2.5.0 (130 FR / 128 active / 111 Must).
+               Source updated to SRS-TRUMOCRACY v2.5.0. No DES additions beyond DES-095..DES-098.
+               v2.2.1 (2026-08-22) — Rework (review cycle 1 FAIL, 84%/0C/0H/2M/3L):
                ISS-01 §10.12.1(b) SCR coverage corrected (16 of 23 covered / 7
                uncovered, not 8/8); ISS-02 §10.12.4 Wireframe→SCR row for screen 3.4
                corrected to SCR-14 (partial) and §10.12.5 class (i) row revised (SCR-14
@@ -160,7 +186,7 @@ Changelog:     v2.2.1 (2026-08-22) — Rework (review cycle 1 FAIL, 84%/0C/0H/2M
 ```
 
 > **Based on:** arc42 + C4 + Google design doc + IEEE 1016. **Produced in:** Design.
-> The twenty-three decision records in `docs/adr/ADR-001..ADR-023` are normative and are
+> The twenty-four decision records in `docs/adr/ADR-001..ADR-024` are normative and are
 > summarised in §12; where this document and an ADR disagree, the ADR wins and this document
 > is the defect.
 
@@ -172,8 +198,8 @@ Changelog:     v2.2.1 (2026-08-22) — Rework (review cycle 1 FAIL, 84%/0C/0H/2M
 
 Trumocracy lets any verified citizen originate a political party, gather demonstrated public
 support, and — on reaching a coded threshold — operate that party under rules that no
-founder, financier or platform operator can override. The SRS v2.4.0 defines 21 `BR`, 129 `FR`
-(127 active + 2 superseded; 110 Must), 28 `NFR` (24 Must), 15 `CON`, and 27 `RISK`. The
+founder, financier or platform operator can override. The SRS v2.6.0 defines 21 `BR`, 131 `FR`
+(129 active + 2 superseded; 112 Must), 28 `NFR` (24 Must), 15 `CON`, and 27 `RISK`. The
 requirements that shape this architecture more than any others:
 
 | ID | Requirement | Architectural consequence |
@@ -1169,6 +1195,121 @@ Conflicts are surfaced, not reconciled. Dispositions are recommendations; resolu
 
 ---
 
+## 10.13 v1/v2 delivery-architecture split
+
+**Approver directive:** Rathish, 2026-08-23. Full governance record: ADR-024.
+
+### 10.13.1 Two delivery definitions
+
+| | Definition A — v1 | Definition B — v2 |
+|---|---|---|
+| Identity/personhood | Conventional auth (database account + WebAuthn passkey) | ZK anonymous enrolment via `ICredentialAdapter` → `PersonhoodRegistry` (ADR-016, ADR-017) |
+| Ballot casting | Conventional authenticated database write; chain audit log | MACI encrypted ballot + 5-of-7 threshold coordinator (ADR-006, DES-023) |
+| Tally | Conventional SQL aggregate; result hash published to audit contract | On-chain ZK tally proof (DES-024, DES-025); independently verifiable |
+| Cryptographic ceremonies | None | Groth16 Phase-1 + per-circuit Phase-2 (ADR-005, ADR-022) |
+| Blockchain role | Audit-record only (petition milestones, tally hashes, manifesto hashes, party activation events) | Audit record + full governance execution (PersonhoodRegistry, PartyRegistry, Governor, MACI, ProtocolGovernance) |
+| Receipt-freeness | NO — disclosed limitation | YES — MACI key-change override |
+| Anonymity floor | NO — conventional DB linkage present | YES — k ≥ 1000 (DES-008) |
+
+**Guardrail (approver-stated):** Nothing built in the Design phase is discarded. v1 reuses requirements, flows, design system, and wireframes. v2 is a swap behind stable interfaces, never a rewrite.
+
+### 10.13.2 DES-095 — IEligibilityVerifier seam
+
+**Purpose:** A stable design-level interface decoupling the application layer from the identity/personhood proof mechanism. The application calls this interface; the backing is swapped between v1 (conventional) and v2 (ZK) without any change above the seam boundary.
+
+**Design-level interface (methods and semantics — not implementation code):**
+
+| Method | v1 backing behaviour | v2 backing behaviour |
+|--------|---------------------|---------------------|
+| `verifyEligibility(memberId, regionId, scope, proof)` | Account lookup + conventional session auth; no ZK proof verified | ZK proof verified through `ICredentialAdapter` → `enrol()` → `PersonhoodRegistry` (ADR-017, DES-069, DES-070) |
+| `isUniqueInScope(memberId, scope)` | Database nullifier record (atomic write on first action) | On-chain `nullifierUsed[keccak(scope, N)]` (DES-001) |
+| `getProperties()` | Returns `{ onePersonOneVote: false, subpoenaResistant: false, unlinkable: false, anonymityFloor: false }` | Returns all true |
+| `IS_INSECURE_MOCK()` | Returns `false` — v1 is an honest conventional backing, NOT a mock (see §10.13.4) | Returns `false` |
+
+**Invariants both backings MUST satisfy:** one-person-one-vote per scope (conventional nullifier record v1; on-chain nullifier v2); eligibility scoping (membership record + snapshot v1; `vote()` snapshotRoot v2); verifiable tally output; no retrospective result change after tally closes.
+
+**Properties ONLY v2 provides:** unlinkability, receipt-freeness, coercion-override, no identity at rest, anonymity floor (k ≥ 1000).
+
+**Composes with:** `ICredentialAdapter` (ADR-017, DES-070) — v2 routes through it; v1 bypasses it honestly (declared in `getProperties()`). `IProofVerifier` seam (ADR-022) — used by `IBallotService` v2 tally path; not used by `IEligibilityVerifier` directly.
+
+### 10.13.3 DES-096 — IBallotService seam
+
+**Purpose:** A stable design-level interface decoupling the application layer from the ballot-casting and tally mechanism.
+
+**Design-level interface (methods and semantics):**
+
+| Method | v1 backing behaviour | v2 backing behaviour |
+|--------|---------------------|---------------------|
+| `castBallot(electionId, choice, memberId, eligibilityRef)` | Authenticated write to database; `BallotReceipt` includes choice + timestamp + member reference | MACI encrypted ballot to message queue (DES-023); `BallotReceipt` includes only the message hash |
+| `changeBallot(electionId, newChoice, memberId)` | Database UPDATE with atomic overwrite; audit log records change | MACI key-change + re-vote; indistinguishable from original ballot at tally layer (FR-032, DES-023) |
+| `computeTally(electionId)` | SQL COUNT aggregate; result hash published to on-chain audit contract | MACI threshold coordinator DKG → on-chain ZK tally proof (DES-024, DES-025); independently verifiable by anyone |
+| `getTallyProperties()` | Returns `{ receiptFree: false, coercionOverride: false, zeroKnowledge: false, publiclyVerifiable: true }` | Returns all true |
+
+**Composes with:** `IProofVerifier` seam (ADR-022) — v2 `computeTally()` produces a ZK proof verified through `IProofVerifier`; v1 `computeTally()` produces a conventional aggregate and does not call `IProofVerifier` (honest bypass, not hidden).
+
+### 10.13.4 IS_INSECURE_MOCK() and the promotion gate
+
+The CI deployment-safety scan (§14, §7.1) blocks any deployment to testnet, staging, or production that has a MockVerifier in the VerifierRegistry (`IS_INSECURE_MOCK()` returning true). The distinction between a mock and the v1 conventional backing is critical:
+
+| Entity | Lies about verification? | `IS_INSECURE_MOCK()` | Promotion past devnet? |
+|--------|------------------------|---------------------|----------------------|
+| `MockVerifier` | YES — accepts any proof without checking | `true` | Blocked by CI gate |
+| v1 conventional backing | NO — checks by conventional means honestly | `false` | Permitted (honest, disclosed) |
+| v2 ZK backing | NO — verifies ZK proof on-chain | `false` | Permitted (real verifier) |
+
+The v1 conventional backing MUST NOT be labelled or implemented as a mock. It honestly performs what it claims. `IS_INSECURE_MOCK()` returns false because it is NOT an insecure mock: it is a functioning conventional implementation, honest about what it is and what it is not. The CI gate checks for lying; it does not check for genuine ZK-property absence. The latter is governed by the conflict table in ADR-024 §(c) and is a decision for the approver.
+
+### 10.13.5 DES-097 — v1 conventional-auth stack and package disposition
+
+**v1 recommendation (from ADR-024 §(b)):** Blockchain as public transparent-audit record only. The v1 application is a conventional Next.js PWA + Postgres database. A small, auditable on-chain audit contract on Base publishes petition milestones, tally result hashes, manifesto version hashes, and party activation events. No on-chain governance execution in v1.
+
+| Package / service | v1 disposition | Rationale summary |
+|---|---|---|
+| `packages/contracts` | **Adapt** — deploy only the lightweight audit-record contract subset; full on-chain governance contracts are v2-only | Satisfies FR-108 (blockchain as audit record); CI gate passes honestly |
+| `packages/circuits` | **Untouched for v2** — no circuits in v1 | v1 backings never call a circuit |
+| `packages/protocol` | **As-is** — pure rules, zero deps; governance state machines, threshold formula, encoding | Strongest reuse candidate; valid in both v1 and v2; differentially tested against chain in v2 |
+| `packages/sdk` | **Adapt** — strip ZK proof generation + on-chain PersonhoodRegistry/PartyRegistry paths; expose IEligibilityVerifier and IBallotService interfaces | v2 is a seam-local swap |
+| `packages/ui` | **As-is** — DES-093 token set, DES-094 privacy-status component apply unchanged; design system is independent of identity/ballot backing | ADR-023; independent of ZK/conventional split |
+| `apps/web` | **As-is with feature flags** — v2-only features flag-off (existing ADR-037 discipline); DES-098 honesty notice is v1 addition | Flag discipline already designed |
+| `apps/verifier` | **Untouched for v2** — meaningful only for MACI ZK tally proofs; not built in v1 | Activates when IBallotService v2 backing wired |
+| `services/indexer` | **As-is** — indexes whatever on-chain events exist; event set grows in v2 | Architecture unchanged |
+| `services/relayer` | **Adapt** — sponsors audit-record writes in v1; ZK proof submission relaying is v2 | Sponsorship model applies in both |
+| `infra` | **As-is** — same Base L2, IPFS/Arweave, Postgres topology | |
+| `tools` | **As-is** — dep-guard, codegen, test harness; IS_INSECURE_MOCK CI scan unchanged | |
+
+### 10.13.6 DES-098 — v1 honesty notice
+
+**Element:** Wherever a vote is cast in v1, the UI MUST display a plain-language honesty notice before the ballot is confirmed. The notice MUST state: (1) this vote uses conventional authentication and is NOT the private receipt-free ballot; (2) the platform database CAN see vote direction and party membership; (3) the cryptographic private ballot — where the platform is technically unable to see it — is available when the platform upgrades to the v2 privacy layer; (4) the tally result IS publicly auditable and published to the blockchain.
+
+**Requirements:**
+- Visible before confirmation; non-dismissable (voter must acknowledge to proceed); WCAG 2.2 AA (DES-081); screen-reader accessible
+- Displayed on SCR-13 (ballot booth) and SCR-14 (post-vote confirmation)
+- MUST NOT use the words "private", "anonymous", "receipt-free", or "secure" to describe v1 voting behaviour
+- Backs: **FR-131** (v1 honesty notice MUST — minted by PO, Doc 02 v2.6.0, 2026-08-23; owner Nadia Hassan; traces BR-005/BR-009)
+
+**Relationship to existing design:** DES-063 (coercion-safe confirmation surface, v2) is the v2 successor; DES-098 is the v1 disclosure surface. §13 "Public tallies in Phase 1" debt row's disclosure discipline is the precedent pattern.
+
+### 10.13.7 Charter-layer conflict check (ADR-024 §(c))
+
+The following tensions between v1 conventional auth and the Charter/Guarded layers are recorded FOR THE APPROVER'S DECISION. They are surfaced, not reconciled. Full analysis in ADR-024.
+
+**Legend — "v1 status" column notation:**
+- **(i) SATISFIED** — v1 meets this rule fully by application design; no approver decision required.
+- **(ii) DEFERRED** — the property is absent in v1; v1 makes no claim to it; honest disclosure via DES-098 (FR-131) applies; no approver decision on the claim itself (only on whether deferral with disclosure is acceptable scope).
+- **(iii) TENSION — FOR THE APPROVER'S DECISION** — the v1 implementation and the Charter or Guarded layer rule are in active tension; an explicit approver ruling is required before v1 implementation begins.
+
+| ID | Tension | v1 status | Decision owed |
+|----|---------|-----------|--------------|
+| T-01 | Charter Rule 6 — anonymity by default | **(ii)/(iii)** Conventional DB links account↔party; operator can comply with subpoena | Does the approver accept v1 as a disclosed non-anonymous product? |
+| T-02 | FR-128 — subpoena test | **(iii)** Conventional DB operator CAN disclose; FR-128 requires technical inability to comply | Is the subpoena test deferred in full to v2? |
+| T-03 | BR-009 / FR-082 — anonymity guarantee | **(ii) DEFERRED** | Are FR-082 and BR-009 accepted as v2-only properties? |
+| T-04 | NFR-003 — receipt-freeness (Guarded Layer named absolute) | **(ii) DEFERRED with honest disclosure** | Is deferral-with-disclosure acceptable? |
+| T-05 | Charter Rule 3 — no privileged role over outcomes | **(ii) DEFERRED** Tamper-evidence (detectable) not tamper-prevention | Is Charter Rule 3 accepted as v2-only (immutable core contracts)? |
+
+**Resolved items (for completeness):** Charter Rule 2 (no transferable power) — SATISFIED. Charter Rule 5 (no behavioural surveillance) — SATISFIED. Charter Rule 7 (CON-001, parties only) — SATISFIED. CON-012 (no bespoke unaudited crypto) — SATISFIED. CON-013 (non-violence clause) — SATISFIED.
+
+---
+
 ## 11. Situation & failure-mode analysis (per requirement)
 
 | Requirement / DES | Normal | Edge | Failure → behaviour |
@@ -1237,7 +1378,7 @@ Directive from approver (Rathish, 2026-08-11): sweep all four FR-115 steward pow
 
 ## 12. Architecture Decision Records
 
-Full records in `docs/adr/`. Status of all twenty-three ADRs: **Accepted**.
+Full records in `docs/adr/`. Status of all twenty-four ADRs: **Accepted**.
 
 | ADR | Decision | Chief consequence accepted |
 |---|---|---|
@@ -1264,6 +1405,7 @@ Full records in `docs/adr/`. Status of all twenty-three ADRs: **Accepted**.
 | 021 | Verification gates COUNTING, never joining; on-device nullifier-only identity posture; pilot sequence (Phase 1: India/Aadhaar offline KYC; Phase 2: EU/eIDAS 2.0; Phase 3: USA deferred); subpoena test as design invariant; two rejected designs recorded — persistent referral graph and encrypted identity registry (2026-08-20, directed by Rathish; DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Decisions 1–4); **amended 2026-08-20 (OI-19 CLOSED: FR-125 finalised, non-invite fallback mandatory, FR-020 unamended; OI-20 CLOSED: FR-004 satisfied at architecture level, Phase-1 dated limitation, Charter-layer guard FR-129)** | CON-015 Gate-2 legal-opinion dependency; OI-19 and OI-20 both CLOSED 2026-08-20 (DECISIONS-2026-08-20-OI19-OI20.md); open-tier account farms accepted (zero counted impact) |
 | 022 | Groth16 stays for Phase 1; near-irreversible Charter-adjacent commitment; PPoT Hermez reused at ~$0 for phase-1 setup; assurance-based per-circuit phase-2 (not convention count); Gate-2 six-circuit transcript set batchable into a campaign of days; accepted trade-off over universal-setup; revisit trigger: Phase 2+ circuit-count dominance; NFR-009 (two independent audits before Gate 2) unchanged (2026-08-21, directed by Rathish; DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md REC-2) | per-circuit phase-2 cost grows with circuit count — growth is the revisit trigger; migration is a verifier swap by design (`IProofVerifier` seam) but a full re-audit in practice |
 | 023 | Design system token set (DES-093) + privacy-status signature element (DES-094) adopted as the normative foundation for `packages/ui`; territory rule (navy = public-party / paper = private-user) is normative; PrivacyStatus component's normative privacy binding enforces FR-124 at component level; four wireframe conflicts recorded (§10.12.6) as engineer and PO disposition guidance; ADR-011 packages/ui designation is now concretely specified (2026-08-22, directed by Rathish; design/wireframes/index.html) | Fraunces font bundle risk: engineer must verify 15 MB install floor and self-host (Google Fonts CDN blocked by CSP); token values are specific hex, not a semantic system — any brand change is a DES amendment; three open conflicts (C-01 adapter-driven strings; C-02 unbacked 100-member cap; C-03 missing finance ledger screen) require PO/engineer action before build |
+| 024 | v1/v2 delivery-architecture split: IEligibilityVerifier seam (DES-095) and IBallotService seam (DES-096) as the stable abstraction boundary between conventional-auth v1 and ZK/MACI v2; v1 stack = blockchain as audit-record only (not full on-chain governance); v1 package disposition; honesty notice DES-098; Charter-layer conflict table T-01..T-05 for approver's decision (2026-08-23, directed by Rathish) | Migration cost accepted: v1→v2 migrates identity and ballot backings; application logic, design system, and package topology above the seams are unchanged; Charter-layer tensions T-01/T-02/T-03/T-04/T-05 require approver decision (§10.13.7, ADR-024 §(c)) before v1 implementation begins |
 
 ## 13. Risks & technical debt
 
@@ -1323,6 +1465,15 @@ pre-existing Phase-3, environment, external, or mechanism gaps per Doc 08 §gap-
 |---|---|---|
 | FR-082..086 (three-tier privacy), FR-124 (verified-status privacy, v2.3.1 ruling), NFR-001, NFR-002, NFR-011, NFR-013 | DES-093 (design token set) | 16 colour tokens + 2 typefaces + territory rule; normative foundation for `packages/ui/tokens.css`; ADR-023. US layer: owed — in the FR-121..FR-129 next-increment and in the design-debt items (§10.12.5). |
 | FR-082..086, FR-124, NFR-001, NFR-002, NFR-024 | DES-094 (privacy-status component) | Three states (anon / ver / pub); normative FR-124 privacy binding (self-view only; no Supporter badge; absence-test obligation); normative for `packages/ui/PrivacyStatus`; ADR-023. US layer: owed — no US yet; the component underpins every flow that shows a privacy state, which spans US-0001..US-0130 range once built. Leak-check PASS recorded (§10.12.3). |
+
+**v2.3.0 v1/v2 split additions (§10.13, 2026-08-23):**
+
+| Requirement | DES | Notes |
+|---|---|---|
+| BR-006, BR-009, FR-030..035, FR-069, FR-070, FR-082..086, FR-106..108, FR-121..129, NFR-001..004, NFR-009, NFR-027, CON-002, CON-008, CON-012, CON-013 | DES-095 (IEligibilityVerifier seam) | Design-level interface decoupling the application from the identity/personhood proof mechanism; v1 backing: conventional DB auth; v2 backing: `ICredentialAdapter` → `PersonhoodRegistry` (ADR-017); IS_INSECURE_MOCK() = false in both honest backings; ADR-024. US layer: owed — PO to derive US from this design element. |
+| BR-011, FR-030..035, FR-082..086, NFR-001..004, NFR-009 | DES-096 (IBallotService seam) | Design-level interface decoupling the application from the ballot-casting and tally mechanism; v1 backing: conventional DB write + audit chain log; v2 backing: MACI + 5-of-7 DKG + ZK tally proof (ADR-006, DES-023..025); `IProofVerifier` seam (ADR-022) is the upgrade path at the tally-proof layer; ADR-024. US layer: owed — flows through existing US once backings are wired. |
+| FR-108 (blockchain as trust layer not database), CON-012, CON-013 | DES-097 (v1 conventional-auth stack and package disposition) | Blockchain as audit-record only in v1; `packages/contracts` audit subset deployed; `packages/circuits` / `apps/verifier` untouched for v2; `packages/protocol` as-is; disposition table in §10.13.5; ADR-024 §(b). US layer: no new US — package disposition is a build-time decision, not a story-level deliverable. |
+| FR-131 (v1 honesty notice MUST — minted by PO, Doc 02 v2.6.0, 2026-08-23; owner Nadia Hassan; traces BR-005/BR-009) | DES-098 (v1 honesty notice) | Non-dismissable plain-language notice on SCR-13 (ballot booth) and SCR-14 (post-vote confirmation); MUST NOT use "private", "anonymous", "receipt-free" to describe v1 voting; ADR-024 §(d); WCAG 2.2 AA (DES-081). US layer: owed — PO to mint US from FR-131 covering the SCR-13/SCR-14 notice surface. |
 
 ## 16. Open questions
 
@@ -1535,11 +1686,13 @@ Design response: §10.1 STRIDE table updated; SC-15 general rule (ProtocolGovern
 
 ### C-02 — Wireframe "caps at 100 until legal verification" has no backing requirement (v2.2.0)
 
-**Status:** Open — Product Owner must decide: mint a FR or reject the concept.
+**Status:** CLOSED — PO decided: accept. FR-130 minted (Doc 02 v2.5.0; DECISIONS-2026-08-22-WIREFRAME-C01-C02.md). 2026-08-22, Rathish.
 
 **The conflict:** Wireframe 2.3 note: "Membership caps at 100 until legal verification completes — so an unverified party can't gather false strength." No backing FR, DES, or US exists. FR-013 (petition state), FR-075 (platform vs legal registration distinction), FR-076 (founding member count ≥ 5), FR-016 (activation threshold by formula) — none authorise a provisional membership cap of any kind. This is a new design concept with no normative footing.
 
 **Required disposition:** This screen element MUST NOT be built until a FR is minted, reviewed, and approved. The Product Owner must decide whether the concept is accepted (mint FR) or rejected (revise wireframe copy). The architect does not determine this; it is a product decision. Recorded in §10.12.5 class (ii) as design debt and here as a conflict.
+
+**Closure note (2026-08-23):** PO accepted the concept and minted FR-130 (Doc 02 v2.5.0) — FR-130 is the provisional-party membership cap (anti-capture control); it closes C-02 by providing the normative footing for the wireframe 2.3 note. The 100-member provisional cap and its enforcement mechanism are now the engineer's build-time obligation per FR-130. Separately, DES-098 (v1 honesty notice, §10.13.6) is backed by FR-131 (Doc 02 v2.6.0, 2026-08-23) — the v1 honesty notice MUST minted by PO; FR-131 and FR-130 are separate requirements with separate obligations. No further architect action required on C-02 itself.
 
 ---
 

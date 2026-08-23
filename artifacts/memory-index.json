@@ -2543,6 +2543,298 @@
         "Doc 05 v2.1.0 business-mode document-review: neutral reviewer (PM to assign)"
       ],
       "gate": "Gate 1 APPROVED (2026-08-11, Rathish, unconditional). Gate 2 NOT READY. Must count now 111. RTM 125 rows / 12 COMPLETE / 113 OPEN. Doc 02 v2.5.0 and Doc 05 v2.1.0 both In Review."
+    },
+    {
+      "id": "architect-2026-08-23T1000",
+      "role": "architect",
+      "file": "artifacts/architect-2026-08-23T1000.md",
+      "timestamp": "2026-08-23T10:00:00Z",
+      "phase": "Design — v1/v2 delivery-architecture split",
+      "product": "Trumocracy",
+      "summary": "v1/v2 delivery-architecture split (approver directive Rathish, 2026-08-23). ADR-024 created: IEligibilityVerifier seam (DES-095), IBallotService seam (DES-096), v1 conventional-auth backing (DES-097), v1 package disposition, v1 honesty notice (DES-098), Charter-layer conflict check T-01..T-05 for approver's decision. Doc 03 v2.2.1 → v2.3.0 → v2.3.1: §10.13 added, §12 ADR-024 row, §15 DES-095..DES-098 traceability, §18 C-02 closure annotation. v2.3.1 rework: ISS-01 (High) FR-130/FR-131 mislabeling corrected in §15 DES-098 row, §15 DES-095 row (FR-121..130→FR-121..129), ADR-024 Traces, ADR-024 §(d); ISS-02 (Medium) §10.13.6 and §18 C-02 corrected; ISS-03 (Low) §10.13.7 legend added; source-pin v2.5.0→v2.6.0; counts 130/128/111→131/129/112. ADR-016 item (c) citizen-exclusion sentence added. Documents only — no product code.",
+      "artifacts_written": [
+        "docs/adr/ADR-024-v1v2-delivery-split-voting-identity-seams.md (CREATED)",
+        "docs/03-architecture-design-sdd.md (v2.3.0, In Review — surgical edits)",
+        "docs/adr/ADR-016-enrolment-issuer-hierarchy.md (item (c) sentence added)",
+        "artifacts/architect-2026-08-23T1000.md (this note)"
+      ],
+      "ids_touched": {
+        "DES_minted": "DES-095, DES-096, DES-097, DES-098",
+        "ADR_created": "ADR-024",
+        "ADR_amended": "ADR-016 (item (c) citizen-exclusion sentence)",
+        "docs_bumped": "Doc 03 v2.3.1 (via v2.3.0 → rework cycle 1)",
+        "code_written": "none"
+      },
+      "high_water_marks_after": {
+        "DES": "DES-098",
+        "ADR": "ADR-024"
+      },
+      "key_decisions": [
+        "IEligibilityVerifier (DES-095) as seam 1: decouples application from identity/personhood proof mechanism; v1 honest bypass of ICredentialAdapter declared in getProperties(); IS_INSECURE_MOCK() = false.",
+        "IBallotService (DES-096) as seam 2: decouples application from ballot-casting and tally mechanism; IProofVerifier seam (ADR-022) is the upgrade path at tally-proof layer.",
+        "Blockchain as audit-record only in v1 (DES-097): CI gate blocks mock path; schedule freed; FR-108 satisfied; migration cost bounded to seam-local scope.",
+        "Charter tensions T-01..T-05 surfaced for approver, not reconciled: approver directed the split and wants them enumerated on the record.",
+        "DES-098 honesty notice: non-dismissable on SCR-13/SCR-14; backs PO FR-to-be-minted (FR-130 per PO session).",
+        "C-02 closure: PO decided accept; FR-130 minted (Doc 02 v2.5.0); §18 annotation applied."
+      ],
+      "open_items": [
+        "T-01..T-05 Charter-layer conflict table — approver decision required BEFORE v1 implementation begins (BLOCKING).",
+        "DES for FR-130 (provisional-party membership cap): owed by architect; US-0131 is Not Ready pending DES.",
+        "v1 honesty notice FR (backs DES-098): PO to mint if not already done this session.",
+        "US from FR-130 covering SCR-13/SCR-14 notice surface: PO to mint before Coding sprint.",
+        "Doc 03 v2.3.0 document-review: PM to assign neutral reviewer (review-loop protocol).",
+        "FR-129 tier-determination (FR-118 Tier-1 vs FR-119 Tier-2): next DES increment.",
+        "FR-121..FR-129 DES/US/TC RTM rows: Gate-2 blocker.",
+        "Doc 04 technical-mode review (v1.0.2): Gate-2 blocker, NOT STARTED.",
+        "CON-015 legal opinion India/Aadhaar: Gate-2 blocker, NOT STARTED.",
+        "One-vs-six circuit clarification: awaiting Rathish confirmation."
+      ],
+      "gate": "Gate 1 APPROVED (2026-08-11, Rathish, unconditional). Gate 2 NOT READY. T-01..T-05 Charter-layer tensions REQUIRE APPROVER DECISION before v1 implementation. Doc 03 v2.3.1 APPROVED (cycle-2 review PASS 97%/0C/0H/0M/0L; artifacts/reviews/03-architecture-design-sdd-v2.3.1-technical-cycle2.md). Must count 112. RTM 125 rows / 12 COMPLETE / 113 OPEN."
+    },
+    {
+      "id": "tester-2026-08-23T1045",
+      "role": "tester (neutral reviewer — PM-assigned)",
+      "file": "artifacts/tester-2026-08-23T1045.md",
+      "timestamp": "2026-08-23T10:45:00Z",
+      "phase": "Design — document-review loop (Cycles 1 and 2)",
+      "product": "Trumocracy",
+      "summary": "Ran technical-mode document-review (document-review skill) over Doc 03 v2.3.0 (Cycle 1) and v2.3.1 (Cycle 2). Cycle 1: FAIL (90%, 0C/1H/1M/1L) — ISS-01 (High) broken DES-098 traceability (FR-130 mislabeled as honesty-notice FR); ISS-02 (Medium) §10.13.6/§15/§18 internal inconsistency; ISS-03 (Low) undefined (i)/(ii)/(iii) notation. Cycle 2: PASS (97%, 0C/0H/0M/0L) — all three issues confirmed fixed: FR-131 minted in Doc 02 v2.6.0 (Must; Nadia Hassan; BR-005/BR-009; DES-098); §15 DES-098 and DES-095 rows corrected; ADR-024 Traces corrected; §10.13.6 and §18 C-02 closure note corrected; §10.13.7 legend added. No regressions found. SOP advances; architect to set Status: Approved on v2.3.1.",
+      "artifacts_written": [
+        "artifacts/reviews/03-architecture-design-sdd-v2.3.0-technical-cycle1.md",
+        "artifacts/reviews/03-architecture-design-sdd-v2.3.1-technical-cycle2.md",
+        "artifacts/tester-2026-08-23T1045.md"
+      ],
+      "review_verdicts": {
+        "cycle1": {
+          "document": "03-architecture-design-sdd.md",
+          "version": "2.3.0",
+          "score": 90,
+          "critical": 0,
+          "high": 1,
+          "medium": 1,
+          "low": 1,
+          "cycle": 1,
+          "verdict": "FAIL",
+          "routed_to": "architect (Ravi Deshmukh)"
+        },
+        "cycle2": {
+          "document": "03-architecture-design-sdd.md",
+          "version": "2.3.1",
+          "score": 97,
+          "critical": 0,
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "cycle": 2,
+          "verdict": "PASS",
+          "routing": "architect to set Status: Approved"
+        }
+      },
+      "ids_touched": {
+        "review_reports_created": "03-architecture-design-sdd-v2.3.0-technical-cycle1.md, 03-architecture-design-sdd-v2.3.1-technical-cycle2.md",
+        "code_written": "none",
+        "documents_edited": "none (reviewer is read-only)"
+      },
+      "open_items": [
+        "T-01..T-05 Charter-layer tensions in §10.13.7 require explicit approver ruling (Rathish) BEFORE v1 implementation — pre-existing, not a document defect.",
+        "US/TC for FR-131 (DES-098 notice screens) owed at next catch-up — Phase 3 debt (§16).",
+        "DES for FR-130 (provisional-party cap) owed by architect — §16 debt.",
+        "FR-129 tier-determination owed at next DES increment — §16 debt."
+      ],
+      "gate": "Gate 1 APPROVED. Gate 2 NOT READY. Doc 03 v2.3.1 review Cycle 2: PASS. Architect to set Status: Approved. SOP advances."
+    },
+    {
+      "id": "technical-writer-2026-08-23T1200",
+      "role": "technical-writer (neutral reviewer)",
+      "file": "artifacts/technical-writer-2026-08-23T1200.md",
+      "timestamp": "2026-08-23T12:00:00Z",
+      "phase": "Define (post-Gate-1, document-review loop)",
+      "product": "Trumocracy",
+      "scope": "Business-mode document-review of Doc 02 v2.6.0 (Cycle 1 of 5). Reviewer is NOT the owner; product-owner owns Doc 02.",
+      "summary": "Ran business-mode Cycle-1 review of docs/02-requirements-srs.md v2.6.0 (FAIL 94%, 0C/0H/1M/1L) and Cycle-2 review of v2.7.0 (PASS 98%, 0C/0H/0M/0L). Cycle-1 ISS-01 (Medium, B3): DECISIONS-2026-08-23-V1-V2-SPLIT.md did not exist — dangling source reference for §16 and FR-131. Cycle-1 ISS-02 (Low, B2): six H=Y-flagged FRs had no §16.4 register entry. Cycle-2 verification: ISS-01 resolved (decision record exists, verbatim directive recorded by PM, §16.1 Source block updated, Doc 03 reference updated to v2.3.1 Approved); ISS-02 resolved (H-07..H-14 added covering all 17 H=Y items — 13 FRs + 4 NFRs — confirmed by independent sweep). No regressions. PASS. Product-owner to set Status: Approved on v2.7.0.",
+      "artifacts_written": [
+        "artifacts/reviews/02-requirements-srs-v2.6.0-business-cycle1.md",
+        "artifacts/reviews/02-requirements-srs-v2.7.0-business-cycle2.md",
+        "artifacts/technical-writer-2026-08-23T1200.md"
+      ],
+      "review_verdicts": {
+        "cycle1": {
+          "document": "02-requirements-srs.md",
+          "version": "2.6.0",
+          "score": 94,
+          "critical": 0,
+          "high": 0,
+          "medium": 1,
+          "low": 1,
+          "cycle": 1,
+          "verdict": "FAIL",
+          "routed_to": "product-owner (Priya Raghunathan) for rework to v2.7.0"
+        },
+        "cycle2": {
+          "document": "02-requirements-srs.md",
+          "version": "2.7.0",
+          "score": 98,
+          "critical": 0,
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "cycle": 2,
+          "verdict": "PASS",
+          "routing": "product-owner (Priya Raghunathan) sets Status: Approved on v2.7.0; SOP advances"
+        }
+      },
+      "gate": "Gate 1 APPROVED. Gate 2 NOT READY. Doc 02 v2.7.0 review: PASS (Cycle 2). Review loop complete. Product-owner sets Status: Approved; SOP advances."
+    },
+    {
+      "file": "artifacts/product-owner-2026-08-23T0900.md",
+      "role": "product-owner",
+      "timestamp": "2026-08-23T09:00:00Z",
+      "phase": "Define",
+      "summary": "Doc 02 v2.5.0 → v2.6.0 → v2.7.0. v2.6.0: (1) §16 Delivery Phasing — v1/v2 classification table for all 131 FRs and 28 NFRs, honesty register H-01..H-06, contradiction surface (16 items AWAITING APPROVER CONFIRMATION); classification tallies: IN-v1 106 FRs/24 NFRs, PARTIAL 19 FRs/3 NFRs, DEFERRED-v2 4 FRs/1 NFR, SUPERSEDED-n/a 2 FRs. (2) FR-131 minted (Must, §4.45, Nadia Hassan, DES-098, BR-005/BR-009, SCR-13/SCR-14); §8 Gherkin 4 scenarios; §11 Must count 111→112; §12 trace updated. (3) CON-007 corrected from stale ~USD 4.13M to record-derived ≈ USD 4.03M (L2 basis) + ≈ USD 175K contingency, appetite USD 4.2M unchanged. (4) Header v2.6.0, In Review, 2026-08-23, changelog prepended. v2.7.0 rework (c1 FAIL 94%, 0C/0H/1M/1L): ISS-01 (Medium) — §16 Source block corrected, provisional qualifier removed, Doc 03 reference updated to v2.3.1 (Approved). ISS-02 (Low) — H-07..H-14 added covering FR-002, FR-034, FR-048, FR-059, FR-063, FR-103, FR-124, NFR-024. All H?=Y rows now map to §16.4.",
+      "ids_touched": {
+        "FR": ["FR-131"],
+        "DES": ["DES-095", "DES-096", "DES-097", "DES-098"],
+        "CON": ["CON-007"],
+        "honesty_register": ["H-01", "H-02", "H-03", "H-04", "H-05", "H-06"]
+      },
+      "decisions": [
+        "FR-131 BR trace: BR-005 and BR-009 (both applied).",
+        "FR-131 owner: Nadia Hassan (UX-writing/accessibility/plain-language NFR owner).",
+        "Classification test: DEFERRED-v2 iff requirement exists ONLY for anonymity/private ballots/coercion-resistance/hostile-state safety.",
+        "Contradiction surface: 16 items surfaced AWAITING APPROVER CONFIRMATION — none reconciled silently.",
+        "Pre-allocation error: Doc 03 §12 references FR-130 for DES-098; cascade annotation owed to Doc 03 at next architect increment.",
+        "CON-007: record-derived figures used; approver cited figures (~$3.836M, ~$294K) match no artifact."
+      ],
+      "open_items": [
+        "Doc 03 cascade annotation for FR-131/DES-098 pre-allocation error — architect (Ravi Deshmukh), next Doc 03 increment.",
+        "US for FR-131 — product-owner, next session when DES assigned.",
+        "TC for FR-131 — tester (Ji-woo Park), Phase 3.",
+        "RTM row for FR-131 — tester, after DES and TC available.",
+        "16 contradiction surface items in §16.5 — all AWAITING APPROVER CONFIRMATION (Rathish).",
+        "PM to re-plan Doc 13 §3.1 (MACI OFF / v1 scope statement).",
+        "Doc 02 v2.6.0 business-mode document-review — PM to assign neutral reviewer."
+      ],
+      "documents_edited": {
+        "docs/02-requirements-srs.md": "v2.5.0 → v2.6.0 → v2.7.0 (In Review)"
+      },
+      "gate": "Gate 1 APPROVED. Gate 2 NOT READY. Must count 112. RTM 126 rows / 12 COMPLETE / 114 OPEN. Doc 02 v2.7.0 APPROVED (c2 PASS 98%, 0C/0H/0M/0L)."
+    },
+    {
+      "id": "project-manager-2026-08-23T1400",
+      "role": "project-manager",
+      "file": "artifacts/project-manager-2026-08-23T1400.md",
+      "timestamp": "2026-08-23T14:00:00Z",
+      "phase": "Governance — v1/v2 delivery split recording + Doc 13 v2.1.0 re-plan",
+      "product": "Trumocracy",
+      "summary": "Executed three deliverables from the Rathish 2026-08-23 v1/v2 delivery-split directive: (1) Created DECISIONS-2026-08-23-V1-V2-SPLIT.md — resolves ISS-01 (Medium) in Doc 02 v2.6.0 c1 review; records directive verbatim-in-substance; lists what was applied, what is AWAITING APPROVER CONFIRMATION (items a–f), and open items. (2) Appended additive section to GATE-STATUS-2026-08-09.md — document versions, Gate-2 posture, pending items P-1..P-11. (3) Surgical edits to docs/13-project-plan.md (v2.0.3 → v2.1.0, In Review): header/banner; §2.1 scope update (112 Must, SRS v2.6.0); §3.1 supersession annotation; §3.3 v1-gate annotation; new §3.5 v1 delivery plan (MS-V1-01..MS-V1-09, 5–9 month range, PR-1..PR-10 production-readiness bar, v2 re-entry); §6 RISK-31..RISK-34; §11 v2.1.0 re-plan log entry. No Docs 01/02/03/05 edited. No product code.",
+      "artifacts_written": [
+        "artifacts/status/DECISIONS-2026-08-23-V1-V2-SPLIT.md",
+        "artifacts/status/GATE-STATUS-2026-08-09.md (updated — additive section appended)",
+        "docs/13-project-plan.md (v2.0.3 → v2.1.0, In Review)",
+        "artifacts/project-manager-2026-08-23T1400.md",
+        "artifacts/memory-index.json (updated — this entry appended)"
+      ],
+      "ids_minted": {
+        "RISK": "RISK-31..RISK-34",
+        "MS": "MS-V1-01..MS-V1-09, MS-V1-LRG",
+        "PR_items": "PR-1..PR-10"
+      },
+      "key_decisions_recorded": [
+        "v1/v2 delivery split: Definition A (conventional-auth) / Definition B (ZK/MACI); applied.",
+        "Classification test: DEFERRED-v2 iff ONLY for anonymity/private-ballot/coercion-resistance/hostile-state-safety.",
+        "Honesty requirement: FR-131 at every vote-cast surface; H-01..H-06 in README.",
+        "Reuse guardrail: ADR-024 seams; v2 is implementation swap.",
+        "v1 production-readiness bar PR-1..PR-10: plan recommendation AWAITING APPROVER CONFIRMATION on NFR-009 re-reading.",
+        "v2 re-entry / Gate-2 re-scoping: 2027-05-14 attaches to Definition B; v1 gate date NOT SET: AWAITING APPROVER CONFIRMATION."
+      ],
+      "awaiting_approver_confirmation": [
+        "(a) v1 stack recommendation — DES-097 (blockchain as audit-record-only)",
+        "(b) 16 contradiction-surface items in Doc 02 §16.5",
+        "(c) T-01..T-05 Charter-layer tensions in Doc 03 §10.13.7 / ADR-024",
+        "(d) Re-scoped Gate-2: v1 gate date NOT SET; 2027-05-14 attaches to Definition B",
+        "(e) NFR-009 v1 re-reading (lighter bar for v1 vs two heavy audits for v2)",
+        "(f) 2027-05-14 referent confirmation (carry-forward from 2026-08-21)"
+      ],
+      "gate": "Gate 1 APPROVED (2026-08-11, unconditional). Gate 2 (Definition B) NOT READY — date 2027-05-14 UNCHANGED. v1 gate NOT SET.",
+      "next_actions": [
+        "PM to assign neutral reviewer for Doc 13 v2.1.0 c1 business-mode review.",
+        "PM to assign neutral reviewer for Doc 05 v2.1.0 c1 business-mode review (overdue).",
+        "product-owner to rework Doc 02 v2.6.0 → v2.7.0 (ISS-01 now resolved; ISS-02 Low pending).",
+        "Approver (Rathish) to confirm items (a)–(f) before v1 implementation begins."
+      ]
+    },
+    {
+      "id": "sre-2026-08-23T1630",
+      "role": "sre",
+      "file": "artifacts/sre-2026-08-23T1630.md",
+      "timestamp": "2026-08-23T16:30",
+      "phase": "Design (post Gate 1) — document-review loop",
+      "product": "Trumocracy",
+      "summary": "Neutral document reviewer (sre, PM-assigned; document-review skill). Business-mode Cycle 1 review of docs/13-project-plan.md v2.1.0: FAIL 84%, 0C/1H/2M/2L. Business-mode Cycle 2 review of docs/13-project-plan.md v2.2.0: PASS 95%, 0C/0H/0M/2L. All five cycle-1 issues resolved. Two new Low issues found (RISK-31/33 stale H-01..H-06 cross-reference; RISK-22..30 bold-ID formatting inconsistency). SOP advances. Project-manager to set Status: Approved.",
+      "artifacts_written": [
+        "artifacts/reviews/13-project-plan-v2.1.0-business-cycle1.md",
+        "artifacts/reviews/13-project-plan-v2.2.0-business-cycle2.md",
+        "artifacts/sre-2026-08-23T1630.md",
+        "artifacts/memory-index.json (updated — this entry with cycle-2 outcome appended)"
+      ],
+      "ids_touched": {
+        "reviewed_c1": "docs/13-project-plan.md v2.1.0",
+        "reviewed_c2": "docs/13-project-plan.md v2.2.0",
+        "report_c1": "artifacts/reviews/13-project-plan-v2.1.0-business-cycle1.md",
+        "report_c2": "artifacts/reviews/13-project-plan-v2.2.0-business-cycle2.md",
+        "ids_minted": "none (reviewer is read-only)"
+      },
+      "verdict": {
+        "cycle1": {"result": "FAIL", "score": "84%", "critical": 0, "high": 1, "medium": 2, "low": 2},
+        "cycle2": {"result": "PASS", "score": "95%", "critical": 0, "high": 0, "medium": 0, "low": 2}
+      },
+      "cycle2_issues": [
+        "ISS-01 Low B4 §6 RISK-31 and RISK-33: mitigation/anchor columns cite H-01..H-06; PR-7 (authoritative bar) now says H-01..H-14; stale cross-reference in risk rows",
+        "ISS-02 Low B6 §6 RISK-22..RISK-30: bold-ID format inconsistent with RISK-01..16 (plain) though both carried from Doc 02 §10; cosmetic only"
+      ],
+      "gate": "Gate 1 APPROVED (2026-08-11, unconditional). Gate 2 NOT READY. Doc 13 v2.2.0 PASS 95% cycle 2 — SOP ADVANCES. Project-manager to set Status: Approved.",
+      "next_actions": [
+        "Project-manager (Ana-Maria Petrescu) to set docs/13-project-plan.md Status: Approved.",
+        "PM to optionally fix ISS-01 and ISS-02 (Low) in a patch v2.2.1 at discretion.",
+        "PM to assign neutral reviewer for Doc 05 v2.1.0 c1 business-mode review (overdue — carried from PM T1400 note).",
+        "Approver (Rathish) to confirm items (a)–(f) before v1 implementation begins (carried from PM T1400 note)."
+      ]
+    },
+    {
+      "id": "project-manager-2026-08-23T1400-rework",
+      "role": "project-manager",
+      "file": "artifacts/project-manager-2026-08-23T1400.md",
+      "timestamp": "2026-08-23T14:00:00Z",
+      "phase": "Governance — Doc 13 v2.2.0 rework (ISS-H1/M1/M2/L1/L2)",
+      "product": "Trumocracy",
+      "summary": "Executed Doc 13 v2.1.0 → v2.2.0 rework following sre cycle-1 FAIL (84%, 0C/1H/2M/2L). Five issues fixed: ISS-H1 — RISK-22..30 inserted in §6 in ordinal position (recovered from Doc 02 §10; were absent at v2.1.0 — register jumped RISK-21 → RISK-31); §6 header note updated. ISS-M1 — v1 Must-set arithmetic corrected in §3.5.1 and PR-10 to 108 (112 total Must − 4 DEFERRED-v2 Must FRs: FR-030, FR-031, FR-082, FR-086). ISS-M2 — MS-V1-09 and PR-7 updated H-01..H-06 → H-01..H-14. ISS-L1 — header Source and §2.1 SRS pin updated v2.6.0 → v2.7.0. ISS-L2 — §13.1 document-review row updated (Doc 02 v2.7.0 Approved c2 PASS 98%; Doc 13 v2.1.0 FAIL c1; v2.2.0 pending c2). Banner v2.2.0 note added; §11 re-plan entry prepended. GATE-STATUS one-line dated correction appended. Memory note rework section appended.",
+      "artifacts_written": [
+        "docs/13-project-plan.md (v2.1.0 → v2.2.0, In Review, pending c2)",
+        "artifacts/status/GATE-STATUS-2026-08-09.md (one-line dated correction appended)",
+        "artifacts/project-manager-2026-08-23T1400.md (rework section appended)",
+        "artifacts/memory-index.json (this entry appended)"
+      ],
+      "ids_minted": "none",
+      "ids_corrected": {
+        "RISK_inserted": "RISK-22..RISK-30 (recovered from Doc 02 §10; ISS-H1 fix)",
+        "v1_must_set": "corrected from 112 to 108 (ISS-M1 fix)",
+        "h_register": "H-01..H-06 → H-01..H-14 in MS-V1-09 and PR-7 (ISS-M2 fix)"
+      },
+      "source_of_RISK_22_30": {
+        "RISK-22..24": "Doc 02 §10 lines 2313-2315; minted at v1.1.0 per product-owner-2026-08-09T2200",
+        "RISK-25..30": "Doc 02 §10 lines 2316-2321; minted at v2.0.0 era per product-owner-2026-08-10T1700"
+      },
+      "v1_must_set_derivation": "112 total Must (SRS v2.7.0 §11) − 4 DEFERRED-v2 Must FRs (FR-030, FR-031, FR-082, FR-086) = 108",
+      "gate": "Gate 1 APPROVED (2026-08-11, unconditional). Gate 2 (Definition B) NOT READY — date 2027-05-14 unchanged. v1 gate NOT SET.",
+      "doc_13_status": "APPROVED 2026-08-23 — v2.2.0 c2 PASS 95%, 0C/0H/0M/2L; artifacts/reviews/13-project-plan-v2.2.0-business-cycle2.md",
+      "carried_lows": [
+        "ISS-01 (Low): RISK-31 and RISK-33 §6 rows cite H-01..H-06 instead of H-01..H-14 — fix in next substantive re-plan",
+        "ISS-02 (Low): RISK-22..30 rows lack **bold-ID** formatting — fix in next substantive re-plan"
+      ],
+      "next_actions": [
+        "PM to assign neutral reviewer for Doc 05 v2.1.0 c1 business-mode review (overdue).",
+        "Approver (Rathish) to confirm items (a)–(f) per DECISIONS-2026-08-23-V1-V2-SPLIT.md §4."
+      ]
     }
   ]
 }
