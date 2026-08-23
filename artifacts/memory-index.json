@@ -2472,6 +2472,77 @@
         "ISS-03: Changelog '§18 four new entries' — only 3 entries present in §18"
       ],
       "gate": "Gate 2 NOT READY. Doc 03 v2.2.0 FAIL cycle 1 — routed to architect for v2.2.1 rework."
+    },
+    {
+      "id": "product-owner-2026-08-22T1600",
+      "role": "product-owner",
+      "file": "artifacts/product-owner-2026-08-22T1600.md",
+      "timestamp": "2026-08-22T16:00:00Z",
+      "phase": "Define — C-01/C-02 wireframe conflict-register rulings applied",
+      "product": "Trumocracy",
+      "summary": "Applied two approver rulings (Rathish, 2026-08-22) from Doc 03 §10.12.6 conflict register. C-02 DECIDED (accept): FR-130 minted (Must, §4.44, Doc 02 v2.5.0) — provisional-party membership cap at 100 members until verified legal registration, anti-capture control; US-0131 minted (Doc 05 v2.1.0, FE-009, SCR-06, Not Ready pending DES, TC OPEN Phase 3). Must count 110→111. C-01 CONFIRMED (no change): 'Verify with Aadhaar' is adapter-driven string per FR-004/OI-20/DES-070; no requirement change, no Doc 03 edit. Both docs In Review; review loop outstanding. Open cascade: Doc 03 §18/§10.12.6 C-02 closure annotation owed at next Doc 03 version (architect-owned).",
+      "artifacts_written": [
+        "docs/02-requirements-srs.md (v2.5.0, In Review)",
+        "docs/05-product-backlog.md (v2.1.0, In Review)",
+        "artifacts/status/DECISIONS-2026-08-22-WIREFRAME-C01-C02.md",
+        "artifacts/status/GATE-STATUS-2026-08-09.md (addendum appended)",
+        "artifacts/product-owner-2026-08-22T1600.md"
+      ],
+      "ids_touched": {
+        "FR_minted": "FR-130",
+        "US_minted": "US-0131",
+        "FR_high_water_mark_after": "FR-130",
+        "US_high_water_mark_after": "US-0131"
+      },
+      "doc_versions": {
+        "Doc 02": "v2.5.0 (In Review)",
+        "Doc 05": "v2.1.0 (In Review)"
+      },
+      "fr_details": {
+        "FR-130": {
+          "section": "§4.44",
+          "title": "Provisional-party membership cap (C-02 anti-capture ruling)",
+          "priority": "Must",
+          "owner": "Sofia Marchetti",
+          "br_trace": "BR-002, BR-012",
+          "verify_by": "T, I",
+          "des": "OWED — next Doc 03 increment",
+          "tc": "OPEN — Phase 3",
+          "us": "US-0131"
+        }
+      },
+      "us_details": {
+        "US-0131": {
+          "fe": "FE-009",
+          "ep": "EP-03",
+          "scr": "SCR-06",
+          "owner": "Sofia Marchetti",
+          "priority": "Must",
+          "points": 3,
+          "status": "Backlog — Not Ready pending DES",
+          "implements": "FR-130"
+        }
+      },
+      "key_decisions": [
+        "BR-002 and BR-012 chosen as FR-130 trace: directly address 'false strength' / mob-capture anti-capture rationale",
+        "Sofia Marchetti as FR-130/US-0131 owner: owns FR-075 (legal-registration boundary), the most adjacent requirement",
+        "FE-009 (Automatic activation) chosen for US-0131: provisional-party state begins at activation; FR-019 (jurisdiction lock post-activation) is a peer",
+        "SCR-06 (Petition browser & detail) chosen: wireframe screen 2.3 maps to SCR-06 in Doc 03 §10.12.4",
+        "DES owed — not fabricated; US-0131 Not Ready per DoR until DES assigned",
+        "TC OPEN Phase 3 — not fabricated; house style matched",
+        "Distinction from endorsement-floor constants (DES-010 max(byPopulation,byVerified,500)) explicitly recorded in FR-130 text and §4.44 preamble",
+        "No Doc 03 edit made — Doc 03 is architect-owned and freshly Approved v2.2.1",
+        "Doc 03 §18/§10.12.6 C-02 cascade surfaced explicitly, not silently skipped"
+      ],
+      "open_items": [
+        "DES for FR-130: architect (Ravi Deshmukh), next Doc 03 design increment",
+        "Doc 03 §18/§10.12.6 C-02 closure annotation: architect, next Doc 03 version",
+        "TC for FR-130/US-0131: tester (Ji-woo Park), Phase 3",
+        "RTM row for FR-130: tester, after DES and TC available",
+        "Doc 02 v2.5.0 business-mode document-review: neutral reviewer (PM to assign)",
+        "Doc 05 v2.1.0 business-mode document-review: neutral reviewer (PM to assign)"
+      ],
+      "gate": "Gate 1 APPROVED (2026-08-11, Rathish, unconditional). Gate 2 NOT READY. Must count now 111. RTM 125 rows / 12 COMPLETE / 113 OPEN. Doc 02 v2.5.0 and Doc 05 v2.1.0 both In Review."
     }
   ]
 }

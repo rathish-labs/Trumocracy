@@ -691,3 +691,60 @@ cascade correction once the product-owner picks them up:
 | Doc 02 SRS (`docs/02-requirements-srs.md`) | CON-007 accepted-budget parenthetical | "~USD 4.13M" | product-owner (Priya Raghunathan) |
 
 These are not edited in this directive — they are the product-owner's cascade obligation.
+
+---
+
+## Wireframe conflict-register rulings C-01 and C-02 — 2026-08-22
+
+> Two approver rulings received 2026-08-22, transmitted via coordinator. All prior gate decisions
+> and their wording are unchanged and intact. Full decision record:
+> `artifacts/status/DECISIONS-2026-08-22-WIREFRAME-C01-C02.md`. This section is additive only.
+
+### C-02 DECIDED — Provisional-party membership cap (FR-130 minted)
+
+**Rathish's ruling (verbatim):** "Mint it as a MUST: a provisional party (before legal
+verification completes) is capped at 100 members; the cap lifts automatically on verified legal
+registration. Rationale to record: it prevents an unverified party accumulating false strength
+before it is legally real — an anti-capture control, not display copy."
+
+**Applied 2026-08-22:**
+- FR-130 minted (Must, Doc 02 v2.5.0 §4.44). BR trace: BR-002, BR-012.
+  Owner: Sofia Marchetti (legal-registration boundary owner, FR-075).
+- US-0131 minted (Doc 05 v2.1.0, FE-009, EP-03). SCR: SCR-06 (wireframe screen 2.3).
+  Status: Backlog / Not Ready pending DES.
+- §8 Gherkin for FR-130 added. §11 Must count: 110 → 111. §12 trace updated.
+- Distinction from endorsement-floor constants (max(byPopulation, byVerified, 500)) explicitly
+  recorded in FR-130 text and the decision record — the two MUST NOT be conflated.
+
+**Open cascade item (not yet applied):** Doc 03 §18/§10.12.6 C-02 currently shows
+"PO must decide." Closure annotation ("PO decided: accept — FR-130 minted, Doc 02 v2.5.0")
+is owed at the next Doc 03 version. Doc 03 is architect-owned (Ravi Deshmukh) and freshly
+Approved v2.2.1; no Doc 03 edit made in this session. The decision record above is the
+authoritative bridge.
+
+### C-01 CONFIRMED — Adapter-driven string disposition (no requirement change)
+
+**Rathish's ruling (verbatim):** "Confirm on the record that the 'Verify with Aadhaar' button
+is an adapter-driven string resolved at build time per the pilot region's rail (FR-004/OI-20),
+not a hardcoded dependency and not a requirement change. No new requirement."
+
+**Disposition confirmed 2026-08-22:**
+- "Verify with Aadhaar" is the correct Phase-1 India deployment string, resolved at build time
+  from region-level config per DES-070 and FR-004/OI-20.
+- No requirement change. No Doc 02 edit. No Doc 03 edit.
+- Doc 03 §10.12.6 C-01 recorded the adapter-driven disposition already; the approver's
+  confirmation is on record in `DECISIONS-2026-08-22-WIREFRAME-C01-C02.md`.
+- Engineer build-time obligation: "Verify with Aadhaar" MUST NOT be a literal string.
+
+### Document versions after this session
+
+| Document | Version | Status |
+|----------|---------|--------|
+| Doc 02 Requirements (`docs/02-requirements-srs.md`) | **v2.5.0** | In Review |
+| Doc 05 Backlog (`docs/05-product-backlog.md`) | **v2.1.0** | In Review |
+
+Both documents require a passing business-mode document-review before Status flips to Approved.
+
+**Gate 2:** NOT READY. RTM (Doc 08 v2.1.0): 125 Must rows / 12 COMPLETE / 113 OPEN (FR-121..FR-130
+RTM rows not yet added; FR-130 row will be added when DES and TC are available). Must count
+now 111 (FR-130 added). Legal-opinion line item (India/Aadhaar): NOT STARTED — Gate-2 blocker.

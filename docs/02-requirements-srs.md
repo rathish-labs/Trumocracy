@@ -2,14 +2,30 @@
 
 ```
 Document ID:   SRS-TRUMOCRACY
-Version:       2.4.0
-Status:        Approved (review loop, cycle 1 PASS 100% — artifacts/reviews/02-requirements-srs-v2.4.0-business-cycle1.md)
+Version:       2.5.0
+Status:        In Review
 Owner:         Priya Raghunathan — Product Owner
 Approvers:     Gate 1 — Priya Raghunathan (Product Owner), Ana-Maria Petrescu (Project Manager),
                Rathish (Human Approver — Gate 1 re-entry, v2.0.0)
 Source:        PR-TRUMOCRACY (docs/01-press-release-prfaq.md)
-Last updated:  2026-08-20
-Change:        v2.4.0 — OI-19 and OI-20 rulings applied (Rathish, 2026-08-20;
+Last updated:  2026-08-22
+Change:        v2.5.0 — C-02 ruling applied (Rathish, 2026-08-22;
+               artifacts/status/DECISIONS-2026-08-22-WIREFRAME-C01-C02.md). C-02 DECIDED:
+               provisional-party membership cap is an anti-capture control, not display copy —
+               an unverified party (platform-activated but not yet legally registered per FR-075)
+               MUST be capped at 100 members; cap lifts automatically on verified legal
+               registration; no manual or operator lift path. FR-130 minted (Must, §4.44);
+               §8 Gherkin for FR-130 added; §11 Must count 110 → 111; §12 traceability updated
+               (FR-130 trace added; BR-002, BR-012 → FR-130 → US-0131). FR-130 has no DES yet
+               (same recorded-phasing posture as FR-121..FR-129; TC OPEN — Phase 3; US-0131
+               minted in Doc 05 v2.1.0). C-01 disposition CONFIRMED on record
+               (DECISIONS-2026-08-22-WIREFRAME-C01-C02.md): the "Verify with Aadhaar" button
+               is an adapter-driven string resolved at build time per the pilot region's rail
+               (FR-004/OI-20 architecture-level plurality; DES-070); no requirement change;
+               no Doc 02 edit. Open cascade item: Doc 03 §18/§10.12.6 C-02 entry still shows
+               "PO must decide" — closure annotation owed at the next Doc 03 version (Doc 03
+               is architect-owned, freshly Approved v2.2.1; this record does not edit it).
+               v2.4.0 — OI-19 and OI-20 rulings applied (Rathish, 2026-08-20;
                artifacts/status/DECISIONS-2026-08-20-OI19-OI20.md). OI-19 DECIDED: invite-gating
                is a spam-control rate-limiter, never an admission condition; FR-125 finalised (no
                longer draft) — mandatory non-invite fallback ALWAYS open, leads to full counted
@@ -752,6 +768,28 @@ See §9.2.
 | ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
 |----|-------------------------------|-----------|----------|-------|-----------|
 | FR-129 | Making single-issuer operation permanent — or extending it beyond the published, dated Phase-1 scope (FR-121) — MUST NOT be achievable as a deployment or configuration default; it MUST require the Charter-layer amendment process with re-entry through the two human gates (CLAUDE.md re-entry rule). Amendment machinery reference: FR-118 (entrenched-charter Tier 1, unamendable by any vote, changeable only by fork) and FR-119 (named-absolutes Tier 2, amendable only via the Doc 03 super-process) define the two-tier amendment system; the question of WHICH tier governs issuer-plurality requirements is not answered in this version and MUST NOT be assumed — that determination is owed to the architect in the next Doc 03 increment and MUST be recorded in the RTM when settled. What is normative here regardless of tier: (a) any path that makes single-rail operation permanent without going through the Charter-level amendment process and the two gates MUST be rejected by the system; (b) an attempt to extend the single-issuer deployment via configuration flag or deployment default MUST be blocked; (c) only the Amendment path (re-entry through Gate 1 and Gate 2 per CLAUDE.md) can modify the scope of the Phase-1 deployment limitation. Phase-1 accepted limitation: in Phase 1 a person without Aadhaar cannot enrol in the pilot region (accepted exclusion per TD-05/ADR-016; FR-004's 50% attestor-share cap is inoperative for the Phase-1 single-rail duration); exit condition is Phase 2 / eIDAS 2.0 (FR-121). _(Source: OI-20 ruling, Rathish, 2026-08-20, DECISIONS-2026-08-20-OI19-OI20.md §2.)_ | BR-006, BR-012, BR-021 | Must | Marcus Adeyemi | T, A |
+
+### 4.44 Provisional-party membership cap (C-02 anti-capture ruling)
+
+> **✅ C-02 DECIDED (Rathish, 2026-08-22; artifacts/status/DECISIONS-2026-08-22-WIREFRAME-C01-C02.md):**
+> The "Membership caps at 100 until legal verification completes" notice on wireframe screen 2.3
+> (Petition — live onboarding; Doc 03 §10.12.6 C-02) is an anti-capture control, not display copy.
+> Doc 03 §10.12.6 C-02 recorded the gap ("No backing FR, DES, or US exists") and required the
+> product-owner to decide: accept and mint an FR, or reject and revise the copy. The approver's
+> ruling is: **accept — mint the FR**. The cap is rationale-grounded: it prevents an unverified
+> party accumulating membership strength ("false strength") before it is legally real. It is not
+> display copy; it is a code-enforced anti-capture invariant. FR-130 minted below.
+>
+> **Distinction from endorsement-floor constants (MUST NOT be conflated):** FR-130's cap is a
+> MEMBERSHIP cap on a provisional party (post-activation, pre-legal-registration). It is wholly
+> distinct from the endorsement threshold (FR-014, FR-016) and from the endorsement-floor
+> constants in DES-010 (max(byPopulation, byVerified, 500)) — those govern petition legitimacy
+> and are set by population formula; FR-130 governs post-activation provisional membership and
+> is a fixed anti-capture invariant. No endorsement-floor constant is altered by this ruling.
+
+| ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
+|----|-------------------------------|-----------|----------|-------|-----------|
+| FR-130 | A provisional party — one that has been platform-activated per FR-018 but whose legal registration has not yet been externally verified and recorded per FR-075 — MUST be capped at 100 members; the cap MUST lift automatically, by code, on verified legal registration being recorded on the platform per FR-075; no operator or manual path may lift the cap before that event. This requirement is an anti-capture control: it prevents an unverified party accumulating membership strength before it is legally real. **Distinction:** this cap is wholly distinct from the endorsement threshold (FR-014, FR-016) and from the endorsement-floor constants (DES-010: max(byPopulation, byVerified, 500)) — those govern petition legitimacy; FR-130 governs post-activation provisional membership, a separate anti-capture layer. _(Source: C-02 ruling, Rathish, 2026-08-22; Doc 03 §10.12.6 C-02; artifacts/status/DECISIONS-2026-08-22-WIREFRAME-C01-C02.md. DES owed at next Doc 03 increment — same recorded-phasing posture as FR-121..FR-129. TC OPEN — Phase 3.)_ | BR-002, BR-012 | Must | Sofia Marchetti | T, I |
 
 ---
 
@@ -1901,6 +1939,32 @@ Then the issuer-plurality scope restriction may be extended or modified per the 
 ```
 
 ```gherkin
+# FR-130 — provisional-party membership cap: 100-member limit until verified legal registration (anti-capture control)
+# NOTE: this cap is wholly distinct from the endorsement threshold (FR-014/FR-016) and the endorsement-floor
+# constants (DES-010: max(byPopulation, byVerified, 500)). Do not conflate the two.
+
+# Scenario 1: 101st join attempt on an unverified provisional party is refused with a stated reason
+Given a provisional party (platform-activated per FR-018; legal registration not yet verified and recorded per FR-075) that already has 100 members
+When a 101st citizen attempts to join
+Then the join is refused
+And the reason stated is that the party has reached the 100-member provisional cap
+And the citizen is informed that the cap lifts automatically on the party's verified legal registration
+
+# Scenario 2: cap lifts automatically on verified legal registration — no human action in the path
+Given the same provisional party at 100 members
+When the party's legal registration is verified and recorded on the platform per FR-075 (code-executed; no operator action in the path)
+Then the membership cap lifts automatically by code
+And a subsequent 101st join attempt by any citizen succeeds without a cap refusal
+
+# Scenario 3: no operator or manual lift path exists before legal registration is verified
+Given a provisional party whose legal registration has not yet been verified
+When any operator, employee, platform administrator, or human actor attempts to lift the membership cap by any mechanism (configuration flag, administrative action, deployment default, or direct state mutation)
+Then no such capability exists
+And the attempt is refused
+And the cap remains in place until legal registration is code-verified
+```
+
+```gherkin
 # NFR-001 — privacy: no actor determines party membership or vote from system data
 # Adversary model per §6 NFR-001: holds all operator logs, all attestor credential hashes, full public verifiable record, network timing at 1-second granularity
 # ε and collusion bound provisional until OI-10 closes (Design, owner: Dr. Lena Kowalczyk)
@@ -2182,12 +2246,12 @@ Then the transition is appended with timestamp and cause; the prior state is pre
 
 ## 11. Requirements prioritization & release plan (MoSCoW)
 
-**Counts (v2.4.0).** 21 BR · 129 FR minted (127 active + 2 superseded: FR-046, FR-062) · 28 NFR · 15 CON · 27 requirement-level RISK rows in §10 (RISK-01..16 + RISK-22..32; RISK-17..21 live in Doc 13) · 12 TDs.
-_(v1.1.0 baseline: 13 BR · 73 FR · 26 NFR · 12 CON · 19 RISK · 7 TDs. v1.0.0 baseline: 12 BR · 61 FR · 26 NFR · 12 CON · 16 RISK · 6 TDs. Added by CR-v1.1.0: 1 BR, 12 FR, 3 RISK, 1 TD. Added by v2.0.0 re-entry: 7 BR, 40 FR, 2 NFR, 2 CON, 9 RISK, 3 TDs; 2 FRs superseded. Added by v2.1.0: 1 BR (BR-021), 7 FR (FR-114..FR-120), 2 RISK (RISK-31..32), 1 TD (TD-11). Added by v2.3.0: 8 FR (FR-121..FR-128, all Must), 1 CON (CON-015), 1 TD (TD-12); OI-19/OI-20 minted. No new BR or NFR. Added by v2.4.0: 1 FR (FR-129, Must — Charter-layer guard); OI-19 and OI-20 CLOSED; FR-125 finalised (no longer draft). New FRs have no DES/US yet — recorded-phasing posture, RTM catches up.)_
+**Counts (v2.5.0).** 21 BR · 130 FR minted (128 active + 2 superseded: FR-046, FR-062) · 28 NFR · 15 CON · 27 requirement-level RISK rows in §10 (RISK-01..16 + RISK-22..32; RISK-17..21 live in Doc 13) · 12 TDs.
+_(v1.1.0 baseline: 13 BR · 73 FR · 26 NFR · 12 CON · 19 RISK · 7 TDs. v1.0.0 baseline: 12 BR · 61 FR · 26 NFR · 12 CON · 16 RISK · 6 TDs. Added by CR-v1.1.0: 1 BR, 12 FR, 3 RISK, 1 TD. Added by v2.0.0 re-entry: 7 BR, 40 FR, 2 NFR, 2 CON, 9 RISK, 3 TDs; 2 FRs superseded. Added by v2.1.0: 1 BR (BR-021), 7 FR (FR-114..FR-120), 2 RISK (RISK-31..32), 1 TD (TD-11). Added by v2.3.0: 8 FR (FR-121..FR-128, all Must), 1 CON (CON-015), 1 TD (TD-12); OI-19/OI-20 minted. No new BR or NFR. Added by v2.4.0: 1 FR (FR-129, Must — Charter-layer guard); OI-19 and OI-20 CLOSED; FR-125 finalised (no longer draft). New FRs have no DES/US yet — recorded-phasing posture, RTM catches up. Added by v2.5.0: 1 FR (FR-130, Must — provisional-party membership cap, anti-capture control; C-02 ruling, Rathish, 2026-08-22; US-0131 minted in Doc 05 v2.1.0; DES owed — same recorded-phasing posture; TC OPEN — Phase 3).)_
 
 | Priority | FR count | FR IDs |
 |----------|----------|--------|
-| **Must** | **110** | FR-001, 002, 003, 004, 006, 007, 008, 009, 010, 011, 014, 016, 018, 020, 021, 022, 023, 024, 025, 026, 027, 028, 030, 031, 032, 033, 035, 036, 037, 039, 040, 042, 043, 045, 047, 050, 051, 054, 056, 058, 059, 060, 061, 063, 064, 065, 066, 067, 068, 069, 070, 071, 072, 073, 074, 075, 076, 077, 078, 079, 080, 081, 082, 083, 084, 085, 086, 087, 088, 089, 090, 091, 092, 093, 094, 095, 096, 097, 098, 099, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129 |
+| **Must** | **111** | FR-001, 002, 003, 004, 006, 007, 008, 009, 010, 011, 014, 016, 018, 020, 021, 022, 023, 024, 025, 026, 027, 028, 030, 031, 032, 033, 035, 036, 037, 039, 040, 042, 043, 045, 047, 050, 051, 054, 056, 058, 059, 060, 061, 063, 064, 065, 066, 067, 068, 069, 070, 071, 072, 073, 074, 075, 076, 077, 078, 079, 080, 081, 082, 083, 084, 085, 086, 087, 088, 089, 090, 091, 092, 093, 094, 095, 096, 097, 098, 099, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130 |
 | **Should** | 14 | FR-005, 012, 013, 015, 017, 019, 029, 034, 038, 041, 044, 048, 049, 055 |
 | **Could** | 3 | FR-052, 053, 057 |
 | **Won't (this release)** | — | Vote delegation; state elections; cross-jurisdiction parties; social features; staff moderation of political speech |
@@ -2197,7 +2261,7 @@ _Convention: superseded rows (FR-046, FR-062) are excluded from the active Must 
 
 NFR priorities: **Must** — NFR-001…007, 009…017, 020…025, 027…028 (24). **Should** — NFR-008, 018, 019, 026 (4).
 
-**On the size of the Must set.** The Must set grows from 54 to 94 with the v2.0.0 vision re-entry directed by the approver (Rathish, 2026-08-10). The 40 new Must FRs (FR-074..FR-113) cover party self-governance, participation tiers and privacy, committees, proposal lifecycle, candidate selection, manifesto, financial transparency, COI, audit, disputes, member rights, conduct votes, data classification, transparency dashboard, scorecard, and trust-anchor lifecycle governance. FR-050 is raised from Should to Must (financial transparency is now a business requirement, BR-019). FR-062 is superseded by §4.24 (FR-082..FR-086) and excluded from the active Must count. All v2.0.0 FRs are Must per the approver's direction. Gate 1 re-entry approves direction; Gate 2 still governs launch readiness. _v2.1.0: the Must set grows from 94 to 101 with seven steward-organisation FRs (FR-114..FR-120), all Must per the conditional Gate-1 approval directed by Rathish (2026-08-11); the condition is fulfilled by this version landing before Design. v2.3.0: the Must set grows from 101 to 109 with eight FRs (FR-121..FR-128) covering pilot jurisdiction sequence, tiered participation (verification gates counting, never joining), and on-device proof / nullifier-only identity posture — all Must per Decision 1–3 (Rathish, 2026-08-20). New FRs have no DES/US yet — same recorded-phasing posture as FR-074..FR-111; tester's next RTM catch-up covers FR-121..128. v2.4.0: the Must set grows from 109 to 110 with FR-129 (Charter-layer guard — making single-issuer operation permanent requires Charter-level re-entry, never a deployment default; OI-20 ruling, Rathish, 2026-08-20). FR-125 finalised (OI-19 RESOLVED). FR-129 has no DES/US yet — same recorded-phasing posture._
+**On the size of the Must set.** The Must set grows from 54 to 94 with the v2.0.0 vision re-entry directed by the approver (Rathish, 2026-08-10). The 40 new Must FRs (FR-074..FR-113) cover party self-governance, participation tiers and privacy, committees, proposal lifecycle, candidate selection, manifesto, financial transparency, COI, audit, disputes, member rights, conduct votes, data classification, transparency dashboard, scorecard, and trust-anchor lifecycle governance. FR-050 is raised from Should to Must (financial transparency is now a business requirement, BR-019). FR-062 is superseded by §4.24 (FR-082..FR-086) and excluded from the active Must count. All v2.0.0 FRs are Must per the approver's direction. Gate 1 re-entry approves direction; Gate 2 still governs launch readiness. _v2.1.0: the Must set grows from 94 to 101 with seven steward-organisation FRs (FR-114..FR-120), all Must per the conditional Gate-1 approval directed by Rathish (2026-08-11); the condition is fulfilled by this version landing before Design. v2.3.0: the Must set grows from 101 to 109 with eight FRs (FR-121..FR-128) covering pilot jurisdiction sequence, tiered participation (verification gates counting, never joining), and on-device proof / nullifier-only identity posture — all Must per Decision 1–3 (Rathish, 2026-08-20). New FRs have no DES/US yet — same recorded-phasing posture as FR-074..FR-111; tester's next RTM catch-up covers FR-121..128. v2.4.0: the Must set grows from 109 to 110 with FR-129 (Charter-layer guard — making single-issuer operation permanent requires Charter-level re-entry, never a deployment default; OI-20 ruling, Rathish, 2026-08-20). FR-125 finalised (OI-19 RESOLVED). FR-129 has no DES/US yet — same recorded-phasing posture. v2.5.0: the Must set grows from 110 to 111 with FR-130 (provisional-party membership cap — a provisional party is capped at 100 members until verified legal registration; the cap lifts automatically by code; anti-capture control; C-02 ruling, Rathish, 2026-08-22). FR-130 has no DES yet — same recorded-phasing posture; US-0131 minted in Doc 05 v2.1.0; TC OPEN — Phase 3._
 
 **Release shape.** One release at 2027-06-01 (following Gate 2 readiness 2027-05-14), delivered
 on trunk behind flags, rolled out 1 → 10 → 50 → 100% in the one approved pilot jurisdiction; a
@@ -2257,6 +2321,11 @@ per the refine loop; none exist at v1.0.0 or v1.1.0 (all v1.1.0 requirements sou
 **Session scope (v2.3.0/v2.4.0):** DES (Doc 03) and US (Doc 05) seeding for FR-121..FR-129 is owed after the next Design/Backlog catch-up. Downstream columns are OPEN by design — recorded not hidden. The RTM will close the chains when Docs 03/05/07 catch up. FR-125 is now implementation-ready (OI-19 RESOLVED at v2.4.0); its story may be marked Ready in Doc 05 once DES/US are assigned. FR-129 joins the recorded-phasing set awaiting DES/US; the architect MUST determine which amendment tier (FR-118 Tier 1 or FR-119 Tier 2) governs issuer-plurality requirements in the next Doc 03 increment.
 
 - BR-006, BR-012, BR-021 → FR-129 _(Charter-layer guard — single-issuer permanence requires Charter-level re-entry; OI-20 ruling, Rathish, 2026-08-20; DES/US owed at next Design increment)_
+
+**v2.5.0 addition (C-02 ruling, Rathish, 2026-08-22; artifacts/status/DECISIONS-2026-08-22-WIREFRAME-C01-C02.md):**
+- BR-002 (party gains full party status only by demonstrated support — a provisional / not-yet-legal party MUST NOT accumulate disproportionate strength before legal legitimacy is established), BR-012 (platform MUST resist governance attacks — mob capture of an existing party's founding charter by a sudden membership flood) → FR-130 _(provisional-party membership cap — 100-member anti-capture invariant until verified legal registration; US-0131 minted in Doc 05 v2.1.0; DES owed at next Doc 03 increment; TC OPEN — Phase 3)_
+
+**v2.5.0 session scope:** FR-130 is in the recorded-phasing posture. US-0131 (Doc 05 v2.1.0) is NOT Ready per DoR until a DES is assigned by the architect in the next Doc 03 increment. TC to be minted in Phase 3. The RTM (Doc 08) will close the chain BR-002/BR-012 → FR-130 → DES → US-0131 → TC when Docs 03 and 07 catch up. Open cascade item: Doc 03 §18/§10.12.6 C-02 entry currently shows "PO must decide — accept (mint FR) or reject" — closure annotation is owed at the next Doc 03 version (architect-owned; no Doc 03 edit made in this session per the approver's directive). The DECISIONS-2026-08-22-WIREFRAME-C01-C02.md record is the bridge until that annotation lands.
 
 ---
 

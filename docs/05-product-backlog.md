@@ -2,12 +2,21 @@
 
 ```
 Document ID:   BKLG-TRUMOCRACY
-Version:       2.0.1
-Status:        Approved (review loop, cycle 2 PASS 99% — artifacts/reviews/05-product-backlog-v2.0.1-business-cycle2.md)
+Version:       2.1.0
+Status:        In Review
 Owner:         Priya Raghunathan — Product Owner
-Source:        SRS-TRUMOCRACY (docs/02-requirements-srs.md v2.2.0), PR-TRUMOCRACY (docs/01-press-release-prfaq.md)
-Last updated:  2026-08-11
-Change:        v2.0.1 — Cycle-1 business-review rework (2026-08-11).
+Source:        SRS-TRUMOCRACY (docs/02-requirements-srs.md v2.5.0), PR-TRUMOCRACY (docs/01-press-release-prfaq.md)
+Last updated:  2026-08-22
+Change:        v2.1.0 — C-02 ruling applied (Rathish, 2026-08-22;
+               artifacts/status/DECISIONS-2026-08-22-WIREFRAME-C01-C02.md). US-0131 minted
+               under FE-009 (EP-03) implementing FR-130 (provisional-party membership cap,
+               Must — Doc 02 v2.5.0 §4.44). SCR: SCR-06 (Petition browser & detail —
+               wireframe screen 2.3). Owner: Sofia Marchetti. Priority: Must. Points: 3.
+               Status: Backlog (Not Ready pending DES). TC OPEN — Phase 3. DES owed at next
+               Doc 03 increment — same recorded-phasing posture as FR-121..FR-129. §2 story
+               count: 130 → 131. §9 total: 130 stories / ~812 pts → 131 stories / ~815 pts.
+               §12 traceability updated: FR-130→US-0131 added.
+               v2.0.1 — Cycle-1 business-review rework (2026-08-11).
                Addresses ISS-01 and ISS-02 from artifacts/reviews/05-product-backlog-v2.0.0-business-cycle1.md.
                ISS-01 (Medium): Features lines in seven pre-existing §4 epic blocks updated to include features
                added by v2.0.0 — EP-01 += FE-037; EP-02 += FE-038; EP-04 += FE-039; EP-05 += FE-042;
@@ -73,9 +82,9 @@ early as possible.
 `Theme → Epic (EP-##) → Feature (FE-###) → User Story (US-####) → Task`.
 Non-functional work appears as **explicit backlog items**, never as an assumption — see §8.
 
-**Contents.** 12 epics · 56 features · 130 user stories · 9 explicit non-functional backlog items. (ISS-D: count corrected from 8 to 9 after NF-09 was added at v1.1.1; v2.0.0 adds EP-11, EP-12, FE-037..FE-056, US-0084..US-0130.)
+**Contents.** 12 epics · 56 features · 131 user stories · 9 explicit non-functional backlog items. (ISS-D: count corrected from 8 to 9 after NF-09 was added at v1.1.1; v2.0.0 adds EP-11, EP-12, FE-037..FE-056, US-0084..US-0130; v2.1.0 adds US-0131.)
 All 101 Must FRs in Doc 02 v2.2.0 are covered by at least one story; coverage is asserted in §12 and
-verified in the RTM. (ISS-E: source pin updated from v1.1.0 to v1.1.1; v2.0.0: source pin updated to v2.2.0.)
+verified in the RTM. FR-130 (Must, Doc 02 v2.5.0) is covered by US-0131 (minted v2.1.0). (ISS-E: source pin updated from v1.1.0 to v1.1.1; v2.0.0: source pin updated to v2.2.0; v2.1.0: source pin updated to v2.5.0.)
 
 ## 3. Prioritization framework
 
@@ -899,6 +908,39 @@ AC:
     Given the party wishes to operate in another jurisdiction
     When it petitions there
     Then it must meet that jurisdiction's own threshold independently
+```
+```
+US-0131  Have the provisional-party membership cap enforced automatically until legal registration is verified      (FE-009 · EP-03)
+As a citizen interested in a newly-activated but not-yet-legally-registered (provisional) party,
+I want the platform to enforce a 100-member cap by code and lift it automatically on verified legal
+registration — with no operator or manual lift path — so that an unverified party cannot accumulate
+false membership strength before it is legally real.
+Owner: Sofia Marchetti   Priority: Must   Points: 3   Implements: FR-130   Depends on: US-0022, US-0085
+SCR: SCR-06 (Petition browser & detail — wireframe screen 2.3; provisional)
+Note: Not Ready pending DES — FR-130 has no DES assigned yet (Doc 03 §16 next-increment scope;
+  same recorded-phasing posture as FR-121..FR-129). TC: OPEN — Phase 3; no TC minted yet.
+  Status: Backlog.
+AC:
+  Scenario: 100-member cap enforced on provisional party
+    Given a provisional party (platform-activated per FR-018; legal registration not yet verified per FR-075)
+    And the party already has 100 members
+    When a 101st citizen attempts to join
+    Then the join is refused
+    And the reason states that the party has reached the 100-member provisional cap and that the cap
+      lifts automatically on verified legal registration
+  Scenario: Cap lifts automatically on verified legal registration — no human action in the path
+    Given a provisional party at 100 members
+    When the party's legal registration is verified and recorded on the platform per FR-075
+      (code-executed; no operator or human action in the path)
+    Then the membership cap lifts automatically by code
+    And a subsequent join attempt by a 101st citizen succeeds without a cap refusal
+  Scenario (adversarial): No operator or manual lift path
+    Given a provisional party whose legal registration has not yet been verified
+    When any operator, employee, platform administrator, or human actor attempts to lift the
+      membership cap by any mechanism
+    Then no such capability exists
+    And the attempt is refused
+    And the cap remains in place until code-verified legal registration
 ```
 
 ### EP-04 · Open, equal membership
@@ -2850,7 +2892,7 @@ Modified Fibonacci (1, 2, 3, 5, 8, 13). **Reference story: US-0024 "Join a party
 Anything estimated above 13 must be split before it enters a sprint. Estimates are re-baselined once
 the architect publishes Doc 03, because several stories (US-0007, US-0038, US-0041, US-0042, US-0068)
 carry the bulk of the technical unknown and are deliberately estimated pessimistically until then.
-**Total (v2.0.0): 130 stories, approximately 812 points** (v1.1.1 was 83 stories at approximately 499 points; 47 new stories from the v2.0.0 Gate-1-re-entry catch-up add approximately 313 points at preliminary estimates). _(ISS-07: v1.0.0 base corrected to actual point sum; total revised accordingly; v2.0.0 total subject to revision after Doc 03 is published and DES links assigned.)_
+**Total (v2.1.0): 131 stories, approximately 815 points** (v1.1.1 was 83 stories at approximately 499 points; 47 new stories from the v2.0.0 Gate-1-re-entry catch-up add approximately 313 points at preliminary estimates; v2.1.0 adds US-0131 — 3 points). _(ISS-07: v1.0.0 base corrected to actual point sum; total revised accordingly; v2.0.0 total subject to revision after Doc 03 is published and DES links assigned.)_
 
 ## 10. Backlog refinement cadence & WIP limits
 
@@ -2917,6 +2959,7 @@ Coverage assertion at v2.0.0 — to be independently verified by the tester in t
   FR-112→US-0122 · FR-113→US-0123 ·
   FR-114→US-0124 · FR-115→US-0125 · FR-116→US-0126 · FR-117→US-0127 ·
   FR-118→US-0128 · FR-119→US-0129 · FR-120→US-0130.
+- **v2.1.0 addition (C-02 ruling, Rathish, 2026-08-22):** FR-130→US-0131. DES owed (same recorded-phasing posture as FR-121..FR-129; TC OPEN — Phase 3). US-0131 is Backlog / Not Ready pending DES.
 - **DES links available for FR-112..FR-120** (Doc 03 v2.x; re-confirm with architect after Doc 03 updated):
   FR-112, FR-113 → DES-090 (TrustAnchorLifecycle) ·
   FR-114 → DES-088 (StewardRegistry) ·
@@ -2937,6 +2980,10 @@ Coverage assertion at v2.0.0 — to be independently verified by the tester in t
   in §6 and will satisfy the Definition of Ready only after Gate 1 produces the updated Doc 03 and
   DES links are confirmed. FR-112..FR-120 have provisional DES links (see DES map above) subject
   to re-confirmation.
+- **v2.1.0 DES readiness gap (declared):** FR-130 (US-0131) has no DES assigned — same
+  recorded-phasing posture as FR-121..FR-129 (Doc 03 §16 next-increment scope). US-0131 is
+  marked "Not Ready pending DES" and satisfies DoR only after the architect assigns a DES in
+  the next Doc 03 increment.
 - `DES-###` links for FR-074..FR-111: **not yet assigned** — added after architect updates Doc 03.
 - `TC-####` links: **not yet assigned** — added by the tester in Doc 07.
 
