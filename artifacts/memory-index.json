@@ -2397,6 +2397,152 @@
         "Approver confirmations still pending: magnitude (≈4,025K / ≈175K vs ~$3.836M / ~$294K) and Gate-2 referent (2027-05-14 vs 2027-03-15) — per DECISIONS record."
       ],
       "gate": "Gate 1 PENDING (MS-01 2026-08-22). Doc 13 v2.0.3: PASS — SOP may advance. Gate 2 NOT READY."
+    },
+    {
+      "id": "architect-2026-08-22T1120",
+      "role": "architect",
+      "file": "artifacts/architect-2026-08-22T1120.md",
+      "timestamp": "2026-08-22T11:20:00Z",
+      "phase": "Design",
+      "product": "Trumocracy",
+      "summary": "Formalised wireframe visual language as design-system spec in Doc 03 §10.12. Minted DES-093 (token set), DES-094 (privacy-status component), ADR-023 (design system adoption). Leak-check PASS against FR-124. Four conflicts surfaced (C-01 Aadhaar hardcoding; C-02 100-member cap unbacked; C-03 finance ledger screen absent; C-04 illustrative threshold). Design-debt register: 5 class-i screens + 3 class-ii required-absent screens. Referent correction: approver attributed verified-status ruling to OI-19 — corrected to FR-124 ruling; no requirement changed. Doc 03 advanced v2.1.5 → v2.2.0, Status: In Review.",
+      "artifacts_written": [
+        "docs/03-architecture-design-sdd.md",
+        "docs/adr/ADR-023-design-system-tokens-privacy-status.md",
+        "artifacts/architect-2026-08-22T1120.md"
+      ],
+      "ids_touched": {
+        "DES": "DES-093, DES-094",
+        "ADR": "ADR-023",
+        "open_questions": "Q11, Q12, Q13, Q14",
+        "contradiction_entries": "C-01, C-02, C-03"
+      },
+      "doc_versions": {
+        "Doc 03": "v2.2.0 (In Review)"
+      },
+      "conflicts_surfaced": [
+        "C-01: Verify with Aadhaar hardcoded vs adapter-driven (DES-070/FR-004/OI-20)",
+        "C-02: 100-member provisional cap has no backing FR",
+        "C-03: Finance ledger screen undesigned; FR-050 Must requires it",
+        "C-04: 9,000 threshold is illustrative; must not be a constant"
+      ],
+      "leak_check": "PASS — no Supporter-status leak in wireframe as-drawn (FR-124 applied)",
+      "referent_correction": "Approver cited OI-19 for verified-status-privacy ruling; correct referent is FR-124 ruling (Doc 02 v2.3.1, Rathish 2026-08-20); OI-19 is the invite-gating ruling (FR-125)",
+      "open_items": [
+        "FR-121..FR-129 DES coverage still owed (pre-existing §16 debt)",
+        "FR-129 Charter-layer tier determination owed",
+        "Q11: Welcome screen specification",
+        "Q12: 100-member cap PO decision",
+        "Q13: FR-125 non-invite fallback design (all 4 layers)",
+        "Q14: Finance ledger screen design",
+        "C-01..C-03 resolution by PO/engineer",
+        "5 class-i design-debt screens + 3 class-ii required-absent screens"
+      ],
+      "gate": "Gate 2 NOT READY. Doc 03 v2.2.0 In Review — awaiting document-review skill (technical mode) before engineer starts packages/ui."
+    },
+    {
+      "id": "tester-2026-08-22T1430",
+      "role": "tester",
+      "file": "artifacts/tester-2026-08-22T1430.md",
+      "timestamp": "2026-08-22T14:30:00Z",
+      "phase": "Verify — document-review technical mode",
+      "product": "Trumocracy",
+      "scope": "Technical-mode document-review of Doc 03 v2.2.0 (§10.12, ADR-023, §15/§16/§18 additions). Neutral reviewer — architect is the document owner.",
+      "summary": "Doc 03 v2.2.0 FAIL (84%, 0C/0H/2M/3L). Two medium issues: (ISS-01) §10.12.1(b) summary says 8/23 SCRs covered but table shows 16/23; (ISS-02) §10.12.4 cross-table contradiction on screen 3.4 vs SCR-14. Three low issues. Leak-check independently verified PASS (13 privacy() calls, all holder self-view). Tokens verbatim faithful. Routed to architect for v2.2.1 rework.",
+      "artifacts_written": [
+        "artifacts/reviews/03-architecture-design-sdd-v2.2.0-technical-cycle1.md",
+        "artifacts/tester-2026-08-22T1430.md"
+      ],
+      "review_verdicts": {
+        "03-architecture-design-sdd-v2.2.0": {
+          "score": 84,
+          "critical": 0,
+          "high": 0,
+          "medium": 2,
+          "low": 3,
+          "cycle": 1,
+          "verdict": "FAIL",
+          "routed_to": "architect (Ravi Deshmukh) — fix ISS-01 (SCR count summary) and ISS-02 (3.4/SCR-14 table contradiction); ISS-03/04/05 recommended in same pass"
+        }
+      },
+      "leak_check_independent": "PASS — 13 privacy() function calls verified (3 anon + 10 ver), all authenticated-holder self-view; additional inline div.privacy.pub at wireframe line 450 (screen 3.6) is holder self-view preview, not a leak",
+      "author_claims_refuted": [
+        "ISS-01: '8 of 23 SCRs covered; 8 with no wireframe' — actual: 16 covered, 7 uncovered",
+        "ISS-02: Screen 3.4 'None' in Wireframe→SCR table — contradicted by SCR-14→3.4 in SCR→Wireframe table",
+        "ISS-03: Changelog '§18 four new entries' — only 3 entries present in §18"
+      ],
+      "gate": "Gate 2 NOT READY. Doc 03 v2.2.0 FAIL cycle 1 — routed to architect for v2.2.1 rework."
+    },
+    {
+      "id": "product-owner-2026-08-22T1600",
+      "role": "product-owner",
+      "file": "artifacts/product-owner-2026-08-22T1600.md",
+      "timestamp": "2026-08-22T16:00:00Z",
+      "phase": "Define — C-01/C-02 wireframe conflict-register rulings applied",
+      "product": "Trumocracy",
+      "summary": "Applied two approver rulings (Rathish, 2026-08-22) from Doc 03 §10.12.6 conflict register. C-02 DECIDED (accept): FR-130 minted (Must, §4.44, Doc 02 v2.5.0) — provisional-party membership cap at 100 members until verified legal registration, anti-capture control; US-0131 minted (Doc 05 v2.1.0, FE-009, SCR-06, Not Ready pending DES, TC OPEN Phase 3). Must count 110→111. C-01 CONFIRMED (no change): 'Verify with Aadhaar' is adapter-driven string per FR-004/OI-20/DES-070; no requirement change, no Doc 03 edit. Both docs In Review; review loop outstanding. Open cascade: Doc 03 §18/§10.12.6 C-02 closure annotation owed at next Doc 03 version (architect-owned).",
+      "artifacts_written": [
+        "docs/02-requirements-srs.md (v2.5.0, In Review)",
+        "docs/05-product-backlog.md (v2.1.0, In Review)",
+        "artifacts/status/DECISIONS-2026-08-22-WIREFRAME-C01-C02.md",
+        "artifacts/status/GATE-STATUS-2026-08-09.md (addendum appended)",
+        "artifacts/product-owner-2026-08-22T1600.md"
+      ],
+      "ids_touched": {
+        "FR_minted": "FR-130",
+        "US_minted": "US-0131",
+        "FR_high_water_mark_after": "FR-130",
+        "US_high_water_mark_after": "US-0131"
+      },
+      "doc_versions": {
+        "Doc 02": "v2.5.0 (In Review)",
+        "Doc 05": "v2.1.0 (In Review)"
+      },
+      "fr_details": {
+        "FR-130": {
+          "section": "§4.44",
+          "title": "Provisional-party membership cap (C-02 anti-capture ruling)",
+          "priority": "Must",
+          "owner": "Sofia Marchetti",
+          "br_trace": "BR-002, BR-012",
+          "verify_by": "T, I",
+          "des": "OWED — next Doc 03 increment",
+          "tc": "OPEN — Phase 3",
+          "us": "US-0131"
+        }
+      },
+      "us_details": {
+        "US-0131": {
+          "fe": "FE-009",
+          "ep": "EP-03",
+          "scr": "SCR-06",
+          "owner": "Sofia Marchetti",
+          "priority": "Must",
+          "points": 3,
+          "status": "Backlog — Not Ready pending DES",
+          "implements": "FR-130"
+        }
+      },
+      "key_decisions": [
+        "BR-002 and BR-012 chosen as FR-130 trace: directly address 'false strength' / mob-capture anti-capture rationale",
+        "Sofia Marchetti as FR-130/US-0131 owner: owns FR-075 (legal-registration boundary), the most adjacent requirement",
+        "FE-009 (Automatic activation) chosen for US-0131: provisional-party state begins at activation; FR-019 (jurisdiction lock post-activation) is a peer",
+        "SCR-06 (Petition browser & detail) chosen: wireframe screen 2.3 maps to SCR-06 in Doc 03 §10.12.4",
+        "DES owed — not fabricated; US-0131 Not Ready per DoR until DES assigned",
+        "TC OPEN Phase 3 — not fabricated; house style matched",
+        "Distinction from endorsement-floor constants (DES-010 max(byPopulation,byVerified,500)) explicitly recorded in FR-130 text and §4.44 preamble",
+        "No Doc 03 edit made — Doc 03 is architect-owned and freshly Approved v2.2.1",
+        "Doc 03 §18/§10.12.6 C-02 cascade surfaced explicitly, not silently skipped"
+      ],
+      "open_items": [
+        "DES for FR-130: architect (Ravi Deshmukh), next Doc 03 design increment",
+        "Doc 03 §18/§10.12.6 C-02 closure annotation: architect, next Doc 03 version",
+        "TC for FR-130/US-0131: tester (Ji-woo Park), Phase 3",
+        "RTM row for FR-130: tester, after DES and TC available",
+        "Doc 02 v2.5.0 business-mode document-review: neutral reviewer (PM to assign)",
+        "Doc 05 v2.1.0 business-mode document-review: neutral reviewer (PM to assign)"
+      ],
+      "gate": "Gate 1 APPROVED (2026-08-11, Rathish, unconditional). Gate 2 NOT READY. Must count now 111. RTM 125 rows / 12 COMPLETE / 113 OPEN. Doc 02 v2.5.0 and Doc 05 v2.1.0 both In Review."
     }
   ]
 }
