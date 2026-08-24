@@ -202,3 +202,101 @@ All H?=Y rows in §16.3 now map to a specific §16.4 entry.
 - "DECISIONS-2026-08-23-V1-V2-SPLIT.md — project-manager" is CLOSED (file now exists).
 - "Doc 02 v2.6.0 business-mode document-review" is now "Doc 02 v2.7.0 business-mode c2 review
   — neutral reviewer (PM to assign) — outstanding."
+
+---
+
+## Rework section 2 — v2.8.0 (2026-08-23, same session)
+
+**Trigger:** Approver rulings transmitted via coordinator (2026-08-23).
+Decision record: `artifacts/status/DECISIONS-2026-08-23-V1-AUTH-SPAM-RESISTANCE.md`.
+
+### FR-132 minted (Must, §4.46, Marcus Adeyemi) — COMPLETE
+
+Normative text: In a Definition-A (v1) deployment, the `IEligibilityVerifier` backing MUST use
+phone-based SMS verification: each verified phone number creates at most one member account. The
+system MUST record and present phone verification as spam mitigation, NOT unique-personhood proof.
+v1 MUST NOT claim, in its UI, README, or any public-facing material, that one-person-one-vote is
+guaranteed. The FR-131 honesty notice (DES-098) MUST carry a plain-language statement that
+one-account-per-phone is not one-person-one-vote.
+Traces: BR-006 (v1 degraded form of personhood), BR-012 (anti-capture/Sybil).
+Design: DES-095 amended, ADR-025.
+
+### FR-133 minted (Must, §4.47, Rafael Duarte) — COMPLETE
+
+Normative text: Phone numbers at enrolment MUST be screened via (a) VoIP/virtual-number
+phone-intelligence API; (b) velocity checks; (c) device anti-fraud. Flagged numbers MUST be
+rate-limited, MUST NOT be hard-blocked, MUST NOT be denied a governance action solely on the
+flag. False-positive path (legitimate VoIP/eSIM user) MUST be first-class: completes every
+primary flow subject only to rate-limiting. Flag events are restricted-class (NFR-027), never
+on public record.
+Traces: BR-012 (anti-capture), BR-003 (frictionless join / non-exclusion).
+Design: DES-099.
+
+### §8 Gherkin — COMPLETE
+
+FR-132: 3 scenarios (enrolment creates one account per phone; v1 MUST NOT claim one-person-one-vote; honesty notice carries caveat).
+FR-133: 4 scenarios (flagged VoIP → rate-limited not blocked; legitimate VoIP/eSIM completes all flows; flag events not on public record; hard-block path does not exist — absence test).
+
+### §16 updates — COMPLETE
+
+- FR-001 v1-form: updated to "one account per verified phone number; SMS spam speed-bump; MUST NOT claim one-person-one-vote (FR-132)"
+- FR-002 v1-form: updated to note "same phone-verified account across scopes"
+- FR-003: reclassified IN-v1 → PARTIAL (v1 stores phone number; H? N → Y); v1 form + v2 form updated
+- FR-132 row added (IN-v1, H? = Y)
+- FR-133 row added (IN-v1, H? = N)
+- NFR-010 v1-form: annotated with phone-number restricted-store carve-out
+- §16.3.1 heading updated to FR-001..FR-133
+- §16 Source block updated to include DECISIONS-2026-08-23-V1-AUTH-SPAM-RESISTANCE.md and blockchain ratification note
+- §16 intro examples block updated for FR-001
+
+### §16.4 honesty register additions — COMPLETE
+
+H-15: v1 does not guarantee one-person-one-vote (FR-132; T-06)
+H-16: v1 stores verified phone number as identity data (FR-003 partial; T-07)
+Final register: H-01..H-16.
+
+### §16.5 contradiction surface additions — COMPLETE
+
+T-06 (Charter Rule 1 — one human one vote — vs v1 phone auth): AWAITING APPROVER CONFIRMATION
+T-07 (FR-003 no identity at rest — vs phone number storage): AWAITING APPROVER CONFIRMATION
+Closing note updated: T-01..T-05 → T-01..T-07; ADR-025 reference added.
+
+### Counts updated
+
+Must count: 112 → 114 (FR-132, FR-133 both Must). §11 prose and ID list updated.
+
+### FR-003 reclassification sweep
+
+- NFR-010 (data minimisation): v1-form annotated; remains IN-v1 (phone number in restricted-store carve-out enumerated in §7). H? unchanged (N).
+- No other NFR rows required update.
+- Blockchain Ruling 3: DES-097 stack recommendation is now RATIFIED; item (a) from DECISIONS-2026-08-23-V1-V2-SPLIT.md §4 CLOSED as DECIDED. Recorded in §16 Source block and §12 scope note.
+
+### Document status after v2.8.0
+
+`docs/02-requirements-srs.md` — v2.7.0 (Approved) → **v2.8.0** (In Review).
+
+---
+
+## Rework section 3 — v2.9.0 (2026-08-23, same session)
+
+**Trigger:** c1 business-mode review of v2.8.0 FAIL (97%, 0C/0H/1M/2L; `artifacts/reviews/02-requirements-srs-v2.8.0-business-cycle1.md`).
+
+ISS-01 (Medium): §16.3.1 tally line updated. Verified arithmetic against table: 133 FRs minted, 2 superseded (FR-046, FR-062) = 131 active. FR-003 moved from IN-v1 to PARTIAL (−1 IN-v1, +1 PARTIAL); FR-132 and FR-133 added as IN-v1 (+2 IN-v1). Final: IN-v1 107, PARTIAL 20, DEFERRED-v2 4, SUPERSEDED-n/a 2. NFR tally verified unchanged: IN-v1 24, PARTIAL 3, DEFERRED-v2 1, total 28.
+
+ISS-02 (Low): §11 heading "Counts (v2.6.0)" → "Counts (v2.9.0)".
+
+ISS-03 (Low): §16 Source block "Doc 03 v2.4.0" → "Doc 03 v2.4.1 (Approved)".
+
+`docs/02-requirements-srs.md` → **v2.9.0** (In Review).
+
+---
+
+## Rework section 4 — v2.10.0 (2026-08-23, same session)
+
+**Trigger:** c2 business-mode review of v2.9.0 FAIL (98%, 0C/0H/1M/1L; `artifacts/reviews/02-requirements-srs-v2.9.0-business-cycle2.md`).
+
+ISS-A (Medium): §11 Counts line corrected — "133 FR minted (131 active + 2 superseded: FR-046, FR-062)". Sweep of §11 and §1/§2 for stale "131 FR"/"129 active"/"112 Must": no other active-prose occurrences found outside historical changelog entries (which correctly record past states). One additional "Doc 03 v2.4.0" found in §12 v2.8.0 scope note (line 2524) — not in scope of ISS-B (§4.46/§4.47 only); flagged for coordinator.
+
+ISS-B (Low): §4.46 inline annotation "Doc 03 v2.4.0" → "Doc 03 v2.4.1 (Approved)"; §4.47 inline annotation "Doc 03 v2.4.0" → "Doc 03 v2.4.1 (Approved)".
+
+`docs/02-requirements-srs.md` → **v2.10.0** (**Approved**, c3 PASS 100%, 0C/0H/0M/0L; `artifacts/reviews/02-requirements-srs-v2.10.0-business-cycle3.md`). Post-edit citation sweep (no version bump): §12 v2.8.0 scope note "Doc 03 v2.4.0" → "Doc 03 v2.4.1 (Approved)" fixed. Full active-prose sweep found no other stale cross-document pins — all remaining v2.3.x/v2.4.0 occurrences are historical SRS self-annotations or Gherkin version comments, not cross-doc version pins. v2.10.0 changelog appended with citation-fix note.

@@ -2,14 +2,48 @@
 
 ```
 Document ID:   SRS-TRUMOCRACY
-Version:       2.7.0
+Version:       2.10.0
 Status:        Approved
 Owner:         Priya Raghunathan — Product Owner
 Approvers:     Gate 1 — Priya Raghunathan (Product Owner), Ana-Maria Petrescu (Project Manager),
                Rathish (Human Approver — Gate 1 re-entry, v2.0.0)
 Source:        PR-TRUMOCRACY (docs/01-press-release-prfaq.md)
 Last updated:  2026-08-23
-Change:        v2.7.0 — Rework against c1 business-mode review (FAIL 94%, 0C/0H/1M/1L;
+Change:        v2.10.0 — Rework against c2 business-mode review (FAIL 98%, 0C/0H/1M/1L;
+               artifacts/reviews/02-requirements-srs-v2.9.0-business-cycle2.md). ISS-A
+               (Medium): §11 Counts line corrected — "133 FR minted (131 active + 2
+               superseded)"; sweep found no other stale "131 FR"/"129 active"/"112 Must"
+               in active prose outside historical changelog entries. ISS-B (Low): §4.46
+               and §4.47 inline annotations "Doc 03 v2.4.0" → "Doc 03 v2.4.1 (Approved)"
+               (both). Post-edit citation sweep (no version bump): §12 v2.8.0 scope note
+               "Doc 03 v2.4.0" → "Doc 03 v2.4.1 (Approved)"; full active-prose sweep found
+               no further stale cross-document pins — all other v2.3.x/v2.4.0 occurrences
+               are historical SRS self-annotations or Gherkin version comments, not
+               cross-document version pins. Pre-review fix (no version bump): §11 heading
+               "Counts (v2.9.0)" → "Counts (v2.10.0)"; maintenance rule added beside heading.
+               v2.9.0 — Rework against c1 business-mode review (FAIL 97%, 0C/0H/1M/2L;
+               artifacts/reviews/02-requirements-srs-v2.8.0-business-cycle1.md). ISS-01
+               (Medium): §16.3.1 tally line updated — FR-001..FR-133, 131 active, IN-v1 107,
+               PARTIAL 20, DEFERRED-v2 4, SUPERSEDED-n/a 2 (verified against table). ISS-02
+               (Low): §11 heading label corrected — "Counts (v2.6.0)" → "Counts (v2.9.0)".
+               ISS-03 (Low): §16 Source block "Doc 03 v2.4.0" → "Doc 03 v2.4.1 (Approved)".
+               No other changes.
+               v2.8.0 — Approver rulings 2026-08-23 applied (DECISIONS-2026-08-23-V1-AUTH-SPAM-
+               RESISTANCE.md): FR-132 minted (Must, §4.46, Marcus Adeyemi — v1 phone-based SMS
+               auth; MUST NOT claim one-person-one-vote; traces BR-006, BR-012; design DES-095
+               amended, ADR-025). FR-133 minted (Must, §4.47, Rafael Duarte — v1 spam-resistance
+               flag-don't-block layer; false-positive path first-class; traces BR-012, BR-003;
+               design DES-099). §8 Gherkin for FR-132/FR-133 added. §11 Must count 112 → 114.
+               §12 trace/scope note updated. §16 updates: FR-001/FR-002 v1-form cells softened to
+               one-account-per-verified-phone (cite FR-132); FR-003 reclassified IN-v1 → PARTIAL
+               (v1 stores phone number; H? N → Y); FR-132/FR-133 rows added (both IN-v1; FR-132
+               H?=Y, FR-133 H?=N); NFR-010 v1-form annotated with phone-number carve-out.
+               §16.4: H-15 (one-person-one-vote not guaranteed; FR-132; T-06) and H-16 (phone
+               number stored in v1; FR-003 partial; T-07) added. §16.5: T-06 (Charter Rule 1 vs
+               v1 phone auth) and T-07 (FR-003 vs phone number storage) added — both AWAITING
+               APPROVER CONFIRMATION. Blockchain ratification of DES-097 recorded (Ruling 3;
+               item (a) from V1-V2-SPLIT §4 CLOSED).
+               v2.7.0 — Rework against c1 business-mode review (FAIL 94%, 0C/0H/1M/1L;
                artifacts/reviews/02-requirements-srs-v2.6.0-business-cycle1.md). ISS-01
                (Medium): §16 Source block citation corrected — decision record
                DECISIONS-2026-08-23-V1-V2-SPLIT.md now exists; removed provisional
@@ -839,6 +873,34 @@ See §9.2.
 | FR-131 | Wherever a vote is cast in a Definition-A (v1) deployment, the UI MUST display a plain-language honesty notice (designed as DES-098) before the ballot is confirmed. The notice MUST state: **(a)** this ballot uses conventional authentication and is NOT anonymous, NOT receipt-free, and NOT coercion-resistant; **(b)** the platform database CAN see vote direction and party membership in v1; **(c)** the cryptographic private ballot — where the platform is technically unable to see vote direction or party membership — is available when the platform upgrades to the Definition-B (v2) privacy layer. The notice MUST be: visible before confirmation; non-dismissable (the voter MUST acknowledge the notice to proceed); WCAG 2.2 AA compliant (DES-081); screen-reader accessible. The notice MUST appear on SCR-13 (ballot booth) and SCR-14 (post-vote confirmation). The v1 product — its UI, README, and all public-facing materials — MUST NOT use the words "private", "anonymous", "receipt-free", or "secure" to describe v1 voting behaviour, and MUST NOT present itself as providing the Definition-B (v2) cryptographic guarantees. _(Source: approver directive 2026-08-23, Rathish; DECISIONS-2026-08-23-V1-V2-SPLIT.md. Follows the disclosed-limitation pattern: Doc 03 §13 Phase-1 public-tally disclosure; DES-063 (v2 coercion-safe confirmation surface is the v2 successor to DES-098). DES-098 minted; US/TC/RTM owed at next catch-up — same recorded-phasing posture as FR-121..FR-130. TC OPEN — Phase 3.)_ | BR-005, BR-009 | Must | Nadia Hassan | T, I |
 
 _BR trace rationale: **BR-005** — "Manifestos, commitments and office-holders' governance votes MUST be publicly verifiable." Platform honesty about the properties of the voting mechanism is the complement of verifiability; in v1 the tally result IS on the audit record (FR-033/FR-054) but the mechanism is not private, and FR-131 ensures that distinction is stated plainly. **BR-009** — "Proving personhood and residency MUST NOT expose a member's real-world identity or make them targetable." The honesty notice protects members by ensuring informed consent about what v1 cannot guarantee before they vote, enabling them to make an informed decision about their exposure._
+
+---
+
+### 4.46 v1 phone-based authentication — IEligibilityVerifier backing (DES-095 amended, ADR-025)
+
+> **Rationale.** The approver (Rathish, 2026-08-23) selected phone-based SMS verification as the v1 backing of the `IEligibilityVerifier` seam (DES-095) over email-based authentication. This selection is recorded honestly: phone verification is a spam speed-bump that makes casual fake accounts harder — it is NOT a proof of unique personhood. v1 MUST never claim one-person-one-vote; that guarantee is v2's ZK enrolment, which swaps in behind the same DES-095 interface per ADR-024/ADR-025. The FR-131 honesty notice (DES-098) MUST carry the one-account-per-phone caveat.
+>
+> _(Source: approver directive 2026-08-23, Rathish; DECISIONS-2026-08-23-V1-AUTH-SPAM-RESISTANCE.md §2 Ruling 1. Design: DES-095 (v1 backing amended in Doc 03 v2.4.1 (Approved)), ADR-025. US/TC/RTM owed at next catch-up — same recorded-phasing posture as FR-131. TC OPEN — Phase 3.)_
+
+| ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
+|----|-------------------------------|-----------|----------|-------|-----------|
+| FR-132 | In a Definition-A (v1) deployment, the `IEligibilityVerifier` backing MUST use phone-based SMS verification: each verified phone number creates at most one member account. The system MUST record and present phone verification as spam mitigation, NOT unique-personhood proof. v1 MUST NOT claim, in its UI, README, or any public-facing material, that one-person-one-vote is guaranteed; that guarantee requires the v2 ZK enrolment backing to be swapped in per ADR-024/ADR-025/DES-095. The FR-131 honesty notice (DES-098) MUST carry a plain-language statement that one-account-per-phone is not one-person-one-vote: one person holding multiple phone numbers can create multiple accounts in v1. _(Source: approver directive 2026-08-23, Rathish; DECISIONS-2026-08-23-V1-AUTH-SPAM-RESISTANCE.md §2 Ruling 1. Design: DES-095 amended, ADR-025. US/TC/RTM owed at next catch-up — same recorded-phasing posture as FR-131. TC OPEN — Phase 3.)_ | BR-006, BR-012 | Must | Marcus Adeyemi | T, I |
+
+_BR trace rationale: **BR-006** — "Membership MUST be verifiable as a real human resident... one person one vote is a foundational rule." Phone-based SMS auth is the v1 degraded form of this guarantee — it is as close to BR-006 as v1's technology scope permits, honestly recorded as a spam speed-bump rather than a personhood proof. **BR-012** — "The platform MUST resist governance attacks: sockpuppet, astroturf and Sybil actors MUST NOT be able to capture a party." Phone verification with velocity/device checks (FR-133) is the v1 Sybil-resistance and anti-capture mechanism, directly serving the anti-capture goal of BR-012 even without providing the full personhood guarantee of BR-006._
+
+---
+
+### 4.47 v1 spam-resistance layer — flag-don't-block (DES-099)
+
+> **Rationale.** The approver (Rathish, 2026-08-23) directed a conventional spam-resistance layer for v1: VoIP/virtual-number detection via a phone-intelligence API, plus velocity and device anti-fraud checks. The ruling is explicit on the flag-don't-block rule: legitimate people use VoIP and eSIMs, and wrongly excluding a citizen from a political platform is a serious failure; the false-positive risk MUST be recorded explicitly and the false-positive path MUST be first-class. This requirement follows established design precedents: FR-061 (degrade, never deny), FR-125/OI-19 (spam-control rate-limiter never an admission condition), and FR-020 (non-invite fallback always open and absolute).
+>
+> _(Source: approver directive 2026-08-23, Rathish; DECISIONS-2026-08-23-V1-AUTH-SPAM-RESISTANCE.md §2 Ruling 2. Design: DES-099 (minted by architect, Doc 03 v2.4.1 (Approved)). US/TC/RTM owed at next catch-up — same recorded-phasing posture as FR-132. TC OPEN — Phase 3.)_
+
+| ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
+|----|-------------------------------|-----------|----------|-------|-----------|
+| FR-133 | In a Definition-A (v1) deployment, phone numbers submitted at enrolment MUST be screened via: **(a)** a phone-intelligence API for VoIP/virtual-number detection (flagging cloud-farm, burner-number, and known non-personal-use indicators); **(b)** velocity checks (enrolment rate per IP, device fingerprint, and network segment within configurable windows); **(c)** device anti-fraud signals. A number flagged by any of these checks MUST be rate-limited and MAY be queued for additional verification; it MUST NOT be hard-blocked; it MUST NOT be denied a governance action solely on the basis of the flag. The false-positive path (a legitimate VoIP/eSIM user) MUST be first-class: that user MUST be able to complete every primary flow — enrol, join, petition-sign, vote — subject only to rate-limiting, never outright denial (FR-061, FR-020). Flag events are restricted-class data (NFR-027) and MUST NOT be exposed on any public record or governance-path surface. _(Source: approver directive 2026-08-23, Rathish; DECISIONS-2026-08-23-V1-AUTH-SPAM-RESISTANCE.md §2 Ruling 2. Design: DES-099. Note: FR-020 (open join) is unamended and absolute — FR-133 operates upstream of join; a flagged phone is rate-limited at screening, never excluded from the membership path. Follows FR-061 degrade-never-deny and FR-125/OI-19 rate-limiter-not-admission-condition precedents. US/TC/RTM owed — same recorded-phasing posture as FR-132. TC OPEN — Phase 3.)_ | BR-012, BR-003 | Must | Rafael Duarte | T, I |
+
+_BR trace rationale: **BR-012** — "The platform MUST resist governance attacks: sockpuppet, astroturf and Sybil actors MUST NOT be able to capture a party." The spam-resistance layer is the v1 mechanism for this, screening at enrolment without excluding legitimate users. **BR-003** — "Joining a party MUST be frictionless... MUST NOT require approval, endorsement, payment, or invitation." The flag-don't-block rule protects this guarantee by ensuring the spam-resistance layer never becomes an exclusion gate — it rate-limits, never denies; FR-020 remains absolute._
 
 ---
 
@@ -2045,6 +2107,61 @@ Then no such path exists; every ballot submission code path requires prior notic
 ```
 
 ```gherkin
+# FR-132 — v1 phone-based authentication: one account per verified phone; MUST NOT claim one-person-one-vote
+# Design: DES-095 (v1 backing amended), ADR-025. Source: DECISIONS-2026-08-23-V1-AUTH-SPAM-RESISTANCE.md Ruling 1.
+
+# Scenario 1: Enrolment creates exactly one account per verified phone number
+Given a Definition-A (v1) deployment of Trumocracy
+When a person completes SMS verification with a valid phone number and submits their enrolment
+Then exactly one member account is created linked to that phone number
+And a second enrolment attempt using the same phone number is rejected with a duplicate-phone error
+
+# Scenario 2: v1 MUST NOT claim one-person-one-vote in any product surface
+Given any surface of a v1 deployment — UI, README, public documentation, or marketing material
+When those surfaces are searched for any claim that v1 guarantees one-person-one-vote, unique personhood, or equivalent
+Then zero such claims are found in v1 product surfaces
+
+# Scenario 3: FR-131 honesty notice carries the one-account-per-phone caveat
+Given a member in a v1 deployment viewing the FR-131 honesty notice (DES-098) before casting a vote
+When the notice is read
+Then the notice states plainly that phone verification is a spam speed-bump, not a personhood proof
+And the notice states that one person holding multiple phone numbers can create multiple accounts in v1
+And the notice states that the one-person-one-vote guarantee is provided by the v2 ZK enrolment, not v1
+```
+
+```gherkin
+# FR-133 — v1 spam-resistance layer: flag-don't-block; false-positive path is first-class
+# Design: DES-099. Source: DECISIONS-2026-08-23-V1-AUTH-SPAM-RESISTANCE.md Ruling 2.
+# Precedents: FR-061 (degrade never deny), FR-125/OI-19 (rate-limiter not admission condition), FR-020 (absolute open join).
+
+# Scenario 1: VoIP/virtual-number flagged phone is rate-limited, not hard-blocked
+Given a Definition-A (v1) deployment of Trumocracy
+And an enrolment attempt with a phone number the spam-resistance layer flags as VoIP or virtual-number
+When the spam-resistance layer processes the enrolment request
+Then the enrolment is rate-limited (delayed or queued for additional verification)
+And the enrolment is NOT hard-blocked
+And the response never states the user is permanently denied due to the flag
+
+# Scenario 2: Flagged legitimate VoIP/eSIM user completes every primary flow
+Given a member in a v1 deployment whose phone number triggered a spam-resistance flag
+But whose enrolment completed (rate-limited path)
+When that member attempts to join a party, sign a petition, or cast a vote
+Then each of those governance actions is available to the member (subject only to rate-limit constraints)
+And no governance action is denied solely on the basis of the spam-resistance flag
+And FR-020 non-invite fallback join path remains available and unaffected
+
+# Scenario 3: Flag events do not appear on any public record or governance-path surface
+Given a member whose phone number triggered a spam-resistance flag during enrolment
+When the public verifiable record, the governance-path surface, and any member-facing data are inspected
+Then zero flag events, VoIP indicators, device scores, or spam-resistance signals appear in any of those surfaces
+
+# Scenario 4: Hard-block path does not exist (absence test)
+Given any code path in a v1 deployment
+When that path is tested for a route that permanently denies a phone number flagged by the spam-resistance layer
+Then no such hard-block path exists; every flagged number either passes rate-limiting or enters an additional-verification queue
+```
+
+```gherkin
 # NFR-001 — privacy: no actor determines party membership or vote from system data
 # Adversary model per §6 NFR-001: holds all operator logs, all attestor credential hashes, full public verifiable record, network timing at 1-second granularity
 # ε and collusion bound provisional until OI-10 closes (Design, owner: Dr. Lena Kowalczyk)
@@ -2326,12 +2443,12 @@ Then the transition is appended with timestamp and cause; the prior state is pre
 
 ## 11. Requirements prioritization & release plan (MoSCoW)
 
-**Counts (v2.6.0).** 21 BR · 131 FR minted (129 active + 2 superseded: FR-046, FR-062) · 28 NFR · 15 CON · 27 requirement-level RISK rows in §10 (RISK-01..16 + RISK-22..32; RISK-17..21 live in Doc 13) · 12 TDs.
-_(v1.1.0 baseline: 13 BR · 73 FR · 26 NFR · 12 CON · 19 RISK · 7 TDs. v1.0.0 baseline: 12 BR · 61 FR · 26 NFR · 12 CON · 16 RISK · 6 TDs. Added by CR-v1.1.0: 1 BR, 12 FR, 3 RISK, 1 TD. Added by v2.0.0 re-entry: 7 BR, 40 FR, 2 NFR, 2 CON, 9 RISK, 3 TDs; 2 FRs superseded. Added by v2.1.0: 1 BR (BR-021), 7 FR (FR-114..FR-120), 2 RISK (RISK-31..32), 1 TD (TD-11). Added by v2.3.0: 8 FR (FR-121..FR-128, all Must), 1 CON (CON-015), 1 TD (TD-12); OI-19/OI-20 minted. No new BR or NFR. Added by v2.4.0: 1 FR (FR-129, Must — Charter-layer guard); OI-19 and OI-20 CLOSED; FR-125 finalised (no longer draft). New FRs have no DES/US yet — recorded-phasing posture, RTM catches up. Added by v2.5.0: 1 FR (FR-130, Must — provisional-party membership cap, anti-capture control; C-02 ruling, Rathish, 2026-08-22; US-0131 minted in Doc 05 v2.1.0; DES owed — same recorded-phasing posture; TC OPEN — Phase 3). Added by v2.6.0: 1 FR (FR-131, Must — v1 honesty notice; approver directive 2026-08-23; DES-098 minted by architect in Doc 03 v2.3.0 §10.13.6; US/TC/RTM owed at next catch-up; same recorded-phasing posture as FR-121..FR-130; TC OPEN — Phase 3).)_
+**Counts (v2.10.0).** _(Maintenance rule: update this label on every version bump — it MUST match the document version number.)_ 21 BR · 133 FR minted (131 active + 2 superseded: FR-046, FR-062) · 28 NFR · 15 CON · 27 requirement-level RISK rows in §10 (RISK-01..16 + RISK-22..32; RISK-17..21 live in Doc 13) · 12 TDs.
+_(v1.1.0 baseline: 13 BR · 73 FR · 26 NFR · 12 CON · 19 RISK · 7 TDs. v1.0.0 baseline: 12 BR · 61 FR · 26 NFR · 12 CON · 16 RISK · 6 TDs. Added by CR-v1.1.0: 1 BR, 12 FR, 3 RISK, 1 TD. Added by v2.0.0 re-entry: 7 BR, 40 FR, 2 NFR, 2 CON, 9 RISK, 3 TDs; 2 FRs superseded. Added by v2.1.0: 1 BR (BR-021), 7 FR (FR-114..FR-120), 2 RISK (RISK-31..32), 1 TD (TD-11). Added by v2.3.0: 8 FR (FR-121..FR-128, all Must), 1 CON (CON-015), 1 TD (TD-12); OI-19/OI-20 minted. No new BR or NFR. Added by v2.4.0: 1 FR (FR-129, Must — Charter-layer guard); OI-19 and OI-20 CLOSED; FR-125 finalised (no longer draft). New FRs have no DES/US yet — recorded-phasing posture, RTM catches up. Added by v2.5.0: 1 FR (FR-130, Must — provisional-party membership cap, anti-capture control; C-02 ruling, Rathish, 2026-08-22; US-0131 minted in Doc 05 v2.1.0; DES owed — same recorded-phasing posture; TC OPEN — Phase 3). Added by v2.6.0: 1 FR (FR-131, Must — v1 honesty notice; approver directive 2026-08-23; DES-098 minted by architect in Doc 03 v2.3.0 §10.13.6; US/TC/RTM owed at next catch-up; same recorded-phasing posture as FR-121..FR-130; TC OPEN — Phase 3). Added by v2.8.0: 2 FR (FR-132, Must — v1 phone-based SMS auth, DES-095 amended, ADR-025; FR-133, Must — v1 spam-resistance flag-don't-block, DES-099; approver directive 2026-08-23; both in recorded-phasing posture; TC OPEN — Phase 3).)_
 
 | Priority | FR count | FR IDs |
 |----------|----------|--------|
-| **Must** | **112** | FR-001, 002, 003, 004, 006, 007, 008, 009, 010, 011, 014, 016, 018, 020, 021, 022, 023, 024, 025, 026, 027, 028, 030, 031, 032, 033, 035, 036, 037, 039, 040, 042, 043, 045, 047, 050, 051, 054, 056, 058, 059, 060, 061, 063, 064, 065, 066, 067, 068, 069, 070, 071, 072, 073, 074, 075, 076, 077, 078, 079, 080, 081, 082, 083, 084, 085, 086, 087, 088, 089, 090, 091, 092, 093, 094, 095, 096, 097, 098, 099, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131 |
+| **Must** | **114** | FR-001, 002, 003, 004, 006, 007, 008, 009, 010, 011, 014, 016, 018, 020, 021, 022, 023, 024, 025, 026, 027, 028, 030, 031, 032, 033, 035, 036, 037, 039, 040, 042, 043, 045, 047, 050, 051, 054, 056, 058, 059, 060, 061, 063, 064, 065, 066, 067, 068, 069, 070, 071, 072, 073, 074, 075, 076, 077, 078, 079, 080, 081, 082, 083, 084, 085, 086, 087, 088, 089, 090, 091, 092, 093, 094, 095, 096, 097, 098, 099, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133 |
 | **Should** | 14 | FR-005, 012, 013, 015, 017, 019, 029, 034, 038, 041, 044, 048, 049, 055 |
 | **Could** | 3 | FR-052, 053, 057 |
 | **Won't (this release)** | — | Vote delegation; state elections; cross-jurisdiction parties; social features; staff moderation of political speech |
@@ -2341,7 +2458,7 @@ _Convention: superseded rows (FR-046, FR-062) are excluded from the active Must 
 
 NFR priorities: **Must** — NFR-001…007, 009…017, 020…025, 027…028 (24). **Should** — NFR-008, 018, 019, 026 (4).
 
-**On the size of the Must set.** The Must set grows from 54 to 94 with the v2.0.0 vision re-entry directed by the approver (Rathish, 2026-08-10). The 40 new Must FRs (FR-074..FR-113) cover party self-governance, participation tiers and privacy, committees, proposal lifecycle, candidate selection, manifesto, financial transparency, COI, audit, disputes, member rights, conduct votes, data classification, transparency dashboard, scorecard, and trust-anchor lifecycle governance. FR-050 is raised from Should to Must (financial transparency is now a business requirement, BR-019). FR-062 is superseded by §4.24 (FR-082..FR-086) and excluded from the active Must count. All v2.0.0 FRs are Must per the approver's direction. Gate 1 re-entry approves direction; Gate 2 still governs launch readiness. _v2.1.0: the Must set grows from 94 to 101 with seven steward-organisation FRs (FR-114..FR-120), all Must per the conditional Gate-1 approval directed by Rathish (2026-08-11); the condition is fulfilled by this version landing before Design. v2.3.0: the Must set grows from 101 to 109 with eight FRs (FR-121..FR-128) covering pilot jurisdiction sequence, tiered participation (verification gates counting, never joining), and on-device proof / nullifier-only identity posture — all Must per Decision 1–3 (Rathish, 2026-08-20). New FRs have no DES/US yet — same recorded-phasing posture as FR-074..FR-111; tester's next RTM catch-up covers FR-121..128. v2.4.0: the Must set grows from 109 to 110 with FR-129 (Charter-layer guard — making single-issuer operation permanent requires Charter-level re-entry, never a deployment default; OI-20 ruling, Rathish, 2026-08-20). FR-125 finalised (OI-19 RESOLVED). FR-129 has no DES/US yet — same recorded-phasing posture. v2.5.0: the Must set grows from 110 to 111 with FR-130 (provisional-party membership cap — a provisional party is capped at 100 members until verified legal registration; the cap lifts automatically by code; anti-capture control; C-02 ruling, Rathish, 2026-08-22). FR-130 has no DES yet — same recorded-phasing posture; US-0131 minted in Doc 05 v2.1.0; TC OPEN — Phase 3. v2.6.0: the Must set grows from 111 to 112 with FR-131 (v1 honesty notice — wherever a vote is cast in a v1 deployment the UI MUST state plainly that voting is NOT anonymous, NOT receipt-free, and NOT coercion-resistant; approver directive 2026-08-23; design DES-098). FR-131 has no US yet — same recorded-phasing posture as FR-121..FR-130; TC OPEN — Phase 3._
+**On the size of the Must set.** The Must set grows from 54 to 94 with the v2.0.0 vision re-entry directed by the approver (Rathish, 2026-08-10). The 40 new Must FRs (FR-074..FR-113) cover party self-governance, participation tiers and privacy, committees, proposal lifecycle, candidate selection, manifesto, financial transparency, COI, audit, disputes, member rights, conduct votes, data classification, transparency dashboard, scorecard, and trust-anchor lifecycle governance. FR-050 is raised from Should to Must (financial transparency is now a business requirement, BR-019). FR-062 is superseded by §4.24 (FR-082..FR-086) and excluded from the active Must count. All v2.0.0 FRs are Must per the approver's direction. Gate 1 re-entry approves direction; Gate 2 still governs launch readiness. _v2.1.0: the Must set grows from 94 to 101 with seven steward-organisation FRs (FR-114..FR-120), all Must per the conditional Gate-1 approval directed by Rathish (2026-08-11); the condition is fulfilled by this version landing before Design. v2.3.0: the Must set grows from 101 to 109 with eight FRs (FR-121..FR-128) covering pilot jurisdiction sequence, tiered participation (verification gates counting, never joining), and on-device proof / nullifier-only identity posture — all Must per Decision 1–3 (Rathish, 2026-08-20). New FRs have no DES/US yet — same recorded-phasing posture as FR-074..FR-111; tester's next RTM catch-up covers FR-121..128. v2.4.0: the Must set grows from 109 to 110 with FR-129 (Charter-layer guard — making single-issuer operation permanent requires Charter-level re-entry, never a deployment default; OI-20 ruling, Rathish, 2026-08-20). FR-125 finalised (OI-19 RESOLVED). FR-129 has no DES/US yet — same recorded-phasing posture. v2.5.0: the Must set grows from 110 to 111 with FR-130 (provisional-party membership cap — a provisional party is capped at 100 members until verified legal registration; the cap lifts automatically by code; anti-capture control; C-02 ruling, Rathish, 2026-08-22). FR-130 has no DES yet — same recorded-phasing posture; US-0131 minted in Doc 05 v2.1.0; TC OPEN — Phase 3. v2.6.0: the Must set grows from 111 to 112 with FR-131 (v1 honesty notice — wherever a vote is cast in a v1 deployment the UI MUST state plainly that voting is NOT anonymous, NOT receipt-free, and NOT coercion-resistant; approver directive 2026-08-23; design DES-098). FR-131 has no US yet — same recorded-phasing posture as FR-121..FR-130; TC OPEN — Phase 3. v2.8.0: the Must set grows from 112 to 114 with FR-132 (v1 phone-based SMS authentication — one account per verified phone number; MUST NOT claim one-person-one-vote; IEligibilityVerifier v1 backing; DES-095 amended, ADR-025; approver directive 2026-08-23) and FR-133 (v1 spam-resistance flag-don't-block layer — VoIP/virtual-number intelligence + velocity/device anti-fraud; flagged numbers rate-limited, never hard-blocked; false-positive path first-class; DES-099). Both FR-132 and FR-133 have no US yet — same recorded-phasing posture as FR-131; TC OPEN — Phase 3._
 
 **Release shape.** One release at 2027-06-01 (following Gate 2 readiness 2027-05-14), delivered
 on trunk behind flags, rolled out 1 → 10 → 50 → 100% in the one approved pilot jurisdiction; a
@@ -2411,6 +2528,12 @@ per the refine loop; none exist at v1.0.0 or v1.1.0 (all v1.1.0 requirements sou
 - BR-005 (publicly verifiable platform; honest reporting of mechanism properties), BR-009 (member identity not exposed; informed disclosure of privacy limits) → FR-131 _(v1 honesty notice — DES-098; non-dismissable ballot-confirmation UI notice in v1 deployments; US/TC owed at next catch-up; TC OPEN — Phase 3)_
 
 **v2.6.0 session scope:** FR-131 is in the recorded-phasing posture. DES-098 was minted by the architect in Doc 03 v2.3.0 §10.13.6 and awaited its backing FR (now FR-131). US and TC are OWED at the next catch-up session. Note: Doc 03 v2.3.0 §12 trace table cites "FR-130" for DES-098 — this is a pre-allocation error (FR-130 was already minted at v2.5.0 for the provisional-party membership cap); the honesty-notice FR is FR-131. Cascade annotation owed to Doc 03 at the next architect increment. The RTM (Doc 08) will close the chain BR-005/BR-009 → FR-131 → DES-098 → US → TC when Docs 05 and 07 catch up. The v1/v2 phasing classification (§16) is the comprehensive record of which FRs and NFRs are IN-v1, PARTIAL, DEFERRED-v2, or SUPERSEDED; that section is the canonical reference for the architect, engineer, and tester when scoping v1 deliverables.
+
+**v2.8.0 addition (approver directive 2026-08-23; DECISIONS-2026-08-23-V1-AUTH-SPAM-RESISTANCE.md):**
+- BR-006 (verified personhood, one person one vote — phone auth is the v1 degraded form), BR-012 (anti-capture/Sybil resistance) → FR-132 _(v1 phone-based SMS authentication — one account per verified phone number; MUST NOT claim one-person-one-vote; FR-131 honesty notice carries the caveat; DES-095 v1 backing amended, ADR-025; US/TC owed at next catch-up; TC OPEN — Phase 3)_
+- BR-012 (anti-capture/Sybil resistance), BR-003 (frictionless join; non-exclusion) → FR-133 _(v1 spam-resistance layer — VoIP/virtual-number intelligence + velocity/device anti-fraud; flag-don't-block; false-positive path first-class; DES-099; follows FR-061/FR-125/FR-020 precedents; US/TC owed at next catch-up; TC OPEN — Phase 3)_
+
+**v2.8.0 session scope:** FR-132 and FR-133 are in the recorded-phasing posture. DES-095 (v1 backing amended to specify phone auth) and DES-099 (new spam-resistance layer design) were produced by the architect in Doc 03 v2.4.1 (Approved). US/TC/RTM rows owed at the next catch-up. FR-003 reclassified from IN-v1 to PARTIAL: v1 stores the verified phone number as the account credential (identity data, restricted-class, not on public record); v2 eliminates storage via ZK on-device processing (FR-126). FR-003's reclassification does not add a new trace (existing BR-009 trace is unchanged); the v1-form note is updated in §16.3.1. NFR-010 v1-form annotated in §16.3.1 to note that the phone number falls under the restricted-store carve-out ("restricted stores enumerated in §7"). Contradiction surface updated: T-06 (Charter Rule 1 — one human one vote — vs v1 phone auth) and T-07 (FR-003 — no identity at rest — vs phone number storage) added to §16.5. Blockchain Ruling 3 ratifies DES-097 stack recommendation (item (a) from DECISIONS-2026-08-23-V1-V2-SPLIT.md §4 is now CLOSED as DECIDED); recorded in §16 Source note.
 
 ---
 
@@ -2523,9 +2646,12 @@ verified in the RTM (Doc 08). Gate 1 was approved 2026-08-11 at Doc 01 v2.0.0 + 
 ## 16. Delivery phasing — Definition A (v1) and Definition B (v2)
 
 > **Source:** Approver directive 2026-08-23, Rathish — transmitted via coordinator.
-> Decision record: `artifacts/status/DECISIONS-2026-08-23-V1-V2-SPLIT.md`. Architect
-> alignment: Doc 03 v2.3.1 (Approved) §10.13 (DES-095..DES-098) + ADR-024. This
-> section is the canonical reference for the engineer, tester, and architect when
+> Decision records: `artifacts/status/DECISIONS-2026-08-23-V1-V2-SPLIT.md` (v1/v2 split);
+> `artifacts/status/DECISIONS-2026-08-23-V1-AUTH-SPAM-RESISTANCE.md` (phone auth, spam
+> resistance, blockchain ratification — Ruling 3 ratifies DES-097; item (a) from V1-V2-SPLIT
+> §4 CLOSED as DECIDED). Architect alignment: Doc 03 v2.3.1 (Approved) §10.13
+> (DES-095..DES-098) + ADR-024; Doc 03 v2.4.1 (Approved) §10.13 (DES-095 amended, DES-099) + ADR-025.
+> This section is the canonical reference for the engineer, tester, and architect when
 > scoping v1 deliverables.
 
 ### 16.1 Definitions
@@ -2557,21 +2683,21 @@ A requirement's delivery-phase disposition is determined by this test, applied t
 | **DEFERRED-v2** | The requirement exists ONLY to provide anonymity, private ballots, coercion-resistance, or hostile-state safety. It cannot be meaningfully satisfied in conventional-auth v1. |
 | **SUPERSEDED-n/a** | The requirement has been superseded by a later requirement; retained for traceability only. |
 
-**Examples of the intended pattern:** FR-001 (one credential per human) is PARTIAL — v1: one verified account per person via conventional identity check and database duplicate prevention; v2: ZK nullifier-based credential with on-chain uniqueness. FR-030 (ballot unlinkability) is DEFERRED-v2 — it exists only to provide anonymity. FR-018 (automatic activation) is IN-v1 — nothing cryptographic about code-executing a party-state transition.
+**Examples of the intended pattern:** FR-001 (one credential per human) is PARTIAL — v1: one account per verified phone number (SMS verification is a spam speed-bump, NOT a personhood proof; FR-132; MUST NOT claim one-person-one-vote); v2: ZK nullifier-based credential with on-chain uniqueness guarantee. FR-030 (ballot unlinkability) is DEFERRED-v2 — it exists only to provide anonymity. FR-018 (automatic activation) is IN-v1 — nothing cryptographic about code-executing a party-state transition.
 
 **Standing Musts:** requirements classified PARTIAL or DEFERRED-v2 remain **Must FOR DEFINITION B**. They are NOT weakened or deleted — they are phased, with the v1 posture disclosed under FR-131 (§4.45, DES-098). The honesty register (§16.4) and the contradiction surface (§16.5) document what this means for v1 users.
 
 ### 16.3 Classification table
 
-#### 16.3.1 Functional Requirements (FR-001..FR-131)
+#### 16.3.1 Functional Requirements (FR-001..FR-133)
 
 Columns: **ID** · **Short name** · **Priority** · **v1 disposition** · **v1 form** (for PARTIAL rows and IN-v1 rows whose mechanism changes; "—" where the normative text applies identically) · **v2 form** (for PARTIAL and DEFERRED rows) · **Honesty item** (Y = a v1 user might assume the v2 guarantee; the absence MUST be disclosed).
 
 | ID | Short name | Pri | Disposition | v1 form | v2 form | H? |
 |----|-----------|-----|-------------|---------|---------|-----|
-| FR-001 | One credential per human | Must | PARTIAL | One verified account per person; conventional identity check + DB duplicate prevention | ZK nullifier-based credential; on-chain nullifier uniqueness | N |
-| FR-002 | Per-scope single action, cross-scope unlinkability | Must | PARTIAL | DB-enforced one-action-per-scope; cross-scope linkability NOT prevented (same account used across scopes) | ZK scope-bound nullifiers; cross-scope unlinkability technical guarantee | Y |
-| FR-003 | No identity data at rest | Must | IN-v1 | Credential discarded after check; only eligibility result stored; no identity doc, biometric, DOB, address in any store | Same guarantee; ZK circuit ensures discard on-device (FR-126 strengthens) | N |
+| FR-001 | One credential per human | Must | PARTIAL | One account per verified phone number; SMS verification is a spam speed-bump, NOT a personhood proof (FR-132); DB duplicate prevention by phone hash; MUST NOT claim one-person-one-vote in v1 | ZK nullifier-based credential; on-chain nullifier uniqueness; one-person-one-vote guaranteed by construction | N |
+| FR-002 | Per-scope single action, cross-scope unlinkability | Must | PARTIAL | DB-enforced one-action-per-scope; cross-scope linkability NOT prevented (same phone-verified account used across scopes; cite FR-132) | ZK scope-bound nullifiers; cross-scope unlinkability technical guarantee | Y |
+| FR-003 | No identity data at rest | Must | PARTIAL | v1: verified phone number stored as the account credential (identity data, restricted-class; not on public record; FR-133 rate-limiting requires retention); credential doc/biometric/DOB/address discarded after check; phone number MUST NOT appear on any public record | v2: no identity data at rest by construction; ZK circuit checks and discards credential on-device (FR-126); phone number storage eliminated; ZK nullifier only | Y |
 | FR-004 | Attestor plurality and concentration cap | Must | IN-v1 | Plural adapter interface; Phase-1 single-rail limitation dated and recorded (OI-20, FR-121, FR-129) | Same; pluggable adapter interface unchanged | N |
 | FR-005 | Revoke fraudulent credential | Should | IN-v1 | Conventional revocation; DB invalidates future actions | Same | N |
 | FR-006 | Residency without address | Must | IN-v1 | Region-level attested claim; no address stored at any stage | Same | N |
@@ -2699,7 +2825,9 @@ Columns: **ID** · **Short name** · **Priority** · **v1 disposition** · **v1 
 | FR-128 | No stored identity; subpoena test | Must | PARTIAL | No identity documents stored in any form; operator DB CAN be compelled to disclose member↔party mapping and vote direction — subpoena test NOT met in v1 | ZK: operator technically cannot comply; no mapping exists | Y |
 | FR-129 | Attestor-plurality Charter guard | Must | IN-v1 | Single-issuer permanence requires Charter-level re-entry; config flag attempt refused | Same | N |
 | FR-130 | Provisional-party membership cap (100; anti-capture) | Must | IN-v1 | 100-member cap code-enforced; lifts automatically on verified legal registration | Same | N |
-| FR-131 | v1 honesty notice (DES-098) | Must | IN-v1 | Non-dismissable plain-language UI notice before each ballot in v1; states NOT anonymous, NOT receipt-free, NOT coercion-resistant | — (v1-only requirement; v2 replaces with FR-030/031/NFR-003 cryptographic guarantees + DES-063 coercion-safe confirmation surface) | N |
+| FR-131 | v1 honesty notice (DES-098) | Must | IN-v1 | Non-dismissable plain-language UI notice before each ballot in v1; states NOT anonymous, NOT receipt-free, NOT coercion-resistant; carries one-account-per-phone caveat (FR-132) | — (v1-only requirement; v2 replaces with FR-030/031/NFR-003 cryptographic guarantees + DES-063 coercion-safe confirmation surface) | N |
+| FR-132 | v1 phone-based authentication (DES-095 amended, ADR-025) | Must | IN-v1 | SMS verification; one account per verified phone number; MUST NOT claim one-person-one-vote; honesty caveat carried by FR-131 notice (DES-098) | RETIRED on v2 ZK-enrolment swap-in (DES-095 backing switches to ZK nullifier per ADR-024/ADR-025; one-person-one-vote guarantee becomes true by construction) | Y |
+| FR-133 | v1 spam-resistance layer — flag-don't-block (DES-099) | Must | IN-v1 | VoIP/virtual-number intelligence + velocity/device anti-fraud; flagged numbers rate-limited, not hard-blocked; false-positive path first-class; flag events restricted-class | Becomes defence-in-depth in v2 (ZK nullifier provides uniqueness guarantee; spam layer may be retained or retired by architect decision at v2 design increment) | N |
 
 #### 16.3.2 Non-Functional Requirements (NFR-001..NFR-028)
 
@@ -2714,7 +2842,7 @@ Columns: **ID** · **Short name** · **Priority** · **v1 disposition** · **v1 
 | NFR-007 | Reliability / availability SLOs | Must | IN-v1 | Same SLOs | Same | N |
 | NFR-008 | Scalability / capacity | Should | IN-v1 | Same targets | Same | N |
 | NFR-009 | Security audit: zero open critical/high at Gate 2 | Must | IN-v1 | Audits required in both; v1 audit scope excludes ZK circuits and ceremony | Same; broader scope in v2 covers ZK circuits and trusted setup | N |
-| NFR-010 | Data minimisation by construction | Must | IN-v1 | No identity on public record or governance-path stores; restricted stores enumerated in §7 | Same | N |
+| NFR-010 | Data minimisation by construction | Must | IN-v1 | No identity on public record or governance-path stores; restricted stores enumerated in §7 (v1 note: verified phone number is restricted-class credential storage — enumerated in §7 carve-out; see FR-003 partial, FR-132) | Same | N |
 | NFR-011 | Accessibility: WCAG 2.2 AA | Must | IN-v1 | Same in both; FR-131 notice also WCAG AA per DES-081 | Same | N |
 | NFR-012 | Portability: reference device / bandwidth floor | Must | IN-v1 | Same floor; v1 omits ZK proving from install and latency budget | Same | N |
 | NFR-013 | Localisation: 8 launch languages | Must | IN-v1 | Same in both | Same | N |
@@ -2734,7 +2862,7 @@ Columns: **ID** · **Short name** · **Priority** · **v1 disposition** · **v1 
 | NFR-027 | No per-user behavioural telemetry | Must | IN-v1 | No telemetry in both; UT-0525/UT-0740 absence tests | Same | N |
 | NFR-028 | Append-only data lifecycle | Must | IN-v1 | DB append-only constraints; confidential-class carve-out (OI-16) | Same | N |
 
-**Tally — FRs (FR-001..FR-131, excluding superseded):** 129 active FRs classified: **IN-v1 106** · **PARTIAL 19** · **DEFERRED-v2 4** · **SUPERSEDED-n/a 2** (FR-046, FR-062).
+**Tally — FRs (FR-001..FR-133, excluding superseded):** 131 active FRs classified: **IN-v1 107** · **PARTIAL 20** · **DEFERRED-v2 4** · **SUPERSEDED-n/a 2** (FR-046, FR-062).
 
 **Tally — NFRs (NFR-001..NFR-028):** 28 NFRs classified: **IN-v1 24** · **PARTIAL 3** · **DEFERRED-v2 1**.
 
@@ -2758,6 +2886,8 @@ The following guarantees are ones that v1 users might reasonably assume the tran
 | H-12 | **Individual conduct votes are cryptographically private** | In v1 individual conduct votes are not exposed through the platform API (policy); the DB operator CAN read individual conduct vote records. v2 ZK conduct-vote proofs make individual votes cryptographically private even from the operator. | FR-103 (partial) | T-02 |
 | H-13 | **Verified status is private even from the operator** | In v1 verified status is stored in the DB and kept private by policy (API returns aggregate-only); the DB operator CAN read individual verified-status records. v2 ZK proof-of-personhood reveals only that a valid credential exists, nothing about the underlying status attribute. | FR-124 (partial) | T-01, T-03 |
 | H-14 | **No individual-level identity data is available even to the operator (anti-harassment)** | In v1 the platform API does not expose identity; however individual-level data (membership, activity, verified status) exists in the DB and COULD enable targeted harassment by a malicious operator or under legal compulsion. v2 ZK anonymity means no individual-level data exists anywhere in the system. | NFR-024 (partial) | T-01, T-03 |
+| H-15 | **v1 guarantees one-person-one-vote** | v1 phone verification is a spam speed-bump only. One person holding multiple phone numbers CAN create multiple accounts in v1. The one-person-one-vote guarantee requires the v2 ZK nullifier enrolment to be swapped in (ADR-024/ADR-025/DES-095). The FR-131 honesty notice (DES-098) and FR-132 both require this caveat to be stated explicitly in the UI and all product materials. Charter Rule 1 (one human, one vote) is not technically enforced in v1 — see T-06. | FR-132 | T-06 |
+| H-16 | **v1 stores no identity data (no identity at rest)** | v1 stores the verified phone number as the account credential. A phone number is identity data. It is restricted-class (never on the public record, never in governance-path stores) but it EXISTS in the v1 operator database. The FR-133 spam-resistance layer requires retaining phone-number records for rate-limiting and dispute resolution. The v2 ZK design eliminates phone number storage entirely. FR-003 is reclassified PARTIAL for this reason — see T-07. | FR-003 (partial) | T-07 |
 
 ### 16.5 Contradiction surface — for approver decision, not reconciled
 
@@ -2784,4 +2914,7 @@ The following existing Must / BR / NFR / Charter-tenet statements in this docume
 | BR-009/FR-082 anonymity guarantee (T-03) | FR-082 and BR-009 state anonymity for Supporters unconditionally. In v1 the DB holds member↔party. Architect tension T-03 in Doc 03 §10.13.7. | Are FR-082 and BR-009 accepted as v2-only properties whose v1 equivalent is "policy + honest disclosure"? | AWAITING APPROVER CONFIRMATION (T-03) |
 | NFR-003 receipt-freeness — named absolute in the Guarded Layer (T-04) | NFR-003 is a Guarded-Layer named absolute (BR-011, amendable only via the Doc 03 super-process per FR-119). It cannot be waived in v1 unilaterally. Architect tension T-04 in Doc 03 §10.13.7. | Is deferral-with-disclosure (FR-131 + §16.4) acceptable for v1, with NFR-003 remaining a named absolute for Definition B? | AWAITING APPROVER CONFIRMATION (T-04) |
 
-_Note on the five architect tensions (T-01..T-05): these are documented in Doc 03 §10.13.7 / ADR-024 §(c). The above contradiction-surface table cross-references them by ID; the architect's analysis in §10.13.7 is the primary source. This table does not duplicate or contradict that analysis — it applies it at the requirements level._
+| Charter Rule 1 — one human, one vote (T-06) | The Charter layer records one human, one vote as a foundational guarantee of the platform (cited in BR-006 success measure). | Ruling 1 (Rathish, 2026-08-23) is explicit: v1 phone verification is a spam speed-bump, NOT a proof of unique personhood; v1 MUST NOT claim one-person-one-vote. The platform ships with Charter Rule 1 visible but without the mechanism to enforce it (v2 ZK enrolment enforces it). FR-132 records this posture; H-15 requires it to be disclosed. Architect conflict-table formalisation owed in Doc 03 §10.13.7 (ADR-025 this session). Cite: DECISIONS-2026-08-23-V1-AUTH-SPAM-RESISTANCE.md §5 T-06. | AWAITING APPROVER CONFIRMATION (T-06) |
+| FR-003 phone-number storage (T-07) | FR-003 states: "no identity data stored at rest" (a Must, IN-v1). | v1 phone-based auth (Ruling 1) stores the verified phone number as the account credential. A phone number is identity data. FR-003 is reclassified PARTIAL: v1 form stores the phone number restricted-class (not on public record); v2 eliminates storage via ZK. The flag-don't-block rule (FR-133) requires retaining phone-number records for rate-limiting and dispute resolution, deepening this tension. H-16 requires explicit disclosure. Architect conflict-table formalisation owed in Doc 03 §10.13.7. Cite: DECISIONS-2026-08-23-V1-AUTH-SPAM-RESISTANCE.md §5 T-07. | AWAITING APPROVER CONFIRMATION (T-07) |
+
+_Note on architect tensions (T-01..T-07): T-01..T-05 are documented in Doc 03 §10.13.7 / ADR-024 §(c). T-06 and T-07 are surfaced by the 2026-08-23 phone-auth rulings; architect formalisation owed in Doc 03 §10.13.7 / ADR-025 this session. The above contradiction-surface table cross-references tensions by ID; the architect's analysis in §10.13.7 is the primary source. This table does not duplicate or contradict that analysis — it applies it at the requirements level._

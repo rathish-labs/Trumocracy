@@ -73,7 +73,7 @@ IEligibilityVerifier {
 | Method | Semantics |
 |--------|-----------|
 | `verifyEligibility` | Returns true if the member is a unique eligible person for the given action scope. In v1: account lookup in database with conventional session authentication — the check is honest and complete for what it is. In v2: ZK proof verified through `ICredentialAdapter` → on-chain `enrol()` path (ADR-017, DES-069, DES-070). |
-| `isUniqueInScope` | Returns true if the member has NOT already exercised this scope (one-person-one-vote per scope). In v1: conventional database nullifier record (written atomically on first action). In v2: on-chain `nullifierUsed[keccak(scope, N)]` check (DES-001). |
+| `isUniqueInScope` | Returns true if the member has NOT already exercised this scope. In v1: conventional database nullifier record (written atomically on first action) — prevents double-voting from the same account-scope pair; does NOT provide one-person-one-vote (`getProperties().onePersonOneVote = false`; T-06, ADR-025 §(a)). In v2: on-chain `nullifierUsed[keccak(scope, N)]` check (DES-001) — derived from unique personhood proof; genuine one-person-one-vote guarantee. |
 | `getProperties` | Declares which properties this backing provides. v1 returns `{ onePersonOneVote: false, subpoenaResistant: false, unlinkable: false, anonymityFloor: false }`. v2 returns all true. The application MUST read and surface these properties — see DES-098 honesty notice. |
 | `IS_INSECURE_MOCK` | MUST return false in both honest backings. This is how the CI promotion gate distinguishes a disclosed conventional backing from a mock that lies about verifying. See §"Composition check" below. |
 
@@ -129,7 +129,7 @@ tally-proof verification layer; a verifier swap, not a redesign.
 
 | Invariant | How v1 satisfies | How v2 satisfies |
 |-----------|-----------------|-----------------|
-| One-person-one-vote per scope | Conventional nullifier record in database, written atomically | On-chain `nullifierUsed[keccak(scope, N)]` (DES-001) |
+| **One-vote-per-account per scope (v1) / One-vote-per-person per scope (v2)** | Conventional nullifier record in database, written atomically — prevents double-voting from the same account; does NOT provide one-person-one-vote (`getProperties().onePersonOneVote = false`; T-06, ADR-025 §(a)) | On-chain `nullifierUsed[keccak(scope, N)]` (DES-001) — derived from unique personhood proof; genuine one-person-one-vote guarantee |
 | Eligibility scoping (correct region at snapshot time) | Database membership record + snapshot timestamp check | `vote()` checks `publicSignals[0] == proposal.snapshotRoot` (DES-019) |
 | Last-vote-counts | Database UPDATE with atomic overwrite | MACI last-message-wins semantics (FR-032, DES-023) |
 | Verifiable tally output | Publicly auditable SQL aggregate + signed hash on-chain | On-chain ZK tally proof reproducible by anyone (DES-025) |
@@ -192,6 +192,8 @@ for the approver.
 ---
 
 ## (b) The v1 stack decision
+
+> **Amendment (2026-08-23):** The recommendation below is RATIFIED by the approver (Rathish, Ruling 3, DECISIONS-2026-08-23-V1-AUTH-SPAM-RESISTANCE.md §2). The blockchain-as-public-transparent-audit-record design is now the confirmed v1 foundation. v1's story is **transparency-now, privacy-later**: the chain delivers transparency in v1; the ZK layer delivers privacy in v2. Composition confirmed by architect in Doc 03 v2.4.0 §10.13.5 DES-097 ratification note: identical to the blockchain-as-audit-layer boundary in §5.1/ADR-009/FR-108; the chain remains commitments and audit-record only; the conventional DB is the application store; no restricted data on-chain.
 
 ### Recommendation: blockchain as public transparent-audit record only
 

@@ -116,3 +116,143 @@ PASS → product-owner (Priya Raghunathan) sets `Status: Approved` on v2.7.0. SO
 
 Gate 1 APPROVED (2026-08-11). Gate 2 NOT READY. Doc 02 v2.7.0 review: PASS (Cycle 2).
 Review loop complete. Product-owner sets Status: Approved; SOP advances to next phase.
+
+---
+
+## Cycle 1 of new loop — Doc 02 v2.8.0 (2026-08-23)
+
+**Verdict: FAIL**
+**Score: 97%**
+**Critical: 0 | High: 0 | Medium: 1 | Low: 2**
+
+### What I read
+Header and changelog (v2.8.0 additions); §4.46 (FR-132); §4.47 (FR-133); §8 Gherkin for
+FR-132 (3 scenarios) and FR-133 (4 scenarios); §11 Must count table; §12 FR-132/FR-133 trace
+rows; §16.1 Source block; §16.3.1 classification table and tally line; §16.4 H-01..H-16;
+§16.5 full T-01..T-07 contradiction surface. Also read:
+`artifacts/status/DECISIONS-2026-08-23-V1-AUTH-SPAM-RESISTANCE.md` (three rulings, §5 tensions);
+`docs/03-architecture-design-sdd.md` v2.4.1 header and changelog, §10.13.2 DES-095 amendment,
+§10.13.8 DES-099, §15 FR-132/FR-133 rows.
+
+### Obligation checks — all passed
+Decision record exists with three rulings. FR-132 honest (spam speed-bump, not personhood
+proof). FR-133 flag-don't-block with first-class false-positive path. FR-133 Gherkin Scenario
+2 is the false-positive path. H? sweep: 19 H=Y items at v2.8.0, all covered by H-01..H-16.
+H-15 and H-16 wording honest and complete. T-06/T-07 in §16.5 aligned with decision record
+§5 and Doc 03 §10.13.7. §11 Must count = 114. FR-132 traces DES-095 (amended) + ADR-025
+in Doc 03 v2.4.1. FR-133 traces DES-099 in Doc 03 v2.4.1. Catch-up posture recorded for both.
+No regressions in v2.7.0-approved content.
+
+### ISS-01 (Medium — B4 Correctness)
+§16.3.1 FR tally line not updated for v2.8.0. Still reads "FR-001..FR-131, 129 active:
+IN-v1 106 · PARTIAL 19." Correct at v2.8.0: "FR-001..FR-133, 131 active: IN-v1 107 ·
+PARTIAL 20" (FR-132 and FR-133 both IN-v1; FR-003 reclassified IN-v1 → PARTIAL). The stale
+tally gives downstream roles wrong counts, contradicting the table above it.
+
+### ISS-02 (Low — B6 Convention compliance)
+§11 heading label reads "Counts (v2.6.0)" in a v2.8.0 document. Pre-existing issue not
+caught in v2.6.0 or v2.7.0 review cycles (confirmed by tester note 2026-08-23T1045 observation).
+Counts in the table are correct; only the label is stale.
+
+### ISS-03 (Low — B3 Traceability)
+§16 Source block cites "Doc 03 v2.4.0" for DES-095 amended / DES-099 / ADR-025. Doc 03 is
+now at v2.4.1 (Approved). Should cite "Doc 03 v2.4.1 (Approved)".
+
+### Artifact
+`artifacts/reviews/02-requirements-srs-v2.8.0-business-cycle1.md` — full cycle-1 report.
+
+### Routing
+FAIL → product-owner (Priya Raghunathan) for rework. Must fix ISS-01 (Medium). Should fix
+ISS-02 and ISS-03 (both Low). Bump to at minimum v2.9.0 (Medium issue requires minor bump);
+set Status: In Review. After rework: neutral reviewer runs Cycle 2 of the v2.8.0 loop.
+
+## Gate status (v2.8.0 Cycle 1)
+
+Gate 1 APPROVED (2026-08-11). Gate 2 NOT READY. Doc 02 v2.8.0 review: FAIL (Cycle 1 of new
+loop). Routes to product-owner for rework to v2.9.0.
+
+---
+
+## Cycle 2 — Doc 02 v2.9.0 (2026-08-23)
+
+**Verdict: FAIL**
+**Score: 98%**
+**Critical: 0 | High: 0 | Medium: 1 | Low: 1**
+
+### Fix verification
+
+ISS-01 fix (§16.3.1 tally): RESOLVED — tally line now "FR-001..FR-133, 131 active: IN-v1 107
+· PARTIAL 20 · DEFERRED-v2 4 · SUPERSEDED-n/a 2". Independently verified by row count:
+IN-v1 107 ✓, PARTIAL 20 ✓, DEFERRED-v2 4 ✓.
+
+ISS-02 fix (§11 label): RESOLVED — label now "Counts (v2.9.0)" ✓.
+
+ISS-03 fix (§16 Source block): RESOLVED — §16 Source block now cites "Doc 03 v2.4.1
+(Approved)" ✓.
+
+### ISS-A (Medium — B4 Correctness)
+§11 header still reads "131 FR minted (129 active + 2 superseded: FR-046, FR-062)". Correct
+count at v2.9.0: 133 FR minted (131 active + 2 superseded). The ISS-01 fix correctly set the
+§16.3.1 tally to 131 active = 133 minted; §11 header contradicts this. The header was not
+updated when FR-132 and FR-133 were added at v2.8.0, and the v2.9.0 rework corrected only
+the version label. Fix: update to "133 FR minted (131 active + 2 superseded)".
+
+### ISS-B (Low — B3 Traceability)
+§4.46 and §4.47 rationale source annotations still cite "Doc 03 v2.4.0" — not covered by
+ISS-03 fix (which was limited to §16 Source block). Fix: update both to "Doc 03 v2.4.1 (Approved)".
+
+### Artifact
+`artifacts/reviews/02-requirements-srs-v2.9.0-business-cycle2.md` — full cycle-2 report.
+
+### Routing
+FAIL → product-owner (Priya Raghunathan). Fix ISS-A (Medium). Fix ISS-B (Low). Bump to
+minimum v2.10.0 (Medium issue requires minor bump); set Status: In Review.
+
+## Gate status (v2.9.0 Cycle 2)
+
+Gate 1 APPROVED (2026-08-11). Gate 2 NOT READY. Doc 02 v2.9.0 review: FAIL (Cycle 2 of
+loop). Routes to product-owner for rework to v2.10.0.
+
+---
+
+## Cycle 3 — Doc 02 v2.10.0 (2026-08-23)
+
+**Verdict: PASS**
+**Score: 100%**
+**Critical: 0 | High: 0 | Medium: 0 | Low: 0**
+
+### Fix verification
+
+ISS-A fix (§11 minted count): RESOLVED — §11 now reads "133 FR minted (131 active + 2
+superseded: FR-046, FR-062)". Independently verified by row count: IN-v1 107, PARTIAL 20,
+DEFERRED-v2 4; active = 131; minted = 133. ✓
+
+ISS-A co-fix (§11 label): "Counts (v2.10.0)" with maintenance rule "(update this label on
+every version bump — it MUST match the document version number)". ✓
+
+ISS-B fix (§4.46/§4.47 annotations): Both now read "Doc 03 v2.4.1 (Approved)". ✓
+
+Pre-review fixes: §12 v2.8.0 scope-note citation updated to "Doc 03 v2.4.1 (Approved)".
+Active-prose sweep for "Doc 03 v2.4.0" — zero hits in active prose; only changelog entries
+(correct as historical record). ✓
+
+### Internal consistency — all clear
+§11 Counts line (133 minted / 131 active) now matches §16.3.1 tally (131 active / IN-v1 107
+/ PARTIAL 20 / DEFERRED-v2 4 / SUPERSEDED-n/a 2). Must = 114 with FR-132/FR-133 in the
+Must ID list. No internal contradictions.
+
+### No regressions
+All v2.9.0 content intact: §16.4 H-01..H-16, §16.5 T-01..T-07, §16.1 Source block,
+FR-132/FR-133 normative text and Gherkin, §12 trace rows.
+
+### Artifact
+`artifacts/reviews/02-requirements-srs-v2.10.0-business-cycle3.md` — full cycle-3 report.
+
+### Routing
+PASS → product-owner (Priya Raghunathan) sets `Status: Approved` on v2.10.0.
+Review loop complete. SOP advances.
+
+## Gate status (v2.10.0 Cycle 3)
+
+Gate 1 APPROVED (2026-08-11). Gate 2 NOT READY. Doc 02 v2.10.0 review: PASS (Cycle 3).
+Review loop complete. Product-owner sets Status: Approved; SOP advances.

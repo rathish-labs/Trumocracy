@@ -856,3 +856,60 @@ RTM rows: NOT STARTED.
 APPROVER CONFIRMATION. v1 production-readiness bar defined in Doc 13 §3.5.
 
 > **Correction 2026-08-23 (appended after document-review results):** Doc 02 is now **v2.7.0 (Approved; c2 PASS 98%**, `artifacts/reviews/02-requirements-srs-v2.7.0-business-cycle2.md`). Doc 13 is now **v2.2.0 (In Review; pending c2** business-mode review; v2.1.0 c1 FAIL 84%, 0C/1H/2M/2L resolved by rework — `artifacts/reviews/13-project-plan-v2.1.0-business-cycle1.md`).
+
+---
+
+## v1 authentication & spam-resistance rulings — 2026-08-23 (second entry this date)
+
+**Decision record:** `artifacts/status/DECISIONS-2026-08-23-V1-AUTH-SPAM-RESISTANCE.md`
+**Decision-maker:** Rathish (human approver). **Recorded by:** project-manager (Ana-Maria Petrescu).
+
+### The three rulings (summary)
+
+| # | Ruling | Key constraint |
+|---|--------|----------------|
+| **1** | **Phone-based SMS verification** chosen for v1 auth (over email); v1's `IEligibilityVerifier` backing is phone auth | Phone is a spam speed-bump **only** — NOT a proof of unique personhood. v1 MUST NEVER claim one-person-one-vote. |
+| **2** | **Flag-don't-block** spam-resistance layer: VoIP/virtual-number detection + velocity/device anti-fraud; suspicious numbers are **flagged and rate-limited**, not hard-blocked | Legitimate people use VoIP and eSIMs. Wrongly excluding a citizen from a political platform is a serious failure. False-positive risk must be disclosed. |
+| **3** | **Blockchain stays in v1** as the public transparent-audit foundation — every party action on a tamper-proof public record from day one. v1 = transparency-now; v2 = privacy-later | **RATIFIES** ADR-024 §(b) / DES-097 stack recommendation (previously AWAITING APPROVER CONFIRMATION in V1-V2-SPLIT §4(a)); architect to confirm composition in Doc 03 v2.4.0. |
+
+### Application in progress this session
+
+| Document | Version | Work owed | Status |
+|----------|---------|-----------|--------|
+| Doc 02 Requirements | v2.8.0 | FR-132 (phone auth, Must); FR-133 (flag-don't-block spam layer, Must); FR-003 classification reassessment (T-07); H-register update (T-06) | IN PROGRESS |
+| Doc 03 SDD | v2.4.0 | ADR-025; DES-095 amendment; DES-099 (spam layer); T-06/T-07 in conflict table; blockchain composition confirmation | IN PROGRESS |
+| Doc 13 Project Plan | v2.3.0 | Effort-range (a) partially resolved; vendor still open; risk updates; §11 entry | AFTER PO + Arch |
+| Doc 02 v2.8.0 business-mode review | cycle 1 | Neutral reviewer TBA | After v2.8.0 produced |
+| Doc 03 v2.4.0 technical-mode review | cycle 1 | Neutral reviewer TBA | After v2.4.0 produced |
+| Doc 13 v2.3.0 business-mode review | cycle 1 | Neutral reviewer TBA | After v2.3.0 produced |
+
+### Two new tensions surfaced
+
+| ID | Tension | Status |
+|----|---------|--------|
+| **T-06** | Charter Rule 1 (one human, one vote) vs v1 phone-auth — v1 ships with the charter rule visible but without a mechanism to enforce it; honesty register must cover this gap | AWAITING architect conflict-table update (Doc 03 §10.13.7) + approver confirmation |
+| **T-07** | FR-003 (no identity data at rest) vs v1 phone-number storage — a phone number is identity data; FR-003's current IN-v1 classification in §16 requires PO reassessment | AWAITING PO reassessment (Doc 02 §16) + architect update + approver confirmation |
+
+**Gate-2 (Definition B / v2):** NOT READY. Date 2027-05-14 UNCHANGED. T-01..T-05 + T-06 + T-07 are all unresolved Charter-tension items. Items (b)–(f) from V1-V2-SPLIT §4 remain AWAITING APPROVER CONFIRMATION. Item (a) (stack ratification) is now DECIDED by Ruling 3.
+
+---
+
+### Closing state — 2026-08-23 (end of session)
+
+All three upstream documents are now **Approved**:
+
+| Document | Final version | Review path | Verdict |
+|----------|--------------|-------------|---------|
+| Doc 02 Requirements SRS | v2.10.0 | business c1 FAIL 97% → c2 FAIL 98% → c3 PASS 100% | **Approved** |
+| Doc 03 SDD | v2.4.1 | technical c1 FAIL 94% → c2 PASS 97% | **Approved** |
+| Doc 13 Project Plan | v2.4.0 | business c1 FAIL 92% → c2 PASS 96% | **Approved** |
+
+**Test suites green (as of session close):** contracts 95 · protocol 82 · sdk 124 · indexer 16 · web 16 · exit 0.
+
+**Outstanding approver-confirmation set (unchanged — all AWAITING RATHISH):**
+- Charter tensions T-01..T-07 (T-01..T-05 from V1-V2-SPLIT; T-06 Charter Rule 1 vs phone-auth; T-07 FR-003 vs phone-number storage)
+- DEFERRED-Must confirmations (FR-030, FR-031, FR-082, FR-086) — classification as DEFERRED-v2 confirmed by PM classification test; approver acknowledgement not yet recorded
+- NFR-009 v1 re-reading (two-audit bar vs v1 scope)
+- v1 launch-readiness gate date — NOT SET
+- 2027-05-14 referent confirmation (attaches to Definition B)
+- V1-V2-SPLIT §4 items (b)–(f)

@@ -133,7 +133,7 @@ Additional changes made:
 
 | Action | Owner | Priority |
 |--------|-------|----------|
-| Doc 13 v2.2.0 c2 business-mode review (assign neutral, non-owner reviewer) | PM (Ana-Maria Petrescu) | **DONE** — PASS 95%, 0C/0H/0M/2L; `artifacts/reviews/13-project-plan-v2.2.0-business-cycle2.md`; 2026-08-23 |
+| Doc 13 v2.2.0 c2 business-mode review | PM (Ana-Maria Petrescu) | **DONE** — PASS 95%, 0C/0H/0M/2L; `artifacts/reviews/13-project-plan-v2.2.0-business-cycle2.md`; 2026-08-23 |
 | Doc 05 v2.1.0 c1 business-mode review (overdue carry-forward) | PM to assign neutral reviewer | Outstanding |
 | Approver confirmations (a)–(f) per `DECISIONS-2026-08-23-V1-V2-SPLIT.md §4` | Rathish (human approver) | Before v1 implementation |
 
@@ -142,3 +142,120 @@ Additional changes made:
 Two surviving Low issues carried into the next substantive re-plan (matching v2.0.3 precedent — Low issues do not block Approved status):
 - **ISS-01 (Low):** RISK-31 and RISK-33 rows in §6 cite `H-01..H-06` instead of `H-01..H-14` (same stale reference as ISS-M2 but in the risk-table mitigation text, not MS-V1-09/PR-7). Fix in next substantive re-plan.
 - **ISS-02 (Low):** RISK-22..30 rows lack bold-ID formatting (`**RISK-##**`) used by RISK-17..21 and RISK-31..34. Fix in next substantive re-plan.
+
+---
+
+## v1 auth & spam-resistance rulings — decision record (appended 2026-08-23)
+
+Three approver rulings received (Rathish, 2026-08-23, transmitted via coordinator). Decision
+record written; gate-status additive section appended. Docs 02/03/13 not yet updated by PM —
+PO and architect are applying rulings this session; Doc 13 v2.3.0 will follow.
+
+| Ruling | Decision | Key constraint |
+|--------|----------|----------------|
+| 1 — v1 auth | Phone-based SMS verification | Spam speed-bump only; NOT one-person-one-vote proof; v1 must never claim uniqueness |
+| 2 — v1 spam resistance | Flag-don't-block (VoIP detection + velocity/device checks) | Rate-limit suspicious numbers; MUST NOT hard-block; false-positive risk disclosed |
+| 3 — blockchain in v1 | RATIFIED: blockchain as transparent-audit foundation from day one | Transparency-now (chain); privacy-later (ZK in v2); DES-097 / ADR-024 §(b) ratified |
+
+**What resolved:** V1-V2-SPLIT §4 item (a) (stack ratification) — NOW DECIDED (Ruling 3). Doc 13 §3.5 effort-assumption (a) auth mechanism — PARTIALLY RESOLVED (mechanism: phone; vendor: still open).
+
+**Two new tensions surfaced (not in T-01..T-05):**
+- T-06: Charter Rule 1 (one human one vote) vs v1 phone-auth — v1 cannot enforce it; honesty register must cover the gap. AWAITING architect conflict-table update + approver confirmation.
+- T-07: FR-003 (no identity data at rest) vs v1 phone-number storage — current IN-v1 classification in §16 requires PO reassessment. AWAITING PO + architect + approver.
+
+**Artifacts written this step:**
+- `artifacts/status/DECISIONS-2026-08-23-V1-AUTH-SPAM-RESISTANCE.md` — created
+- `artifacts/status/GATE-STATUS-2026-08-09.md` — additive section appended
+- `artifacts/memory-index.json` — new entry appended
+
+---
+
+## Doc 13 v2.3.0 — auth & spam-resistance rulings applied (appended 2026-08-23)
+
+Executed Doc 13 v2.2.0 (Approved) → v2.3.0 following upstream approval of Doc 02 v2.10.0
+(PASS 100%, c3) and Doc 03 v2.4.1 (PASS 97%, c2). Applied the three auth/spam rulings from
+`DECISIONS-2026-08-23-V1-AUTH-SPAM-RESISTANCE.md` surgically across Doc 13.
+
+### Edits applied (summary)
+
+| Section | Change |
+|---------|--------|
+| Header | v2.2.0 → v2.3.0; Approved → In Review; SRS v2.7.0 → v2.10.0; added Doc 03 v2.4.1, ADR-025, DECISIONS file to Sources |
+| Banner | v2.3.0 re-plan note added |
+| §2.1 | 112 Must → **114 Must**; FR-001..FR-131 → FR-001..FR-133; SRS v2.7.0 → v2.10.0 |
+| §3.5.1 | v1 Must-set **108 → 110** (114 − 4 DEFERRED-v2); DES-097 RATIFIED noted |
+| MS-V1-02 | Full rewrite — phone-based SMS (FR-132, ADR-025), spam layer (FR-133, DES-099), DEP-11/DEP-12, flag-don't-block, false-positive path, FR-131 one-account-per-phone caveat |
+| MS-V1-09 | H-01..H-14 → H-01..H-16 |
+| §3.5.3 assumption (a) | Auth DECIDED (phone); stack ratified; vendors open; DEP-11/12 procurement lead time noted as new scheduling constraint |
+| §3.5.3 effort range | **HOLDS at 5–9 months** — phone auth was the blank placeholder (net neutral scope); DEP-11/12 procurement may shift left end if not initiated immediately |
+| §3.5.3 reuse table | New rows: phone-auth (FR-132) and spam-resistance (FR-133) |
+| PR-1 | Extended scope: OTP delivery, SIM-swap/recycling, spam-layer false-positive, vendor API security |
+| PR-6 | Extended: FR-132 one-account-per-phone caveat; FR-133 hard-block prohibition |
+| PR-7 | H-01..H-14 → H-01..H-16 |
+| PR-10 | "110 = 114 total Must − 4 DEFERRED-v2" |
+| §3.5.6 (new) | T-06/T-07 tension table — Charter Rule 1 vs phone-auth; FR-003 vs phone-number storage; both AWAITING APPROVER |
+| §5 DEP-11/DEP-12 | New rows: SMS delivery provider; phone-intelligence API vendor |
+| §6 RISK-35..RISK-39 | New rows: SMS deliverability/cost (RISK-35); SIM-swap account takeover (RISK-36); phone-intelligence false-positive (RISK-37); vendor privacy exposure — phone numbers to DEP-12 (RISK-38); no-phone exclusion residual (RISK-39) |
+| §6 RISK-31/RISK-33 | H-01..H-02/H-06 → H-01..H-16 (carried Low ISS-01 from c2 — now fixed) |
+| §6 RISK-22..30 | Bold-ID `**RISK-##**` → plain `RISK-##` (carried Low ISS-02 from c2 — now fixed) |
+| §13.1 | Document-review row updated: Doc 02 v2.10.0 PASS 100% (c3 Approved); Doc 13 v2.2.0 PASS 95% (c2 Approved, 2L carried); Doc 13 v2.3.0 In Review pending c1 |
+| §11 | v2.3.0 re-plan log entry prepended (newest first) |
+
+### Verified figures
+
+- **v1 Must-set:** 110 = 114 total Must (SRS v2.10.0 §11) − 4 DEFERRED-v2 Must FRs (FR-030, FR-031, FR-082, FR-086). FR-132 and FR-133 are both IN-v1 Must — included in the 114 total, not deferred.
+- **Effort range:** 5–9 months — HOLDS. Reasoning: phone auth fills the blank auth placeholder (net neutral); DEP-11/12 vendor procurement is a new scheduling risk, not a scope addition; database vendor still open.
+- **Carried Lows from c2 (ISS-01 and ISS-02):** BOTH FIXED in v2.3.0.
+
+### New IDs minted in v2.3.0
+
+| Prefix | IDs | Notes |
+|--------|-----|-------|
+| RISK | RISK-35..RISK-39 | Phone-auth and spam-resistance vendor risks |
+| DEP | DEP-11, DEP-12 | SMS delivery provider; phone-intelligence API vendor |
+
+### Open items after v2.3.0
+
+| Item | Owner | Priority |
+|------|-------|----------|
+| Doc 13 v2.3.0 c1 business-mode review (assign neutral reviewer) | PM (Ana-Maria Petrescu) | Immediate |
+| Doc 05 v2.1.0 c1 business-mode review (overdue carry-forward) | PM to assign neutral reviewer | Outstanding |
+| T-06 ruling (Charter Rule 1 vs v1 phone-auth) | Rathish (human approver) | Before v1 auth implementation |
+| T-07 ruling (FR-003 vs phone-number storage) | Rathish (human approver) | Before v1 auth implementation |
+| Approver confirmations (b)–(f) per `DECISIONS-2026-08-23-V1-V2-SPLIT.md §4` | Rathish (human approver) | Before v1 implementation begins |
+| DEP-11/DEP-12 vendor procurement initiated | Rafael Duarte | Before MS-V1-02 — new scheduling constraint |
+| v1 launch-readiness gate date | Rathish (human approver) | NOT SET — awaiting confirmation |
+
+---
+
+## Doc 13 v2.4.0 — c1 review rework (appended 2026-08-23)
+
+Executed Doc 13 v2.3.0 (In Review) → v2.4.0 following cycle-1 business-mode review FAIL (92%,
+0C/0H/1M/1L; `artifacts/reviews/13-project-plan-v2.3.0-business-cycle1.md`). Two surgical fixes.
+
+| Issue | Fix Applied |
+|-------|------------|
+| ISS-01 (Medium) §6 RISK-32 | RISK-32 title, description, and mitigation fully rewritten for phone-based SMS OTP authentication. Old text described "password, passkey, or OAuth" / "PKCE for OAuth" — pre-Ruling-1 language that survived the v2.3.0 re-plan. New text covers OTP interception (SS7 hijack), replay in OTP grace window, session-fixation in the SMS auth context. New mitigation: strict OTP expiry (≤ 60 s), single-use enforcement, rate limiting via DES-099, session expiry; ADR-025 §(c-iv) residual accepted; RISK-36 cross-referenced. Carried-by updated: added ADR-025 and FR-132. |
+| ISS-02 (Low) §2.1 ADR range | "ADR-001…ADR-024" → "ADR-001…ADR-025" (ADR-025 Accepted 2026-08-23). |
+
+Auth-assumption sweep (password/passkey/OAuth/PKCE/email-verification across all active prose): RISK-32 was the only instance — no other pre-ruling auth language found.
+
+ADR-range sweep (citations stopping at ADR-023/ADR-024): no other instances found.
+
+Additional changes:
+- Header: v2.3.0 → v2.4.0; Status: In Review (pending c2)
+- Banner: v2.4.0 re-plan note prepended
+- §13.1 document-review row updated: Doc 13 v2.3.0 FAIL c1 92% recorded; v2.4.0 rework pending c2
+- §11 re-plan log: v2.4.0 entry prepended (newest first)
+- `artifacts/memory-index.json`: new entry appended
+
+---
+
+## Doc 13 v2.4.0 APPROVED — session close (appended 2026-08-23)
+
+Cycle-2 business-mode review PASS (96%, 0C/0H/0M/0L; `artifacts/reviews/13-project-plan-v2.4.0-business-cycle2.md`).
+
+- `docs/13-project-plan.md`: Status set to Approved (c2 report cited in header).
+- §13.1 gate-readiness row updated: Doc 13 v2.4.0 PASS 96% Approved 2026-08-23.
+- `artifacts/status/GATE-STATUS-2026-08-09.md`: closing state entry appended to the auth-rulings section — all three upstream documents Approved, test suites green, outstanding approver-confirmation set listed.
+- `artifacts/memory-index.json`: closing entry appended.
