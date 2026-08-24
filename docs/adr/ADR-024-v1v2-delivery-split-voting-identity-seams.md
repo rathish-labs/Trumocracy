@@ -134,6 +134,7 @@ tally-proof verification layer; a verifier swap, not a redesign.
 | Last-vote-counts | Database UPDATE with atomic overwrite | MACI last-message-wins semantics (FR-032, DES-023) |
 | Verifiable tally output | Publicly auditable SQL aggregate + signed hash on-chain | On-chain ZK tally proof reproducible by anyone (DES-025) |
 | No retrospective result change after tally closes | Database lock after `computeTally` enacts result | On-chain immutable tally root |
+| **`verifyEligibility` call-site placement (both backings — MUST NOT gate account creation or party-join)** | `verifyEligibility` MUST be invoked at the three FR-123 COUNTING-action call sites (strength-number contribution, binding-ballot admission, candidacy nomination); MUST NOT be called as a precondition of account creation or party-join. The "live session" in the v1 backing description means a session active at the time of the COUNTING action, not a session-establishment check at login. Account creation and party-join use FR-020 / FR-122 (phone verification only) — `verifyEligibility` is not called on those paths. (DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md; see [AMENDMENT 2026-08-24] below.) | `verifyEligibility` MUST be invoked at the three FR-123 COUNTING-action call sites; MUST NOT be called as a precondition of account creation or party-join. The v2 backing routes through `ICredentialAdapter` → `PersonhoodRegistry` at COUNTING-action scope (DES-069, DES-070) — identical call-site placement to v1. (DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md.) |
 
 ### Properties ONLY the v2 backing provides
 
@@ -415,3 +416,65 @@ is for the approver's record. Deferring it means the v1 implementation proceeds 
 documented decision on the most significant tension (T-01, Charter Rule 6). That is precisely
 the kind of silent reconciliation the VEKTOR handbook and the architect's conflict-surfacing
 obligation prohibit.
+
+---
+
+## [AMENDMENT — 2026-08-24]
+
+**Ruling:** DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md (approver, Rathish, 2026-08-24).
+**Applied to ADR-024 by:** Ravi Deshmukh (architect), Doc 03 v2.6.1 rework cycle 1.
+**Doc 03 reference:** §10.13.2 DES-095 normative call-site placement; §12 ADR-024 row annotation.
+
+### Call-site placement — normative rule for both backings
+
+`verifyEligibility` MUST be invoked at the three FR-123 COUNTING-action call sites:
+
+- strength-number contribution,
+- binding-ballot admission, and
+- candidacy nomination.
+
+`verifyEligibility` MUST NOT be called as a precondition of account creation or party-join.
+This placement is **identical in the v1 conventional backing and the v2 ZK backing** — it is
+the architectural reason v1 and v2 share one participation model (verification gates COUNTING,
+never joining; FR-020 and FR-122 remain absolute). This rule is recorded in the invariants
+table above as the "verifyEligibility call-site placement" row.
+
+### v1 backing description — disambiguation
+
+The original v1 backing description reads: "A member is 'eligible' if they have a live session,
+their account is associated with the correct region, and they have not already exercised the
+given scope (conventional nullifier record)."
+
+The phrase **"live session"** in this description means a session active **at the time the
+COUNTING action is attempted** — not a session-establishment check at login. A participant who
+holds a live session but has not yet attempted a COUNTING action has NOT yet been subject to
+`verifyEligibility`. The correct reading is:
+
+> A member is eligible (to take a specific FR-123 COUNTING action) if, at the moment the
+> action is requested, they have a live session, their account is associated with the correct
+> region, and they have not already exercised the given scope (conventional nullifier record).
+
+Account creation and party-join are governed exclusively by FR-020 (absolute join right) and
+FR-122 (open-tier access with phone verification alone). `verifyEligibility` is NOT invoked
+on account-creation or party-join paths in v1. The method semantics table row for
+`verifyEligibility` describes the check as "for the given action scope" — the scope parameter
+in the call signature is always a FR-123 COUNTING-action scope, never an account-creation or
+party-join scope.
+
+### Mirror with v2
+
+The v2 backing's call-site placement is identical: `verifyEligibility` routes through
+`ICredentialAdapter` → `PersonhoodRegistry` at COUNTING-action scope (DES-069, DES-070,
+ADR-017). Account creation and party-join do not call `verifyEligibility` in v2 either —
+phone verification (FR-122) is the sole account-creation gate; `PersonhoodRegistry.enrol()`
+is triggered when a participant first attempts a COUNTING action, not when they create an
+account or join a party.
+
+### What is NOT changed by this amendment
+
+- The method signature `verifyEligibility(memberId, regionId, scope, proof)` is unchanged.
+- `getProperties().onePersonOneVote = false` for v1 is unchanged.
+- T-06 ACCEPTED — DEFERRED WITH DISCLOSURE status is unchanged; the multiple-legitimate-IDs
+  residual remains open (not closed by this ruling).
+- The `IS_INSECURE_MOCK() = false` requirement for both honest backings is unchanged.
+- The IBallotService seam and its v1/v2 backings are not affected by this ruling.
