@@ -256,3 +256,65 @@ Review loop complete. SOP advances.
 
 Gate 1 APPROVED (2026-08-11). Gate 2 NOT READY. Doc 02 v2.10.0 review: PASS (Cycle 3).
 Review loop complete. Product-owner sets Status: Approved; SOP advances.
+
+---
+
+## Cycle 1 of new loop — Doc 02 v2.11.0 (2026-08-23)
+
+**Verdict: PASS**
+**Score: 99%**
+**Critical: 0 | High: 0 | Medium: 0 | Low: 1**
+
+### What I read
+
+Header and changelog (v2.11.0 additions); §4.46 FR-132 full 5-part normative text and
+rationale; §4.47 FR-133 normative text and rationale (scope-asymmetry clarification);
+§8 Gherkin scenarios 3–6 for FR-132 and scenarios 3–4 for FR-133; §11 Must count table
+and label; §16 Source block (lines 2712–2727); §16.4 H-01..H-19 (full register); §16.5
+T-01..T-08 plus new BR-003/FR-020 AWAITING row. Also read:
+`artifacts/status/DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md` (ruling, retention
+rule, five confirmations §4, open items §6); `docs/03-architecture-design-sdd.md`
+§10.13.9 DES-100 (allowlist, denylist, HMAC design) for field-for-field comparison.
+
+### Review obligations — all passed
+
+1. **FR-132 vs DES-100 field-for-field:** Allowlist 6 fields match exactly; denylist 9
+   items match exactly. No gaps or extra fields on either side. ✓
+2. **H? sweep both directions:** All 19 H entries (H-01..H-19) map to PARTIAL/DEFERRED-v2
+   FR/NFR rows; no H=Y row without an H entry; no orphaned H entry. H-17 (vendor sees
+   document), H-18 (subject_id_hash retained), H-19 (no-ID exclusion) all honest and
+   sufficient. ✓
+3. **FR-133 scope asymmetry:** Stated unambiguously in both rationale box and normative
+   text. Flag-don't-block governs spam layer only; ID check is a hard eligibility gate.
+   False-positive path (FR-133) and ID exclusion (FR-132) are separate mechanisms. ✓
+4. **CONFIRMED markings:** T-01..T-05 CONFIRMED; T-06 IMPROVED; T-07 RESHAPED; T-08
+   ARCHITECT-RESOLVED. All match decision record §4 exactly. No overclaim. V1 gate date
+   is NOT SET — no date appears in the document. ✓
+5. **BR-003/FR-020 contradiction row:** Genuinely surfaced as AWAITING APPROVER
+   CONFIRMATION. Full tension stated; affected population (refugees, stateless persons)
+   named; not softened. ✓
+6. **Standard checks:** §11 label "Counts (v2.11.0)" ✓; Must 114 ✓; FR minted 133 (131
+   active + 2 superseded) ✓; tally IN-v1 107 / PARTIAL 20 / DEFERRED-v2 4 unchanged ✓;
+   FR-132 traces DES-095/DES-100/ADR-025 ✓; catch-up posture recorded ✓; §8 Gherkin
+   scenarios present ✓; changelog accurate ✓; no regressions from v2.10.0 ✓.
+
+### ISS-01 (Low — B2/B4 Documentation accuracy)
+
+Doc 03 version pin stale. Multiple locations cite "Doc 03 v2.5.0 (In Review)" but Doc 03
+is at v2.5.1 (Approved). Locations: §16 Source block, §4.46 rationale, H-17 entry,
+§16.5 T-01..T-08 rows and footer note. Fix: sweep all occurrences, replace with
+"Doc 03 v2.5.1 (Approved)". Normative content correct; only the version label is stale.
+
+### Artifact
+
+`artifacts/reviews/02-requirements-srs-v2.11.0-business-cycle1.md` — full cycle-1 report.
+
+### Routing
+
+PASS → product-owner (Priya Raghunathan) sets `Status: Approved` on v2.11.0. The Low
+issue (ISS-01) may be fixed in the next version without re-review. SOP advances.
+
+## Gate status (v2.11.0 Cycle 1)
+
+Gate 1 APPROVED (2026-08-11). Gate 2 NOT READY. Doc 02 v2.11.0 review: PASS (Cycle 1).
+Review loop complete. Product-owner sets Status: Approved; SOP advances.

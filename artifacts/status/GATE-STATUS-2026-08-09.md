@@ -894,6 +894,45 @@ APPROVER CONFIRMATION. v1 production-readiness bar defined in Doc 13 §3.5.
 
 ---
 
+## v1 identity verification ruling & open-confirmation closure — 2026-08-23 (third entry this date)
+
+**Decision record:** `artifacts/status/DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md`
+**Decision-maker:** Rathish (human approver). **Recorded by:** project-manager (Ana-Maria Petrescu).
+
+### The ruling in brief
+
+v1 identity = **phone (SMS) + government-ID document check at signup**. Consumer-app model (dating-platform tier). v1 anti-fraud / anti-Sybil layer — NOT the v2 anonymity guarantee.
+
+**Retention rule (verify-and-discard):**
+- Government ID verified to produce only a "verified adult, region X" FLAG. Platform MUST NOT store the document or any reversible copy. **Keep the result, discard the source.**
+- Phone number stored **HASHED (one-way)** — sufficient to enforce one-account-per-number; never plaintext.
+- v1 = "real-person verified, not anonymous". v2 = "unique person proven without the platform ever seeing identity."
+
+### Confirmations folded in
+
+| Item | Disposition |
+|------|-------------|
+| T-01..T-05 Charter tensions | **CONFIRMED** — deferred-with-disclosure dispositions accepted |
+| FR-030, FR-031, FR-082, FR-086 (DEFERRED-v2 Musts) | **CONFIRMED** — Definition-B-only; remain Must for v2; not weakened or deleted |
+| NFR-009 v1 re-reading | **CONFIRMED** — one OWASP-class pen test for v1; two cryptographic audits stay for v2 |
+| 2027-05-14 | **CONFIRMED** — Gate-2 referent for Definition B (also closes "2027-03-15" carry-forward from 2026-08-21 budget ruling) |
+| v1 gate date | **NOT CLOSED** — MS-V1-LRG mechanism confirmed; **date still NOT SET — explicit approver value required** |
+
+### Application in progress
+
+| Document | Version | Changes owed | Status |
+|----------|---------|--------------|--------|
+| Doc 03 SDD | v2.5.0 | ADR-025 amended (ID check + retention rule + 3 architect Qs answered); DES-095 updated; new DES for ID-check flow | **OWED — architect first** |
+| Doc 02 Requirements | v2.11.0 | FR-132 amended (ID check co-required, verify-and-discard); FR-003 PARTIAL scope updated; H-register new items; T-06/T-07 updated | After Doc 03 v2.5.0 |
+| Doc 13 Project Plan | v2.5.0 | MS-V1-02 updated; new DEP; RISK updates | After Doc 02 v2.11.0 |
+| Reviews | — | Doc 03 v2.5.0 technical c1; Doc 02 v2.11.0 business c1; Doc 13 v2.5.0 business c1 | Sequential per review loop |
+
+**CON-015 legal opinion:** now **more load-bearing** — the ruling adds government-ID document verification to v1; document verification in the India/Aadhaar pilot is precisely the legally sensitive area CON-015 covers. Must be in hand ≥ 8 weeks before Gate 2.
+
+**Gate-2 (Definition B / v2):** NOT READY. Date 2027-05-14 **CONFIRMED**. T-01..T-05 CONFIRMED (deferred-with-disclosure). T-06/T-07 remain open (reshaped by this ruling; architect Qs gate finalisation). V1-V2-SPLIT §4 items (b)–(f): (a) DECIDED (Ruling 3 prior record); (b)–(f) status unchanged — see prior records.
+
+---
+
 ### Closing state — 2026-08-23 (end of session)
 
 All three upstream documents are now **Approved**:
@@ -913,3 +952,27 @@ All three upstream documents are now **Approved**:
 - v1 launch-readiness gate date — NOT SET
 - 2027-05-14 referent confirmation (attaches to Definition B)
 - V1-V2-SPLIT §4 items (b)–(f)
+
+---
+
+### Closing state — 2026-08-24 (ruling fully applied)
+
+All three upstream documents are now **Approved**:
+
+| Document | Final version | Review path | Verdict |
+|----------|--------------|-------------|---------|
+| Doc 02 Requirements SRS | v2.11.0 | business c1 PASS 99% | **Approved** |
+| Doc 03 SDD | v2.5.1 | technical c1 FAIL 93% → c2 PASS 97% | **Approved** |
+| Doc 13 Project Plan | v2.6.0 | business c1 FAIL 91% → c2 PASS 95% | **Approved** |
+
+**Architectural changes applied:** ADR-025 amended with §(e) (ID-check retention discipline; architect Q1/Q2/Q3 answers; consequence c-viii). DES-100 minted (field-level retention: allowlist `id_verified_flag`/`age_verified`/`issuing_region`/`subject_id_hash`/`phone_hash`/`verified_at`; HMAC-SHA-256 + KMS-held pepper; vendor no-retention clause). Honesty register expanded to H-01..H-19 (H-17 vendor sees document; H-18 derived identifier retained; H-19 no gov-ID = no enrolment).
+
+**Tensions:** T-06 IMPROVED-not-closed (Charter Rule 1 vs phone auth — disclosed, open for approver). T-07 reshaped, pending CON-015. T-08 architect-resolved. Government-ID vs BR-003/FR-020 row: **AWAITING APPROVER ruling**.
+
+**Confirmations closed this ruling:** T-01..T-05 CONFIRMED · DEFERRED-v2 Musts (FR-030/031/082/086) CONFIRMED · NFR-009 v1 re-reading CONFIRMED (one pen test) · 2027-05-14 Gate-2 referent CONFIRMED. **v1 gate date: NOT SET — explicit approver value still required.**
+
+**CON-015:** now CRITICAL PATH gating MS-V1-02. No enrolment work begins until it clears. Must be initiated immediately. Effort range revised 5–9 → 6–10 months.
+
+**Test suites green (as of session close):** contracts 95 · protocol 82 · sdk 124 · indexer 16 · web 16 · exit 0.
+
+**Outstanding:** Doc 01 and Doc 05 business-mode review reports not yet produced — Gate 1 cannot be presented until these clear. CON-015 immediate start required (Sofia Marchetti). DEP-11/12/13 vendor procurement (Rafael Duarte). v1 gate date and T-06/T-08 rulings (Rathish).

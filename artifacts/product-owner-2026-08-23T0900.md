@@ -300,3 +300,80 @@ ISS-A (Medium): §11 Counts line corrected — "133 FR minted (131 active + 2 su
 ISS-B (Low): §4.46 inline annotation "Doc 03 v2.4.0" → "Doc 03 v2.4.1 (Approved)"; §4.47 inline annotation "Doc 03 v2.4.0" → "Doc 03 v2.4.1 (Approved)".
 
 `docs/02-requirements-srs.md` → **v2.10.0** (**Approved**, c3 PASS 100%, 0C/0H/0M/0L; `artifacts/reviews/02-requirements-srs-v2.10.0-business-cycle3.md`). Post-edit citation sweep (no version bump): §12 v2.8.0 scope note "Doc 03 v2.4.0" → "Doc 03 v2.4.1 (Approved)" fixed. Full active-prose sweep found no other stale cross-document pins — all remaining v2.3.x/v2.4.0 occurrences are historical SRS self-annotations or Gherkin version comments, not cross-doc version pins. v2.10.0 changelog appended with citation-fix note.
+
+## Rework section 5 — v2.11.0 (2026-08-23, same session)
+
+**Trigger:** New approver ruling (`artifacts/status/DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md`). Source material read: the ruling, Doc 03 v2.5.0 §10.13.7 (conflict table CONFIRMED/IMPROVED/RESHAPED/ARCHITECT-RESOLVED), Doc 03 v2.5.0 §10.13.9 (DES-100 field-level allowlist/denylist/HMAC design, Q-1/Q-2/Q-3), ADR-025 §(e).
+
+**Edits made to `docs/02-requirements-srs.md` → v2.11.0 (In Review):**
+
+1. **Header:** v2.10.0 Approved → v2.11.0 In Review; changelog prepended (full summary of all changes below).
+
+2. **§4.46 heading + rationale block (FR-132):** Renamed to "v1 identity verification — IEligibilityVerifier backing (DES-095 amended, DES-100, ADR-025)". Rationale expanded: phone SMS + government-ID document check; verify-and-discard model; "real-person verified, not anonymous" posture; same-document deduplication via `subject_id_hash` improves but does NOT close one-person-one-vote gap; vendor no-retention clause required. Source updated to cite DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md, DES-100, ADR-025 §(e).
+
+3. **FR-132 normative text (§4.46):** Fully rewritten. Now requires: (a) phone SMS (phone_hash stored HMAC-SHA-256/KMS-pepper, never plaintext); (b) government-ID document check with verify-and-discard — DES-100 allowlist (id_verified_flag, age_verified, issuing_region, subject_id_hash, phone_hash, verified_at) enumerated normatively, denylist enumerated normatively; (c) subject_id_hash deduplication — duplicate-document refused regardless of phone; (d) honesty posture — MUST NOT claim anonymity or one-person-one-vote; (e) vendor no-retention contractual clause required.
+
+4. **§4.47 heading + rationale block (FR-133):** Rationale expanded with critical asymmetry paragraph: flag-don't-block governs spam layer ONLY; government-ID check is a hard eligibility gate; false-positive path handles VoIP not no-ID citizens. New tension recorded against BR-003/FR-020, routed to §16.5.
+
+5. **FR-133 normative text (§4.47):** Added explicit sentence: "Scope of flag-don't-block: the flag-don't-block rule applies ONLY to the spam-resistance layer signals enumerated above; it does NOT apply to the government-ID eligibility gate (FR-132 §(b))."
+
+6. **§8 Gherkin (FR-132):** Scenario 3 updated (improved caveat — same-document dedupe + multiple-IDs still defeats); three new scenarios added: Scenario 4 (verify+discard — allowlist persists, denylist absent); Scenario 5 (duplicate-document refusal via subject_id_hash); Scenario 6 (no-ID denied with disclosure).
+
+7. **§16 Source block:** Updated to cite DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md, Doc 03 v2.5.0 (In Review) §10.13.7, §10.13.9, ADR-025 §(e).
+
+8. **§16.3.1 FR-001 row:** v1-form updated to phone+ID check, phone_hash AND subject_id_hash deduplication; "real-person verified" posture; MUST NOT claim one-person-one-vote (multiple IDs still defeat).
+
+9. **§16.3.1 FR-002 row:** v1-form updated to cite subject_id_hash improves same-document deduplication across scopes but does not provide cross-scope unlinkability.
+
+10. **§16.3.1 FR-003 row:** Reshaped — phone_hash + subject_id_hash stored HMAC (improvement over plaintext, both are derived identity data); denylist discarded; CON-015 governs legal classification.
+
+11. **§16.3.1 FR-132 row:** Updated v1-form to phone+ID check, verify-and-discard, allowlist/denylist, same-document deduplication, "real-person verified" posture, vendor no-retention clause, CON-015 governs.
+
+12. **§16.3.2 NFR-004 row:** Annotated — subject_id_hash same-document deduplication improves Sybil resistance; multiple-IDs vector remains.
+
+13. **§16.3.2 NFR-010 row:** Updated — phone_hash and subject_id_hash restricted-store carve-out under DES-100 allowlist; CON-015 governs.
+
+14. **§16.4 H-15:** Updated — same-document dedupe improves, T-06 status IMPROVED not closed, multiple-IDs vector stands, `getProperties().onePersonOneVote = false` unchanged.
+
+15. **§16.4 H-16:** Updated — phone stored as HMAC-SHA-256 hash (improvement over plaintext); both phone_hash and subject_id_hash are derived identity data; T-07 RESHAPED.
+
+16. **§16.4 H-17 minted:** ID-check vendor sees document; non-retention depends on vendor contract; risk recorded in Doc 01 §E3 and DES-100 §Q-2.
+
+17. **§16.4 H-18 minted:** subject_id_hash retained as derived identifier; deduplication utility vs identity-surface deepening; CON-015 governs.
+
+18. **§16.4 H-19 minted:** No government ID = no enrolment in v1; political platform exclusion; analogous to ADR-016 Aadhaar exclusion; AWAITING APPROVER CONFIRMATION.
+
+19. **§16.5 T-01..T-05:** Status changed AWAITING APPROVER CONFIRMATION → **CONFIRMED** (Rathish, 2026-08-23; DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md §4). All five confirmations recorded with source citation.
+
+20. **§16.5 FR-030/031/082/086 DEFERRED-v2:** Status → **CONFIRMED** (Definition-B-only).
+
+21. **§16.5 T-06:** Status → **T-06 IMPROVED — gap acknowledged**. Same-document dedupe materially improves; multiple-IDs vector stands; `getProperties().onePersonOneVote = false` unchanged. Cite: Doc 03 v2.5.0 §10.13.7.
+
+22. **§16.5 T-07:** Status → **T-07 RESHAPED — CON-015 governs**. Hashed storage accepted; legal classification of phone_hash/subject_id_hash to be resolved by CON-015.
+
+23. **§16.5 T-08 added:** FR-004 plurality vs single-vendor ID-check provider. **ARCHITECT-RESOLVED** (Doc 03 v2.5.0 §10.13.7 T-08): Phase-1 single-vendor operational limitation; provider-agnostic architecture; Phase 2 adds second provider.
+
+24. **§16.5 new tension row:** Government-ID eligibility gate vs BR-003/FR-020. **AWAITING APPROVER CONFIRMATION** — does the approver accept no-government-ID exclusion as a v1 limitation disclosed under FR-131 + §16.4 (H-19), or must a non-document fallback path be specified for v1?
+
+25. **§16.5 note updated:** Reflects T-01..T-05 CONFIRMED; T-06 IMPROVED; T-07 RESHAPED; T-08 ARCHITECT-RESOLVED; government-ID tension AWAITING APPROVER CONFIRMATION.
+
+26. **CON-015 annotation (§9):** CRITICAL PATH annotation added — eight retention questions from DES-100 routed to CON-015 (India DPDP Act, Aadhaar Act 2016, GDPR); no enrolment sprint begins without CON-015 cleared.
+
+27. **§11 heading:** "Counts (v2.10.0)" → "Counts (v2.11.0)".
+
+28. **§12 v2.11.0 scope note:** Added — records FR-132/FR-133 amendment posture, DES-100 source, ADR-025 §(e), T-status updates, CON-015 critical path, Doc 03 v2.5.0 In Review pin.
+
+**IDs touched:** FR-001, FR-002, FR-003, FR-132, FR-133 amended. NFR-004, NFR-010 annotated. H-15, H-16 updated. H-17, H-18, H-19 minted. T-01..T-08 status updated. CON-015 annotated. No new FR/NFR minted; Must count stays at 114.
+
+**Open items carried forward:**
+- CON-015 CRITICAL PATH — legal opinion on DES-100 eight-question scope must be obtained before enrolment sprint. Owner: Sofia Marchetti.
+- Government-ID vs BR-003/FR-020 tension AWAITING APPROVER CONFIRMATION (Rathish).
+- US for FR-131, FR-132, FR-133 owed at next catch-up.
+- TC and RTM rows for FR-131, FR-132, FR-133 owed Phase 3.
+- Doc 03 cascade annotation owed (§12 pre-allocation error FR-130 vs FR-131 for DES-098) — architect-owned.
+- Doc 03 v2.5.0 In Review: this document pins it at v2.5.0 In Review; §16 Source block will be updated to v2.5.0 Approved when the architect's review concludes.
+
+`docs/02-requirements-srs.md` → **v2.11.0** (**Approved**, c1 PASS 99%, 0C/0H/0M/1L; `artifacts/reviews/02-requirements-srs-v2.11.0-business-cycle1.md`).
+
+**Carried Low debt — ISS-01 (authorised by reviewer; deferred to next substantive Doc 02 increment per Doc 13 v2.0.3 precedent):**
+ISS-01: All occurrences of "Doc 03 v2.5.0 (In Review)" in active prose are stale — Doc 03 is now **v2.5.1 (Approved)**. Affected locations: §16 Source block, §4.46 rationale inline source note, H-17 (§16.4), and the §16.5 T-row source citations and footer note. The reviewer authorised fixing this without re-review in the next substantive increment. The next editor MUST sweep these four locations and replace "Doc 03 v2.5.0 (In Review)" with "Doc 03 v2.5.1 (Approved)" as the first pre-edit step.

@@ -259,3 +259,154 @@ Cycle-2 business-mode review PASS (96%, 0C/0H/0M/0L; `artifacts/reviews/13-proje
 - §13.1 gate-readiness row updated: Doc 13 v2.4.0 PASS 96% Approved 2026-08-23.
 - `artifacts/status/GATE-STATUS-2026-08-09.md`: closing state entry appended to the auth-rulings section — all three upstream documents Approved, test suites green, outstanding approver-confirmation set listed.
 - `artifacts/memory-index.json`: closing entry appended.
+
+---
+
+## v1 identity verification ruling & confirmations — decision record (appended 2026-08-23)
+
+Third decision record this date. Ruling: v1 identity = phone (SMS) + government-ID document check (verify-and-discard; hashed phone). Five confirmations received; one NOT CLOSED.
+
+| Item | Disposition |
+|------|-------------|
+| T-01..T-05 | CONFIRMED — deferred-with-disclosure accepted |
+| FR-030/031/082/086 (DEFERRED-v2 Musts) | CONFIRMED — Definition-B-only; not weakened |
+| NFR-009 v1 re-reading | CONFIRMED — one OWASP pen test for v1; two crypto audits for v2 |
+| 2027-05-14 | CONFIRMED — Gate-2 referent for Definition B; closes 2027-03-15 carry-forward |
+| v1 gate date | NOT CLOSED — MS-V1-LRG mechanism confirmed; date still NOT SET |
+
+**Architect deliverable (three Qs):** Q-1 provider return values and what we store; Q-2 hashed-phone brute-force residual and mitigation; Q-3 which retention rules are legal-review-dependent. Plus FR-004 plurality question re: v1 ID-verification provider.
+
+**CON-015 now more load-bearing** — government-ID verification in the India/Aadhaar pilot is precisely the legally sensitive area.
+
+**Artifacts written this step:**
+- `artifacts/status/DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md` — created
+- `artifacts/status/GATE-STATUS-2026-08-09.md` — third additive section appended
+- `artifacts/memory-index.json` — new entry appended
+
+---
+
+## Doc 13 v2.5.0 — identity ruling + confirmations applied (appended 2026-08-23)
+
+Executed Doc 13 v2.4.0 (Approved) → v2.5.0. Upstream Approved: Doc 02 v2.11.0 (c1 PASS 99%); Doc 03 v2.5.1 (c2 PASS 97%).
+
+### Confirmations applied
+
+| Item | Disposition |
+|------|-------------|
+| NFR-009 v1 re-reading | **CONFIRMED** — one OWASP-class pen test for v1; two crypto audits for v2 |
+| 2027-05-14 Gate-2 referent | **CONFIRMED** — Definition B; "2027-03-15" carry-forward CLOSED |
+| T-01..T-05 Charter tensions | **CONFIRMED** — deferred-with-disclosure accepted |
+| FR-030/031/082/086 DEFERRED-v2 Musts | **CONFIRMED** — Definition-B-only; not weakened |
+| v1 gate date | **NOT SET** — approver supplied no date; still required |
+
+### Key edits summary
+
+| Section | Change |
+|---------|--------|
+| Header | v2.4.0 → v2.5.0; Approved → In Review; SRS v2.10.0 → v2.11.0; Doc 03 v2.4.1 → v2.5.1; DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md added |
+| §2.1 | SRS pin → v2.11.0 |
+| §3.5.1 | DEFERRED-v2 CONFIRMED noted; "New in v1" updated with DES-100, subject_id_hash |
+| MS-V1-02 | Extended: gov-ID check + DES-100 (allowlist/denylist, HMAC+KMS pepper, subject_id_hash dedup, vendor no-retention clause) + DEP-13; CON-015 CRITICAL PATH noted |
+| MS-V1-09 | H-01..H-16 → H-01..H-19 |
+| §3.5.3 assumptions | Identity check DECIDED; DEP-13; CON-015 CRITICAL PATH (must start immediately) |
+| §3.5.3 effort range | **5–9 → 6–10 months** — ID check is genuinely new scope; CON-015 hard gate on MS-V1-02 |
+| §3.5.3 reuse table | DES-100 and gov-ID check added |
+| NFR-009 note | AWAITING → CONFIRMED |
+| PR-1 | Extended: ID-check flow, field-level denylist audit, pepper/KMS, vendor no-retention confirmation |
+| PR-6 | H-17/18/19 disclosure; H-19 prominence at sign-up entry |
+| PR-7 | H-01..H-16 → H-01..H-19 |
+| §3.5.5 | Gate-2 CONFIRMED; v1-LRG mechanism CONFIRMED / date NOT SET; T-01..T-05 CONFIRMED |
+| §3.5.6 | T-06 IMPROVED-not-closed; T-07 reshaped (pending CON-015); T-08 AWAITING APPROVER |
+| §5 | DEP-13 added |
+| §6 | RISK-40..43 added; §6 header note updated |
+| §13.1 | Review row updated |
+| §11 | v2.5.0 re-plan log entry prepended |
+
+### New IDs minted
+
+| Prefix | IDs | Notes |
+|--------|-----|-------|
+| DEP | DEP-13 | ID-verification provider |
+| RISK | RISK-40..RISK-43 | Gov-ID check risks |
+
+---
+
+## Doc 13 v2.6.0 — ISS-01/ISS-02 rework (appended 2026-08-23)
+
+Executed Doc 13 v2.5.0 (In Review) → v2.6.0. Source: c1 review FAIL report
+`artifacts/reviews/13-project-plan-v2.5.0-business-cycle1.md` (91%, 0C/0H/2M/0L).
+Two surgical fixes only; everything else reviewer-confirmed clean.
+
+### Changes made
+
+| Section | Change |
+|---------|--------|
+| Header | v2.5.0 → v2.6.0; "pending c1" → "pending c2" |
+| Banner | v2.6.0 re-plan note prepended (before v2.4.0 entry) |
+| §6 header blockquote | Maintenance note added: H-register range appears in both stage/PR sections AND §6 risk rows; both sites must be swept together on any Doc 02 §16.4 register change |
+| §6 RISK-31 mitigation | H-01..H-16 → H-01..H-19; added note that H-18 covers `subject_id_hash`/`phone_hash` at-rest surface |
+| §6 RISK-33 mitigation | H-01..H-16 → H-01..H-19; narrative expanded with H-17 (vendor sees government document), H-18 (derived identifiers retained at rest), H-19 (no government ID = no enrolment) |
+| §6 RISK-33 Carried-by | Doc 02 §16.4 H-01..H-16 → Doc 02 §16.4 H-01..H-19 |
+| §13.1 document-review row | Doc 02 updated v2.10.0 PASS 100% c3 → v2.11.0 PASS 99% c1 (Approved 2026-08-23); Doc 13 v2.5.0 FAIL 91% c1 recorded; Doc 13 v2.6.0 In Review c2 pending; Gate-1-cannot-be-presented line updated (v2.5.0 → v2.6.0) |
+| §11 | v2.6.0 re-plan log entry prepended |
+
+### §13.1 rows verified (no other changes needed — reviewer confirmed clean)
+
+All other §13.1 rows were verified against actual current state and found accurate or
+explicitly reviewer-confirmed as not to be disturbed:
+- PR-FAQ present: ✅ (Doc 01 exists)
+- Metrics defined: ✅ (§1)
+- Out-of-scope: ✅ (§2.2)
+- Kill criteria: ✅ (§3.6)
+- BR/FR/NFR indexed: stale counts (reviewer confirmed not to disturb)
+- MoSCoW: stale counts (reviewer confirmed not to disturb)
+- Named owners: ✅ (§2.3 + §3.5.1)
+- Gherkin: ✅ (Doc 02)
+- FR traces: ✅ (RTM)
+- Constraints/risks: ✅ (§6)
+- Backlog seeded: stale v1.0.0 reference (reviewer confirmed not to disturb)
+- Project plan: stale v1.0.0 reference (reviewer confirmed not to disturb)
+- Named owners per workstream: ✅ (§4)
+- Resourcing variance: ✅ (~−USD 245,000)
+- Gate-2 date: ✅ (2027-05-14, not achievable as stated in CON-007)
+- Document-review reports: UPDATED (ISS-02)
+- Coverage gaps: ✅ (Doc 05 §12, declared non-blocking)
+
+### Open items after v2.6.0
+
+| Item | Owner | Priority |
+|------|-------|----------|
+| Doc 13 v2.6.0 c2 business-mode review | Coordinator/reviewer | High — Gate-1 blocker |
+| Doc 05 v2.1.0 c1 business-mode review | Coordinator/reviewer | High — Gate-1 blocker |
+| Doc 01 passing business-mode review | Coordinator/reviewer | High — Gate-1 blocker |
+| T-06 IMPROVED status approver confirmation | Approver (Rathish) | High |
+| T-08 ruling (gov-ID vs BR-003/FR-020) | Approver (Rathish) | High |
+| T-07 resolution pending CON-015 | Depends on CON-015 | Medium |
+| v1 Gate-1 date (NOT SET) | Approver (Rathish) | Medium |
+| CON-015 legal opinion start (CRITICAL PATH) | Sofia Marchetti | Urgent |
+| DEP-11/12/13 vendor procurement | Rafael Duarte | High |
+
+---
+
+## Doc 13 v2.6.0 — Approved (appended 2026-08-24)
+
+Cycle-2 business-mode review PASS (95%, 0C/0H/0M/1L; `artifacts/reviews/13-project-plan-v2.6.0-business-cycle2.md`).
+
+### Changes made
+
+| Section | Change |
+|---------|--------|
+| Header | Status: In Review → Approved (citing c2 report per house style) |
+| §13.1 document-review row | Doc 13 v2.6.0 updated: ❌ In Review → ✅ PASS 95% business mode cycle 2 (Approved 2026-08-24); Gate-1-cannot-be-presented line updated (removed Doc 13 from blockers) |
+| GATE-STATUS-2026-08-09.md | Closing state entry appended to third 2026-08-23 section |
+
+### Surviving Low — carried debt (DO NOT FIX until next convenient revision)
+
+ISS-Low: four §13.1 evidence-column entries carry v1.0.0-era stale counts (pre-existing since v1.0.0; survived c1 PASS v2.2.0 and c2 PASS v2.4.0). Correct current values for next picker-upper:
+
+| Stale claim | Correct current value |
+|-------------|----------------------|
+| 12 BR / 61 FR / 26 NFR | 21 BR / 133 FR / 28 NFR |
+| 42 Must requirements | 114 Must requirements (SRS v2.11.0) |
+| backlog v1.0.0 seeded | backlog v2.1.0 (Doc 05 current) |
+| plan v1.0.0 produced | plan v2.6.0 (Doc 13 current, Approved) |

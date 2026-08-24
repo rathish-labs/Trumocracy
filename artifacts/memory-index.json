@@ -2549,47 +2549,60 @@
       "role": "architect",
       "file": "artifacts/architect-2026-08-23T1000.md",
       "timestamp": "2026-08-23T10:00:00Z",
-      "phase": "Design — v1/v2 delivery-architecture split",
+      "phase": "Design — v1/v2 delivery-architecture split and v1 identity verification ruling",
       "product": "Trumocracy",
-      "summary": "v1/v2 delivery-architecture split and v1 identity ruling application (approver directive Rathish, 2026-08-23). ADR-024 created: IEligibilityVerifier seam (DES-095), IBallotService seam (DES-096), v1 conventional-auth backing (DES-097), v1 package disposition, v1 honesty notice (DES-098), Charter-layer conflict check T-01..T-05. Doc 03 v2.2.1 → v2.3.0 → v2.3.1 (APPROVED) → v2.4.0 (In Review): v2.3.1 rework fixed FR-130/FR-131 mislabeling (ISS-01 High/ISS-02 Medium/ISS-03 Low). v2.4.0: ADR-025 created (phone auth + DES-099 spam layer + T-06/T-07 conflict extensions + Ruling 3 ratification); §10.13.2 DES-095 amended; §10.13.5 ratification note; §10.13.7 T-06/T-07; §10.13.8 DES-099; §12 ADR-025 row/count twenty-five/ADR-001..ADR-025; §15 FR-132/FR-133 rows; source v2.8.0; counts 133/131/114. ADR-016 item (c) citizen-exclusion sentence added. Documents only — no product code.",
+      "summary": "Full v1/v2 delivery-architecture split and three ruling applications (Rathish, 2026-08-23). ADR-024 created: IEligibilityVerifier seam (DES-095), IBallotService seam (DES-096), v1 stack (DES-097), v1 honesty notice (DES-098), Charter-layer conflict check T-01..T-05. Doc 03 progression: v2.2.1 → v2.3.0 → v2.3.1 (APPROVED, cycle-2 97%) → v2.4.0 → v2.4.1 (APPROVED, cycle-2 97%) → v2.5.0 (In Review). v2.4.0: ADR-025 created (phone auth + DES-099 + T-06/T-07 + Ruling 3 ratification). v2.4.1: IS-01 invariants overclaim fixed. v2.5.0: ID-verification ruling — ADR-025 §(e) added (government-ID document check, verify-and-discard, Q-1/Q-2/Q-3 answered, hashed phone HMAC/KMS, subject_id_hash deduplication, FR-004 plurality resolved, T-08 minted); DES-100 minted (§10.13.9 — v1 ID-document verification and retention model, allowlist/denylist, HMAC design, Q-1/Q-2/Q-3 rationale, legal routing); §10.13.7: T-01..T-05 CONFIRMED, T-06 reshaped, T-07 reshaped, T-08 added; §15 DES-100 row + DES-095 amendment-2 row; §16 five-confirmations block. ADR-016 item (c) citizen-exclusion sentence added. SRS pinned to v2.10.0 (PO to v2.11.0 owed). Documents only — no product code.",
       "artifacts_written": [
         "docs/adr/ADR-024-v1v2-delivery-split-voting-identity-seams.md (CREATED)",
-        "docs/03-architecture-design-sdd.md (v2.3.0, In Review — surgical edits)",
+        "docs/03-architecture-design-sdd.md (v2.3.0 → v2.3.1 → v2.4.0 → v2.4.1 → v2.5.0 In Review — surgical edits)",
         "docs/adr/ADR-016-enrolment-issuer-hierarchy.md (item (c) sentence added)",
+        "docs/adr/ADR-025-v1-phone-auth-spam-resistance.md (CREATED; then amended — §(e) added 2026-08-23)",
         "artifacts/architect-2026-08-23T1000.md (this note)"
       ],
       "ids_touched": {
-        "DES_minted": "DES-095, DES-096, DES-097, DES-098, DES-099",
+        "DES_minted": "DES-095, DES-096, DES-097, DES-098, DES-099, DES-100",
         "ADR_created": "ADR-024, ADR-025",
-        "ADR_amended": "ADR-016 (item (c) citizen-exclusion sentence), ADR-024 (§(b) Ruling 3 ratification note)",
-        "docs_bumped": "Doc 03 v2.4.0 (via v2.2.1 → v2.3.0 → v2.3.1 APPROVED → v2.4.0 In Review)",
+        "ADR_amended": "ADR-016 (item (c) citizen-exclusion sentence), ADR-024 (§(b) Ruling 3 ratification note; invariants table corrected), ADR-025 (§(e) added: government-ID document check, verify-and-discard, Q-1/Q-2/Q-3, hashed phone HMAC/KMS, subject_id_hash, FR-004 plurality, T-08, consequences reshaped)",
+        "docs_bumped": "Doc 03 v2.5.0 In Review (via v2.2.1 → v2.3.0 → v2.3.1 APPROVED → v2.4.0 → v2.4.1 APPROVED → v2.5.0 In Review)",
+        "SRS_pinned": "v2.10.0 (Doc 02 current; PO increment to v2.11.0 owed — architect answers gate PO's next version)",
         "code_written": "none"
       },
       "high_water_marks_after": {
-        "DES": "DES-098",
-        "ADR": "ADR-024"
+        "DES": "DES-100",
+        "ADR": "ADR-025"
       },
       "key_decisions": [
         "IEligibilityVerifier (DES-095) as seam 1: decouples application from identity/personhood proof mechanism; v1 honest bypass of ICredentialAdapter declared in getProperties(); IS_INSECURE_MOCK() = false.",
         "IBallotService (DES-096) as seam 2: decouples application from ballot-casting and tally mechanism; IProofVerifier seam (ADR-022) is the upgrade path at tally-proof layer.",
         "Blockchain as audit-record only in v1 (DES-097): CI gate blocks mock path; schedule freed; FR-108 satisfied; migration cost bounded to seam-local scope.",
-        "Charter tensions T-01..T-05 surfaced for approver, not reconciled: approver directed the split and wants them enumerated on the record.",
-        "DES-098 honesty notice: non-dismissable on SCR-13/SCR-14; backs PO FR-to-be-minted (FR-130 per PO session).",
-        "C-02 closure: PO decided accept; FR-130 minted (Doc 02 v2.5.0); §18 annotation applied."
+        "DES-098 honesty notice: non-dismissable on SCR-13/SCR-14; backs FR-131.",
+        "Phone auth (ADR-025 §(a)): SMS speed-bump not personhood proof; getProperties().onePersonOneVote = false.",
+        "DES-099 spam-resistance: flag-don't-block; phone-intelligence API + velocity/device anti-fraud; flag data restricted-class.",
+        "Government-ID document check (ADR-025 §(e), DES-100): verify-and-discard; allowlist (id_verified_flag, age_verified, issuing_region, subject_id_hash, phone_hash, verified_at); denylist (images, biometrics, name, DOB, document number); HMAC-SHA-256/KMS-pepper for both hashes.",
+        "Q-1 resolved: provider returns subject_id (stable); stored as subject_id_hash for same-document deduplication; tension recorded (verify-and-discard vs uniqueness); recommendation: retain subject_id_hash.",
+        "Q-2 resolved: HMAC-SHA-256 with KMS-held pepper; brute-force residual accepted (exhaustible if both DB dump and pepper compromised); slow KDFs rejected (non-deterministic for lookup); five operational MUST requirements stated.",
+        "Q-3 resolved: architect-decidable items confirmed; CON-015-routed items enumerated (Aadhaar Act compliance critical path; DPDP consent; hash personal-data classification; retention period; cross-border transfer; erasure rights; EU Article 9 Phase 2+).",
+        "FR-004 plurality question resolved: v1 vendor is application-layer, not protocol-level attestor; FR-004 satisfied at ADR-021 level; T-08 minted as Phase-1 dated limitation.",
+        "T-01..T-05 CONFIRMED by approver (2026-08-23; DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md §4).",
+        "FR-030/031/082/086 confirmed Definition-B-only; NFR-009 v1 re-reading confirmed (one pen test); 2027-05-14 Gate-2 referent confirmed."
       ],
       "open_items": [
-        "T-01..T-05 Charter-layer conflict table — approver decision required BEFORE v1 implementation begins (BLOCKING).",
-        "DES for FR-130 (provisional-party membership cap): owed by architect; US-0131 is Not Ready pending DES.",
-        "v1 honesty notice FR (backs DES-098): PO to mint if not already done this session.",
-        "US from FR-130 covering SCR-13/SCR-14 notice surface: PO to mint before Coding sprint.",
-        "Doc 03 v2.3.0 document-review: PM to assign neutral reviewer (review-loop protocol).",
+        "T-06 open — improved (subject_id_hash deduplication added) but NOT closed; awaiting further approver confirmation.",
+        "T-07 reshaped — hashed phone + subject_id_hash; CON-015 and GDPR counsel govern legal classification.",
+        "T-08 minted — single-vendor ID-check concentration risk; architect-resolved as dated limitation; not a blocking decision.",
+        "v1 gate date: NOT SET — explicit approver value required.",
+        "CON-015 legal opinion India/Aadhaar: NOW CRITICAL-PATH — government-ID check added to India pilot; must clear ≥ 8 weeks before Gate 2; no enrolment sprint begins without it.",
+        "DEP-new (ID-verification provider): vendor selection open; to be added to Doc 13 (PM).",
+        "US from FR-132 (amended, ID-check + verify-and-discard): PO to mint at v2.11.0 catch-up.",
+        "Doc 03 v2.5.0 technical document-review: owed — PM to assign neutral reviewer.",
+        "PO Doc 02 v2.11.0: owed — FR-132 amended; FR-003 PARTIAL reshaped; H-register items for ID check and hashed phone; T-06/T-07 updated.",
         "FR-129 tier-determination (FR-118 Tier-1 vs FR-119 Tier-2): next DES increment.",
         "FR-121..FR-129 DES/US/TC RTM rows: Gate-2 blocker.",
         "Doc 04 technical-mode review (v1.0.2): Gate-2 blocker, NOT STARTED.",
-        "CON-015 legal opinion India/Aadhaar: Gate-2 blocker, NOT STARTED.",
-        "One-vs-six circuit clarification: awaiting Rathish confirmation."
+        "DES for phone-auth recovery path (SIM-swap/number-recycling): owed before enrolment sprint.",
+        "SMS cost NFR-005 verification: owed by engineer before build."
       ],
-      "gate": "Gate 1 APPROVED (2026-08-11, Rathish, unconditional). Gate 2 NOT READY. T-01..T-07 Charter-layer tensions REQUIRE APPROVER DECISION before v1 implementation (T-06/T-07 added 2026-08-23 per Rulings 1–2). Doc 03 v2.4.1 APPROVED (cycle-2 PASS 97%/0C/0H/0M/0L; artifacts/reviews/03-architecture-design-sdd-v2.4.1-technical-cycle2.md). ADR-025 created. DES-099 minted. Must count 114 (SRS v2.8.0). RTM 125 rows / 12 COMPLETE / 113 OPEN."
+      "gate": "Gate 1 APPROVED (2026-08-11, Rathish, unconditional). Gate 2 NOT READY. T-01..T-05 CONFIRMED 2026-08-23. T-06 improved/open. T-07 reshaped (CON-015 governs). T-08 minted (architect-resolved). BR-003/FR-020 contradiction (no-ID exclusion) AWAITING APPROVER CONFIRMATION. Doc 03 v2.5.1 APPROVED (cycle-2 PASS 97%/0C/0H/0M/0L; artifacts/reviews/03-architecture-design-sdd-v2.5.1-technical-cycle2.md). DES-095..DES-100 minted. ADR-025 amended (§(e) incl. c-viii). SRS v2.11.0. Must count 114."
     },
     {
       "id": "tester-2026-08-23T1045",
@@ -2739,9 +2752,42 @@
             "pre_review": "§12 v2.8.0 scope-note updated to Doc 03 v2.4.1; active-prose sweep clean; §11 label 'Counts (v2.10.0)' with maintenance rule"
           },
           "routing": "product-owner (Priya Raghunathan) sets Status: Approved on v2.10.0; review loop complete; SOP advances"
+        },
+        "v2_11_0_cycle1": {
+          "document": "02-requirements-srs.md",
+          "version": "2.11.0",
+          "score": 99,
+          "critical": 0,
+          "high": 0,
+          "medium": 0,
+          "low": 1,
+          "cycle": 1,
+          "verdict": "PASS",
+          "issues": {
+            "ISS-01": "Low, B2/B4 — Doc 03 version pin stale: §16 Source block, §4.46 rationale, H-17, §16.5 T-01..T-08 rows and footer note all cite 'Doc 03 v2.5.0 (In Review)'; actual version is v2.5.1 (Approved)"
+          },
+          "obligations_verified": {
+            "FR-132_vs_DES-100": "PASS — allowlist 6 fields match exactly; denylist 9 items match exactly; field-for-field consistent",
+            "H_sweep_both_directions": "PASS — all 19 H entries (H-01..H-19) map to PARTIAL/DEFERRED-v2 rows; no H=Y row without an H entry; H-17/H-18/H-19 honest and sufficient",
+            "FR-133_scope_asymmetry": "PASS — flag-don't-block = spam layer only; ID check = hard eligibility gate; stated unambiguously in rationale and normative text",
+            "CONFIRMED_markings": "PASS — T-01..T-05 CONFIRMED; T-06 IMPROVED; T-07 RESHAPED; T-08 ARCHITECT-RESOLVED; all match decision record §4 exactly; no overclaim",
+            "v1_gate_date": "PASS — NOT SET; no v1 gate date appears in the document",
+            "BR003_FR020_row": "PASS — genuinely surfaced as AWAITING APPROVER CONFIRMATION; not softened",
+            "standard_checks": "PASS — §11 label v2.11.0; Must 114; FR minted 133 (131 active); tally unchanged; traceability complete; Gherkin scenarios 3-6 present; changelog accurate; no regressions"
+          },
+          "routing": "PASS — product-owner (Priya Raghunathan) sets Status: Approved on v2.11.0. ISS-01 (Low) may be fixed in next version without re-review. SOP advances."
         }
       },
-      "gate": "Gate 1 APPROVED. Gate 2 NOT READY. Doc 02 v2.10.0 review: PASS (Cycle 3). Review loop complete. Product-owner sets Status: Approved; SOP advances."
+      "artifacts_written_updated": [
+        "artifacts/reviews/02-requirements-srs-v2.6.0-business-cycle1.md",
+        "artifacts/reviews/02-requirements-srs-v2.7.0-business-cycle2.md",
+        "artifacts/reviews/02-requirements-srs-v2.8.0-business-cycle1.md",
+        "artifacts/reviews/02-requirements-srs-v2.9.0-business-cycle2.md",
+        "artifacts/reviews/02-requirements-srs-v2.10.0-business-cycle3.md",
+        "artifacts/reviews/02-requirements-srs-v2.11.0-business-cycle1.md",
+        "artifacts/technical-writer-2026-08-23T1200.md"
+      ],
+      "gate": "Gate 1 APPROVED. Gate 2 NOT READY. Doc 02 v2.11.0 review: PASS (Cycle 1). Review loop complete. Product-owner sets Status: Approved; SOP advances."
     },
     {
       "id": "tester-2026-08-23T1500",
@@ -2829,7 +2875,7 @@
       "documents_edited": {
         "docs/02-requirements-srs.md": "v2.5.0 → v2.6.0 → v2.7.0 (Approved, c2 PASS 98%) → v2.8.0 (In Review)"
       },
-      "gate": "Gate 1 APPROVED. Gate 2 NOT READY. Must count 114. RTM 126 rows / 12 COMPLETE / 114 OPEN. Doc 02 v2.10.0 APPROVED (c3 PASS 100%, 0C/0H/0M/0L)."
+      "gate": "Gate 1 APPROVED. Gate 2 NOT READY. Must count 114. RTM 126 rows / 12 COMPLETE / 114 OPEN. Doc 02 v2.11.0 APPROVED (c1 PASS 99%, 0C/0H/0M/1L; artifacts/reviews/02-requirements-srs-v2.11.0-business-cycle1.md). Carried Low debt ISS-01: 'Doc 03 v2.5.0 (In Review)' stale in §16 Source block, §4.46 rationale, H-17, §16.5 T-row citations — correct value is Doc 03 v2.5.1 (Approved); sweep deferred to next substantive Doc 02 increment per Doc 13 v2.0.3 precedent."
     },
     {
       "id": "project-manager-2026-08-23T1400",
@@ -3156,6 +3202,321 @@
         "v1 launch-readiness gate date",
         "2027-05-14 referent (attaches to Definition B)",
         "V1-V2-SPLIT §4 items (b)–(f)"
+      ]
+    },
+    {
+      "id": "project-manager-2026-08-23T1400-identity-verification-ruling",
+      "role": "project-manager",
+      "file": "artifacts/project-manager-2026-08-23T1400.md",
+      "timestamp": "2026-08-23T14:00:00Z",
+      "phase": "Governance — v1 identity verification ruling + confirmation closure",
+      "product": "Trumocracy",
+      "summary": "Third decision record this date. Ruling: v1 identity = phone (SMS) + government-ID document check with verify-and-discard retention and hashed phone storage. Five confirmations: T-01..T-05 CONFIRMED; FR-030/031/082/086 DEFERRED-v2 Musts CONFIRMED; NFR-009 v1 re-reading CONFIRMED (one OWASP pen test for v1; two crypto audits for v2); 2027-05-14 CONFIRMED as Gate-2 referent for Definition B (closes 2027-03-15 carry-forward). v1 gate date NOT CLOSED — mechanism confirmed, date still NOT SET. Architect deliverable: three Qs (Q-1 provider return values; Q-2 hashed-phone brute-force residual; Q-3 retention legal-dependency split) plus FR-004 plurality question re: v1 ID-verification provider. CON-015 now more load-bearing.",
+      "artifacts_written": [
+        "artifacts/status/DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md (created)",
+        "artifacts/status/GATE-STATUS-2026-08-09.md (third additive section appended — third entry this date)",
+        "artifacts/project-manager-2026-08-23T1400.md (identity-verification ruling section appended)",
+        "artifacts/memory-index.json (this entry appended)"
+      ],
+      "confirmations": {
+        "T-01..T-05": "CONFIRMED — deferred-with-disclosure accepted",
+        "FR-030_031_082_086": "CONFIRMED — Definition-B-only; remain Must for v2; not weakened",
+        "NFR-009_v1": "CONFIRMED — one OWASP pen test for v1; two crypto audits for v2",
+        "2027-05-14": "CONFIRMED — Gate-2 referent for Definition B; closes 2027-03-15 carry-forward",
+        "v1_gate_date": "NOT CLOSED — MS-V1-LRG mechanism confirmed; date NOT SET — explicit approver value required"
+      },
+      "architect_deliverable": [
+        "Q-1: provider return values and what fields platform stores",
+        "Q-2: hashed-phone brute-force residual and mitigation",
+        "Q-3: which retention rules are architect-decidable vs legal-review-dependent",
+        "FR-004 plurality question re: v1 ID-verification provider vs OI-20 / FR-129"
+      ],
+      "gate": "Gate 1 APPROVED (2026-08-11). Gate 2 (Definition B) NOT READY — date 2027-05-14 CONFIRMED. v1 gate NOT SET.",
+      "next_actions": [
+        "architect (Ravi Deshmukh) to produce Doc 03 v2.5.0 — ADR-025 amended; Q-1/Q-2/Q-3 answered; FR-004 plurality addressed.",
+        "product-owner (Priya Raghunathan) to produce Doc 02 v2.11.0 after Doc 03 v2.5.0.",
+        "PM to produce Doc 13 v2.5.0 after Doc 02 v2.11.0.",
+        "Sofia Marchetti to prioritise CON-015 legal opinion — now more load-bearing.",
+        "Rathish (approver) to supply v1 gate date — last remaining NOT CLOSED item from this session's confirmations."
+      ]
+    },
+    {
+      "id": "tester-2026-08-23T1600",
+      "role": "tester (neutral reviewer — PM-assigned)",
+      "file": "artifacts/tester-2026-08-23T1045.md",
+      "timestamp": "2026-08-23T16:00:00Z",
+      "phase": "Design — document-review loop, Doc 03 v2.5.0 Cycle 1",
+      "product": "Trumocracy",
+      "summary": "Ran technical-mode document-review (document-review skill) over Doc 03 v2.5.0 (government-ID document check increment: DES-100 minted; ADR-025 §(e) amendment with Q-1/Q-2/Q-3 answers; T-01..T-05 CONFIRMED; T-06/T-07 reshaped; T-08 minted). Verdict: FAIL 93%/0C/0H/1M/1L. ISS-01 Medium: no-ID exclusion consequence absent from ADR-025 §(e) — H-19 in Doc 02 v2.11.0 records the exclusion but ADR-025 has no explicit parallel consequence (c-viii or equivalent). ISS-02 Low: source pin stale (v2.10.0 → should be v2.11.0 now that v2.11.0 exists). All three Q answers confirmed sound; DES-100 allowlist field-for-field matches FR-132 v2.11.0; T-06/T-07/T-08 consistent across sources; v1 gate date correctly NOT SET; ADR count remains twenty-five; no regressions. Route: architect to rework to v2.5.1.",
+      "artifacts_written": [
+        "artifacts/reviews/03-architecture-design-sdd-v2.5.0-technical-cycle1.md",
+        "artifacts/tester-2026-08-23T1045.md (v2.5.0 cycle-1 addendum appended)"
+      ],
+      "review_verdicts": {
+        "cycle1": {
+          "document": "03-architecture-design-sdd.md",
+          "version": "2.5.0",
+          "score": 93,
+          "critical": 0,
+          "high": 0,
+          "medium": 1,
+          "low": 1,
+          "cycle": 1,
+          "verdict": "FAIL",
+          "routed_to": "architect (Ravi Deshmukh) — rework to v2.5.1"
+        }
+      },
+      "issues": {
+        "ISS-01": {
+          "severity": "Medium",
+          "rubric": "T5 Completeness",
+          "location": "ADR-025 §(e) Updated consequences",
+          "description": "No-ID exclusion consequence absent — citizens without accepted government ID cannot enrol in v1; H-19 in Doc 02 v2.11.0 records this; ADR-025 §(e) has no parallel explicit consequence (analogous to c-vi for phone); ADR-016 Aadhaar-exclusion sentence is house precedent",
+          "fix": "Add explicit consequence (c-viii or equivalent) citing H-19 and BR-003/FR-020 tension (AWAITING APPROVER CONFIRMATION)"
+        },
+        "ISS-02": {
+          "severity": "Low",
+          "rubric": "T6 Convention",
+          "location": "Doc 03 v2.5.0 header Source field",
+          "description": "Source pin reads SRS-TRUMOCRACY v2.10.0; FR-132 amended with allowlist/denylist formally captured in v2.11.0; now that v2.11.0 exists, pin should be updated",
+          "fix": "Update header Source and §1.1 counts to SRS-TRUMOCRACY v2.11.0"
+        }
+      },
+      "ids_touched": {
+        "review_reports_created": "03-architecture-design-sdd-v2.5.0-technical-cycle1.md",
+        "code_written": "none",
+        "documents_edited": "none (reviewer is read-only)"
+      },
+      "open_items": [
+        "ISS-01 Medium: ADR-025 §(e) missing no-ID exclusion consequence — route to architect.",
+        "ISS-02 Low: Doc 03 v2.5.0 source pin stale — route to architect.",
+        "v1 gate date NOT SET — Rathish to supply.",
+        "CON-015 legal opinion — critical-path (must be in hand ≥8 weeks before Gate 2).",
+        "US/TC for FR-132 amended (government-ID flow) — owed at next catch-up (Phase 3 debt).",
+        "Vendor selection (government-ID document check provider) open — Doc 13 DEP-new."
+      ],
+      "gate": "Gate 1 APPROVED. Gate 2 NOT READY. Doc 03 v2.5.0 Cycle 1: FAIL. Route to architect for v2.5.1 rework."
+    },
+    {
+      "id": "tester-2026-08-23T1700",
+      "role": "tester (neutral reviewer — PM-assigned)",
+      "file": "artifacts/tester-2026-08-23T1045.md",
+      "timestamp": "2026-08-23T17:00:00Z",
+      "phase": "Design — document-review loop, Doc 03 v2.5.1 Cycle 2",
+      "product": "Trumocracy",
+      "summary": "Ran technical-mode document-review (document-review skill) over Doc 03 v2.5.1 (rework of v2.5.0 Cycle 1 FAIL). Verdict: PASS 97%/0C/0H/0M/0L. ISS-01 Medium CLOSED: ADR-025 §(e) (c-viii) is substantive — three paragraphs naming ADR-016 precedent, disproportionately excluded populations, BR-003/FR-020 AWAITING APPROVER CONFIRMATION (word-for-word match to Doc 02 §16.5), H-19, DES-098/FR-131 disclosure, v2/OI-03 path; DES-100 §10.13.9 Exclusion residual paragraph mirrored; FR-020 added to Traces; Backs updated to v2.11.0. ISS-02 Low CLOSED: Source pin updated to v2.11.0; §1.1 counts verified against Doc 02 v2.11.0 §11 — exact match (21 BR / 133 FR / 131 active / 114 Must / 28 NFR / 15 CON / 27 RISK). No regressions in six cycle-1 cleared obligations. Architect to set Status: Approved.",
+      "artifacts_written": [
+        "artifacts/reviews/03-architecture-design-sdd-v2.5.1-technical-cycle2.md",
+        "artifacts/tester-2026-08-23T1045.md (v2.5.1 cycle-2 addendum appended)"
+      ],
+      "review_verdicts": {
+        "cycle2": {
+          "document": "03-architecture-design-sdd.md",
+          "version": "2.5.1",
+          "score": 97,
+          "critical": 0,
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "cycle": 2,
+          "verdict": "PASS",
+          "routing": "architect to set Status: Approved on Doc 03 v2.5.1"
+        }
+      },
+      "ids_touched": {
+        "review_reports_created": "03-architecture-design-sdd-v2.5.1-technical-cycle2.md",
+        "code_written": "none",
+        "documents_edited": "none (reviewer is read-only)"
+      },
+      "open_items": [
+        "v1 gate date NOT SET — Rathish to supply.",
+        "CON-015 legal opinion — critical-path (must be in hand ≥8 weeks before Gate 2).",
+        "BR-003/FR-020 contradiction (H-19) — AWAITING APPROVER CONFIRMATION.",
+        "US/TC for FR-132 amended (government-ID flow) — owed at next catch-up (Phase 3 debt).",
+        "Vendor selection (government-ID document check provider) open — Doc 13 DEP-new."
+      ],
+      "gate": "Gate 1 APPROVED. Gate 2 NOT READY. Doc 03 v2.5.1 Cycle 2: PASS. Architect to set Status: Approved. SOP advances."
+    },
+    {
+      "id": "project-manager-2026-08-23T1400-doc13-v2.5.0",
+      "role": "project-manager",
+      "file": "artifacts/project-manager-2026-08-23T1400.md",
+      "timestamp": "2026-08-23T14:00:00Z",
+      "phase": "Governance — Doc 13 v2.5.0 identity ruling + confirmations applied",
+      "product": "Trumocracy",
+      "summary": "Produced Doc 13 v2.4.0 (Approved) → v2.5.0 (Status: In Review pending c1). Upstream: Doc 02 v2.11.0 Approved (c1 PASS 99%); Doc 03 v2.5.1 Approved (c2 PASS 97%). Applied identity ruling: gov-ID check + verify-and-discard (DES-100). Five confirmations applied: NFR-009 v1 CONFIRMED; 2027-05-14 CONFIRMED + 2027-03-15 carry-forward CLOSED; T-01..T-05 CONFIRMED; DEFERRED-v2 Musts CONFIRMED; v1 gate date NOT SET (still no date). Effort range revised 5–9 → 6–10 months (ID check genuinely new scope; CON-015 now hard gate on MS-V1-02). DEP-13 added. RISK-40..43 added.",
+      "artifacts_written": [
+        "docs/13-project-plan.md (v2.4.0 Approved → v2.5.0 In Review)",
+        "artifacts/project-manager-2026-08-23T1400.md (v2.5.0 section appended)",
+        "artifacts/memory-index.json (this entry appended)"
+      ],
+      "ids_minted": {
+        "DEP": "DEP-13",
+        "RISK": "RISK-40, RISK-41, RISK-42, RISK-43"
+      },
+      "effort_range": "6–10 months — LEFT END SHIFTS RIGHT. ID check is genuinely new scope (DEP-13, DES-100 KMS discipline, dedup path ~+3–6 weeks in S-2). CON-015 is hard gate on MS-V1-02; must start immediately.",
+      "confirmations_applied": {
+        "NFR-009_v1": "CONFIRMED — one OWASP pen test for v1; two crypto audits for v2",
+        "2027-05-14": "CONFIRMED — Gate-2 referent for Definition B; 2027-03-15 carry-forward CLOSED",
+        "T-01_T-05": "CONFIRMED — deferred-with-disclosure accepted",
+        "DEFERRED_v2_Musts": "CONFIRMED — FR-030/031/082/086 Definition-B-only; not weakened",
+        "v1_gate_date": "NOT SET — approver supplied no date; still required"
+      },
+      "tensions_updated": {
+        "T-06": "IMPROVED-not-closed — gov-ID check improves Sybil-resistance but does not enforce one-human-one-vote; approver confirmation of IMPROVED status still required",
+        "T-07": "Reshaped — pending CON-015 legal opinion",
+        "T-08": "AWAITING APPROVER CONFIRMATION — government-ID vs BR-003/FR-020"
+      },
+      "gate": "Gate 1 APPROVED (2026-08-11). Gate 2 (Definition B) NOT READY — date 2027-05-14 CONFIRMED. v1 gate NOT SET.",
+      "next_actions": [
+        "PM to assign neutral reviewer for Doc 13 v2.5.0 c1 business-mode review (immediate).",
+        "Sofia Marchetti to start CON-015 legal opinion NOW — critical path for MS-V1-02.",
+        "Rafael Duarte to initiate DEP-13 vendor procurement immediately.",
+        "Rathish (approver) to supply v1 gate date.",
+        "Rathish (approver) to rule on T-08 (gov-ID vs BR-003/FR-020).",
+        "Rathish (approver) to confirm T-06 IMPROVED status."
+      ]
+    },
+    {
+      "id": "sre-2026-08-23T1630-v2.5.0-c1",
+      "role": "sre",
+      "file": "artifacts/sre-2026-08-23T1630.md",
+      "timestamp": "2026-08-23T16:30",
+      "phase": "Design (post Gate 1) — document-review loop, v2.5.0 cycle 1",
+      "product": "Trumocracy",
+      "summary": "Neutral document reviewer (sre, PM-assigned). Business-mode Cycle 1 review of docs/13-project-plan.md v2.5.0 (identity-verification ruling + five approver confirmations). Verdict: FAIL. Score: 91%. 0C/0H/2M/0L. ISS-01 Medium: RISK-31 and RISK-33 cite H-01..H-16 — stale since Doc 02 v2.11.0 expanded to H-01..H-19; H-17/H-18/H-19 directly relevant to both risks. ISS-02 Medium: §13.1 evidence column shows Doc 02 v2.10.0 approved; current is v2.11.0 (PASS 99% c1 Approved). All five confirmations verified against decision record. CON-015 reasoning sound. Effort range 6-10 months honest. RISK-40..43 correct. Route to PM for v2.6.0 rework.",
+      "artifacts_written": [
+        "artifacts/reviews/13-project-plan-v2.5.0-business-cycle1.md",
+        "artifacts/sre-2026-08-23T1630.md (v2.5.0 c1 addendum appended)",
+        "artifacts/memory-index.json (updated — this entry appended)"
+      ],
+      "verdict": {
+        "result": "FAIL",
+        "score": "91%",
+        "critical": 0,
+        "high": 0,
+        "medium": 2,
+        "low": 0,
+        "cycle": "1 of 5 (new cycle for v2.5.0)"
+      },
+      "issues": [
+        "ISS-01 Medium B4 §6 RISK-31 (line 618) and RISK-33 (line 620): both cite H-01..H-16 — stale since Doc 02 v2.11.0. H-17 (vendor sees document), H-18 (derived identifier retained), H-19 (no gov-ID = no enrolment) are directly relevant to both risk mitigations. RISK-33 narrative names only H-15/H-16. Fix: update both rows to H-01..H-19; update RISK-33 narrative.",
+        "ISS-02 Medium B4 §13.1 (line 912): evidence column shows Doc 02 v2.10.0 PASS 100% — current upstream-approved is v2.11.0 (PASS 99% c1, Approved 2026-08-23). §11 re-plan log correctly notes v2.11.0 but §13.1 was not updated. Fix: update §13.1 evidence to Doc 02 v2.11.0 PASS 99% c1."
+      ],
+      "spot_checks_passed": [
+        "All five confirmations match decision record §4 exactly ✓",
+        "No inferred v1 gate date anywhere ✓",
+        "CON-015 critical-path reasoning sound: MS-V1-02 dependency + 8-week lead time relative to S-2 start ✓",
+        "Effort range 6-10 months: honest, first-principles, no appetite claim ✓",
+        "RISK-40..43: no collision; all have owner/scoring/mitigation; RISK-41 vs Doc 01 §E1 accurate ✓",
+        "H-01..H-19 sweep: banner, MS-V1-09, PR-6, PR-7, §3.5.6 all correct; RISK-31/33 stale (ISS-01) ✓",
+        "v1 Must set = 110 (114-4) ✓",
+        "ADR range ADR-001..ADR-025 ✓",
+        "DEP-13 sequential (DEP-11/12/13) ✓",
+        "Gate dates unchanged (2027-05-14 CONFIRMED; v1 NOT SET) ✓",
+        "T-06 IMPROVED-not-closed; T-07 reshaped pending CON-015; T-08 AWAITING ✓",
+        "RISK-32/35-39 unchanged (no regressions) ✓"
+      ],
+      "gate": "Gate 1 APPROVED (2026-08-11). Doc 13 v2.5.0 FAIL 91% cycle 1 — route to PM for v2.6.0 rework. Gate 2 (Definition B) NOT READY.",
+      "next_actions": [
+        "PM (Ana-Maria Petrescu) to rework Doc 13 v2.5.0 → v2.6.0: update RISK-31/33 H-register to H-01..H-19; update RISK-33 narrative to mention H-17/H-18/H-19; update §13.1 Doc 02 version to v2.11.0 PASS 99% c1. Set Status: In Review.",
+        "PM to assign neutral reviewer for Doc 13 v2.6.0 c2 business-mode review.",
+        "Sofia Marchetti to start CON-015 legal opinion immediately.",
+        "Rafael Duarte to initiate DEP-13 vendor procurement immediately.",
+        "Rathish (approver) to supply v1 gate date and rule on T-08."
+      ]
+    },
+    {
+      "id": "project-manager-2026-08-23T1400-doc13-v2.6.0",
+      "role": "project-manager",
+      "file": "artifacts/project-manager-2026-08-23T1400.md",
+      "timestamp": "2026-08-23T17:15",
+      "phase": "Design (post Gate 1) — document-review loop, v2.5.0 rework → v2.6.0",
+      "product": "Trumocracy",
+      "summary": "Owning role rework. Doc 13 v2.5.0 (FAIL 91%, 0C/0H/2M/0L) → v2.6.0 (In Review, pending c2). ISS-01: RISK-31 and RISK-33 H-register updated H-01..H-16 → H-01..H-19; RISK-33 narrative expanded (H-17 vendor sees document, H-18 derived identifiers retained, H-19 no gov-ID = no enrolment); RISK-33 Carried-by updated; maintenance note added to §6 header blockquote. ISS-02: §13.1 document-review row updated (Doc 02 v2.10.0 → v2.11.0 PASS 99% c1; Doc 13 v2.5.0 FAIL c1 recorded; v2.6.0 In Review pending c2; Gate-1-cannot-be-presented line updated). All other §13.1 rows verified against current state — reviewer confirmed clean, not disturbed. Header version/status bumped. Banner note prepended. §11 re-plan log entry prepended.",
+      "artifacts_written": [
+        "docs/13-project-plan.md (v2.6.0 — two surgical fixes: ISS-01 RISK-31/33 H-register + maintenance note; ISS-02 §13.1 review row)",
+        "artifacts/project-manager-2026-08-23T1400.md (v2.6.0 rework section appended)",
+        "artifacts/memory-index.json (updated — this entry appended)"
+      ],
+      "ids_touched": {
+        "RISK": ["RISK-31", "RISK-33"]
+      },
+      "gate": "Gate 1 APPROVED (2026-08-11). Doc 13 v2.6.0 In Review — pending c2 business-mode review. Gate 2 (Definition B) NOT READY.",
+      "next_actions": [
+        "Coordinator to assign neutral reviewer for Doc 13 v2.6.0 c2 business-mode review (immediate).",
+        "Coordinator/reviewer to run Doc 01 and Doc 05 business-mode reviews.",
+        "Sofia Marchetti to start CON-015 legal opinion NOW — critical path for MS-V1-02.",
+        "Rafael Duarte to initiate DEP-13 vendor procurement immediately.",
+        "Rathish (approver) to supply v1 gate date.",
+        "Rathish (approver) to rule on T-08 (gov-ID vs BR-003/FR-020).",
+        "Rathish (approver) to confirm T-06 IMPROVED status."
+      ]
+    },
+    {
+      "id": "sre-2026-08-23T1630-v2.6.0-c2",
+      "role": "sre",
+      "file": "artifacts/sre-2026-08-23T1630.md",
+      "timestamp": "2026-08-24T00:00",
+      "phase": "Design (post Gate 1) — document-review loop, v2.6.0 cycle 2",
+      "product": "Trumocracy",
+      "summary": "Neutral document reviewer (sre, PM-assigned). Business-mode Cycle 2 re-review of docs/13-project-plan.md v2.6.0. Verdict: PASS. Score: 95%. 0C/0H/0M/1L. Both cycle-1 Medium defects (ISS-01 RISK-31/33 H-register stale; ISS-02 §13.1 Doc 02 version stale) fully resolved. Independent H-register sweep across full document: CLEAN — all five active-prose sites cite H-01..H-19; historical banner/§11 citations are non-active. Maintenance note at §6 header confirmed. All v2.5.0 regressions confirmed intact. One carried Low: pre-existing §13.1 evidence-column counts stale from v1.0.0 (lines 916, 917, 922, 923) — readiness claims remain accurate; PM's judgment defensible; recommended patch in next revision. PM (Ana-Maria Petrescu) to set Status: Approved.",
+      "artifacts_written": [
+        "artifacts/reviews/13-project-plan-v2.6.0-business-cycle2.md",
+        "artifacts/sre-2026-08-23T1630.md (v2.6.0 c2 addendum appended)",
+        "artifacts/memory-index.json (updated — this entry appended)"
+      ],
+      "verdict": {
+        "result": "PASS",
+        "score": "95%",
+        "critical": 0,
+        "high": 0,
+        "medium": 0,
+        "low": 1,
+        "cycle": "2 of 5"
+      },
+      "issues": [
+        "ISS-01 Low B4 §13.1 lines 916-923: four evidence-column entries carry stale counts from Doc 13/Doc 02 v1.0.0 (12/61/26 BR/FR/NFR; 42 Must; backlog v1.0.0; plan v1.0.0). Pre-existing since v1.0.0; survived v2.2.0 and v2.4.0 approved cycles; readiness claims accurate. PM's decision to leave out-of-scope for targeted fix is defensible. Recommended patch in next revision."
+      ],
+      "fixes_verified": [
+        "ISS-01 RISK-31 H-01..H-19 with H-18 explicit (subject_id_hash/phone_hash) — RESOLVED ✓",
+        "ISS-01 RISK-33 H-01..H-19 with H-15..H-19 all named; Carried-by updated — RESOLVED ✓",
+        "ISS-01 §6 header maintenance note added (both sites swept together rule) — RESOLVED ✓",
+        "ISS-02 §13.1 Doc 02 v2.11.0 PASS 99% c1; v2.5.0 FAIL 91% c1 recorded; v2.6.0 In Review c2; gate text updated — RESOLVED ✓"
+      ],
+      "gate": "Gate 1 APPROVED (2026-08-11). Doc 13 v2.6.0 PASS 95% cycle 2 — PM to set Status: Approved. Gate 2 (Definition B) NOT READY.",
+      "next_actions": [
+        "PM (Ana-Maria Petrescu) to set Doc 13 v2.6.0 Status: Approved and update §13.1 gate-readiness row.",
+        "Coordinator to run Doc 01 and Doc 05 business-mode reviews to complete Gate-1 package.",
+        "Sofia Marchetti to start CON-015 legal opinion NOW — critical path for MS-V1-02.",
+        "Rafael Duarte to initiate DEP-13 vendor procurement immediately.",
+        "Rathish (approver) to supply v1 gate date and rule on T-08."
+      ]
+    },
+    {
+      "id": "project-manager-2026-08-23T1400-doc13-v2.6.0-approved",
+      "role": "project-manager",
+      "file": "artifacts/project-manager-2026-08-23T1400.md",
+      "timestamp": "2026-08-24T00:00",
+      "phase": "Design (post Gate 1) — document-review loop, v2.6.0 Approved",
+      "product": "Trumocracy",
+      "summary": "Doc 13 v2.6.0 Approved (business c2 PASS 95%, 0C/0H/0M/1L). Header status set to Approved citing c2 report. §13.1 updated: Doc 13 v2.6.0 PASS 95% c2 Approved 2026-08-24; Gate-1-cannot-be-presented line updated (Doc 13 no longer a blocker — Docs 01 and 05 remain). Surviving Low (four stale v1.0.0-era counts in §13.1) logged as carried debt in memory note — not fixed per coordinator instruction. Closing state entry appended to third 2026-08-23 section in GATE-STATUS-2026-08-09.md: Doc 02 v2.11.0/Doc 03 v2.5.1/Doc 13 v2.6.0 all Approved; ADR-025 §(e) + DES-100; H-01..H-19; T-06 IMPROVED open / T-07 pending CON-015 / T-08 architect-resolved / gov-ID vs BR-003 AWAITING APPROVER; confirmations closed; v1 gate NOT SET; CON-015 critical path; effort 6–10 months; suites green.",
+      "artifacts_written": [
+        "docs/13-project-plan.md (v2.6.0 — Status set to Approved; §13.1 Doc 13 row updated)",
+        "artifacts/status/GATE-STATUS-2026-08-09.md (closing state entry appended to third 2026-08-23 section)",
+        "artifacts/project-manager-2026-08-23T1400.md (v2.6.0 Approved section appended; carried-Low logged)",
+        "artifacts/memory-index.json (updated — this entry appended)"
+      ],
+      "carried_debt": "ISS-Low §13.1 four stale v1.0.0-era counts: 12/61/26 BR/FR/NFR → correct 21/133/28; 42 Must → 114; backlog v1.0.0 → v2.1.0; plan v1.0.0 → v2.6.0. Pre-existing since v1.0.0, survived two approved cycles. Fix at next convenient revision.",
+      "gate": "Gate 1 APPROVED (2026-08-11). Doc 13 v2.6.0 APPROVED (business c2 PASS 95%). Gate-1 presentation blocked only by Docs 01 and 05 (no passing business-mode reviews yet). Gate 2 (Definition B) NOT READY.",
+      "next_actions": [
+        "Coordinator/reviewer to run Doc 01 business-mode review (Gate-1 blocker).",
+        "Coordinator/reviewer to run Doc 05 v2.1.0 business-mode review (Gate-1 blocker).",
+        "Sofia Marchetti to start CON-015 legal opinion NOW — critical path for MS-V1-02.",
+        "Rafael Duarte to initiate DEP-11/12/13 vendor procurement immediately.",
+        "Rathish (approver) to supply v1 gate date.",
+        "Rathish (approver) to rule on T-08 (gov-ID vs BR-003/FR-020).",
+        "Rathish (approver) to confirm T-06 IMPROVED status."
       ]
     }
   ]

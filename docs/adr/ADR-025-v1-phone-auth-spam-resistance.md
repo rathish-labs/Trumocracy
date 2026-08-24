@@ -5,17 +5,29 @@ Status:        Accepted
 Date:          2026-08-23
 Owner:         Ravi Deshmukh — Principal Architect
 Traces:        BR-003, BR-006, BR-012,
-               FR-003 (PARTIAL in v1 per Doc 02 v2.8.0 §16), FR-058, FR-061,
-               FR-071, FR-120, FR-125, FR-131, FR-132, FR-133,
-               NFR-005, NFR-010, NFR-022,
-               CON-002, CON-008,
-               DES-095 (amended), DES-098, DES-099,
+               FR-003 (PARTIAL in v1 — reshaped by 2026-08-23 amendment: phone_hash +
+               subject_id_hash retained; document image, name, DOB, document number
+               DISCARDED; CON-015 governs legal classification of retained hashes),
+               FR-058, FR-061, FR-071, FR-120, FR-125, FR-131,
+               FR-132 (amended by ruling 2026-08-23: government-ID document check
+               co-required alongside phone SMS; verify-and-discard retention rule;
+               hashed phone HMAC-SHA-256/KMS-pepper specified; MUST NOT claim unique
+               personhood — check confirms real person, not unique person),
+               FR-133,
+               NFR-005, NFR-010, NFR-016, NFR-022,
+               CON-002, CON-008, CON-015,
+               DES-095 (amended), DES-098, DES-099, DES-100 (minted 2026-08-23),
                ADR-002 (passkeys compose with phone auth in v1),
                ADR-024 (IEligibilityVerifier seam — v1 backing now named here)
 Source:        Approver directive, Rathish, 2026-08-23 (Rulings 1 and 2);
                DECISIONS-2026-08-23-V1-AUTH-SPAM-RESISTANCE.md;
                docs/02-requirements-srs.md v2.8.0 (FR-132, FR-133);
-               docs/03-architecture-design-sdd.md v2.3.1 (DES-095, ADR-024)
+               docs/03-architecture-design-sdd.md v2.3.1 (DES-095, ADR-024);
+               [AMENDED 2026-08-23] Approver directive, Rathish, 2026-08-23;
+               DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md (government-ID
+               ruling, verify-and-discard retention, hashed phone, Q-1/Q-2/Q-3
+               architect answers, five confirmations T-01..T-05, FR-030/031/082/086,
+               NFR-009 v1 re-reading, 2027-05-14); docs/02-requirements-srs.md v2.10.0
 ```
 
 ---
@@ -193,3 +205,140 @@ These tensions were pre-registered in the decision record (DECISIONS-2026-08-23-
 **Deploy full on-chain governance contracts with phone-auth mapped onto call paths.** Already rejected by ADR-024 §(b) for three reasons (CI promotion gate, schedule, FR-108). This ADR does not reopen that decision.
 
 **No spam resistance in v1 (ship phone auth without DES-099).** Rejected. Without the phone-intelligence layer, a cloud-farm operator can register thousands of virtual numbers and create a corresponding number of accounts with no meaningful friction beyond the per-SMS cost. The spam speed-bump is an approver requirement (Ruling 2).
+
+---
+
+## [AMENDMENT — 2026-08-23] Government-ID document check, verify-and-discard retention, and Q-1/Q-2/Q-3 answers
+
+**Approver directive:** Rathish, 2026-08-23.
+**Source:** DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md §2–§3.
+**Effect:** This amendment expands the v1 identity mechanism from phone-alone to phone + government-ID document check (verify-and-discard). It answers the three architect questions (Q-1, Q-2, Q-3) directed by the approver, reshapes consequences (c-i) and (c-ii), adds consequence (c-vii) for the ID-verification vendor, extends the conflict table with T-08, and resolves the FR-004 plurality question. Existing sections (a)–(d) are unchanged; this amendment adds §(e).
+
+---
+
+### (e) Decision: v1 identity verification expands to phone + government-ID document check
+
+#### The ruling — verbatim-in-substance
+
+> v1 uses conventional consumer-app identity verification — the model dating apps use: **phone (SMS) PLUS a government-ID document check at signup** to confirm a real, legal-age person. This is a v1 anti-fraud / anti-Sybil layer, NOT the v2 anonymity guarantee.
+>
+> The government ID is verified (on-device or via a provider) to produce ONLY a "verified adult, region X" flag. The platform MUST NOT store the identity document itself or any reversible copy of it. **Keep the result, discard the source.**
+>
+> The phone number is stored **HASHED (one-way)**, sufficient to enforce one-account-per-number, never as reversible plaintext.
+>
+> v1 is "real-person verified, not anonymous"; v2 is "unique person proven without the platform ever seeing identity."
+
+The full engineering specification is in DES-100 (Doc 03 §10.13.9). This section records the architectural rationale and consequences.
+
+#### Q-1 — What does the ID-verification provider actually return, and what fields does the platform store?
+
+A third-party ID-verification provider (vendor TBD; to be listed in Doc 13 as DEP-new) receives the document image (front/back) and optionally a selfie for face match, processes it, and returns a structured JSON response.
+
+**Stored fields (allowlist — only these fields MAY be persisted; everything else is discarded):**
+
+| Field | Derivation | Purpose |
+|---|---|---|
+| `id_verified_flag` | From provider `status: APPROVED` | Gate: true iff age + region + document authentic |
+| `age_verified` | From provider `checks.age_verified` | Confirms ≥ 18 at signup |
+| `issuing_region` | From provider `checks.issuing_country` (ISO 3166-1 alpha-2) | Assigns citizen to correct governance region |
+| `subject_id_hash` | `HMAC-SHA-256(provider_subject_id, pepper_id)` | Same-document deduplication (see below) |
+| `phone_hash` | `HMAC-SHA-256(E.164-normalized(phone), pepper_phone)` | One-account-per-number enforcement |
+| `verified_at` | ISO-8601 timestamp | Compliance audit trail |
+
+**Discarded fields (denylist — MUST NEVER reach any persistence layer, log, or analytics pipeline):**
+document images, biometric templates, selfie frames, `name`, `date_of_birth`, `document_number`, `expiry_date`, `verification_id` (ephemeral session handle).
+
+**The verify-and-discard-vs-uniqueness tension (recorded honestly):**
+Storing ONLY the boolean `id_verified_flag` satisfies verify-and-discard in the strictest sense but allows the same government ID to be re-presented from a different phone number to create a second verified account. The `subject_id_hash` resolves this: modern providers issue a stable `subject_id` pseudonymous token for a given individual — re-verification of the same person yields the same `subject_id`, which hashes to the same `subject_id_hash`. On account creation the enrolment service checks for an existing matching `subject_id_hash` → if found, rejects as duplicate document. **Recommendation: retain `subject_id_hash` for best Sybil resistance within the verify-and-discard constraint.**
+
+Honest consequence: `subject_id_hash` is a derived identifier from the provider's processing of biometric/document data. It is retained in restricted-class credential store. Whether it constitutes "personal data" under India DPDP or GDPR is a legal question routed to CON-015 (see Q-3 below). Its retention deepens the FR-003 PARTIAL surface; T-07 is reshaped accordingly.
+
+**Alignment with Doc 01 §E1:** "We do not keep your identity documents or biometric templates — they are checked and discarded, never stored by us." The allowlist DELIVERS this promise: no images, no biometrics, no document number, no name or DOB are stored at any layer. The promise holds ONLY IF the vendor contract includes a no-retention clause for document images and biometric templates on the provider's side — this is a vendor-contract requirement, not just a platform-side constraint.
+
+#### Q-2 — Hashed phone HMAC design and brute-force residual
+
+**Design:** `phone_hash = HMAC-SHA-256(E.164-normalized(phone_number), pepper_phone)` where `pepper_phone` is a 32-byte randomly generated secret key in KMS/HSM — it MUST NOT reside in the same data store as the hashes and MUST NOT be loaded into application memory in raw form.
+
+**Why HMAC with KMS pepper, not bcrypt/Argon2id:**
+The one-account-per-number check requires deterministic lookup (`SELECT WHERE phone_hash = compute(input)`). Slow KDFs (bcrypt, Argon2id) use per-record random salts — they are non-deterministic and unsuitable for deduplication queries without degrading enrolment-service performance to ~100 ms+ per check at scale. HMAC-SHA-256 with a KMS-held pepper is the correct design for deterministic, brute-force-resistant duplicate detection.
+
+**Brute-force residual (stated precisely):**
+- Attacker with database dump only (no pepper): computationally infeasible — brute force is blocked without the key. Security holds as long as the pepper is uncompromised.
+- Attacker with both the database dump AND the pepper: the Indian mobile number space is ~4 × 10⁹ possible numbers (10-digit numbers starting 6–9), ~1.1 billion active. Exhaustive precomputation of HMAC-SHA-256 over this space takes hours on commodity GPU hardware. **Phone numbers CAN be recovered if both the DB dump and the pepper are compromised simultaneously. This is the accepted residual for any HMAC scheme.**
+- Insider with simultaneous KMS + DB access: can reconstruct all phone numbers. Dual-authorization for KMS access is the primary mitigation.
+
+`subject_id_hash` uses the same HMAC pattern with a separate pepper (`pepper_id`). Two peppers are maintained separately in KMS — never combined.
+
+**Operational MUST requirements (both peppers):**
+1. KMS/HSM stored; HMAC computation occurs via KMS API; raw key bytes MUST NOT be loaded into application memory in production.
+2. Dual-authorization access policy on the KMS keys (2-person integrity rule).
+3. Pepper rotation schedule defined before production launch; re-hashing window during rotation holds access to both old and new peppers simultaneously.
+4. No plaintext phone number written to application logs, error traces, analytics pipelines, or debugging outputs. Log-scrubbing MUST be enforced at the application layer.
+5. Hash lookup endpoint MUST be rate-limited at the application layer to prevent online enumeration.
+
+#### Q-3 — Legal-review routing: architect-decidable vs CON-015/GDPR counsel
+
+**Architect-decidable (confirmed in this amendment and in DES-100):**
+- Which fields to discard at the application layer — confirmed in the denylist above.
+- Which fields to store — allowlist above; privacy-by-design rationale is the architectural basis.
+- HMAC-SHA-256 with KMS-held pepper — a security-design decision; no legal dependency.
+- Restriction of all retained fields to restricted-class credential store only — never on governance-path stores, never on-chain, never in public records.
+- Provider fail-closed mode: if provider is unavailable, enrolment FAILS; no permit-through.
+
+**MUST route to CON-015 and/or GDPR/DPDP counsel (not architect-decidable):**
+
+| Retention question | Legal domain | Priority |
+|---|---|---|
+| Is ephemeral provider-side processing of the government-ID image compliant with India DPDP Act 2023 consent/purpose-limitation provisions? Does verify-and-discard satisfy DPDP "legitimate use"? | CON-015 (India DPDP + Aadhaar Act 2016) | **Critical path — must clear before implementation** |
+| If the government ID is an Aadhaar card: does document-check verification by a non-UIDAI entity constitute unauthorized authentication under the Aadhaar Act 2016 and Aadhaar Authentication Regulations? | CON-015 — this is the specific area it covers | **Critical path** |
+| Is `phone_hash` personal data under India DPDP and GDPR (re-identifiable with the KMS key)? | CON-015 + EU GDPR counsel | High |
+| Is `subject_id_hash` personal data under India DPDP and GDPR (derived from biometric/document processing)? | CON-015 + EU GDPR counsel | High |
+| Retention period for `id_verified_flag`, `phone_hash`, `subject_id_hash` after account deletion (storage-limitation principle) | CON-015 | High |
+| Cross-border data transfer: if the ID-verification provider processes documents outside India, do DPDP Chapter V transfer restrictions apply? | CON-015 + provider contract | High |
+| Erasure rights: if a user exercises a DPDP/GDPR right to erasure, can `phone_hash` and `subject_id_hash` be deleted without breaking the audit chain? (On-chain records do not contain these fields — they are restricted-class — so audit integrity is maintained; legal confirmation required.) | CON-015 | Medium |
+| EU GDPR Article 9: political-platform context may mean even restricted-class `phone_hash` linked to party membership constitutes Article 9 (politically sensitive) data. Out of scope for Phase-1 India pilot; Gate-2 blocker for any EU expansion. | EU GDPR counsel | Medium (Phase 1) / High (Phase 2+) |
+
+**CON-015 is now more load-bearing** than at its original minting: this ruling adds government-ID document verification to the India/Aadhaar pilot, which is precisely the legally sensitive area CON-015 covers. The CON-015 legal opinion MUST be in hand ≥ 8 weeks before Gate 2. **No enrolment sprint begins without CON-015 cleared for the government-ID check path.**
+
+#### FR-004 plurality question — architect-resolved
+
+**Question (from DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md §5(ii)):** Does the v1 ID-verification provider fall under FR-004's ≥2 independent attestors requirement, and how does that interact with OI-20 (Phase-1 single-rail) and FR-129 (Charter-layer permanence guard)?
+
+**Architect ruling:** The v1 ID-verification vendor is an application-layer component called at account signup. It does NOT issue ZK-verifiable personhood credentials; it does NOT plug into the `PersonhoodRegistry`. FR-004's ≥2 independent attestors requirement is defined in ADR-003/ADR-016/ADR-021 for the v2 protocol-level attestor stack (entities that issue credentials for the `PersonhoodRegistry`). FR-004 is satisfied at the architecture level by OI-20's resolution (ADR-021). It does NOT literally apply to the v1 ID-verification vendor.
+
+**However, the intent behind FR-004 — attestor diversity, concentration risk, compulsion resistance — applies in spirit.** A single vendor seeing every signup is a concentration risk: if the vendor is compelled by a state, compromised, or goes offline, every v1 enrolment is affected. This is the same compulsion-risk motivation recorded in Doc 01 §E3 and ADR-003.
+
+**Resolution:** Single-vendor ID-check is an accepted Phase-1 dated limitation — NOT a permanent architecture choice. This mirrors OI-20 reasoning for Phase-1 single-rail Aadhaar. FR-129 (Charter-layer guard) prevents entrenchment of single-vendor operation at the platform-permanence level. This concentration risk is recorded as T-08 in the conflict table (Doc 03 §10.13.7) and as a design debt item.
+
+#### Updated consequences (amendment additions)
+
+**Amended consequence (c-i) — Sybil ceiling improved but not closed:**
+Government-ID document check raises the practical Sybil barrier compared to phone-alone: a bad actor now needs both a new SIM card AND a new (or stolen) government ID per fake account. `subject_id_hash` same-document deduplication prevents same-document-different-phone reuse. The Sybil ceiling remains: one person with multiple government IDs (rare but possible) can still create multiple accounts. `getProperties().onePersonOneVote = false` is unchanged. v1 is "real-person verified, not unique-person guaranteed."
+
+**Amended consequence (c-ii) — FR-003 PARTIAL posture reshaped:**
+v1 now retains `phone_hash` (HMAC-SHA-256, not plaintext) + `subject_id_hash` (HMAC-SHA-256, not the provider's raw token) + `id_verified_flag` + `age_verified` + `issuing_region` + `verified_at`. No PII fields (name, DOB, document number, images) are stored at any layer. Hashed phone improves the FR-003 PARTIAL position vs plaintext retention; `subject_id_hash` adds a new derived identifier that deepens the retained surface. Legal classification of the hashes as personal data under India DPDP and GDPR is routed to CON-015 (Q-3 answer).
+
+**New consequence (c-vii) — ID-verification vendor dependency:**
+v1 now has a third new third-party dependency (beyond SMS delivery and phone-intelligence API): a government-ID document verification provider. Vendor TBD (to be listed in Doc 13 as DEP-new). Privacy consequence: the vendor receives document images, which is a materially deeper data exposure than the phone number transmitted to the phone-intelligence API. Mitigation posture: (a) vendor contract MUST include verify-and-discard terms — no retention of document images or biometric templates; (b) no-resale, no-profiling clauses; (c) cross-border transfer compliance per CON-015; (d) vendor failure mode is fail-closed — if the vendor is unavailable, enrolment fails (not permit-through). Residual: the vendor processes the document. Even with contractual controls, this is a deeper trust relationship than the phone-intelligence call. Accepted for v1; eliminated in v2 (ZK enrolment — no document reaches any external party).
+
+#### (c-viii) Exclusion residual: no accepted government-ID document → no v1 enrolment
+
+A citizen who cannot present an accepted government-ID document at signup cannot enrol in v1. This is the direct parallel to the ADR-016 Aadhaar-exclusion sentence: "In Phase 1, a person without Aadhaar cannot enrol in the pilot region." In v1, a person without an accepted government-ID document cannot enrol in the platform.
+
+This matters beyond an ordinary operational limitation. Trumocracy's whole premise is that no gatekeeper can deny political participation (BR-003, FR-020). An identity-document gate is structurally such a mechanism: citizens who lack government-issued ID — who disproportionately include migrants, those in poverty, youth below document-issuance age, and others already marginalised from formal institutions — are excluded from a political platform that exists specifically to serve citizens.
+
+**Conflict with BR-003 / FR-020 (AWAITING APPROVER CONFIRMATION):** FR-020 grants the absolute right of any eligible person to join a party. The government-ID requirement introduces an eligibility condition — document possession — that FR-020's absolute-right language does not contemplate. This contradiction is recorded in Doc 02 v2.11.0 and is AWAITING APPROVER CONFIRMATION.
+
+**Honesty register:** Doc 02 v2.11.0 **H-19** records this exclusion: "In v1, a person without an accepted government-ID document cannot enrol in the platform." The DES-098 honesty notice (Doc 03 §10.13.6) and FR-131 are the disclosure mechanisms.
+
+**v2 path:** ZK enrolment on a wider attestor class (ADR-003/ADR-016) is designed to reduce this exclusion over time. Phase-1 single-rail (Aadhaar/OVD) already carries a known exclusion (ADR-016 item (c)); the government-ID-document check in v1 deepens it. The exclusion is an accepted Phase-1 limitation, not a permanent architecture choice. The no-document enrolment path remains a Phase-3 matter (OI-03).
+
+---
+
+#### Updated conflict-table analysis
+
+**T-06 (reshaped):** Government-ID document check + `subject_id_hash` same-document deduplication raises the Sybil barrier over phone-alone. Same-document-different-phone is now detected. Same-person-multiple-IDs is not prevented. `getProperties().onePersonOneVote = false` is unchanged. v1 MUST NOT claim one-person-one-vote or unique personhood — the check confirms real person, not unique person. T-06 is improved but not closed. See §10.13.7 T-06 row.
+
+**T-07 (reshaped):** Stored surface is now `phone_hash` + `subject_id_hash` + `id_verified_flag` + `age_verified` + `issuing_region` + `verified_at` — no PII fields. Hashed phone improves FR-003 PARTIAL position vs plaintext. `subject_id_hash` adds a derived identifier that deepens the retained surface slightly. Legal classification routed to CON-015. See §10.13.7 T-07 row.
+
+**T-08 (new):** Single-vendor ID-verification concentration risk vs FR-004 plurality intent — see FR-004 plurality question answer above and §10.13.7 T-08 row.
