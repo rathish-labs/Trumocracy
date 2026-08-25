@@ -10,4 +10,4 @@
  *   import '@trumocracy/ui/tokens.css';
  */
 export { PrivacyStatus } from './PrivacyStatus.js';
-export type { SelfViewToken, PrivacyState, PrivacyStatusProps } from './PrivacyStatus.js';
+export type { SelfViewToken, PrivacyState, PrivacyStatusProps, BackingProperties } from './PrivacyStatus.js';

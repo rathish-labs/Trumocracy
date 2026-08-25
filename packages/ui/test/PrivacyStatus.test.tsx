@@ -1,16 +1,23 @@
 /**
- * UT-0750..UT-0757 — PrivacyStatus component (DES-094).
+ * UT-0750..UT-0758 — PrivacyStatus component (DES-094 v2.7.1).
  *
  * These tests protect the normative binding clauses of the privacy-status component
- * (Doc 03 §10.12.3). They are written in the spirit of UT-0700/UT-0701 (safety surfaces):
- * the component's rendering contract is a privacy property, not a presentation property.
+ * (Doc 03 §10.12.3 v2.7.1). They are written in the spirit of UT-0700/UT-0701 (safety
+ * surfaces): the component's rendering contract is a privacy property, not a presentation
+ * property.
  *
- * Traces: DES-094, FR-082..086, FR-124, NFR-001, NFR-002, NFR-024.
+ * UT-0758 covers the clause 7 backing-aware subtitle selection added in v2.7.1:
+ *   - absent prop → v1 subtitle (fail-honest default)
+ *   - unlinkable: false → v1 subtitle
+ *   - unlinkable: true → v2 subtitle (ZK backing)
+ *   - malformed/partial prop → v1 subtitle (fail-honest)
+ *
+ * Traces: DES-094, DES-095, FR-082..086, FR-124, FR-131, NFR-001, NFR-002, NFR-024.
  */
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { PrivacyStatus } from '../src/PrivacyStatus.js';
-import type { SelfViewToken } from '../src/PrivacyStatus.js';
+import type { SelfViewToken, BackingProperties } from '../src/PrivacyStatus.js';
 
 /** A valid self-view token — the only value that satisfies the contract. */
 const VALID_SELF_VIEW: SelfViewToken = { holder: 'authenticated-self' };
@@ -22,10 +29,12 @@ describe('UT-0750 PrivacyStatus renders each state with exact approved copy', ()
     expect(screen.getByText('Nothing you do here is linked to you')).toBeTruthy();
   });
 
-  it('UT-0751 renders the ver state with the correct title and subtitle', () => {
+  it('UT-0751 renders the ver state with the correct title and v1 subtitle when no backingProperties (fail-honest default)', () => {
+    // Clause 7 (Doc 03 §10.12.3 v2.7.1): absent backingProperties → fail-honest default →
+    // v1 subtitle. The v2 subtitle MUST NOT be shown unless unlinkable === true explicitly.
     render(<PrivacyStatus state="ver" selfView={VALID_SELF_VIEW} />);
     expect(screen.getByText('Verified — private')).toBeTruthy();
-    expect(screen.getByText('Your vote counts. Your identity is not stored')).toBeTruthy();
+    expect(screen.getByText('Your vote counts. How you voted is never made public.')).toBeTruthy();
   });
 
   it('UT-0752 renders the pub state with the correct title and subtitle', () => {
@@ -79,12 +88,16 @@ describe('UT-0757 PrivacyStatus ver state absence test — clause 3 and clause 6
    * linkage — no analytics, no console, no data attributes recording state).
    */
   it('the ver state markup contains only the two approved copy strings and nothing more', () => {
-    const { container } = render(<PrivacyStatus state="ver" selfView={VALID_SELF_VIEW} />);
+    // Absence test covers the v2 ZK path (unlinkable: true) — the case with the stronger
+    // identity claim. Pass unlinkable: true to render v2 subtitle; the absence checks below
+    // apply equally to both paths (no extra metadata regardless of which subtitle is shown).
+    const v2Backing: BackingProperties = { unlinkable: true };
+    const { container } = render(<PrivacyStatus state="ver" selfView={VALID_SELF_VIEW} backingProperties={v2Backing} />);
     const text = container.textContent ?? '';
 
     // The ONLY text that should appear is the title and subtitle. Nothing else.
     const TITLE = 'Verified — private';
-    const SUBTITLE = 'Your vote counts. Your identity is not stored';
+    const SUBTITLE = 'Your vote counts. Your identity is not stored.';
     const expectedText = `${TITLE}${SUBTITLE}`;
 
     // Normalise whitespace for comparison.
@@ -99,8 +112,11 @@ describe('UT-0757 PrivacyStatus ver state absence test — clause 3 and clause 6
   });
 
   it('the ver state rendered markup has no data-* attributes recording the state', () => {
-    const { container } = render(<PrivacyStatus state="ver" selfView={VALID_SELF_VIEW} />);
-    const markup = container.innerHTML;
+    // Check both paths: v1 (no backing) and v2 (unlinkable: true) must both be clean.
+    const { container: v1Container } = render(<PrivacyStatus state="ver" selfView={VALID_SELF_VIEW} />);
+    const { container: v2Container } = render(<PrivacyStatus state="ver" selfView={VALID_SELF_VIEW} backingProperties={{ unlinkable: true }} />);
+    const container = v1Container; // primary check; v2 uses same JSX structure
+    const markup = container.innerHTML + v2Container.innerHTML;
 
     // Clause 6: no data-* attributes that record state beyond what rendering requires.
     // The CSS class (privacy ver) is necessary for rendering; a data-state or data-value
@@ -117,11 +133,59 @@ describe('UT-0757 PrivacyStatus ver state absence test — clause 3 and clause 6
   });
 
   it('the ver state does not appear in a pub-state render (states are mutually exclusive)', () => {
-    // The pub state must not accidentally render the ver copy. Verified Supporters are
-    // not public; the pub state is for voluntary role-taking. Mixing the two would
+    // The pub state must not accidentally render the ver copy (v1 or v2). Verified Supporters
+    // are not public; the pub state is for voluntary role-taking. Mixing the two would
     // be a privacy leak (FR-124(b)/(c)).
     const { container: pubContainer } = render(<PrivacyStatus state="pub" selfView={VALID_SELF_VIEW} />);
     expect(pubContainer.textContent).not.toContain('Verified');
+    // Neither v1 nor v2 ver subtitles may appear in a pub render.
     expect(pubContainer.textContent).not.toContain('Your identity is not stored');
+    expect(pubContainer.textContent).not.toContain('How you voted is never made public');
+  });
+});
+
+describe('UT-0758 PrivacyStatus ver subtitle backing-aware selection (clause 7 — Doc 03 §10.12.3 v2.7.1)', () => {
+  /**
+   * Clause 7 normative rule: subtitle for the `ver` state is selected by the live
+   * IEligibilityVerifier backing's declared properties (DES-095 getProperties()).
+   *
+   * Selection:
+   *   backingProperties.unlinkable === true  → v2 subtitle (ZK backing only)
+   *   all other cases                        → v1 subtitle (fail-honest default)
+   *
+   * These tests ensure the component never assumes the stronger (v2) claim.
+   * Traces: DES-094, DES-095, FR-131, clause 7 (v2.7.1).
+   */
+
+  it('absent backingProperties renders the v1 subtitle (fail-honest default — clause 7)', () => {
+    // No prop at all → fall back to v1. The v2 subtitle MUST NEVER be assumed.
+    render(<PrivacyStatus state="ver" selfView={VALID_SELF_VIEW} />);
+    expect(screen.getByText('Your vote counts. How you voted is never made public.')).toBeTruthy();
+    expect(screen.queryByText('Your vote counts. Your identity is not stored.')).toBeNull();
+  });
+
+  it('unlinkable: false renders the v1 subtitle (explicit conventional backing)', () => {
+    // v1 conventional backing declares unlinkable: false → v1 subtitle.
+    const v1Backing: BackingProperties = { onePersonOneVote: false, subpoenaResistant: false, unlinkable: false, anonymityFloor: false };
+    render(<PrivacyStatus state="ver" selfView={VALID_SELF_VIEW} backingProperties={v1Backing} />);
+    expect(screen.getByText('Your vote counts. How you voted is never made public.')).toBeTruthy();
+    expect(screen.queryByText('Your vote counts. Your identity is not stored.')).toBeNull();
+  });
+
+  it('unlinkable: true renders the v2 subtitle (ZK backing — clause 7)', () => {
+    // v2 ZK backing declares unlinkable: true → v2 subtitle only.
+    const v2Backing: BackingProperties = { onePersonOneVote: true, subpoenaResistant: true, unlinkable: true, anonymityFloor: true };
+    render(<PrivacyStatus state="ver" selfView={VALID_SELF_VIEW} backingProperties={v2Backing} />);
+    expect(screen.getByText('Your vote counts. Your identity is not stored.')).toBeTruthy();
+    expect(screen.queryByText('Your vote counts. How you voted is never made public.')).toBeNull();
+  });
+
+  it('malformed/partial prop (no unlinkable field) renders the v1 subtitle (fail-honest)', () => {
+    // A partial BackingProperties object with no unlinkable field → undefined → v1 subtitle.
+    // This also covers the case of a future backing that omits the field.
+    const partialBacking: BackingProperties = { onePersonOneVote: false };
+    render(<PrivacyStatus state="ver" selfView={VALID_SELF_VIEW} backingProperties={partialBacking} />);
+    expect(screen.getByText('Your vote counts. How you voted is never made public.')).toBeTruthy();
+    expect(screen.queryByText('Your vote counts. Your identity is not stored.')).toBeNull();
   });
 });

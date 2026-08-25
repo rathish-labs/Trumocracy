@@ -1112,3 +1112,44 @@ v2.8.0 business-mode review cycle.
 reports at any version. Gate 1 cannot be presented until both clear.
 
 **Closure complete — 2026-08-24.** With Doc 02 v2.13.0, Doc 03 v2.6.1, and Doc 13 v2.8.1 all Approved, all approver rulings on v1 scope are applied and closed. The branch is ready for the approver to push and merge. Standing items that survive closure: routed cascade debt (Doc 01/02/03/09/10 per SCOPE-CLOSURE §4.4); Gate-1-presentation blocker (Docs 01 and 05 lack passing reviews); carried review Lows (Doc 03 ISS-A/ISS-B); and the operational headline — CON-015 by 2026-09-07; DEP-11/12/13 by 2026-09-19; RISK-41 no-retention clause — which must start now.
+
+---
+
+### Closing state — 2026-08-25 (scaffold honesty fix, code-review loop, traceability close)
+
+#### Code drop
+
+Commit 5320342 and this session's fixes passed technical review — Doc 06 v2.0.1 Approved (cycle-2 PASS 97%; cycle-1 FAIL 94% on the UI typecheck bar, fixed). reviewer-qa merge sign-off technical PASS recorded; **merge execution conditionally held on RTM zero-gap per CLAUDE.md** (report: `artifacts/reviews/06-coding-and-ut-v2.0.1-technical-cycle2.md`).
+
+#### Honesty fix
+
+DES-094 made backing-aware — Doc 03 v2.7.1 Approved (cycle-2 PASS 97%; cycle-1 FAIL 91% — the reviewer also caught the anon-state analysis stretch, resolved by normative clause 8). The v1 `ver` subtitle is now "Your vote counts. How you voted is never made public." with the v2 copy rendering only behind a backing declaring `unlinkable: true`; fail-honest default is v1 copy. Suite 383 green (95/82/160/14/16/16).
+
+#### Traceability close
+
+Doc 05 v2.2.0 In Review (US-0132/0133/0134 minted; full business review still owed — the standing Gate-1 blocker on Docs 01/05 is UNCHANGED). Doc 07 v2.2.1 Approved (cycle-2 PASS 98%). Doc 08 v2.2.3 Approved (cycle-4 PASS 99% after cycle-1 FAIL 95% / cycle-2 FAIL 96% / cycle-3 FAIL 96%).
+
+#### Material RTM finding
+
+The review loop discovered **eight Must FRs entirely absent from the RTM forward trace** (FR-121, FR-125..FR-130, FR-133) — the honest open-Must figure is **126 of 138** (completion 8.7%), not the previously reported 118/113. Gate 2 unchanged NOT READY; the figure got worse because it got honest. Source: `artifacts/reviews/08-traceability-matrix-v2.2.2-technical-cycle2.md` (ISS-02, absent-FR sweep) and `artifacts/reviews/08-traceability-matrix-v2.2.3-technical-cycle4.md` (cycle-4 PASS 99%, 0C/0H/0M/2L).
+
+#### Carried debt register (this session)
+
+| Document | Severity | Issue |
+|----------|----------|-------|
+| Doc 03 | Low | Clause 8 "component or host screen" phrasing |
+| Doc 06 | Low | v2.0.1 date typo 2026-08-24→25 |
+| Doc 07 | Low | §5.3 header range + "15 of 18" |
+| Doc 08 | Low | "a 8.7%" article; §9 Notes column |
+| Enrolment-sprint | Obligation | Clause 8 affordance; ICredentialStore; audit-contract tally wiring; fonts/DES-082 floor check; SIM-swap recovery DES |
+
+#### Operational reminder (UNCHANGED)
+
+| Item | Latest start | Days from 2026-08-25 | Owner | Status |
+|------|-------------|----------------------|-------|--------|
+| CON-015 — independent legal opinion (Aadhaar API / data-minimisation) | **2026-09-07** | **13 days** | Sofia Marchetti | **NOT STARTED — CRITICAL PATH** |
+| DEP-11 — SMS/phone-auth provider contract | **2026-09-19** | **25 days** | Rafael Duarte | **NOT STARTED** |
+| DEP-12 — phone-intelligence API (VoIP/fraud detection) contract | **2026-09-19** | **25 days** | Rafael Duarte | **NOT STARTED** |
+| DEP-13 — government-ID document-check provider contract | **2026-09-19** | **25 days** | Rafael Duarte | **NOT STARTED** |
+
+**Gate 2:** NOT READY. RTM (Doc 08 v2.2.3): 138 Must rows / 12 COMPLETE / **126 OPEN** (8.7% completion). Gate-1-presentation blocker: Docs 01 and 05 still lack passing business-mode review reports.

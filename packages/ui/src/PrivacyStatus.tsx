@@ -4,8 +4,8 @@
  * Persistent authenticated-holder self-view element. Renders one of three participation-tier
  * states. Normatively binds FR-124 at the component level.
  *
- * Normative reference: Doc 03 §10.12.3; ADR-023.
- * Traces: FR-082..086, FR-124, NFR-001, NFR-002, NFR-024.
+ * Normative reference: Doc 03 §10.12.3 v2.7.1; ADR-023.
+ * Traces: FR-082..086, FR-124, FR-131, NFR-001, NFR-002, NFR-024.
  *
  * ─── Normative binding clauses (Doc 03 §10.12.3) ────────────────────────────────
  *
@@ -51,10 +51,63 @@
  *   crossing to a public role. It is NOT a PrivacyStatus component instance. The engineer
  *   MUST NOT implement screen 3.6's preview element as a PrivacyStatus component call.
  *
+ * Clause 7 — Backing-aware copy selection for `ver` state (FR-131, H-15, H-16, T-01, T-02):
+ *   The subtitle rendered in the `ver` state MUST be selected by the live IEligibilityVerifier
+ *   backing's declared properties (DES-095 seam, Doc 03 §10.13.2 `getProperties()`), passed
+ *   via the optional `backingProperties` prop. The component is designed so a caller can pass
+ *   `verifier.getProperties()` straight through without adaptation.
+ *
+ *   Selection rule (normative — clause 7):
+ *     - `backingProperties.unlinkable === true`   → v2 subtitle (ZK backing)
+ *     - All other cases (false, undefined, absent, call error) → v1 subtitle (fail-honest default)
+ *
+ *   The v2 subtitle ("Your vote counts. Your identity is not stored.") MUST render ONLY when
+ *   the live backing explicitly declares `unlinkable: true`. Absence of the prop or any error
+ *   falls back to the v1 subtitle ("Your vote counts. How you voted is never made public.").
+ *   The v2 subtitle MUST NEVER be assumed — fail-honest means the weaker claim is the default.
+ *
+ *   Proxy annotation (Doc 03 §10.12.3 clause 7, v2.7.1 ISS-02): `getProperties().unlinkable`
+ *   is used as the subtitle-selection trigger because the current v2 ZK backing that declares
+ *   `unlinkable: true` also guarantees "no identity at rest" by construction (ZK enrolment;
+ *   nullifier-only on-chain; no `phone_hash` or `subject_id_hash` retained). The `unlinkable`
+ *   property is a PROXY for the full "no identity at rest" guarantee, not an independent test.
+ *   Any future backing declaring `unlinkable: true` MUST satisfy the same guarantee by design
+ *   review before the v2 subtitle may render behind it. This is a design-review invariant for
+ *   future backing registrations.
+ *
+ * Clause 8 — Non-vote `anon` context disclosure (FR-131, ADR-025 §(c-ii)):
+ *   In browsing (screen 1.2), party-joining (screen 1.6), and endorsing (screen 2.3), the
+ *   `anon` pill or its host screen MUST provide an accessible data-practices disclosure link
+ *   adjacent to the pill. This obligation is deliberately NOT implemented in this session —
+ *   it belongs to the enrolment sprint. Owner: engineer (enrolment sprint). Trigger: MUST be
+ *   implemented before any screen rendering the `anon` pill in a non-vote context ships to
+ *   production. Doc 03 §10.12.3 clause 8.
+ *
  * ─────────────────────────────────────────────────────────────────────────────────
  */
 
 import type { ReactElement, CSSProperties } from 'react';
+
+/**
+ * Properties declared by the live IEligibilityVerifier backing (DES-095, Doc 03 §10.13.2).
+ *
+ * Matches the exact shape of `ConventionalEligibilityVerifier.getProperties()` so a caller
+ * can pass `verifier.getProperties()` directly without adaptation:
+ *   `<PrivacyStatus state="ver" selfView={sv} backingProperties={verifier.getProperties()} />`
+ *
+ * All fields are optional so a partial response (e.g. a future backing exposing a subset)
+ * degrades gracefully to the fail-honest default rather than throwing.
+ *
+ * Clause 7 (Doc 03 §10.12.3): only `unlinkable` drives subtitle selection for the `ver`
+ * state. The other fields are accepted for forward compatibility and ignored by this component.
+ */
+export interface BackingProperties {
+  readonly onePersonOneVote?: boolean;
+  readonly subpoenaResistant?: boolean;
+  /** Clause 7 trigger: true iff the backing cannot determine who voted (v2 ZK property). */
+  readonly unlinkable?: boolean;
+  readonly anonymityFloor?: boolean;
+}
 
 /**
  * Proof token for the self-view contract (clause 1 above).
@@ -93,7 +146,48 @@ export interface PrivacyStatusProps {
    * token on surfaces displaying another actor's data.
    */
   selfView: SelfViewToken;
+  /**
+   * Properties declared by the live IEligibilityVerifier backing (DES-095 getProperties()).
+   *
+   * Clause 7 (Doc 03 §10.12.3 v2.7.1): When `state` is "ver", this prop drives subtitle
+   * selection:
+   *   - `backingProperties.unlinkable === true`  → v2 subtitle (ZK backing only)
+   *   - All other cases (false, undefined, prop absent, or error) → v1 subtitle (fail-honest)
+   *
+   * Designed for direct pass-through: `backingProperties={verifier.getProperties()}`.
+   * Absent or malformed → fail-honest default (v1 subtitle). The v2 subtitle MUST NEVER
+   * be assumed. Has no effect when state is "anon" or "pub".
+   *
+   * Clause 8 owed obligation (enrolment sprint, NOT this session): the `anon` state requires
+   * a data-practices disclosure link in non-vote contexts (Doc 03 §10.12.3 clause 8).
+   */
+  backingProperties?: BackingProperties;
 }
+
+// ─── ver-state subtitle constants (clause 7, Doc 03 §10.12.3 v2.7.1 backing-aware sub-table)
+
+/**
+ * v1 subtitle — fail-honest default (conventional backing; all cases where unlinkable ≠ true).
+ *
+ * Verbatim from the v2.7.1 backing-aware sub-table (row: "v1 (conventional): unlinkable = false,
+ * or call absent/error — fail-honest default"). FR-131 compliant: no identity-at-rest claim;
+ * truthful for v1 (aggregate-only publication is policy-enforced; individual vote direction
+ * never published). Doc 03 §10.12.3 clause 7, backing-aware sub-table row 2.
+ */
+const VER_SUBTITLE_V1 = 'Your vote counts. How you voted is never made public.' as const;
+
+/**
+ * v2 subtitle — rendered ONLY when backingProperties.unlinkable === true (ZK backing).
+ *
+ * Verbatim from the v2.7.1 backing-aware sub-table (row: "v2 (ZK): unlinkable = true").
+ * MUST NOT render against a v1 conventional backing: v1 retains phone_hash and subject_id_hash
+ * in the operator DB and cannot technically sustain "Your identity is not stored" (H-15, H-16,
+ * T-01, T-02). Doc 03 §10.12.3 clause 7, backing-aware sub-table row 1.
+ *
+ * Proxy annotation (v2.7.1 ISS-02): any future backing declaring unlinkable: true MUST satisfy
+ * "no identity at rest" by design review before this subtitle may render. Doc 03 §10.12.3 clause 7.
+ */
+const VER_SUBTITLE_V2 = 'Your vote counts. Your identity is not stored.' as const;
 
 // ─── State configuration (verbatim from Doc 03 §10.12.3 table) ───────────────────
 
@@ -118,6 +212,12 @@ type StateConfig = {
  * Every value in this table is normative: the copy is approved verbatim and the colour
  * bindings correspond exactly to the CSS custom properties in tokens.css (DES-093).
  * Do not alter any value here without a matching change to the SDD and ADR-023.
+ *
+ * NOTE on `ver.subtitle`: the value stored here (VER_SUBTITLE_V1) is the fail-honest default
+ * used when backingProperties is absent or unlinkable !== true. The component overrides it to
+ * VER_SUBTITLE_V2 when backingProperties.unlinkable === true (clause 7). Do not change the
+ * `ver.subtitle` field here to VER_SUBTITLE_V2 — that would hardcode the v2 claim, which
+ * clause 7 expressly prohibits.
  */
 const STATE_CONFIG: Readonly<Record<PrivacyState, StateConfig>> = {
   anon: {
@@ -134,7 +234,9 @@ const STATE_CONFIG: Readonly<Record<PrivacyState, StateConfig>> = {
     textColor:  '#1f5a42',
     cssClass:   'privacy ver',
     title:      'Verified — private',
-    subtitle:   'Your vote counts. Your identity is not stored',
+    // Clause 7 fail-honest default — overridden to VER_SUBTITLE_V2 by the component
+    // when backingProperties.unlinkable === true. See the component body.
+    subtitle:   VER_SUBTITLE_V1,
   },
   pub: {
     dotColor:   '#F2B134', // var(--amber)
@@ -154,12 +256,20 @@ const STATE_CONFIG: Readonly<Record<PrivacyState, StateConfig>> = {
  * Renders the authenticated holder's participation-tier state in their own authenticated
  * session. Returns null for any non-conforming selfView token (clause 1 — fail-closed).
  *
+ * For the `ver` state, pass `backingProperties` to select the correct subtitle (clause 7):
+ *   - `backingProperties.unlinkable === true`  → v2 subtitle (ZK backing)
+ *   - All other cases (absent prop, false, undefined) → v1 subtitle (fail-honest default)
+ *
  * @example
- * // Obtain selfView from the authenticated session context only:
+ * // v1 conventional backing — no prop needed (fail-honest default):
  * const selfView: SelfViewToken = { holder: 'authenticated-self' };
  * return <PrivacyStatus state="ver" selfView={selfView} />;
+ *
+ * @example
+ * // v2 ZK backing — pass getProperties() directly:
+ * return <PrivacyStatus state="ver" selfView={selfView} backingProperties={verifier.getProperties()} />;
  */
-export function PrivacyStatus({ state, selfView }: PrivacyStatusProps): ReactElement | null {
+export function PrivacyStatus({ state, selfView, backingProperties }: PrivacyStatusProps): ReactElement | null {
   // Clause 1 — runtime guard: self-view only.
   // The component returns null when the selfView contract is not satisfied, regardless of
   // what TypeScript's type system allows. This is the fail-closed rendering rule.
@@ -168,6 +278,21 @@ export function PrivacyStatus({ state, selfView }: PrivacyStatusProps): ReactEle
   }
 
   const cfg = STATE_CONFIG[state];
+
+  // ─── Clause 7 — backing-aware subtitle selection for `ver` state ─────────────────
+  //
+  // The subtitle for the `ver` state is selected by the live backing's declared properties.
+  // Rule: backingProperties.unlinkable === true → v2 subtitle (ZK backing has no identity at
+  // rest); all other cases → v1 subtitle (fail-honest default; the stronger claim is never
+  // assumed). Doc 03 §10.12.3 clause 7; backing-aware sub-table (v2.7.1).
+  //
+  // `unlinkable` is a PROXY for "no identity at rest" — see proxy annotation in JSDoc above.
+  // Any future backing declaring unlinkable: true MUST satisfy the same guarantee by design
+  // review. Doc 03 §10.12.3 clause 7, v2.7.1 ISS-02.
+  const subtitle: string =
+    state === 'ver' && backingProperties?.unlinkable === true
+      ? VER_SUBTITLE_V2
+      : cfg.subtitle;
 
   // Inline styles use the exact hex values from DES-094 rather than CSS custom property
   // references, so the component renders correctly in environments that do not load
@@ -209,7 +334,7 @@ export function PrivacyStatus({ state, selfView }: PrivacyStatusProps): ReactEle
           {cfg.title}
         </span>
         <span className="privacy-subtitle" style={{ fontSize: '11px', lineHeight: 1.3 }}>
-          {cfg.subtitle}
+          {subtitle}
         </span>
       </span>
     </div>

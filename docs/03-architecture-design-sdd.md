@@ -2,14 +2,57 @@
 
 ```
 Document ID:   SDD-TRUMOCRACY
-Version:       2.6.1
+Version:       2.7.1
 Status:        Approved
 Owner:         Ravi Deshmukh — Principal Architect
 Approvers:     Rafael Duarte (Security), Chen Wei (Reliability), Dr. Lena Kowalczyk (Privacy),
                Aisha Nkemdirim (Elections & Voting)
 Source:        SRS-TRUMOCRACY v2.13.0
-Last updated:  2026-08-24
-Change:        v2.6.1 (2026-08-24) — Rework (review cycle 1 FAIL, 84%/0C/0H/3M/3L;
+Last updated:  2026-08-25
+Change:        v2.7.1 (2026-08-25) — §10.12.3 rework cycle 1 (FAIL 91%/0C/0H/1M/2L;
+               artifacts/reviews/03-architecture-design-sdd-v2.7.0-technical-cycle1.md):
+               ISS-01 (Medium) `anon`-state copy analysis fully reworked — interpretive basis
+               stated explicitly ("publicly linked through any published record", not
+               "unreadable by operator"); India/TRAI SIM-registration linkage and subpoena
+               path acknowledged (ADR-025 "Why phone over email"; Doc 02 H-16, H-18;
+               §10.13.7 T-01, T-02); disclosure gap for non-vote `anon` contexts (screens
+               1.2, 1.6, 2.3) resolved via option (a): clause 8 added to DES-094 normative
+               binding list requiring accessible data-practices disclosure adjacent to `anon`
+               pill in browsing/joining/endorsing contexts; `anon` subtitle unchanged (no
+               v1 variant required under stated interpretive basis); `anon` state confirmed
+               as rendering for authenticated open-tier (phone-verified, not
+               government-ID-verified) users.
+               ISS-02 (Low) Clause 7 annotated: `getProperties().unlinkable` is a proxy for
+               the full "no identity at rest" guarantee; any future backing declaring
+               `unlinkable: true` MUST satisfy same guarantee by design review before v2
+               copy may render behind it.
+               ISS-03 (Low) Prominent normative note added at three-state table header:
+               clause 7 + backing-aware sub-table are the normative implementation spec;
+               three-state table is informational reference copy; v1 default subtitle
+               stated explicitly.
+               v2.7.0 (2026-08-25) — DES-094 backing-aware copy + carried debt ISS-A/ISS-B
+               (approver directive Rathish, 2026-08-25; engineer FLAG A,
+               artifacts/engineer-2026-08-24T2015.md):
+               §10.12.3 DES-094 — `ver` state subtitle made backing-aware. FR-131 banned-words
+               analysis conducted: title "Verified — private" is COMPLIANT — "private" describes
+               the visibility of the holder's verified status (private to the holder; never
+               published per-individual; aggregate-only by FR-124(b)), NOT voting behaviour;
+               no change to title required. v1 subtitle decided: "Your vote counts. How you voted
+               is never made public." — truthful for v1 (aggregate-only publication enforced by
+               FR-124(b); does not claim identity is unstored; no banned words). v2 subtitle
+               retained: "Your vote counts. Your identity is not stored." (truthful only for the
+               ZK backing). Backing-aware copy sub-table added; anon/pub state analysis
+               conducted and recorded (no v1 variants needed for either state). Clause 7 added
+               to normative binding list: subtitle selection MUST be keyed off
+               IEligibilityVerifier.getProperties() (DES-095); v2 copy renders only when
+               getProperties().unlinkable = true; all other cases (including call failure /
+               absent values) fall back to v1 copy (fail-honest default); cites FR-131,
+               H-15, H-16, T-01, T-02. DES-094 element-table traces updated to add FR-131.
+               §15 DES-094 amendment row added (v2.7.0 section).
+               ISS-B: §1.1 body prose SRS v2.12.0 → SRS v2.13.0.
+               ISS-A: ADR-025 §(e) Q-1 allowlist table age_verified row corrected from
+               "at signup" → "at COUNTING-tier government-ID verification".
+               v2.6.1 (2026-08-24) — Rework (review cycle 1 FAIL, 84%/0C/0H/3M/3L;
                artifacts/reviews/03-architecture-design-sdd-v2.6.0-technical-cycle1.md):
                ISS-01 (Medium) §10.13.9 DES-100 field table `status` row — purpose corrected:
                "used to gate account creation" → "used to determine COUNTING-tier eligibility
@@ -302,7 +345,7 @@ Changelog:     v2.6.0 (2026-08-24) — Government-ID gates COUNTING, never joini
 
 Trumocracy lets any verified citizen originate a political party, gather demonstrated public
 support, and — on reaching a coded threshold — operate that party under rules that no
-founder, financier or platform operator can override. The SRS v2.12.0 defines 21 `BR`, 133 `FR`
+founder, financier or platform operator can override. The SRS v2.13.0 defines 21 `BR`, 133 `FR`
 (131 active + 2 superseded; 114 Must), 28 `NFR` (24 Must), 15 `CON`, and 27 `RISK`. The
 requirements that shape this architecture more than any others:
 
@@ -1149,15 +1192,50 @@ others).
 
 | DES | Element | Purpose | Traces | Implementation location |
 |---|---|---|---|---|
-| DES-094 | Privacy-status component | Persistent authenticated-holder self-view element; renders one of three states; normatively binds FR-124 at the component level | FR-082..086, FR-124, NFR-001, NFR-002, NFR-024 | `packages/ui/PrivacyStatus` (not yet created — Coding phase) |
+| DES-094 | Privacy-status component | Persistent authenticated-holder self-view element; renders one of three states; normatively binds FR-124 at the component level | FR-082..086, FR-124, FR-131, NFR-001, NFR-002, NFR-024 | `packages/ui/PrivacyStatus` (not yet created — Coding phase) |
 
 **Three states — exact wireframe copy and colour bindings:**
+
+> **Normative note (v2.7.1 — ISS-03):** The table below is **informational reference copy** maintained per the annotate-don't-delete convention. The `ver` row preserves the v2 reference subtitle annotated "(v2 ZK backing only — see backing-aware copy below)." **Clause 7 in the normative binding list below and the backing-aware sub-table are the normative implementation spec for the `ver` subtitle.** The v1 default `ver` subtitle ("Your vote counts. How you voted is never made public.") does not appear in this table — it appears in the backing-aware sub-table. An engineer implementing `PrivacyStatus.tsx` MUST consult clause 7 and the backing-aware sub-table; taking the `ver` row of this table as the implementation spec will produce an incorrect hardcoded v2 subtitle, which clause 7 expressly prohibits.
 
 | State | CSS class | Dot colour | Background | Text colour | Title | Subtitle |
 |---|---|---|---|---|---|---|
 | `anon` | `privacy anon` | `--grey-soft` (#8892AE) | #ECEEF5 | #41496b | "Anonymous" | "Nothing you do here is linked to you" |
-| `ver` | `privacy ver` | `--green` (#2C7A5B) | `--green-soft` (#E7F1EC) | #1f5a42 | "Verified — private" | "Your vote counts. Your identity is not stored" |
+| `ver` | `privacy ver` | `--green` (#2C7A5B) | `--green-soft` (#E7F1EC) | #1f5a42 | "Verified — private" | "Your vote counts. Your identity is not stored." *(v2 ZK backing only — see backing-aware copy below)* |
 | `pub` | `privacy pub` | `--amber` (#F2B134) | #FDF3E0 | #8a5b10 | "Public" | "You chose a public role. Your record is visible" |
+
+**Backing-aware copy for `ver` state (v2.7.0 amendment — approver directive Rathish, 2026-08-25; engineer FLAG A, `artifacts/engineer-2026-08-24T2015.md`):**
+
+| Backing | Title | Subtitle | When rendered |
+|---|---|---|---|
+| v2 (ZK): `getProperties().unlinkable = true` | "Verified — private" | "Your vote counts. Your identity is not stored." | Live `IEligibilityVerifier` backing (DES-095, §10.13.2) declares `unlinkable = true` |
+| v1 (conventional): `getProperties().unlinkable = false`, or call absent/error — **fail-honest default** | "Verified — private" | "Your vote counts. How you voted is never made public." | All other cases, including getProperties() failure or absent backing information |
+
+**FR-131 banned-words analysis (v2.7.0, architect record):**
+
+Title "Verified — private": the word "private" describes the **visibility of the holder's verified status** (private to the holder; never published per-individual; aggregate-only by FR-124(b)), NOT voting behaviour. FR-131's ban ("MUST NOT use 'private' to describe v1 voting behaviour" — §10.13.6 DES-098) does not apply to a title describing *status visibility*. The title is COMPLIANT in v1 and requires no change.
+
+v1 subtitle "Your vote counts. How you voted is never made public.": no banned words present; truthful for v1 (aggregate-only publication is policy-enforced by FR-124(b); individual vote direction is never published to any public audience; the operator-level DB access is separately disclosed by DES-098/FR-131); Grade-8 reading level; one short sentence. COMPLIANT.
+
+**`anon` state copy analysis (v2.7.1 — reworked from v2.7.0 per ISS-01):**
+
+**User class.** The `anon` state renders for **authenticated open-tier users** — phone-verified accounts that have NOT completed government-ID verification and therefore do not hold COUNTING-tier eligibility. This is the specific user class for whom the following analysis is most consequential.
+
+**Copy:** "Nothing you do here is linked to you."
+
+**Interpretive basis (explicit — stated here, not assumed).** This claim is sustained only in the sense of "publicly linked to your real-world self through any published record." It does NOT mean "unreadable by the operator." This distinction must be stated plainly: in v1, an authenticated open-tier user's platform actions — party joins, endorsements, and browsing-event records captured by the indexer — ARE associated with their DB account. The `phone_hash` (HMAC-SHA-256/KMS-pepper of the verified phone number; Doc 02 H-16) is held in the operator's restricted-class credential store. An operator holding the KMS pepper CAN derive the original phone number from `phone_hash`. If a government-ID verification has been completed, `subject_id_hash` (HMAC-SHA-256/KMS-pepper of the document subject ID; Doc 02 H-18) is also retained. In the India pilot: the TRAI SIM-registration mandate requires SIM cards to be registered to a named real person (ADR-025, "Why phone over email"). This makes the chain `platform account → phone_hash → phone number → TRAI-registered real-world identity` a concrete, subpoena-accessible path to a real-world person (Doc 02 H-16, H-18; §10.13.7 T-01, T-02). This is not a theoretical capability — it is the disclosed v1 posture accepted under the deferred-with-disclosure model (T-01 CONFIRMED, Rathish, 2026-08-23; DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md §4).
+
+**FR-124(b) aggregate-only policy.** No participant action is ever published linked to any individual identity. No published record accessible to anyone other than the operator links any action to the `anon` user's account or phone number. This is the operative basis on which "linked to you" is truthful in the public sense — the claim holds for every published record. The operator-accessible linkage is real but is a platform-data-practices concern, not a published-record concern, and is accepted as a disclosed v1 limitation.
+
+**Disclosure gap acknowledged.** DES-098 (the FR-131 honesty notice) applies at vote-casting time (SCR-13/14 — ballot booth and vote-confirmation screen only). The `anon` pill renders on browsing (screen 1.2), party-joining (screen 1.6), and endorsing (screen 2.3) with no equivalent contextual disclosure at the point the claim is displayed. A user seeing "Nothing you do here is linked to you" while browsing parties or joining a party has no in-context signal that the platform DB associates their actions with their account and holds a hash linkable — with the KMS pepper — to their phone number and, in the India pilot, to a TRAI-registered real-world identity. This is a real gap; it is addressed normatively in clause 8 below.
+
+**Resolution — option (a) adopted (architect decision, 2026-08-25).** A normative disclosure obligation for non-vote `anon` contexts is added as clause 8 in the DES-094 normative binding list below. Rationale for option (a) over option (b) (design debt): recording the gap as named debt with a milestone would allow the component to ship in the enrolment sprint without any disclosure mechanism in browsing, joining, and endorsing contexts — exactly the contexts where the `anon` pill appears with no other disclosure currently present. A normative clause in the component spec closes the gap at the implementation-obligation level; the engineer building `PrivacyStatus.tsx` has an enforceable obligation rather than a deferred note. DES-098's scope (SCR-13/14 ballot booth) is unchanged.
+
+**`anon` subtitle v1 variant — no change (architect decision, 2026-08-25).** "Nothing you do here is linked to you" is sustainable under the explicit interpretive basis stated above: no `anon`-state action is published linked to any individual identity in either v1 or v2 (FR-124(b) aggregate-only policy). The operator-side linkage is real in v1 — but that is a platform-data-practices disclosure concern addressed by clause 8, not by a subtitle change. No v1 subtitle variant is required. This decision is recorded; if a future honesty review or user-research finding establishes that "publicly linked" is not the reading a reasonable user in the India pilot context applies to the claim, a subtitle variant MUST be considered before that deployment.
+
+**Verdict (revised).** Copy is compliant under the stated interpretive basis. Non-vote `anon` context disclosure gap addressed normatively via clause 8. No v1 subtitle variant required.
+
+**`pub` state copy analysis (v2.7.0):** "You chose a public role. Your record is visible." True in both v1 and v2: Workers and Candidates have voluntarily taken a public role (FR-124(c)); their public participation record is visible by design. No banned words. No identity-at-rest claims. Copy is backing-independent. **Verdict: no v1 variant needed.**
 
 **Normative privacy binding (FR-124 — these constraints are component-level requirements, not just policies):**
 
@@ -1167,6 +1245,8 @@ others).
 4. **Worker/Candidate `pub` state (FR-124(c)):** The `pub` state corresponds to voluntary role-taking. A separate static "Public" badge on the Worker/Candidate public participation record is permitted by FR-124(c). That badge is NOT a PrivacyStatus component instance; it is a distinct static label on the public-tier participation record.
 5. **Aggregate counts (FR-124(b)):** Aggregate verified counts (e.g. "12,480 verified members") on public party pages are plain text derived from on-chain aggregate data. They are not PrivacyStatus component instances and do not reveal any individual's state.
 6. **No retroactive linkage (FR-124(e), FR-086):** The PrivacyStatus component MUST NOT write, emit, or trigger any log entry or export that associates the holder's rendered state with any persistent record accessible to any other actor. FR-086 applies: no retroactive linkage between an anonymous Supporter's verified status and their identity is permitted through any data the system holds or emits. This obligation is particularly relevant at screen 3.6, whose copy ("What you've done as an anonymous supporter stays anonymous forever. It is never linked to your new public identity") makes the no-retroactive-linkage guarantee explicit to the user — the component rendering MUST be consistent with that guarantee.
+7. **Backing-aware copy selection for `ver` state (FR-131, H-15, H-16, T-01, T-02):** The subtitle rendered in the `ver` state MUST be selected by the live `IEligibilityVerifier` backing's declared properties (DES-095 seam, §10.13.2 `getProperties()`). The v2 subtitle ("Your vote counts. Your identity is not stored.") MUST render ONLY when the live backing declares `getProperties().unlinkable = true`. The v1 subtitle ("Your vote counts. How you voted is never made public.") MUST render in all other cases — including when `getProperties()` returns `unlinkable = false`, when the call fails, or when backing information is absent. **Absence of backing information MUST fall back to the v1 (weaker-claim) subtitle — the fail-honest default; the v2 subtitle MUST never be assumed.** This ensures the stronger identity-at-rest claim is never shown against a v1 conventional backing, which retains `phone_hash` and `subject_id_hash` in the operator DB and cannot technically sustain "Your identity is not stored" (H-15, H-16, T-01 — operator can see account↔membership; T-02 — subpoena test deferred to v2). The component MUST NOT hardcode the v2 subtitle. Cites: FR-131 (no misleading identity-at-rest claim for v1 voting behaviour), H-15 (one-person-one-vote not guaranteed in v1), H-16 (hashed identity data at rest in v1), T-01/T-02 (DB operator access and subpoena deferral). *(v2.7.1 — ISS-02 annotation: `getProperties().unlinkable` is used as the subtitle-selection trigger because the current v2 ZK backing that declares `unlinkable: true` also guarantees "no identity data at rest" by construction — ZK enrolment; nullifier-only on-chain; no `phone_hash` or `subject_id_hash` retained. The `unlinkable` property is a **proxy** for the full "no identity at rest" guarantee, not an independent test. Any future backing declaring `unlinkable: true` MUST satisfy the same guarantee by design review before the v2 subtitle may render behind it. This is a design-review invariant for future backing registrations.)*
+8. **Non-vote `anon` context disclosure (FR-131, ADR-025 §(c-ii), Doc 02 H-16, H-18):** In any screen where the `anon` pill renders in a non-vote-casting context — specifically browsing (screen 1.2), party-joining (screen 1.6), and endorsing (screen 2.3) — the component or its host screen MUST provide an accessible data-practices disclosure link adjacent to the pill. The disclosure MUST inform the user, in plain language at Grade-8 level or lower, that: (i) the platform holds a hashed account identifier associated with their phone number in a restricted-access store; (ii) their open-tier participation actions are associated with that account in the platform DB; and (iii) this account record is subject to legal compulsion in the jurisdiction of operation. The minimum disclosure mechanism is a "?" or "Learn more" affordance adjacent to the `anon` pill that surfaces a one-paragraph plain-language data notice. This obligation exists because DES-098's honesty notice (FR-131) applies only at vote time (SCR-13/14) and does not cover non-vote contexts where the `anon` pill displays the claim "Nothing you do here is linked to you." DES-098's scope is unchanged; this clause supplements it for non-vote surfaces. Cites: FR-131 (honesty notice obligation); ADR-025 §(c-ii) (phone number at rest as identity data in v1); Doc 02 H-16 (`phone_hash` is derived identity data held in operator DB); Doc 02 H-18 (`subject_id_hash` retained as derived identifier); T-01 (operator-side linkage accepted with disclosure). Owner: engineer (enrolment sprint). Trigger: MUST be implemented before any screen rendering the `anon` pill in a non-vote context is shipped to production.
 
 **Leak-check verdict (FR-124 applied to entire wireframe):**
 
@@ -1731,6 +1811,18 @@ pre-existing Phase-3, environment, external, or mechanism gaps per Doc 08 §gap-
 | FR-020 (absolute join right — unchanged), FR-122 (open-tier access with phone verification alone), FR-123 (COUNTING actions: strength-number contribution, binding-ballot admission, candidacy nomination) | DES-095 amended (amendment 3 — call-site placement: verifyEligibility MUST be invoked at the three FR-123 COUNTING-action call sites; MUST NOT be called as a precondition of account creation or party-join; placement is identical for v1 conventional backing and v2 ZK backing; seam invariants table updated; DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md; ADR-024 [AMENDMENT 2026-08-24]) | Third amendment to DES-095 this session: the 2026-08-24 ruling establishes that the ID check gates COUNTING, never joining; call-site placement is the architectural expression of this rule; normative constraint applies to both backings equally. US layer: no new US — this is a placement constraint on call sites for existing US-level actions. |
 | FR-131 clause (d) (open-tier participants blocked from a COUNTING action MUST receive disclosure of non-counting status and explanation of how to become COUNTING-eligible; minted Doc 02 v2.12.0; owner Nadia Hassan; traces BR-005/BR-009) | DES-098 amended (FR-131 clause (d) cross-reference added: the DES-098 honesty-notice obligation extends to the point of a blocked COUNTING action for open-tier participants — not only to ballot-confirmation screens SCR-13/SCR-14; DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md) | Extends the DES-098 scope established in v2.6.0: clause (d) triggers at any COUNTING-action block (strength contribution, binding vote, candidacy), not only at the ballot booth. US layer: owed — PO to extend US from FR-131 to cover the blocked-action disclosure path. |
 | FR-020 (absolute join right), FR-122 (open-tier access), FR-123 (COUNTING actions), FR-124 (verified status private to holder — restricted-class; no public badge; no Supporter badge) | DES-100 amended (counting-gate correction: exclusion residual rewritten from platform exclusion to COUNTING-tier eligibility gate; FR-124 composition check recorded — verified status is restricted-class and MUST NOT become a public per-participant marker; field table status row corrected to COUNTING-tier eligibility gate; age_verified field scoped to COUNTING-tier verification; DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md) | The 2026-08-24 ruling corrects DES-100's exclusion-residual scope from "cannot enrol in v1" to "cannot take COUNTING actions"; FR-124 composition check added confirming verified-status privacy applies identically to the v1 `id_verified_flag` path. US layer: owed — PO to update US derived from FR-132 to reflect the COUNTING-action trigger rather than enrolment trigger. |
+
+**v2.7.0 DES-094 backing-aware copy amendment (§10.12.3, 2026-08-25):**
+
+| Requirement | DES | Notes |
+|---|---|---|
+| FR-082..086, FR-124, FR-131 (v1 honesty notice — no misleading identity-at-rest claim in v1); H-15 (onePersonOneVote not technically guaranteed in v1); H-16 (phone_hash and subject_id_hash retained as restricted-class identity data in v1) | DES-094 amended — backing-aware `ver` subtitle: v1 conventional backing renders "Your vote counts. How you voted is never made public." (when `getProperties().unlinkable = false` or call absent/error); v2 ZK backing renders "Your vote counts. Your identity is not stored." (only when `getProperties().unlinkable = true`); fail-honest default is the v1 subtitle; clause 7 added to normative binding (FR-131, H-15, H-16, T-01, T-02); anon/pub states confirmed backing-independent (no v1 variants); DES-094 element-table traces updated to add FR-131 | Approver directive Rathish 2026-08-25; resolves engineer FLAG A (`artifacts/engineer-2026-08-24T2015.md`). US layer: no new US — this is a copy-selection constraint on the existing DES-094 component; engineer to implement clause 7 as part of PrivacyStatus.tsx in the enrolment sprint. |
+
+**v2.7.1 DES-094 rework cycle 1 (§10.12.3, 2026-08-25):**
+
+| Requirement | DES | Notes |
+|---|---|---|
+| FR-131 (honesty notice — non-vote `anon` contexts); ADR-025 §(c-ii) (phone number at rest as identity data); Doc 02 H-16 (`phone_hash` derived identity data); Doc 02 H-18 (`subject_id_hash` retained); T-01/T-02 (operator-side linkage and subpoena deferral) | DES-094 amended — `anon`-state copy analysis fully reworked (ISS-01): interpretive basis stated explicitly; India/TRAI subpoena chain acknowledged; disclosure gap for non-vote contexts addressed via clause 8 (new normative obligation for data-practices disclosure adjacent to `anon` pill on screens 1.2/1.6/2.3); `anon` subtitle unchanged; clause 7 annotated (ISS-02: `unlinkable` is proxy for full "no identity at rest" guarantee; design-review invariant for future backings); normative note added at three-state table header (ISS-03). | Review cycle 1 rework (FAIL 91%/0C/0H/1M/2L; artifacts/reviews/03-architecture-design-sdd-v2.7.0-technical-cycle1.md). No new DES or ADR minted. US layer: engineer to implement clause 8 data-practices disclosure link as part of PrivacyStatus.tsx host-screen integration in the enrolment sprint. |
 
 ## 16. Open questions
 
