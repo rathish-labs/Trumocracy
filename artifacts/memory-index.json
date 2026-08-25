@@ -3420,6 +3420,61 @@
     "Carried Low debt (Doc 03/06/07/08) to be resolved at next increment."
    ],
    "gate": "Gate 1 APPROVED unconditionally 2026-08-11 (Rathish). Gate 2 NOT READY — 126/138 open Must rows (8.7%). Merge of code drop conditionally held on RTM zero-gap."
+  },
+  {
+   "id": "project-manager-2026-08-25T1200",
+   "role": "project-manager",
+   "file": "artifacts/project-manager-2026-08-25T1200.md",
+   "timestamp": "2026-08-25T12:00:00Z",
+   "phase": "Governance clarification — RTM zero-gap merge-vs-gate-2 ruling",
+   "product": "Trumocracy",
+   "summary": "Recorded approver (Rathish Kumar) ruling that RTM zero-gap is a Gate-2 completion condition, not an incremental-merge condition. Wrote DECISIONS-2026-08-25-RTM-MERGE-RULE-CLARIFICATION.md (ruling verbatim + CLAUDE.md ambiguity analysis + consequences). Appended governance clarification section to GATE-STATUS-2026-08-09.md: scaffold MERGEABLE NOW, Gate 2 UNCHANGED NOT READY 126/138 Must rows open, future build PRs assessed on code-drop review bar not RTM zero-gap. Assessed CLAUDE.md wording: reviewer-qa role line 'RTM verify + sign merge' is genuinely ambiguous; amendment proposed for org learnings register but NOT applied (human-owned edit).",
+   "artifacts_written": [
+    "artifacts/status/DECISIONS-2026-08-25-RTM-MERGE-RULE-CLARIFICATION.md",
+    "artifacts/status/GATE-STATUS-2026-08-09.md (governance clarification section appended)",
+    "artifacts/project-manager-2026-08-25T1200.md",
+    "artifacts/memory-index.json (this entry appended)"
+   ],
+   "key_decisions": [
+    "RTM zero-gap rule: Gate-2 condition only; not an incremental-merge condition (Rathish, 2026-08-25).",
+    "Scaffold (5320342 + 61fd8af) MERGEABLE NOW — reviewer-qa conditional hold superseded.",
+    "Gate 2 UNCHANGED — NOT READY, 126/138 Must rows open.",
+    "CLAUDE.md wording genuinely ambiguous in reviewer-qa role line; amendment drafted for human adoption via org learnings register; no CLAUDE.md edit made."
+   ],
+   "open_items": [
+    "CON-015: NOT STARTED. Latest start 2026-09-07 (13 days). CRITICAL PATH. Owner: Sofia Marchetti.",
+    "DEP-11/12/13: NOT STARTED. Latest start 2026-09-19 (25 days). Owner: Rafael Duarte.",
+    "126 open Must rows block Gate 2.",
+    "Gate-1-presentation blocker: Docs 01 and 05 lack passing business-mode reviews.",
+    "CLAUDE.md amendment AL-## proposal to be filed in org repo learnings register at next cadence review.",
+    "Enrolment-sprint obligations carried forward."
+   ],
+   "gate": "Gate 1 APPROVED unconditionally 2026-08-11 (Rathish). Gate 2 NOT READY — 126/138 open Must rows. Scaffold merge SIGNED by reviewer-qa under governance clarification."
+  },
+  {
+   "id": "reviewer-qa-2026-08-25T1400",
+   "role": "reviewer-qa",
+   "file": "artifacts/reviewer-qa-2026-08-25T1400-merge-signoff-addendum.md",
+   "timestamp": "2026-08-25T14:00:00Z",
+   "phase": "Verify — merge sign-off addendum",
+   "product": "Trumocracy",
+   "summary": "Issued unconditional merge sign-off for build/v1-scaffold (commits 5320342 + 61fd8af + documents-only commits). The CONDITIONALLY HELD position in 06-coding-and-ut-v2.0.1-technical-cycle2.md §6 is superseded by the approver's governance ruling (DECISIONS-2026-08-25-RTM-MERGE-RULE-CLARIFICATION.md). Technical PASS (97%, 0C/0H/0M/1L) stands. Suite 383 green. Traceability rows US-0132..US-0134 / TC-3470..TC-3488 present in Doc 07 v2.2.1 and Doc 08 v2.2.3 (both Approved). Gate 2 remains NOT READY — 126/138 Must rows open; this sign-off does not change that.",
+   "artifacts_written": [
+    "artifacts/reviewer-qa-2026-08-25T1400-merge-signoff-addendum.md"
+   ],
+   "ids_touched": {
+    "reviews_consulted": "06-coding-and-ut-v2.0.1-technical-cycle2.md",
+    "US_covered": "US-0132, US-0133, US-0134",
+    "TC_covered": "TC-3470..TC-3488"
+   },
+   "merge_signoff": "SIGNED — build/v1-scaffold (5320342 + 61fd8af)",
+   "open_items": [
+    "126 open Must rows block Gate 2 — not a merge blocker; a Gate-2 blocker.",
+    "CON-015: NOT STARTED — latest start 2026-09-07. CRITICAL PATH.",
+    "ISS-03 Low (Doc 06 date typo 2026-08-24→25): engineer to fix at next increment.",
+    "Enrolment-sprint obligations: clause 8 affordance, ICredentialStore, audit-contract tally wiring, fonts/DES-082 floor check, SIM-swap recovery DES."
+   ],
+   "gate": "Gate 1 APPROVED unconditionally 2026-08-11 (Rathish). Gate 2 NOT READY — 126/138 open Must rows. Merge of build/v1-scaffold SIGNED."
   }
  ]
 }

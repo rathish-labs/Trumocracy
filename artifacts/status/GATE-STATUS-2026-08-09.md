@@ -1153,3 +1153,76 @@ The review loop discovered **eight Must FRs entirely absent from the RTM forward
 | DEP-13 — government-ID document-check provider contract | **2026-09-19** | **25 days** | Rafael Duarte | **NOT STARTED** |
 
 **Gate 2:** NOT READY. RTM (Doc 08 v2.2.3): 138 Must rows / 12 COMPLETE / **126 OPEN** (8.7% completion). Gate-1-presentation blocker: Docs 01 and 05 still lack passing business-mode review reports.
+
+---
+
+### Governance clarification — 2026-08-25 (RTM zero-gap = Gate-2 condition, not merge condition)
+
+**Ruling by:** Rathish Kumar (human approver), 2026-08-25.
+**Recorded by:** project-manager (Ana-Maria Petrescu).
+**Decision record:** `artifacts/status/DECISIONS-2026-08-25-RTM-MERGE-RULE-CLARIFICATION.md`.
+**Additive only — all prior text unchanged and intact.**
+
+#### The ruling
+
+The approver clarified that the RTM zero-gap rule ("the RTM (Doc 08) has zero gaps in Must
+rows") is a **Gate-2 completion condition, not an incremental-merge condition**. It means
+"the system may not be certified Gate-2-complete with open Must rows." It does NOT mean
+"no branch may merge while any Must row is open" — that reading would freeze all incremental
+delivery at 8.7% completion and is not the rule's intent. See the decision record for the
+ruling verbatim.
+
+#### reviewer-qa conditional hold — superseded
+
+The reviewer-qa CONDITIONALLY HELD position on the scaffold merge (recorded in
+`artifacts/reviews/06-coding-and-ut-v2.0.1-technical-cycle2.md §6`) is **superseded** by
+this governance ruling. The technical PASS stands unmodified.
+
+The scaffold (commits 5320342 + 61fd8af, plus the documents-only commits following) is
+**MERGEABLE NOW**:
+
+| Evidence | Detail |
+|----------|--------|
+| Doc 06 v2.0.1 — technical review | PASS: 97%, 0C/0H/0M/1L (cycle 2 of 5) |
+| Test suite | 383/383 ALL PASS (contracts 95 / protocol 82 / sdk 160 / ui 14 / indexer 16 / web 16) |
+| Traceability | US-0132..US-0134 / TC-3470..TC-3488 present in Doc 07 v2.2.1 and Doc 08 v2.2.3 (both Approved) |
+| Typecheck (packages/ui tsc --noEmit) | Exit 0 — independently confirmed |
+| Dep-guard | 7 packages, layering OK |
+
+Merge sign-off per "Merge to trunk" RACI (A = reviewer-qa): **SIGNED**.
+Full sign-off addendum: `artifacts/reviewer-qa-2026-08-25T1400-merge-signoff-addendum.md`.
+
+#### Gate 2 — UNCHANGED
+
+Gate 2 is **still NOT READY**. This ruling does not weaken or alter the Gate-2 RTM zero-gap
+requirement. Gate 2 requires:
+
+| Condition | Status |
+|-----------|--------|
+| Tests green | Partially — circuits not compiled; mock verifier in use |
+| RTM zero gaps in Must rows | **NOT MET — 126 of 138 Must rows open (8.7% completion)** |
+| Rollback proven | NOT DRILLED |
+| CON-015 legal opinion (Aadhaar) | NOT STARTED — latest start 2026-09-07 |
+| Doc 04 (Test Strategy) review debt | OPEN |
+| Independent audits | NOT STARTED |
+
+The honest open-Must count **126/138** (surfaced 2026-08-25) is the correct and binding figure
+for Gate-2 assessment.
+
+#### CLAUDE.md wording — ambiguity noted
+
+The project-manager assessed CLAUDE.md and found the wording **genuinely ambiguous** in one
+location: the reviewer-qa role description "RTM verify + sign merge" does not specify that the
+RTM verify step is a Gate-2-only completeness check, not an incremental-merge gate. The
+Gate-2 section and the Definition of Done are unambiguous (zero-gap = Gate-2 condition).
+
+A CLAUDE.md wording amendment is a human-owned edit; no agent has edited the handbook. The
+project-manager will file a proposal in the org repo's `learnings/agent-learnings.md` register
+at the next cadence review. Proposed text is documented in the decision record §3.3.
+
+#### Future build PRs
+
+Future build PRs during the build phase are assessed on the code-drop review bar (Doc 06 §4a:
+technical-mode document-review PASS + suite green + typecheck clean + dep-guard clean) plus
+traceability (stories trace to FR/DES; TCs exist). RTM zero-gap is **not** a merge gate.
+Gate-2 certification remains the sole RTM zero-gap checkpoint.
