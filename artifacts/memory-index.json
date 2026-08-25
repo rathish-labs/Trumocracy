@@ -2800,6 +2800,64 @@
                                          "RISK-41 no-retention clause — hard pre-condition for DEP-13 contract."
                                      ],
                       "gate":  "Gate 1 APPROVED (2026-08-11, Rathish). Gate 2 NOT READY. Doc 13 v2.8.1 Approved. Branch ready for approver to push and merge."
+                  },
+                  {
+                      "id":  "engineer-2026-08-24T2015",
+                      "role":  "engineer",
+                      "file":  "artifacts/engineer-2026-08-24T2015.md",
+                      "timestamp":  "2026-08-24T20:15:00Z",
+                      "phase":  "Coding & UT — First build session: scaffold and seams only",
+                      "product":  "Trumocracy",
+                      "summary":  "Built packages/ui (@trumocracy/ui) with DES-093 token set (tokens.css) and DES-094 PrivacyStatus component (PrivacyStatus.tsx, 10 UT-0750..0757 tests). Added ADR-024 seams to packages/sdk: eligibility.js (IEligibilityVerifier/DES-095 — COUNTING_ACTION enum, NotACountingAction, StubPhoneVerifier, StubIdDocumentChecker, ConventionalEligibilityVerifier with IS_INSECURE_MOCK delegation) and ballot.js (IBallotService/DES-096 — ConventionalBallotService with seam composition, BallotReceipt shaped for v2 narrowing, computeTally with SHA-256 result hash). 36 new seam tests UT-0760..UT-0779. Full suite: 379 tests (333 existing + 46 new), all green. dep-guard PASS. No commits made.",
+                      "artifacts_written":  [
+                                                "packages/ui/package.json",
+                                                "packages/ui/tokens.css",
+                                                "packages/ui/src/PrivacyStatus.tsx",
+                                                "packages/ui/src/index.ts",
+                                                "packages/ui/tsconfig.json",
+                                                "packages/ui/vitest.config.ts",
+                                                "packages/ui/test/setup.ts",
+                                                "packages/ui/test/PrivacyStatus.test.tsx",
+                                                "packages/sdk/src/eligibility.js",
+                                                "packages/sdk/src/ballot.js",
+                                                "packages/sdk/src/index.js (modified — seam exports added)",
+                                                "packages/sdk/test/seams.test.js",
+                                                "artifacts/engineer-2026-08-24T2015.md (this note)",
+                                                "artifacts/memory-index.json (updated — this entry appended)"
+                                            ],
+                      "ids_touched":  {
+                                          "DES":  "DES-093, DES-094, DES-095, DES-096, DES-097, DES-100",
+                                          "ADR":  "ADR-011, ADR-023, ADR-024, ADR-025",
+                                          "FR":  "FR-020, FR-082..086, FR-122, FR-123, FR-124, FR-131, FR-132, FR-133",
+                                          "UT":  "UT-0750..UT-0757 (packages/ui), UT-0760..UT-0779 (packages/sdk)"
+                                      },
+                      "test_results":  {
+                                           "contracts":  95,
+                                           "protocol":  82,
+                                           "sdk":  160,
+                                           "ui":  10,
+                                           "indexer":  16,
+                                           "web":  16,
+                                           "total":  379,
+                                           "new_tests":  46,
+                                           "regressions":  0
+                                       },
+                      "flags_raised":  [
+                                           "FLAG-A: ver state subtitle 'Your identity is not stored' is a v2-accurate statement; v1 DB stores membership. Approved copy used verbatim per task; tension flagged for approver.",
+                                           "FLAG-B: COUNTING_ACTION scope interpreted as direct enum string value. Alternative: scope-built-from-enum with cryptographic derivation (v2 path). Flagged for architect review.",
+                                           "FLAG-C: credentialStore seam uses Map<memberId, IdDocumentResult> directly; no formal ICredentialStore interface. Flagged for next sprint.",
+                                           "FLAG-D: computeTally publicationPath = 'PENDING-audit-contract-wiring' — chain write not integrated. Flagged for later sprint.",
+                                           "FLAG-E: Fraunces/Inter self-hosting vs 15MB floor (DES-082) deferred. No font files bundled. Flagged for production build sprint.",
+                                           "FLAG-F: SIM-swap/number-recycling recovery design (ADR-025 §(c-iv)) — DES owed before enrolment sprint."
+                                       ],
+                      "open_items":  [
+                                         "No commits made — coordinator commits after final verification.",
+                                         "reviewer-qa must run security scan + RTM check before merge sign-off.",
+                                         "Six flags above require approver/architect awareness before enrolment sprint.",
+                                         "No app features, no screens, no real vendor integrations, no contracts/circuits touched.",
+                                         "CON-015 legal opinion and DEP-11/12/13 vendor procurement remain open (carried from project-manager-2026-08-24T2345)."
+                                     ],
+                      "gate":  "Gate 1 APPROVED (2026-08-11, Rathish). Gate 2 NOT READY. Build session complete — scaffold and seams delivered; 379/379 tests green; no regressions."
                   }
               ]
 }
