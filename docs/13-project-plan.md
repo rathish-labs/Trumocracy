@@ -2,7 +2,7 @@
 
 ```
 Document ID:   PLAN-TRUMOCRACY
-Version:       2.7.2
+Version:       2.8.1
 Status:        Approved
 Owner:         Ana-Maria Petrescu — Project Manager
 Source:        PR-TRUMOCRACY (docs/01-press-release-prfaq.md),
@@ -15,9 +15,11 @@ Source:        PR-TRUMOCRACY (docs/01-press-release-prfaq.md),
                DECISIONS-2026-08-23-V1-V2-SPLIT.md (v1/v2 delivery split, Definition A/B),
                DECISIONS-2026-08-23-V1-AUTH-SPAM-RESISTANCE.md (Rulings 1–3 — v1 auth, spam resistance, blockchain ratification),
                DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md (v1 identity = phone + gov-ID verify-and-discard; five confirmations),
-               DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md (gov-ID gates COUNTING not joining; MS-V1-LRG 2027-06-30 APPROVER-DELEGATED; T-06 ACCEPTED; Gov-ID gate tension RESOLVED [mislabelled T-08 in v2.7.0 — corrected v2.7.1]; ADR-025 amended)
+               DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md (gov-ID gates COUNTING not joining; MS-V1-LRG 2027-06-30 APPROVER-DELEGATED; T-06 ACCEPTED; Gov-ID gate tension RESOLVED [mislabelled T-08 in v2.7.0 — corrected v2.7.1]; ADR-025 amended),
+               DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md (three confirmations: terminology CLOSED; MS-V1-LRG 2027-06-30 APPROVER-CONFIRMED; RISK-44 CLOSED option (a) — Definition-B Gate-2 re-based after v1 gate, 2027-05-14 retired; v1 scope CLOSED)
 Last updated:  2026-08-24
-Change:        v2.7.2 — Rework: cycle-2 business-mode review FAIL 95% (0C/0H/1M/1L; `artifacts/reviews/13-project-plan-v2.7.1-business-cycle2.md`). Two surgical fixes. (ISS-C2-01 Medium) Doc 02 v2.13.0 and Doc 03 v2.6.1 upstream-pin "Approved" claims confirmed accurate: both document owners flipped `Status: In Review` → `Status: Approved` on 2026-08-24 (after v2.7.1 submission). Six citation sites (header Source block ×2, §2.1, §3.5.1, §13.1 ×2) strengthened to record the PASS verdict + review-report citation alongside the Approved status in house style. Note: the v2.7.1 pins predated the owner flips; the "Approved" label is accurate as of v2.7.2 — the timeline is recorded, not retrofitted. (ISS-C2-02 Low) v2.7.0 banner entry item (6) annotated [mislabelled T-08 in v2.7.0 — corrected v2.7.1] to mirror the §11 v2.7.0 log-entry correction applied in v2.7.1.
+Change:        v2.8.1 — Rework cycle 1. Business-mode review FAIL 95% (0C/0H/1M/1L; `artifacts/reviews/13-project-plan-v2.8.0-business-cycle1.md`). Two surgical fixes: (ISS-01 Medium) §8.3 budget table header — retirement annotation added to 2027-05-14 (superseded: pre-split Definition-B referent, retired 2026-08-24 per RISK-44 option (a), SCOPE-CLOSURE §3.3; MS-13 re-based after the v1 gate, offset at v2 re-entry); 10-month figure and all cost totals unchanged (§13.3 confirms budget figure remains valid as planning basis). (ISS-02 Low) §3.1 Phase-3 row and §8.1 wave-appetite Later row — parenthetical annotation added to 2027-04-19 → 2027-07-09 dates identifying them as Definition-B placeholder dates derived from the retired 2027-05-14 referent, to be re-planned at v2 re-entry.
+               v2.8.0 — v1 scope closure rulings applied (Rathish, 2026-08-24; DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md). (1) MS-V1-LRG 2027-06-30 label upgraded APPROVER-DELEGATED → APPROVER-CONFIRMED at all active sites. (2) RISK-44 CLOSED — Definition-B Gate-2 (MS-13) re-based to "after the v1 gate (2027-06-30); specific offset to be planned when Definition B re-enters design→build — deliberately not fixed now"; 2027-05-14 retired as a fixed Definition-B Gate-2 target at all active sites (superseded figure retained as annotated historical record per annotate-don't-delete convention). (3) CON-015 derived 2027-03-19 Gate-2 deadline retired with its base; S-2b latest-start 2026-09-07 stands as sole binding deadline. (4) §3.5.5 ⚠ DECISION REQUIRED callout resolved; coherent sequential sequencing stated. (5) §3.5.6 heading and preamble updated (T-01..T-05 CONFIRMED; T-06 ACCEPTED; T-07 PENDING CON-015; T-08 ARCHITECT-RESOLVED; naming collision CONFIRMED-CLOSED). (6) §13.1 Doc 13 self-row updated; cascade debt note added (Doc 01/02/03/09/10 per SCOPE-CLOSURE §4.4). (7) §6 RISK-44 closed; RISK-45/46 premises verified and updated.
 ```
 
 > **Based on:** Shape Up (appetite, fixed-time/flex-scope) + Rolling-wave planning + the VEKTOR
@@ -30,13 +32,16 @@ Change:        v2.7.2 — Rework: cycle-2 business-mode review FAIL 95% (0C/0H/1
 > `CON-007`. The cryptography critical path — **one batched phase-2 ceremony campaign across six
 > circuits** (5–15 independent contributors per circuit, days not weeks — corrected per `ADR-022` /
 > REC-1 2026-08-21) **plus two independent audits and their remediation** — cannot be compressed
-> into a Gate 2 on **2027-02-15**. The plan's evidence-based Gate-2 date is **2027-05-14** (+13
-> weeks), and this date is **audit-paced, not ceremony-paced** (the audits were already the binding
-> constraint before the ceremony correction; removing the ceremony bulk from the critical path does
-> not move Gate 2). The 10-month run-rate at 18 FTE consumes the whole USD 4.2M with **no
-> contingency and a ~USD 245,000 (~−5.8%) shortfall**; the ceremony logistics budget line drops to near-zero
-> (see §8.3). On the Gate-1-accepted L2 basis (decision B-01) the corrected budget is ≈ USD 4.03M against
-> the unchanged USD 4.2M appetite, with the ≈ USD 175K difference held as an explicit audit-remediation
+> into a Gate 2 on **2027-02-15**. The plan's evidence-based Definition-B Gate-2 date was
+> **2027-05-14** (+13 weeks, audit-paced, not ceremony-paced). **This figure has been retired as of
+> 2026-08-24 (DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md §3.3) via RISK-44 ruling option (a):** the
+> Definition-B Gate-2 (MS-13) is re-based to follow the v1 gate (2027-06-30); the specific offset
+> is deliberately not fixed now and will be planned when Definition B re-enters design→build.
+> Superseded fixed date: **2027-05-14** (pre-split artifact, retired 2026-08-24). The 10-month
+> run-rate at 18 FTE consumes the whole USD 4.2M with **no contingency and a ~USD 245,000
+> (~−5.8%) shortfall**; the ceremony logistics budget line drops to near-zero (see §8.3). On the
+> Gate-1-accepted L2 basis (decision B-01) the corrected budget is ≈ USD 4.03M against the
+> unchanged USD 4.2M appetite, with the ≈ USD 175K difference held as an explicit audit-remediation
 > contingency per the approver ruling of 2026-08-21 (see §8.3, RISK-18, RISK-19). The scope has
 > re-baselined to **SRS v2.4.0 (110 Must requirements)**. Sections §3.4
 > (critical path), §8.3 (resourcing) and §13 (Gate-1 packet) set out the three levers. **The
@@ -183,7 +188,7 @@ scope moves — §13 names the two candidate scope cuts and their price.
 | **Phase 0 — Foundations** | Monorepo with CI-enforced dependency direction (`ADR-011`); EVM test harness; **pure protocol reference implementation** (`packages/protocol` — threshold maths, tier rules, state transitions, ID derivation, no I/O); `ADR-001`…`ADR-014` written | n/a | local / CI | **In progress**, complete by 2026-09-14 |
 | **Phase 1 — Walking skeleton on testnet** | Personhood + residency registries against a **mock verifier**; petition → threshold → activation; join/leave; tiered proposals + voting with a **public tally**; timelocks. End-to-end, one citizen journey, nothing real about the cryptography yet | elections **OFF** · recall **OFF** · treasury **OFF** · fork **OFF** · MACI **OFF** | public testnet | 2026-09-14 → 2026-11-27 |
 | **Phase 2 — Real cryptography** | Circom circuits per `ADR-005`; **one batched phase-2 ceremony campaign, six transcripts**, 5–15 independent contributors per circuit on Perpetual Powers of Tau (`ADR-022` — corrected 2026-08-21); Groth16 verifiers frozen by hash in the verifier registry; client-side proving on the reference device; **two independent audits — one protocol, one circuits** (`NFR-009`, `CON-012`); issuer + attester onboarding for the pilot region(s) through the 30-day registry timelock (`ADR-003`, `ADR-010`) | MACI still **OFF**; mock verifier retired | testnet, then mainnet dark | 2026-10-05 → 2027-04-19 |
-| **Phase 3 — Coercion resistance & representation** | MACI with the **5-of-7 threshold coordinator committee** (`ADR-006`); elections; recall; treasury guardrail; fork. **This is the first phase real citizens use.** Staged **1 → 10 → 50 → 100%** | all five flags progressively **ON**, metric-gated | production (lead pilot) | 2027-04-19 → 2027-07-09 |
+| **Phase 3 — Coercion resistance & representation** | MACI with the **5-of-7 threshold coordinator committee** (`ADR-006`); elections; recall; treasury guardrail; fork. **This is the first phase real citizens use.** Staged **1 → 10 → 50 → 100%** | all five flags progressively **ON**, metric-gated | production (lead pilot) | 2027-04-19 → 2027-07-09 (Definition-B placeholder dates derived from retired 2027-05-14 referent — to be re-planned at v2 re-entry) |
 | **Phase 4 — Sovereignty** | `renounceProtocolKeys()` — irreversible protocol-key renunciation (`ADR-010`); sovereign OP Stack rollup evaluation (`ADR-001b`); transparent-setup proving system evaluation (Noir/UltraHonk or STARK, `ADR-005` §6); hardened native client for high-risk jurisdictions (`ADR-012`) | — | production | from 2027-09-03 (entry review) |
 
 **Why Phase 3 is the launch, not Phase 2.** `BR-011` and `NFR-003` (receipt-freeness) are **Must**.
@@ -218,7 +223,7 @@ therefore a **dark** mainnet phase, not a launch.
 | MS-10 | Audit remediation closed | Checkpoint | — | 2027-04-16 | **Zero critical and zero high open** (`NFR-009`); re-review signed by both firms | Head of Security |
 | MS-11 | Issuer + attester registries live for the pilot region(s) | Checkpoint | — | 2027-04-19 | ≥ 2 accepted issuers incl. ≥ 1 non-state (`ADR-003` invariant); ≥ 2 residency attesters; 30-day registry timelock cleared | Identity PM · Architect |
 | MS-12 | MACI 5-of-7 committee constituted; DKG rehearsed | Checkpoint | — | 2027-05-07 | 7 operators across ≥ 5 legal jurisdictions and competing parties; DKG + tally rehearsal on testnet; liveness attestations live | Elections PM · SRE |
-| MS-13 | **Launch readiness** | **Gate** | **Gate 2** | **2027-05-14** | See §3.3 | **Human approver** (Product **A** · QA **C** · SRE **C**) |
+| MS-13 | **Launch readiness** | **Gate** | **Gate 2** | **Re-based after the v1 gate (2027-06-30); specific offset to be planned when Definition B re-enters design→build — deliberately not fixed now (DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md §3.3). Superseded fixed date: 2027-05-14 (pre-split artifact, retired 2026-08-24).** | See §3.3 | **Human approver** (Product **A** · QA **C** · SRE **C**) |
 | MS-14 | Staged rollout at 100% in the lead pilot | Checkpoint | — | 2027-07-09 | 1 → 10 → 50 → 100% completed, each stage metric-gated; no kill criterion tripped | SRE |
 | MS-15 | Phase 4 entry review | Checkpoint | — | 2027-09-03 | 12-week production evidence; refine-log routed; renunciation readiness assessed | PO · Architect |
 
@@ -246,8 +251,7 @@ able to check, all of:
 
 Gate 1 approves **direction only**. It does not approve a schedule as a commitment.
 
-**Gate 2 — Launch readiness (MS-13, target 2027-05-14), immediately before the Phase-3 production
-rollout.** The approver must be shown, and must be able to check, all of:
+**Gate 2 — Launch readiness (MS-13 — Definition B; target re-based after the v1 gate (2027-06-30); specific offset to be planned at v2 re-entry — DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md §3.3; superseded fixed date: 2027-05-14, retired 2026-08-24), immediately before the Phase-3 production rollout.** The approver must be shown, and must be able to check, all of:
 
 1. **RTM (Doc 08) with zero gaps in every Must row** — `BR → FR/NFR → DES → US → TC` closed for all
    42 Must FRs and 22 Must NFRs, **verified independently by reviewer-qa**, not self-reported.
@@ -277,7 +281,11 @@ rollout.** The approver must be shown, and must be able to check, all of:
 11. **`CON-015` legal opinion cleared** — independent legal opinion on Aadhaar API usage within the
     project's data-minimisation posture (Gate-2 line item opened 2026-08-20 per
     DECISIONS-2026-08-20-PILOT-VERIFICATION.md). Status: **NOT STARTED**. Owner: Sofia Marchetti.
-    Must be in hand ≥ 8 weeks before Gate 2 (≥ 2027-03-19).
+    **Binding deadline: S-2b latest start 2026-09-07** (sole binding deadline per
+    DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md — S-2b must start 2026-11-01; 2026-11-01 − 56 days
+    = 2026-09-07). The previously stated "≥ 8 weeks before Gate 2 (≥ 2027-03-19 absolute)" figure
+    was derived from the now-retired 2027-05-14 Definition-B Gate-2 date and is **retired along
+    with its base (2026-08-24)**. The S-2b gate stands as the sole operative deadline.
 12. **Doc 04 (Test Strategy) `document-review` debt cleared** — a passing review report (≥ 95%, zero
     C/H/M) for the current Doc 04 version. Status: **OPEN**. Owner: PM to assign neutral reviewer.
 13. **RTM (Doc 08) catch-up for `FR-121`…`FR-129`** — traceability rows (`FR/NFR → DES → US → TC`)
@@ -288,13 +296,15 @@ rollout.** The approver must be shown, and must be able to check, all of:
 If any one of these is missing, **the gate is not presented.** The project-manager emits
 `<missing_information>` naming the blocker and routes the work back to the owning role.
 
-> **⚠ v1/v2 split annotation — 2026-08-23.** The twelve conditions above describe the
-> **Definition B (v2)** Gate-2 posture (audit-paced, 2027-05-14). **Definition A (v1)** uses a
-> lighter, separately stated production-readiness bar — see **§3.5**. The v1 bar replaces items 3
-> (two heavy ZK audits), 4 (six ceremony transcripts), and 9 (MACI 5-of-7 committee) for the v1
-> launch-readiness gate. All other items (RTM zero gaps for the v1 Must set, suites green, rollback
-> proven, a11y, legal, Doc 04 review debt, FR-121..FR-131 catch-up) apply to both Definitions.
-> **MS-V1-LRG — v1 launch-readiness gate: 2027-06-30.** Supplied by the coordinator under the approver's explicit delegation ("YOU SUPPLY — suggest mid-2027"), recorded in `DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md §4.1`. Basis: coding start 2026-09-14; revised effort range 6–10 months (2027-03-14 … 2027-07-14); 2027-06-30 sits at ~9.5 months, deliberately toward the conservative end because DEP-11/DEP-12/DEP-13 are all un-contracted (4–8 week procurement lead times) and CON-015 is NOT STARTED while gating stage S-2. **APPROVER-DELEGATED — subject to the approver's correction.**
+> **⚠ v1/v2 split annotation — 2026-08-23; updated 2026-08-24.** The twelve conditions above describe the
+> **Definition B (v2)** Gate-2 posture (audit-paced; Definition-B Gate-2 target re-based after the
+> v1 gate per RISK-44 ruling — see §3.5.5; superseded fixed date: 2027-05-14, retired 2026-08-24).
+> **Definition A (v1)** uses a lighter, separately stated production-readiness bar — see **§3.5**.
+> The v1 bar replaces items 3 (two heavy ZK audits), 4 (six ceremony transcripts), and 9 (MACI
+> 5-of-7 committee) for the v1 launch-readiness gate. All other items (RTM zero gaps for the v1
+> Must set, suites green, rollback proven, a11y, legal, Doc 04 review debt, FR-121..FR-131 catch-up)
+> apply to both Definitions.
+> **MS-V1-LRG — v1 launch-readiness gate: 2027-06-30. APPROVER-CONFIRMED (Rathish, 2026-08-24; DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md).** Basis: coding start 2026-09-14; revised effort range 6–10 months (2027-03-14 … 2027-07-14); 2027-06-30 sits at ~9.5 months, deliberately toward the conservative end because DEP-11/DEP-12/DEP-13 are all un-contracted (4–8 week procurement lead times) and CON-015 is NOT STARTED while gating stage S-2. Previously APPROVER-DELEGATED per `DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md §4.1`; upgraded to APPROVER-CONFIRMED 2026-08-24.
 >
 > **Back-scheduled latest-start dates from 2027-06-30 (all figures as of 2026-08-24):**
 >
@@ -306,13 +316,26 @@ If any one of these is missing, **the gate is not presented.** The project-manag
 > | CON-015 legal opinion (8-week lead; S-2b ID-integration hard gate) | **2026-09-07** for S-2b constraint (2026-11-01 − 56 days = 2026-09-06/07; binding; earlier than 2027-05-05 Gate-2 line item) | Legal opinion ~8 weeks; must be in hand before S-2b ID-integration starts (latest S-2b start 2026-11-01); Gate-2 line item due 2027-05-05 is the secondary deadline | **No — NOT STARTED; latest start 2026-09-07 for S-2b (14 days from 2026-08-24); must start immediately (Sofia Marchetti)** |
 > | Lightweight security review (PR-1) — booking | **2027-04-07** | 4–8 week lead + 2–4 week duration; must complete before 2027-06-30 | Not yet late — book by 2027-04-07 |
 >
-> **Note: the Definition-B Gate-2 date of 2027-05-14 and the v1 gate date of 2027-06-30 are incoherent** — see §3.5.5 for the surfaced decision required from the approver.
+> **Note: RISK-44 CLOSED 2026-08-24.** The incoherence between the Definition-B Gate-2 date
+> (formerly 2027-05-14) and the v1 gate (2027-06-30) is resolved via option (a): the Definition-B
+> Gate-2 (MS-13) is re-based to follow the v1 gate. The fixed date 2027-05-14 is retired. See §3.5.5
+> and DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md §3.3.
 
 ### 3.4 Critical path
 
 The critical path runs through **cryptography, not features**. Every long-lead item below is
 externally paced — contributor recruitment, audit-firm capacity, and a 30-day on-chain registry
 timelock are not things a team of 18 can work harder to shorten.
+
+> **⚠ Definition-B programme dates — 2026-08-24 update.** The critical path and dates below
+> describe the **Definition-B (v2) programme**. Per RISK-44 ruling option (a)
+> (DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md §3.3), all Definition-B milestone dates below that
+> derive from the former fixed Gate-2 date of **2027-05-14** (retired 2026-08-24) are now
+> placeholder offsets only. Specifically: MS-09 (2027-03-12), MS-10 (2027-04-16), MS-11
+> (2027-04-19), MS-12 (2027-05-07), MS-13 (Gate 2), and the staged rollout window
+> (2027-05-17→2027-07-09) will all be re-planned when Definition B re-enters design→build after
+> the v1 gate (2027-06-30). Do not use these dates for scheduling until Definition B re-enters.
+> MS-04..MS-08 (pre-audit milestones) and the v1 path (MS-V1-01..MS-V1-LRG) are unaffected.
 
 ```
 Gate 1 (2026-08-22)
@@ -327,8 +350,8 @@ Gate 1 (2026-08-22)
                 → ▲ verifier registry frozen; issuer/attester registry 30-day timelock clears (2027-04-19)  [external]
                   → MACI Phase-3 integration + 5-of-7 committee DKG rehearsal (2027-04-19 → 2027-05-07)
                     → RTM zero gaps · rollback drill · red-team · a11y · legal (2027-05-07 → 2027-05-13)
-                      → ▣ GATE 2 (2027-05-14)
-                        → staged rollout 1 → 10 → 50 → 100% (2027-05-17 → 2027-07-09)
+                      → ▣ GATE 2 [Definition B — date re-based after v1 gate; superseded fixed date: 2027-05-14, retired 2026-08-24]
+                        → staged rollout 1 → 10 → 50 → 100% [to be planned at v2 re-entry]
 ```
 
 **Long-lead items (▲) and the date they must be *started*, not finished:**
@@ -348,8 +371,11 @@ re-ceremony (now a matter of days per `ADR-022`) or an audit remediation oversho
 (`OI-02`) buys ~3 weeks — but on the *feature* path, which is not the critical path. **Cutting
 features does not buy time here. Only starting the audit programme earlier does.**
 
-**The variance.** `CON-007` targets Gate 2 on 2027-02-15 and launch on 2027-03-01. The evidence-based
-dates are **Gate 2 on 2027-05-14** and 100% rollout on **2027-07-09**. See §13.3.
+**The variance.** `CON-007` targets Gate 2 on 2027-02-15 and launch on 2027-03-01. The original
+evidence-based Definition-B Gate-2 date was **2027-05-14** (superseded: retired 2026-08-24 per
+RISK-44 ruling option (a)); the Definition-B Gate-2 is now re-based after the v1 gate (2027-06-30)
+with the specific offset to be planned at v2 re-entry. The original 100% rollout date of
+**2027-07-09** derived from 2027-05-14 and is likewise retired as a fixed date. See §13.3 and §3.5.5.
 
 ---
 
@@ -357,7 +383,7 @@ dates are **Gate 2 on 2027-05-14** and 100% rollout on **2027-07-09**. See §13.
 
 > **Authority:** Rathish (human approver), 2026-08-23, transmitted via coordinator.
 > Full directive: `artifacts/status/DECISIONS-2026-08-23-V1-V2-SPLIT.md`.
-> This section is the plan's recommendation. T-06 has been confirmed/resolved by the approver (2026-08-24; `DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md`). The Gov-ID gate vs BR-003/FR-020 tension (mislabelled T-08 in v2.7.0; corrected v2.7.1) is also RESOLVED by the same ruling. The real T-08 (single-vendor ID-check concentration vs FR-004 plurality intent — Doc 03 §10.13.7) is ARCHITECT-RESOLVED independently. The one remaining open item requiring an approver decision before the v1 gate can be presented is the Definition-B Gate-2 vs v1-gate scheduling incoherence (§3.5.5, RISK-44).
+> This section is the plan's recommendation. T-06 has been confirmed/resolved by the approver (2026-08-24; `DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md`). The Gov-ID gate vs BR-003/FR-020 tension (mislabelled T-08 in v2.7.0; corrected v2.7.1) is also RESOLVED by the same ruling. The real T-08 (single-vendor ID-check concentration vs FR-004 plurality intent — Doc 03 §10.13.7) is ARCHITECT-RESOLVED independently. **RISK-44 is CLOSED (Rathish, 2026-08-24; DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md)** — the Definition-B Gate-2 vs v1-gate incoherence is resolved via option (a): Definition-B Gate-2 re-based after the v1 gate (2027-06-30); 2027-05-14 retired. All v1 scope rulings are now closed. The one remaining external dependency is T-07 (PENDING CON-015 legal opinion — a legal input, not an approver ruling).
 
 #### 3.5.1 What ships in v1 (Definition A)
 
@@ -508,23 +534,42 @@ B is not an exception.
   and `IBallotService` interfaces are the stable contracts; the v1 conventional-auth / DB backing is
   replaced by the ZK nullifier circuit / MACI message queue backing. This is one implementation
   swap at two points, never a rewrite of the full application.
-- **Gate-2 date 2027-05-14** (audit-paced, MS-13) attaches to **Definition B. CONFIRMED by approver (2026-08-23).** Also closes the "2027-03-15" carry-forward from the 2026-08-21 budget ruling — that figure matched no artifact; 2027-05-14 is now confirmed as the authoritative Gate-2 referent for Definition B. The existing critical path (MS-06 circuit freeze → MS-07 ceremony logistics → MS-08 batched ceremony → MS-09/MS-10 audits → MS-11/MS-12 MACI integration → MS-13 Gate 2) is the **Definition-B programme** unchanged.
-- **v1 launch-readiness gate (MS-V1-LRG): 2027-06-30.** The existence of a separate v1 launch-readiness gate is **CONFIRMED** by the approver. The gate date is **APPROVER-DELEGATED** — supplied by the coordinator under the approver's explicit delegation ("YOU SUPPLY — suggest mid-2027"), per `DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md §4.1`. Basis: coding start 2026-09-14; revised effort range 6–10 months (2027-03-14 … 2027-07-14); 2027-06-30 sits at ~9.5 months, deliberately toward the conservative end because DEP-11/DEP-12/DEP-13 are all un-contracted (4–8 week procurement lead times) and CON-015 is NOT STARTED while gating stage S-2b. **Subject to the approver's correction.** The back-scheduled latest-start dates are given in §3.3. See also `DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md §4`.
+- **Definition-B Gate-2 (MS-13) — re-based after the v1 gate (2027-06-30); specific offset
+  to be planned when Definition B re-enters design→build — deliberately not fixed now
+  (DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md §3.3).** The strategy is **sequential**: v1
+  (Definition A) ships first; Definition B then re-enters the SOP at the top and is built in the
+  open with contributors. Option (c) (overlap) is **explicitly rejected by the approver**: capacity
+  is single-track and A-first is deliberate. **Superseded fixed date: 2027-05-14** — a pre-split
+  artifact that predated the Definition-A / Definition-B separation; never a valid post-split
+  Definition-B Gate-2 target; **retired 2026-08-24** (DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md
+  §3.3; RISK-44 closed via option (a)). The prior "2027-03-15" carry-forward from the 2026-08-21
+  budget ruling matched no artifact and was already closed when 2027-05-14 was confirmed as the
+  Definition-B Gate-2 referent; both figures are now superseded and retired. The existing critical
+  path structure (MS-06 circuit freeze → MS-07 ceremony logistics → MS-08 batched ceremony →
+  MS-09/MS-10 audits → MS-11/MS-12 MACI integration → MS-13 Gate 2) is the **Definition-B
+  programme** unchanged; its absolute dates will be set when Definition B re-enters.
+- **v1 launch-readiness gate (MS-V1-LRG): 2027-06-30. APPROVER-CONFIRMED (Rathish, 2026-08-24;
+  DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md).** The existence of a separate v1 launch-readiness
+  gate is confirmed by the approver. Basis: coding start 2026-09-14; revised effort range 6–10
+  months (2027-03-14 … 2027-07-14); 2027-06-30 sits at ~9.5 months, deliberately toward the
+  conservative end because DEP-11/DEP-12/DEP-13 are all un-contracted (4–8 week procurement lead
+  times) and CON-015 is NOT STARTED while gating stage S-2b. Previously APPROVER-DELEGATED per
+  `DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md §4.1`; upgraded to APPROVER-CONFIRMED 2026-08-24.
+  The back-scheduled latest-start dates are given in §3.3. See also
+  `DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md §4`.
 
-> ⚠ **DECISION REQUIRED FROM APPROVER — Definition-B Gate-2 vs v1-gate incoherence.** §3.5.5 records that Definition B "re-enters design→build **after v1 launch**" (the programme disposition confirmed in this section). The Definition-B Gate-2 date is **2027-05-14**, confirmed 2026-08-23 (`DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md §4`). The v1 launch-readiness gate (MS-V1-LRG) is **2027-06-30**, which falls **47 days after** the Definition-B Gate-2. That is incoherent: the Definition-B programme cannot gate before the v1 launch it is supposed to follow. The three options — verbatim from `DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md §4.2`:
->
-> **(a) Re-base the Definition-B Gate-2 date** to a date that follows the v1 gate date (2027-06-30 or later), reflecting the actual sequencing intended.
->
-> **(b) Pull the v1 gate date earlier** within the 6–10 month band (to a date before 2027-05-14) so that the v1 launch precedes the Definition-B Gate-2.
->
-> **(c) Allow the two programmes to overlap** — retire the "after v1 launch" sequencing and allow Definition-B design and build to proceed in parallel with v1's final stages, with Gate-2 gating Definition B's own launch independently.
->
-> **The project-manager does not choose. The approver records one decision. The 2027-05-14 figure is NOT changed until the approver rules.** Both figures stand and the incoherence is recorded in RISK-44.
+> ✅ **RESOLVED — RISK-44 CLOSED (Rathish, 2026-08-24).** The incoherence between the
+> Definition-B Gate-2 (formerly 2027-05-14) and the v1 gate (2027-06-30) is resolved via
+> **option (a)**: the Definition-B Gate-2 date is re-based to fall after the v1 gate. The strategy
+> is sequential — v1 ships first, then Definition B re-enters the SOP and is built in the open
+> with contributors. Option (c) (overlap) is explicitly rejected. The specific offset for the
+> re-based Definition-B Gate-2 will be planned when Definition B re-enters design→build — it is
+> **deliberately not fixed now**. Source: DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md §3.3.
 - **T-01..T-05 Charter tensions: CONFIRMED** by approver (2026-08-23) — deferred-with-disclosure dispositions accepted as recorded in Doc 03 §10.13.7. No further action required on T-01..T-05.
 
-#### 3.5.6 Charter tensions pending approver confirmation (v1 scope)
+#### 3.5.6 Charter tensions — dispositions (v1 scope; all ruled)
 
-Charter tensions surfaced by the auth rulings and identity ruling (2026-08-23). T-01..T-05: CONFIRMED by approver (deferred-with-disclosure accepted). **T-06: ACCEPTED — DEFERRED WITH DISCLOSURE (Rathish, 2026-08-24). T-07: reaffirmed RESHAPED — PENDING CON-015 (unchanged). Gov-ID gate vs BR-003/FR-020 tension: RESOLVED (Rathish, 2026-08-24) — the ruling confirmed the government-ID check gates COUNTING only (not joining), preserving BR-003/FR-020 absolutely. *(Mislabelled T-08 in v2.7.0 — this tension is not T-numbered; corrected v2.7.1.)* The real T-08 (single-vendor ID-check concentration vs FR-004 plurality intent — Doc 03 §10.13.7) is ARCHITECT-RESOLVED independently.**
+Charter tensions surfaced by the auth rulings and identity ruling (2026-08-23). All tensions now have a final disposition. **T-01..T-05: CONFIRMED** by approver (deferred-with-disclosure accepted; Doc 03 §10.13.7). **T-06: ACCEPTED — DEFERRED WITH DISCLOSURE** (Rathish, 2026-08-24; `DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md §4.3`). **T-07: RESHAPED — PENDING CON-015** legal opinion (the legal input is outstanding; approver confirmation follows when CON-015 clears; unchanged from 2026-08-23). **Gov-ID gate vs BR-003/FR-020 (formerly unlabelled, mislabelled T-08 in v2.7.0): RESOLVED** (Rathish, 2026-08-24; `DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md §3.2/§4.5`) — government-ID check gates COUNTING only (not joining); BR-003/FR-020 intact absolutely. **T-08 (FR-004 concentration vs single-vendor ID-check): ARCHITECT-RESOLVED** (Doc 03 §10.13.7; 2026-08-23). **Naming collision ("supporter level" = FR-122 open/unverified tier): CONFIRMED-CLOSED** (Rathish, 2026-08-24; DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md §3.1) — "supporter level" confirmed as the human-readable label for the FR-122 open/unverified membership tier; no structural ambiguity survives.
 
 | ID | Tension | Impact on v1 | Status |
 |----|---------|--------------|--------|
@@ -663,7 +708,7 @@ here except where they carry a dependency above. Two plan-local assumptions are 
 | **RISK-42** | **No-COUNTING-tier exclusion's adoption impact** — `H-19` discloses that citizens without a government ID cannot take COUNTING actions in v1 (contribute to official strength, vote in binding decisions, stand as a candidate). Open-tier participation remains available (FR-122). **2026-08-24 ruling update:** citizens without a government ID are no longer excluded from the platform — they can join, read, discuss, support, and organise. However, the O-1 target (250,000 enrolled members) and party-strength metrics (FR-123: contributing to official strength) still depend on COUNTING-tier enrolment. In pilot jurisdictions with low government-ID penetration (stateless persons, undocumented residents, displaced populations), the fraction of participants who can take COUNTING actions may be substantially below the registered-user base, suppressing official party strength numbers and potentially making party activation harder (FR-014 threshold is based on counted strength). This could interact with KC-3 if activation thresholds are never reached. | 3 | 4 | 12 | `H-19` (corrected meaning: COUNTING exclusion, not platform exclusion) required in README and at the COUNTING-action entry point (PR-6 item (e)). Pilot-jurisdiction ID-penetration rate assessed before pilot launch — a low rate depresses the COUNTING participant pool, not the total user base. Gov-ID gate vs BR-003/FR-020 tension RESOLVED (BR-003/FR-020 intact) [v2.7.0 mislabelled this as `T-08`; not a T-numbered tension — corrected v2.7.1]; RISK-42 now concerns COUNTING-tier adoption specifically. Confirm that party-activation thresholds are calibrated against the estimated COUNTING-tier base, not the total enrolled base, in the pilot jurisdictions. Also see RISK-45 (non-counting class depressing measured party strength). O-1 tracking against KC-3 should distinguish total enrolled vs COUNTING-enrolled. **Trigger:** pre-launch estimate of COUNTING-tier participation < 70% of enrolled users in the lead pilot → re-present strength metrics and activation thresholds to approver before launch commitment | `FR-122`, `FR-123`, `FR-132`, `ADR-025`, `CON-001`, H-19, O-1, KC-3 | Marcus Adeyemi | **Open — updated v2.7.0 (premise corrected: COUNTING exclusion, not platform exclusion)** |
 | **RISK-43** | **Pepper / KMS compromise enabling phone-hash and subject_id_hash brute-force** — the DES-100 retention scheme stores HMAC-SHA-256 hashes with a KMS-held pepper. If an attacker obtains the DB dump AND the pepper (e.g. via a KMS misconfiguration or insider threat), the hashes become brute-forceable: phone numbers are low-entropy (~10 billion possibilities), and subject_id_hash is similarly bounded. The architect's stated residual in Doc 03 v2.6.0 (In Review). | 3 | 5 | 15 | `DES-100` operational MUST: pepper MUST be KMS-held and not co-located with the hash store; KMS access is separately permissioned, logged, and audited. PR-1 pen test explicitly covers pepper and KMS handling (confirm physical separation and access controls). Pepper rotation cadence defined in the data-retention schedule (DES-100). DB dump alone without the pepper is insufficient for brute-force. Residual: a full KMS compromise + DB dump breaks the scheme; accepted as a platform-level trust anchor. **Trigger:** any evidence of KMS access anomaly or unauthorised DB export → incident response and pepper rotation | `DES-100`, `ADR-025`, `NFR-016`, DEP-13 | Rafael Duarte | **Open — new (v1)** |
 
-| **RISK-44** | **v1-gate vs Definition-B Gate-2 scheduling incoherence — DECISION REQUIRED** — the v1 launch-readiness gate (MS-V1-LRG) is 2027-06-30; the Definition-B Gate-2 date is 2027-05-14. §3.5.5 states that Definition B "re-enters design→build after v1 launch." A Definition-B Gate-2 (2027-05-14) that falls 47 days before the v1 launch gate (2027-06-30) is structurally incoherent: Definition B cannot gate before the v1 launch it is supposed to follow. Until the approver rules, both figures stand. The three resolution options are documented in §3.5.5. | 4 | 4 | 16 | **ESCALATED TO APPROVER** — no mitigation is possible without the approver's ruling. See §3.5.5 for options (a), (b), (c). The 2027-05-14 figure is NOT changed by the project-manager. **Trigger:** any scheduling work that depends on the relative order of v1 launch and Definition-B Gate-2 → must wait for the approver's ruling. | `DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md §4.2` | Ana-Maria Petrescu (surfaces; does not resolve) | **Open — DECISION REQUIRED FROM APPROVER** |
+| **RISK-44** | **v1-gate vs Definition-B Gate-2 scheduling incoherence — CLOSED — RULED option (a)** — the v1 launch-readiness gate (MS-V1-LRG) was 2027-06-30; the former Definition-B Gate-2 date was 2027-05-14. §3.5.5 had stated that Definition B "re-enters design→build after v1 launch", making a Gate-2 date of 2027-05-14 (47 days before the v1 gate) structurally incoherent. Three resolution options were presented: (a) re-base Definition-B Gate-2 after v1 gate; (b) pull the v1 gate earlier; (c) allow overlap. **Resolved via option (a)** (Rathish, 2026-08-24; DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md §3.3): Definition-B Gate-2 (MS-13) re-based to follow the v1 gate (2027-06-30); option (c) explicitly rejected; specific offset to be planned at v2 re-entry — deliberately not fixed now. Superseded fixed date: **2027-05-14** (pre-split artifact, retired 2026-08-24). | — | — | — | **CLOSED — RULED option (a)** (Rathish, 2026-08-24; DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md §3.3). No further trigger or mitigation required — the incoherence is resolved. | `DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md §4.2`; `DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md §3.3` | Ana-Maria Petrescu | **CLOSED — RULED option (a) (Rathish, 2026-08-24)** |
 | **RISK-45** | **Non-counting participant class depressing measured party strength** — under the 2026-08-24 ruling, a potentially large class of participants (phone-only, no government ID) can join parties but their membership does not count toward official party strength (FR-123). If this class is large in the pilot jurisdictions, the measured party strength number — which drives petition thresholds, activation, and the denominator oracle (FR-014/FR-015, ADR-004) — could be substantially lower than total enrolled membership, making it harder to activate parties and potentially discouraging participation. Participants who invest effort but find their contributions do not count toward official strength may disengage or lose trust in the platform's fairness claim. | 3 | 4 | 12 | FR-131 clause (d) and H-19 disclosures must be clear that open-tier participation does not contribute to official strength numbers — so participants understand the distinction upfront, not after investing effort. Threshold calibration (OI-01) MUST account for the expected split between COUNTING and open-tier participants in the pilot jurisdictions. Activation thresholds calibrated against the COUNTING-tier base only (not total enrolled). Monitor COUNTING-tier participation rate as a leading indicator in staging before rollout. **Trigger:** COUNTING-tier enrolment rate < 60% of total enrolled users in the pilot → re-evaluate threshold calibration and present revised targets to approver before launch. | `FR-014`, `FR-015`, `FR-122`, `FR-123`, `FR-131`, `ADR-004`, OI-01 | Marcus Adeyemi | **Open — new (v2.7.0)** |
 | **RISK-46** | **Counting-gate enforcement distributed across S-4/S-5/S-6 — regression and consistency risk against DES-095 seam** — the 2026-08-24 ruling moves the FR-123 counting-gate enforcement point from a single location (account creation in S-2) to three separate build stages (S-4: strength contribution; S-5: binding vote; S-6: candidacy). Each stage must independently wire `IEligibilityVerifier.isEligible()` at its COUNTING-action call sites. A missed call site would silently permit an open-tier user to take a COUNTING action without eligibility verification — a correctness and integrity defect. The risk of partial coverage increases as the number of wiring points increases. | 3 | 5 | 15 | `ADR-024` mandates that no auth or ballot logic may bypass the `IEligibilityVerifier` seam (DES-095). CI integration tests MUST verify that each FR-123 call site (strength contribution, binding vote, candidacy) routes through `IEligibilityVerifier.isEligible()` — no direct call to implementation. PR-11 (§3.5.4) requires test traces (`TC-####`) documenting the code-path for each of the three call sites. reviewer-qa checks each S-4/S-5/S-6 merge for counting-gate wiring coverage. **Trigger:** any pull request adding a COUNTING-action path that does not call `IEligibilityVerifier.isEligible()` is a merge blocker — reviewer-qa must catch at code review. | `ADR-024`, `DES-095`, `FR-123`, PR-11 | Samuel Oyelaran (engineer); Rafael Duarte (reviewer-qa sign-off) | **Open — new (v2.7.0)** |
 
@@ -736,7 +781,7 @@ only the **date or the pilot count** can move (§3.4).
 |------|-------|---------------------|--------------|-----------------|
 | **Now** | Phase 0 → Phase 1 | **14 weeks** (2026-08-24 → 2026-11-27) | Detailed | Gate 1 decision; MS-05 |
 | **Next** | Phase 2 | **21 weeks** (2026-12-14 → 2027-04-19, overlapping from 2026-10-05) | Coarse — sharpened at MS-05 | MS-06 circuit freeze; any audit finding above medium |
-| **Later** | Phase 3 | **12 weeks** (2027-04-19 → 2027-07-09) | Headline only | Gate 2; each rollout stage gate |
+| **Later** | Phase 3 | **12 weeks** (2027-04-19 → 2027-07-09; Definition-B placeholder dates derived from retired 2027-05-14 referent — to be re-planned at v2 re-entry) | Headline only | Gate 2; each rollout stage gate |
 | **Beyond** | Phase 4 | Not appetited in this plan | Headline only | MS-15 entry review with 12 weeks of production evidence |
 
 ### 8.2 Cadence (deliberately light)
@@ -791,7 +836,7 @@ indexer, a relayer/paymaster, and a standalone verifier — is realistically **1
 This is a **~4.5 FTE structural gap**, and it is the reason the feature float in §3.4 is only three
 weeks. It is stated here rather than absorbed into optimism.
 
-**Budget against USD 4.2M** (Gate 1 2026-08-22 → Gate 2 2027-05-14 ≈ **10 months**; blended rate per
+**Budget against USD 4.2M** (Gate 1 2026-08-22 → Gate 2 2027-05-14 ~~(superseded: pre-split Definition-B referent, retired 2026-08-24 per RISK-44 option (a), SCOPE-CLOSURE §3.3; MS-13 re-based after the v1 gate, offset at v2 re-entry; budget figure valid as planning basis — see §13.3)~~ ≈ **10 months** (Definition-B programme placeholder); blended rate per
 `A-PLAN-01`):
 
 | Line | Basis | USD |
@@ -887,6 +932,8 @@ here. Approver confirmation of magnitude is pending — see
 
 | Date | Wave | What changed | Why (signal from gate / production) | By |
 |------|------|--------------|-------------------------------------|----|
+| 2026-08-24 | Delivery split | **v2.8.1 — Rework cycle 1.** Business-mode review FAIL 95% (0C/0H/1M/1L; `artifacts/reviews/13-project-plan-v2.8.0-business-cycle1.md`). Two surgical fixes. **(ISS-01 Medium)** §8.3 budget table header: retirement annotation added to 2027-05-14 (superseded: pre-split Definition-B referent, retired 2026-08-24 per RISK-44 option (a), SCOPE-CLOSURE §3.3; MS-13 re-based after the v1 gate, offset at v2 re-entry; budget figure valid as planning basis — see §13.3); 10-month figure and all cost totals unchanged. **(ISS-02 Low)** §3.1 Phase-3 row and §8.1 wave-appetite Later row: parenthetical added to 2027-04-19 → 2027-07-09 identifying these as Definition-B placeholder dates derived from the retired 2027-05-14 referent, to be re-planned at v2 re-entry. | `artifacts/reviews/13-project-plan-v2.8.0-business-cycle1.md` (FAIL cycle-1, 0C/0H/1M/1L) | Ana-Maria Petrescu |
+| 2026-08-24 | Delivery split | **v2.8.0 — v1 scope closure rulings applied (Rathish, 2026-08-24; DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md).** Three approver confirmations applied surgically: (1) **Terminology CONFIRMED-CLOSED:** "supporter level" = FR-122 open/unverified tier; naming collision closed. §3.5.6 preamble updated. (2) **MS-V1-LRG 2027-06-30 APPROVER-CONFIRMED:** all active APPROVER-DELEGATED / "subject to approver's correction" sites for 2027-06-30 upgraded to APPROVER-CONFIRMED (Rathish, 2026-08-24). Sites updated: §3.3 v1/v2 annotation; §3.5.5 MS-V1-LRG bullet. Banner historical entries (v2.1.0, v2.5.0) left unchanged (historical record). (3) **RISK-44 CLOSED — option (a):** Definition-B Gate-2 (MS-13) re-based to follow the v1 gate (2027-06-30); option (c) (overlap) explicitly rejected; single-track capacity confirmed deliberate; specific offset not fixed — to be planned at v2 re-entry. The fixed date 2027-05-14 is retired at all active sites (annotate-don't-delete: superseded date kept visible). Sections updated: banner Read-this-first paragraph; MS-13 milestone row; §3.3 Gate-2 header; §3.3 CON-015 item 11 (2027-03-19 derived deadline retired; S-2b 2026-09-07 sole binding deadline); §3.3 v1/v2 annotation; §3.3 incoherence note (resolved); §3.4 critical path diagram (MS-13 annotated, rollout annotated); §3.4 variance paragraph; §3.5 preamble (RISK-44 CLOSED noted); §3.5.5 (DECISION REQUIRED callout replaced with RESOLVED; sequential strategy stated plainly; option (c) rejected; 2027-05-14 retired); §3.5.6 heading retitled and preamble updated (all tensions ruled; naming collision CONFIRMED-CLOSED). §6 RISK-44 row: CLOSED — RULED option (a) (Rathish, 2026-08-24). RISK-45/46 premises verified — unchanged (both remain Open; premises hold after the ruling). §13.1 Doc 13 self-row updated to v2.8.0 In Review — cycle pending. Cascade debt note added (§13.1): Doc 01/02/03/09/10 cascade debt routed to owners per DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md §4.4. §13.3 lever table: 2027-05-14 references annotated as retired. | `DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md`; Doc 02 v2.13.0 (Approved); Doc 03 v2.6.1 (Approved) | Ana-Maria Petrescu |
 | 2026-08-24 | Delivery split | **v2.7.2 — Rework cycle 2.** Business-mode review FAIL 95% (0C/0H/1M/1L; `artifacts/reviews/13-project-plan-v2.7.1-business-cycle2.md`). Two surgical fixes. (ISS-C2-01 Medium) Doc 02 v2.13.0 and Doc 03 v2.6.1 "Approved" pins confirmed accurate: both document owners flipped `Status: In Review` → `Status: Approved` on 2026-08-24 (after v2.7.1 submission). Six citation sites (header Source block ×2, §2.1, §3.5.1, §13.1 ×2) strengthened to record the PASS verdict + review-report citation alongside the Approved status in house style. Note: v2.7.1 pins predated the owner flips; the "Approved" label is accurate as of v2.7.2 — timeline honest, not retrofitted. (ISS-C2-02 Low) v2.7.0 banner entry item (6) annotated [mislabelled T-08 in v2.7.0 — corrected v2.7.1] to mirror the §11 v2.7.0 log-entry correction applied in v2.7.1. | `artifacts/reviews/13-project-plan-v2.7.1-business-cycle2.md`; Doc 02 v2.13.0 (Status: Approved, owner flip 2026-08-24); Doc 03 v2.6.1 (Status: Approved, owner flip 2026-08-24) | Ana-Maria Petrescu |
 | 2026-08-24 | Delivery split | **v2.7.1 — Rework cycle 1.** Business-mode review FAIL 90% (0C/1H/2M/1L; `artifacts/reviews/13-project-plan-v2.7.0-business-cycle1.md`). Four surgical fixes: (ISS-01 High) T-08 label collision corrected throughout — the §3.5.6 row previously labelled T-08 for the Gov-ID gate vs BR-003/FR-020 tension is relabelled to "Gov-ID gate vs BR-003/FR-020 (Doc 02 §16.5 row)"; real T-08 (single-vendor concentration vs FR-004 — Doc 03 §10.13.7; ARCHITECT-RESOLVED) added to §3.5.6; §3.5 preamble, RISK-42 mitigation, and this log's v2.7.0 entry annotated. (ISS-02 Medium) Upstream pins corrected to Doc 02 v2.13.0 (Approved, PASS 99%; `artifacts/reviews/02-requirements-srs-v2.13.0-business-cycle2.md`) and Doc 03 v2.6.1 (Approved, PASS 97%; `artifacts/reviews/03-architecture-design-sdd-v2.6.1-technical-cycle2.md`) at header Source, §2.1, §3.5.1, and §13.1; §13.1 gate-readiness evidence updated to PASS verdict, v2.12.0 gate-blocker claim removed. (ISS-03 Medium) RISK-44/45/46 rows moved inside main §6 table after RISK-43; duplicate pre-table provenance blockquote removed; §6 header blockquote extended to include RISK-40..46 provenance and maintenance note. (ISS-04 Low) "Already late" imprecision corrected: CON-015 latest start 2026-09-07 for S-2b (14 days away — NOT yet late; must start immediately); DEP-11/12/13 latest start 2026-09-19 (26 days away — NOT yet late; initiation must begin immediately). §3.3 back-schedule table and §3.5.3 prose updated. | `artifacts/reviews/13-project-plan-v2.7.0-business-cycle1.md`; Doc 02 v2.13.0 (Approved); Doc 03 v2.6.1 (Approved) | Ana-Maria Petrescu |
 | 2026-08-24 | Delivery split | **v2.7.0 — Government-ID gates COUNTING not joining; MS-V1-LRG 2027-06-30 set; incoherence surfaced; build-order updated; T-06 ACCEPTED; T-08 RESOLVED [v2.7.1 correction: "T-08 RESOLVED" in this entry referred to the Gov-ID gate vs BR-003/FR-020 tension, which was mislabelled T-08 in v2.7.0; the real T-08 (single-vendor concentration vs FR-004) is ARCHITECT-RESOLVED per Doc 03 §10.13.7; see v2.7.1 entry above].** Source: `DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md` (Rathish, 2026-08-24). Upstream pins: Doc 02 v2.12.0 (In Review), Doc 03 v2.6.0 (In Review). Changes by section: (1) **Header** — version 2.6.0 → 2.7.0; Status Approved → In Review; Last updated 2026-08-24; Change block added; upstream pins updated; DECISIONS-2026-08-24 added to Source. (2) **Banner** — v2.1.0 and v2.5.0 re-plan entries updated (NOT SET → 2027-06-30 APPROVER-DELEGATED). (3) **§3.3** — v1 gate date annotation replaced with MS-V1-LRG 2027-06-30, back-scheduled latest-start dates table (DEP-11/12/13 already late; CON-015 already late vs S-2b constraint; security review book by 2027-04-07), incoherence note pointing to §3.5.5. (4) **§3.5.2** — MS-V1-02 split into S-2a (phone-only, no CON-015 dependency) and S-2b (ID integration, CON-015 hard-gates); S-2b note clarifying ID check enforcement is at S-4/S-5/S-6 call sites; S-4, S-5, S-6 rows updated with FR-123 IEligibilityVerifier counting-gate wiring notes; MS-V1-09 H-19 meaning corrected. (5) **§3.5.3** — DEP-13 and CON-015 assumption rows updated (S-2b framing); government-ID enforcement-point assumption row added; CON-015 critical-path text updated (5-month reference removed; S-2a/S-3 unblocked from CON-015 explained). (6) **§3.5.4** — PR-6 updated: items (b) and (e) corrected for H-19 COUNTING meaning; clause (f) added (FR-131 clause (d) non-counting disclosure + counting-gate enforcement evidenced before v1 gate; Ji-woo Park owner); PR-7 H-19 corrected; PR-11 added (FR-131 clause (d) open-tier non-counting disclosure + counting-gate enforcement bar item; Ji-woo Park owner). (7) **§3.5.5** — MS-V1-LRG date set (APPROVER-DELEGATED); ⚠ DECISION REQUIRED callout added for Definition-B Gate-2 vs v1-gate incoherence with three options. (8) **§3.5.6** — preamble updated (T-06 ACCEPTED, Gov-ID gate tension RESOLVED [mislabelled T-08 in v2.7.0 — corrected v2.7.1]); T-06 status ACCEPTED — DEFERRED WITH DISCLOSURE; T-07 RESHAPED reaffirmed; Gov-ID gate vs BR-003/FR-020 status RESOLVED [mislabelled T-08 in v2.7.0 — corrected v2.7.1]. (9) **§5** — DEP-13 fallback updated (S-2b framing; no longer "hard eligibility gate at account creation"). (10) **§6** — §6 header provenance note updated (RISK-44..46 at v2.7.0); RISK-33 H-19 corrected (COUNTING exclusion); RISK-40 description updated (denial of service = no COUNTING, not no enrolment); RISK-42 premise corrected (COUNTING exclusion; Gov-ID gate tension RESOLVED noted [mislabelled T-08 in v2.7.0 — corrected v2.7.1]); RISK-44 added (v1-gate vs Definition-B Gate-2 incoherence, DECISION REQUIRED, L4/I4/Exposure 16); RISK-45 added (non-counting class depressing party strength, L3/I4/Exposure 12); RISK-46 added (counting-gate distributed across S-4/S-5/S-6 regression risk, L3/I5/Exposure 15). | `DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md`; Doc 02 v2.12.0 (In Review); Doc 03 v2.6.0 (In Review) | Ana-Maria Petrescu |
@@ -946,9 +993,23 @@ Sign-off is at the **gates** (MS-01 / MS-13), not on every plan revision.
 | **Project plan with milestones, risk register of record, RACI, rollout/rollback** | ✅ Ready | **This document, v1.0.0** |
 | Named owner per workstream | ✅ Ready | §4 — 13 workstreams, all owned |
 | Resourcing costed against `CON-007` | ⚠ Ready **with a variance** | §8.3 — ~−USD 245,000 (~−5.8%), zero contingency (`RISK-19`) |
-| Gate-2 date achievable as stated in `CON-007` | ❌ **Not achievable** | §3.4 — evidence-based Gate 2 is 2027-05-14, +13 weeks |
-| **Passing `document-review` reports for Docs 01, 02, 05, 13** | ⚠ **Partially cleared** | **Doc 02 v2.13.0: ✅ PASS 99%** — business mode, cycle 2 (Status: Approved 2026-08-24; business c2 PASS 99%; `artifacts/reviews/02-requirements-srs-v2.13.0-business-cycle2.md`). **Doc 03 v2.6.1: ✅ PASS 97%** — technical mode, cycle 2 (Status: Approved 2026-08-24; technical c2 PASS 97%; `artifacts/reviews/03-architecture-design-sdd-v2.6.1-technical-cycle2.md`). **Doc 13 v2.2.0: ✅ PASS 95%** — business mode, cycle 2 (Approved 2026-08-23). **Doc 13 v2.4.0: ✅ PASS 96%** — business mode, cycle 2 (Approved 2026-08-23). **Doc 13 v2.5.0: ❌ FAIL 91%** — business mode, cycle 1 (2026-08-23); 0C/0H/2M/0L. **Doc 13 v2.6.0: ✅ PASS 95%** — business mode, cycle 2 (Approved 2026-08-24). **Doc 13 v2.7.0: ❌ FAIL 90%** — business mode, cycle 1 (2026-08-24; `artifacts/reviews/13-project-plan-v2.7.0-business-cycle1.md`); 0C/1H/2M/1L. **Doc 13 v2.7.1: ❌ FAIL 95%** — business mode, cycle 2 (2026-08-24; `artifacts/reviews/13-project-plan-v2.7.1-business-cycle2.md`); 0C/0H/1M/1L. **Doc 13 v2.7.2: ✅ PASS 98%** — business mode, cycle 3 (Status: Approved 2026-08-24; `artifacts/reviews/13-project-plan-v2.7.2-business-cycle3.md`); 0C/0H/0M/1L. Docs 01, 05: ❌ passing business-mode review reports not yet produced. **Gate 1 cannot be presented until Docs 01 and 05 have passing business-mode reviews.** |
+| Gate-2 date achievable as stated in `CON-007` | ❌ **Not achievable (Definition B; Definition A v1 gate: 2027-06-30 APPROVER-CONFIRMED)** | §3.4 — CON-007 targets Definition-B Gate 2 on 2027-02-15; the former evidence-based figure was **2027-05-14** (+13 weeks), retired 2026-08-24 (RISK-44 closed via option (a)). Definition-B Gate-2 (MS-13) is now re-based after the v1 gate (2027-06-30); specific offset to be planned at v2 re-entry — the gap vs CON-007's 2027-02-15 target is structurally larger; Definition B will require its own plan at v2 re-entry. The v1 gate (MS-V1-LRG 2027-06-30) is a separate bar; its achievability is assessed at §3.5. |
+| **Passing `document-review` reports for Docs 01, 02, 05, 13** | ⚠ **Partially cleared** | **Doc 02 v2.13.0: ✅ PASS 99%** — business mode, cycle 2 (Status: Approved 2026-08-24; business c2 PASS 99%; `artifacts/reviews/02-requirements-srs-v2.13.0-business-cycle2.md`). **Doc 03 v2.6.1: ✅ PASS 97%** — technical mode, cycle 2 (Status: Approved 2026-08-24; technical c2 PASS 97%; `artifacts/reviews/03-architecture-design-sdd-v2.6.1-technical-cycle2.md`). **Doc 13 v2.2.0: ✅ PASS 95%** — business mode, cycle 2 (Approved 2026-08-23). **Doc 13 v2.4.0: ✅ PASS 96%** — business mode, cycle 2 (Approved 2026-08-23). **Doc 13 v2.5.0: ❌ FAIL 91%** — business mode, cycle 1 (2026-08-23); 0C/0H/2M/0L. **Doc 13 v2.6.0: ✅ PASS 95%** — business mode, cycle 2 (Approved 2026-08-24). **Doc 13 v2.7.0: ❌ FAIL 90%** — business mode, cycle 1 (2026-08-24; `artifacts/reviews/13-project-plan-v2.7.0-business-cycle1.md`); 0C/1H/2M/1L. **Doc 13 v2.7.1: ❌ FAIL 95%** — business mode, cycle 2 (2026-08-24; `artifacts/reviews/13-project-plan-v2.7.1-business-cycle2.md`); 0C/0H/1M/1L. **Doc 13 v2.7.2: ✅ PASS 98%** — business mode, cycle 3 (Status: Approved 2026-08-24; `artifacts/reviews/13-project-plan-v2.7.2-business-cycle3.md`); 0C/0H/0M/1L. **Doc 13 v2.8.0: ❌ FAIL 95%** — business c1 (`artifacts/reviews/13-project-plan-v2.8.0-business-cycle1.md`); **Doc 13 v2.8.1: ✅ PASS 100%** — business c2 (Status: Approved 2026-08-24; `artifacts/reviews/13-project-plan-v2.8.1-business-cycle2.md`). Docs 01, 05: ❌ passing business-mode review reports not yet produced. **Gate 1 cannot be presented until Docs 01 and 05 have passing business-mode reviews.** |
 | Four declared non-Must backlog coverage gaps closed | ⚠ Declared, not closed | Doc 05 §12 — `FR-005`, `FR-049`, `FR-050`, `FR-052`, `FR-053`. Non-blocking; owned by the PO |
+
+> **Cross-document cascade debt — routed to owners (2026-08-24).** The v1 scope closure
+> rulings (DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md §4.4) create downstream update debt in five
+> other documents. Doc 13 v2.8.0 is the sole document commissioned this session
+> (DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md §5.1); the cascade is deferred and routed:
+> - **Doc 01** (line 420) — update warranted; **routed to product-owner (PO: Priya Raghunathan)**.
+> - **Doc 02** (line 2656) — update warranted; **routed to product-owner (PO: Priya Raghunathan)**.
+> - **Doc 03** (lines 1761–1762) — update warranted; **routed to architect (Priya Raghunathan)**.
+> - **Doc 09** (lines 35 and 341) — update warranted; **routed to sre (Chen Wei)**.
+> - **Doc 10** (line 19) — update warranted; **routed to sre (Chen Wei)**.
+>
+> Each owner must apply the RISK-44 ruling (Definition-B Gate-2 re-based after v1 gate; 2027-05-14
+> retired) in their document before their next version increment. These are not Gate-1 blockers in
+> themselves but must be cleared before the relevant document's next passing review.
 
 ### 13.2 The five open items requiring a Gate-1 decision
 
@@ -994,19 +1055,29 @@ small-region governance) either weaken a Must NFR or cut objective 4.
 
 ### 13.3 The appetite variance — three costed levers
 
+> **2026-08-24 update.** The lever analysis below was developed against the former Definition-B
+> Gate-2 date of **2027-05-14** (now retired — RISK-44 closed via option (a);
+> DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md §3.3). The B-01 lever (L2) was accepted by the
+> approver at Gate 1 on 2026-08-09 and its budget figure and the §8.3 line it references remain
+> valid. The specific Gate-2 date cited (2027-05-14) is a superseded pre-split figure. The
+> Definition-B Gate-2 (MS-13) is now re-based after the v1 gate (2027-06-30); Definition B's lever
+> analysis will be re-issued when Definition B re-enters design→build. The v1-specific timeline and
+> cost posture is in §3.5.
+
 `CON-007` targets Gate 2 on **2027-02-15** and launch on **2027-03-01**. The plan's evidence-based
-Gate 2 is **2027-05-14**. The gap is **13 weeks**, and every week of it sits on the externally paced
-cryptography path (§3.4): two independent audits, their remediation, MACI Phase-3, and a 30-day
-on-chain registry timelock. _(Note 2026-08-21: the v1.0.0 text named "six ceremonies at ≥ 500
-contributors" as a critical-path driver. Per `ADR-022` / REC-1, the ceremony burden has collapsed
-to a batched campaign of days. The Gate-2 date does not move — the audits were already the binding
+Definition-B Gate 2 was **2027-05-14** (superseded: retired 2026-08-24 per RISK-44 ruling — see
+§3.5.5). The gap vs CON-007 was **13 weeks**, driven by the externally paced cryptography path
+(§3.4): two independent audits, their remediation, MACI Phase-3, and a 30-day on-chain registry
+timelock. _(Note 2026-08-21: the v1.0.0 text named "six ceremonies at ≥ 500 contributors" as a
+critical-path driver. Per `ADR-022` / REC-1, the ceremony burden has collapsed to a batched campaign
+of days. The Gate-2 date did not move under that correction — the audits were already the binding
 constraint before the correction, completing 2027-03-12 vs ceremonies completing 2027-03-05; see
 §3.4.)_
 
 | Lever | Effect on date | Effect on budget | PM assessment |
 |---|---|---|---|
-| **L1 — Move Gate 2 to 2027-05-14; hold 3 pilots** | Gate 2 +13 wks; 100% rollout 2027-07-09 | **~−USD 245,000 (~−5.8%) over** appetite, no contingency | Honest schedule, unfunded. Not viable without more money |
-| **L2 — Move Gate 2 to 2027-05-14; launch in 1 pilot, roll the other 2 post-launch** _(B-01: accepted by Gate-1 approver 2026-08-09)_ | Gate 2 +13 wks | ≈ **USD 4.03M**; ≈ USD 175K (~4%) banked as an explicit audit-remediation contingency (approver ruling 2026-08-21) — _corrected from "≈ USD 4.13M, ~1.7%" which was computed off the pre-correction 4.55M total_ | **Recommended. Accepted (B-01 2026-08-09).** Keeps every Must requirement and every guardrail; defers only jurisdictional breadth, which is already `CON-005`-gated per jurisdiction. Note: B-01 already accepted this lever — the budget note now reflects the cascade-corrected figure (§8.3) |
+| **L1 — Move Gate 2 to 2027-05-14; hold 3 pilots** _(2027-05-14 is the pre-split Definition-B referent, retired 2026-08-24 — see §3.5.5 and §3.4)_ | Gate 2 +13 wks vs CON-007 target; 100% rollout 2027-07-09 (derived from retired 2027-05-14 — retired 2026-08-24) | **~−USD 245,000 (~−5.8%) over** appetite, no contingency | Honest schedule, unfunded. Not viable without more money. Definition-B lever; to be re-issued at v2 re-entry |
+| **L2 — Move Gate 2 to 2027-05-14; launch in 1 pilot, roll the other 2 post-launch** _(2027-05-14 is the pre-split Definition-B referent, retired 2026-08-24)_ _(B-01: accepted by Gate-1 approver 2026-08-09)_ | Gate 2 +13 wks vs CON-007 target | ≈ **USD 4.03M**; ≈ USD 175K (~4%) banked as an explicit audit-remediation contingency (approver ruling 2026-08-21) — _corrected from "≈ USD 4.13M, ~1.7%" which was computed off the pre-correction 4.55M total_ | **Recommended. Accepted (B-01 2026-08-09).** The budget figure and single-pilot lever remain valid. The date reference (2027-05-14) is superseded — Definition-B Gate-2 is re-based after the v1 gate (2027-06-30) per RISK-44 ruling. Keeps every Must requirement and every guardrail; defers only jurisdictional breadth (`CON-005`-gated per jurisdiction). |
 | **L3 — Hold 2027-02-15; cut scope to fit** | Gate 2 on time | Within appetite | **Not offered.** The only scope that fits is Phase 2 — a mainnet launch with **MACI OFF**, i.e. voting without coercion resistance. That violates Must requirements `BR-011` and `NFR-003`. The PM will not present this as viable |
 
 **Recommendation: L2.** The decision belongs to the human approver.

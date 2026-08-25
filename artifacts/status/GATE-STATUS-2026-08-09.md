@@ -1036,3 +1036,79 @@ Source: `docs/13-project-plan.md §3.3` (latest-start arithmetic table, verified
 | Doc 13 v2.7.2 Low ISS-C3-01 — §13.1 Doc 13 self-reference row not updated on version bump | **Fixed** in this close-out as post-PASS editorial fix (Status flip + §13.1 row updated to record v2.7.1 FAIL 95% and v2.7.2 PASS 98%); verified. |
 
 **Gate-1 presentation blocker (unchanged):** Docs 01 and 05 have no passing business-mode review reports at any version. Gate 1 cannot be presented until both clear. This is unaffected by the Doc 13 approval.
+
+---
+
+### Closing state — 2026-08-24 (v1 scope closure ruling)
+
+> ⚠ **OPERATIONAL HEADLINE — action required before 2026-09-07.** Two external procurement
+> tracks are NOT STARTED and both have hard latest-start deadlines within the next 26 days:
+>
+> | Item | Latest start | Days from today | Owner | Status |
+> |------|-------------|-----------------|-------|--------|
+> | **CON-015** — independent legal opinion (Aadhaar API / India data-minimisation posture). Hard gate on S-2b; no ID-check integration work begins until cleared. | **2026-09-07** | **14 days** | Sofia Marchetti | **NOT STARTED — CRITICAL PATH** |
+> | **DEP-11** — SMS/phone-auth provider contract | **2026-09-19** | **26 days** | Rafael Duarte | **NOT STARTED** |
+> | **DEP-12** — phone-intelligence API (VoIP/fraud detection) contract | **2026-09-19** | **26 days** | Rafael Duarte | **NOT STARTED** |
+> | **DEP-13** — government-ID document-check provider contract | **2026-09-19** | **26 days** | Rafael Duarte | **NOT STARTED** |
+>
+> DEP-13 requires a **no-retention contractual clause** as a hard pre-condition (RISK-41;
+> ADR-025 §(e)): the platform's publicly stated promise "we do not keep your identity documents"
+> (Doc 01 §E1) is only delivered if this clause holds. No workaround exists. Contract execution
+> must not proceed without it.
+
+**Ruling recorded (Rathish, 2026-08-24; DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md):** Three
+approver confirmations applied:
+
+1. **Terminology CONFIRMED-CLOSED:** "supporter level" = FR-122 open/unverified tier. The
+   human-readable label for the open membership tier is confirmed as "supporter level." The
+   potential naming collision between this label and the counting-class distinction is closed — no
+   structural ambiguity survives.
+
+2. **MS-V1-LRG 2027-06-30 APPROVER-CONFIRMED:** The v1 launch-readiness gate date previously
+   APPROVER-DELEGATED per DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md §4.1 is upgraded to
+   APPROVER-CONFIRMED (Rathish, 2026-08-24). All active "APPROVER-DELEGATED" and "subject to
+   approver's correction" sites in Doc 13 updated. Historical changelog rows left unchanged.
+
+3. **RISK-44 CLOSED — option (a):** The Definition-B Gate-2 (MS-13) vs v1 gate (MS-V1-LRG
+   2027-06-30) scheduling incoherence is resolved. Definition-B Gate-2 is re-based to follow the
+   v1 gate (2027-06-30); option (c) (overlap) is explicitly rejected; single-track capacity is
+   deliberate (v1 ships first, then Definition B re-enters the SOP and is built in the open with
+   contributors). Specific offset deliberately not fixed now — to be planned when Definition B
+   re-enters design→build. Superseded fixed date: **2027-05-14** (pre-split artifact, retired
+   2026-08-24; annotated-not-deleted throughout Doc 13).
+
+**Document status this session:**
+
+| Document | Version | Status | Notes |
+|----------|---------|--------|-------|
+| Doc 13 Project Plan | **v2.8.1** | **Approved** | v2.8.1 Approved (business c2 PASS 100%; c1 FAIL 95% on one missed §8.3 annotation, reworked) |
+| Doc 02 Requirements SRS | v2.13.0 | Approved | Unchanged this session |
+| Doc 03 SDD | v2.6.1 | Approved | Unchanged this session |
+
+**Tension dispositions (cumulative, as of 2026-08-24):**
+
+| Tension | Disposition |
+|---------|------------|
+| T-01..T-05 | **CONFIRMED** (Rathish, 2026-08-23; deferred-with-disclosure accepted; Doc 03 §10.13.7) |
+| T-06 — Charter Rule 1 (one human, one vote) vs v1 phone-auth | **ACCEPTED — DEFERRED WITH DISCLOSURE** (Rathish, 2026-08-24; DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md §4.3) |
+| T-07 — FR-003 (no identity data at rest) vs v1 phone-number storage | **RESHAPED — PENDING CON-015** (legal input outstanding; approver confirmation follows when CON-015 clears) |
+| T-08 — FR-004 plurality intent vs single-vendor ID-check | **ARCHITECT-RESOLVED** (Doc 03 §10.13.7; 2026-08-23) |
+| Gov-ID gate vs BR-003/FR-020 | **RESOLVED** (Rathish, 2026-08-24; DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md §3.2/§4.5) |
+| Naming collision ("supporter level" vs FR-122 tier) | **CONFIRMED-CLOSED** (Rathish, 2026-08-24; DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md §3.1) |
+
+**Cross-document cascade debt — routed (not commissioned):** The ruling creates downstream update
+debt in Doc 01 (line 420), Doc 02 (line 2656), Doc 03 (lines 1761-1762), Doc 09 (lines 35/341),
+and Doc 10 (line 19). Per DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md §5.1, only Doc 13 was
+commissioned this session. Each owner must apply the RISK-44 ruling (Definition-B Gate-2 re-based
+after v1 gate; 2027-05-14 retired) before their next document version increment. Routed:
+Doc 01/02 → PO (Priya Raghunathan); Doc 03 → Architect (Priya Raghunathan); Doc 09/10 → SRE
+(Chen Wei). Recorded in Doc 13 v2.8.0 §13.1 cascade note.
+
+**v1 scope status:** Approver (Rathish) has confirmed all v1 scope questions closed as of
+2026-08-24. The `design/formalize-design-system` branch is ready to push/merge pending the Doc 13
+v2.8.0 business-mode review cycle.
+
+**Gate-1 presentation blocker (unchanged):** Docs 01 and 05 have no passing business-mode review
+reports at any version. Gate 1 cannot be presented until both clear.
+
+**Closure complete — 2026-08-24.** With Doc 02 v2.13.0, Doc 03 v2.6.1, and Doc 13 v2.8.1 all Approved, all approver rulings on v1 scope are applied and closed. The branch is ready for the approver to push and merge. Standing items that survive closure: routed cascade debt (Doc 01/02/03/09/10 per SCOPE-CLOSURE §4.4); Gate-1-presentation blocker (Docs 01 and 05 lack passing reviews); carried review Lows (Doc 03 ISS-A/ISS-B); and the operational headline — CON-015 by 2026-09-07; DEP-11/12/13 by 2026-09-19; RISK-41 no-retention clause — which must start now.
