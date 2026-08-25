@@ -1,0 +1,111 @@
+/*
+ * DES-093 — Design token set for @trumocracy/ui
+ * Normative reference: Doc 03 §10.12.2; ADR-023.
+ *
+ * TERRITORY RULE (normative — semantic, not stylistic):
+ *
+ *   body.navy  — Public party territory.
+ *                Surfaces readable by any citizen, anonymous or authenticated.
+ *                Use for: Welcome (1.1), Accountability dashboard (3.5), and any future
+ *                public-party overview or discovery surface.
+ *
+ *   body.paper — Private authenticated user session territory.
+ *                Surfaces that require a live authenticated session to access.
+ *                Use for: Browse (1.2), enrolment/join flows (1.3–1.6), creation and
+ *                petition flows (2.1–2.3), personal governance (3.1–3.4), one-way door (3.6).
+ *
+ *   A screen that violates this assignment — for example, a private authenticated flow
+ *   rendered on a navy surface — is a design defect detectable at review. This rule is
+ *   an architectural invariant; applying the wrong class is not a style choice.
+ *   Doc 03 §10.12.2; ADR-023.
+ *
+ * NOTE — typeface bundle deferral (DES-082 / DES-093):
+ *   The Fraunces and Inter self-hosting vs 15 MB install floor verification is a DEFERRED
+ *   build task. The Google Fonts CDN is blocked by the strict CSP in the PWA shell (ADR-012);
+ *   self-hosting is the default requirement. No font files are bundled here; only fallback
+ *   stacks are declared. The engineer MUST verify the combined font bundle meets DES-082
+ *   before any production font-hosting decision is made.
+ */
+
+:root {
+  /* ─── Colour tokens (verbatim from wireframe :root — DES-093) ────────────────── */
+
+  --navy:       #1E2761; /* Primary public/party territory fill */
+  --navy2:      #2E3D7E; /* Card fill on navy surfaces */
+  --navy3:      #3F4E96; /* Avatar fill; accent on navy surfaces */
+
+  --amber:      #F2B134; /* Primary CTA; petition/active pill; amber privacy-dot (pub state) */
+  --amber-deep: #D9971C; /* Eyebrow text on navy; amber hover */
+
+  --ice:        #CADCFC; /* Secondary text on navy surfaces */
+  --ice-deep:   #AEC0E8; /* Sub-text on navy surfaces */
+
+  --paper:      #F7F5EF; /* Primary private/user territory fill */
+  --paper2:     #EFEBE0; /* Progress bar track; secondary fills on paper surfaces */
+
+  --ink:        #1B2440; /* Primary text on all surfaces */
+
+  --grey:       #5A6685; /* Secondary text on paper surfaces */
+  --grey-soft:  #8892AE; /* Tertiary text; anonymous privacy-dot */
+
+  --green:      #2C7A5B; /* Verified state; "on track" pill; success icons */
+  --green-soft: #E7F1EC; /* Verified privacy-status background; "good" note fill */
+
+  --red:        #B4483C; /* Against-vote bar in tally; error states */
+
+  --line:       #E4E1D6; /* Borders; dividers; progress track on paper */
+
+  /* ─── Typography ─────────────────────────────────────────────────────────────── */
+
+  /* Display and title text: h1, h2, card headings, avatar initials.
+   * Self-hosting required — see bundle deferral note above. */
+  --serif: 'Fraunces', Georgia, serif;
+
+  /* Body, labels, buttons, captions.
+   * Self-hosting required — see bundle deferral note above. */
+  --sans:  'Inter', system-ui, sans-serif;
+
+  /* ─── Radii (verbatim from wireframe CSS) ────────────────────────────────────── */
+
+  --radius-card:    16px; /* Card */
+  --radius-button:  14px; /* Button */
+  --radius-pill:    20px; /* Pill / chip */
+  --radius-privacy: 12px; /* Privacy-status element (DES-094) */
+  --radius-avatar:  11px; /* Avatar */
+
+  /* ─── Shadows (verbatim from wireframe CSS) ──────────────────────────────────── */
+
+  --shadow-card: 0 2px 6px rgba(30, 39, 97, 0.05); /* Card elevation */
+}
+
+/* ─── Territory classes ───────────────────────────────────────────────────────── */
+
+/**
+ * body.navy — public party territory.
+ *
+ * Apply to any surface that represents the public commons: the party's public record,
+ * petition browsers, accountability dashboards, and welcome screens. Any citizen —
+ * anonymous or authenticated — may view these surfaces. Using navy on a private
+ * authenticated surface is a design defect; using paper on a public surface is too.
+ *
+ * Doc 03 §10.12.2; ADR-023; DES-093.
+ */
+body.navy {
+  background-color: var(--navy);
+  color: var(--ice);
+}
+
+/**
+ * body.paper — private authenticated session territory.
+ *
+ * Apply to any surface that requires a live authenticated session: the member's personal
+ * governance screens, enrolment flows, petition creation, proposal browsing, and ballot
+ * confirmation screens. These surfaces are the citizen's own space; they MUST NOT render
+ * on an unauthenticated route.
+ *
+ * Doc 03 §10.12.2; ADR-023; DES-093.
+ */
+body.paper {
+  background-color: var(--paper);
+  color: var(--ink);
+}

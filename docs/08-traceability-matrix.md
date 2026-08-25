@@ -2,14 +2,18 @@
 
 ```
 Document ID:   RTM-TRUMOCRACY
-Version:       2.1.0
-Status:        Approved (review loop, cycle 1 PASS 100% — artifacts/reviews/08-traceability-matrix-v2.1.0-technical-cycle1.md)
+Version:       2.2.3
+Status:        Approved — 08-traceability-matrix-v2.2.3-technical-cycle4.md
 Owner:         Ji-woo Park — Test Lead (tester, author)
 Verifier:      reviewer-qa (independent) — Accountable for "RTM complete (zero gaps)" per CLAUDE.md RACI
-Source:        SRS-TRUMOCRACY v2.2.0 · SDD-TRUMOCRACY v2.1.1 §5.2 · BKLG-TRUMOCRACY v2.0.1 ·
-               CODE-TRUMOCRACY v1.0.0 · MTP-TRUMOCRACY v1.0.1 · TC-TRUMOCRACY v2.1.0
-Last updated:  2026-08-12
-Changelog:     v2.1.0 (2026-08-12) — TC-TRUMOCRACY v2.1.0 sync: FR-117 TC column += TC-3467 (publishAuditRef vacancy-immediate citizen fallback) and TC-3468 (issuer-onboarding coordination vacancy-immediate citizen fallback); FR-119 TC column += TC-3469 (Open Layer vote attempts GovernanceConstants setter to lower Guarded Layer constant; reverts at anti-circularity classification check). §6 coverage dashboard TC total 375→378 (127 passing-evidence unchanged; 248→251 not executed or not executable). Source pin TC-TRUMOCRACY v2.0.1→v2.1.0.
+Source:        SRS-TRUMOCRACY v2.13.0 · SDD-TRUMOCRACY v2.7.1 §5.2 · BKLG-TRUMOCRACY v2.2.0 ·
+               CODE-TRUMOCRACY v2.0.1 · MTP-TRUMOCRACY v1.0.1 · TC-TRUMOCRACY v2.2.1
+Last updated:  2026-08-25
+Changelog:     v2.2.3 (2026-08-25) — cycle-3 rework (08-traceability-matrix-v2.2.2-technical-cycle3.md). ISS-01 (Medium): §3.1 heading corrected from "the 106 gating functional rows" to "the 114 gating functional rows". ISS-02 (Medium): Gate-2 verdict paragraph updated — five stale pre-v2.2.2 figures corrected to v2.2.2 actuals: 130→138 gating Must rows; 118→126 open Must rows; 9.2%→8.7% completion rate; 33→41 G-TRACE rows; 46→47 G-PHASE3 rows.
+               v2.2.2 (2026-08-25) — cycle-2 rework (08-traceability-matrix-v2.2.1-technical-cycle2.md). ISS-01 (Medium): TC-3488 added to NFR-011 forward trace row (§3.2); UT-0753 (accessible-name aria-label, packages/ui/test/PrivacyStatus.test.tsx line 46) added as evidence; US-0132 added to NFR-011 US column; dashboard TC total 397 now correctly traced (was 396 actual). ISS-02 (Medium) + sweep of FR-121..FR-133 range: 8 absent Must FR rows added to §3.1 in numerical order — FR-121 (BR-020/BR-006, G-TRACE+G-PHASE3), FR-125 (BR-003/BR-006, G-TRACE+G-PHASE3), FR-126 (BR-009/BR-006, G-TRACE+G-PHASE3), FR-127 (BR-006/BR-009, G-TRACE+G-PHASE3), FR-128 (BR-009/BR-006, G-TRACE+G-PHASE3), FR-129 (BR-006/BR-012/BR-021, G-TRACE+G-PHASE3), FR-130 (BR-002/BR-012, US-0131, G-TRACE+G-PHASE3), FR-133 (BR-012/BR-003, DES-099, G-PHASE3 only). Arithmetic: Must FR 106→114 (+8); Must rows 130→138; open Must 118→126 (+8); completion 9.2%→8.7% (12/138); G-TRACE 34→41 (+7: FR-121/FR-125..FR-130); G-PHASE3 46→47 (+1: FR-133); by-reason total corrects 114→127 (distinct 118→126). §6 FR-Must row 106→114. §7 heading/preamble updated; entries 119–126 added. §9 gate verdict 12/130→12/138; open Must 118→126; reviewer-qa notes 118→126; tester sign-off 118→126; gate rule footnote 118→126.
+               v2.2.1 (2026-08-25) — cycle-1 rework (08-traceability-matrix-v2.2.0-technical-cycle1.md). ISS-01 (Medium): §9 tester sign-off row updated from stale v2.0.1/2026-08-12/113 to v2.2.1/2026-08-25/118; gate-rule footnote updated from 113 to 118 — both now internally consistent with the §9 summary table. ISS-02 (Low): Stories 134 verified correct against Doc 05 v2.2.0 (Doc 05 baseline at v2.1.0 was 131, not 130; 131 + 3 new US-0132..0134 = 134; reviewer arithmetic 130+3=133 used stale baseline; no count change). TC sync from Doc 07 v2.2.1: TC total 396→397 (TC-3488 added), passing evidence 142→143 (55 inh. · 88 obs.), anchor count 387→388. TC-count convention note updated.
+               v2.2.0 (2026-08-25) — TC-TRUMOCRACY v2.2.0 sync: 5 new Must FR rows added (FR-122, FR-123, FR-124, FR-131, FR-132) via US-0132..US-0134 (Doc 05 v2.2.0). FR-082..FR-086 rows updated: DES-093/DES-094 assigned (G-TRACE removed; G-PHASE3 retained; US-0132 added; new TCs TC-3470/TC-3471/TC-3472/TC-3474 added with Pass (obs.) evidence). SUMMARY: 148→153 rows, 125→130 Must, 101→106 Must FR, 113→118 OPEN. Must-row gaps: G-TRACE 39→34 (5 FR-082..086 DES gaps closed), G-PHASE3 36→46 (FR-082..086 reclassified + 5 new rows). §6 coverage dashboard: FR-Must 101→106, Stories 130→134, TC total 378→396 (142 passing, 254 not executable). §7 gap log entries 73-77 reclassified from G-TRACE to G-PHASE3; entries 114-118 added for FR-122..124/131/132. §9 gate verdict updated. Source pins: SRS v2.13.0, SDD v2.7.1, BKLG v2.2.0, CODE v2.0.1, TC v2.2.0.
+               v2.1.0 (2026-08-12) — TC-TRUMOCRACY v2.1.0 sync: FR-117 TC column += TC-3467 (publishAuditRef vacancy-immediate citizen fallback) and TC-3468 (issuer-onboarding coordination vacancy-immediate citizen fallback); FR-119 TC column += TC-3469 (Open Layer vote attempts GovernanceConstants setter to lower Guarded Layer constant; reverts at anti-circularity classification check). §6 coverage dashboard TC total 375→378 (127 passing-evidence unchanged; 248→251 not executed or not executable). Source pin TC-TRUMOCRACY v2.0.1→v2.1.0.
                v2.0.0 (2026-08-11) — 47 new Must FR rows added (FR-074..FR-120, SRS v2.2.0) to §3.1; 2 new Must NFR rows (NFR-027, NFR-028) added to §3.2; FR-062 row annotated as superseded by FR-082..FR-086 per SRS v2.2.0; FR-046 row annotated as superseded by FR-094/FR-095 per SRS v2.2.0; summary totals recomputed (125 Must rows, 12 COMPLETE, 113 OPEN — 9.6%); §6 coverage dashboard updated; §7 gap log extended to 113 entries; Gate-2 verdict updated; source pins bumped to SRS v2.2.0, SDD v2.1.1, BKLG v2.0.1, TC v2.0.0.
                v2.0.1 (2026-08-12) — cycle-1 technical review rework (08-traceability-matrix-v2.0.0-technical-cycle1.md): ISS-01 Critical: TC-3460..TC-3464 added to FR-119 TC column; ISS-02 High: TC-3454 moved from FR-109 row to FR-119 row; TC-3456 removed from FR-110 row (now FR-119 only); ISS-03 Medium: §9 gate verdict table updated to 125/12/113; stale sentence fixed; ISS-04 Medium: §6 passing-evidence count corrected to 127 (55 inh. + 72 obs.) per Doc 07 §2 footer; §6 TC count convention note updated; ISS-05 Low: subsumed by ISS-03. Source pins: Doc 04 → v1.0.1, Doc 07 → v2.0.1.
                v1.1.4 (2026-08-10) — §6 Test cases dashboard corrected to expanded-convention total 308 (pre-existing drift; 299 row anchors + 9 from collapsed TC-3200–TC-3209 range); breakdown corrected to 148 with evidence / 160 not executable; TC-count note added; SRS source pin bumped to v1.1.1; BKLG source pin bumped to v1.1.2.
@@ -29,29 +33,29 @@ Changelog:     v2.1.0 (2026-08-12) — TC-TRUMOCRACY v2.1.0 sync: FR-117 TC colu
 
 | Measure | Count |
 |---|---|
-| Requirement rows in this matrix | **148** (125 Must + 23 Should/Could) |
-| **Must rows (gating)** | **125** — 101 Must FR + 24 Must NFR |
+| Requirement rows in this matrix | **161** (138 Must + 23 Should/Could) |
+| **Must rows (gating)** | **138** — 114 Must FR + 24 Must NFR |
 | **Must rows COMPLETE** | **12** |
-| **Must rows OPEN (gap)** | **113** |
-| Must-row completion | **9.6%** |
+| **Must rows OPEN (gap)** | **126** |
+| Must-row completion | **8.7%** |
 | Non-Must rows complete / gap | 3 / 20 |
-| Total rows complete / gap | 15 / 133 |
+| Total rows complete / gap | 15 / 146 |
 
 ### Must-row gaps by primary reason
 
 | Code | Reason | Must rows | Closes in |
 |---|---|---|---|
-| `G-PHASE3` | The capability is **not implemented** in this drop — MACI, Elections, Recall, Treasury, recovery, relayer, feedback scorer, debate lifecycle, membership nullifier; 8 new Must FRs from CR-v1.1.0; 9 Must FRs with DES from v2.2.0 (FR-112..FR-120); NFR-027 and NFR-028 | **36** | Phase 3 |
+| `G-PHASE3` | The capability is **not implemented** in this drop — MACI, Elections, Recall, Treasury, recovery, relayer, feedback scorer, debate lifecycle, membership nullifier; 8 new Must FRs from CR-v1.1.0; 9 Must FRs with DES from v2.2.0 (FR-112..FR-120); NFR-027 and NFR-028; FR-082..086 (DES-093/094 now assigned, G-TRACE removed, implementation still pending); 5 new Must FRs (FR-122, FR-123, FR-124, FR-131, FR-132); FR-133 (DES-099 assigned, Doc 03 v2.4.1 Approved; no US or TC yet — Phase 3) | **47** | Phase 3 |
 | `G-NOMECH` | The design has **no mechanism** for the stated guarantee — the requirement cannot be tested because nothing implements it | **10** | Design fix required first |
 | `G-NOENV` | Needs an **environment or instrument that does not exist** — devnet/testnet/staging, CI scanner, device lab | **9** | Phase 2–3 |
 | `G-EXTERNAL` | Needs **external evidence** — independent audit, legal review, usability study, reproducible-build attestation | **5** | Phase 2–3 (MS-09/MS-10) |
 | `G-UI` | Needs the **client surface** built and verified — accessibility, localisation, plain language, jargon scan, ballot-direction audit (FR-063) | **6** | Phase 3 |
 | `G-UNMEASURABLE` | **Not falsifiable or not measurable as written** — needs a requirement restatement, not more testing | **4** | Requires a product/architecture decision |
 | `G-CIRCUIT` | Depends on **compiled circuits and real verifiers**; today enforced by `MockVerifierAlwaysTrue` (Doc 06 §7.1–7.2); FR-069/FR-070 also need compiled circuits | **5** | Phase 2 ceremonies |
-| `G-TRACE` | The **chain itself is broken** — no `DES` in Doc 03 §5.2 (or no `US` in Doc 05), independently of any test result. **v1.1.0: All 15 pre-existing DES gaps closed (DES-064..086).** v2.0.0: FR-074..FR-111 (38 rows) have no DES — Doc 03 §16 records this as deliberate next-increment phasing, not an error. NFR-007 (no story/NF-backlog item) retains G-TRACE aspect. | **39** (1 NFR-007 + 38 FR-074..FR-111) | Immediate: NFR-007; Design phase (next increment): FR-074..FR-111 |
-| | **Total** | **114** | |
+| `G-TRACE` | The **chain itself is broken** — no `DES` in Doc 03 §5.2 (or no `US` in Doc 05), independently of any test result. **v1.1.0: All 15 pre-existing DES gaps closed (DES-064..086).** v2.0.0: FR-074..FR-111 (38 rows) have no DES — Doc 03 §16 records this as deliberate next-increment phasing, not an error. NFR-007 (no story/NF-backlog item) retains G-TRACE aspect. **v2.2.0: FR-082..086 DES gaps closed (DES-093/094 assigned via Doc 05 v2.2.0 US-0132); those 5 rows reclassified to G-PHASE3.** **v2.2.2: FR-121, FR-125..FR-130 added (7 rows; no DES; recorded-phasing posture, Doc 03 §16; same posture as FR-074..FR-111).** | **41** (1 NFR-007 + 40 FRs: FR-074..FR-081/FR-087..FR-111/FR-121/FR-125..FR-130) | Immediate: NFR-007; Design phase (next increment): FR-074..FR-081, FR-087..FR-111, FR-121, FR-125..FR-130 |
+| | **Total** | **127** | |
 
-_Note: Total by-reason count (114) exceeds Must-rows OPEN (113) by 1 because NFR-007 carries both G-NOENV (environment) and G-TRACE (no story) — it is counted in G-TRACE above and appears in the G-NOENV 9-count as well. This pre-existing compound classification does not affect the row count (113 distinct open Must rows)._
+_Note: Total by-reason count (127) exceeds Must-rows OPEN (126) by 1 because NFR-007 carries both G-NOENV (environment) and G-TRACE (no story) — it is counted in G-TRACE above and appears in the G-NOENV 9-count as well. This pre-existing compound classification does not affect the row count (126 distinct open Must rows). Arithmetic: 47+10+9+5+6+4+5+41 = 127; distinct open = 126._
 
 ### Chain-integrity findings (independent of test status)
 
@@ -63,10 +67,10 @@ _Note: Total by-reason count (114) exceeds Must-rows OPEN (113) by 1 because NFR
 
 ### Gate-2 verdict — one paragraph, blunt
 
-**Gate 2 cannot be approved today, and it is further from approval than it was at v1.1.4.** Of 125 gating Must rows, **12 close and 113
-do not** — a 9.6% completion rate against a gate criterion that requires **zero** open Must rows.
-The picture did not worsen because of regressions; it worsened because 49 new Must rows from SRS v2.2.0 were honestly added, all of them open, none of them fabricated as complete.
-The 113 open rows break down as follows: **38 rows carry G-TRACE** (FR-074..FR-111 have no DES yet — Doc 03 §16 deliberate phasing — and no implementation); **36 rows carry G-PHASE3** (capability designed or planned but not built — MACI, Elections, Recall, Treasury, recovery, steward organisation, trust-anchor lifecycle governance, v2.0 governance stores); **10 rows carry G-NOMECH** (no mechanism for the guarantee at all — per-region attestor cap, dwell period, residency cooldown, churn limit, open-ballot flag freeze, source independence, display-filtering register); **4 rows carry G-UNMEASURABLE** (requirements not falsifiable as written — `FR-002`'s "better than chance", `NFR-001`'s unset collusion bound, `NFR-004`'s duplicate rate); **9 rows carry G-NOENV**, **6 carry G-UI**, **5 carry G-EXTERNAL**, and **5 carry G-CIRCUIT**. Nothing has been audited, no environment exists, no rollback has been drilled, every proof is produced by a mock verifier, and the entire v2.0 governance architecture (three-tier amendment, steward organisation, trust-anchor lifecycle, transparency dashboard) exists only in design documents. Doc 04's Gate-2 blockers `OPEN-01`, `OPEN-02`, `OPEN-03`, and `OPEN-11` remain open. **The correct reading of this matrix is that Trumocracy is at the end of Phase 1 and Gate 2 belongs after Phase 3, exactly where Doc 13 put it (MS-13, 2027-05-14).** Anyone presenting this drop as launch-ready would be presenting a false green light.
+**Gate 2 cannot be approved today, and it is further from approval than it was at v1.1.4.** Of 138 gating Must rows, **12 close and 126
+do not** — a 8.7% completion rate against a gate criterion that requires **zero** open Must rows.
+The picture did not worsen because of regressions; it worsened because 49 new Must rows from SRS v2.2.0 were honestly added, all of them open, and because v2.2.0 adds 5 more Must FR rows (FR-122..124/131/132) also open. 15 new test cases in TS-SCAFFOLD pass observed (TC-3470..TC-3486 minus the 3 Blocked), which is genuine progress; it is not enough to close any Must row in full because the seam implementations are IS_INSECURE_MOCK=true and the broader FR guarantees (storage, enforcement, linkage prevention) are not yet implemented.
+The 126 open rows break down as follows: **41 rows carry G-TRACE** (FR-074..FR-081, FR-087..FR-111 have no DES yet — Doc 03 §16 deliberate phasing — and no implementation; FR-082..086 DES gaps now closed by DES-093/094); **47 rows carry G-PHASE3** (capability designed or planned but not built — includes FR-082..086 reclassified from G-TRACE, 5 new scaffold FRs, MACI, Elections, Recall, Treasury, recovery, steward organisation, trust-anchor lifecycle governance, v2.0 governance stores); **10 rows carry G-NOMECH**; **4 rows carry G-UNMEASURABLE**; **9 rows carry G-NOENV**, **6 carry G-UI**, **5 carry G-EXTERNAL**, and **5 carry G-CIRCUIT**. Nothing has been audited, no environment exists, no rollback has been drilled, every proof is produced by a mock verifier, and the entire v2.0 governance architecture (three-tier amendment, steward organisation, trust-anchor lifecycle, transparency dashboard) exists only in design documents. Doc 04's Gate-2 blockers `OPEN-01`, `OPEN-02`, `OPEN-03`, and `OPEN-11` remain open. **The correct reading of this matrix is that Trumocracy is at the end of Phase 1 and Gate 2 belongs after Phase 3, exactly where Doc 13 put it (MS-13, 2027-05-14).** Anyone presenting this drop as launch-ready would be presenting a false green light.
 
 ---
 
@@ -107,7 +111,7 @@ front of a Gate-2 approver, which is the worst outcome available here.
 
 ## 3. Forward trace (requirement → everything)
 
-### 3.1 Must FRs — the 101 gating functional rows
+### 3.1 Must FRs — the 114 gating functional rows
 
 Legend: **✅ COMPLETE** · **☐ OPEN** (reason code in the last column). `DES` cells reading **none** indicate either a Doc 03 §5.2 gap (existing rows, now all closed per v1.1.0) or deliberate next-increment phasing (FR-074..FR-111, per Doc 03 §16).
 
@@ -187,11 +191,11 @@ Legend for new rows: `DES` = **none** for FR-074..FR-111 (Doc 03 §16 deliberate
 | BR-016 | **FR-079** exactly three participation tiers (Supporter, Worker, Candidate); tiers are descriptive only; tiers MUST NOT confer voting weight, standing, or precedence | none | none | EP-04 ▸ FE-039 ▸ US-0089 | TC-3405 | none | ☐ **G-TRACE + G-PHASE3** — no DES (Doc 03 §16); no implementation |
 | BR-016, BR-017 | **FR-080** Worker tier self-declared with no approval; recorded work is sole credential; informed-consent event recorded before declaration confirmed | none | none | EP-04 ▸ FE-039 ▸ US-0090 | TC-3406 | none | ☐ **G-TRACE + G-PHASE3** — no DES (Doc 03 §16); no implementation |
 | BR-016, BR-013 | **FR-081** Candidate tier from post-debate member vote per FR-067; eligibility by code; no human approval or auto-renomination | none | none | EP-04 ▸ FE-039 ▸ US-0091 | TC-3407 | none | ☐ **G-TRACE + G-PHASE3** — no DES (Doc 03 §16); no implementation |
-| BR-017, BR-009 | **FR-082** Supporter-tier: only nullifier stored; no attributable record; no profile surface; NFR-001/002/024 apply unconditionally | none | none | EP-09 ▸ FE-040 ▸ US-0092 | TC-3408 | none | ☐ **G-TRACE + G-PHASE3** — no DES (Doc 03 §16); no implementation |
-| BR-017, BR-005 | **FR-083** Worker/Candidate-tier: public participation record from consent event; ballot direction never disclosed in any tier; FR-048 elected-rep exception | none | none | EP-09 ▸ FE-040 ▸ US-0093 | TC-3409 | none | ☐ **G-TRACE + G-PHASE3** — no DES (Doc 03 §16); no implementation |
-| BR-017 | **FR-084** full disclosure schedule published before any declaration window; no post-declaration demand outside schedule | none | none | EP-09 ▸ FE-040 ▸ US-0094 | TC-3410 | none | ☐ **G-TRACE + G-PHASE3** — no DES (Doc 03 §16); no implementation |
-| BR-017, BR-009 | **FR-085** informed consent irrevocable for term; withdrawal before nomination window closes permitted; pre-nomination disclosure data (confidential-class) destroyed on withdrawal (OI-16 adopted) | none | none | EP-09 ▸ FE-040 ▸ US-0095 | TC-3411 | none | ☐ **G-TRACE + G-PHASE3** — no DES (Doc 03 §16); no implementation |
-| BR-017, BR-009 | **FR-086** prior Supporter-period activity remains anonymous permanently after public role taken; no linkage through any data or combination of public outputs | none | none | EP-09 ▸ FE-040 ▸ US-0096 | TC-3412 | none | ☐ **G-TRACE + G-PHASE3** — no DES (Doc 03 §16); no implementation |
+| BR-017, BR-009 | **FR-082** Supporter-tier: only nullifier stored; no attributable record; no profile surface; NFR-001/002/024 apply unconditionally | DES-093/DES-094 · ADR-023 | none | EP-09 ▸ FE-040 ▸ US-0092, US-0132 | TC-3408, TC-3470, TC-3474 | TC-3470 Pass (obs.) · UT-0750; TC-3474 Pass (obs.) · UT-0757 | ☐ **G-PHASE3** — DES-093/094 assigned (v2.2.0, UI display layer only); US-0132 closes the US gap; full storage/enforcement/linkage-prevention design pending; IS_INSECURE_MOCK=true |
+| BR-017, BR-005 | **FR-083** Worker/Candidate-tier: public participation record from consent event; ballot direction never disclosed in any tier; FR-048 elected-rep exception | DES-093/DES-094 · ADR-023 | none | EP-09 ▸ FE-040 ▸ US-0093, US-0132 | TC-3409, TC-3471, TC-3474 | TC-3471 Pass (obs.) · UT-0751; TC-3474 Pass (obs.) · UT-0757 | ☐ **G-PHASE3** — DES-093/094 assigned (v2.2.0, UI display layer only); US-0132 closes the US gap; full participation-record data model and ballot-direction non-disclosure enforcement pending |
+| BR-017 | **FR-084** full disclosure schedule published before any declaration window; no post-declaration demand outside schedule | DES-093/DES-094 · ADR-023 | none | EP-09 ▸ FE-040 ▸ US-0094, US-0132 | TC-3410, TC-3472, TC-3474 | TC-3472 Pass (obs.) · UT-0752; TC-3474 Pass (obs.) · UT-0757 | ☐ **G-PHASE3** — DES-093/094 assigned (v2.2.0, UI display layer only); US-0132 closes the US gap; disclosure schedule publication and enforcement not yet designed |
+| BR-017, BR-009 | **FR-085** informed consent irrevocable for term; withdrawal before nomination window closes permitted; pre-nomination disclosure data (confidential-class) destroyed on withdrawal (OI-16 adopted) | DES-093/DES-094 · ADR-023 | none | EP-09 ▸ FE-040 ▸ US-0095, US-0132 | TC-3411, TC-3474, TC-3476 | TC-3474 Pass (obs.) · UT-0757; TC-3476 Blocked | ☐ **G-PHASE3** — DES-093/094 assigned (v2.2.0, UI display layer only; TC-3476 enrolment disclosure affordance Blocked); US-0132 closes the US gap; consent lifecycle and data-destruction mechanics not yet designed |
+| BR-017, BR-009 | **FR-086** prior Supporter-period activity remains anonymous permanently after public role taken; no linkage through any data or combination of public outputs | DES-093/DES-094 · ADR-023 | none | EP-09 ▸ FE-040 ▸ US-0096, US-0132 | TC-3412, TC-3474 | TC-3474 Pass (obs.) · UT-0757 | ☐ **G-PHASE3** — DES-093/094 assigned (v2.2.0, UI display layer only); US-0132 closes the US gap; cross-tier unlinkability guarantee for role-changers not yet designed |
 | BR-015, BR-014 | **FR-087** committees formed; sole permitted output is proposals entering ordinary lifecycle; no special precedence; composition and minutes public | none | none | EP-11 ▸ FE-041 ▸ US-0097 | TC-3413 | none | ☐ **G-TRACE + G-PHASE3** — no DES (Doc 03 §16); no implementation |
 | BR-015, BR-008 | **FR-088** committees MUST NOT hold capabilities that can change who wins, who votes, or who is a member; non-permitted configuration rejected by code | none | none | EP-11 ▸ FE-041 ▸ US-0098 | TC-3414 | none | ☐ **G-TRACE + G-PHASE3** — no DES (Doc 03 §16); no implementation |
 | BR-015 | **FR-089** committee membership expires at term end by code; continuation requires fresh member vote; FR-041 discipline | none | none | EP-11 ▸ FE-041 ▸ US-0099 | TC-3415 | none | ☐ **G-TRACE + G-PHASE3** — no DES (Doc 03 §16); no implementation |
@@ -226,8 +230,21 @@ Legend for new rows: `DES` = **none** for FR-074..FR-111 (Doc 03 §16 deliberate
 | BR-021, BR-015 | **FR-118** seven charter rules entrenched as unamendable by any vote at any tier; amendment proposals targeting Tier-1 rules rejected by code at submission | DES-087 | none | EP-12 ▸ FE-056 ▸ US-0128 | TC-3444, TC-3449, TC-3455 | none | ☐ **G-PHASE3** — DES-087; ProtocolGovernance entrenched-rule enforcement not deployed |
 | BR-021, BR-008 | **FR-119** three-tier amendment structure: Tier-1 fork-only; Tier-2 named absolutes via super-process (DES-087 constants); Tier-3 ordinary citizen vote with published constants | DES-087, DES-091 | none | EP-12 ▸ FE-056 ▸ US-0129 | TC-3445, TC-3450, TC-3454, TC-3456, TC-3457, TC-3458, TC-3459, TC-3460, TC-3461, TC-3462, TC-3463, TC-3464, TC-3469 | none | ☐ **G-PHASE3** — DES-087, DES-091; ProtocolGovernance and GovernanceConstants not deployed; TC-3469 tests anti-circularity direct attack (Open Layer vote attempting to lower Guarded Layer constant) |
 | BR-021, BR-003 | **FR-120** unconditional right to fork (FR-053 mechanics; NFR-018 full-history export) entrenched in Tier-1; fork right available regardless of any steward action or protocol vote | DES-034 | none | EP-12 ▸ FE-056 ▸ US-0130 | TC-3446 | none | ☐ **G-PHASE3** — DES-034; `fork` flag OFF above dev; FR-053 open critical; Phase-3 only |
+| BR-020, BR-006 | **FR-121** pilot jurisdiction sequence: Phase-1 India (Aadhaar offline paperless KYC); Phase-2 EU (eIDAS 2.0 wallets); Phase-3 USA deferred — ordered by technical readiness of the identity rail, not market size; CON-015 must clear before Phase-1 adapter is implementation-ready | none | none | none | none | none | ☐ **G-TRACE + G-PHASE3** — no DES assigned (Doc 03 §16 deliberate next-increment phasing); no implementation in this drop |
+| BR-003, BR-016 | **FR-122** open-tier (Supporter) participants refused at all counting actions; IEligibilityVerifier returns false for any non-counting-tier participant; refusal reason emitted | DES-095 · ADR-025 | none | EP-01 ▸ FE-057 ▸ US-0133 | TC-3478 | TC-3478 Pass (obs.) · UT-0763, UT-0764 | ☐ **G-PHASE3** — DES-095 assigned; IS_INSECURE_MOCK=true; production ZK-backed enforcement pending Phase 3 |
+| BR-006, BR-010, BR-016 | **FR-123** counting-tier verified participants pass the eligibility gate; IEligibilityVerifier returns true; counting action proceeds | DES-095 · ADR-025 | none | EP-01 ▸ FE-057 ▸ US-0133 | TC-3477 | TC-3477 Pass (obs.) · UT-0760, UT-0761, UT-0762 | ☐ **G-PHASE3** — DES-095 assigned; IS_INSECURE_MOCK=true; production ZK-backed gate pending Phase 3 |
+| BR-009, BR-017, BR-006 | **FR-124** verified-status property is private to the holder; PrivacyStatus component refuses self-view; backing-aware 'ver' copy (absent/false/true/malformed `backing.isVerified` four-path coverage) | DES-094 · ADR-023 | none | EP-09 ▸ FE-040 ▸ US-0132 | TC-3473, TC-3474, TC-3475 | TC-3473 Pass (obs.) · UT-0754..UT-0756; TC-3474 Pass (obs.) · UT-0757; TC-3475 Pass (obs.) · UT-0758 | ☐ **G-PHASE3** — DES-094 assigned; component passes for the UI layer; verified-status backend enforcement and full privacy guarantee pending |
+| BR-003, BR-006 | **FR-125** spam-control invite-gating: invite-based fast path permitted; non-invite fallback MUST always remain available and must never be the sole door; determined real person can always join without an invite; referral edge verified and discarded immediately; counted-membership path ungated (OI-19 RESOLVED at v2.4.0; finalised — implementation-ready pending DES) | none | none | none | none | none | ☐ **G-TRACE + G-PHASE3** — no DES assigned (Doc 03 §16 deliberate next-increment phasing); no implementation in this drop |
+| BR-009, BR-006 | **FR-126** on-device credential processing: raw credential (Aadhaar XML, eIDAS wallet attributes, ICAO NFC, mDL data) processed exclusively on user device; only ZK proof and derived nullifier transmitted; raw credential never sent to platform or any intermediary; strengthens FR-003 | none | none | none | none | none | ☐ **G-TRACE + G-PHASE3** — no DES assigned (Doc 03 §16 deliberate next-increment phasing); on-device prover and witness preparation (ADR-017) designed but formal DES owed; no implementation in this drop |
+| BR-006, BR-009 | **FR-127** duplicate enrolment detection by nullifier collision only: no identity record comparison, name-matching, biometric comparison, or document-number lookup in any duplicate-detection path; second attempt by same person produces same deterministic nullifier (FR-069) and collides on-chain | none | none | none | none | none | ☐ **G-TRACE + G-PHASE3** — no DES assigned (Doc 03 §16 deliberate next-increment phasing); nullifier-collision posture is C-03 design (ADR-017) recorded as normative; formal DES owed; no implementation in this drop |
+| BR-009, BR-006 | **FR-128** no stored identity data in any form (raw, reversible, encrypted-but-decryptable); acceptance test is the subpoena test: the platform MUST be technically unable to disclose who belongs to a party on court order | none | none | none | none | none | ☐ **G-TRACE + G-PHASE3** — no DES assigned (Doc 03 §16 deliberate next-increment phasing); subpoena-test posture is Decision 3/ADR-017 recorded as normative; formal DES owed; no implementation in this drop |
+| BR-006, BR-012, BR-021 | **FR-129** Charter-layer guard on single-issuer permanence: making single-issuer operation permanent (beyond dated Phase-1 scope) MUST require Charter-level amendment and re-entry through both gates; configuration or deployment-default extension MUST be blocked; Charter-tier classification (FR-118 vs FR-119) owed to architect (OI-20 ruling, Rathish, 2026-08-20) | none | none | none | none | none | ☐ **G-TRACE + G-PHASE3** — no DES assigned (recorded-phasing posture, Doc 03 §16); Charter-tier classification owed to architect; no implementation in this drop |
+| BR-002, BR-012 | **FR-130** provisional-party membership cap: a platform-activated party whose legal registration has not yet been verified MUST be capped at 100 members; cap lifts automatically by code on verified legal registration (FR-075); no operator or manual path may lift the cap early; anti-capture invariant (C-02 ruling, Rathish, 2026-08-22) | none | none | EP-03 ▸ FE-009 ▸ US-0131 | none | none | ☐ **G-TRACE + G-PHASE3** — no DES assigned (recorded-phasing posture, Doc 03 §16); US-0131 minted (Doc 05 v2.1.0) but Not Ready pending DES; TC OPEN — Phase 3 |
+| BR-005, BR-009 | **FR-131** ballot seam with honest pre-action notices: cast records ballot without revealing direction; silent ballot-change (last cast counts); deterministic tally-hash for audit; cast refused without eligibilityRef; results embargo while ballot open; audit-contract publication | DES-096 · ADR-024 | none | EP-06 ▸ FE-058 ▸ US-0134 | TC-3476, TC-3481, TC-3482, TC-3483, TC-3484, TC-3485, TC-3486, TC-3487 | TC-3482..TC-3486 Pass (obs.) · UT-0770..UT-0776; TC-3476/TC-3481/TC-3487 Blocked | ☐ **G-PHASE3** — DES-096 assigned; IS_INSECURE_MOCK=true; seam passes for cast/change/tally/refusal/embargo (5 TCs obs.); FR-131 clause (d) notice (TC-3481) and audit-contract endpoint (TC-3487) Blocked; production ZK ballot pending Phase 3 |
+| BR-006, BR-012 | **FR-132** IEligibilityVerifier allowlist-only action-type shape (DES-100): only counting actions permitted; JOIN, LEAVE, account-creation throw `IllegalActionType`; IS_INSECURE_MOCK=false with no vendor bound throws `VendorNotBound` | DES-095, DES-100 · ADR-024, ADR-025 | none | EP-01 ▸ FE-057 ▸ US-0133 | TC-3479, TC-3480 | TC-3479 Pass (obs.) · UT-0765; TC-3480 Pass (obs.) · UT-0766..UT-0769 | ☐ **G-PHASE3** — DES-095/DES-100 assigned; allowlist shape and VendorNotBound guard pass; production enforcement pending Phase 3 |
+| BR-012, BR-003 | **FR-133** v1 spam-resistance flag-don't-block layer: VoIP/virtual-number intelligence + velocity/device anti-fraud; flagged numbers rate-limited, never hard-blocked; false-positive path first-class; flag-don't-block scope limited to spam signals only — government-ID eligibility gate (FR-132 §(b)) is a hard gate not subject to flag-don't-block | DES-099 | none | none | none | none | ☐ **G-PHASE3** — DES-099 assigned (Doc 03 v2.4.1 Approved); no US or TC yet — recorded-phasing posture; TC OPEN — Phase 3 |
 
-**Must FR subtotal (v2.0.0): 101 rows · 12 complete · 89 open.**
+**Must FR subtotal (v2.2.2): 114 rows · 12 complete · 102 open.**
 
 ### 3.2 Must NFRs — the 24 gating quality rows
 
@@ -242,7 +259,7 @@ Legend for new rows: `DES` = **none** for FR-074..FR-111 (Doc 03 §16 deliberate
 | BR-007, BR-008 | **NFR-007** availability 99.5% / 99.9% | DES-051 | **none** | TC-1046, TC-2150, TC-2153, TC-2422 | UT-0517 (**obs.**, tolerance only) | ☐ **G-NOENV + G-TRACE** — **no story and no backlog item implements this NFR**, and no environment exists to measure it |
 | BR-008, BR-012 | **NFR-009** independent security audit, 0 critical/high | DES-079 | NF-02, NF-03 | TC-1863, TC-1600–TC-1614 | capability-absence suite (partial) | ☐ **G-EXTERNAL** — neither audit firm has reported (MS-09, 2027-03-12); the red team (NF-03) has not run |
 | BR-009 | **NFR-010** no personal data at rest or on the record | DES-080 | US-0002 | TC-2050–TC-2053 | UT-0046 (**obs.**), UT-0108 | ☐ **G-NOENV** — the three build-failing scanners of Doc 04 §11 do not exist (DES-080 assigned in v1.1.0, closing G-TRACE) |
-| BR-007 | **NFR-011** WCAG 2.2 AA | DES-081 | US-0045, US-0070 | TC-2250–TC-2255 | UT-0704, UT-0721 (two components, not executed) | ☐ **G-UI** — no automated a11y gate; no manual screen-reader pass has been performed (DES-081 assigned in v1.1.0, closing G-TRACE) |
+| BR-007 | **NFR-011** WCAG 2.2 AA | DES-081 | US-0045, US-0070, US-0132 | TC-2250–TC-2255, TC-3488 | UT-0704, UT-0721 (two components, not executed); TC-3488 Pass (obs.) · UT-0753 (accessible-name aria-label, packages/ui/test/PrivacyStatus.test.tsx line 46) | ☐ **G-UI** — no automated a11y gate; no manual screen-reader pass has been performed (DES-081 assigned in v1.1.0, closing G-TRACE); TC-3488/UT-0753 (TS-SCAFFOLD accessible-name check) pass; full WCAG 2.2 AA automation gate and screen-reader pass remain pending |
 | BR-007 | **NFR-012** device & bandwidth floor | DES-082 | US-0012, US-0070 · NF-05 | TC-2080, TC-2083, TC-2084, TC-2382 | none | ☐ **G-UI** — offline draft composition (US-0012) has no implementing code or test (DES-082 assigned in v1.1.0, closing G-TRACE) |
 | BR-007 | **NFR-013** 8 locales incl. RTL | DES-083 | US-0070 | TC-2330, TC-2333 | none | ☐ **G-UI** — no locale files, no string-coverage gate (DES-083 assigned in v1.1.0, closing G-TRACE) |
 | BR-008 | **NFR-014** censorship resistance | DES-041, DES-050, DES-051 · ADR-001 | NF-06 | TC-2423, TC-2670, TC-2671 | UT-0054 (**obs.**, escape hatch cannot be disabled) | ☐ **G-NOENV** — the blocking simulation needs an isolated network lab that does not exist |
@@ -358,29 +375,31 @@ was located by identifier in a real test file. Result of the reverse sweep:
 | Dimension | Total | Traced (chain links all present) | Complete (chain closes with a passing TC) | Gaps |
 |---|---|---|---|---|
 | BR | 21 | 21 | **0** — every BR depends on ≥1 open Must FR | 21 |
-| FR — Must | 101 | 101 | **12** | **89** |
+| FR — Must | 114 | 114 | **12** | **102** |
 | FR — Should/Could | 19 | 14 (5 lack a `US`) | 3 | 16 |
 | NFR — Must | 24 | 23 (1 lacks a `US`: NFR-007) | **0** | **24** |
 | NFR — Should | 4 | 2 | 0 | 4 |
 | Risks | 19 | 19 | 4 fully mitigated & proven | 15 |
-| Stories | 130 | 130 (all carry Gherkin AC) | 12 meet the Definition of Done | 118 |
-| Test cases | 378 | 378 | 127 with passing evidence (55 inh. · 72 obs.) | 251 not executed or not executable |
+| Stories | 134 | 134 (all carry Gherkin AC) | 12 meet the Definition of Done | 122 |
+| Test cases | 397 | 397 | 143 with passing evidence (55 inh. · 88 obs.) | 254 not executed or not executable |
 | Screens | 23 | 23 mapped | 0 verified (no UI suite executed) | 23 |
 
-**TC count convention (Test cases row — v2.1.0 reconciliation):** Doc 07 at v2.1.0 uses 369 TC row anchors (299 original + 70 TS-GOV2, including TC-3467..TC-3469 minted 2026-08-12). This dashboard uses the **expanded** convention: 369 - 1 + 10 = **378 designed test cases** (one anchor TC-3200-TC-3209 expands to 10 exploratory charters; see Doc 07 §2 convention note). The 127 'with passing evidence' = 55 Pass (inh.) + 72 Pass (obs.) per Doc 07 §2 footer; unchanged from v2.0.1 (TC-3467..TC-3469 add no automated tests). The 251 'not executed or not executable' = 378 - 127 = 251 (includes Blocked, No mechanism, Manual, Not run, and automated-not-executed-this-session cases).
+**TC count convention (Test cases row — v2.2.1 reconciliation):** Doc 07 at v2.2.1 uses 388 TC row anchors (299 original + 70 TS-GOV2 + 19 TS-SCAFFOLD). This dashboard uses the **expanded** convention: 388 - 1 + 10 = **397 designed test cases** (one anchor TC-3200-TC-3209 expands to 10 exploratory charters; see Doc 07 §2 convention note). The 143 'with passing evidence' = 55 Pass (inh.) + 88 Pass (obs.) per Doc 07 §2 footer; the 16 new passing cases are from TS-SCAFFOLD (TC-3470..TC-3475, TC-3477..TC-3480, TC-3482..TC-3486, TC-3488, R-04/R-05 2026-08-25). The 254 'not executed or not executable' = 397 - 143 = 254 (includes Blocked, No mechanism, Manual, Not run, and automated-not-executed-this-session cases).
 
 
 **Definition of Done check (CLAUDE.md).** A story is done only when its RTM row is complete.
-**12 of 130 stories** meet that bar: US-0019, US-0024, US-0025, US-0026, US-0027, US-0031, US-0033,
-US-0034, US-0035, US-0036, US-0037, US-0028. The 47 new stories (US-0084..US-0130) and the 13 pre-v2 stories (US-0071..US-0083) are not done (capabilities not yet implemented). Every other story is **not done**.
+**12 of 134 stories** meet that bar: US-0019, US-0024, US-0025, US-0026, US-0027, US-0031, US-0033,
+US-0034, US-0035, US-0036, US-0037, US-0028. The 47 new stories (US-0084..US-0130) and the 13 pre-v2 stories (US-0071..US-0083) are not done (capabilities not yet implemented). US-0132/0133/0134 (TS-SCAFFOLD) are not done — seam is IS_INSECURE_MOCK=true and the full FR guarantees are not yet implemented. Every other story is **not done**.
 
-## 7. Gap log — all 113 open Must rows
+## 7. Gap log — all 126 open Must rows
 
 Owners are the named requirement owners from Doc 02; phase targets are Doc 13 milestones.
 **v1.1.0 update (2026-08-10):** FR-011 and FR-035 removed (now COMPLETE after DES-074/075 assigned);
 12 new Must FR rows added for FR-062..073 (entries 53–64); G-TRACE secondary tags removed from 13
 rows whose DES gaps are now closed by DES-073..086. NFR-007 retains G-TRACE (no story/backlog item
 — not a DES gap).
+**v2.2.0 update (2026-08-25):** Entries 73–77 (FR-082..086) reclassified from G-TRACE to G-PHASE3 — DES-093/094 now assigned (US-0132; TS-SCAFFOLD seam). Entries 114–118 added for FR-122, FR-123, FR-124, FR-131, FR-132 (all G-PHASE3; DES assigned; IS_INSECURE_MOCK=true; production pending Phase 3).
+**v2.2.2 update (2026-08-25):** Entries 119–126 added — FR-121 (G-TRACE+G-PHASE3; no DES; pilot-jurisdiction sequence), FR-125 (G-TRACE+G-PHASE3; no DES; invite-gating), FR-126 (G-TRACE+G-PHASE3; no DES; on-device credential), FR-127 (G-TRACE+G-PHASE3; no DES; nullifier-collision-only duplicate detection), FR-128 (G-TRACE+G-PHASE3; no DES; no stored identity), FR-129 (G-TRACE+G-PHASE3; no DES; Charter-layer guard), FR-130 (G-TRACE+G-PHASE3; no DES; membership cap; US-0131 Not Ready pending DES), FR-133 (G-PHASE3; DES-099 assigned; no US or TC). Must FR count corrects from 106 to 114; open Must rows correct from 118 to 126.
 Gap-log entry numbers are internal sequence only; no externally referenced ID (FR, NFR, BR, US, TC) was renumbered. Prior references to old entry numbers should be resolved by FR/NFR ID, not by entry number.
 
 | # | Row | Reason | Blocking cause (one line) | Owner | Closes at |
@@ -458,11 +477,11 @@ Gap-log entry numbers are internal sequence only; no externally referenced ID (F
 | 70 | FR-079 | G-TRACE | No DES assigned — Doc 03 §16; three participation-tier descriptive metadata model not designed | Grace Mbeki | Design next increment |
 | 71 | FR-080 | G-TRACE | No DES assigned — Doc 03 §16; Worker self-declaration + informed-consent UI flow not designed | Grace Mbeki | Design next increment |
 | 72 | FR-081 | G-TRACE | No DES assigned — Doc 03 §16; Candidate self-nomination + eligibility check not designed | Aisha Nkemdirim | Design next increment |
-| 73 | FR-082 | G-TRACE | No DES assigned — Doc 03 §16; Supporter nullifier-only storage (no profile) not designed | Dr. Lena Kowalczyk | Design next increment |
-| 74 | FR-083 | G-TRACE | No DES assigned — Doc 03 §16; Worker/Candidate public participation-record model not designed | Erik Lindqvist | Design next increment |
-| 75 | FR-084 | G-TRACE | No DES assigned — Doc 03 §16; disclosure-schedule publication + enforcement not designed | Dr. Lena Kowalczyk | Design next increment |
-| 76 | FR-085 | G-TRACE | No DES assigned — Doc 03 §16; informed-consent irrevocability + withdrawal-destroy flow not designed | Sofia Marchetti | Design next increment |
-| 77 | FR-086 | G-TRACE | No DES assigned — Doc 03 §16; Supporter-period anonymity retention across tier transitions not designed | Dr. Lena Kowalczyk | Design next increment |
+| 73 | FR-082 | G-PHASE3 | DES-093/094 assigned (v2.2.0) — UI display layer designed; US-0092/US-0132 present; TC-3470/TC-3474 pass; full storage/enforcement/linkage-prevention not yet designed or implemented | Dr. Lena Kowalczyk | Design + Phase 3 |
+| 74 | FR-083 | G-PHASE3 | DES-093/094 assigned (v2.2.0) — UI display layer designed; US-0093/US-0132 present; TC-3471/TC-3474 pass; participation-record data model and ballot-direction enforcement not yet designed | Erik Lindqvist | Design + Phase 3 |
+| 75 | FR-084 | G-PHASE3 | DES-093/094 assigned (v2.2.0) — UI display layer designed; US-0094/US-0132 present; TC-3472/TC-3474 pass; disclosure-schedule publication and enforcement not yet designed | Dr. Lena Kowalczyk | Design + Phase 3 |
+| 76 | FR-085 | G-PHASE3 | DES-093/094 assigned (v2.2.0) — UI display layer designed; US-0095/US-0132 present; TC-3474 passes, TC-3476 Blocked (enrolment screen not wired); consent lifecycle and data-destruction mechanics not yet designed | Sofia Marchetti | Design + Phase 3 |
+| 77 | FR-086 | G-PHASE3 | DES-093/094 assigned (v2.2.0) — UI display layer designed; US-0096/US-0132 present; TC-3474 passes; cross-tier unlinkability guarantee for role-changers not yet designed | Dr. Lena Kowalczyk | Design + Phase 3 |
 | 78 | FR-087 | G-TRACE | No DES assigned — Doc 03 §16; committee formation + minute publication not designed | Tomas Ferreira | Design next increment |
 | 79 | FR-088 | G-TRACE | No DES assigned — Doc 03 §16; committee capability boundary enforcement not designed | Rafael Duarte | Design next increment |
 | 80 | FR-089 | G-TRACE | No DES assigned — Doc 03 §16; committee mechanical term expiry not designed | Rafael Duarte | Design next increment |
@@ -499,6 +518,19 @@ Gap-log entry numbers are internal sequence only; no externally referenced ID (F
 | 111 | FR-120 | G-PHASE3 | Fork-right preservation (DES-034 lineage) — fork flag OFF above dev; no Phase-3 deployment yet | Erik Lindqvist | Phase 3 |
 | 112 | NFR-027 | G-PHASE3 | No inspection harness for v2 surfaces; UT-0525/UT-0740 pass but v2 aggregate-analytics discipline not verified | Dr. Lena Kowalczyk | Phase 3 |
 | 113 | NFR-028 | G-PHASE3 | No governance-path audit scan for v2 stores; append-only discipline unverified beyond existing UT scope | Erik Lindqvist | Phase 3 |
+| 114 | FR-122 | G-PHASE3 | DES-095/ADR-025 assigned; IS_INSECURE_MOCK=true; TC-3478 Pass (obs.) at stub level; production ZK-backed open-tier refusal enforcement pending | Dr. Lena Kowalczyk | Phase 3 |
+| 115 | FR-123 | G-PHASE3 | DES-095/ADR-025 assigned; IS_INSECURE_MOCK=true; TC-3477 Pass (obs.) at stub level; production ZK-backed counting-tier gate enforcement pending | Dr. Lena Kowalczyk | Phase 3 |
+| 116 | FR-124 | G-PHASE3 | DES-094/ADR-023 assigned; TC-3473/TC-3474/TC-3475 Pass (obs.) for UI layer; full verified-status privacy enforcement (backend + storage) pending | Grace Mbeki | Phase 3 |
+| 117 | FR-131 | G-PHASE3 | DES-096/ADR-024 assigned; IS_INSECURE_MOCK=true; TC-3482..TC-3486 Pass (obs.) at seam level; TC-3476/TC-3481/TC-3487 Blocked (screen wiring + audit-contract endpoint pending); production ZK ballot pending | Samuel Oyelaran | Phase 3 |
+| 118 | FR-132 | G-PHASE3 | DES-095/DES-100/ADR-024/ADR-025 assigned; IS_INSECURE_MOCK=true; TC-3479/TC-3480 Pass (obs.); production allowlist-only enforcement and VendorNotBound guard in production pending | Samuel Oyelaran | Phase 3 |
+| 119 | FR-121 | G-TRACE + G-PHASE3 | No DES assigned — Doc 03 §16 next-increment phasing; pilot-jurisdiction sequence (India Aadhaar → EU eIDAS 2.0 → USA deferred) not designed | Marcus Adeyemi | Design next increment |
+| 120 | FR-125 | G-TRACE + G-PHASE3 | No DES assigned — Doc 03 §16; invite-gating spam-control with mandatory non-invite fallback; OI-19 RESOLVED (v2.4.0) — finalised but implementation-ready pending DES | Grace Mbeki | Design next increment |
+| 121 | FR-126 | G-TRACE + G-PHASE3 | No DES assigned — Doc 03 §16; on-device credential-processing boundary not separately designed (ADR-017 covers prover concept; formal DES owed) | Dr. Lena Kowalczyk | Design next increment |
+| 122 | FR-127 | G-TRACE + G-PHASE3 | No DES assigned — Doc 03 §16; nullifier-collision-only duplicate-detection posture (ADR-017/C-03) recorded normative; formal DES owed | Marcus Adeyemi | Design next increment |
+| 123 | FR-128 | G-TRACE + G-PHASE3 | No DES assigned — Doc 03 §16; subpoena-test no-stored-identity posture (Decision 3/ADR-017) recorded normative; formal DES owed | Dr. Lena Kowalczyk | Design next increment |
+| 124 | FR-129 | G-TRACE + G-PHASE3 | No DES assigned — recorded-phasing posture (Doc 03 §16); Charter-tier classification (FR-118 vs FR-119) for issuer-plurality guard owed to architect (OI-20) | Marcus Adeyemi | Design next increment |
+| 125 | FR-130 | G-TRACE + G-PHASE3 | No DES assigned — recorded-phasing posture (Doc 03 §16); US-0131 minted (Doc 05 v2.1.0) but Not Ready pending DES; membership cap not implemented; TC OPEN | Sofia Marchetti | Design next increment + Phase 3 |
+| 126 | FR-133 | G-PHASE3 | DES-099 assigned (Doc 03 v2.4.1 Approved); no US or TC yet — recorded-phasing posture; spam-resistance flag-don't-block layer not deployed | Rafael Duarte | Phase 3 |
 
 ### 7.1 The four gaps that will not close by building harder
 
@@ -541,9 +573,9 @@ stays shut.**
 
 | Criterion | Required | Actual | Verdict |
 |---|---|---|---|
-| Must rows with a complete chain | 125 / 125 | **12 / 125** | **FAIL** |
-| Open Must rows | 0 | **113** | **FAIL** |
-| Tests green across the requirement set | all | 222 observed green over ~35% of the codebase's guarantees; 112 cases cannot execute | **FAIL** |
+| Must rows with a complete chain | 138 / 138 | **12 / 138** | **FAIL** |
+| Open Must rows | 0 | **126** | **FAIL** |
+| Tests green across the requirement set | all | 272 observed green (222 from 2026-08-09 + 50 new from TS-SCAFFOLD 2026-08-25) over ~40% of the codebase's guarantees; 127 cases cannot execute; seam tests are IS_INSECURE_MOCK=true | **FAIL** |
 | Rollback proven | yes | never drilled (TC-2425) | **FAIL** |
 | Doc 04 Gate-2 blockers closed | OPEN-01…06, OPEN-11 | OPEN-04, OPEN-05, OPEN-06 **closed with regression tests**; OPEN-01, OPEN-02, OPEN-03, OPEN-11 **open** | **FAIL** |
 | Independent security/crypto audit, 0 critical/high | yes | not started | **FAIL** |
@@ -559,8 +591,8 @@ scenario the risk register describes. That is a strong Phase-1 foundation. It is
 
 | Role | Name | Decision | Date | Notes |
 |---|---|---|---|---|
-| Tester (author, **R**) | Ji-woo Park | **Submitted — 113 open Must rows recorded** | 2026-08-12 | v2.0.1, Status In Review. 49 new Must rows added (FR-074..FR-120, NFR-027/028). Traceability defects from cycle-1 review corrected. FR-011 and FR-035 remain COMPLETE. |
-| reviewer-qa (**A**, independent verifier) | _pending_ | | | Must independently verify these 113 gaps (including 38 G-TRACE rows FR-074..FR-111 and NFR-007) before any merge sign-off |
+| Tester (author, **R**) | Ji-woo Park | **Submitted — 126 open Must rows recorded** | 2026-08-25 | v2.2.2, Status In Review. Cycle-2 rework (08-traceability-matrix-v2.2.1-technical-cycle2.md): ISS-01 — TC-3488/UT-0753 added to NFR-011 forward trace row (§3.2); US-0132 added to NFR-011 US column; dashboard TC 397 now correctly traced. ISS-02 + sweep — 8 absent Must FR rows added (FR-121, FR-125..FR-130, FR-133); Must FR 106→114; open Must 118→126. |
+| reviewer-qa (**A**, independent verifier) | _pending_ | | | Must independently verify these 126 gaps (including 40 G-TRACE rows FR-074..FR-081/FR-087..FR-111/FR-121/FR-125..FR-130 and NFR-007) before any merge sign-off |
 | Principal Architect | _pending_ | | | Owns the 15 missing `DES` links (Doc 03 §5.2) and OPEN-02/03/11 |
 | Product Owner (**A** for Gate 2) | _pending_ | | | Owns `OI-01`…`OI-05`, the `FR-005`/`FR-049`/`FR-050`/`FR-052`/`FR-053` story gap, and the OPEN-01 receipt-freeness decision |
 | Project Manager (**R** for Gate 2) | _pending_ | | | Gate-2 packet: this matrix is the traceability evidence, and it fails the criterion |
@@ -568,4 +600,4 @@ scenario the risk register describes. That is a strong Phase-1 foundation. It is
 
 ---
 ### Gate rule
-**0 gaps in Must rows = traceability criterion met. There are 113 open Must rows. The gate stays shut.**
+**0 gaps in Must rows = traceability criterion met. There are 126 open Must rows. The gate stays shut.**

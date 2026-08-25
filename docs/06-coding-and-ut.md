@@ -2,16 +2,59 @@
 
 ```
 Document ID:   CODE-TRUMOCRACY
-Version:       1.1.0
-Status:        In Review
-Owner:         Ravi Deshmukh — Principal Architect (acting engineer, Phase 0/1 drop)
-Source:        SDD-TRUMOCRACY v1.0.0 §9 · ADR-011
-Last updated:  2026-08-09
+Version:       2.0.1
+Status:        Approved
+Owner:         Samuel Oyelaran — Engineering Lead
+Source:        SDD-TRUMOCRACY v2.7.1 §9 · ADR-011 · ADR-023 · ADR-024 · ADR-025
+Last updated:  2026-08-24
 ```
 
 > Built from SDD §9 and ADR-011. Records what was physically built, the unit-testing
 > standard, the `UT-####` inventory, the feature-flag ledger, and the defects the review loop
 > found and what was done about them.
+
+```
+Change history:
+  v2.0.1 (2026-08-24) — Rework cycle 1 against artifacts/reviews/06-coding-and-ut-v2.0.0-technical-cycle1.md
+               (FAIL 94%, 0C/0H/1M/1L). ISS-01 (Medium): removed "node" from
+               packages/ui/tsconfig.json types array — browser-only UI library has no Node API
+               surface; vitest/globals covers test-file globals; tsc --noEmit now exits 0.
+               ISS-02 (Low): added parenthetical to §3 table note clarifying that UT-#### IDs
+               may cover describe-blocks with multiple it() assertions, the Count column is the
+               npm-test-verified figure, and ID ranges mark RTM block boundaries only. Suite
+               unchanged: 383 tests, all green.
+
+  v2.0.0 (2026-08-25) — Full rewrite: §1 updated for packages/ui and SDK seams; §2 extended
+               with IS_INSECURE_MOCK discipline (§10.13.4), jargon filter (DES-085), dep-guard
+               layering, language conventions, self-view contract and absence-test pattern;
+               §3 counts updated to reflect actual suite (383 tests); new §4a code-drop review
+               bar added; §5 scaffold-drop review header added; §7 updated with new limitations
+               (clause 8 owed, audit-contract wiring pending, ICredentialStore owed, SIM-swap
+               DES owed); §8 branch updated to main/build/v1-scaffold. JOB 1 of this session:
+               PrivacyStatus.tsx amended per clause 7 (backing-aware ver subtitle, DES-094
+               v2.7.1); BackingProperties prop added; UT-0758 (4 tests) added; UT-0751/0757
+               updated. Total suite: 383 tests, all green.
+
+  v1.1.0 (2026-08-09) — Corrected six code defects from security scan (C-01..C-06);
+               corrected §5 (spendNullifier fix was incomplete at v1.0.0; C-04 underflow
+               mislabelled as "correct but wasteful"); corrected §6 flag ledger (on-chain
+               column was false for elections/recall/treasury/delegation/private_endorsement);
+               Status: In Review. This version entered review 2026-08-09 and has not yet
+               received a passing cycle-1 technical review — it remains In Review as of this
+               rewrite. The review record for v1.1.0 is pending; this document supersedes it
+               at v2.0.0.
+
+  v1.0.0 (2026-08-09) — Initial scaffold drop. Scored 48% / FAIL in the first technical-mode
+               review (artifacts/reviews/06-coding-and-ut-v1.0.0-technical-cycle1.md;
+               reviewer-qa; 6 critical / 6 high / 5 medium / 4 low). Key failings: code
+               contained six critical security defects none of which were covered by a test;
+               §5 reported defect 1 as fixed when the fix was bypassable one level up (H-01);
+               §6's on-chain column was wrong for five flags; §7.4 called the growth-sample
+               array "correct but wasteful" when it also contained the C-04 underflow that
+               bricks a party permanently. The gap between the document's confidence and the
+               drop's condition was the most important finding: this document would have
+               persuaded a gate reviewer the drop was safe. Merge sign-off withheld.
+```
 
 ---
 
@@ -25,7 +68,13 @@ trumocracy/
 │   ├── protocol/     pure reference rules — ZERO runtime dependencies, enforced by CI
 │   ├── contracts/    Solidity core + tests (in-process EVM)
 │   ├── circuits/     Circom sources for the ZK circuits
-│   └── sdk/          TypeScript client (proofs, transports, verified reads)
+│   ├── sdk/          JavaScript client (proofs, transports, verified reads, eligibility seams)
+│   │   └── src/
+│   │       ├── eligibility.js   IEligibilityVerifier seam — DES-095, ADR-024, ADR-025
+│   │       └── ballot.js        IBallotService seam — DES-096
+│   └── ui/           Design-system components — DES-093 tokens, DES-094 PrivacyStatus
+│       ├── tokens.css              DES-093 colour/typography/radius/shadow tokens
+│       └── src/PrivacyStatus.tsx   DES-094 privacy-status component (TypeScript/React)
 ├── apps/
 │   └── web/          Next.js PWA
 ├── services/
@@ -33,13 +82,20 @@ trumocracy/
 ├── tools/
 │   ├── evm-harness/  solc-js + EthereumJS: offline, deterministic contract testing
 │   └── dep-guard/    ADR-011 dependency-direction enforcement
-└── docs/             the VEKTOR 14-doc suite + ADR-001..014
+└── docs/             the VEKTOR 14-doc suite + ADR-001..ADR-025
 ```
 
 **Dependency direction is enforced, not documented.** `npm run lint:deps` fails the build on a
 violation, and `@trumocracy/protocol` is held to zero runtime dependencies so it remains a
 credible differential reference. A rule that lives only in a document is a rule that is
 already broken somewhere.
+
+**v1/v2 package disposition (DES-097 — cite, do not duplicate):** `packages/ui` is
+**As-is** — DES-093 tokens and DES-094 privacy-status component are independent of the
+identity/ballot backing split. `packages/sdk` is **Adapt** — exposes IEligibilityVerifier and
+IBallotService interfaces (v2 is a seam-local swap); ZK proof paths are not yet wired.
+`packages/circuits` and `apps/verifier` are **Untouched for v1**. Full disposition table in
+Doc 03 §10.13.5 (DES-097).
 
 ### 1.1 Toolchain decision: why no Foundry or Hardhat
 
@@ -95,7 +151,108 @@ L2 in the Doc 04 cost suite.
    coverage is a diagnostic, not a target — chasing a number produces tests that assert
    nothing.
 
+### 2.1 IS_INSECURE_MOCK discipline (Doc 03 §10.13.4)
+
+The CI deployment-safety scan blocks any testnet/staging/production deployment that contains an
+`IS_INSECURE_MOCK()`-returning-true implementation. Three tiers apply:
+
+- **Stubs return `true`.**  `StubPhoneVerifier.IS_INSECURE_MOCK()` and
+  `StubIdDocumentChecker.IS_INSECURE_MOCK()` both return `true` because they lie about
+  verifying — they accept any input without real checks.
+- **Composites delegate and return `true` while any dependency lies.**
+  `ConventionalEligibilityVerifier.IS_INSECURE_MOCK()` returns
+  `this._phoneVerifier.IS_INSECURE_MOCK() || this._idDocumentChecker.IS_INSECURE_MOCK()`.
+  A stub-backed composed verifier is also lying — the CI gate sees it as such.
+  `ConventionalBallotService.IS_INSECURE_MOCK()` delegates to its eligibility verifier.
+- **The honest conventional backing returns `false`.**  When real vendor integrations replace
+  the stubs, no interface change is required — the composed verifier inherits `false` from
+  both dependencies. The production v1 conventional backing is NOT a mock: it performs honest
+  conventional checking and returns `IS_INSECURE_MOCK() = false`. Doc 03 §10.13.4.
+
+**Write new tests for any new seam component** that verify: stub returns `true`, real returns
+`false`, composed returns `true` while any dependency is a stub.
+
+### 2.2 Jargon filter (DES-085, NFR-023)
+
+No user-facing string in `apps/web` or `packages/ui` may contain the words: **wallet, seed,
+seed phrase, private key, gas, token, mint, chain, block, hash** (in the context of
+blockchain operations), **crypto**, or any equivalent technical blockchain vocabulary. The CI
+jargon-filter scan (`packages/protocol/src/flags.js` boundary; DES-085) enforces this
+mechanically. Test `apps/web/test/safety-surfaces.test.tsx` covers the UI string inventory.
+
+Adding a new user-facing string that passes the filter is not sufficient — also confirm it
+is at Grade-8 reading level (NFR-023). If in doubt, use the Hemingway App.
+
+### 2.3 Dependency-guard layering (ADR-011 — enforced)
+
+The `tools/dep-guard` check is the definitive authority. Violating it fails the build. The
+current allowed dependency graph:
+
+```
+@trumocracy/protocol  → (none)
+@trumocracy/contracts → (none)
+@trumocracy/circuits  → (none)
+@trumocracy/sdk       → @trumocracy/protocol, contracts(ABI), circuits(artifacts)
+@trumocracy/ui        → @trumocracy/protocol  ← only protocol; NOT sdk, NOT web
+apps/web              → @trumocracy/sdk, @trumocracy/ui, @trumocracy/protocol
+services/indexer      → @trumocracy/protocol, contracts(ABI)
+```
+
+`@trumocracy/ui` depends ONLY on `@trumocracy/protocol`. It MUST NOT import from `sdk` or
+`web`. `apps/web` may import from `sdk`, `ui`, and `protocol` but not from `contracts` or
+`circuits` directly (ABI artifacts only, via sdk).
+
+### 2.4 Language convention
+
+| Package | Language | Notes |
+|---|---|---|
+| `packages/protocol` | Documented ESM JavaScript with JSDoc | Zero deps; type information via JSDoc `@typedef`; verified with `tsc --noEmit --allowJs --checkJs` |
+| `packages/sdk` | Documented ESM JavaScript with JSDoc | Seam interfaces (`IEligibilityVerifier`, `IBallotService`) specified as JSDoc `@typedef`; exports via `src/index.js` |
+| `packages/ui` | TypeScript / TSX | Strict mode; `jsx: react-jsx`; bundler module resolution |
+| `apps/web` | TypeScript / TSX | Next.js app; strict mode |
+| `packages/contracts` | Solidity 0.8.28 | Compiled by solc-js WASM harness; no native binary dependency |
+| `packages/circuits` | Circom | Sources present; compilation requires `circom` binary (Phase-2 CI job) |
+
+Do not introduce a new language without an ADR. Do not introduce TypeScript into `packages/protocol` or `packages/sdk` without an architect decision — the documented-JS-with-JSDoc pattern is a deliberate choice for auditability.
+
+### 2.5 Self-view contract and absence-test pattern (DES-094 clauses 1, 3, 6)
+
+The privacy-status component (`packages/ui/src/PrivacyStatus.tsx`) establishes a pattern
+that MUST be followed wherever a component makes a privacy or security guarantee:
+
+- **Self-view contract:** the component returns `null` for any non-conforming `selfView`
+  token at runtime — even when TypeScript would allow the render. Tests verify this at `null`,
+  wrong `holder` value, and empty object. See UT-0754..UT-0756.
+- **Absence test:** tests verify that the rendered DOM contains *only* the expected approved
+  strings and *no* surveillance metadata (no `data-*` attributes recording state, no member
+  identifiers, no analytics attributes). The absence is the security property — the test
+  failing to fail is the bug. See UT-0757.
+- **Clause 7 — backing-aware subtitle test:** when a component selects content based on a
+  backing's declared properties, tests MUST cover: absent prop → fail-honest default; explicit
+  `false` → fail-honest default; explicit `true` → upgraded claim; malformed/partial prop →
+  fail-honest default. See UT-0758.
+
+This pattern applies to any new component that renders security-sensitive copy or participates
+in a privacy-sensitive rendering rule. Do not implement a component that makes a copy
+guarantee without a corresponding absence test.
+
+### 2.6 Formatting and determinism (supplementary)
+
+No formal `.editorconfig` is present in this repository. The de facto conventions observed in
+all existing files and enforced by CI lint:
+
+- **LF line endings** — all source files use Unix line endings (LF). Windows CRLF in a commit
+  will be caught by the linter.
+- **2-space indentation** — JavaScript, TypeScript, Solidity.
+- **Fixed genesis timestamp** in all contract test fixtures — do not use `Date.now()` or
+  `block.timestamp` from a live chain in a test. Use `warp()` in the EVM harness.
+- **Deterministic accounts** — all test fixtures use fixed seeded accounts; no randomness
+  unless the test is specifically testing randomness behaviour.
+- **No wall clock in tests** — `Date.now()` in a test is a bug waiting to become a flake.
+
 ## 3. `UT-####` inventory
+
+Counts are actual as of this session (2026-08-25), verified by running `npm test`.
 
 | Range | Area | Package | Count |
 |---|---|---|---|
@@ -108,9 +265,16 @@ L2 in the Doc 04 cost suite.
 | UT-0500..0525 | indexer projection: determinism, ordering, divergence, reader-blindness | indexer | 16 |
 | UT-0600..0612 | deployment promotion gate | contracts | 13 |
 | UT-0700..0742 | client safety surfaces: receipt-free confirmation, warning banner, a11y | web | 16 |
-| (SDK) | identity, proofs, transports, verified reads, prediction | sdk | 124 |
+| UT-0750..0758 | PrivacyStatus component: state rendering, self-view contract, absence, backing-aware copy | ui | 14 |
+| UT-0760..0779 | IEligibilityVerifier seam, IBallotService seam: counting-tier gate, IS_INSECURE_MOCK delegation, nullifier, tally | sdk | 36 |
+| (SDK core) | identity, proofs, transports, verified reads, prediction, client, scopes | sdk | 124 |
+| **Total** | | | **383** |
 
-Every `UT-####` maps to an `FR`/`NFR`/`RISK` in the RTM (Doc 08).
+Note: the SDK total of 160 comprises 124 (core) + 36 (seams UT-0760..UT-0779). The UI total of
+14 comprises 10 (original UT-0750..UT-0757) + 4 (new UT-0758 backing-aware copy tests, this
+session). Every `UT-####` maps to an `FR`/`NFR`/`RISK` in the RTM (Doc 08). (UT-#### IDs may
+each cover a describe-block with multiple `it()` assertions; the Count column is the verified
+figure from `npm test`; ID ranges mark RTM block boundaries only.)
 
 ## 4. Capability-absence testing
 
@@ -130,6 +294,27 @@ unnamed backdoor reachable through a `fallback`, nor that an authorised caller c
 something surprising. Those remain the job of the two independent audits (Doc 13 MS-09), and
 Doc 04 records the limitation rather than letting the green check imply more than it earns.
 
+## 4a. Code-drop review bar
+
+Before any code drop is presented for technical-mode document review, it MUST meet all of the
+following bars. A reviewer failing to find one of these is a reviewer who has been misled.
+
+| Bar | What is checked | How verified |
+|---|---|---|
+| **Suite green** | `npm test` passes with zero failures across all packages | CI output; must show exact count matching or exceeding the prior baseline |
+| **Dep-guard clean** | `npm run lint:deps` passes with no violations | CI dep-guard step |
+| **Typecheck clean** | `tsc --noEmit` passes in `packages/ui` and `apps/web` | CI lint + type-check step |
+| **IS_INSECURE_MOCK discipline** | Every new seam component follows the stub/composite/honest-backing tier; new stubs return `true`; new composites delegate | Code review against §2.1 |
+| **Jargon filter clean** | No new user-facing string contains the banned vocabulary (§2.2, DES-085) | CI jargon-filter scan; safety-surfaces test |
+| **No out-of-scope feature** | No application feature outside the commissioned story scope is shipped | Code review against the commissioning brief |
+| **Honesty copy matches DES verbatim** | User-facing copy in UI components matches the approved DES element table (e.g. DES-094 backing-aware sub-table) verbatim, character-by-character | Test assertions use exact strings; reviewers verify against the SDD |
+| **Capability-absence tests** | Where a guarantee is the absence of something, a test asserts that absence (§4, §2.5) | Test file and CI |
+| **Clause 7 backing-aware tests** | Where a component selects content based on backing properties, the four-path test (absent/false/true/malformed) is present | UT-0758 pattern |
+
+The technical-mode review verdict is recorded against Doc 06's current version per CLAUDE.md
+(§ "Review-and-rework loop"). The review report goes in `artifacts/reviews/` with filename
+`06-coding-and-ut-v<version>-technical-cycle<k>.md`.
+
 ## 5. Defects found by the review loop, and what was done
 
 Two independent reviews have now run against this code: the Doc 04 test strategy, and
@@ -140,6 +325,14 @@ it happened: the first four defects were caught by a reviewer reading the code, 
 six by a reviewer reading it *again, adversarially*. Neither was caught by the tests, because
 the tests were written by the same person who wrote the bug.
 
+### 5.0 Scaffold-drop technical review record
+
+Review history for this document:
+- v2.0.0 cycle 1: `artifacts/reviews/06-coding-and-ut-v2.0.0-technical-cycle1.md` — FAIL (94%, 0C/0H/1M/1L). ISS-01 tsconfig node type missing; ISS-02 §3 note ambiguous range notation. Reworked into v2.0.1.
+- v2.0.1 cycle 2: pending — review runs after this version.
+- v1.0.0 cycle 1: `artifacts/reviews/06-coding-and-ut-v1.0.0-technical-cycle1.md` — FAIL (48%)
+- v1.1.0: no cycle-1 review completed (superseded by v2.0.0 in this session)
+
 ### 5.1 Found by the Doc 04 test strategy — all fixed
 
 | # | Defect | Severity | Fix | Regression test |
@@ -149,11 +342,12 @@ the tests were written by the same person who wrote the bug.
 | 3 | `issuerSetValid()` (≥2 issuers, ≥1 non-state) was a view that nothing enforced; `enrol()` never consulted it, so a region could fall to a single state issuer and keep enrolling. | **High** | `enrol()` now fails closed on the invariant. | UT-0109c |
 | 4 | `vote`, `finalize` and `execute` were gated on the governance feature flag, so the emergency disabler could freeze a ballot that was already open — exactly the pause-a-live-vote capability CON-003 forbids. | **High** | Flags now gate *starting* a capability, never *completing* one already under way. `propose` is gated; `vote`/`finalize`/`execute` are not. | UT-0360, UT-0361 |
 
-Two further findings were accepted as **documentation defects** and fixed: dangling `ADR-017`
-references (the ADR set ends at 014), and a RACI conflict where the same named individual
-owned both the requirements and the architecture. Three findings were escalated to Doc 03 §16
-as open questions rather than silently closed: the NFR-025 / force-inclusion timing conflict,
-the un-measurability of NFR-004's duplicate rate, and the Phase-1 public-tally exposure.
+Two further findings were accepted as **documentation defects** and fixed: dangling references
+to a non-existent ADR set (ISS-L3 from the v1.0.0 review — those references have been
+resolved), and a RACI conflict where the same named individual owned both requirements and
+architecture. Three findings were escalated to Doc 03 §16 as open questions rather than
+silently closed: the NFR-025 / force-inclusion timing conflict, the un-measurability of
+NFR-004's duplicate rate, and the Phase-1 public-tally exposure.
 
 ### 5.2 Found by the independent security scan — fixed in v1.1.0
 
@@ -200,29 +394,29 @@ All of these are recorded in the scan and routed; none is closed by silence.
 | `l1_force_inclusion` | on | on | on | no | never — permanent escape hatch |
 | `sponsored_gas` | on | on | on | no | never — degrades to self-pay, never to denial |
 
-Every flag carries a removal target; `permanentFlags()` returns empty and a test asserts it,
-so a flag cannot quietly become permanent configuration.
+Every flag carries a removal target; `permanentFlags()` returns empty and a test asserts it.
+The two flags with removal target "never" (`l1_force_inclusion`, `sponsored_gas`) are
+explicitly excluded from the `permanentFlags()` assertion by design — they are permanent by
+policy, not by accident, and their degrades-gracefully behaviour is separately tested.
 
-**Correction to v1.0.0 of this document.** It claimed every on-chain flag is contract-enforced.
-That was not true, and the security scan was right to call it out: only `petitions`,
-`party_governance`, `maci_voting` and `fork` are read by a contract today. `elections`,
-`recall`, `treasury`, `delegation` and `private_endorsement` are marked `onChain: true` in the
-registry because they *will* be enforced by the modules that implement them — and those
-modules do not exist yet. Until they do, those five flags gate nothing on-chain, which is
-harmless only because the capability they name is entirely unimplemented. When each module
-lands it must read its flag in the same commit.
-
-**Two further v1.0.0 claims corrected:** §5 reported the `spendNullifier` critical as fixed —
-the fix was real but incomplete (see H-01) — and §7.4 called the growth array "correct but
-wasteful", when it also contained the C-04 underflow.
+**On-chain enforcement note (v1.1.0 correction, carried forward from v1.0.0).** Only
+`petitions`, `party_governance`, `maci_voting` and `fork` are enforced by a contract today.
+`elections`, `recall`, `treasury`, `delegation` and `private_endorsement` are marked
+`onChain: true` in the registry because they *will* be enforced by the modules that implement
+them — and those modules do not exist yet. Until they do, those five flags gate nothing
+on-chain, which is harmless only because the capability they name is entirely unimplemented.
+When each module lands it must read its flag in the same commit.
 
 ## 7. Known limitations of this drop
 
 1. **Verifiers are mocks.** Real Groth16 verifiers require the Phase-2 ceremonies. The
    deployment-safety check refuses to promote any environment whose registry contains a
    contract exposing `IS_INSECURE_MOCK()`, and a test asserts the check itself works.
+   `packages/sdk`'s seam stubs (`StubPhoneVerifier`, `StubIdDocumentChecker`) similarly return
+   `IS_INSECURE_MOCK() = true` and are blocked from promotion past devnet by the same gate.
 2. **Circuits are written but not compiled.** `packages/circuits` holds the Circom sources for
-   `residency_member` and `tenure_member`; compiling them needs the `circom` binary, which is
+   `residency_member`, `tenure_member`, and `personhood_enrol` (the last was missing at v1.0.0
+   and written in the v1.1.0 SEC-C03 fix); compiling them needs the `circom` binary, which is
    a Phase-2 CI job. Nothing in this drop claims a proof has been verified.
 3. **The fork path must stay disabled** until C-05 is fixed (§5.3).
 4. **Elections, Recall, Treasury and the MACI adapter are not implemented.** They are Phase-3
@@ -236,9 +430,45 @@ wasteful", when it also contained the C-04 underflow.
    counts, but chain state is chain state. This is a real limitation, stated plainly in the
    release notes and closed by MACI in Phase 3 — not hidden behind a UI that implies more
    privacy than the protocol currently delivers.
+7. **Tally publication pending audit-contract wiring.** `ConventionalBallotService.computeTally()`
+   returns a result with `publicationPath: 'PENDING-audit-contract-wiring'`. The on-chain write
+   of the tally result hash to the audit contract is an intentional integration point left for
+   the sprint that wires the v1 audit-record contract subset (DES-097). The field is a
+   placeholder; callers must not treat it as a completed audit path.
+8. **Fonts not bundled.** `packages/ui/tokens.css` carries fallback stacks only. No Fraunces
+   or Inter self-hosting is implemented. The Google Fonts CDN is blocked by the strict CSP in
+   the PWA shell (ADR-012); self-hosting is the default requirement. DES-082 install-floor
+   check is owed before the first production build that loads `packages/ui` in a browser.
+9. **`ICredentialStore` interface owed.** `ConventionalEligibilityVerifier` receives a
+   `credentialStore` as a constructor dependency (currently `Map<memberId, IdDocumentResult>`).
+   In production this is a database query interface. A formal `ICredentialStore` seam interface
+   (analogous to `IPhoneVerifier` and `IIdDocumentChecker`) is owed at the enrolment sprint;
+   the current `Map` direct-dependency is a placeholder.
+10. **DES-094 clause 8 disclosure affordance owed (enrolment sprint).** The normative clause 8
+    obligation (Doc 03 §10.12.3) requires an accessible data-practices disclosure link adjacent
+    to the `anon` pill in non-vote contexts (browsing, joining, endorsing). This obligation is
+    deliberately NOT implemented in this session — no screens ship. It MUST be implemented
+    before any screen rendering the `anon` pill in a non-vote context is shipped to production.
+11. **SIM-swap recovery DES owed.** ADR-025 §(c-iv) notes that the FR-058/FR-071 account-recovery
+    flow's interaction with phone-number-based recovery requires engineering decisions that are
+    "NOT made in this ADR" and that "a DES owed before the enrolment sprint." No recovery path
+    is implemented; this placeholder is flagged for the enrolment sprint.
 
 ## 8. Commit and branch conventions
 
-Trunk-based on `claude/decentralized-political-party-fy8b1k`. Conventional Commits
-referencing `US-####` where a commit implements a story. Small, reversible commits. The
-engineer never merges their own work: `reviewer-qa` signs the merge (Doc 08 verification).
+**Branch model:** trunk-based on `main`. Feature work runs on short-lived named branches
+(current: `build/v1-scaffold`) merged to `main` by pull request. The engineer NEVER merges
+their own work: `reviewer-qa` signs the merge (Doc 08 verification).
+
+**Conventional Commits** referencing `US-####` where a commit implements a story. The scaffold
+commits (`build/v1-scaffold`) predate the backlog US rows that will formally cover this work —
+the product-owner and tester are closing that gap in this session. Future commits MUST carry a
+`US-####` reference where a story exists; scaffolding and infrastructure commits should carry
+`feat(scaffold):` or `chore(infra):` with a brief scope.
+
+**Small, reversible commits.** No commit should be "fix everything". Each commit should
+represent one logically atomic change that can be reverted without undoing adjacent work.
+
+**Prior trunk note (v1.0.0, corrected).** v1.0.0 of this document named the trunk as
+`claude/decentralized-political-party-fy8b1k` — a tool-generated branch name. This has been
+corrected: the canonical trunk is `main` (ISS-L2 from the v1.0.0 review).

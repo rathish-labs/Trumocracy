@@ -30,3 +30,18 @@ export {
   mockVerifierAbi,
   optimismPortalAbi,
 } from './abi.js';
+
+// ─── ADR-024 seams — DES-095 / DES-096 / DES-097 ────────────────────────────────
+// IEligibilityVerifier and IBallotService: stable interfaces allowing the v2 ZK
+// swap behind the seam without changing any caller above it. Doc 03 §10.13.2–10.13.3.
+export {
+  COUNTING_ACTION,
+  NotACountingAction,
+  StubPhoneVerifier,
+  StubIdDocumentChecker,
+  ConventionalEligibilityVerifier,
+} from './eligibility.js';
+
+export {
+  ConventionalBallotService,
+} from './ballot.js';

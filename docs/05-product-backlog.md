@@ -2,12 +2,26 @@
 
 ```
 Document ID:   BKLG-TRUMOCRACY
-Version:       2.1.0
+Version:       2.2.0
 Status:        In Review
 Owner:         Priya Raghunathan — Product Owner
-Source:        SRS-TRUMOCRACY (docs/02-requirements-srs.md v2.5.0), PR-TRUMOCRACY (docs/01-press-release-prfaq.md)
-Last updated:  2026-08-22
-Change:        v2.1.0 — C-02 ruling applied (Rathish, 2026-08-22;
+Source:        SRS-TRUMOCRACY (docs/02-requirements-srs.md v2.13.0), PR-TRUMOCRACY (docs/01-press-release-prfaq.md)
+Last updated:  2026-08-25
+Change:        v2.2.0 — Scaffold traceability gap closed (Rathish directive, 2026-08-25).
+               Three backing stories minted for the design-system code drop (commit 5320342 +
+               session fix): US-0132 (FE-040 · EP-09, DES-093 token set + DES-094 PrivacyStatus,
+               FR-082..086 / FR-124 / FR-131); US-0133 (new FE-057 · EP-01, IEligibilityVerifier
+               seam, FR-122 / FR-123 / FR-132, ADR-024/025); US-0134 (new FE-058 · EP-06,
+               IBallotService seam, FR-131 / BR-005, DES-096, ADR-024). All three Status:
+               Partial — built and tested (UT-0750..0758 UI; UT-0760..0779 SDK seams); not
+               screen-wired; RTM rows OPEN; DoD not satisfied. Two new features minted: FE-057
+               (EP-01, counting-tier access control seam), FE-058 (EP-06, ballot service seam).
+               §2 feature count: 56 → 58; story count: 131 → 134. §4 EP-01 and EP-06 feature
+               lists updated. §5 FE-057/058 rows added. §9 total updated. §12 traceability
+               updated; source pin updated to Doc 02 v2.13.0. NOTE: Doc 05 remains Status:
+               In Review — no passing business-mode review exists yet; the v2.2.0 increment
+               awaits the owed full business review before Gate-1 presentation.
+               v2.1.0 — C-02 ruling applied (Rathish, 2026-08-22;
                artifacts/status/DECISIONS-2026-08-22-WIREFRAME-C01-C02.md). US-0131 minted
                under FE-009 (EP-03) implementing FR-130 (provisional-party membership cap,
                Must — Doc 02 v2.5.0 §4.44). SCR: SCR-06 (Petition browser & detail —
@@ -82,9 +96,9 @@ early as possible.
 `Theme → Epic (EP-##) → Feature (FE-###) → User Story (US-####) → Task`.
 Non-functional work appears as **explicit backlog items**, never as an assumption — see §8.
 
-**Contents.** 12 epics · 56 features · 131 user stories · 9 explicit non-functional backlog items. (ISS-D: count corrected from 8 to 9 after NF-09 was added at v1.1.1; v2.0.0 adds EP-11, EP-12, FE-037..FE-056, US-0084..US-0130; v2.1.0 adds US-0131.)
+**Contents.** 12 epics · 58 features · 134 user stories · 9 explicit non-functional backlog items. (ISS-D: count corrected from 8 to 9 after NF-09 was added at v1.1.1; v2.0.0 adds EP-11, EP-12, FE-037..FE-056, US-0084..US-0130; v2.1.0 adds US-0131; v2.2.0 adds FE-057/058, US-0132..0134.)
 All 101 Must FRs in Doc 02 v2.2.0 are covered by at least one story; coverage is asserted in §12 and
-verified in the RTM. FR-130 (Must, Doc 02 v2.5.0) is covered by US-0131 (minted v2.1.0). (ISS-E: source pin updated from v1.1.0 to v1.1.1; v2.0.0: source pin updated to v2.2.0; v2.1.0: source pin updated to v2.5.0.)
+verified in the RTM. FR-130 (Must, Doc 02 v2.5.0) is covered by US-0131 (minted v2.1.0). FR-122, FR-123, FR-131, FR-132 (Must, Doc 02 v2.13.0) are covered by US-0132..US-0134 (minted v2.2.0). (ISS-E: source pin updated from v1.1.0 to v1.1.1; v2.0.0: source pin updated to v2.2.0; v2.1.0: source pin updated to v2.5.0; v2.2.0: source pin updated to v2.13.0.)
 
 ## 3. Prioritization framework
 
@@ -130,7 +144,7 @@ In scope: enrolment, one-credential-per-human, per-scope action limits, cross-sc
   nullifier, pluggable credential adapter, government eID issuer hierarchy.
 Out of scope: any storage of identity documents; any identity issued by Trumocracy.
 Success metric: <=0.1% duplicate credentials; 0 identity fields at data inventory; >=2 attestors live per region.
-Features: FE-001, FE-002, FE-003, FE-004, FE-034, FE-036, FE-037
+Features: FE-001, FE-002, FE-003, FE-004, FE-034, FE-036, FE-037, FE-057
 Owner: Marcus Adeyemi            Status: Backlog
 ```
 ```
@@ -201,7 +215,7 @@ In scope: eligible anonymous casting, unlinkability, receipt-freeness, silent re
   embargo, non-transferability, publicly reproducible tally.
 Out of scope: delegation, proxy voting, individual vote verification (see TD-06).
 Success metric: 0 receipt constructions found; 100% of tallies independently reproducible.
-Features: FE-017, FE-018, FE-019
+Features: FE-017, FE-018, FE-019, FE-058
 Owner: Aisha Nkemdirim           Status: Backlog
 ```
 ```
@@ -365,6 +379,8 @@ Owner: Rafael Duarte             Status: Backlog
 | FE-054 | Trust-anchor lifecycle governance (EP-12) | Revocation and rotation are member-voted governance actions; no operator path exists | FR-112, FR-113 | US-0122–0123 | Rafael Duarte |
 | FE-055 | Steward organisation (EP-12) | Elected, enumerated-power-only body; zero citizen-flow dependency provable by test suite | FR-114, FR-115, FR-116, FR-117 | US-0124–0127 | Aisha Nkemdirim |
 | FE-056 | Amendment boundary & unconditional fork right (EP-12) | Seven rules are fork-only; named absolutes need super-process; fork right is entrenched and always exercisable | FR-118, FR-119, FR-120 | US-0128–0130 | Rafael Duarte |
+| FE-057 | Counting-tier access control seam (EP-01) | Verify once, count securely — the eligibility seam gates all counting actions on verified personhood and delivers honest refusals to open-tier participants | FR-122, FR-123, FR-132 | US-0133 | Samuel Oyelaran |
+| FE-058 | Ballot service seam (EP-06) | The signed ballot contract — cast, change, and tally exposed as a verifiable seam with honest pre-action notices and a deterministic tally-hash for audit publication | FR-131; BR-005 | US-0134 | Samuel Oyelaran |
 
 ## 6. User stories
 
@@ -631,6 +647,46 @@ AC:
   Scenario (negative): Surface omits the distinction
     When an automated content audit scans all surfaces that display party status
     Then every such surface includes the platform-activation vs legal-registration distinction
+```
+```
+US-0133  Gate every counting action behind the IEligibilityVerifier seam      (FE-057 · EP-01)
+As a verified citizen, I want every counting action (binding vote, official-strength petition
+contribution, account-status event) to pass through the IEligibilityVerifier seam so that
+non-verified open-tier participants are refused with an honest FR-131 clause (d) notice and no
+counting action ever executes without a successful eligibility check.
+Owner: Samuel Oyelaran   Priority: Must   Points: 8   Implements: FR-122, FR-123, FR-132   Depends on: US-0001
+DES: DES-095 (IEligibilityVerifier seam).
+ADR: ADR-024 (SDK seam contract), ADR-025 (counting-tier gate).
+Note: Status Partial — IEligibilityVerifier interface + conventional stub built and tested
+  (UT-0760..UT-0779, 36 seam tests green per Doc 06 v2.0.1 §3); IS_INSECURE_MOCK=true while
+  stub-backed. Real verifier vendor integration gated on CON-015 / DEP-13. JOIN, LEAVE, and
+  account-creation call sites throw on incorrect COUNTING_ACTION invocation as asserted by seam
+  tests. TC: OPEN — no TC-#### minted yet. RTM row not yet complete; DoD not satisfied.
+AC:
+  Scenario: Verified participant passes counting gate (FR-123)
+    Given a participant with verificationLevel=COUNTING and IS_INSECURE_MOCK=true (conventional stub)
+    When they attempt a COUNTING_ACTION (binding vote or official-strength petition)
+    Then the eligibility check passes and the action proceeds (UT-0760..UT-0762 pass)
+  Scenario: Open-tier participant refused at counting gate with honest notice (FR-122, FR-131)
+    Given a participant whose verificationLevel=OPEN (phone verification only, FR-122)
+    When they attempt a COUNTING_ACTION
+    Then the action is refused; an FR-131 clause (d) plain-language notice is delivered stating
+      the participant is not verified for counting actions; no partial action is recorded
+      (UT-0763..UT-0764 pass)
+  Scenario (adversarial): JOIN / LEAVE routed through COUNTING_ACTION call site
+    Given any actor
+    When they call IEligibilityVerifier.verify with action=JOIN or action=LEAVE
+    Then an IllegalActionType exception is thrown and the action is refused (UT-0765 passes)
+  Scenario (adversarial): Production deployment with IS_INSECURE_MOCK=false and no vendor bound
+    Given IS_INSECURE_MOCK=false and no real vendor connected (CON-015 / DEP-13 unresolved)
+    When any COUNTING_ACTION is attempted
+    Then the seam throws a VendorNotBound exception and refuses the action; no silent pass-through
+      occurs (FR-132 government-ID gate enforced by configuration)
+  Scenario (negative): Account-creation flow attempts COUNTING_ACTION invocation
+    Given the account-creation path
+    When it attempts to invoke IEligibilityVerifier.verify with action=COUNTING_ACTION
+    Then a configuration error is thrown at startup; account creation must never be routed through
+      a counting gate (FR-132 — government-ID check gates counting, never joining)
 ```
 
 ### EP-02 · Party drafting & the eight mandatory pillars
@@ -1429,6 +1485,49 @@ AC:
     When the result screen is audited against WCAG 2.2 AA by screen reader and keyboard/switch at 200% text scale
     Then zero Level A or AA failures are found
 ```
+```
+US-0134  Expose cast, change, and tally through the IBallotService seam with honest notices and a verifiable tally-hash      (FE-058 · EP-06)
+As a platform engineer, I want the IBallotService seam to implement cast, ballot-change, tally,
+and eligibilityRef composition in a single signed contract that emits a deterministic tally-hash
+for audit publication and delivers an FR-131 honesty notice before any counting action, so that
+every ballot operation is auditable end-to-end and no counting action can proceed without honest
+disclosure.
+Owner: Samuel Oyelaran   Priority: Must   Points: 8   Implements: FR-131   Depends on: US-0038, US-0133
+DES: DES-096 (IBallotService seam).
+ADR: ADR-024 (SDK seam contract).
+Note: Status Partial — IBallotService interface + conventional stub built and tested
+  (UT-0770..UT-0779 within the UT-0760..0779 seam range, Doc 06 v2.0.1 §3); IS_INSECURE_MOCK=true
+  while stub-backed. Audit-contract wiring (tally-hash publication endpoint) is owed. TC: OPEN —
+  no TC-#### minted yet. RTM row not yet complete; DoD not satisfied. BR-005 (ballot accessible to
+  every eligible citizen) is upstream rationale.
+AC:
+  Scenario: Cast succeeds for a verified eligible participant
+    Given IBallotService.cast called with a valid eligibilityRef from IEligibilityVerifier (US-0133)
+    When the ballot is open and the participant is eligible
+    Then the cast is recorded and a deterministic ballot receipt (revealing no ballot direction)
+      is returned (UT-0770..UT-0771 pass)
+  Scenario: Silent ballot-change (re-vote override) leaves no distinguishing signal
+    Given a participant who has already cast a ballot
+    When they call IBallotService.cast again before ballot close
+    Then only the last cast counts; no distinguishing signal appears in any log, receipt, or
+      observable state (FR-131 honesty; UT-0772 passes)
+  Scenario: Tally emits a deterministic tally-hash for audit publication
+    Given a closed ballot
+    When IBallotService.tally is called
+    Then the result includes a deterministic hash over the canonical ballot state; the hash
+      matches on independent re-computation from the same state (audit-publication contract;
+      UT-0773..UT-0774 pass)
+  Scenario (adversarial): Cast attempted without a valid eligibilityRef
+    Given IBallotService.cast called without a successful IEligibilityVerifier result
+    When the seam receives the call
+    Then the cast is refused; an FR-131 clause (d) honest notice is delivered; no ballot record
+      is written (UT-0775 passes)
+  Scenario (adversarial): Tally requested while ballot is still open
+    Given an open ballot
+    When any actor calls IBallotService.tally
+    Then the call is refused (results embargo maintained per FR-131 honesty contract; UT-0776
+      passes)
+```
 
 ### EP-07 · Localized nomination & internal election
 
@@ -2124,6 +2223,52 @@ AC:
     Given any personalisation feature on any surface
     When the personalisation state is inspected on the server side
     Then no personalisation state for any user is stored, transmitted or held server-side
+```
+```
+US-0132  Provide the design-system token set and PrivacyStatus component backing the tier-privacy display      (FE-040 · EP-09)
+As a platform engineer, I want a stable token-first component library (DES-093 design tokens +
+DES-094 PrivacyStatus with three anonymity states and backing-aware 'ver' copy per FR-131 clause 7),
+so that every downstream screen renders honest tier-privacy status without duplicating the anonymity
+logic.
+Owner: Samuel Oyelaran   Priority: Must   Points: 5   Implements: FR-082, FR-083, FR-084, FR-085, FR-086, FR-124, FR-131   Depends on: US-0089, US-0092
+SCR: none — PrivacyStatus (DES-094) is a shared UI component in packages/ui, not a screen; no SCR
+  is assigned or claimed for this story.
+DES: DES-093 (token set), DES-094 (PrivacyStatus component).
+Note: Status Partial — token set and PrivacyStatus component built and tested (UT-0750..UT-0758,
+  14 unit tests green per Doc 06 v2.0.1 §3); not wired to any screen; clause-8 disclosure
+  affordance owed at the enrolment sprint. FR-124 backing-aware 'ver' copy rule (clause 7)
+  implemented per UT-0758 four-path pattern (absent / false / true / malformed backing props).
+  TC: OPEN — no TC-#### minted yet; tester to add full-stack scenario coverage. RTM row not yet
+  complete; DoD not satisfied.
+AC:
+  Scenario: Supporter-tier state renders anonymous copy (FR-082)
+    Given PrivacyStatus receives tier="supporter"
+    When rendered
+    Then copy states the participant is unconditionally anonymous with no public profile and no
+      attributable record (FR-082); UT-0750 passes
+  Scenario: Worker-tier state renders public-from-consent copy (FR-083)
+    Given PrivacyStatus receives tier="worker" and isVerified=true
+    When rendered
+    Then copy states the record is public from the consent event forward, no pre-consent activity
+      is attributable (FR-083); UT-0751 passes
+  Scenario: Candidate-tier state renders permanent-disclosure copy (FR-084)
+    Given PrivacyStatus receives tier="candidate" and isVerified=true
+    When rendered
+    Then copy states candidacy is public and disclosures are permanent (FR-084); UT-0752 passes
+  Scenario: Backing-aware 'ver' copy — four-path test (FR-124 clause 7 / UT-0758)
+    Given backing.isVerified is absent, false, true, and malformed in four separate renders
+    When each is rendered
+    Then each path produces the correct 'ver' copy or the fail-honest default with no runtime
+      error (UT-0758 four-path pattern passes on all paths)
+  Scenario (adversarial): Malformed BackingProperties — fail-honest default
+    Given the component receives a structurally invalid BackingProperties object
+    When it attempts to render
+    Then it displays the fail-honest default; it logs a warning; it does not crash or show an
+      incorrect tier status (UT-0757..UT-0758 pattern)
+  Scenario (negative): Verified status not exposed to third parties (FR-124)
+    When the component API is inspected for any interface, prop, or endpoint that reveals
+      isVerified to a third-party observer
+    Then no such exposure exists; verified status remains private to the holder
 ```
 
 ### EP-10 · Zero-friction access: cost, recovery, accessibility
@@ -2892,7 +3037,7 @@ Modified Fibonacci (1, 2, 3, 5, 8, 13). **Reference story: US-0024 "Join a party
 Anything estimated above 13 must be split before it enters a sprint. Estimates are re-baselined once
 the architect publishes Doc 03, because several stories (US-0007, US-0038, US-0041, US-0042, US-0068)
 carry the bulk of the technical unknown and are deliberately estimated pessimistically until then.
-**Total (v2.1.0): 131 stories, approximately 815 points** (v1.1.1 was 83 stories at approximately 499 points; 47 new stories from the v2.0.0 Gate-1-re-entry catch-up add approximately 313 points at preliminary estimates; v2.1.0 adds US-0131 — 3 points). _(ISS-07: v1.0.0 base corrected to actual point sum; total revised accordingly; v2.0.0 total subject to revision after Doc 03 is published and DES links assigned.)_
+**Total (v2.2.0): 134 stories, approximately 836 points** (v1.1.1 was 83 stories at approximately 499 points; 47 new stories from the v2.0.0 Gate-1-re-entry catch-up add approximately 313 points at preliminary estimates; v2.1.0 adds US-0131 — 3 points; v2.2.0 adds US-0132 — 5 points, US-0133 — 8 points, US-0134 — 8 points: +21 points). _(ISS-07: v1.0.0 base corrected to actual point sum; total revised accordingly; v2.0.0 total subject to revision after Doc 03 is published and DES links assigned.)_
 
 ## 10. Backlog refinement cadence & WIP limits
 
@@ -2960,6 +3105,16 @@ Coverage assertion at v2.0.0 — to be independently verified by the tester in t
   FR-114→US-0124 · FR-115→US-0125 · FR-116→US-0126 · FR-117→US-0127 ·
   FR-118→US-0128 · FR-119→US-0129 · FR-120→US-0130.
 - **v2.1.0 addition (C-02 ruling, Rathish, 2026-08-22):** FR-130→US-0131. DES owed (same recorded-phasing posture as FR-121..FR-129; TC OPEN — Phase 3). US-0131 is Backlog / Not Ready pending DES.
+- **v2.2.0 additions (scaffold traceability gap, Rathish directive, 2026-08-25):**
+  FR-082..086→US-0092..0096 (existing) **and** US-0132 (design-system seam; DES-093/094 assigned) ·
+  FR-122→US-0133 (IEligibilityVerifier seam; DES-095 assigned; ADR-024/025) ·
+  FR-123→US-0133 (same seam) ·
+  FR-124→US-0132 (design-system seam; verified-status privacy backing; DES-093/094 assigned) ·
+  FR-131→US-0132 (backing-aware 'ver' copy, clause 7), US-0133 (clause d refusal notice),
+    US-0134 (honest pre-action notice and results-embargo contract; DES-096 assigned; ADR-024) ·
+  FR-132→US-0133 (government-ID check gates counting actions, never joining).
+  All three stories Status: Partial — built and tested; RTM rows OPEN; DoD not satisfied.
+  TC: OPEN — no TC-#### minted for US-0132..0134.
 - **DES links available for FR-112..FR-120** (Doc 03 v2.x; re-confirm with architect after Doc 03 updated):
   FR-112, FR-113 → DES-090 (TrustAnchorLifecycle) ·
   FR-114 → DES-088 (StewardRegistry) ·
@@ -2984,6 +3139,13 @@ Coverage assertion at v2.0.0 — to be independently verified by the tester in t
   recorded-phasing posture as FR-121..FR-129 (Doc 03 §16 next-increment scope). US-0131 is
   marked "Not Ready pending DES" and satisfies DoR only after the architect assigns a DES in
   the next Doc 03 increment.
+- **v2.2.0 DES assignments (scaffold drop, Doc 03 v2.7.1):**
+  FR-082..086, FR-124, FR-131 (US-0132) → DES-093 (token set), DES-094 (PrivacyStatus) — assigned.
+  FR-122, FR-123, FR-132 (US-0133) → DES-095 (IEligibilityVerifier) — assigned; ADR-024/025.
+  FR-131 (US-0134) → DES-096 (IBallotService) — assigned; ADR-024.
+  US-0132..0134 satisfy the DES readiness condition for their primary DES; downstream screen
+  wiring and audit-contract wiring remain owed (clause-8 disclosure affordance; tally-hash
+  publication endpoint).
 - `DES-###` links for FR-074..FR-111: **not yet assigned** — added after architect updates Doc 03.
 - `TC-####` links: **not yet assigned** — added by the tester in Doc 07.
 

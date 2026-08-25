@@ -241,7 +241,7 @@ A third-party ID-verification provider (vendor TBD; to be listed in Doc 13 as DE
 | Field | Derivation | Purpose |
 |---|---|---|
 | `id_verified_flag` | From provider `status: APPROVED` | Gate: true iff age + region + document authentic |
-| `age_verified` | From provider `checks.age_verified` | Confirms ≥ 18 at signup |
+| `age_verified` | From provider `checks.age_verified` | Confirms ≥ 18 at COUNTING-tier government-ID verification |
 | `issuing_region` | From provider `checks.issuing_country` (ISO 3166-1 alpha-2) | Assigns citizen to correct governance region |
 | `subject_id_hash` | `HMAC-SHA-256(provider_subject_id, pepper_id)` | Same-document deduplication (see below) |
 | `phone_hash` | `HMAC-SHA-256(E.164-normalized(phone), pepper_phone)` | One-account-per-number enforcement |
