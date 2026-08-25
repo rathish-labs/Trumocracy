@@ -748,3 +748,367 @@ Both documents require a passing business-mode document-review before Status fli
 **Gate 2:** NOT READY. RTM (Doc 08 v2.1.0): 125 Must rows / 12 COMPLETE / 113 OPEN (FR-121..FR-130
 RTM rows not yet added; FR-130 row will be added when DES and TC are available). Must count
 now 111 (FR-130 added). Legal-opinion line item (India/Aadhaar): NOT STARTED — Gate-2 blocker.
+
+---
+
+## v1/v2 delivery split (Definition A / Definition B) — 2026-08-23
+
+> Approver directive received 2026-08-23, transmitted via coordinator. All prior gate decisions
+> and their wording are unchanged and intact. Full decision record:
+> `artifacts/status/DECISIONS-2026-08-23-V1-V2-SPLIT.md`. This section is additive only.
+
+**Decision pointer:** Rathish (human approver), 2026-08-23. Recorded by project-manager
+(Ana-Maria Petrescu). Transmitted via coordinator.
+
+**What was decided:** The delivery programme splits into two definitions:
+
+- **Definition A (v1):** the transparent party platform — real, production-grade, shareable;
+  eight-pillar party creation, petition→threshold→activation, free membership, proposals and
+  debates, candidate selection by member vote, manifesto + commitment tracking, public finance
+  and performance dashboards. **Voting works in v1** under conventional authentication; the
+  ZK private ballot is deferred. Goal: a working v1 in months, shared on GitHub.
+- **Definition B (v2):** the same platform plus the hard cryptographic guarantees — ZK
+  anonymous enrolment, MACI private receipt-free ballots, trusted-setup ceremony, coordinator
+  committee, two heavy independent audits. v2 is an implementation swap behind stable seam
+  interfaces (DES-095/DES-096), never a rewrite.
+
+**Classification test (normative):** DEFERRED-v2 iff a requirement exists ONLY to provide
+anonymity, private ballots, coercion-resistance, or hostile-state safety.
+
+**Honesty requirement:** v1 must state plainly at every vote-cast surface that it is not the
+private ballot. Deferrals that weaken assumed guarantees become README honesty items, never
+silent omissions.
+
+**Reuse guardrail:** nothing from the design phase is discarded; v2 is an implementation swap
+(ADR-024), never a rewrite.
+
+**v1 exemptions:** ceremony, coordinator committee, two heavy ZK audits (NFR-009 Definition B
+path). The plan states what v1 DOES need (see §3.5 / Doc 13 v2.1.0).
+
+---
+
+### Document versions and review verdicts
+
+| Document | Version | Status | Review verdict |
+|----------|---------|--------|----------------|
+| Doc 03 Architecture (SDD) | **v2.3.1** | **Approved** | Technical c1 FAIL 90% (v2.3.0) → rework → c2 PASS 97% (v2.3.1), 0C/0H/0M/0L |
+| Doc 02 Requirements | **v2.6.0** | In Review | Business c1 FAIL 94%, 0C/0H/1M/1L — **rework to v2.7.0 owed** (ISS-01 now resolved by DECISIONS-2026-08-23-V1-V2-SPLIT.md) |
+| Doc 13 Project Plan | **v2.1.0** | In Review | c1 review pending assignment |
+
+Review reports:
+- `artifacts/reviews/03-architecture-design-sdd-v2.3.0-technical-cycle1.md` (FAIL c1)
+- `artifacts/reviews/03-architecture-design-sdd-v2.3.1-technical-cycle2.md` (PASS c2)
+- `artifacts/reviews/02-requirements-srs-v2.6.0-business-cycle1.md` (FAIL c1)
+
+---
+
+### What the split does to the Gate-2 posture
+
+The v1/v2 split creates two distinct launch-readiness profiles:
+
+**Definition A (v1) launch-readiness gate** — an earlier gate against the v1-scoped Must set
+(112 Must requirements with DEFERRED-v2 items deferred). v1 Gate-2 conditions replace the
+ceremony/committee/two-ZK-audit path with a lighter production-readiness bar (see Doc 13
+§3.5). The specific v1 gate date is a **plan recommendation AWAITING APPROVER CONFIRMATION**
+(see Doc 13 §3.5 — no date has been set or changed).
+
+**Definition B (v2) Gate-2** — the existing 2027-05-14 audit-paced date attaches to
+Definition B. The existing Phase 2 (circuits/ceremony/audits) and Phase 3 (MACI/elections-
+crypto) content becomes the Definition-B programme, re-entering design→build after v1 launch.
+DES-095/096 seams make v2 an implementation swap. **Gate-2 date 2027-05-14 is UNCHANGED
+until the approver confirms the re-scoping.**
+
+---
+
+### Pending items
+
+| # | Item | Owner | Priority |
+|---|------|-------|----------|
+| **P-1** | **PO rework Doc 02 to v2.7.0** — ISS-01 (resolved: cite this record); ISS-02 (H-07..H-12 or umbrella note) | product-owner (Priya Raghunathan) | Immediate — unblocked by this record |
+| **P-2** | **Doc 02 c2 business-mode re-review** | PM to assign neutral reviewer | After v2.7.0 produced |
+| **P-3** | **Doc 13 v2.1.0 c1 business-mode review** | PM to assign neutral reviewer | After this record committed |
+| **P-4** | **Approver confirmations (a)–(f)** — v1 stack (DES-097); 16 contradiction-surface items; T-01..T-05; re-scoped Gate-2; NFR-009 v1 re-reading; 2027-05-14 referent | Rathish (human approver) | Before v1 implementation begins |
+| **P-5** | **CON-015 legal opinion** — independent legal opinion on Aadhaar API usage | Sofia Marchetti | Gate-2 blocker (both Definitions); NOT STARTED; ≥ 8 wks before Gate 2 |
+| **P-6** | **Doc 04 (Test Strategy) review debt** — technical-mode review of v1.0.2 | PM to assign neutral reviewer | Gate-2 blocker (both Definitions); OPEN |
+| **P-7** | **FR-121..FR-131 US/TC/RTM catch-up** — traceability rows for all 11 minted requirements | Architect (DES) → PO (US) → Tester (TC/RTM) | Gate-2 blocker (both Definitions); NOT STARTED |
+| **P-8** | **Doc 05 v2.1.0 c1 business-mode review debt** (carry-forward from 2026-08-22; no review report exists) | PM to assign neutral reviewer | Outstanding — not yet reviewed |
+| **P-9** | **Doc 03 cascade annotation for FR-131/DES-098** (pre-allocation error: §12 references "FR-130" for DES-098; FR-131 is the correct ID) | architect (Ravi Deshmukh) — next increment | Before RTM can be complete for FR-131 |
+| **P-10** | **DES for FR-130** (provisional-party cap) | architect (Ravi Deshmukh) | Next DES increment |
+| **P-11** | **FR-129 tier-determination** (FR-118 Tier-1 vs FR-119 Tier-2) | architect (Ravi Deshmukh) | Next DES increment |
+
+**Pre-existing Gate-2 blockers that remain** (not affected by the v1/v2 split decision):
+
+| Blocker | Applies to | Status |
+|---------|-----------|--------|
+| CON-015 legal opinion (India/Aadhaar) | Both Definitions | NOT STARTED |
+| Doc 04 review debt (technical-mode, v1.0.2) | Both Definitions | OPEN |
+| RTM zero gaps — 114 open Must rows (Doc 08 v2.1.0) | Both Definitions | OPEN (v1 Must set is a subset; v1 gate requires zero gaps in v1-scoped rows) |
+| Rollback drill (NFR-020) | Both Definitions | NOT DRILLED |
+
+---
+
+**Gate 2 (Definition B / v2):** NOT READY. Date 2027-05-14 UNCHANGED pending approver
+confirmation of re-scoping. RTM (Doc 08 v2.1.0): 125 Must rows (pre-FR-131) / 12 COMPLETE /
+113+ OPEN. Must count now 112 (FR-131 added). Legal-opinion: NOT STARTED. FR-121..FR-131
+RTM rows: NOT STARTED.
+
+**v1 launch-readiness gate (Definition A):** date NOT SET — plan recommendation AWAITING
+APPROVER CONFIRMATION. v1 production-readiness bar defined in Doc 13 §3.5.
+
+> **Correction 2026-08-23 (appended after document-review results):** Doc 02 is now **v2.7.0 (Approved; c2 PASS 98%**, `artifacts/reviews/02-requirements-srs-v2.7.0-business-cycle2.md`). Doc 13 is now **v2.2.0 (In Review; pending c2** business-mode review; v2.1.0 c1 FAIL 84%, 0C/1H/2M/2L resolved by rework — `artifacts/reviews/13-project-plan-v2.1.0-business-cycle1.md`).
+
+---
+
+## v1 authentication & spam-resistance rulings — 2026-08-23 (second entry this date)
+
+**Decision record:** `artifacts/status/DECISIONS-2026-08-23-V1-AUTH-SPAM-RESISTANCE.md`
+**Decision-maker:** Rathish (human approver). **Recorded by:** project-manager (Ana-Maria Petrescu).
+
+### The three rulings (summary)
+
+| # | Ruling | Key constraint |
+|---|--------|----------------|
+| **1** | **Phone-based SMS verification** chosen for v1 auth (over email); v1's `IEligibilityVerifier` backing is phone auth | Phone is a spam speed-bump **only** — NOT a proof of unique personhood. v1 MUST NEVER claim one-person-one-vote. |
+| **2** | **Flag-don't-block** spam-resistance layer: VoIP/virtual-number detection + velocity/device anti-fraud; suspicious numbers are **flagged and rate-limited**, not hard-blocked | Legitimate people use VoIP and eSIMs. Wrongly excluding a citizen from a political platform is a serious failure. False-positive risk must be disclosed. |
+| **3** | **Blockchain stays in v1** as the public transparent-audit foundation — every party action on a tamper-proof public record from day one. v1 = transparency-now; v2 = privacy-later | **RATIFIES** ADR-024 §(b) / DES-097 stack recommendation (previously AWAITING APPROVER CONFIRMATION in V1-V2-SPLIT §4(a)); architect to confirm composition in Doc 03 v2.4.0. |
+
+### Application in progress this session
+
+| Document | Version | Work owed | Status |
+|----------|---------|-----------|--------|
+| Doc 02 Requirements | v2.8.0 | FR-132 (phone auth, Must); FR-133 (flag-don't-block spam layer, Must); FR-003 classification reassessment (T-07); H-register update (T-06) | IN PROGRESS |
+| Doc 03 SDD | v2.4.0 | ADR-025; DES-095 amendment; DES-099 (spam layer); T-06/T-07 in conflict table; blockchain composition confirmation | IN PROGRESS |
+| Doc 13 Project Plan | v2.3.0 | Effort-range (a) partially resolved; vendor still open; risk updates; §11 entry | AFTER PO + Arch |
+| Doc 02 v2.8.0 business-mode review | cycle 1 | Neutral reviewer TBA | After v2.8.0 produced |
+| Doc 03 v2.4.0 technical-mode review | cycle 1 | Neutral reviewer TBA | After v2.4.0 produced |
+| Doc 13 v2.3.0 business-mode review | cycle 1 | Neutral reviewer TBA | After v2.3.0 produced |
+
+### Two new tensions surfaced
+
+| ID | Tension | Status |
+|----|---------|--------|
+| **T-06** | Charter Rule 1 (one human, one vote) vs v1 phone-auth — v1 ships with the charter rule visible but without a mechanism to enforce it; honesty register must cover this gap | AWAITING architect conflict-table update (Doc 03 §10.13.7) + approver confirmation |
+| **T-07** | FR-003 (no identity data at rest) vs v1 phone-number storage — a phone number is identity data; FR-003's current IN-v1 classification in §16 requires PO reassessment | AWAITING PO reassessment (Doc 02 §16) + architect update + approver confirmation |
+
+**Gate-2 (Definition B / v2):** NOT READY. Date 2027-05-14 UNCHANGED. T-01..T-05 + T-06 + T-07 are all unresolved Charter-tension items. Items (b)–(f) from V1-V2-SPLIT §4 remain AWAITING APPROVER CONFIRMATION. Item (a) (stack ratification) is now DECIDED by Ruling 3.
+
+---
+
+## v1 identity verification ruling & open-confirmation closure — 2026-08-23 (third entry this date)
+
+**Decision record:** `artifacts/status/DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md`
+**Decision-maker:** Rathish (human approver). **Recorded by:** project-manager (Ana-Maria Petrescu).
+
+### The ruling in brief
+
+v1 identity = **phone (SMS) + government-ID document check at signup**. Consumer-app model (dating-platform tier). v1 anti-fraud / anti-Sybil layer — NOT the v2 anonymity guarantee.
+
+**Retention rule (verify-and-discard):**
+- Government ID verified to produce only a "verified adult, region X" FLAG. Platform MUST NOT store the document or any reversible copy. **Keep the result, discard the source.**
+- Phone number stored **HASHED (one-way)** — sufficient to enforce one-account-per-number; never plaintext.
+- v1 = "real-person verified, not anonymous". v2 = "unique person proven without the platform ever seeing identity."
+
+### Confirmations folded in
+
+| Item | Disposition |
+|------|-------------|
+| T-01..T-05 Charter tensions | **CONFIRMED** — deferred-with-disclosure dispositions accepted |
+| FR-030, FR-031, FR-082, FR-086 (DEFERRED-v2 Musts) | **CONFIRMED** — Definition-B-only; remain Must for v2; not weakened or deleted |
+| NFR-009 v1 re-reading | **CONFIRMED** — one OWASP-class pen test for v1; two cryptographic audits stay for v2 |
+| 2027-05-14 | **CONFIRMED** — Gate-2 referent for Definition B (also closes "2027-03-15" carry-forward from 2026-08-21 budget ruling) |
+| v1 gate date | **NOT CLOSED** — MS-V1-LRG mechanism confirmed; **date still NOT SET — explicit approver value required** |
+
+### Application in progress
+
+| Document | Version | Changes owed | Status |
+|----------|---------|--------------|--------|
+| Doc 03 SDD | v2.5.0 | ADR-025 amended (ID check + retention rule + 3 architect Qs answered); DES-095 updated; new DES for ID-check flow | **OWED — architect first** |
+| Doc 02 Requirements | v2.11.0 | FR-132 amended (ID check co-required, verify-and-discard); FR-003 PARTIAL scope updated; H-register new items; T-06/T-07 updated | After Doc 03 v2.5.0 |
+| Doc 13 Project Plan | v2.5.0 | MS-V1-02 updated; new DEP; RISK updates | After Doc 02 v2.11.0 |
+| Reviews | — | Doc 03 v2.5.0 technical c1; Doc 02 v2.11.0 business c1; Doc 13 v2.5.0 business c1 | Sequential per review loop |
+
+**CON-015 legal opinion:** now **more load-bearing** — the ruling adds government-ID document verification to v1; document verification in the India/Aadhaar pilot is precisely the legally sensitive area CON-015 covers. Must be in hand ≥ 8 weeks before Gate 2.
+
+**Gate-2 (Definition B / v2):** NOT READY. Date 2027-05-14 **CONFIRMED**. T-01..T-05 CONFIRMED (deferred-with-disclosure). T-06/T-07 remain open (reshaped by this ruling; architect Qs gate finalisation). V1-V2-SPLIT §4 items (b)–(f): (a) DECIDED (Ruling 3 prior record); (b)–(f) status unchanged — see prior records.
+
+---
+
+### Closing state — 2026-08-23 (end of session)
+
+All three upstream documents are now **Approved**:
+
+| Document | Final version | Review path | Verdict |
+|----------|--------------|-------------|---------|
+| Doc 02 Requirements SRS | v2.10.0 | business c1 FAIL 97% → c2 FAIL 98% → c3 PASS 100% | **Approved** |
+| Doc 03 SDD | v2.4.1 | technical c1 FAIL 94% → c2 PASS 97% | **Approved** |
+| Doc 13 Project Plan | v2.4.0 | business c1 FAIL 92% → c2 PASS 96% | **Approved** |
+
+**Test suites green (as of session close):** contracts 95 · protocol 82 · sdk 124 · indexer 16 · web 16 · exit 0.
+
+**Outstanding approver-confirmation set (unchanged — all AWAITING RATHISH):**
+- Charter tensions T-01..T-07 (T-01..T-05 from V1-V2-SPLIT; T-06 Charter Rule 1 vs phone-auth; T-07 FR-003 vs phone-number storage)
+- DEFERRED-Must confirmations (FR-030, FR-031, FR-082, FR-086) — classification as DEFERRED-v2 confirmed by PM classification test; approver acknowledgement not yet recorded
+- NFR-009 v1 re-reading (two-audit bar vs v1 scope)
+- v1 launch-readiness gate date — NOT SET
+- 2027-05-14 referent confirmation (attaches to Definition B)
+- V1-V2-SPLIT §4 items (b)–(f)
+
+---
+
+### Closing state — 2026-08-24 (ruling fully applied)
+
+All three upstream documents are now **Approved**:
+
+| Document | Final version | Review path | Verdict |
+|----------|--------------|-------------|---------|
+| Doc 02 Requirements SRS | v2.11.0 | business c1 PASS 99% | **Approved** |
+| Doc 03 SDD | v2.5.1 | technical c1 FAIL 93% → c2 PASS 97% | **Approved** |
+| Doc 13 Project Plan | v2.6.0 | business c1 FAIL 91% → c2 PASS 95% | **Approved** |
+
+**Architectural changes applied:** ADR-025 amended with §(e) (ID-check retention discipline; architect Q1/Q2/Q3 answers; consequence c-viii). DES-100 minted (field-level retention: allowlist `id_verified_flag`/`age_verified`/`issuing_region`/`subject_id_hash`/`phone_hash`/`verified_at`; HMAC-SHA-256 + KMS-held pepper; vendor no-retention clause). Honesty register expanded to H-01..H-19 (H-17 vendor sees document; H-18 derived identifier retained; H-19 no gov-ID = no enrolment).
+
+**Tensions:** T-06 IMPROVED-not-closed (Charter Rule 1 vs phone auth — disclosed, open for approver). T-07 reshaped, pending CON-015. T-08 architect-resolved. Government-ID vs BR-003/FR-020 row: **AWAITING APPROVER ruling**.
+
+**Confirmations closed this ruling:** T-01..T-05 CONFIRMED · DEFERRED-v2 Musts (FR-030/031/082/086) CONFIRMED · NFR-009 v1 re-reading CONFIRMED (one pen test) · 2027-05-14 Gate-2 referent CONFIRMED. **v1 gate date: NOT SET — explicit approver value still required.**
+
+**CON-015:** now CRITICAL PATH gating MS-V1-02. No enrolment work begins until it clears. Must be initiated immediately. Effort range revised 5–9 → 6–10 months.
+
+**Test suites green (as of session close):** contracts 95 · protocol 82 · sdk 124 · indexer 16 · web 16 · exit 0.
+
+**Outstanding:** Doc 01 and Doc 05 business-mode review reports not yet produced — Gate 1 cannot be presented until these clear. CON-015 immediate start required (Sofia Marchetti). DEP-11/12/13 vendor procurement (Rafael Duarte). v1 gate date and T-06/T-08 rulings (Rathish).
+
+---
+
+### Closing state — 2026-08-24 (ID-gates-counting ruling)
+
+**Ruling recorded:** government-ID gates COUNTING, never joining. BR-003 (one human, one account) and FR-020 (no invitation as an admission condition) are intact and unamended. A person without a government ID may open an uncounted account on the open tier and participate in non-counted activities; their membership does not count toward party strength or activation thresholds. Decision record: `artifacts/status/DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md`.
+
+**Document versions closed this session:**
+
+| Document | Final version | Review path | Verdict |
+|----------|--------------|-------------|---------|
+| Doc 02 Requirements SRS | v2.13.0 | business c2 PASS 99% | **Approved** |
+| Doc 03 SDD | v2.6.1 | technical c2 PASS 97% | **Approved** |
+| Doc 13 Project Plan | v2.7.2 | business c3 PASS 98% | **Approved** |
+
+Review reports:
+- `artifacts/reviews/02-requirements-srs-v2.13.0-business-cycle2.md` (PASS 99%, 0C/0H/0M/1L)
+- `artifacts/reviews/03-architecture-design-sdd-v2.6.1-technical-cycle2.md` (PASS 97%, 0C/0H/0M/2L)
+- `artifacts/reviews/13-project-plan-v2.7.2-business-cycle3.md` (PASS 98%, 0C/0H/0M/1L)
+
+**ADR amendments applied 2026-08-24:** ADR-024 (v1/v2 delivery-split reuse guardrail) and ADR-025 (v1 identity-verification retain-and-discard posture) both amended to reflect the counting-gate disposition. Source: `artifacts/status/DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md`.
+
+**Tension dispositions:**
+
+| Tension | Disposition |
+|---------|------------|
+| T-06 — Charter Rule 1 (one human, one vote) vs v1 phone-auth | **ACCEPTED — deferred with disclosure** (Rathish, 2026-08-24). v1 ships the charter rule visible but without a ZK enforcement mechanism; honesty register covers the gap. |
+| T-07 — FR-003 (no identity data at rest) vs v1 phone-number storage | **PENDING CON-015.** Reshaped by the identity-verification ruling; cannot close until legal opinion on Aadhaar API data-minimisation posture is in hand. |
+| §16.5 government-ID vs BR-003/FR-020 | **RESOLVED** (Rathish, 2026-08-24). Counting-gate disposition ends the conflict. Source: `artifacts/status/DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md`. |
+
+**v1 gate date:** MS-V1-LRG set to **2027-06-30** — **APPROVER-DELEGATED** (2026-08-24); subject to approver correction. Conservative end of the 6–10 month effort range, sized to absorb CON-015 lead time and vendor procurement. Source: `artifacts/status/DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md §4.1`; recorded in `docs/13-project-plan.md §3.5.5`.
+
+**Open items requiring approver decision (AWAITING RATHISH):**
+
+| # | Item | Source |
+|---|------|--------|
+| **(a)** | **2027-05-14 Definition-B Gate-2 vs 2027-06-30 v1 gate incoherence** — RISK-44, ESCALATED. Three options (a) pull Definition-B Gate-2 forward to align with v1; (b) accept the overlap and treat v1 launch as a soft milestone preceding the hard Definition-B gate; (c) re-scope Definition B to a later date. No choice made. Awaiting approver ruling. | `docs/13-project-plan.md §3.5.5`; `artifacts/reviews/13-project-plan-v2.7.2-business-cycle3.md §4` |
+| **(b)** | **"Supporter level" naming-collision confirmation** — the counting-gate disposition creates a potential collision between the open-tier "Supporter" role label and the counting-class distinction. Approver confirmation of the final naming convention required before copy is locked. | `artifacts/status/DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md` |
+| **(c)** | **Confirmation or correction of the delegated 2027-06-30 date** — the date was set by the project-manager under APPROVER-DELEGATED authority. The approver must confirm this date is correct or supply an alternative. | `docs/13-project-plan.md §3.5.5`; `artifacts/status/DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md §4.1` |
+
+**Operational urgencies (NOT STARTED — action required immediately):**
+
+| Item | Latest start | Owner | Status |
+|------|-------------|-------|--------|
+| CON-015 — independent legal opinion (Aadhaar API, data-minimisation posture) | **2026-09-07** | Sofia Marchetti | NOT STARTED — CRITICAL PATH gating MS-V1-02; 14 days from 2026-08-24 |
+| DEP-11 vendor procurement (ID-check provider) | **2026-09-19** | Rafael Duarte | NOT STARTED — 26 days from 2026-08-24 |
+| DEP-12 vendor procurement (SMS/phone-auth provider) | **2026-09-19** | Rafael Duarte | NOT STARTED — 26 days from 2026-08-24 |
+| DEP-13 vendor procurement (KMS/pepper infrastructure) | **2026-09-19** | Rafael Duarte | NOT STARTED — 26 days from 2026-08-24 |
+
+Source: `docs/13-project-plan.md §3.3` (latest-start arithmetic table, verified by document-review cycle 3, `artifacts/reviews/13-project-plan-v2.7.2-business-cycle3.md §3`).
+
+**Review debt carried forward:**
+
+| Item | Status |
+|------|--------|
+| Doc 03 v2.6.1 Low ISS-A — ADR-016 amendment block item (c) omits citizen-exclusion sentence | Open; architect (Ravi Deshmukh); fix at next DES increment |
+| Doc 03 v2.6.1 Low ISS-B — ADR-022 six-circuit confirmation-level wording | Open; architect (Ravi Deshmukh); fix at next DES increment |
+| Doc 13 v2.7.2 Low ISS-C3-01 — §13.1 Doc 13 self-reference row not updated on version bump | **Fixed** in this close-out as post-PASS editorial fix (Status flip + §13.1 row updated to record v2.7.1 FAIL 95% and v2.7.2 PASS 98%); verified. |
+
+**Gate-1 presentation blocker (unchanged):** Docs 01 and 05 have no passing business-mode review reports at any version. Gate 1 cannot be presented until both clear. This is unaffected by the Doc 13 approval.
+
+---
+
+### Closing state — 2026-08-24 (v1 scope closure ruling)
+
+> ⚠ **OPERATIONAL HEADLINE — action required before 2026-09-07.** Two external procurement
+> tracks are NOT STARTED and both have hard latest-start deadlines within the next 26 days:
+>
+> | Item | Latest start | Days from today | Owner | Status |
+> |------|-------------|-----------------|-------|--------|
+> | **CON-015** — independent legal opinion (Aadhaar API / India data-minimisation posture). Hard gate on S-2b; no ID-check integration work begins until cleared. | **2026-09-07** | **14 days** | Sofia Marchetti | **NOT STARTED — CRITICAL PATH** |
+> | **DEP-11** — SMS/phone-auth provider contract | **2026-09-19** | **26 days** | Rafael Duarte | **NOT STARTED** |
+> | **DEP-12** — phone-intelligence API (VoIP/fraud detection) contract | **2026-09-19** | **26 days** | Rafael Duarte | **NOT STARTED** |
+> | **DEP-13** — government-ID document-check provider contract | **2026-09-19** | **26 days** | Rafael Duarte | **NOT STARTED** |
+>
+> DEP-13 requires a **no-retention contractual clause** as a hard pre-condition (RISK-41;
+> ADR-025 §(e)): the platform's publicly stated promise "we do not keep your identity documents"
+> (Doc 01 §E1) is only delivered if this clause holds. No workaround exists. Contract execution
+> must not proceed without it.
+
+**Ruling recorded (Rathish, 2026-08-24; DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md):** Three
+approver confirmations applied:
+
+1. **Terminology CONFIRMED-CLOSED:** "supporter level" = FR-122 open/unverified tier. The
+   human-readable label for the open membership tier is confirmed as "supporter level." The
+   potential naming collision between this label and the counting-class distinction is closed — no
+   structural ambiguity survives.
+
+2. **MS-V1-LRG 2027-06-30 APPROVER-CONFIRMED:** The v1 launch-readiness gate date previously
+   APPROVER-DELEGATED per DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md §4.1 is upgraded to
+   APPROVER-CONFIRMED (Rathish, 2026-08-24). All active "APPROVER-DELEGATED" and "subject to
+   approver's correction" sites in Doc 13 updated. Historical changelog rows left unchanged.
+
+3. **RISK-44 CLOSED — option (a):** The Definition-B Gate-2 (MS-13) vs v1 gate (MS-V1-LRG
+   2027-06-30) scheduling incoherence is resolved. Definition-B Gate-2 is re-based to follow the
+   v1 gate (2027-06-30); option (c) (overlap) is explicitly rejected; single-track capacity is
+   deliberate (v1 ships first, then Definition B re-enters the SOP and is built in the open with
+   contributors). Specific offset deliberately not fixed now — to be planned when Definition B
+   re-enters design→build. Superseded fixed date: **2027-05-14** (pre-split artifact, retired
+   2026-08-24; annotated-not-deleted throughout Doc 13).
+
+**Document status this session:**
+
+| Document | Version | Status | Notes |
+|----------|---------|--------|-------|
+| Doc 13 Project Plan | **v2.8.1** | **Approved** | v2.8.1 Approved (business c2 PASS 100%; c1 FAIL 95% on one missed §8.3 annotation, reworked) |
+| Doc 02 Requirements SRS | v2.13.0 | Approved | Unchanged this session |
+| Doc 03 SDD | v2.6.1 | Approved | Unchanged this session |
+
+**Tension dispositions (cumulative, as of 2026-08-24):**
+
+| Tension | Disposition |
+|---------|------------|
+| T-01..T-05 | **CONFIRMED** (Rathish, 2026-08-23; deferred-with-disclosure accepted; Doc 03 §10.13.7) |
+| T-06 — Charter Rule 1 (one human, one vote) vs v1 phone-auth | **ACCEPTED — DEFERRED WITH DISCLOSURE** (Rathish, 2026-08-24; DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md §4.3) |
+| T-07 — FR-003 (no identity data at rest) vs v1 phone-number storage | **RESHAPED — PENDING CON-015** (legal input outstanding; approver confirmation follows when CON-015 clears) |
+| T-08 — FR-004 plurality intent vs single-vendor ID-check | **ARCHITECT-RESOLVED** (Doc 03 §10.13.7; 2026-08-23) |
+| Gov-ID gate vs BR-003/FR-020 | **RESOLVED** (Rathish, 2026-08-24; DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md §3.2/§4.5) |
+| Naming collision ("supporter level" vs FR-122 tier) | **CONFIRMED-CLOSED** (Rathish, 2026-08-24; DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md §3.1) |
+
+**Cross-document cascade debt — routed (not commissioned):** The ruling creates downstream update
+debt in Doc 01 (line 420), Doc 02 (line 2656), Doc 03 (lines 1761-1762), Doc 09 (lines 35/341),
+and Doc 10 (line 19). Per DECISIONS-2026-08-24-V1-SCOPE-CLOSURE.md §5.1, only Doc 13 was
+commissioned this session. Each owner must apply the RISK-44 ruling (Definition-B Gate-2 re-based
+after v1 gate; 2027-05-14 retired) before their next document version increment. Routed:
+Doc 01/02 → PO (Priya Raghunathan); Doc 03 → Architect (Priya Raghunathan); Doc 09/10 → SRE
+(Chen Wei). Recorded in Doc 13 v2.8.0 §13.1 cascade note.
+
+**v1 scope status:** Approver (Rathish) has confirmed all v1 scope questions closed as of
+2026-08-24. The `design/formalize-design-system` branch is ready to push/merge pending the Doc 13
+v2.8.0 business-mode review cycle.
+
+**Gate-1 presentation blocker (unchanged):** Docs 01 and 05 have no passing business-mode review
+reports at any version. Gate 1 cannot be presented until both clear.
+
+**Closure complete — 2026-08-24.** With Doc 02 v2.13.0, Doc 03 v2.6.1, and Doc 13 v2.8.1 all Approved, all approver rulings on v1 scope are applied and closed. The branch is ready for the approver to push and merge. Standing items that survive closure: routed cascade debt (Doc 01/02/03/09/10 per SCOPE-CLOSURE §4.4); Gate-1-presentation blocker (Docs 01 and 05 lack passing reviews); carried review Lows (Doc 03 ISS-A/ISS-B); and the operational headline — CON-015 by 2026-09-07; DEP-11/12/13 by 2026-09-19; RISK-41 no-retention clause — which must start now.

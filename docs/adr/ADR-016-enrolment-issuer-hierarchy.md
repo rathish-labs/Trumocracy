@@ -19,7 +19,8 @@ Amendment:     2026-08-20 — OI-20 ruling (Rathish, 2026-08-20;
                DEPLOYMENT limitation, exit condition Phase 2/eIDAS 2.0 per FR-121 — a
                deployment fact, not an architecture property, and never a Charter amendment.
                (c) FR-004's 50% attestor-share cap is inoperative for the Phase-1 single-rail
-               duration (sole rail carries 100% share) — accepted, recorded explicitly.
+               duration (sole rail carries 100% share) — accepted, recorded explicitly. In
+               Phase 1, a person without Aadhaar cannot enrol in the pilot region.
                (d) Permanence guard: extending single-issuer operation beyond the published
                Phase-1 scope requires the Charter-layer amendment process with Gate-1 re-entry,
                never a deployment default (FR-129). OI-20 CLOSED.

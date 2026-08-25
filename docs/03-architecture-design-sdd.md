@@ -2,14 +2,144 @@
 
 ```
 Document ID:   SDD-TRUMOCRACY
-Version:       2.2.1
+Version:       2.6.1
 Status:        Approved
 Owner:         Ravi Deshmukh — Principal Architect
 Approvers:     Rafael Duarte (Security), Chen Wei (Reliability), Dr. Lena Kowalczyk (Privacy),
                Aisha Nkemdirim (Elections & Voting)
-Source:        SRS-TRUMOCRACY v2.4.0
-Last updated:  2026-08-22
-Changelog:     v2.2.1 (2026-08-22) — Rework (review cycle 1 FAIL, 84%/0C/0H/2M/3L):
+Source:        SRS-TRUMOCRACY v2.13.0
+Last updated:  2026-08-24
+Change:        v2.6.1 (2026-08-24) — Rework (review cycle 1 FAIL, 84%/0C/0H/3M/3L;
+               artifacts/reviews/03-architecture-design-sdd-v2.6.0-technical-cycle1.md):
+               ISS-01 (Medium) §10.13.9 DES-100 field table `status` row — purpose corrected:
+               "used to gate account creation" → "used to determine COUNTING-tier eligibility
+               (FR-123 actions)"; sibling rows swept — no additional pre-ruling residuals found.
+               ISS-02 (Medium) §10.13.7 T-06 row — parenthetical rewritten: the
+               `subject_id_hash` deduplication check runs at COUNTING-tier verification time
+               across all sessions (not at account creation); "in one session" qualifier
+               removed (deduplication is persistent across all sessions); framing corrected
+               from "cannot create two accounts" to "cannot gain COUNTING-tier eligibility in
+               two accounts using one government ID" (per ruling). ACCEPTED — DEFERRED WITH
+               DISCLOSURE status and multiple-legitimate-IDs residual unchanged.
+               ISS-03 (Medium) ADR-024 — (a) invariants table: "verifyEligibility call-site
+               placement" row added (MUST be invoked at FR-123 COUNTING-action call sites;
+               MUST NOT gate account creation or party-join; identical placement v1 and v2);
+               (b) v1 backing description disambiguated in [AMENDMENT 2026-08-24] block
+               ("live session" = COUNTING-action check, not account-creation check);
+               (c) [AMENDMENT 2026-08-24] block added recording ruling and call-site placement;
+               (d) §12 ADR-024 row annotated with 2026-08-24 amendment (matching ADR-025
+               treatment).
+               ISS-04 (Low) §10.13.9 DES-100 allowlist `age_verified` — "at signup" →
+               "at COUNTING-tier government-ID verification".
+               ISS-05 (Low) Source pin updated: v2.12.0 (In Review) → v2.13.0 (business
+               cycle-2 PASS 99%; artifacts/reviews/02-requirements-srs-v2.13.0-business-
+               cycle2.md); counts unchanged (21 BR · 133 FR / 131 active / 114 Must · 28 NFR
+               · 15 CON · 27 RISK — v2.13.0 adds Gherkin scenarios only, no new IDs).
+               ISS-06 (Low) §15 — v2.6.x amendment trace rows added: DES-095 amendment 3
+               (FR-020, FR-122, FR-123 call-site placement; DECISIONS-2026-08-24-V1-ID-GATES-
+               COUNTING.md); DES-098 FR-131 clause (d) extension; DES-100 counting-gate
+               correction (FR-020, FR-122, FR-123, FR-124 composition).
+Changelog:     v2.6.0 (2026-08-24) — Government-ID gates COUNTING, never joining (approver
+               directive Rathish, 2026-08-24; DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md):
+               §10.13.2 DES-095 — normative call-site placement added: IEligibilityVerifier
+               MUST be invoked at FR-123 COUNTING-action call sites (strength-number
+               contribution, binding-ballot admission, candidacy nomination) and MUST NOT be
+               called as a precondition of account creation or party-join; placement is
+               identical for v1 conventional backing and v2 ZK backing — this is the
+               architectural reason v1 and v2 share one participation model; seam invariants
+               updated to describe COUNTING eligibility, not account admission. §10.13.6
+               DES-098 — FR-131 clause (d) cross-reference added: UI must disclose non-
+               counting status to open-tier participants at the point of a blocked COUNTING
+               action and must explain how to become COUNTING-eligible. §10.13.7 T-06 —
+               updated to ACCEPTED — DEFERRED WITH DISCLOSURE (approver, Rathish,
+               2026-08-24); BR-003/FR-020 contradiction row marked RESOLVED (government-ID
+               check does not gate joining; it gates COUNTING-tier eligibility only).
+               §10.13.9 DES-100 — exclusion residual paragraph rewritten: a citizen without
+               an accepted government-ID document CAN create an account, join a party, and
+               participate in the open tier with phone verification alone; what they cannot do
+               is take FR-123 COUNTING actions (contribute to official strength, vote in
+               binding decisions, stand as a candidate); ADR-016 Aadhaar-exclusion precedent
+               corrected to COUNTING-gate scope; FR-124 composition check recorded (verified
+               status restricted-class; no public badge). §12 ADR-025 row annotated with
+               2026-08-24 amendment. §1.1 source updated to SRS v2.12.0; counts unchanged
+               (21 BR · 133 FR / 131 active / 114 Must · 28 NFR · 15 CON · 27 RISK — Doc 02
+               v2.12.0 minted no new IDs). No new DES or ADR minted.
+               v2.5.1 (2026-08-23) — Rework (review cycle 1 FAIL, 93%/0C/0H/1M/1L;
+               artifacts/reviews/03-architecture-design-sdd-v2.5.0-technical-cycle1.md):
+               ISS-01 (Medium) no-ID exclusion residual added — ADR-025 §(e) c-viii minted
+               (citizen without accepted government-ID document cannot enrol in v1; BR-003/
+               FR-020 contradiction row AWAITING APPROVER CONFIRMATION; H-19 cited; ADR-016
+               Aadhaar-exclusion sentence is the house precedent); §10.13.9 DES-100 exclusion-
+               residual note added. ISS-02 (Low) Source pin updated to SRS-TRUMOCRACY v2.11.0;
+               §1.1 counts updated to v2.11.0 (21 BR · 133 FR / 131 active / 114 Must · 28 NFR
+               · 15 CON · 27 RISK — unchanged from v2.10.0; FR-132/FR-133 amended not minted).
+               v2.5.0 (2026-08-23) — ID-verification ruling applied (approver directive
+               Rathish, 2026-08-23; DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md):
+               ADR-025 amended (§(e) added: government-ID document check alongside phone SMS;
+               verify-and-discard retention rule; Q-1/Q-2/Q-3 architect answers; hashed phone
+               HMAC-SHA-256/KMS-pepper; subject_id_hash same-document deduplication; FR-004
+               plurality question resolved — single-vendor dated limitation, T-08 minted; CON-015
+               now critical-path); DES-095 v1 backing updated — document check + phone_hash +
+               subject_id_hash storage model (ADR-025 §(e)); DES-100 minted (§10.13.9) — v1
+               ID-document verification flow, allowlist/denylist, HMAC design, Q-1/Q-2/Q-3
+               rationale, legal-review routing; §10.13.7 conflict table: T-01..T-05 CONFIRMED
+               (2026-08-23; DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md §4); T-06 reshaped
+               (same-document deduplication via subject_id_hash added; tension stands); T-07
+               reshaped (hashed phone improves FR-003 PARTIAL; subject_id_hash adds derived
+               identifier; CON-015 governs classification); T-08 minted (single-vendor ID-check
+               concentration vs FR-004 plurality intent; architect-resolved as Phase-1 dated
+               limitation); §12 ADR-025 amendment note added; §15 DES-100 row + DES-095
+               amendment-2 row added; §1.1 updated to SRS-TRUMOCRACY v2.10.0. Five confirmations
+               from §4 of decision record noted in §10.13.7 and §16. (PO increment to
+               SRS-TRUMOCRACY v2.11.0 owed — architect answers gate PO's next version.)
+               v2.4.1 (2026-08-23) — Rework (review cycle 1 FAIL, 94%/0C/0H/1M/0L;
+               artifacts/reviews/03-architecture-design-sdd-v2.4.0-technical-cycle1.md):
+               ISS-01 (Medium) §10.13.2 invariants corrected — "one-person-one-vote per scope"
+               overclaim replaced with "one-vote-per-account per scope (v1) /
+               one-vote-per-person per scope (v2)" with correct backing descriptions
+               (`getProperties().onePersonOneVote = false` for v1; T-06, ADR-025 §(a));
+               ADR-024 invariants table row corrected (same distinction); ADR-024
+               `isUniqueInScope` semantics row corrected (same distinction). No other changes.
+               v2.4.0 (2026-08-23) — v1 identity backing + spam-resistance layer (approver
+               directives Rathish, 2026-08-23, Rulings 1–3,
+               DECISIONS-2026-08-23-V1-AUTH-SPAM-RESISTANCE.md): §10.13.2 DES-095 v1-backing
+               amended — phone-based SMS auth named (FR-132, ADR-025); §10.13.8 added —
+               DES-099 spam-resistance layer (phone-intelligence VoIP detection + velocity/
+               device anti-fraud; flag-don't-block; FR-133; ADR-025 §(b)); §10.13.7 T-06
+               (Charter Rule 1 vs phone-auth) and T-07 (FR-003 PARTIAL vs phone-number
+               storage) rows added; §10.13.5 DES-097 ratification note added (Ruling 3 —
+               blockchain-as-audit-record RATIFIED; transparency-now/privacy-later); ADR-024
+               §(b) amendment note added. ADR-025 registered in §12 (ADR count twenty-four →
+               twenty-five; ADR-001..ADR-024 → ADR-001..ADR-025). §15 DES-095 amendment row
+               (FR-132) + DES-099 row (FR-133) added. §1.1 counts updated to SRS v2.8.0 (133
+               FR / 131 active / 114 Must). Source updated to SRS-TRUMOCRACY v2.8.0.
+               v2.3.1 (2026-08-23) — Rework (review cycle 1 FAIL, 90%/0C/1H/1M/1L;
+               artifacts/reviews/03-architecture-design-sdd-v2.3.0-technical-cycle1.md):
+               ISS-01 (High) §15 DES-098 row corrected — FR-130 was wrong (FR-130 = provisional-
+               party membership cap; FR-131 = v1 honesty notice MUST, minted by PO, Doc 02
+               v2.6.0, 2026-08-23); §15 DES-095 row FR range corrected (FR-121..130 →
+               FR-121..129; FR-130 has no logical connection to IEligibilityVerifier seam);
+               ADR-024 Traces section corrected (FR-121..FR-129, FR-131 in place of
+               FR-121..FR-130); ISS-02 (Medium) §10.13.6 DES-098 "Backs" placeholder replaced
+               with actual FR-131 reference; §18 C-02 closure note corrected — removed incorrect
+               claim that "FR-130 backs the SCR-13/SCR-14 disclosure obligation" (FR-130 = cap,
+               FR-131 = honesty notice, separate mintings); ISS-03 (Low) §10.13.7 legend added
+               defining (i)/(ii)/(iii) notation. Source-pin: v2.5.0 → v2.6.0; §1.1 counts
+               updated to SRS v2.6.0 (131 FR / 129 active / 112 Must). No other content changed.
+               v2.3.0 (2026-08-23) — v1/v2 delivery-architecture split (approver directive
+               Rathish, 2026-08-23): §10.13 added — v1/v2 architecture split, abstraction
+               seams (IEligibilityVerifier DES-095, IBallotService DES-096), v1 conventional-
+               auth backing (DES-097), v1 package disposition table, v1 honesty notice
+               (DES-098, backs "FR — to be minted by PO this session"); Charter-layer conflict
+               table (T-01..T-05, for approver's decision); ADR-024 registered in §12 (ADR
+               count twenty-three → twenty-four; ADR-001..ADR-023 → ADR-001..ADR-024); §15
+               DES-095..DES-098 traceability rows added. Two cascade items: (i) §18 C-02
+               closure annotation applied — PO decided: accept, FR-130 minted (Doc 02 v2.5.0,
+               DECISIONS-2026-08-22-WIREFRAME-C01-C02.md); (ii) ADR-016 amendment-block item
+               (c) citizen-exclusion sentence added (ISS-01 from v2.1.4 deferred review
+               cycle). §1.1 counts updated to SRS v2.5.0 (130 FR / 128 active / 111 Must).
+               Source updated to SRS-TRUMOCRACY v2.5.0. No DES additions beyond DES-095..DES-098.
+               v2.2.1 (2026-08-22) — Rework (review cycle 1 FAIL, 84%/0C/0H/2M/3L):
                ISS-01 §10.12.1(b) SCR coverage corrected (16 of 23 covered / 7
                uncovered, not 8/8); ISS-02 §10.12.4 Wireframe→SCR row for screen 3.4
                corrected to SCR-14 (partial) and §10.12.5 class (i) row revised (SCR-14
@@ -160,7 +290,7 @@ Changelog:     v2.2.1 (2026-08-22) — Rework (review cycle 1 FAIL, 84%/0C/0H/2M
 ```
 
 > **Based on:** arc42 + C4 + Google design doc + IEEE 1016. **Produced in:** Design.
-> The twenty-three decision records in `docs/adr/ADR-001..ADR-023` are normative and are
+> The twenty-five decision records in `docs/adr/ADR-001..ADR-025` are normative and are
 > summarised in §12; where this document and an ADR disagree, the ADR wins and this document
 > is the defect.
 
@@ -172,8 +302,8 @@ Changelog:     v2.2.1 (2026-08-22) — Rework (review cycle 1 FAIL, 84%/0C/0H/2M
 
 Trumocracy lets any verified citizen originate a political party, gather demonstrated public
 support, and — on reaching a coded threshold — operate that party under rules that no
-founder, financier or platform operator can override. The SRS v2.4.0 defines 21 `BR`, 129 `FR`
-(127 active + 2 superseded; 110 Must), 28 `NFR` (24 Must), 15 `CON`, and 27 `RISK`. The
+founder, financier or platform operator can override. The SRS v2.12.0 defines 21 `BR`, 133 `FR`
+(131 active + 2 superseded; 114 Must), 28 `NFR` (24 Must), 15 `CON`, and 27 `RISK`. The
 requirements that shape this architecture more than any others:
 
 | ID | Requirement | Architectural consequence |
@@ -1169,6 +1299,250 @@ Conflicts are surfaced, not reconciled. Dispositions are recommendations; resolu
 
 ---
 
+## 10.13 v1/v2 delivery-architecture split
+
+**Approver directive:** Rathish, 2026-08-23. Full governance record: ADR-024.
+
+### 10.13.1 Two delivery definitions
+
+| | Definition A — v1 | Definition B — v2 |
+|---|---|---|
+| Identity/personhood | Conventional auth (database account + WebAuthn passkey) | ZK anonymous enrolment via `ICredentialAdapter` → `PersonhoodRegistry` (ADR-016, ADR-017) |
+| Ballot casting | Conventional authenticated database write; chain audit log | MACI encrypted ballot + 5-of-7 threshold coordinator (ADR-006, DES-023) |
+| Tally | Conventional SQL aggregate; result hash published to audit contract | On-chain ZK tally proof (DES-024, DES-025); independently verifiable |
+| Cryptographic ceremonies | None | Groth16 Phase-1 + per-circuit Phase-2 (ADR-005, ADR-022) |
+| Blockchain role | Audit-record only (petition milestones, tally hashes, manifesto hashes, party activation events) | Audit record + full governance execution (PersonhoodRegistry, PartyRegistry, Governor, MACI, ProtocolGovernance) |
+| Receipt-freeness | NO — disclosed limitation | YES — MACI key-change override |
+| Anonymity floor | NO — conventional DB linkage present | YES — k ≥ 1000 (DES-008) |
+
+**Guardrail (approver-stated):** Nothing built in the Design phase is discarded. v1 reuses requirements, flows, design system, and wireframes. v2 is a swap behind stable interfaces, never a rewrite.
+
+### 10.13.2 DES-095 — IEligibilityVerifier seam
+
+**Purpose:** A stable design-level interface decoupling the application layer from the identity/personhood proof mechanism. The application calls this interface; the backing is swapped between v1 (conventional) and v2 (ZK) without any change above the seam boundary.
+
+**Normative call-site placement (2026-08-24; DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md):**
+`IEligibilityVerifier.verifyEligibility()` MUST be invoked at the three FR-123 COUNTING-action call sites:
+(a) contributing to a party's official strength number;
+(b) admission to a binding ballot (vote eligibility check);
+(c) candidacy nomination.
+The verifier MUST NOT be called as a precondition of account creation or party-join — those paths require phone verification alone (FR-020, FR-122). This call-site placement is **identical** for the v1 conventional backing (government-ID document check via DES-100) and the v2 ZK backing (nullifier proof via `ICredentialAdapter` → `PersonhoodRegistry`). The seam's position in the architecture — called at COUNTING actions, never at joining — is what makes v1 and v2 share one participation model with different verification backings. It is therefore an additional architectural reason that the v2 swap is an implementation swap behind the seam, not a rewrite of participation logic above it.
+
+**Design-level interface (methods and semantics — not implementation code):**
+
+| Method | v1 backing behaviour | v2 backing behaviour |
+|--------|---------------------|---------------------|
+| `verifyEligibility(memberId, regionId, scope, proof)` | Checks COUNTING-tier eligibility at the FR-123 action call site: queries `id_verified_flag = true` from restricted-class credential store (DES-100 allowlist; set when the member first completed government-ID document check at a prior COUNTING-action attempt or onboarding step); confirms session auth; no ZK proof verified; MUST NOT claim one-person-one-vote; MUST NOT claim unique personhood — check confirms real person, not unique person (FR-132 amended, ADR-025 §(e), 2026-08-23; re-scoped to COUNTING gate, ADR-025 §[AMENDMENT 2026-08-24]). If `id_verified_flag` is absent, the enrolment service MUST prompt the member to complete the government-ID document check (DES-100) and retry; it MUST NOT refuse account creation or party-join for absence of the flag. DES-099 spam-resistance guard applies in the enrolment path for the ID-check step, not on the COUNTING-action call itself. | ZK proof verified through `ICredentialAdapter` → `enrol()` → `PersonhoodRegistry` (ADR-017, DES-069, DES-070) |
+| `isUniqueInScope(memberId, scope)` | Database nullifier record (atomic write on first COUNTING action per scope) | On-chain `nullifierUsed[keccak(scope, N)]` (DES-001) |
+| `getProperties()` | Returns `{ onePersonOneVote: false, subpoenaResistant: false, unlinkable: false, anonymityFloor: false }` — these describe COUNTING-eligibility properties, not account-admission properties | Returns all true |
+| `IS_INSECURE_MOCK()` | Returns `false` — v1 is an honest conventional backing, NOT a mock (see §10.13.4) | Returns `false` |
+
+**Invariants both backings MUST satisfy:** one-vote-per-account per scope (v1) / one-vote-per-person per scope (v2) — v1: conventional nullifier record prevents double-voting from the same account; does NOT provide one-person-one-vote (`getProperties().onePersonOneVote = false`; T-06, ADR-025 §(a)). v2: on-chain nullifier derived from unique personhood proof — DES-001; genuine one-person-one-vote guarantee; eligibility scoping (membership record + snapshot v1; `vote()` snapshotRoot v2); verifiable tally output; no retrospective result change after tally closes. **Both backings MUST NOT gate account creation or party-join on verifyEligibility — the seam gates COUNTING actions only (FR-020, FR-122, FR-123).**
+
+**Properties ONLY v2 provides:** unlinkability, receipt-freeness, coercion-override, no identity at rest, anonymity floor (k ≥ 1000).
+
+**Composes with:** `ICredentialAdapter` (ADR-017, DES-070) — v2 routes through it; v1 bypasses it honestly (declared in `getProperties()`). `IProofVerifier` seam (ADR-022) — used by `IBallotService` v2 tally path; not used by `IEligibilityVerifier` directly.
+
+### 10.13.3 DES-096 — IBallotService seam
+
+**Purpose:** A stable design-level interface decoupling the application layer from the ballot-casting and tally mechanism.
+
+**Design-level interface (methods and semantics):**
+
+| Method | v1 backing behaviour | v2 backing behaviour |
+|--------|---------------------|---------------------|
+| `castBallot(electionId, choice, memberId, eligibilityRef)` | Authenticated write to database; `BallotReceipt` includes choice + timestamp + member reference | MACI encrypted ballot to message queue (DES-023); `BallotReceipt` includes only the message hash |
+| `changeBallot(electionId, newChoice, memberId)` | Database UPDATE with atomic overwrite; audit log records change | MACI key-change + re-vote; indistinguishable from original ballot at tally layer (FR-032, DES-023) |
+| `computeTally(electionId)` | SQL COUNT aggregate; result hash published to on-chain audit contract | MACI threshold coordinator DKG → on-chain ZK tally proof (DES-024, DES-025); independently verifiable by anyone |
+| `getTallyProperties()` | Returns `{ receiptFree: false, coercionOverride: false, zeroKnowledge: false, publiclyVerifiable: true }` | Returns all true |
+
+**Composes with:** `IProofVerifier` seam (ADR-022) — v2 `computeTally()` produces a ZK proof verified through `IProofVerifier`; v1 `computeTally()` produces a conventional aggregate and does not call `IProofVerifier` (honest bypass, not hidden).
+
+### 10.13.4 IS_INSECURE_MOCK() and the promotion gate
+
+The CI deployment-safety scan (§14, §7.1) blocks any deployment to testnet, staging, or production that has a MockVerifier in the VerifierRegistry (`IS_INSECURE_MOCK()` returning true). The distinction between a mock and the v1 conventional backing is critical:
+
+| Entity | Lies about verification? | `IS_INSECURE_MOCK()` | Promotion past devnet? |
+|--------|------------------------|---------------------|----------------------|
+| `MockVerifier` | YES — accepts any proof without checking | `true` | Blocked by CI gate |
+| v1 conventional backing | NO — checks by conventional means honestly | `false` | Permitted (honest, disclosed) |
+| v2 ZK backing | NO — verifies ZK proof on-chain | `false` | Permitted (real verifier) |
+
+The v1 conventional backing MUST NOT be labelled or implemented as a mock. It honestly performs what it claims. `IS_INSECURE_MOCK()` returns false because it is NOT an insecure mock: it is a functioning conventional implementation, honest about what it is and what it is not. The CI gate checks for lying; it does not check for genuine ZK-property absence. The latter is governed by the conflict table in ADR-024 §(c) and is a decision for the approver.
+
+### 10.13.5 DES-097 — v1 conventional-auth stack and package disposition
+
+**v1 recommendation (from ADR-024 §(b)):** Blockchain as public transparent-audit record only. The v1 application is a conventional Next.js PWA + Postgres database. A small, auditable on-chain audit contract on Base publishes petition milestones, tally result hashes, manifesto version hashes, and party activation events. No on-chain governance execution in v1.
+
+| Package / service | v1 disposition | Rationale summary |
+|---|---|---|
+| `packages/contracts` | **Adapt** — deploy only the lightweight audit-record contract subset; full on-chain governance contracts are v2-only | Satisfies FR-108 (blockchain as audit record); CI gate passes honestly |
+| `packages/circuits` | **Untouched for v2** — no circuits in v1 | v1 backings never call a circuit |
+| `packages/protocol` | **As-is** — pure rules, zero deps; governance state machines, threshold formula, encoding | Strongest reuse candidate; valid in both v1 and v2; differentially tested against chain in v2 |
+| `packages/sdk` | **Adapt** — strip ZK proof generation + on-chain PersonhoodRegistry/PartyRegistry paths; expose IEligibilityVerifier and IBallotService interfaces | v2 is a seam-local swap |
+| `packages/ui` | **As-is** — DES-093 token set, DES-094 privacy-status component apply unchanged; design system is independent of identity/ballot backing | ADR-023; independent of ZK/conventional split |
+| `apps/web` | **As-is with feature flags** — v2-only features flag-off (existing ADR-037 discipline); DES-098 honesty notice is v1 addition | Flag discipline already designed |
+| `apps/verifier` | **Untouched for v2** — meaningful only for MACI ZK tally proofs; not built in v1 | Activates when IBallotService v2 backing wired |
+| `services/indexer` | **As-is** — indexes whatever on-chain events exist; event set grows in v2 | Architecture unchanged |
+| `services/relayer` | **Adapt** — sponsors audit-record writes in v1; ZK proof submission relaying is v2 | Sponsorship model applies in both |
+| `infra` | **As-is** — same Base L2, IPFS/Arweave, Postgres topology | |
+| `tools` | **As-is** — dep-guard, codegen, test harness; IS_INSECURE_MOCK CI scan unchanged | |
+
+**Ratification note (2026-08-23):** Ruling 3 (Rathish, 2026-08-23; DECISIONS-2026-08-23-V1-AUTH-SPAM-RESISTANCE.md §2) RATIFIES the ADR-024 §(b)/DES-097 stack recommendation. The blockchain-as-public-transparent-audit-record design is the v1 foundation. v1's story is **transparency-now, privacy-later**: the chain delivers the transparency guarantee in v1; the ZK layer delivers the privacy guarantee in v2. Composition confirmed: this is identical to the blockchain-as-audit-layer design in §5.1/ADR-009/FR-108 — the chain remains commitments and audit-record only; the conventional DB is the application store; no restricted data appears on-chain; the boundary is unchanged. ADR-024 §(b) dated amendment note records this ratification.
+
+### 10.13.6 DES-098 — v1 honesty notice
+
+**Element:** Wherever a vote is cast in v1, the UI MUST display a plain-language honesty notice before the ballot is confirmed. The notice MUST state: (1) this vote uses conventional authentication and is NOT the private receipt-free ballot; (2) the platform database CAN see vote direction and party membership; (3) the cryptographic private ballot — where the platform is technically unable to see it — is available when the platform upgrades to the v2 privacy layer; (4) the tally result IS publicly auditable and published to the blockchain.
+
+**Requirements:**
+- Visible before confirmation; non-dismissable (voter must acknowledge to proceed); WCAG 2.2 AA (DES-081); screen-reader accessible
+- Displayed on SCR-13 (ballot booth) and SCR-14 (post-vote confirmation)
+- MUST NOT use the words "private", "anonymous", "receipt-free", or "secure" to describe v1 voting behaviour
+- Backs: **FR-131** (v1 honesty notice MUST — minted by PO, Doc 02 v2.6.0, 2026-08-23; owner Nadia Hassan; traces BR-005/BR-009)
+
+**FR-131 clause (d) extension (Doc 02 v2.12.0, 2026-08-24; DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md):** DES-098 MUST also provide a disclosure to open-tier (unverified) participants at the point a COUNTING action is blocked due to absence of government-ID verification. The disclosure MUST, in plain language: (1) inform the participant that the specific action (contributing to strength, casting a binding vote, or standing as a candidate) requires COUNTING-tier eligibility; (2) explain that open-tier participation (reading, following, watching, discussing, supporting, organising) continues to be available without any additional verification; (3) explain how to complete the government-ID document check to become COUNTING-eligible. This disclosure composes with the ballot-booth notice above: the ballot-booth notice applies to verified (COUNTING-tier) participants; this clause (d) disclosure applies to open-tier participants who attempt a COUNTING action before completing ID verification. No new DES element is minted — this is a clause extension to DES-098, reflecting FR-131 clause (d) (Doc 02 v2.12.0, owner Nadia Hassan).
+
+**Relationship to existing design:** DES-063 (coercion-safe confirmation surface, v2) is the v2 successor; DES-098 is the v1 disclosure surface. §13 "Public tallies in Phase 1" debt row's disclosure discipline is the precedent pattern.
+
+### 10.13.7 Charter-layer conflict check (ADR-024 §(c))
+
+The following tensions between v1 conventional auth and the Charter/Guarded layers are recorded FOR THE APPROVER'S DECISION. They are surfaced, not reconciled. Full analysis in ADR-024.
+
+**Legend — "v1 status" column notation:**
+- **(i) SATISFIED** — v1 meets this rule fully by application design; no approver decision required.
+- **(ii) DEFERRED** — the property is absent in v1; v1 makes no claim to it; honest disclosure via DES-098 (FR-131) applies; no approver decision on the claim itself (only on whether deferral with disclosure is acceptable scope).
+- **(iii) TENSION — FOR THE APPROVER'S DECISION** — the v1 implementation and the Charter or Guarded layer rule are in active tension; an explicit approver ruling is required before v1 implementation begins.
+
+| ID | Tension | v1 status | Decision owed |
+|----|---------|-----------|--------------|
+| T-01 | Charter Rule 6 — anonymity by default | **(ii)/(iii)** Conventional DB links account↔party; operator can comply with subpoena | **CONFIRMED 2026-08-23** — v1 accepted as a disclosed non-anonymous product; deferred-with-disclosure model accepted. (DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md §4) |
+| T-02 | FR-128 — subpoena test | **(iii)** Conventional DB operator CAN disclose; FR-128 requires technical inability to comply | **CONFIRMED 2026-08-23** — subpoena test deferred in full to v2; deferral-with-disclosure accepted. (DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md §4) |
+| T-03 | BR-009 / FR-082 — anonymity guarantee | **(ii) DEFERRED** | **CONFIRMED 2026-08-23** — FR-082 and BR-009 are Definition-B (v2-only); remain Must for v2; not weakened or deleted. (DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md §4) |
+| T-04 | NFR-003 — receipt-freeness (Guarded Layer named absolute) | **(ii) DEFERRED with honest disclosure** | **CONFIRMED 2026-08-23** — deferral-with-disclosure is acceptable. (DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md §4) |
+| T-05 | Charter Rule 3 — no privileged role over outcomes | **(ii) DEFERRED** Tamper-evidence (detectable) not tamper-prevention | **CONFIRMED 2026-08-23** — Charter Rule 3 accepted as v2-only (immutable core contracts). (DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md §4) |
+| T-06 | Charter Rule 1 — one human one vote vs v1 phone+ID auth | **(ii) DEFERRED with honest disclosure — IMPROVED (2026-08-23)** — government-ID document check (DES-100) raises the Sybil barrier over phone-alone; `subject_id_hash` same-document deduplication detects same-document-different-phone reuse. Same-person-with-multiple-government-IDs is not prevented. `getProperties().onePersonOneVote = false` is unchanged; v1 MUST NEVER claim one-person-one-vote or unique personhood — the check confirms real person, not unique person. FR-131/FR-132 (amended)/H-15 carry the caveat. | **ACCEPTED — DEFERRED WITH DISCLOSURE (approver, Rathish, 2026-08-24).** Same-document deduplication (`subject_id_hash`) IMPROVES Charter Rule 1 enforcement (cannot gain COUNTING-tier eligibility (FR-123) in two accounts using one government ID — the `subject_id_hash` check runs at COUNTING-tier verification time across all sessions, not at account creation). Multiple legitimate government IDs still allow limited multi-accounting — not closed. Disclosure mechanism: H-15 (onePersonOneVote not technically guaranteed) + FR-132 §(d) self-declaration. `getProperties().onePersonOneVote = false` unchanged. (DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md §4.3; ADR-025 §(d) [AMENDMENT 2026-08-24]) |
+| T-07 | FR-003 (no identity data at rest) vs v1 identity data-at-rest surface | **(ii) DEFERRED / PARTIAL — RESHAPED (2026-08-23)** — stored surface is now: `phone_hash` (HMAC-SHA-256/KMS-pepper, not plaintext) + `subject_id_hash` (HMAC-SHA-256/KMS-pepper — derived identifier for same-document deduplication) + `id_verified_flag` + `age_verified` + `issuing_region` (country code) + `verified_at`; no PII fields (name, DOB, document number, images) stored at any layer (DES-100 allowlist/denylist). Hashed phone improves FR-003 PARTIAL position vs plaintext; `subject_id_hash` adds a new derived identifier that deepens the retained surface. Legal classification of stored hashes as personal data under India DPDP and GDPR is not architect-decidable — routed to CON-015 and GDPR counsel (ADR-025 §(e) Q-3). v2 eliminates by construction. | Reshaped — CON-015 legal opinion and GDPR counsel govern final classification. Architect answers (DES-100, ADR-025 §(e)) gate PO's Doc 02 v2.11.0 update. (DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md §5) |
+| T-08 | FR-004 plurality intent (attestor concentration risk) vs v1 single-vendor ID-verification provider | **(iii) TENSION RECORDED — ARCHITECT-RESOLVED (2026-08-23)** — FR-004's ≥2 independent attestors requirement applies to the v2 protocol-level attestor stack (ZK credential issuers in `PersonhoodRegistry`); it does NOT apply literally to the v1 application-layer ID-verification vendor, which does not issue ZK-verifiable credentials. However, the concentration risk (single vendor sees all signups; state-compulsion risk identical to the §E3 + ADR-003 motivation for attestor diversity) is real and must be recorded. Phase-1 single-vendor is an accepted dated limitation — not a permanent choice. FR-129 Charter-layer guard prevents entrenchment. | **ARCHITECT-RESOLVED** — single-vendor accepted as Phase-1 dated limitation by analogy to OI-20; FR-004 literal requirement satisfied at protocol level (ADR-021); concentration risk recorded as design debt; Phase-2 multi-vendor option to be assessed. Not a blocking decision for the approver; disclosed per honest-record discipline. (ADR-025 §(e)) |
+
+**Resolved items (for completeness):** Charter Rule 2 (no transferable power) — SATISFIED. Charter Rule 5 (no behavioural surveillance) — SATISFIED. Charter Rule 7 (CON-001, parties only) — SATISFIED. CON-012 (no bespoke unaudited crypto) — SATISFIED. CON-013 (non-violence clause) — SATISFIED. **BR-003/FR-020 vs government-ID eligibility gate** — RESOLVED (approver, Rathish, 2026-08-24; DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md §4.5): the government-ID check does NOT gate joining (BR-003/FR-020 intact and absolute); it gates COUNTING-tier eligibility only (FR-123). The exclusion is from vote-COUNTING, not from membership. H-19 amended in Doc 02 v2.12.0 to reflect this. The prior AWAITING APPROVER CONFIRMATION flag (Doc 02 v2.11.0 §16.5 and DES-100 exclusion-residual note) is closed.
+
+### 10.13.8 DES-099 — v1 spam-resistance layer
+
+**Element:** A conventional fraud-detection service in the enrolment service path. It is NOT in any governance-path data store; flag records are restricted-class operational data.
+
+**Components and normative semantics (FR-133, ADR-025 §(b)):**
+
+| Component | Purpose | Tech |
+|-----------|---------|------|
+| Phone-intelligence API | Classify the registering phone number: real mobile, eSIM, VoIP, virtual/cloud-farm, recently recycled, blocked-carrier MSISDN | Third-party phone-intelligence vendor (vendor TBD; Doc 13 assumption (a) partially resolved — mechanism set, vendor open) |
+| Velocity / device anti-fraud | Detect high-frequency registration patterns, device-fingerprint clustering, IP/ASN clustering, registration-attempt surge | Application-layer rate-limiting and device-signal checks; no persistent cross-session device ID stored outside the restricted audit log |
+
+**Normative flag-don't-block rule (FR-133, Ruling 2 — non-negotiable):**
+- A suspicious classification MUST result in rate-limiting or queue-slowing, NOT a hard block.
+- A governance action (petition endorsement, membership join, proposal vote) MUST NEVER be denied solely on a fraud flag (FR-061 degrade-never-deny; FR-125/OI-19 rate-limiter-never-admission-condition; FR-020 absolute).
+- A first-class false-positive dispute path is mandatory — a legitimate citizen using VoIP or eSIM MUST be able to dispute without explaining their phone-number choice.
+- Flag events are restricted-class: not queryable by members, not published to any public record, not written to any on-chain store. Stored only in the restricted operational audit log with the enrolment service.
+
+**Privacy residual (recorded, not hidden):** The enrolment phone number is transmitted to the phone-intelligence vendor for scoring. Mitigation posture: minimal payload (phone number only; no party context, no political context); vendor contract must include no-retention/no-resale/no-profiling terms; vendor failure mode is fail-open (enrolment proceeds; spam layer is advisory). Residual accepted for v1; eliminated in v2 by ZK enrolment making the spam layer unnecessary at the uniqueness level. Full analysis in ADR-025 §(c-iii).
+
+### 10.13.9 DES-100 — v1 ID-document verification and retention model
+
+**Element:** The end-to-end flow for government-ID document verification as the v1 COUNTING-tier eligibility gate, the allowlist of retained fields, the hashing/KMS design for all retained identity-derived data, and the legal-review routing table. Implements the verify-and-discard retention rule (approver directive, Rathish, 2026-08-23; DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md §2). **Amended 2026-08-24 (DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md):** the ID check is the COUNTING-tier gate (FR-123), not an account-creation gate; account creation requires phone verification alone (FR-020, FR-122). Answers architect Q-1 and Q-2 in full; routes Q-3 items to CON-015 and GDPR counsel.
+
+**Why this element exists:** ADR-025 §(a) names the phone-verification channel for account creation. This element names the government-ID document check that confirms a real, legal-age person as a prerequisite for COUNTING-tier eligibility (FR-123) — specifying precisely the data-at-rest surface that results. The check is triggered when a member first attempts a COUNTING action (strength contribution, binding vote, candidacy) without `id_verified_flag = true` in the restricted-class credential store; account creation itself does NOT require this check. **[Pre-amendment text — superseded 2026-08-24: this element previously described the check as "before account creation"; that scoping was wrong per the 2026-08-24 ruling and is corrected here. The verify-and-discard retention rule, the allowlist/denylist, the HMAC design, and the Q-1/Q-2/Q-3 answers are unchanged.]**
+
+**Provider integration:** A third-party ID-verification provider (vendor TBD; Doc 13 DEP-new) receives the document image (front/back) and optionally a selfie, processes it, and returns a structured JSON response to the platform's enrolment service.
+
+**Field-level disposition (Q-1 answer):**
+
+| Provider field | Description | Platform action |
+|---|---|---|
+| `status` | APPROVED / REJECTED / REVIEW_NEEDED | Read; used to determine COUNTING-tier eligibility (FR-123 actions); not persisted |
+| `verification_id` | Ephemeral provider-issued session UUID | **DISCARDED immediately** — MUST NOT be persisted |
+| `subject_id` | Provider-issued stable pseudonymous token (same individual re-verifying → same token) | `HMAC-SHA-256(subject_id, pepper_id)` → stored as `subject_id_hash` |
+| `checks.age_verified` | Boolean: verified ≥ 18 | Stored as `age_verified` boolean |
+| `checks.issuing_country` | ISO 3166-1 alpha-2 code (e.g. "IN") | Stored as `issuing_region` |
+| `extracted_data.name` | Document-holder's full name | **DISCARDED** — PII; MUST NOT reach any store or log |
+| `extracted_data.date_of_birth` | Date of birth | **DISCARDED** — PII |
+| `extracted_data.document_number` | Document serial number | **DISCARDED** — PII |
+| `extracted_data.expiry_date` | Document expiry date | **DISCARDED** |
+| Document images (front/back) | Raw image bytes | **DISCARDED** — MUST NOT be forwarded or buffered beyond in-flight verification |
+| Selfie / biometric template | Liveness frames or biometric embeddings | **DISCARDED** — MUST NOT be stored or forwarded |
+
+**Allowlist — fields that MAY be persisted (restricted-class credential store only):**
+
+| Field | Type | Purpose |
+|---|---|---|
+| `id_verified_flag` | boolean | Gate: true iff document authentic + age verified + region returned |
+| `age_verified` | boolean | Confirms ≥ 18 at COUNTING-tier government-ID verification |
+| `issuing_region` | ISO 3166-1 alpha-2 | Assigns citizen to correct governance region |
+| `subject_id_hash` | HMAC-SHA-256(provider_subject_id, pepper_id) | Same-document deduplication — prevents same-document-different-phone reuse |
+| `phone_hash` | HMAC-SHA-256(E.164-normalized(phone), pepper_phone) | One-account-per-number enforcement (ADR-025 §(a)) |
+| `verified_at` | ISO-8601 timestamp | Compliance audit trail |
+
+**Denylist — fields that MUST NEVER reach any persistence layer, log, analytics pipeline, or error trace:** document images, biometric templates, selfie frames, `name`, `date_of_birth`, `document_number`, `expiry_date`, raw `subject_id`, `verification_id`.
+
+**Doc 01 §E1 alignment:** The allowlist delivers the PR-FAQ promise — "We do not keep your identity documents or biometric templates — they are checked and discarded, never stored by us." This promise holds ONLY IF the vendor contract includes a no-retention clause for document images and biometric templates on the provider's side. The vendor-contract constraint is not optional — it is part of this design element's correctness condition.
+
+**Q-2 answer — HMAC design and brute-force residual:**
+
+`phone_hash = HMAC-SHA-256(E.164-normalized(phone_number), pepper_phone)` and `subject_id_hash = HMAC-SHA-256(provider_subject_id, pepper_id)`. Both peppers (32-byte keys, randomly generated) are stored in KMS/HSM — not in the same data store as the hashes; not loaded into application memory in raw form.
+
+**Why HMAC-SHA-256 with KMS pepper (and why not bcrypt/Argon2id):** The deduplication check is a deterministic lookup — `SELECT WHERE phone_hash = compute(input)`. Slow KDFs (bcrypt, Argon2id) use per-record random salts, making them non-deterministic and unsuitable for duplicate-detection queries without degrading enrolment-service performance to ~100 ms+ per check at scale. HMAC with a KMS-held pepper is the correct design for deterministic, brute-force-resistant deduplication.
+
+**Brute-force residual (stated precisely):**
+- Attacker with DB dump only (no pepper): computationally infeasible — cannot precompute the hash table without the key. Security holds as long as the pepper is uncompromised.
+- Attacker with DB dump AND pepper: Indian mobile number space is ~4 × 10⁹ possible numbers (~1.1 billion active). Exhaustive precomputation takes hours on commodity GPU hardware. **Phone numbers CAN be recovered if both the DB dump and the pepper are simultaneously compromised. This is the accepted residual for any HMAC scheme.**
+- Insider with simultaneous KMS + DB access: can reconstruct all phone numbers. Dual-authorization is the primary mitigation.
+
+**Operational MUST requirements:**
+1. KMS/HSM stored; HMAC computation via KMS API; raw pepper bytes MUST NOT be loaded into application memory in production.
+2. Dual-authorization access policy on both KMS keys (2-person integrity rule).
+3. Pepper rotation schedule defined before production launch; re-hashing window during rotation holds access to both old and new peppers.
+4. No plaintext phone number written to any log, error trace, analytics pipeline, or debug output. Log-scrubbing MUST be enforced at application layer.
+5. Hash-lookup endpoints MUST be rate-limited at application layer to prevent online enumeration.
+
+**Verify-and-discard vs uniqueness tension (recorded honestly):** `subject_id_hash` detects same-document-different-phone reuse — a material Sybil-resistance improvement over phone-alone. It does NOT prevent a person holding multiple legitimate government IDs from creating multiple accounts. T-06 stands unchanged: `getProperties().onePersonOneVote = false`; v1 is "real-person verified, not unique-person guaranteed." The alternative (boolean only, no `subject_id_hash`) satisfies the stricter verify-and-discard interpretation but provides no same-document deduplication. Recommendation: retain `subject_id_hash`.
+
+**Q-3 answer — Legal-review routing:**
+
+*Architect-decidable (confirmed by this element):* fields to discard (denylist above); fields to store (allowlist above); HMAC-SHA-256/KMS design; restriction to restricted-class credential store only; provider fail-closed on unavailability.
+
+*MUST route to CON-015 and/or GDPR/DPDP counsel:*
+
+| Question | Legal domain | Priority |
+|---|---|---|
+| Is ephemeral provider-side processing of the government-ID image compliant with India DPDP Act 2023 consent/purpose-limitation provisions? Does verify-and-discard satisfy DPDP "legitimate use"? | CON-015 (India DPDP + Aadhaar Act 2016) | **Critical path — clears before implementation** |
+| If the government ID is Aadhaar: does document-check verification by a non-UIDAI entity constitute unauthorized authentication under the Aadhaar Act 2016 and Aadhaar Authentication Regulations? | CON-015 (specifically covers this) | **Critical path** |
+| Is `phone_hash` personal data under India DPDP and GDPR (re-identifiable with KMS key)? | CON-015 + EU GDPR counsel | High |
+| Is `subject_id_hash` personal data under India DPDP and GDPR (derived from biometric/document processing)? | CON-015 + EU GDPR counsel | High |
+| Retention period for all allowlist fields after account deletion (storage-limitation principle) | CON-015 | High |
+| Cross-border data transfer if ID-verification provider processes outside India | CON-015 + provider contract | High |
+| Erasure rights (DPDP/GDPR): can `phone_hash` and `subject_id_hash` be deleted without breaking audit chain? (On-chain records do not contain these fields — they are restricted-class — audit integrity maintained; legal confirmation required.) | CON-015 | Medium |
+| EU GDPR Article 9: political-platform context — restricted-class `phone_hash` linked to party membership may constitute politically sensitive data. Out of scope for Phase-1 India pilot; Gate-2 blocker for any EU expansion. | EU GDPR counsel | Medium (Phase 1) / High (Phase 2+) |
+
+**CON-015 is now critical-path:** this ruling adds government-ID document verification to the India/Aadhaar pilot — precisely the legally sensitive area CON-015 covers (Aadhaar Act 2016, DPDP, eKYC regulations). CON-015 legal opinion MUST be in hand ≥ 8 weeks before Gate 2. **No enrolment sprint begins without CON-015 cleared for the government-ID check path.**
+
+**Exclusion residual (recorded, not hidden) — REWRITTEN 2026-08-24 (DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md; corrects the pre-amendment scoping below):**
+
+A citizen without an accepted government-ID document **CAN** create an account, join a party, and participate fully in the open tier with phone verification alone — reading, following, watching, discussing, supporting, and organising (FR-122, FR-020). What they **cannot** do in v1 is:
+(a) have a vote counted in a binding decision;
+(b) contribute to a party's official strength number;
+(c) stand as a candidate.
+
+These are exactly the three FR-123 COUNTING actions. The exclusion is from COUNTING-tier eligibility, not from platform membership. An undocumented person is NOT excluded from Trumocracy — they participate at the open tier (FR-122), which is a full citizen-participation tier, without restriction.
+
+**This is still a real and sharp limitation.** The populations most likely to lack accepted government-issued ID documents — migrants, people in poverty, youth below document-issuance age, and those already marginalised from formal institutions — are the populations Trumocracy's mission specifically targets. A permanent non-counting class that disproportionately includes these populations is a genuine cost, not a hidden one. It is accepted as a Phase-1 limitation, not a permanent architecture choice.
+
+**Corrected house precedent:** ADR-016 item (c) — "In Phase 1, a person without Aadhaar cannot enrol in the pilot region" — is the no-document exclusion precedent for the v2 ZK enrolment path, where no-Aadhaar means no nullifier and thus no COUNTING actions. The v1 parallel is: no government-ID document → no COUNTING-tier eligibility in v1. Both precedents apply to the COUNTING gate, not to platform access. **[Pre-amendment text — superseded 2026-08-24: DES-100 previously stated "a citizen without an accepted government-ID document cannot enrol in v1" and the ADR-016 precedent was cited as gating "access to the platform itself"; both statements were wrong per the 2026-08-24 ruling and are corrected here.]**
+
+**FR-124 composition check (2026-08-24):** FR-124 (verified status is PRIVATE TO THE HOLDER, expressed as eligibility, never a public per-participant badge — Rathish ruling 2026-08-20; Doc 02 v2.12.0 §4.41) composes with this element without tension. The DES-100 allowlist fields (`id_verified_flag`, `age_verified`, `subject_id_hash`) are restricted-class and stored only in the restricted-class credential store. They MUST NOT become a public per-participant marker (FR-124 clause (d): no persistent public attribute, field, tag, or derivable signal MUST reveal that a specific participant is COUNTING-verified). This applies identically under the corrected COUNTING-gate scoping: whether the gate is at account creation or at the COUNTING-action call site, the verified-status fields remain restricted-class and never public. No conflict.
+
+**Traces:** FR-003 (PARTIAL — reshaped), FR-020 (RESOLVED — BR-003/FR-020 contradiction closed 2026-08-24; government-ID check does not gate joining), FR-122, FR-123, FR-124 (composition confirmed), FR-132 (amended; re-scoped to COUNTING gate 2026-08-24), NFR-010, NFR-016, CON-002, CON-008, CON-015, DES-095 (amended), ADR-025 §(e) and §[AMENDMENT 2026-08-24].
+**Backs:** FR-132 (Doc 02 v2.12.0; owner Marcus Adeyemi; traces BR-006/BR-012; re-scoped to COUNTING gate by v2.12.0). US layer: owed — PO to derive US from FR-132 (v2.12.0) covering the ID-verification COUNTING-tier flow.
+
+---
+
 ## 11. Situation & failure-mode analysis (per requirement)
 
 | Requirement / DES | Normal | Edge | Failure → behaviour |
@@ -1237,7 +1611,7 @@ Directive from approver (Rathish, 2026-08-11): sweep all four FR-115 steward pow
 
 ## 12. Architecture Decision Records
 
-Full records in `docs/adr/`. Status of all twenty-three ADRs: **Accepted**.
+Full records in `docs/adr/`. Status of all twenty-five ADRs: **Accepted**.
 
 | ADR | Decision | Chief consequence accepted |
 |---|---|---|
@@ -1264,6 +1638,8 @@ Full records in `docs/adr/`. Status of all twenty-three ADRs: **Accepted**.
 | 021 | Verification gates COUNTING, never joining; on-device nullifier-only identity posture; pilot sequence (Phase 1: India/Aadhaar offline KYC; Phase 2: EU/eIDAS 2.0; Phase 3: USA deferred); subpoena test as design invariant; two rejected designs recorded — persistent referral graph and encrypted identity registry (2026-08-20, directed by Rathish; DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Decisions 1–4); **amended 2026-08-20 (OI-19 CLOSED: FR-125 finalised, non-invite fallback mandatory, FR-020 unamended; OI-20 CLOSED: FR-004 satisfied at architecture level, Phase-1 dated limitation, Charter-layer guard FR-129)** | CON-015 Gate-2 legal-opinion dependency; OI-19 and OI-20 both CLOSED 2026-08-20 (DECISIONS-2026-08-20-OI19-OI20.md); open-tier account farms accepted (zero counted impact) |
 | 022 | Groth16 stays for Phase 1; near-irreversible Charter-adjacent commitment; PPoT Hermez reused at ~$0 for phase-1 setup; assurance-based per-circuit phase-2 (not convention count); Gate-2 six-circuit transcript set batchable into a campaign of days; accepted trade-off over universal-setup; revisit trigger: Phase 2+ circuit-count dominance; NFR-009 (two independent audits before Gate 2) unchanged (2026-08-21, directed by Rathish; DECISIONS-2026-08-21-CEREMONY-PROOFSYSTEM.md REC-2) | per-circuit phase-2 cost grows with circuit count — growth is the revisit trigger; migration is a verifier swap by design (`IProofVerifier` seam) but a full re-audit in practice |
 | 023 | Design system token set (DES-093) + privacy-status signature element (DES-094) adopted as the normative foundation for `packages/ui`; territory rule (navy = public-party / paper = private-user) is normative; PrivacyStatus component's normative privacy binding enforces FR-124 at component level; four wireframe conflicts recorded (§10.12.6) as engineer and PO disposition guidance; ADR-011 packages/ui designation is now concretely specified (2026-08-22, directed by Rathish; design/wireframes/index.html) | Fraunces font bundle risk: engineer must verify 15 MB install floor and self-host (Google Fonts CDN blocked by CSP); token values are specific hex, not a semantic system — any brand change is a DES amendment; three open conflicts (C-01 adapter-driven strings; C-02 unbacked 100-member cap; C-03 missing finance ledger screen) require PO/engineer action before build |
+| 024 | v1/v2 delivery-architecture split: IEligibilityVerifier seam (DES-095) and IBallotService seam (DES-096) as the stable abstraction boundary between conventional-auth v1 and ZK/MACI v2; v1 stack = blockchain as audit-record only (not full on-chain governance); v1 package disposition; honesty notice DES-098; Charter-layer conflict table T-01..T-05 for approver's decision (2026-08-23, directed by Rathish); **amended 2026-08-23 (Ruling 3 RATIFIED: blockchain-as-audit-record stack recommendation confirmed by approver; §(b)/DES-097 ratification note added)**; **amended 2026-08-24 (DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md): verifyEligibility MUST be invoked at FR-123 COUNTING-action call sites; MUST NOT be called as a precondition of account creation or party-join; call-site placement is identical in v1 and v2; invariants table updated; v1 "live session" backing description disambiguated; [AMENDMENT 2026-08-24] block added — see ADR-024** | Migration cost accepted: v1→v2 migrates identity and ballot backings; application logic, design system, and package topology above the seams are unchanged; Charter-layer tensions T-01..T-07 require approver decision (§10.13.7, ADR-024 §(c), ADR-025 §(d)) before v1 implementation begins |
+| 025 | v1 identity backing: phone-based SMS verification (one account per verified phone number; FR-132; spam speed-bump NOT personhood proof; v1 MUST NOT claim one-person-one-vote); DES-099 spam-resistance layer (phone-intelligence VoIP/virtual-number detection + velocity/device anti-fraud; flag-don't-block; first-class false-positive path; FR-133); T-06 and T-07 conflict-table extensions for approver's decision (2026-08-23, directed by Rathish, Rulings 1–2); **amended 2026-08-23 (§(e) added: government-ID document check alongside phone SMS; verify-and-discard retention rule — keep result, discard source; phone stored HMAC-SHA-256/KMS-pepper; subject_id_hash same-document deduplication; Q-1/Q-2/Q-3 architect answers; FR-004 plurality question resolved — single-vendor is Phase-1 dated limitation, T-08 minted; CON-015 now critical-path; consequences (c-i)/(c-ii) reshaped, (c-vii) added; T-06 improved but open; T-07 reshaped); amended 2026-08-24 (government-ID check gates COUNTING, never joining — approver Rathish, DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md): §(c-viii) heading and body rewritten — exclusion is from COUNTING-tier eligibility (FR-123), not from the platform; open-tier access (FR-122) available with phone verification alone; §(c-vi) phone-exclusion unchanged with clarifying sentence distinguishing the two exclusions; §(d) T-06 updated to ACCEPTED — DEFERRED WITH DISCLOSURE (approver, 2026-08-24); T-07 reaffirmed PENDING CON-015 unchanged; [AMENDMENT 2026-08-24] block added recording ruling, seam call-site placement, and v1/v2 participation-model mirror** | Multi-phone multi-account Sybil ceiling improved by ID check but not closed (c-i amended); retained surface is phone_hash + subject_id_hash + flags — restricted-class credential store only; no PII fields stored (c-ii amended, T-07 reshaped); three third-party vendor dependencies with privacy residuals — SMS provider, phone-intelligence API, ID-verification provider (c-iii, c-vii); SIM-swap/number-recycling attacks exist (c-iv); SMS cost must fit NFR-005 (c-v); no-phone exclusion (no account) is separate from no-ID exclusion (no COUNTING actions) — two distinct residuals, both disclosed (c-vi, c-viii amended); single-vendor ID-check concentration risk as dated Phase-1 limitation (T-08) |
 
 ## 13. Risks & technical debt
 
@@ -1324,6 +1700,38 @@ pre-existing Phase-3, environment, external, or mechanism gaps per Doc 08 §gap-
 | FR-082..086 (three-tier privacy), FR-124 (verified-status privacy, v2.3.1 ruling), NFR-001, NFR-002, NFR-011, NFR-013 | DES-093 (design token set) | 16 colour tokens + 2 typefaces + territory rule; normative foundation for `packages/ui/tokens.css`; ADR-023. US layer: owed — in the FR-121..FR-129 next-increment and in the design-debt items (§10.12.5). |
 | FR-082..086, FR-124, NFR-001, NFR-002, NFR-024 | DES-094 (privacy-status component) | Three states (anon / ver / pub); normative FR-124 privacy binding (self-view only; no Supporter badge; absence-test obligation); normative for `packages/ui/PrivacyStatus`; ADR-023. US layer: owed — no US yet; the component underpins every flow that shows a privacy state, which spans US-0001..US-0130 range once built. Leak-check PASS recorded (§10.12.3). |
 
+**v2.3.0 v1/v2 split additions (§10.13, 2026-08-23):**
+
+| Requirement | DES | Notes |
+|---|---|---|
+| BR-006, BR-009, FR-030..035, FR-069, FR-070, FR-082..086, FR-106..108, FR-121..129, NFR-001..004, NFR-009, NFR-027, CON-002, CON-008, CON-012, CON-013 | DES-095 (IEligibilityVerifier seam) | Design-level interface decoupling the application from the identity/personhood proof mechanism; v1 backing: conventional DB auth; v2 backing: `ICredentialAdapter` → `PersonhoodRegistry` (ADR-017); IS_INSECURE_MOCK() = false in both honest backings; ADR-024. US layer: owed — PO to derive US from this design element. |
+| BR-011, FR-030..035, FR-082..086, NFR-001..004, NFR-009 | DES-096 (IBallotService seam) | Design-level interface decoupling the application from the ballot-casting and tally mechanism; v1 backing: conventional DB write + audit chain log; v2 backing: MACI + 5-of-7 DKG + ZK tally proof (ADR-006, DES-023..025); `IProofVerifier` seam (ADR-022) is the upgrade path at the tally-proof layer; ADR-024. US layer: owed — flows through existing US once backings are wired. |
+| FR-108 (blockchain as trust layer not database), CON-012, CON-013 | DES-097 (v1 conventional-auth stack and package disposition) | Blockchain as audit-record only in v1; `packages/contracts` audit subset deployed; `packages/circuits` / `apps/verifier` untouched for v2; `packages/protocol` as-is; disposition table in §10.13.5; ADR-024 §(b). US layer: no new US — package disposition is a build-time decision, not a story-level deliverable. |
+| FR-131 (v1 honesty notice MUST — minted by PO, Doc 02 v2.6.0, 2026-08-23; owner Nadia Hassan; traces BR-005/BR-009) | DES-098 (v1 honesty notice) | Non-dismissable plain-language notice on SCR-13 (ballot booth) and SCR-14 (post-vote confirmation); MUST NOT use "private", "anonymous", "receipt-free" to describe v1 voting; ADR-024 §(d); WCAG 2.2 AA (DES-081). US layer: owed — PO to mint US from FR-131 covering the SCR-13/SCR-14 notice surface. |
+
+**v2.4.0 v1 phone-auth + spam-resistance additions (§10.13, 2026-08-23):**
+
+| Requirement | DES | Notes |
+|---|---|---|
+| FR-132 (v1 phone-based authentication; Must; owner Marcus Adeyemi; traces BR-006/BR-012; Doc 02 v2.8.0) | DES-095 amended (IEligibilityVerifier seam — v1 backing named) | v1 backing of IEligibilityVerifier now specified: phone-verified account, one per SMS-verified phone number; seam interface and method signatures unchanged; v1 MUST NOT claim one-person-one-vote; IS_INSECURE_MOCK() = false; ADR-025 §(a). US layer: owed — PO to derive US from FR-132 at next catch-up. |
+| FR-133 (v1 spam-resistance layer — flag-don't-block; Must; owner Rafael Duarte; traces BR-012/BR-003; Doc 02 v2.8.0) | DES-099 (v1 spam-resistance layer) | Phone-intelligence VoIP/virtual-number detection + velocity/device anti-fraud; flag-don't-block semantics (FR-061 degrade-never-deny; FR-125/OI-19 rate-limiter-never-admission-condition; FR-020 absolute); false-positive dispute path mandatory; flag data restricted-class (not on public record, not in governance-path stores); ADR-025 §(b). US layer: owed — PO to derive US from FR-133 at next catch-up. |
+
+**v2.5.0 ID-verification ruling additions (§10.13, 2026-08-23):**
+
+| Requirement | DES | Notes |
+|---|---|---|
+| FR-132 (amended by ruling 2026-08-23: government-ID document check co-required alongside phone SMS; verify-and-discard retention rule; MUST NOT claim unique personhood; Must; owner Marcus Adeyemi; traces BR-006/BR-012; Doc 02 v2.10.0) | DES-095 amended (amendment 2 — v1 backing updated: verifyEligibility now includes document check + verify-and-discard + phone_hash + subject_id_hash in restricted-class credential store; DES-100) | Second amendment to DES-095 in this session: v1 IEligibilityVerifier v1 backing now includes government-ID document check; stored fields named per DES-100 allowlist; MUST NOT claim one-person-one-vote; MUST NOT claim unique personhood — check confirms real person, not unique person; ADR-025 §(e). US layer: owed — PO to amend US derived from FR-132 at v2.11.0 catch-up. |
+| FR-003 (PARTIAL — reshaped: phone_hash + subject_id_hash + flags retained; document/name/DOB/images DISCARDED; CON-015 governs legal classification; Must for v2 — eliminated by ZK construction; Must; owner Dr. Lena Kowalczyk; Doc 02 v2.10.0) | DES-100 (v1 ID-document verification and retention model) | Allowlist: id_verified_flag, age_verified, issuing_region, subject_id_hash (HMAC-SHA-256/KMS-pepper), phone_hash (HMAC-SHA-256/KMS-pepper), verified_at — restricted-class credential store only; denylist: document images, biometric templates, name, DOB, document_number, expiry_date; HMAC brute-force residual documented; CON-015 legal-review routing table; T-06 improved/T-07 reshaped; ADR-025 §(e) Q-1/Q-2/Q-3. US layer: owed — PO to derive US from FR-132 amended covering the ID-verification enrolment flow. |
+| NFR-016 (data-at-rest posture for identity-derived fields; Must; owner Dr. Lena Kowalczyk; traces BR-006/BR-009; Doc 02 v2.10.0), CON-015 (India/Aadhaar legal opinion — now critical-path for government-ID check), CON-008 (no identity data in governance records) | DES-100 (v1 ID-document verification and retention model) | NFR-016 and CON-015 now trace directly to DES-100: HMAC/KMS posture satisfies NFR-016; CON-015 governs the legal questions that DES-100 cannot answer (see Q-3 routing table in §10.13.9). US layer: per FR-132 US above. |
+
+**v2.6.x amendment trace rows (§10.13, 2026-08-24):**
+
+| Requirement | DES | Notes |
+|---|---|---|
+| FR-020 (absolute join right — unchanged), FR-122 (open-tier access with phone verification alone), FR-123 (COUNTING actions: strength-number contribution, binding-ballot admission, candidacy nomination) | DES-095 amended (amendment 3 — call-site placement: verifyEligibility MUST be invoked at the three FR-123 COUNTING-action call sites; MUST NOT be called as a precondition of account creation or party-join; placement is identical for v1 conventional backing and v2 ZK backing; seam invariants table updated; DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md; ADR-024 [AMENDMENT 2026-08-24]) | Third amendment to DES-095 this session: the 2026-08-24 ruling establishes that the ID check gates COUNTING, never joining; call-site placement is the architectural expression of this rule; normative constraint applies to both backings equally. US layer: no new US — this is a placement constraint on call sites for existing US-level actions. |
+| FR-131 clause (d) (open-tier participants blocked from a COUNTING action MUST receive disclosure of non-counting status and explanation of how to become COUNTING-eligible; minted Doc 02 v2.12.0; owner Nadia Hassan; traces BR-005/BR-009) | DES-098 amended (FR-131 clause (d) cross-reference added: the DES-098 honesty-notice obligation extends to the point of a blocked COUNTING action for open-tier participants — not only to ballot-confirmation screens SCR-13/SCR-14; DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md) | Extends the DES-098 scope established in v2.6.0: clause (d) triggers at any COUNTING-action block (strength contribution, binding vote, candidacy), not only at the ballot booth. US layer: owed — PO to extend US from FR-131 to cover the blocked-action disclosure path. |
+| FR-020 (absolute join right), FR-122 (open-tier access), FR-123 (COUNTING actions), FR-124 (verified status private to holder — restricted-class; no public badge; no Supporter badge) | DES-100 amended (counting-gate correction: exclusion residual rewritten from platform exclusion to COUNTING-tier eligibility gate; FR-124 composition check recorded — verified status is restricted-class and MUST NOT become a public per-participant marker; field table status row corrected to COUNTING-tier eligibility gate; age_verified field scoped to COUNTING-tier verification; DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md) | The 2026-08-24 ruling corrects DES-100's exclusion-residual scope from "cannot enrol in v1" to "cannot take COUNTING actions"; FR-124 composition check added confirming verified-status privacy applies identically to the v1 `id_verified_flag` path. US layer: owed — PO to update US derived from FR-132 to reflect the COUNTING-action trigger rather than enrolment trigger. |
+
 ## 16. Open questions
 
 | # | Question | Owner | Needed by |
@@ -1342,6 +1750,16 @@ pre-existing Phase-3, environment, external, or mechanism gaps per Doc 08 §gap-
 | Q12 | **100-member provisional cap (wireframe 2.3) — accept or reject?** The wireframe note "Membership caps at 100 until legal verification completes" has no backing FR. The Product Owner must decide: mint a new FR defining the provisional cap (and its enforcement mechanism, relation to the petition lifecycle, and the "legal verification" trigger), or reject the concept and revise the wireframe copy. This must not be built without a decision. | Priya Raghunathan (PO) | Before design of petition-live screen |
 | Q13 | **FR-125 non-invite fallback — design all four layers.** The mandatory non-invite fallback path (OI-19 ruling; FR-125(b) non-invite fallback ALWAYS available) has no wireframe screen, no DES, no SCR, no US. The Welcome screen (1.1) shows only "Explore" and "I have an invite". The fallback flow must be designed end-to-end. Owner of the DES and SCR: architect (next increment). Owner of the US: product-owner. | Ravi Deshmukh (architect) + Priya Raghunathan (PO) | Before Coding sprint covering FR-125 |
 | Q14 | **Party finance ledger screen — design owed.** The wireframe 1.6 "Finances — every rupee in and out" navigation row links to an undesigned screen. FR-050 (Must) requires the itemised public treasury record. DES-033 covers the on-chain mechanism; the UI is not designed. A ledger SCR, DES surface element, FE, and US are all owed. | Ravi Deshmukh (architect) + Priya Raghunathan (PO) | Before Coding sprint covering FR-050 |
+
+**Confirmations recorded (2026-08-23; DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md §4):**
+
+| Item | Confirmed disposition |
+|---|---|
+| T-01..T-05 Charter tensions | Deferred-with-disclosure model accepted for all five; see §10.13.7 "Decision owed" column for each row. |
+| FR-030, FR-031, FR-082, FR-086 (DEFERRED-v2 Musts) | Definition-B-only confirmed: remain Must for v2; not weakened or deleted; v1 makes no claim to these properties. |
+| NFR-009 v1 re-reading | One OWASP-class pen test for v1 (not two cryptographic audits); the two cryptographic audits remain the requirement for v2. |
+| 2027-05-14 | Gate-2 referent for Definition B confirmed. Also closes the "2027-03-15" carry-forward query from the 2026-08-21 budget ruling — that figure matched no artifact; 2027-05-14 is confirmed. |
+| v1 gate date | The existence of MS-V1-LRG as a separate v1 launch-readiness gate is confirmed as the mechanism; the date is NOT SET — an explicit approver value is still required. |
 
 **Resolved during design:** OI-05 (k ≥ 1000 vs ward-level governance) — ADR-004 §2 escalates
 scope to the nearest ancestor region meeting the floor. OI-12 (FR-073 vs ADR-003) — resolved
@@ -1535,11 +1953,13 @@ Design response: §10.1 STRIDE table updated; SC-15 general rule (ProtocolGovern
 
 ### C-02 — Wireframe "caps at 100 until legal verification" has no backing requirement (v2.2.0)
 
-**Status:** Open — Product Owner must decide: mint a FR or reject the concept.
+**Status:** CLOSED — PO decided: accept. FR-130 minted (Doc 02 v2.5.0; DECISIONS-2026-08-22-WIREFRAME-C01-C02.md). 2026-08-22, Rathish.
 
 **The conflict:** Wireframe 2.3 note: "Membership caps at 100 until legal verification completes — so an unverified party can't gather false strength." No backing FR, DES, or US exists. FR-013 (petition state), FR-075 (platform vs legal registration distinction), FR-076 (founding member count ≥ 5), FR-016 (activation threshold by formula) — none authorise a provisional membership cap of any kind. This is a new design concept with no normative footing.
 
 **Required disposition:** This screen element MUST NOT be built until a FR is minted, reviewed, and approved. The Product Owner must decide whether the concept is accepted (mint FR) or rejected (revise wireframe copy). The architect does not determine this; it is a product decision. Recorded in §10.12.5 class (ii) as design debt and here as a conflict.
+
+**Closure note (2026-08-23):** PO accepted the concept and minted FR-130 (Doc 02 v2.5.0) — FR-130 is the provisional-party membership cap (anti-capture control); it closes C-02 by providing the normative footing for the wireframe 2.3 note. The 100-member provisional cap and its enforcement mechanism are now the engineer's build-time obligation per FR-130. Separately, DES-098 (v1 honesty notice, §10.13.6) is backed by FR-131 (Doc 02 v2.6.0, 2026-08-23) — the v1 honesty notice MUST minted by PO; FR-131 and FR-130 are separate requirements with separate obligations. No further architect action required on C-02 itself.
 
 ---
 
