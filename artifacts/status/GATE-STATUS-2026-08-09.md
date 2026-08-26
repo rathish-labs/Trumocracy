@@ -1226,3 +1226,49 @@ Future build PRs during the build phase are assessed on the code-drop review bar
 technical-mode document-review PASS + suite green + typecheck clean + dep-guard clean) plus
 traceability (stories trace to FR/DES; TCs exist). RTM zero-gap is **not** a merge gate.
 Gate-2 certification remains the sole RTM zero-gap checkpoint.
+
+---
+
+### Closing state — 2026-08-26 (party-creation build session)
+
+#### Code drop
+
+The v1 party-creation flow is complete and demoable behind the `IS_INSECURE_MOCK` in-memory store. Closed FRs this session: FR-010 (collision incl. TOCTOU re-check), FR-011 (eight-pillar gate naming deficiencies), FR-012 (bounds + defaults), FR-013 (expiry / immutable archive / cooldown — the FR-013 Should row CLOSED; first non-Must row closed by build), FR-018 (threshold gate — cycle-1 High: `activateParty` ungated, fixed same session), FR-020 (join never calls the verifier), FR-077 / CON-013 (clause verbatim non-removable), FR-130 (100-cap, code-only lift, NO grace — the brief's "60-day grace" had no backing requirement and was NOT implemented), BR-020 disclosure. Suite 491 green (contracts 95 / protocol 126 / sdk 197 / ui 14 / web 16 / indexer 43); dep-guard and tsc clean.
+
+#### Review
+
+Doc 06 v2.2.0 **Approved** (cycle-1 FAIL 84% — 1 High: `activateParty` ungated, 2 Medium: TOCTOU + `Date.now`; cycle-2 PASS 97%). **reviewer-qa MERGE SIGNED** (2026-08-25, under the RTM-merge-rule clarification recorded in the "Governance clarification — 2026-08-25" section above).
+
+#### Traceability
+
+Doc 05 v2.3.0 In Review (9 existing stories updated, 0 minted; full business review still owed — Gate-1 blocker unchanged). Doc 07 v2.2.2 **Approved** (PASS 97%). Doc 08 v2.2.5 **Approved** (cycle-2 PASS 98%; v2.2.4 cycle-1 FAIL 96% on one dashboard cell). RTM: 16 complete / 161 rows (12 / 138 Must — unchanged; FR-013 Should row newly closed); open Must 126 unchanged.
+
+#### Approver items (requires decision — Rathish)
+
+| ID | Item | Status |
+|----|------|--------|
+| CLAUSE-TEXT-01 | Canonical non-violence clause text (engineer-authored frozen constant) — needs ratification | OPEN |
+| COOLDOWN-01 | `REPETITION_COOLDOWN_SECONDS` = 30 days (engineer-chosen; no published figure in any FR or DES) — needs PO / architect ratification and a formal FR / DES home | OPEN |
+| 60-DAY-GRACE | "60-day grace" discrepancy: brief cited 60-day grace; FR-130 as built has NO grace — FR-130 implemented as written; brief's grace had no backing requirement | OPEN |
+| OI-04 follow-up | Jurisdiction seed list (5 regions) pending OI-04 / registry service | OPEN |
+| ARABIC-I18N | Arabic i18n strings need native-speaker review | OPEN |
+| DES-EMBLEM | Emblem is text-only; no DES exists for image emblems | OPEN |
+
+#### Carried debt added this session
+
+| Document | Severity | Issue |
+|----------|----------|-------|
+| Doc 07 | Low | TC-3512 / TC-3500 citations incl. unconfirmed UT-0805 |
+| Doc 08 | Low | §6 Stories row 12→13 / 122→121 (deferred to next maintenance bump — do NOT fix now) |
+| SDK | Fixed | Header comment corrected under reviewer-qa authorisation this session |
+
+#### Operational clock (UNCHANGED — NOT STARTED)
+
+| Item | Latest start | Days from 2026-08-26 | Owner | Status |
+|------|-------------|----------------------|-------|--------|
+| CON-015 — independent legal opinion (Aadhaar API / data-minimisation) | **2026-09-07** | **12 days** | Sofia Marchetti | **NOT STARTED — CRITICAL PATH** |
+| DEP-11 — SMS / phone-auth provider contract | **2026-09-19** | **24 days** | Rafael Duarte | **NOT STARTED** |
+| DEP-12 — phone-intelligence API (VoIP / fraud detection) contract | **2026-09-19** | **24 days** | Rafael Duarte | **NOT STARTED** |
+| DEP-13 — government-ID document-check provider contract | **2026-09-19** | **24 days** | Rafael Duarte | **NOT STARTED** |
+
+**Gate 2:** NOT READY. RTM (Doc 08 v2.2.5): 138 Must rows / 12 COMPLETE / **126 OPEN** (8.7% completion). Gate-1-presentation blocker: Docs 01 and 05 still lack passing business-mode review reports.

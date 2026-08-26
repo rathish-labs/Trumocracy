@@ -97,4 +97,84 @@ declare module '@trumocracy/sdk' {
     details: Record<string, unknown>;
   }
   export class TrustBoundaryViolation extends TrumocracyError {}
+
+  // ─── Party-creation service seam (DES-097 predecessor) ───────────────────────
+
+  /** IPartyStore — injectable persistence seam for PartyCreationService. */
+  export interface IPartyStore {
+    IS_INSECURE_MOCK(): boolean;
+    findDraftById(id: string): object | null;
+    findPetitionById(id: string): object | null;
+    findPartyById(id: string): object | null;
+    findLivePetitionsByJurisdiction(jurisdiction: string): object[];
+    findActivePartiesByJurisdiction(jurisdiction: string): object[];
+    findExpiredPetitionsByDrafter(drafterPseudonym: string, jurisdiction: string): object[];
+    saveDraft(draft: object): string;
+    updateDraft(id: string, data: object): object;
+    savePetition(petition: object): string;
+    findPetitionById(id: string): object | null;
+    updatePetition(id: string, data: object): object;
+    archivePetition(id: string): object;
+    saveParty(party: object): string;
+    updateParty(id: string, data: object): object;
+    addMember(partyId: string, memberPseudonym: string): void;
+    getMemberPseudonyms(partyId: string): string[];
+  }
+
+  /**
+   * InMemoryPartyStore — IS_INSECURE_MOCK=true; blocked past devnet.
+   * Postgres/API backing is later wiring (DES-097).
+   */
+  export class InMemoryPartyStore implements IPartyStore {
+    IS_INSECURE_MOCK(): true;
+    findDraftById(id: string): object | null;
+    findPetitionById(id: string): object | null;
+    findPartyById(id: string): object | null;
+    findLivePetitionsByJurisdiction(jurisdiction: string): object[];
+    findActivePartiesByJurisdiction(jurisdiction: string): object[];
+    findExpiredPetitionsByDrafter(drafterPseudonym: string, jurisdiction: string): object[];
+    saveDraft(draft: object): string;
+    updateDraft(id: string, data: object): object;
+    savePetition(petition: object): string;
+    updatePetition(id: string, data: object): object;
+    archivePetition(id: string): object;
+    saveParty(party: object): string;
+    updateParty(id: string, data: object): object;
+    addMember(partyId: string, memberPseudonym: string): void;
+    getMemberPseudonyms(partyId: string): string[];
+  }
+
+  export interface PartyCreationDraft {
+    name: string;
+    jurisdiction: string;
+    pillars: Record<string, string>;
+    emblem: string;
+    charter: { nonViolenceClause: string; [key: string]: unknown };
+  }
+
+  export interface PartyStatus {
+    partyId: string;
+    state: string;
+    memberCount: number;
+    provisional: boolean;
+    cap: number | null;
+    capReached: boolean;
+    legalRegistrationStatement: string;
+  }
+
+  /**
+   * PartyCreationService — demoable party-creation flow.
+   * IS_INSECURE_MOCK() delegates to the store.
+   */
+  export class PartyCreationService {
+    constructor(store: IPartyStore, clock?: () => number);
+    IS_INSECURE_MOCK(): boolean;
+    createDraft(draft: PartyCreationDraft, drafterPseudonym: string): { draftId: string };
+    publishDraft(draftId: string): { petitionId: string; opensAt: number; closesAt: number };
+    expirePetitions(now?: number): string[];
+    activateParty(petitionId: string): { partyId: string };
+    joinParty(partyId: string, memberPseudonym: string): { memberCount: number };
+    recordLegalRegistration(partyId: string, evidenceRef: string): { legalRegistrationVerified: true };
+    partyStatus(partyId: string): PartyStatus;
+  }
 }

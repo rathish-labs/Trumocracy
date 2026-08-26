@@ -45,3 +45,11 @@ export {
 export {
   ConventionalBallotService,
 } from './ballot.js';
+
+// ─── Party-creation service seam (DES-097 predecessor) ───────────────────────
+// IPartyStore + InMemoryPartyStore + PartyCreationService: mirrors the
+// eligibility/ballot seam pattern. Postgres/API backing is later wiring.
+export {
+  InMemoryPartyStore,
+  PartyCreationService,
+} from './party-creation.js';

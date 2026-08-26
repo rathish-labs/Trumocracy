@@ -163,6 +163,43 @@ export const en = {
         : binding === 'verified-residents'
           ? 'This is a share of the people in this area who have shown they are real.'
           : 'This is a share of the people who live in this area.',
+    // Party-creation additions — emblem, charter, BR-020, FR-130, FR-077.
+    emblemLabel: 'Party emblem',
+    emblemHelp: 'A short symbol for your party. Up to 8 characters — for example, two or three letters.',
+    jurisdictionSelectLabel: 'Area this party covers',
+    jurisdictionSelectHelp: 'Choose the area your party will stand for. More areas will be added over time.',
+    jurisdictionSelectPlaceholder: 'Select an area',
+    nonViolenceTitle: 'Non-violence commitment',
+    nonViolenceHelp:
+      'Every party must include this statement. It cannot be removed or changed. ' +
+      'This is the only restriction the platform places on what a party believes.',
+    charterSectionTitle: 'Party rules',
+    charterSectionHelp:
+      'These are the rules your party will follow. The platform sets minimum standards. ' +
+      'Your party can choose stricter rules, but not weaker ones.',
+    // BR-020 disclosure: platform creation ≠ legal registration.
+    platformNotLegalTitle: 'Creating a party here is not the same as legal registration',
+    platformNotLegalBody:
+      'Starting a party on this platform means your party exists here, where people can support it. ' +
+      'It does not mean your party is legally registered with any government. ' +
+      'We cannot grant or override legal recognition. You will need to follow your own country\'s ' +
+      'rules for legal registration separately.',
+    // FR-130 provisional status.
+    provisionalLabel: 'Pre-legal-verification',
+    provisionalCapHelpOpen: (cap: number) =>
+      `This party is new and not yet legally registered. It can have up to ${cap} members for now. ` +
+      `The limit lifts automatically when the party completes legal registration.`,
+    provisionalCapHelpReached: (cap: number) =>
+      `This party has reached its ${cap}-member limit for new parties that are not yet legally registered. ` +
+      `No new members can join until the party completes legal registration.`,
+    provisionalCapHelpLegal: 'This party is legally registered. There is no membership limit.',
+    // Draft/publish feedback.
+    draftSaved: 'Your draft has been saved.',
+    petitionStarted: 'Your party is now open for support.',
+    collisionName: 'A party or petition with this name already exists in your area.',
+    collisionEmblem: 'A party or petition with this emblem already exists in your area.',
+    cooldownActive: (reopensAt: number) =>
+      `You filed a very similar party recently in this area. You can file again after ${new Date(reopensAt * 1000).toLocaleDateString()}.`,
   },
   proposals: {
     title: 'Decision',

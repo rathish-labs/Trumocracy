@@ -126,4 +126,41 @@ declare module '@trumocracy/protocol' {
 
   export const PARTY_STATE: Record<string, string>;
   export const PROPOSAL_STATE: Record<string, string>;
+
+  // ─── Party-creation additions (v1 phase 1) ───────────────────────────────────
+
+  /** Provisional party membership cap (FR-130). */
+  export const PROVISIONAL_MEMBER_CAP: 100;
+
+  /** Emblem bounds (FR-010, D3). */
+  export const EMBLEM: { readonly MIN_CHARS: number; readonly MAX_CHARS: number };
+
+  /**
+   * The platform's standard non-violence clause (FR-077, CON-013).
+   * Must appear verbatim in every party charter.
+   */
+  export const NON_VIOLENCE_CLAUSE: string;
+
+  /** Cooldown for re-petitioning with a substantially identical charter (FR-013, COOLDOWN-01). */
+  export const REPETITION_COOLDOWN_SECONDS: number;
+
+  export interface Draft {
+    name?: string;
+    jurisdiction?: string;
+    pillars?: Partial<Record<string, string>>;
+    emblem?: string;
+    charter?: { nonViolenceClause?: string; [key: string]: unknown };
+  }
+
+  /** Validate a complete draft (name + pillars + emblem + charter + non-violence clause). */
+  export function validateDraft(draft: Draft): ValidationResult;
+
+  /** Fill charter defaults where silent (FR-012). Returns a new object, never mutates. */
+  export function applyCharterDefaults(charter?: unknown): unknown;
+
+  /** Compute a stable fingerprint for substantially-identical-charter detection (FR-013, D4). */
+  export function charterFingerprint(draft: { pillars?: Record<string, string>; charter?: unknown }): string;
+
+  /** Normalise a name or emblem for collision detection (FR-010, DES-073). */
+  export function normalizeCollisionKey(s?: string | null): string;
 }

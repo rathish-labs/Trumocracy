@@ -3153,11 +3153,21 @@
    "product": "Trumocracy",
    "summary": "Rework cycle 1 against FAIL reports for Doc 07 v2.2.0 (95%, 0C/0H/1M/1L) and Doc 08 v2.2.0 (96%, 0C/0H/1M/1L). Minted TC-3488 (US-0132 · NFR-011 · DES-094) mapping UT-0753 (PrivacyStatus accessible-name test); corrected §2 counting-difference note from '2-row' to '7-row'; updated all TC/automated/observed-passing totals in Doc 07 (389→390, 158→159, 87→88). Fixed two stale '113 open Must rows' references in Doc 08 §9 (sign-off row and gate-rule footnote) to 118. Verified Stories 134 is correct (US-0131 added at v2.1.0 raises pre-v2.2.0 baseline to 131; 131+3=134 — reviewer used stale 130 baseline). Both documents produced at v2.2.1 Status: In Review.",
    "ids_touched": {
-    "TC_minted": ["TC-3488"],
-    "US_referenced": ["US-0132"],
-    "NFR_referenced": ["NFR-011"],
-    "DES_referenced": ["DES-094"],
-    "UT_referenced": ["UT-0753"],
+    "TC_minted": [
+     "TC-3488"
+    ],
+    "US_referenced": [
+     "US-0132"
+    ],
+    "NFR_referenced": [
+     "NFR-011"
+    ],
+    "DES_referenced": [
+     "DES-094"
+    ],
+    "UT_referenced": [
+     "UT-0753"
+    ],
     "review_source": [
      "artifacts/reviews/07-test-cases-suites-v2.2.0-technical-cycle1.md",
      "artifacts/reviews/08-traceability-matrix-v2.2.0-technical-cycle1.md"
@@ -3225,12 +3235,25 @@
     }
    },
    "ids_touched": {
-    "TC_verified": ["TC-3488"],
-    "UT_verified": ["UT-0753"],
-    "NFR_verified": ["NFR-011"],
-    "DES_verified": ["DES-094"],
-    "US_verified": ["US-0132"],
-    "FR_confirmed_absent_from_Doc08": ["FR-129", "FR-130"]
+    "TC_verified": [
+     "TC-3488"
+    ],
+    "UT_verified": [
+     "UT-0753"
+    ],
+    "NFR_verified": [
+     "NFR-011"
+    ],
+    "DES_verified": [
+     "DES-094"
+    ],
+    "US_verified": [
+     "US-0132"
+    ],
+    "FR_confirmed_absent_from_Doc08": [
+     "FR-129",
+     "FR-130"
+    ]
    },
    "open_items": [
     "Doc 08 v2.2.1 FAIL Cycle 2: tester must produce v2.2.2 — add TC-3488 to NFR-011 forward trace (ISS-01); add FR-129/FR-130 rows to §3.1 with full chains and correct all derived counts (ISS-02).",
@@ -3254,10 +3277,25 @@
     "artifacts/memory-index.json (updated — this entry appended)"
    ],
    "ids_touched": {
-    "FR_added_to_Doc08": ["FR-121", "FR-125", "FR-126", "FR-127", "FR-128", "FR-129", "FR-130", "FR-133"],
-    "TC_added_to_NFR011": ["TC-3488"],
-    "UT_added_to_NFR011": ["UT-0753"],
-    "US_added_to_NFR011": ["US-0132"],
+    "FR_added_to_Doc08": [
+     "FR-121",
+     "FR-125",
+     "FR-126",
+     "FR-127",
+     "FR-128",
+     "FR-129",
+     "FR-130",
+     "FR-133"
+    ],
+    "TC_added_to_NFR011": [
+     "TC-3488"
+    ],
+    "UT_added_to_NFR011": [
+     "UT-0753"
+    ],
+    "US_added_to_NFR011": [
+     "US-0132"
+    ],
     "DES_in_FR133": "DES-099"
    },
    "arithmetic": {
@@ -3304,10 +3342,25 @@
     "verdict": "FAIL"
    },
    "ids_verified": {
-    "FR_new_rows_confirmed_Must": ["FR-121", "FR-125", "FR-126", "FR-127", "FR-128", "FR-129", "FR-130", "FR-133"],
-    "DES_verified": ["DES-099 (Doc 03 §10.13.8)"],
-    "US_verified": ["US-0131 (Doc 05 v2.1.0)"],
-    "TC_verified": ["TC-3488 in NFR-011"]
+    "FR_new_rows_confirmed_Must": [
+     "FR-121",
+     "FR-125",
+     "FR-126",
+     "FR-127",
+     "FR-128",
+     "FR-129",
+     "FR-130",
+     "FR-133"
+    ],
+    "DES_verified": [
+     "DES-099 (Doc 03 §10.13.8)"
+    ],
+    "US_verified": [
+     "US-0131 (Doc 05 v2.1.0)"
+    ],
+    "TC_verified": [
+     "TC-3488 in NFR-011"
+    ]
    },
    "cycle2_issues_closed": {
     "ISS-01": "CLOSED — TC-3488/UT-0753/US-0132 confirmed in NFR-011 row",
@@ -3475,6 +3528,387 @@
     "Enrolment-sprint obligations: clause 8 affordance, ICredentialStore, audit-contract tally wiring, fonts/DES-082 floor check, SIM-swap recovery DES."
    ],
    "gate": "Gate 1 APPROVED unconditionally 2026-08-11 (Rathish). Gate 2 NOT READY — 126/138 open Must rows. Merge of build/v1-scaffold SIGNED."
+  },
+  {
+   "id": "engineer-2026-08-25T1530",
+   "role": "engineer",
+   "file": "artifacts/engineer-2026-08-25T1530.md",
+   "timestamp": "2026-08-25T15:30:00Z",
+   "phase": "Coding & UT — v1 Party-Creation flow",
+   "product": "Trumocracy",
+   "summary": "Implemented the complete v1 PARTY-CREATION flow (D1–D6): protocol additions (validateDraft, applyCharterDefaults, charterFingerprint, normalizeCollisionKey, NON_VIOLENCE_CLAUSE, EMBLEM, PROVISIONAL_MEMBER_CAP, REPETITION_COOLDOWN_SECONDS); SDK service layer (InMemoryPartyStore + PartyCreationService with IS_INSECURE_MOCK=true); web components (EightPillarForm extended, ProvisionalStatus, jurisdictions config, i18n strings, wired petition page). 486 tests green (protocol 126, sdk 192, ui 14, indexer 16, web 43, contracts 95). dep-guard and TypeScript clean. Doc 06 v2.1.0 Status: In Review.",
+   "artifacts_written": [
+    "packages/protocol/test/party-creation.test.js (new)",
+    "packages/sdk/src/party-creation.js (new)",
+    "packages/sdk/test/party-creation.test.js (new)",
+    "apps/web/src/config/jurisdictions.ts (new)",
+    "apps/web/src/components/ProvisionalStatus.tsx (new)",
+    "apps/web/test/party-creation.test.tsx (new)",
+    "packages/protocol/src/constants.js (additive)",
+    "packages/protocol/src/party.js (additive)",
+    "packages/protocol/src/index.js (additive comment)",
+    "packages/sdk/src/index.js (additive exports)",
+    "apps/web/src/i18n/en.ts (additive strings)",
+    "apps/web/src/i18n/ar.ts (additive strings)",
+    "apps/web/src/components/EightPillarForm.tsx (additive extension)",
+    "apps/web/src/app/petitions/new/page.tsx (rewritten as wired client component)",
+    "apps/web/types/trumocracy-protocol.d.ts (additive)",
+    "apps/web/types/trumocracy-sdk.d.ts (additive)",
+    "docs/06-coding-and-ut.md (v2.1.0, Status: In Review)",
+    "artifacts/engineer-2026-08-25T1530.md (this note)"
+   ],
+   "ids_touched": {
+    "UT_minted": "UT-0060..UT-0086 (protocol, 27), UT-0780..UT-0813 (sdk, 34), UT-0841..UT-0857 (web, 17)",
+    "FR_enforced": "FR-010, FR-011, FR-012, FR-013, FR-020, FR-077, FR-130",
+    "CON_enforced": "CON-013",
+    "BR_enforced": "BR-020",
+    "DES_referenced": "DES-085, DES-094, DES-095, DES-096, DES-097",
+    "NFR_tested": "NFR-023",
+    "flags_raised": "CLAUSE-TEXT-01 (NON_VIOLENCE_CLAUSE text), COOLDOWN-01 (REPETITION_COOLDOWN_SECONDS=30 days)"
+   },
+   "engineer_chosen_values_needing_ratification": [
+    "CLAUSE-TEXT-01: NON_VIOLENCE_CLAUSE text (needs approver sign-off)",
+    "COOLDOWN-01: REPETITION_COOLDOWN_SECONDS = 30 * DAY (no Doc 02/03 figure; needs product-owner or architect decision)",
+    "Pilot jurisdiction seeds: 5 regions IN/KA/BLR/MH/MUM/TN (provisional; final per OI-04)",
+    "Arabic translation strings: engineer working draft (needs Doc 14 / native-speaker review)"
+   ],
+   "test_suite_totals": {
+    "contracts": 95,
+    "protocol": 126,
+    "sdk": 192,
+    "ui": 14,
+    "indexer": 16,
+    "web": 43,
+    "total": 486
+   },
+   "open_items": [
+    "Postgres/API backing (DES-097): deferred; IS_INSECURE_MOCK=true blocks past devnet.",
+    "Image emblems: need a DES; out of scope this session.",
+    "CLAUSE-TEXT-01 ratification: flagged for approver decision.",
+    "COOLDOWN-01 ratification: flagged for product-owner or architect decision.",
+    "Arabic strings review: working draft; Doc 14 review required.",
+    "Jurisdiction seed data: provisional; final list per OI-04.",
+    "Doc 06 v2.1.0: needs technical-mode document-review before reviewer-qa can sign merge.",
+    "126 open Must rows still block Gate 2."
+   ],
+   "gate": "Gate 1 APPROVED unconditionally 2026-08-11 (Rathish). Gate 2 NOT READY — 126/138 open Must rows. Code drop complete; coordinator commits; reviewer-qa to review before merge sign-off."
+  },
+  {
+   "id": "reviewer-qa-2026-08-25T1545",
+   "role": "reviewer-qa",
+   "file": "artifacts/reviewer-qa-2026-08-25T1545.md",
+   "timestamp": "2026-08-25T15:45:00Z",
+   "phase": "Verify -- document-review cycle 1 of Doc 06 v2.1.0 + party-creation code drop",
+   "product": "Trumocracy",
+   "summary": "Technical-mode independent document-review of Doc 06 v2.1.0 and party-creation code drop (Samuel Oyelaran 2026-08-25). Score 84% FAIL. 1 High (ISS-01: activateParty no threshold check, violates FR-018), 2 Medium (ISS-02: TOCTOU at publishDraft; ISS-03: Date.now() in archivePetition), 1 Low (ISS-04: section 7 missing limitation). 486 tests all green, dep-guard clean, tsc clean. All other FRs (FR-010/011/012/013/020/077/130, BR-020, CON-013) PASS. Merge sign-off WITHHELD.",
+   "artifacts_written": [
+    "artifacts/reviews/06-coding-and-ut-v2.1.0-technical-cycle1.md",
+    "artifacts/reviewer-qa-2026-08-25T1545.md"
+   ],
+   "review_verdicts": {
+    "06-coding-and-ut-v2.1.0": {
+     "score": 84,
+     "critical": 0,
+     "high": 1,
+     "medium": 2,
+     "low": 1,
+     "cycle": 1,
+     "verdict": "FAIL"
+    }
+   },
+   "findings": {
+    "ISS-01": "High - activateParty no endorsement threshold check (FR-018 violated)",
+    "ISS-02": "Medium - publishDraft TOCTOU collision gap",
+    "ISS-03": "Medium - Date.now() in InMemoryPartyStore.archivePetition bypasses clock injection",
+    "ISS-04": "Low - Doc 06 section 7 missing activateParty enforcement boundary"
+   },
+   "merge_signoff": "WITHHELD -- ISS-01/02/03 must be resolved",
+   "gate": "Gate 2 NOT READY. Cycle 1 of 5 FAIL. Routed to engineer for v2.2.0 rework.",
+   "next_role": "engineer (Samuel Oyelaran) -- fix ISS-01/02/03 (mandatory) and ISS-04 (advisory), produce v2.2.0"
+  },
+  {
+   "id": "engineer-2026-08-25T2358",
+   "role": "engineer",
+   "file": "artifacts/engineer-2026-08-25T2358.md",
+   "timestamp": "2026-08-25T23:58:00Z",
+   "phase": "Coding & UT — rework cycle 1 against Doc 06 v2.1.0 review",
+   "product": "Trumocracy",
+   "summary": "Rework cycle 1 against 06-coding-and-ut-v2.1.0-technical-cycle1.md (FAIL 84%, 0C/1H/2M/1L). ISS-01 (High): activateParty() now enforces FR-018 endorsement threshold via petitionThreshold() with stored jurisdiction denominators; refuses THRESHOLD_NOT_MET. ISS-02 (Medium): publishDraft() re-runs name/emblem collision check (TOCTOU fix). ISS-03 (Medium): archivePetition(id,now) — no Date.now() anywhere in the file. ISS-04 (Low): §7 limitation #19 added. Five new tests (UT-0814..0818). Seven existing activateParty call sites updated. Doc 06 bumped to v2.2.0. Suite: 491 tests (contracts 95 / protocol 126 / sdk 197 / ui 14 / indexer 16 / web 43), dep-guard clean, tsc 0.",
+   "artifacts_written": [
+    "packages/sdk/src/party-creation.js (ISS-01 threshold gate, ISS-02 TOCTOU, ISS-03 archivePetition)",
+    "packages/sdk/test/party-creation.test.js (UT-0814..0818 new; 7 call sites updated)",
+    "docs/06-coding-and-ut.md (v2.2.0)",
+    "artifacts/engineer-2026-08-25T2358.md"
+   ],
+   "ids_touched": {
+    "UT_minted": "UT-0814, UT-0815, UT-0816, UT-0817, UT-0818",
+    "doc": "CODE-TRUMOCRACY v2.2.0"
+   },
+   "suite": {
+    "contracts": 95,
+    "protocol": 126,
+    "sdk": 197,
+    "ui": 14,
+    "indexer": 16,
+    "web": 43,
+    "total": 491
+   },
+   "open_items": [
+    "Doc 06 v2.2.0 needs technical-mode document-review (cycle 2 of 5) by neutral reviewer.",
+    "petition.endorsements production feed: DES-097 Postgres-backed store, later sprint.",
+    "126 open Must rows still block Gate 2."
+   ],
+   "gate": "Gate 1 APPROVED unconditionally 2026-08-11 (Rathish). Gate 2 NOT READY. Rework cycle 1 complete. Hand off to reviewer-qa for cycle-2 review of Doc 06 v2.2.0."
+  },
+  {
+   "id": "reviewer-qa-2026-08-25T1600",
+   "role": "reviewer-qa",
+   "file": "artifacts/reviewer-qa-2026-08-25T1600.md",
+   "timestamp": "2026-08-25T16:00:00Z",
+   "phase": "Verify -- technical-mode document-review cycle 2 of Doc 06 v2.2.0 + party-creation code drop",
+   "product": "Trumocracy",
+   "summary": "Technical-mode independent document-review of Doc 06 v2.2.0 and party-creation code drop (cycle 2 of 5). Score 97% PASS. 0C/0H/0M/1L. All four cycle-1 issues closed: ISS-01 (activateParty threshold gate, fail-closed), ISS-02 (TOCTOU fix), ISS-03 (clock injection), ISS-04 (Doc 06 section 7). New ISS-05 (Low): file-header comment contradiction re Date.now() in constructor default -- functional fix correct. 491 tests green, dep-guard clean, tsc clean. Merge SIGNED.",
+   "artifacts_written": [
+    "artifacts/reviews/06-coding-and-ut-v2.2.0-technical-cycle2.md",
+    "artifacts/reviewer-qa-2026-08-25T1600.md"
+   ],
+   "review_verdicts": {
+    "06-coding-and-ut-v2.2.0": {
+     "score": 97,
+     "critical": 0,
+     "high": 0,
+     "medium": 0,
+     "low": 1,
+     "cycle": 2,
+     "verdict": "PASS"
+    }
+   },
+   "findings": {
+    "ISS-05": "Low -- file header line 19 claims no Date.now() in file, but constructor default at line 348 uses Date.now() as fallback; JSDoc line 341 correct; functional fix accurate"
+   },
+   "merge_signoff": "SIGNED -- 491 tests green, 0C/0H/0M/1L, all cycle-1 issues closed, flag discipline confirmed, rollback proven",
+   "gate": "Gate 1 APPROVED unconditionally 2026-08-11 (Rathish). Gate 2 NOT READY -- 126 open Must rows. Merge to trunk SIGNED."
+  },
+  {
+   "id": "engineer-2026-08-25T2359",
+   "role": "engineer",
+   "file": "artifacts/engineer-2026-08-25T2359.md",
+   "timestamp": "2026-08-25T23:59:00Z",
+   "phase": "Coding & UT -- reviewer-authorized close-out edits (post cycle-2 PASS)",
+   "product": "Trumocracy",
+   "summary": "Two reviewer-authorized close-out edits applied after cycle-2 PASS (97%, 0C/0H/0M/1L, merge SIGNED). Edit 1: docs/06-coding-and-ut.md Status flipped from 'In Review' to 'Approved -- 06-coding-and-ut-v2.2.0-technical-cycle2.md'. Edit 2: packages/sdk/src/party-creation.js clock-injection header comment narrowed to close ISS-05 (Low) per reviewer routing 'Fix in next commit; does not require a rework cycle'. SDK suite 197/197 green after comment-only change.",
+   "artifacts_written": [
+    "docs/06-coding-and-ut.md (Status: Approved, v2.2.0)",
+    "packages/sdk/src/party-creation.js (ISS-05 comment fix)",
+    "artifacts/engineer-2026-08-25T2359.md"
+   ],
+   "ids_touched": {
+    "doc": "CODE-TRUMOCRACY v2.2.0 (Status field only)",
+    "issue_closed": "ISS-05 (Low)"
+   },
+   "suite": {
+    "sdk": 197,
+    "total_verified": 197
+   },
+   "authorization": "artifacts/reviews/06-coding-and-ut-v2.2.0-technical-cycle2.md §9 Routing (ISS-05 Low; does not require rework cycle) + PASS verdict (status flip)",
+   "gate": "Gate 1 APPROVED unconditionally 2026-08-11 (Rathish). Gate 2 NOT READY -- 126 open Must rows."
+  },
+  {
+   "id": "product-owner-2026-08-25T1000",
+   "role": "product-owner",
+   "file": "artifacts/product-owner-2026-08-25T1000.md",
+   "timestamp": "2026-08-25T10:00:00Z",
+   "phase": "Coding & UT -- party-creation drop traceability close-out (Doc 05 update)",
+   "product": "Trumocracy",
+   "summary": "Updated Doc 05 BKLG-TRUMOCRACY v2.2.0 → v2.3.0. Nine existing stories updated with status/notes for the party-creation drop (Doc 06 v2.2.0 Approved): US-0011/0013/0021/0022/0087/0131 Status Partial (IS_INSECURE_MOCK=true; production store pending DES-097); US-0014/0015/0024 COMPLETE stays (additional UT evidence noted). No new stories minted. TC-3489..TC-3516 forward-referenced in notes. Gate-1 blocker persists.",
+   "artifacts_written": [
+    "docs/05-product-backlog.md (v2.3.0, Status: In Review)"
+   ],
+   "ids_touched": {
+    "US_updated": "US-0011, US-0013, US-0014, US-0015, US-0021, US-0022, US-0024, US-0087, US-0131",
+    "FR_referenced": "FR-010, FR-011, FR-012, FR-013, FR-018, FR-020, FR-077, FR-130",
+    "TC_forward_ref": "TC-3489..TC-3516",
+    "UT_cited": "UT-0060..0086 (protocol), UT-0780..0818 (sdk), UT-0841..0857 (web)"
+   },
+   "gate": "Gate 1 APPROVED unconditionally 2026-08-11 (Rathish). Gate 2 NOT READY -- 126 open Must rows. Doc 05 v2.3.0 Status: In Review."
+  },
+  {
+   "id": "tester-2026-08-25T1400",
+   "role": "tester",
+   "file": "artifacts/tester-2026-08-25T1400.md",
+   "timestamp": "2026-08-25T14:00:00Z",
+   "phase": "Coding & UT -- party-creation drop traceability close-out (Docs 07/08 update)",
+   "product": "Trumocracy",
+   "summary": "Doc 07 v2.2.1 → v2.2.2: §5.4 TS-PARTY added (TC-3489..TC-3516, 28 TCs, all Pass inh. from Doc 06 v2.2.0 Approved); §9 R-06/R-07/R-08 added; §10 totals updated (cases designed 390→418 anchor/397→425 expanded; automated 159→187; inherited 55→83). Doc 08 v2.2.3 → v2.2.4: FR-010/011/018/020/077/130 forward-trace rows updated with TC+UT evidence; FR-013 Should row CLOSES (cooldown UT-0798 tested; US-0021 meets DoD); summary non-Must complete 3→4; total complete 15→16; §6 TC 397→425 / passing 143→171; §7 gap log entries 9/11/68/125 updated. No Must rows close.",
+   "artifacts_written": [
+    "docs/07-test-cases-suites.md (v2.2.2, Status: In Review)",
+    "docs/08-traceability-matrix.md (v2.2.4, Status: In Review)"
+   ],
+   "ids_touched": {
+    "TC_minted": "TC-3489..TC-3516 (28 new; TS-PARTY suite)",
+    "FR_updated": "FR-010, FR-011, FR-012, FR-013, FR-018, FR-020, FR-077, FR-130",
+    "US_newly_DoD": "US-0021 (FR-013 Should chain closes end-to-end)",
+    "gap_code_changes": "FR-077 G-TRACE+G-PHASE3 → G-TRACE; FR-130 G-TRACE+G-PHASE3 → G-TRACE (code exists, no DES)"
+   },
+   "counts": {
+    "TC_minted": 28,
+    "TC_total_doc07_anchor": 416,
+    "TC_total_doc07_expanded": 425,
+    "RTM_must_complete": 12,
+    "RTM_must_open": 126,
+    "RTM_non_must_complete": 4,
+    "RTM_non_must_open": 19,
+    "RTM_total_complete": 16,
+    "RTM_total_open": 145,
+    "passing_evidence": 171,
+    "passing_inh": 83,
+    "passing_obs": 88
+   },
+   "gate": "Gate 1 APPROVED unconditionally 2026-08-11 (Rathish). Gate 2 NOT READY -- 126 open Must rows. Docs 07/08 Status: In Review."
+  },
+  {
+   "id": "document-reviewer-2026-08-26T0900",
+   "role": "document-reviewer (neutral — document-review skill)",
+   "file": "artifacts/document-reviewer-2026-08-26T0900.md",
+   "timestamp": "2026-08-26T09:00:00Z",
+   "phase": "Coding & UT -- party-creation drop traceability close-out (document-review)",
+   "product": "Trumocracy",
+   "summary": "Technical-mode document-review cycle 1 of Doc 07 v2.2.2 and Doc 08 v2.2.4. Doc 07 PASS (97%, 0C/0H/0M/2L): two Low UT-citation misalignments in TS-PARTY (TC-3512 UT-0804 cap-lift mismatch; TC-3500 UT-0797/0800 archive-immutability mismatch). Doc 08 FAIL (96%, 0C/0H/1M/0L): one Medium -- §6 dashboard FR-Should/Could row shows '3 complete | 16 gaps', stale after FR-013 closure; correct is '4 complete | 15 gaps'. Route Doc 08 to Ji-woo Park (tester) for v2.2.5.",
+   "artifacts_written": [
+    "artifacts/reviews/07-test-cases-suites-v2.2.2-technical-cycle1.md",
+    "artifacts/reviews/08-traceability-matrix-v2.2.4-technical-cycle1.md",
+    "artifacts/document-reviewer-2026-08-26T0900.md",
+    "artifacts/memory-index.json (updated -- new entry appended)"
+   ],
+   "review_verdicts": {
+    "07-test-cases-suites-v2.2.2": {
+     "score": 97,
+     "critical": 0,
+     "high": 0,
+     "medium": 0,
+     "low": 2,
+     "cycle": 1,
+     "verdict": "PASS"
+    },
+    "08-traceability-matrix-v2.2.4": {
+     "score": 96,
+     "critical": 0,
+     "high": 0,
+     "medium": 1,
+     "low": 0,
+     "cycle": 1,
+     "verdict": "FAIL"
+    }
+   },
+   "hard_checks": {
+    "TC_numbering_no_collision": "PASS -- TC-3489 starts after TC-3488",
+    "UT_citations_spot_checked": "PASS (2 Low misalignments noted in Doc 07)",
+    "arithmetic_doc07": "PASS -- 390+28=418, 159+28=187, 55+28=83, 397+28=425",
+    "arithmetic_doc08": "PASS -- complete 15->16, gap 146->145, TC=425, evidence 83+88=171",
+    "protocol_test_run": "126 passed / 126",
+    "sdk_test_run": "197 passed / 197",
+    "git_diff_no_silent_mutations": "PASS",
+    "fr013_closure_legitimate": "PASS -- proof-independent guarantee; consistent with convention",
+    "g_phase3_count_47": "PASS -- unchanged from v2.2.3",
+    "source_pins": "PASS -- BKLG v2.3.0, CODE v2.2.0, TC v2.2.2"
+   },
+   "open_items": [
+    "Doc 08 v2.2.4 ISS-01 (Medium): §6 dashboard FR-Should/Could '3 complete' -> '4 complete'; route to tester for v2.2.5",
+    "Doc 07 v2.2.2 ISS-01 (Low): TC-3512 UT-0804 citation mismatch; UT-0805 existence unconfirmed; fix in next maintenance version",
+    "Doc 07 v2.2.2 ISS-02 (Low): TC-3500 UT-0797/0800 archive-immutability misalignment; fix in next maintenance version"
+   ],
+   "gate": "Gate 1 APPROVED unconditionally 2026-08-11 (Rathish). Gate 2 NOT READY -- 126 open Must rows. Doc 07 v2.2.2 PASS (tester to set Approved). Doc 08 v2.2.4 FAIL (tester to produce v2.2.5 for cycle-2 review)."
+  },
+  {
+   "id": "tester-2026-08-26T1000",
+   "role": "tester",
+   "file": "artifacts/tester-2026-08-26T1000.md",
+   "timestamp": "2026-08-26T10:00:00Z",
+   "phase": "Verify",
+   "product": "Trumocracy",
+   "summary": "Two surgical edits: (1) Doc 07 v2.2.2 Status flipped to Approved — 07-test-cases-suites-v2.2.2-technical-cycle1.md. (2) Doc 08 v2.2.4 reworked to v2.2.5: §6 FR-Should/Could cell corrected from 3 complete | 16 gaps to 4 complete | 15 gaps; header Version/Last updated updated; changelog entry v2.2.5 prepended. No other body edits.",
+   "artifacts_written": [
+    "docs/07-test-cases-suites.md (Status: Approved)",
+    "docs/08-traceability-matrix.md (v2.2.5, In Review)",
+    "artifacts/tester-2026-08-26T1000.md",
+    "artifacts/memory-index.json (updated -- new entry appended)"
+   ],
+   "ids_touched": {
+    "TC-TRUMOCRACY": "v2.2.2 Status flip to Approved",
+    "RTM-TRUMOCRACY": "v2.2.4 -> v2.2.5, §6 FR-Should/Could 3|16 -> 4|15"
+   },
+   "open_items": [
+    "Doc 08 v2.2.5 requires cycle-2 technical review by neutral role",
+    "Doc 07 v2.2.2 two Lows (TC-3512, TC-3500) deferred to maintenance version before Gate 2",
+    "126 open Must rows continue to block Gate 2"
+   ],
+   "gate": "Gate 1 APPROVED unconditionally 2026-08-11 (Rathish). Gate 2 NOT READY -- 126 open Must rows."
+  },
+  {
+   "id": "document-reviewer-2026-08-26T1000",
+   "role": "document-reviewer (neutral)",
+   "file": "artifacts/document-reviewer-2026-08-26T1000.md",
+   "timestamp": "2026-08-26T10:00:00Z",
+   "phase": "Verify -- technical-mode document-review, cycle 2",
+   "product": "Trumocracy",
+   "scope": "Doc 08 RTM-TRUMOCRACY v2.2.5 -- cycle-2 technical review",
+   "summary": "PASS. Doc 08 v2.2.5 cycle-2 technical review. ISS-01 (cycle-1 Medium) FIXED: §6 FR-Should/Could row now correctly reads 4 complete | 15 gaps. Patch narrowness confirmed -- single cell + header/changelog, no silent mutations. All spot checks pass. One new Low finding: §6 Stories row shows 12 DoD | 122 but adjacent text says 13 (US-0021 added to DoD at v2.2.4; same oversight session as ISS-01). Score 98%, 0C/0H/0M/1L. Verdict: PASS.",
+   "artifacts_written": [
+    "artifacts/reviews/08-traceability-matrix-v2.2.5-technical-cycle2.md",
+    "artifacts/document-reviewer-2026-08-26T1000.md",
+    "artifacts/memory-index.json (updated -- this entry appended)"
+   ],
+   "review_verdicts": {
+    "08-traceability-matrix-v2.2.5": {
+     "score": 98,
+     "critical": 0,
+     "high": 0,
+     "medium": 0,
+     "low": 1,
+     "cycle": 2,
+     "verdict": "PASS"
+    }
+   },
+   "open_items": [
+    "Ji-woo Park (tester) to set Doc 08 Status: Approved at v2.2.5",
+    "ISS-01 (Low, cycle 2): §6 Stories row 12 DoD | 122 -> 13 DoD | 121 -- deferred to next maintenance increment",
+    "126 open Must rows continue to block Gate 2"
+   ],
+   "gate": "Gate 1 APPROVED unconditionally 2026-08-11 (Rathish). Gate 2 NOT READY -- 126 open Must rows. Doc 08 v2.2.5 review loop CLOSED (cycle 2 PASS). Owning role to set Status: Approved."
+  },
+  {
+   "id": "project-manager-2026-08-26T1600",
+   "role": "project-manager",
+   "file": "artifacts/project-manager-2026-08-26T1600.md",
+   "timestamp": "2026-08-26T16:00:00Z",
+   "phase": "Coding & UT -- party-creation build session close",
+   "product": "Trumocracy",
+   "summary": "Two closing actions: (1) orchestrated tester Status flip of Doc 08 v2.2.5 to Approved (cycle-2 PASS 98%, 08-traceability-matrix-v2.2.5-technical-cycle2.md). (2) Appended 'Closing state 2026-08-26 (party-creation build session)' section to GATE-STATUS-2026-08-09.md citing all session figures: Doc 06 v2.2.0 Approved, Doc 07 v2.2.2 Approved, Doc 08 v2.2.5 Approved, suite 491 green, RTM 16/161 (12/138 Must, 126 open), six open approver items (CLAUSE-TEXT-01/COOLDOWN-01/60-DAY-GRACE/OI-04-seed/ARABIC-I18N/DES-EMBLEM), carried debt (Doc 07/08 Lows deferred), CON-015 12 days/DEP-11-13 24 days NOT STARTED.",
+   "artifacts_written": [
+    "docs/08-traceability-matrix.md (Status: Approved at v2.2.5)",
+    "artifacts/status/GATE-STATUS-2026-08-09.md (closing-state section appended)",
+    "artifacts/project-manager-2026-08-26T1600.md",
+    "artifacts/memory-index.json (updated -- this entry appended)"
+   ],
+   "ids_touched": {
+    "RTM-TRUMOCRACY": "v2.2.5 Status: Approved",
+    "GATE-STATUS": "2026-08-26 closing-state section"
+   },
+   "open_items": [
+    "CLAUSE-TEXT-01 -- canonical non-violence clause text needs Rathish ratification",
+    "COOLDOWN-01 -- REPETITION_COOLDOWN_SECONDS=30d needs PO/architect ratification + FR/DES home",
+    "60-DAY-GRACE discrepancy -- brief vs FR-130 as built",
+    "OI-04 jurisdiction seed list (5 regions) pending registry service",
+    "ARABIC-I18N -- native-speaker review needed",
+    "DES-EMBLEM -- image emblem DES not yet written",
+    "Doc 07 Lows (TC-3512/TC-3500/UT-0805) deferred to maintenance version",
+    "Doc 08 Low (Stories 12->13/122->121) deferred to maintenance version",
+    "CON-015 latest start 2026-09-07 (12 days) -- NOT STARTED",
+    "DEP-11/12/13 latest start 2026-09-19 (24 days) -- NOT STARTED",
+    "Doc 05 v2.3.0 full business review owed -- Gate-1 blocker unchanged",
+    "Gate 2 NOT READY -- 126/138 Must rows open (8.7% completion)"
+   ],
+   "gate": "Gate 1 APPROVED unconditionally 2026-08-11 (Rathish). Gate 2 NOT READY -- 138 Must rows / 12 COMPLETE / 126 OPEN (8.7%)."
   }
  ]
 }

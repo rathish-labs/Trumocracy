@@ -155,6 +155,42 @@ export const ar: Messages = {
         : binding === 'verified-residents'
           ? 'هذه نسبة من سكان المنطقة الذين أثبتوا أنهم حقيقيون.'
           : 'هذه نسبة من عدد سكان هذه المنطقة.',
+    // Party-creation additions — emblem, charter, BR-020, FR-130, FR-077.
+    // Translation status: working draft by engineer; reviewed copy owed at Doc 14.
+    emblemLabel: 'شعار الحزب',
+    emblemHelp: 'رمز قصير لحزبك. ثمانية أحرف كحدٍّ أقصى — كأن تكون حرفين أو ثلاثة.',
+    jurisdictionSelectLabel: 'المنطقة التي يمثلها هذا الحزب',
+    jurisdictionSelectHelp: 'اختر المنطقة التي سيمثلها حزبك. ستُضاف مناطق أخرى مع الوقت.',
+    jurisdictionSelectPlaceholder: 'اختر منطقة',
+    nonViolenceTitle: 'التزام بالسلمية',
+    nonViolenceHelp:
+      'يجب أن يتضمن كل حزب هذا البيان. لا يمكن حذفه أو تعديله. ' +
+      'هذا هو القيد الوحيد الذي تضعه المنصة على ما يؤمن به الحزب.',
+    charterSectionTitle: 'قواعد الحزب',
+    charterSectionHelp:
+      'هذه هي القواعد التي سيلتزم بها حزبك. تضع المنصة معايير دنيا، ويمكن لحزبك اختيار قواعد أكثر صرامة، لكن لا يمكنه اختيار قواعد أضعف.',
+    // BR-020 disclosure.
+    platformNotLegalTitle: 'إنشاء حزب هنا لا يعني التسجيل القانوني',
+    platformNotLegalBody:
+      'إنشاء حزب على هذه المنصة يعني وجوده هنا حيث يمكن للناس دعمه. ' +
+      'لا يعني ذلك أن حزبك مسجَّل قانونيًا لدى أي جهة حكومية. ' +
+      'لا نستطيع منح أو إلغاء الاعتراف القانوني. ستحتاج إلى اتباع قواعد بلدك للتسجيل القانوني بشكل مستقل.',
+    // FR-130 provisional status.
+    provisionalLabel: 'ما قبل التحقق القانوني',
+    provisionalCapHelpOpen: (cap: number) =>
+      `هذا الحزب جديد وغير مسجَّل قانونيًا بعد. يمكنه استقبال حتى ${cap} عضوًا في الوقت الحالي. ` +
+      `يُرفع هذا الحد تلقائيًا عند إتمام الحزب تسجيله القانوني.`,
+    provisionalCapHelpReached: (cap: number) =>
+      `وصل هذا الحزب إلى حد ${cap} عضوًا المخصص للأحزاب الجديدة غير المسجَّلة قانونيًا. ` +
+      `لا يمكن قبول أعضاء جدد حتى يُتمّ الحزب تسجيله القانوني.`,
+    provisionalCapHelpLegal: 'هذا الحزب مسجَّل قانونيًا. لا يوجد حد لعدد الأعضاء.',
+    // Draft/publish feedback.
+    draftSaved: 'تم حفظ مسودتك.',
+    petitionStarted: 'حزبك مفتوح الآن لتلقي الدعم.',
+    collisionName: 'يوجد حزب أو عريضة بنفس الاسم في منطقتك.',
+    collisionEmblem: 'يوجد حزب أو عريضة بنفس الشعار في منطقتك.',
+    cooldownActive: (reopensAt: number) =>
+      `لقد قدّمت حزبًا مشابهًا مؤخرًا في هذه المنطقة. يمكنك التقديم مجددًا بعد ${new Date(reopensAt * 1000).toLocaleDateString('ar')}.`,
   },
   proposals: {
     title: 'قرار',

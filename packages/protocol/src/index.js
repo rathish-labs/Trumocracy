@@ -11,3 +11,6 @@ export * from './governance.js';
 export * from './regions.js';
 export * from './flags.js';
 export * from './party.js';
+// party.js new exports: validateDraft, applyCharterDefaults, charterFingerprint,
+// normalizeCollisionKey, NON_VIOLENCE_CLAUSE, PROVISIONAL_MEMBER_CAP, EMBLEM,
+// REPETITION_COOLDOWN_SECONDS — all additive, picked up via '*' above.

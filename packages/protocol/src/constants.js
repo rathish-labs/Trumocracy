@@ -118,6 +118,73 @@ export const SPONSORSHIP_OPS_PER_EPOCH = Object.freeze({
 export const BPS = 10_000;
 export const SECONDS_PER_DAY = DAY;
 
+// ─── Party-creation additions (v1 phase 1) ───────────────────────────────────
+
+/**
+ * Provisional party membership cap (FR-130, anti-capture control).
+ *
+ * A party that has been platform-activated per FR-018 but whose legal
+ * registration has not yet been verified per FR-075 MUST NOT exceed this
+ * number of members. The cap lifts automatically, by code only, when
+ * recordLegalRegistration() records verified registration. No operator or
+ * manual path may lift it.
+ *
+ * D2 coordinator ruling 2026-08-25: no grace period; cap is unconditional.
+ */
+export const PROVISIONAL_MEMBER_CAP = 100;
+
+/**
+ * Emblem bounds (FR-010, D3 coordinator ruling 2026-08-25).
+ *
+ * An emblem is a bounded text identifier — a monogram, glyph, or short
+ * abbreviation — 1–8 characters after leading/trailing whitespace is trimmed.
+ * Image emblems require a dedicated DES and are out of scope for Phase 1.
+ * Collision detection normalises the emblem via normalizeCollisionKey().
+ */
+export const EMBLEM = Object.freeze({
+  MIN_CHARS: 1,
+  MAX_CHARS: 8,
+});
+
+/**
+ * The platform's standard non-violence clause (FR-077, CON-013).
+ *
+ * Every party charter MUST contain this text verbatim and non-removably.
+ * This is the one deliberate exception to the platform's content-neutrality
+ * principle (ADR-013 §4, CON-013): the platform does not judge political
+ * content, but it refuses to host violence. The text is authored at grade-8
+ * reading level with no jargon and no ideological framing beyond the single
+ * non-violence commitment that CON-013 authorises.
+ *
+ * APPROVER RATIFICATION REQUIRED (Flag: CLAUSE-TEXT-01).
+ * This clause text is engineer-authored per D5 (coordinator ruling 2026-08-25)
+ * and MUST receive explicit approver ratification before Gate 2. The text is
+ * frozen here so it is verifiable by code; any change requires a protocol
+ * governance action (ADR-010) and a new frozen constant.
+ */
+export const NON_VIOLENCE_CLAUSE =
+  'This party will act through peaceful and lawful means only. ' +
+  'No member may use, encourage, or support any form of violence in any ' +
+  'activity connected to this party.';
+
+/**
+ * Cooldown window for re-petitioning with a substantially identical charter
+ * in the same jurisdiction by the same drafter (FR-013, D4 coordinator
+ * ruling 2026-08-25).
+ *
+ * "Substantially identical" is an exact match of charterFingerprint(), which
+ * hashes normalised pillar text and charter parameters. Cooldown is measured
+ * from the EXPIRY of the prior petition: drafter must wait this many seconds
+ * after a failed petition expires before filing the same charter again.
+ *
+ * APPROVER RATIFICATION REQUIRED (Flag: COOLDOWN-01).
+ * No published figure found in Doc 02/03 (grepped: cooldown, COOLDOWN,
+ * repetition, re-petition). Engineer-chosen at 30 days (2 592 000 seconds)
+ * — the same window used for FORK.COOLING_OFF_SECONDS, which is also a
+ * reconsideration-prevention window (ADR-008 §5). Needs explicit ratification.
+ */
+export const REPETITION_COOLDOWN_SECONDS = 30 * DAY; // COOLDOWN-01
+
 /** The eight mandatory policy pillars a party vision must cover (BR-INCUBATE). */
 export const PILLARS = Object.freeze([
   'finance',
