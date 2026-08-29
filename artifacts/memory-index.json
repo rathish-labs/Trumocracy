@@ -3909,6 +3909,186 @@
     "Gate 2 NOT READY -- 126/138 Must rows open (8.7% completion)"
    ],
    "gate": "Gate 1 APPROVED unconditionally 2026-08-11 (Rathish). Gate 2 NOT READY -- 138 Must rows / 12 COMPLETE / 126 OPEN (8.7%)."
+  },
+  {
+   "id": "project-manager-2026-08-26T1700",
+   "role": "project-manager",
+   "file": "artifacts/project-manager-2026-08-26T1700.md",
+   "timestamp": "2026-08-26T17:00:00Z",
+   "phase": "Coding & UT -- party-creation approver rulings recorded",
+   "product": "Trumocracy",
+   "summary": "Wrote DECISIONS-2026-08-26-PARTY-CREATION-RULINGS.md capturing four approver rulings (Rathish Kumar, 2026-08-26) on the party-creation build (commit a18ef11). Code constants verified: NON_VIOLENCE_CLAUSE (packages/protocol/src/constants.js lines 165-168) MATCH ratified text verbatim; REPETITION_COOLDOWN_SECONDS = 30*DAY = 2,592,000 seconds = 30 days MATCH confirmed value.",
+   "artifacts_written": [
+    "artifacts/status/DECISIONS-2026-08-26-PARTY-CREATION-RULINGS.md (new)",
+    "artifacts/project-manager-2026-08-26T1700.md (this note)",
+    "artifacts/memory-index.json (this entry appended)"
+   ],
+   "ids_touched": {
+    "referenced": "FR-130, FR-077, FR-013, FR-010, DES-073",
+    "flags_closed": "60-DAY-GRACE, CLAUSE-TEXT-01, COOLDOWN-01 (approver side)",
+    "flags_carried": "OI-04, ARABIC-I18N, DES-EMBLEM, DES-073-v2-gap"
+   },
+   "key_decisions": [
+    "FR-130: 100-member cap UNCONDITIONAL; 60-day grace never adopted into Doc 02 (Rathish, 2026-08-26).",
+    "NON_VIOLENCE_CLAUSE: ratified as-is; frozen before first-party-adoption; breaking-amendment on change. CLAUSE-TEXT-01 CLOSED.",
+    "REPETITION_COOLDOWN_SECONDS: 30 days CONFIRMED; Doc 02 home needed (routed to PO). COOLDOWN-01 CLOSED (approver side).",
+    "Lesser deferrals tracked: OI-04 seed, Arabic review, image-emblem DES, DES-073 v2 contract gap.",
+    "No engineer action required by any ruling."
+   ],
+   "open_items": [
+    "Doc 02 increment (FR-130 annotation, FR-077 clause freeze note, FR-013 cooldown home, deferral notes) -- product-owner",
+    "DES-073 v2 contract collision check; image-emblem DES -- architect (next Doc 03 increment)",
+    "Arabic native-speaker string review -- technical-writer (pre-launch)",
+    "OI-04 jurisdiction seed -- product-owner / architect",
+    "Gate 2: 126/138 Must rows open"
+   ],
+   "gate": "Gate 1 APPROVED unconditionally 2026-08-11 (Rathish). Gate 2 NOT READY -- 126 of 138 Must rows open (8.7% completion)."
+  },
+  {
+   "id": "product-owner-2026-08-26T1100",
+   "role": "product-owner",
+   "file": "artifacts/product-owner-2026-08-26T1100.md",
+   "timestamp": "2026-08-26T11:00:00Z",
+   "phase": "Define -- Doc 02 v2.14.0 annotation pass",
+   "product": "Trumocracy",
+   "summary": "Produced Doc 02 v2.14.0 (Status: In Review) from v2.13.0 (Approved). Pure annotation and normative-home pass applying four approver rulings (Rathish Kumar, 2026-08-26; DECISIONS-2026-08-26-PARTY-CREATION-RULINGS.md). No FRs minted. No IDs minted. Must count stays at 114.",
+   "artifacts_written": [
+    "docs/02-requirements-srs.md (v2.14.0, Status: In Review)",
+    "artifacts/product-owner-2026-08-26T1100.md (this note)",
+    "artifacts/memory-index.json (this entry appended)"
+   ],
+   "ids_touched": {
+    "FR_annotated": "FR-013 (30-day cooldown policy value), FR-077 (normative clause home), FR-130 (unconditional ruling + TC note corrected)",
+    "minted": "none"
+   },
+   "key_decisions": [
+    "FR-130 UNCONDITIONAL annotation: 60-day grace never adopted; cap as built is the ruled behaviour (Ruling 1).",
+    "FR-077 normative home: ratified non-violence clause text frozen before first-party-adoption; CLAUSE-TEXT-01 CLOSED (Ruling 2).",
+    "FR-013 cooldown home: 30 days decided policy value; COOLDOWN-01 CLOSED (Ruling 3).",
+    "Tracked deferrals in §13: (a) OI-04 seed list; (b) Arabic review; (c) image-emblem DES; (d) DES-073 v2 gap (Ruling 4)."
+   ],
+   "counts_verified": {
+    "Must_FR": 114,
+    "FR_minted_total": 133,
+    "FR_active": 131,
+    "FR_superseded": 2,
+    "BR": 21,
+    "NFR": 28,
+    "CON": 15
+   },
+   "open_items": [
+    "Doc 02 v2.14.0 requires business-mode document-review (neutral role) before Approved.",
+    "Tracked deferrals (a)-(d) routed to respective owners.",
+    "Gate 2 NOT READY: 126 of 138 Must rows open."
+   ],
+   "gate": "Gate 1 APPROVED unconditionally 2026-08-11 (Rathish). Gate 2 NOT READY -- 126 of 138 Must rows open (8.7% completion)."
+  },
+  {
+   "id": "architect-2026-08-26T2000",
+   "role": "architect (acting as NEUTRAL REVIEWER -- document-review skill)",
+   "file": "artifacts/architect-2026-08-26T2000.md",
+   "timestamp": "2026-08-26T20:00:00Z",
+   "phase": "Verify -- business-mode document-review, cycle 1",
+   "product": "Trumocracy",
+   "scope": "Doc 02 Requirements Specification v2.14.0 -- business-mode review, cycle 1",
+   "summary": "FAIL. Doc 02 v2.14.0 business-mode review cycle 1. Score 94% (below 95%). 0C/0H/1M/0L. ISS-01 (Medium): FR-131 preamble and requirement text still say 'same recorded-phasing posture as FR-121..FR-130. TC OPEN -- Phase 3', grouping FR-130 with TCs-pending-Phase-3 set, but FR-130 now has TC-3511..3516 passing (Doc 07 v2.2.2 Approved). Three-way clause text comparison: MATCH. FR-119 citation: FAITHFUL. All four rulings applied faithfully. Normative MUST text of FR-130 unamended. No silent normative changes. Routed to product-owner for v2.14.1.",
+   "artifacts_written": [
+    "artifacts/reviews/02-requirements-srs-v2.14.0-business-cycle1.md",
+    "artifacts/architect-2026-08-26T2000.md",
+    "artifacts/memory-index.json (updated -- this entry appended)"
+   ],
+   "review_verdicts": {
+    "02-requirements-srs-v2.14.0": {
+     "score": 94,
+     "critical": 0,
+     "high": 0,
+     "medium": 1,
+     "low": 0,
+     "cycle": 1,
+     "verdict": "FAIL"
+    }
+   },
+   "key_determinations": {
+    "clause_text_comparison": "MATCH -- all three sources (decision record Ruling 2, constants.js lines 165-168, Doc 02 §4.22) identical",
+    "FR119_citation": "FAITHFUL -- CON-013 is an OI-18-established Tier-2 named absolute; FR-119 already governs it; not an unauthorized strengthening",
+    "ruling_fidelity": "PASS -- all four rulings applied faithfully; normative MUST text of FR-130 unamended; §13 deferrals complete",
+    "silent_normative_change": "PASS -- no rewrite of normative text outside commissioned edits",
+    "stale_pin_sweep": "FAIL (ISS-01) -- §11 label updated; historical v2.13.0 refs fine; FR-130 TC OPEN stale in FR-131"
+   },
+   "open_items": [
+    "ISS-01 (Medium): product-owner to rework -> v2.14.1 -> cycle-2 business review",
+    "Gate 2 NOT READY: 126/138 Must rows open"
+   ],
+   "gate": "Gate 1 APPROVED unconditionally 2026-08-11 (Rathish). Gate 2 NOT READY -- 126 of 138 Must rows open. Doc 02 v2.14.0 review loop: cycle 1 FAIL -- route to product-owner for v2.14.1."
+  },
+  {
+   "id": "product-owner-2026-08-26T1200",
+   "role": "product-owner",
+   "file": "artifacts/product-owner-2026-08-26T1200.md",
+   "timestamp": "2026-08-26T12:00:00Z",
+   "phase": "Define -- Doc 02 v2.14.1 rework cycle 1",
+   "product": "Trumocracy",
+   "summary": "ISS-01 (Medium) surgical fix -- Doc 02 v2.14.0 business-mode review cycle 1 FAIL (94%, 0C/0H/1M/0L). Fixed FR-131 TC-status contradiction at both sites in §4.45: preamble annotation and requirement text row. Parenthetical variant chosen: FR-121..FR-130 range kept; FR-130 exception note added (TC-3511..TC-3516 now pass per Doc 07 v2.2.2 Approved; RTM Must row OPEN for G-TRACE -- no DES in Doc 03 §5.2). Sweep found 2 additional occurrences in §11 historical changelog entries for v2.6.0 -- not amended (retroactively accurate). Version bumped to v2.14.1; §11 Counts label updated; §12 rework entry added.",
+   "artifacts_written": [
+    "docs/02-requirements-srs.md (v2.14.1, Status: In Review)",
+    "artifacts/product-owner-2026-08-26T1200.md",
+    "artifacts/memory-index.json (updated -- this entry appended)"
+   ],
+   "ids_touched": {
+    "minted": "none",
+    "amended": "none",
+    "doc_version_bumped": "docs/02-requirements-srs.md v2.14.0 -> v2.14.1"
+   },
+   "key_decisions": [
+    "Parenthetical variant chosen at both ISS-01 sites (range stays FR-121..FR-130; FR-130 exception noted).",
+    "Historical changelog entries in §11 (lines ~2658/~2672) describing v2.6.0 state NOT amended -- retroactive edit would be inaccurate.",
+    "No normative text changed; no IDs minted; Must count stays at 114."
+   ],
+   "open_items": [
+    "Doc 02 v2.14.1 awaiting business-mode document-review cycle 2.",
+    "Gate 2 NOT READY: 126 of 138 Must rows open."
+   ],
+   "gate": "Gate 1 APPROVED unconditionally 2026-08-11 (Rathish). Gate 2 NOT READY. Doc 02 v2.14.1 Status: In Review -- awaiting cycle-2 review.",
+   "next_role": "Neutral role -- document-review skill, business mode, docs/02-requirements-srs.md v2.14.1, cycle 2"
+  },
+  {
+   "id": "sre-2026-08-26T2100",
+   "role": "sre (acting as NEUTRAL REVIEWER -- document-review skill)",
+   "file": "artifacts/sre-2026-08-26T2100.md",
+   "timestamp": "2026-08-26T21:00:00Z",
+   "phase": "Verify -- business-mode document-review, cycle 2",
+   "product": "Trumocracy",
+   "scope": "Doc 02 Requirements Specification v2.14.1 -- business-mode review, cycle 2",
+   "summary": "PASS. Doc 02 v2.14.1 cycle-2 business review. ISS-01 (cycle-1 Medium) FIXED at both §4.45 sites: preamble annotation and FR-131 requirement text row now carry parenthetical variant (FR-130 exception: TC-3511..3516 pass per Doc 07 v2.2.2 Approved; RTM Must row OPEN G-TRACE). TC-3511..3516 verified passing (Doc 07 v2.2.2 Approved; inherited Pass from Doc 06 v2.2.0). FR-130 RTM row 125 OPEN G-TRACE verified (Doc 08 v2.2.5 Approved). Two §11 historical changelog entries (v2.6.0 records) correctly left unamended -- annotate-don't-retrofit convention confirmed correct. Patch narrowness confirmed -- only two §4.45 sites + header/§11 label/§12 changed; v2.14.0 content intact. Score 97%, 0C/0H/0M/0L. Verdict: PASS.",
+   "artifacts_written": [
+    "artifacts/reviews/02-requirements-srs-v2.14.1-business-cycle2.md",
+    "artifacts/sre-2026-08-26T2100.md",
+    "artifacts/memory-index.json (updated -- this entry appended)"
+   ],
+   "review_verdicts": {
+    "02-requirements-srs-v2.14.1": {
+     "score": 97,
+     "critical": 0,
+     "high": 0,
+     "medium": 0,
+     "low": 0,
+     "cycle": 2,
+     "verdict": "PASS"
+    }
+   },
+   "key_determinations": {
+    "ISS01_site1": "FIXED -- §4.45 preamble parenthetical variant correctly applied",
+    "ISS01_site2": "FIXED -- §4.45 FR-131 requirement text row parenthetical variant correctly applied",
+    "TC3511_to_3516_pass": "CONFIRMED -- Doc 07 v2.2.2 Approved; inherited Pass from Doc 06 v2.2.0",
+    "FR130_RTM_OPEN_GTRACE": "CONFIRMED -- Doc 08 v2.2.5 row 125 G-TRACE; G-PHASE3 removed; no DES Doc 03 §5.2",
+    "historical_sites_unamended": "CORRECT -- v2.6.0 datestamped changelog records; not active text",
+    "patch_narrowness": "CONFIRMED -- v2.14.0 content (FR-130 UNCONDITIONAL, FR-077 clause, FR-013 cooldown, §13, Must 114) intact"
+   },
+   "open_items": [
+    "Product-owner to set Status: Approved on docs/02-requirements-srs.md v2.14.1",
+    "Gate 2 NOT READY: 126 of 138 Must rows open"
+   ],
+   "gate": "Gate 1 APPROVED unconditionally 2026-08-11 (Rathish). Gate 2 NOT READY -- 126 of 138 Must rows open. Doc 02 v2.14.1 review loop CLOSED (cycle 2 PASS). Owning role to set Status: Approved."
   }
  ]
 }
