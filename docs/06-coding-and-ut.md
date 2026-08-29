@@ -2,8 +2,8 @@
 
 ```
 Document ID:   CODE-TRUMOCRACY
-Version:       2.3.2
-Status:        Approved — 06-coding-and-ut-v2.3.2-technical-cycle3.md (PASS 97%, 0C/0H/0M/1L)
+Version:       2.3.3
+Status:        In Review
 Owner:         Samuel Oyelaran — Engineering Lead
 Source:        SDD-TRUMOCRACY v2.7.1 §9 · ADR-011 · ADR-023 · ADR-024 · ADR-025
 Last updated:  2026-08-29
@@ -15,6 +15,20 @@ Last updated:  2026-08-29
 
 ```
 Change history:
+  v2.3.3 (2026-08-29) — Recorded-decision closure (documents only; NO code change). The
+               FR-064-SEMANTICS ruling landed: option (a), v1 EXPLICIT-LEAVE (Rathish,
+               Human Approver, 2026-08-29). §7 #20 closed as RESOLVED (a). FR-064's text is
+               amended in Doc 02 v2.15.0 §4.6 — the auto-void wording is superseded and
+               annotated in place; automatic voidance and the bypass-proof nullifier
+               enforcement are DEFERRED to DES-065 at the v2 seam swap, where
+               one-active-membership is enforced cryptographically. The behaviour this drop
+               implements (ALREADY_MEMBER_ELSEWHERE refusal until an explicit recorded
+               leave; fresh joinedAt on every join) is the subset the v2 mechanism
+               formalises — the ruled semantics were already built, so no code, test, or
+               count changes (suite remains 542). §5.0 updated: v2.3.2 cycle-3 PASS (97%)
+               recorded. NOTE: the RTM's FR-064 Must row REMAINS OPEN pending the DES-065
+               build (v2) — the ruling unblocked the semantics, not the row.
+
   v2.3.2 (2026-08-29) — Rework cycle 2 against artifacts/reviews/06-coding-and-ut-v2.3.1-technical-cycle2.md
                (FAIL 92%, 0C/0H/1M/2L). All three issues resolved:
                ISS-C2-01 (Medium): the v2.3.1 ISS-01 fix stopped at the JS boundary —
@@ -467,7 +481,8 @@ the tests were written by the same person who wrote the bug.
 ### 5.0 Scaffold-drop technical review record
 
 Review history for this document:
-- v2.3.2 cycle 3: pending — this rework; re-review owed (neutral reviewer, technical mode).
+- v2.3.3 cycle 1: pending — recorded-decision closure of §7 #20 (no code change); re-review owed (neutral reviewer, technical mode).
+- v2.3.2 cycle 3: `artifacts/reviews/06-coding-and-ut-v2.3.2-technical-cycle3.md` — PASS (97%, 0C/0H/0M/1L). Approved 2026-08-29. Surviving Low ISS-C3-01 (extend UT-0871 to the PartyCreationService shim block — additive hardening; verified in sync at review time) carries as a non-gating backlog item.
 - v2.3.1 cycle 2: `artifacts/reviews/06-coding-and-ut-v2.3.1-technical-cycle2.md` — FAIL (92%, 0C/0H/1M/2L). All four cycle-1 issues verified closed. ISS-C2-01 (Medium): the ISS-01 fix stopped at the JS boundary — `apps/web/types/trumocracy-sdk.d.ts` IPartyStore shim missing `findPetitionsPastClose`, so a TypeScript store could typecheck clean and throw at runtime; ISS-C2-02 (Low): two further stale §5.0 review-record lines (v2.0.1 "pending", v2.1.0 sign-off tail); ISS-C2-03 (Low): UT-0831 and the Low fixes not yet committed (and 4148498 bundled the fix with review artifacts). All three resolved in v2.3.2 (.d.ts synced in both blocks + UT-0871 drift guard; §5.0 corrected; rework committed atomically — fix commit + docs commit).
 - v2.3.0 cycle 1: `artifacts/reviews/06-coding-and-ut-v2.3.0-technical-cycle1.md` — FAIL (90%, 0C/0H/1M/3L). ISS-01 (Medium): expirePetitions reached into InMemoryPartyStore's private `_petitions` field — silent no-op with any production store; ISS-02 (Low): §8 stale branch name; ISS-03 (Low): membershipHistory O(n²) fold undocumented; ISS-04 (Low): UT-0822 as an `it()` inside UT-0821's describe block. All four resolved in v2.3.1 (interface method `findPetitionsPastClose` + regression test UT-0831; branch name fixed; fold reworked to O(n); UT-0822 given its own describe block).
 - v2.2.0 cycle 2: `artifacts/reviews/06-coding-and-ut-v2.2.0-technical-cycle2.md` — PASS (97%, reviewer-qa). Approved. (This line previously read "pending" — stale; corrected at v2.3.1.)
@@ -635,29 +650,22 @@ When each module lands it must read its flag in the same commit.
     — would allow premature activation. Tests in this drop seed endorsement counts
     deterministically via the store; real endorsement feed wiring is a DES-097 integration
     task.
-20. **One-active-party is built in the EXPLICIT-LEAVE form; FR-064's text reads
-    auto-void-on-join — TRACKED DECISION, product-owner ruling owed (Flag: FR-064-SEMANTICS).**
-    The 2026-08-28 commissioning brief directed: "Joining a second party requires leaving the
-    first (an explicit, recorded action)." FR-064 (Doc 02 §4.6) reads: "joining a new party
-    MUST automatically void membership in the current party," enforced by a global
-    membership-scope nullifier (DES-065 — a v2 chain mechanism). This drop enforces the
-    invariant app-side in the stricter explicit-leave form: a second join is refused
-    (ALREADY_MEMBER_ELSEWHERE) until leaveParty() is called. Both forms preserve
-    at-most-one-active-membership; the FR-064 tenure-clock reset holds either way (every
-    join appends a fresh joinedAt).
-    **Decision required** (Doc 02 is product-owner-owned; the engineer cannot edit FR-064):
-    - **(a) Annotate FR-064 with the v1 explicit-leave posture** — auto-void deferred to the
-      DES-065 membership nullifier at the v2 seam swap. **Engineer recommendation:** it
-      matches the 2026-08-28 commissioning brief (the more recent human direction), it is
-      the stricter form (no membership ever changes without an explicit, recorded member
-      action), and auto-void can be layered on later without breaking the invariant, the
-      event log, or any test in this drop.
-    - **(b) Uphold auto-void-on-join as v1 semantics** — joinParty() would then record an
-      implicit leave of the current party instead of refusing; a small, reversible service
-      change (the append-only event log already supports it).
-    Until the product-owner records (a) or (b) in Doc 02, this limitation stands, and the
-    RTM's FR-064 Must row must NOT be closed on the strength of this drop alone.
-    Raised 2026-08-28 (v2.3.0); recorded as a tracked decision 2026-08-29 (v2.3.1).
+20. **One-active-party EXPLICIT-LEAVE form — RESOLVED (a) (Flag: FR-064-SEMANTICS — CLOSED
+    2026-08-29).** The divergence this limitation tracked is resolved by approver ruling:
+    **option (a), v1 EXPLICIT-LEAVE** (Rathish, Human Approver, 2026-08-29). Joining a
+    second party does NOT auto-void the first — a member must explicitly, on the record,
+    leave their current party (leaveParty(), FR-022) before joining another; nothing
+    consequential happens by silence. FR-064's text is amended accordingly in **Doc 02
+    v2.15.0 §4.6** (the superseded auto-void wording is annotated in place, not deleted).
+    Automatic voidance and the bypass-proof nullifier enforcement are **DEFERRED to
+    DES-065** at the v2 seam swap, where one-active-membership is enforced
+    cryptographically — the behaviour implemented in this drop (ALREADY_MEMBER_ELSEWHERE
+    refusal until an explicit recorded leave; fresh joinedAt on every join) is the subset
+    the v2 mechanism formalises. **No code change required**: the drop already implements
+    the ruled semantics. NOTE: the RTM's FR-064 Must row REMAINS OPEN pending the DES-065
+    build (v2) — the ruling unblocked the semantics, not the row.
+    Raised 2026-08-28 (v2.3.0); recorded as a tracked decision at v2.3.1; RESOLVED (a)
+    2026-08-29 (v2.3.3).
 21. **Official-strength contribution is v1 app-side state; no protocol/on-chain counterpart
     yet.** `contributeToStrength()` (FR-123(a)) records counted members in the party store;
     uniqueness is enforced by the counted-members set, not by the verifier's
