@@ -100,6 +100,15 @@ declare module '@trumocracy/sdk' {
 
   // ─── Party-creation service seam (DES-097 predecessor) ───────────────────────
 
+  /** One append-only membership event (never mutated, never deleted). */
+  export interface MembershipEvent {
+    seq: number;
+    partyId: string;
+    memberPseudonym: string;
+    action: 'JOIN' | 'LEAVE';
+    at: number;
+  }
+
   /** IPartyStore — injectable persistence seam for PartyCreationService. */
   export interface IPartyStore {
     IS_INSECURE_MOCK(): boolean;
@@ -112,13 +121,17 @@ declare module '@trumocracy/sdk' {
     saveDraft(draft: object): string;
     updateDraft(id: string, data: object): object;
     savePetition(petition: object): string;
-    findPetitionById(id: string): object | null;
     updatePetition(id: string, data: object): object;
-    archivePetition(id: string): object;
+    archivePetition(id: string, now: number): object;
     saveParty(party: object): string;
     updateParty(id: string, data: object): object;
-    addMember(partyId: string, memberPseudonym: string): void;
+    recordJoin(partyId: string, memberPseudonym: string, at: number): void;
+    recordLeave(partyId: string, memberPseudonym: string, at: number): void;
+    getActiveMembership(memberPseudonym: string): { partyId: string; joinedAt: number } | null;
+    getMembershipEvents(memberPseudonym: string): MembershipEvent[];
     getMemberPseudonyms(partyId: string): string[];
+    recordStrengthContribution(partyId: string, memberPseudonym: string): void;
+    getCountedPseudonyms(partyId: string): string[];
   }
 
   /**
@@ -137,11 +150,16 @@ declare module '@trumocracy/sdk' {
     updateDraft(id: string, data: object): object;
     savePetition(petition: object): string;
     updatePetition(id: string, data: object): object;
-    archivePetition(id: string): object;
+    archivePetition(id: string, now: number): object;
     saveParty(party: object): string;
     updateParty(id: string, data: object): object;
-    addMember(partyId: string, memberPseudonym: string): void;
+    recordJoin(partyId: string, memberPseudonym: string, at: number): void;
+    recordLeave(partyId: string, memberPseudonym: string, at: number): void;
+    getActiveMembership(memberPseudonym: string): { partyId: string; joinedAt: number } | null;
+    getMembershipEvents(memberPseudonym: string): MembershipEvent[];
     getMemberPseudonyms(partyId: string): string[];
+    recordStrengthContribution(partyId: string, memberPseudonym: string): void;
+    getCountedPseudonyms(partyId: string): string[];
   }
 
   export interface PartyCreationDraft {
@@ -156,15 +174,26 @@ declare module '@trumocracy/sdk' {
     partyId: string;
     state: string;
     memberCount: number;
+    /** FR-123(a): counts verified members only — joining is not counting. */
+    officialStrength: number;
     provisional: boolean;
     cap: number | null;
     capReached: boolean;
     legalRegistrationStatement: string;
   }
 
+  export interface MembershipHistoryRow {
+    partyId: string;
+    joinedAt: number;
+    leftAt: number | null;
+    active: boolean;
+  }
+
   /**
-   * PartyCreationService — demoable party-creation flow.
-   * IS_INSECURE_MOCK() delegates to the store.
+   * PartyCreationService — demoable party-creation + membership flow.
+   * IS_INSECURE_MOCK() delegates to the store. Holds NO eligibility verifier:
+   * join/leave structurally cannot call the seam (FR-020); only
+   * contributeToStrength receives a verifier, per call (FR-123(a)).
    */
   export class PartyCreationService {
     constructor(store: IPartyStore, clock?: () => number);
@@ -173,8 +202,80 @@ declare module '@trumocracy/sdk' {
     publishDraft(draftId: string): { petitionId: string; opensAt: number; closesAt: number };
     expirePetitions(now?: number): string[];
     activateParty(petitionId: string): { partyId: string };
-    joinParty(partyId: string, memberPseudonym: string): { memberCount: number };
+    joinParty(partyId: string, memberPseudonym: string): { memberCount: number; joinedAt: number };
+    leaveParty(partyId: string, memberPseudonym: string): { memberCount: number; leftAt: number };
+    membershipHistory(memberPseudonym: string): MembershipHistoryRow[];
+    activeMembership(memberPseudonym: string): { partyId: string; joinedAt: number } | null;
+    countingStatus(partyId: string, memberPseudonym: string): { member: boolean; counted: boolean };
+    contributeToStrength(
+      partyId: string,
+      memberPseudonym: string,
+      verifier: { verifyEligibility(memberId: string, regionId: string, scope: string): EligibilityResult },
+    ): { officialStrength: number };
     recordLegalRegistration(partyId: string, evidenceRef: string): { legalRegistrationVerified: true };
     partyStatus(partyId: string): PartyStatus;
+  }
+
+  // ─── IEligibilityVerifier seam (DES-095, ADR-024/ADR-025) ────────────────────
+
+  export const COUNTING_ACTION: {
+    readonly STRENGTH_CONTRIBUTION: 'STRENGTH_CONTRIBUTION';
+    readonly BINDING_VOTE: 'BINDING_VOTE';
+    readonly CANDIDACY: 'CANDIDACY';
+  };
+
+  export class NotACountingAction extends Error {
+    scope: string;
+  }
+
+  export interface EligibilityResult {
+    eligible: boolean;
+    memberId: string;
+    scope: string;
+    reason?: string;
+  }
+
+  export interface EligibilityProperties {
+    onePersonOneVote: boolean;
+    subpoenaResistant: boolean;
+    unlinkable: boolean;
+    anonymityFloor: boolean;
+  }
+
+  /** DES-100 allowlist — the ONLY fields retained after a government-ID check. */
+  export interface IdDocumentResult {
+    id_verified_flag: boolean;
+    age_verified: boolean;
+    issuing_region: string;
+    subject_id_hash: string;
+    verified_at: string;
+  }
+
+  /** Vendor-boundary stub (IS_INSECURE_MOCK=true; blocked past devnet). */
+  export class StubPhoneVerifier {
+    verifyPhone(phoneE164: string): Promise<{ phone_hash: string }>;
+    IS_INSECURE_MOCK(): true;
+  }
+
+  /** Vendor-boundary stub (IS_INSECURE_MOCK=true; blocked past devnet). */
+  export class StubIdDocumentChecker {
+    checkDocument(documentPayload: object): Promise<IdDocumentResult>;
+    IS_INSECURE_MOCK(): true;
+  }
+
+  /**
+   * v1 conventional backing for the IEligibilityVerifier seam.
+   * IS_INSECURE_MOCK() delegates: true while any vendor seam is a stub.
+   */
+  export class ConventionalEligibilityVerifier {
+    constructor(deps: {
+      phoneVerifier: StubPhoneVerifier | { verifyPhone(p: string): Promise<{ phone_hash: string }>; IS_INSECURE_MOCK(): boolean };
+      idDocumentChecker: StubIdDocumentChecker | { checkDocument(d: object): Promise<IdDocumentResult>; IS_INSECURE_MOCK(): boolean };
+      credentialStore: Map<string, IdDocumentResult>;
+    });
+    verifyEligibility(memberId: string, regionId: string, scope: string, proof?: unknown): EligibilityResult;
+    isUniqueInScope(memberId: string, scope: string): boolean;
+    getProperties(): EligibilityProperties;
+    IS_INSECURE_MOCK(): boolean;
   }
 }
