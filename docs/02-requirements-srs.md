@@ -3,7 +3,7 @@
 ```
 Document ID:   SRS-TRUMOCRACY
 Version:       2.15.0
-Status:        In Review
+Status:        Approved — 02-requirements-srs-v2.15.0-business-cycle1.md (PASS 97%, 0C/0H/0M/1L; ISS-B1 Low carried)
 Owner:         Priya Raghunathan — Product Owner
 Approvers:     Gate 1 — Priya Raghunathan (Product Owner), Ana-Maria Petrescu (Project Manager),
                Rathish (Human Approver — Gate 1 re-entry, v2.0.0)
