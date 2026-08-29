@@ -2,14 +2,42 @@
 
 ```
 Document ID:   SDD-TRUMOCRACY
-Version:       2.8.1
-Status:        Approved — 03-architecture-design-sdd-v2.8.1-technical-cycle2.md (PASS 100%, 0C/0H/0M/0L)
+Version:       2.8.2
+Status:        Approved — 03-architecture-design-sdd-v2.8.2-technical-cycle3.md (PASS 100%, 0C/0H/0M/0L)
 Owner:         Ravi Deshmukh — Principal Architect
 Approvers:     Rafael Duarte (Security), Chen Wei (Reliability), Dr. Lena Kowalczyk (Privacy),
                Aisha Nkemdirim (Elections & Voting)
 Source:        SRS-TRUMOCRACY v2.15.0
 Last updated:  2026-08-29
-Change:        v2.8.1 (2026-08-29) — Rework cycle 1 against
+Change:        v2.8.2 (2026-08-29) — DES-101 completed for FR-077's SECOND HALF (§10.13.10.1).
+               Self-correction: v2.8.0's §15 assessment claimed FR-077's RTM row was closeable
+               once the DES link existed. That was WRONG, and the tester's rule-4 check caught
+               it (Doc 08 v2.4.0): FR-077 requires refusal at publication AND at "every
+               subsequent amendment"; DES-101 designed only the publication gate. Amendment was
+               gated nowhere at either tier, and was UNDESIGNED — an architect gap, not a build
+               gap. §10.13.10.1 now specifies it: (1) the charter becomes a CLAUSE MAP rather
+               than one opaque blob hash, so `amendCharter` amends the named clause and cannot
+               reach another — the structural fix, because entrenching one clause cannot protect
+               a monolithic document that any single amendment replaces wholesale; (2) the
+               non-violence clauseId is PLATFORM-immutable, written by the deployer for every
+               party rather than left to founder election (entrenchment ratchet, DES-017);
+               (3) amendments carry the text (or a text-binding proof) for the clause they name,
+               because `amendCharter(clauseId, newCharterHash, newCharterCID)` never receives
+               the charter text and so cannot verify it even in principle; (4) any future bulk
+               replacement path MUST re-run the gate; (5) a v1 amendment path, when built, routes
+               through the same `validateDraft` contract; (6) the closing evidence is an
+               ADVERSARIAL amendment test — strip the clause while naming an unrelated one and
+               assert refusal — which fails against today's code, as it should.
+               HONEST STATUS: FR-077 stays OPEN (G-NOMECH). This moves it from undesigned to
+               designed-and-unbuilt; it does not close it. §15's v2.8.0 row is corrected in
+               place rather than quietly rewritten.
+               SECURITY FINDING ROUTED: item (2)/(1) is a live weakness in shipped contract
+               code — a party can today amend away the non-violence clause that CON-013 makes a
+               condition of its existence, and `party_governance` is on in every environment.
+               Not exploitable in v1 (no on-chain governance, ADR-024 §(b)); must be fixed
+               BEFORE the on-chain governance increment ships. Recorded in §13; routed to
+               reviewer-qa (next security scan) and the engineer (Phase-3 increment).
+               v2.8.1 (2026-08-29) — Rework cycle 1 against
                artifacts/reviews/03-architecture-design-sdd-v2.8.0-technical-cycle1.md
                (FAIL 95%, 0C/1H/0M/0L). ISS-01 (High): DES-101 named the clause-gate refusals
                `CLAUSE_MISSING` / `CLAUSE_ALTERED`, which appear nowhere in the shipped
@@ -1754,9 +1782,82 @@ exact. (c) *Localisation* — the canonical clause is stored and compared in its
 a translated rendering MAY be displayed alongside for comprehension but MUST NOT be what is
 compared or stored, or the constant stops being a single source of truth.
 
-**Traces:** FR-077, CON-013, ADR-010, DES-074 (parallel gate). **Backs:** FR-077 (Doc 02 §4.22;
-owner Tomás Ferreira; traces BR-014). **Implemented by:** UT-0071..UT-0075 (protocol), UT-0786
-(sdk), UT-0849..UT-0851 (web); TC-3403, TC-3508..TC-3510.
+#### 10.13.10.1 Amendment-time verification — the second half of FR-077 (v2.8.2)
+
+**How this gap was found, and why it matters.** v2.8.0 designed the *publication* gate and
+asserted in §15 that FR-077's RTM row was closeable. That assessment was **wrong**, and the
+tester's rule-4 check caught it: FR-077 requires the system to "refuse publication of any new
+constitution **and** refuse **every subsequent amendment** if the non-violence clause is absent
+or has been altered." Publication is gated at three layers. **Amendment is gated nowhere**, at
+either tier — and it was not merely unimplemented, it was **undesigned**. This subsection supplies
+the missing design. It does **not** close the row: a design is not an implementation.
+
+**The concrete hole.** `Party.amendCharter(clauseId, newCharterHash, newCharterCID)` checks only
+that the caller is the governor and that `immutableClause[clauseId]` is unset, then assigns
+`charter.charterHash` and `charter.charterCID` wholesale. **The function never receives the
+charter text**, so it cannot inspect the clause even in principle. Two distinct failures follow:
+
+1. **Direct** — nothing marks the non-violence clause immutable *by platform rule*.
+   `setFoundingClauses` is called by the registry, but the immutable set is a founding-time
+   *choice*; a party that simply does not entrench the clause may amend it away. A guarantee the
+   platform states unconditionally MUST NOT depend on each party electing to keep it.
+2. **Structural, and the more serious of the two** — even with that clauseId entrenched, an
+   amendment naming *any other* clause replaces the **entire** document hash and CID. The new
+   document may silently omit or alter the non-violence clause, and `ClauseIsImmutable` never
+   fires because the amendment did not name that clause. **Entrenching one clause cannot protect
+   a monolithic blob**: the charter is stored as one hash, so every amendment is a whole-document
+   replacement wearing a single clause's name.
+
+**Normative design.**
+
+1. **The charter is a clause map, not a blob.** `Party` MUST store
+   `mapping(bytes32 clauseId => bytes32 clauseHash)` with the document hash **derived** from the
+   map (an ordered hash over the clause set), rather than storing one opaque `charterHash` that a
+   single call can overwrite. `amendCharter` then does what its signature always implied — amend
+   **the named clause** — and cannot reach any other clause. This is the structural fix; rules 2–4
+   are defence in depth over it.
+2. **The non-violence clause is platform-immutable.** Its `clauseId` is a platform constant, and
+   `PartyDeployer`/`PartyRegistry` MUST write it into `immutableClause` at construction for
+   **every** party, independent of founder choice. Founding parties may entrench *more*; they may
+   never entrench *less* (the DES-017 ratchet, applied to entrenchment). `amendCharter` on that
+   clauseId reverts `ClauseIsImmutable`.
+3. **Amendments carry what they change.** An amendment MUST submit the clause **text** for the
+   clause it names (or a proof binding text to hash), so the contract verifies rather than trusts.
+   Where full text on-chain is uneconomic, the amendment carries `keccak(text)` and the CID, and
+   the platform's published clause hash is compared directly — verification of a document the
+   contract never sees is not verification.
+4. **Whole-document replacement, if ever permitted, re-verifies.** Should a future increment
+   reintroduce a bulk charter replacement path, it MUST re-run the DES-101 gate over the incoming
+   document before the write. A replacement path without re-verification re-opens exactly this
+   hole.
+5. **v1 (application tier).** No charter-amendment path exists in v1 today — recorded as fact, not
+   as safety. When one is built, it MUST route through the same `validateDraft` check that
+   `createDraft` and `publishDraft` already use, with the same (field, code) refusal contract. The
+   single-source-of-truth constant makes this a reuse, not a reimplementation.
+6. **Test obligation.** The closing evidence for FR-077 is an *adversarial amendment* test, not a
+   happy path: amend an unrelated clause with a replacement charter whose non-violence clause has
+   been stripped, and assert refusal. Written against today's code that test **fails**, which is
+   the point — it is the regression test for this hole.
+
+**Status — honest.** FR-077's RTM row stays **OPEN (G-NOMECH)**. This subsection converts it from
+*undesigned* to *designed-and-unbuilt*: the mechanism is now specified, and the row closes when the
+clause-map refactor and rule 6's adversarial test land. The implementation sits in the same
+Phase-3 increment as the governance/proposal lifecycle that drives `amendCharter`.
+
+**Security note (routed).** Item 2 above is a live weakness in shipped contract code, not merely a
+documentation gap: a party may today amend away the non-violence commitment that CON-013 makes a
+condition of its existence. The `party_governance` flag is on in every environment, so this is not
+flag-contained. It is recorded in §13 and routed to reviewer-qa for the next security scan and to
+the engineer for the Phase-3 governance increment. No exploit path exists in v1 deployments,
+because v1 runs no on-chain governance (ADR-024 §(b)) — the exposure arrives with the on-chain
+governance increment, and must be fixed **before** it does.
+
+**Traces:** FR-077, FR-027 (entrenchment), FR-078 (constitution amendable only via tiered
+process), CON-013, ADR-010, DES-017 (ratchet), DES-022 (entrenched clauses), DES-074 (parallel
+gate). **Backs:** FR-077 (Doc 02 §4.22; owner Daniel Okonkwo; traces BR-014). **Implemented by
+(publication half only):** UT-0071..UT-0075 (protocol), UT-0786 (sdk), UT-0849..UT-0851 (web);
+TC-3403, TC-3508..TC-3510. **Owed (amendment half):** clause-map refactor + adversarial amendment
+test.
 
 ### 10.13.11 DES-102 — provisional-party membership cap (FR-130)
 
@@ -2068,7 +2169,8 @@ not duplicated here. Architectural debt carried knowingly:
 | Region path stored as a string on-chain | readability for auditors | acceptable; measured, small | Low |
 | Participation profile (DES-064) off above dev | OI-13 unresolved | ship after Gate 1 re-affirmation resolves OI-13 | Open (governance) |
 | Fork feature flag off above dev | calldata vulnerability deferred at Gate 1 (FORK-CRIT) | design now finalised in DES-034; engineering fix required before flag is enabled | **High — security blocker** |
-| ~~FR-077 and FR-130 have shipped code but no DES~~ | ~~C-02 closure recorded the cap as a build obligation and left the design link unwritten; FR-077's link was never written~~ | **PAID DOWN v2.8.0** — DES-101 (§10.13.10) and DES-102 (§10.13.11) written; the two RTM chain gaps are closed at the design layer | Closed |
+| ~~FR-077 and FR-130 have shipped code but no DES~~ | ~~C-02 closure recorded the cap as a build obligation and left the design link unwritten; FR-077's link was never written~~ | **PAID DOWN v2.8.0** — DES-101 (§10.13.10) and DES-102 (§10.13.11) written; both RTM chain gaps closed at the design layer. FR-130's row then CLOSED (Doc 08 v2.4.0); FR-077's did not — see the row below | Closed |
+| **`Party.amendCharter` can strip the non-violence clause** — it takes `(clauseId, hash, CID)`, never the charter text, and replaces the whole document hash, so an amendment naming any unrelated clause installs a charter without the CON-013 clause; entrenchment does not help, because the immutable set is a founding-time party choice and the blob is replaced wholesale | found 2026-08-29 while completing DES-101 for FR-077's amendment half; the publication gate was designed and the amendment gate was not | **Designed v2.8.2** (§10.13.10.1): clause-map charter + platform-immutable clauseId + amendments carrying their text + adversarial-amendment regression test. **Build owed in the Phase-3 governance increment, and required BEFORE it ships.** Not exploitable in v1 (no on-chain governance, ADR-024 §(b)) | **High — governance-integrity blocker for the on-chain increment** |
 | v1 party/membership store is in-memory (`IS_INSECURE_MOCK = true`) | production Postgres backing not built; blocked past devnet by the CI gate | **Design complete v2.8.0** — DES-097(b) (§10.13.12) specifies the mapping, constraints, retention boundary and promotion condition; the build remains owed, and §6's CON-015 answers gate promotion | Medium (blocked by CI) |
 | FR-130 cap is application-enforced in v1 | v1 has no on-chain membership (ADR-024 §(b)); the application boundary is the only enforcement point that exists | audit-record publication makes an over-cap party **detectable** today (DES-102 rule 8); the on-chain guard in `Party.join()` (DES-102 rule 7) makes it **impossible** at the v2 increment | Medium (disclosed) |
 
@@ -2113,7 +2215,7 @@ pre-existing Phase-3, environment, external, or mechanism gaps per Doc 08 §gap-
 
 | Requirement | DES | Notes |
 |---|---|---|
-| FR-077 (non-violence clause verified by code; publication refused if absent or altered) | **DES-101** (§10.13.10) | Closes a **chain** gap, not a build gap: the implementation shipped at Doc 06 v2.2.0 and passes at protocol + sdk + web (UT-0071..0075, UT-0786, UT-0849..0851; TC-3403, TC-3508..3510). SCR binding added: SCR-04, SCR-05. Architect's assessment: with the DES link written, all four Doc 08 completion rules are satisfiable — the guarantee is a verbatim-match refusal that does **not** depend on proof soundness or on production persistence, the same shape as FR-011/DES-074 which is already COMPLETE. **The status call is the tester's**, per the Doc 08 RACI |
+| FR-077 (non-violence clause verified by code; publication refused if absent or altered **and at every subsequent amendment**) | **DES-101** (§10.13.10 + §10.13.10.1) | ~~v2.8.0 assessment: "all four completion rules are satisfiable… the status call is the tester's."~~ **CORRECTED v2.8.2 — that assessment was wrong.** It read FR-077 as the publication gate alone and missed the requirement's second clause. The tester's rule-4 check (Doc 08 v2.4.0) found that amendment-time verification is gated **nowhere at either tier**, and was undesigned. §10.13.10.1 now designs it (clause-map charter, platform-immutable clauseId, amendments carrying their text, adversarial-amendment test obligation). **FR-077 stays OPEN — reclassified G-TRACE → G-NOMECH.** The DES link is closed; the mechanism gap is now designed but unbuilt. Publication half remains fully tested (UT-0071..0075, UT-0786, UT-0849..0851). SCR binding added: SCR-04, SCR-05. The correction is recorded here rather than rewritten away: a DES that overstates what it covers is the failure mode this document exists to prevent |
 | FR-130 (provisional cap 100 until verified legal registration; code-only lift; no operator path) | **DES-102** (§10.13.11) | Closes the chain gap and specifies both enforcement points (v1 application boundary; v2 `Party.join()`). SCR binding added: SCR-09, SCR-11. Implementation shipped and passes (UT-0802..0811, UT-0825, UT-0852..0856, UT-0862; TC-3511..3516, TC-3528, TC-3529). Architect's assessment: rules 1–3 are satisfied; **rule 4 is a judgement the tester owns** — the cap, the code-only lift and the absence of a bypass are all tested, but in v1 the invariant is application-enforced with audit-record tamper-evidence rather than chain-enforced tamper-prevention (DES-102 rule 8 and the recorded residual). This element does not assert the row closes; it removes the reason it could not |
 | FR-010 (production-persistent store), and every row whose gap reads "production store pending DES-097" | **DES-097(b)** (§10.13.12) | **Enables a build; closes no row.** Specifies the IPartyStore→Postgres mapping, the append-only membership log as the authoritative record, the concurrency re-expression of invariants the in-memory store gets from single-threading, the retention boundary (composing with DES-100 — no raw identity), and the `IS_INSECURE_MOCK = false` promotion condition. Retention duration, erasure handling and hash classification are **PENDING CON-015** and deliberately unspecified |
 

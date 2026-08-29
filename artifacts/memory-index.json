@@ -4671,6 +4671,49 @@
     "reviewer-qa: independent verification of the 125 open Must rows before merge sign-off."
    ],
    "gate": "Gate 2 NOT READY — 125 open Must rows against a zero-gap rule. v2.4.0 records the first Must row to close since v1.1.0, and it closed with no new code: one design element paid one chain gap over tests that were already green. The counterpart lesson is FR-077 — a DES pays a chain gap, but whether the row closes depends on whether the tests cover the WHOLE guarantee."
+  },
+  {
+   "id": "reviewer-qa-2026-08-29T1115",
+   "role": "reviewer-qa",
+   "file": "artifacts/reviewer-qa-2026-08-29T1115.md",
+   "timestamp": "2026-08-29T11:15:00Z",
+   "phase": "Verify — technical-mode document-review Cycle 3",
+   "product": "Trumocracy",
+   "scope": "Doc 03 v2.8.2 — FR-077 amendment-time verification gap (§10.13.10.1 new; §13 new High debt row; §15 FR-077 row corrected in place G-TRACE→G-NOMECH). Base: v2.8.1 Approved 88860b4.",
+   "summary": "PASS 100%, 0C/0H/0M/0L. amendCharter vulnerability independently confirmed real (Party.sol:350-359: takes (clauseId, hash, CID), assigns charter.charterHash/CID wholesale, never receives text; setFoundingClauses:363-377 makes non-violence clauseId a founding-time choice, not platform-mandated; no non-violence check anywhere in contracts). Both failure modes verified. Clause-map fix sound; composes with FR-078/FR-027/DES-017. v1 non-exploitability reasoning verified correct. FR-077 owner corrected Ferreira→Okonkwo (Doc 02 §4.22:708 confirms Daniel Okonkwo). FR-077 stays OPEN (G-NOMECH).",
+   "artifacts_written": [
+    "artifacts/reviews/03-architecture-design-sdd-v2.8.2-technical-cycle3.md",
+    "artifacts/reviewer-qa-2026-08-29T1115.md"
+   ],
+   "review_verdicts": {
+    "03-architecture-design-sdd-v2.8.2": {
+     "score": 100,
+     "critical": 0,
+     "high": 0,
+     "medium": 0,
+     "low": 0,
+     "cycle": 3,
+     "verdict": "PASS"
+    }
+   },
+   "code_verified": {
+    "amendCharter": "Party.sol:350-359 — takes (clauseId, newCharterHash, newCharterCID), checks only governor+immutableClause[clauseId], assigns charter.charterHash/CID wholesale — vulnerability CONFIRMED REAL",
+    "setFoundingClauses": "Party.sol:363-377 — iterates immutableIds array, no platform-forced non-violence clauseId — direct failure mode CONFIRMED",
+    "contracts_grep_nonviolence": "zero matches — no contract-layer non-violence verification exists",
+    "FR077_owner": "Doc 02 §4.22:708 = Daniel Okonkwo (corrected from Tomás Ferreira carried in v2.8.0+v2.8.1)"
+   },
+   "ids_touched": {
+    "DES": "DES-101, DES-102, DES-097(b)",
+    "FR": "FR-077, FR-027, FR-078, CON-013, ADR-010, DES-017, DES-022, DES-074"
+   },
+   "open_items": [
+    "Ravi Deshmukh (architect): set Doc 03 v2.8.2 Status: Approved.",
+    "FR-077 stays OPEN (G-NOMECH) — designed, not yet built. Closes when clause-map refactor + adversarial-amendment test land (Phase-3).",
+    "Engineer (Phase-3): amendCharter weakness must be fixed BEFORE on-chain governance increment ships.",
+    "reviewer-qa next security scan: amendCharter weakness routed for inclusion.",
+    "Ji-woo Park (tester): Doc 07 v2.3.1 patch owed (TC-3508..3510 four corrections + cycle-1 Low issues)."
+   ],
+   "gate": "Gate 2 NOT READY. Doc 03 v2.8.2 PASSES review (cycle 3 PASS 100%). Routes to architect for Status: Approved."
   }
  ]
 }
