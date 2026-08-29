@@ -4403,6 +4403,129 @@
     "No commits made by the reviewer this round, by instruction — the main session commits."
    ],
    "gate": "Gate 2 remains NOT READY. The ruling removed an ambiguity, not a gap: FR-064 still open pending DES-065, FR-130 still open pending a DES, Doc 08 still carries 126 open Must rows against a zero-gap rule. Both documents are honest about that, which is why they passed."
+  },
+  {
+   "id": "reviewer-qa-2026-08-29T1000",
+   "role": "reviewer-qa",
+   "file": "artifacts/reviewer-qa-2026-08-29T1000.md",
+   "timestamp": "2026-08-29T10:00:00Z",
+   "phase": "Verify — technical-mode document-review Cycle 1",
+   "product": "Trumocracy",
+   "scope": "Doc 07 v2.3.0 and Doc 08 v2.3.0 — TS-MEMBERSHIP drop (US-0024 US-0025 US-0073 US-0131 US-0133)",
+   "summary": "Ran technical-mode document-review Cycle 1 on Doc 07 v2.3.0 (PASS 98%, 0C/0H/0M/2L) and Doc 08 v2.3.0 (FAIL 97%, 0C/0H/1M/1L). Doc 07 advances to Approved. Doc 08 routes to tester for v2.3.1 rework. Independently verified 220/220 SDK tests and 71/71 web tests green. All 24 TC-3517..TC-3540 UT mappings and assertions verified against actual test source.",
+   "artifacts_written": [
+    "artifacts/reviews/07-test-cases-suites-v2.3.0-technical-cycle1.md",
+    "artifacts/reviews/08-traceability-matrix-v2.3.0-technical-cycle1.md",
+    "artifacts/reviewer-qa-2026-08-29T1000.md"
+   ],
+   "review_verdicts": {
+    "07-test-cases-suites-v2.3.0": {
+     "score": 98,
+     "critical": 0,
+     "high": 0,
+     "medium": 0,
+     "low": 2,
+     "cycle": 1,
+     "verdict": "PASS"
+    },
+    "08-traceability-matrix-v2.3.0": {
+     "score": 97,
+     "critical": 0,
+     "high": 0,
+     "medium": 1,
+     "low": 1,
+     "cycle": 1,
+     "verdict": "FAIL"
+    }
+   },
+   "test_runs": {
+    "sdk": "220/220 passed (vitest v3.2.7) — membership.test.js 22, party-creation.test.js 38",
+    "web": "71/71 passed (vitest v3.2.7) — join-membership.test.tsx 27, sdk-types-sync.test.ts 1"
+   },
+   "key_findings": {
+    "doc07_ISS-01": "Low — source pins stale (CODE v2.3.2→v2.3.3, SRS v2.13.0→v2.15.0) and §5.5 preamble note says awaiting FR-064 ruling when ruling is done",
+    "doc07_ISS-02": "Low — party-creation.test.js 38/38 in §0.2 and R-12 but lacks dedicated §9 R-## row",
+    "doc08_ISS-01": "Medium — cluster of stale references post-FR-064-SEMANTICS ruling: source pins, FR-064 gap note (says ruling owed when it was received), gap-log entry 55 (says awaiting ruling), §9 tester sign-off (says two blockers when one resolved). FR-064 Must row correctly stays OPEN for DES-065.",
+    "doc08_ISS-02": "Low — §6 Stories row 12 vs text 13, pre-existing v2.2.5 cycle-2 ISS-01 unfixed"
+   },
+   "ids_touched": {
+    "TC": "TC-3517..TC-3540 (all 24 verified)",
+    "UT": "UT-0819..UT-0831, UT-0858..UT-0871 (all verified in source)",
+    "FR": "FR-013, FR-020, FR-021, FR-022, FR-064, FR-122, FR-123, FR-130, FR-131 (Doc 08 rows checked)",
+    "gap_log": "entries 55, 114, 115, 117, 125"
+   },
+   "open_items": [
+    "Ji-woo Park (tester): produce Doc 08 v2.3.1 (ISS-01 Medium + ISS-02 Low fixed); submit for cycle-2 review.",
+    "Ji-woo Park (tester): set Doc 07 v2.3.0 Status: Approved; address Low issues (ISS-01 + ISS-02) in v2.3.1 maintenance patch.",
+    "FR-064 Must row stays OPEN pending DES-065 (v2/Phase-3). No action from this role.",
+    "FR-130 Must row stays OPEN pending architect DES (routed in Doc 02 §13 item (e))."
+   ],
+   "gate": "Gate 2 NOT READY. Doc 07 v2.3.0 PASSES review (Approved). Doc 08 v2.3.0 FAILS review (FAIL cycle 1, 126 open Must rows, Medium issue in gap documentation). Merge sign-off withheld pending Doc 08 rework and zero-gap RTM."
+  },
+  {
+   "id": "reviewer-qa-2026-08-29T1015",
+   "role": "reviewer-qa",
+   "file": "artifacts/reviewer-qa-2026-08-29T1015.md",
+   "timestamp": "2026-08-29T10:15:00Z",
+   "phase": "Verify — technical-mode document-review Cycle 2",
+   "product": "Trumocracy",
+   "scope": "Doc 08 v2.3.1 — cycle-1 rework (ISS-01 Medium + ISS-02 Low resolved)",
+   "summary": "Ran technical-mode document-review Cycle 2 on Doc 08 v2.3.1. PASS 100%, 0C/0H/0M/0L. All cycle-1 issues resolved: source pins updated, FR-064 gap note and gap-log entry 55 correctly show SPLIT (semantics RESOLVED / DES-065 OPEN), §9 sign-off corrected, Stories row corrected 12→13. Ruling citations verified against Doc 02 v2.15.0 Approved and Doc 06 v2.3.3 Approved. Diff confirms exactly the claimed seven changed locations with no collateral changes.",
+   "artifacts_written": [
+    "artifacts/reviews/08-traceability-matrix-v2.3.1-technical-cycle2.md",
+    "artifacts/reviewer-qa-2026-08-29T1015.md"
+   ],
+   "review_verdicts": {
+    "08-traceability-matrix-v2.3.1": {
+     "score": 100,
+     "critical": 0,
+     "high": 0,
+     "medium": 0,
+     "low": 0,
+     "cycle": 2,
+     "verdict": "PASS"
+    }
+   },
+   "ids_touched": {
+    "FR": "FR-064 (gap note verified), FR-130 (gap-log 125 confirmed untouched)",
+    "gap_log": "55 (SPLIT verified correct), 125 (untouched confirmed)",
+    "source_docs_verified": "Doc 02 v2.15.0 §4.6 Approved; Doc 06 v2.3.3 §7 #20 RESOLVED (a)"
+   },
+   "open_items": [
+    "Ji-woo Park: set Doc 08 v2.3.1 Status: Approved.",
+    "Doc 07 v2.3.1 Low-only maintenance patch still owed (Doc 07 ISS-01 + ISS-02 from cycle-1).",
+    "FR-064 Must row stays OPEN pending DES-065 (v2/Phase-3).",
+    "FR-130 Must row stays OPEN pending architect DES.",
+    "Gate 2 NOT READY: 126 open Must rows."
+   ],
+   "gate": "Gate 2 NOT READY. Doc 08 v2.3.1 PASSES review (cycle 2 PASS 100%). Both Doc 07 v2.3.0 and Doc 08 v2.3.1 now cleared for Status: Approved. 126 open Must rows still block Gate 2."
+  },
+  {
+   "id": "reviewer-qa-2026-08-29T1030-merge-signoff",
+   "role": "reviewer-qa",
+   "file": "artifacts/reviewer-qa-2026-08-29T1030-merge-signoff.md",
+   "timestamp": "2026-08-29T10:30:00Z",
+   "phase": "Verify — merge sign-off (build/v1-join-membership)",
+   "product": "Trumocracy",
+   "scope": "Merge sign-off for build/v1-join-membership → main. Code commits 40c7af2, d5c36e2, 4148498, 3a273a1. All review loops closed.",
+   "summary": "SIGNED — merge of build/v1-join-membership to main. All conditions verified: 542/542 tests green; lint:deps OK; tsc exit 0 (apps/web + packages/ui); all four documents Approved (Doc 06 v2.3.3 PASS 98%, Doc 07 v2.3.0 PASS 98%, Doc 08 v2.3.1 PASS 100%, Doc 02 v2.15.0 PASS 97%); no out-of-scope feature; IS_INSECURE_MOCK discipline clean; FR-131(b)/(d) copy verified. RTM zero-gap (126 open Must rows) is a Gate-2 condition not a merge condition per 2026-08-25 ruling.",
+   "merge_signoff": "SIGNED — build/v1-join-membership → main",
+   "test_run": "542/542 passed: contracts 95, protocol 126, sdk 220, ui 14, indexer 16, web 71",
+   "lint_deps": "7 packages, layering OK, exit 0",
+   "tsc": "apps/web exit 0; packages/ui exit 0",
+   "ids_touched": {
+    "US": "US-0024, US-0025, US-0073, US-0131, US-0133",
+    "TC": "TC-3517..TC-3540",
+    "FR": "FR-020, FR-022, FR-064, FR-122, FR-123, FR-130, FR-131"
+   },
+   "open_items": [
+    "126 open Must rows — Gate-2 blocker, not a merge blocker (2026-08-25 ruling).",
+    "FR-064 Must row OPEN pending DES-065 (v2/Phase-3).",
+    "FR-130 Must row OPEN pending architect DES (Doc 02 §13(e)).",
+    "Doc 07 v2.3.1 maintenance patch owed (ISS-01 + ISS-02 Low).",
+    "Doc 02 ISS-B1 Low and Doc 06 ISS-C3-01 Low carried to next increment."
+   ],
+   "gate": "Gate 2 NOT READY (126 open Must rows). Merge SIGNED. Human (Rathish Kumar) executes git merge."
   }
  ]
 }
