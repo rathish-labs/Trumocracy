@@ -110,6 +110,7 @@ import { COUNTING_ACTION } from './eligibility.js';
  * @property {function(object): string} savePetition  — returns petitionId
  * @property {function(string, object): object} updatePetition  — throws if archived
  * @property {function(string, number): object} archivePetition  — (id, now) archives petition using the caller-supplied timestamp; immutable after this; throws on later mutation
+ * @property {function(number): object[]} findPetitionsPastClose  — (now) live petitions whose closesAt < now (expiry candidates)
  * @property {function(object): string} saveParty  — returns partyId
  * @property {function(string, object): object} updateParty  — returns updated party
  * @property {function(string, string, number): void} recordJoin  — (partyId, memberPseudonym, at)
@@ -292,6 +293,25 @@ export class InMemoryPartyStore {
     const result = [];
     for (const petition of this._petitions.values()) {
       if (petition.jurisdiction === jurisdiction && petition.state === PARTY_STATE.PETITION) {
+        result.push(petition);
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Live petitions whose closesAt has passed as of `now` — expiry candidates.
+   * Part of the IPartyStore contract so the service never reaches into private
+   * state (ISS-01, v2.3.1 rework). Production: WHERE state = PETITION AND
+   * closes_at < now.
+   *
+   * @param {number} now
+   * @returns {object[]}
+   */
+  findPetitionsPastClose(now) {
+    const result = [];
+    for (const petition of this._petitions.values()) {
+      if (petition.state === PARTY_STATE.PETITION && petition.closesAt < now) {
         result.push(petition);
       }
     }
@@ -727,19 +747,12 @@ export class PartyCreationService {
    */
   expirePetitions(now) {
     const t = now ?? this._clock();
-    const jurisdiction = null; // scan all — this is a maintenance sweep.
     const expired = [];
-
-    // Scan all live petitions across all jurisdictions.
-    // (InMemoryPartyStore: iterate all maps. Production: a DB query with WHERE closesAt < now.)
-    const allPetitionIds = Array.from(this._store._petitions?.keys() ?? []);
-    for (const id of allPetitionIds) {
-      const petition = this._store.findPetitionById(id);
-      if (!petition || petition.state !== PARTY_STATE.PETITION) continue;
-      if (petition.closesAt < t) {
-        this._store.archivePetition(id, t);
-        expired.push(id);
-      }
+    // Through the IPartyStore contract only — no private-state access (ISS-01,
+    // v2.3.1 rework). The store decides how to find expiry candidates.
+    for (const petition of this._store.findPetitionsPastClose(t)) {
+      this._store.archivePetition(petition.id, t);
+      expired.push(petition.id);
     }
     return expired;
   }

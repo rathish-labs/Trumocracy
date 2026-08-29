@@ -4089,6 +4089,49 @@
     "Gate 2 NOT READY: 126 of 138 Must rows open"
    ],
    "gate": "Gate 1 APPROVED unconditionally 2026-08-11 (Rathish). Gate 2 NOT READY -- 126 of 138 Must rows open. Doc 02 v2.14.1 review loop CLOSED (cycle 2 PASS). Owning role to set Status: Approved."
+  },
+  {
+   "id": "tester-2026-08-28T1000",
+   "role": "tester (acting as NEUTRAL REVIEWER -- document-review skill)",
+   "file": "artifacts/tester-2026-08-28T1000.md",
+   "timestamp": "2026-08-28T10:00:00Z",
+   "phase": "Verify -- technical-mode document-review, cycle 1",
+   "product": "Trumocracy",
+   "branch": "build/v1-party-creation",
+   "scope": "Doc 06 v2.3.0 + code drop (commits 40c7af2, d5c36e2, 38a4341)",
+   "summary": "Ran technical-mode document review of Doc 06 v2.3.0 including the join/membership code drop. Suite green 540 tests (contracts 95 / protocol 126 / sdk 219 / ui 14 / indexer 16 / web 70). Dep-guard clean. tsc exits 0. FR-131(d) four-clause notice complete and non-dismissable. joinPrivate corrected to v1-accurate copy. FR-064 divergence flagged in §7 #20. One Medium defect ISS-01: expirePetitions() breaks IPartyStore seam, silently no-ops in production. VERDICT: FAIL 90% C=0 H=0 M=1 L=3.",
+   "artifacts_written": [
+    "artifacts/reviews/06-coding-and-ut-v2.3.0-technical-cycle1.md",
+    "artifacts/tester-2026-08-28T1000.md",
+    "artifacts/memory-index.json (updated -- this entry appended)"
+   ],
+   "review_verdict": {
+    "06-coding-and-ut-v2.3.0": {
+     "score": 90,
+     "critical": 0,
+     "high": 0,
+     "medium": 1,
+     "low": 3,
+     "cycle": 1,
+     "verdict": "FAIL"
+    }
+   },
+   "issues": {
+    "ISS-01": "Medium -- expirePetitions() accesses _store._petitions directly (not in IPartyStore interface); silent no-op in production; not in §7.",
+    "ISS-02": "Low -- §8 stale branch name (build/v1-scaffold vs actual build/v1-party-creation).",
+    "ISS-03": "Low -- membershipHistory() O(n^2) fold undocumented in §7.",
+    "ISS-04": "Low -- UT-0822 as it() label inside UT-0821 describe() block, ambiguous RTM traceability."
+   },
+   "ids_touched": {
+    "FR": "FR-020, FR-021, FR-022, FR-064, FR-122, FR-123, FR-130, FR-131",
+    "UT": "UT-0819..UT-0830, UT-0858..UT-0870"
+   },
+   "open_items": [
+    "Engineer to rework Doc 06 to v2.3.1 addressing ISS-01 (Medium) and ISS-02/03/04 (Low).",
+    "Cycle-2 review owed after rework.",
+    "Merge sign-off (reviewer-qa) blocked until cycle passes."
+   ],
+   "gate": "Gate 2 NOT READY -- Doc 06 v2.3.0 review loop FAIL cycle 1. Route to engineer for v2.3.1."
   }
  ]
 }
