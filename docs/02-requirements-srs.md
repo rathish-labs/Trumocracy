@@ -2,14 +2,35 @@
 
 ```
 Document ID:   SRS-TRUMOCRACY
-Version:       2.14.1
+Version:       2.15.0
 Status:        In Review
 Owner:         Priya Raghunathan — Product Owner
 Approvers:     Gate 1 — Priya Raghunathan (Product Owner), Ana-Maria Petrescu (Project Manager),
                Rathish (Human Approver — Gate 1 re-entry, v2.0.0)
 Source:        PR-TRUMOCRACY (docs/01-press-release-prfaq.md)
-Last updated:  2026-08-26
-Change:        v2.14.1 — Rework cycle 1 against business-mode review FAIL
+Last updated:  2026-08-29
+Change:        v2.15.0 — FR-064 amended to the v1 EXPLICIT-LEAVE posture per the FR-064-SEMANTICS
+               ruling, option (a) (Rathish, Human Approver, 2026-08-29; flag raised in Doc 06
+               v2.3.0 §7 #20, closed at Doc 06 v2.3.3): joining a second party does NOT
+               auto-void the first — a member MUST explicitly, on the record, leave their
+               current party before joining another (the platform's affirmative-action
+               pattern: nothing consequential happens by silence; auto-void would be a
+               silent, costly state change to a membership the member cares about).
+               Automatic voidance is DEFERRED to the DES-065 global membership-scope
+               nullifier at the v2 seam swap, where one-active-membership is enforced
+               cryptographically — the v1 explicit-leave behaviour is the subset the v2
+               mechanism formalises. Superseded auto-void wording annotated in place in
+               §4.6 (retained, not deleted). §8 FR-064 Gherkin replaced with explicit-leave
+               scenarios. §16.3 FR-064 v1-mechanism cell updated. §13 tracked routing (e)
+               added: FR-130's RTM Must row is blocked by a missing DES in Doc 03 §5.2
+               (architect-owed on-chain design for the provisional cap) — routed to the
+               architect; no test can close it. RTM note: FR-064's Must row REMAINS OPEN
+               pending the DES-065 build (v2) — this ruling resolves the semantics, not the
+               row. Housekeeping: v2.14.1 business cycle-2 review PASSED (97%, 0C/0H/0M/0L;
+               artifacts/reviews/02-requirements-srs-v2.14.1-business-cycle2.md) — v2.14.1
+               stood Approved; this version re-enters review. No new FR minted. No IDs
+               minted. Must count stays at 114. §11 Counts label → v2.15.0.
+               v2.14.1 — Rework cycle 1 against business-mode review FAIL
                (artifacts/reviews/02-requirements-srs-v2.14.0-business-cycle1.md; 94%,
                0C/0H/1M/0L). ISS-01 (Medium): §4.45 FR-131 preamble and §4.45 FR-131
                requirement text — "same recorded-phasing posture as FR-121..FR-130. TC OPEN —
@@ -552,7 +573,7 @@ See §9.2.
 | FR-021 | Grant every member of a party exactly one vote of identical weight in every party ballot, and MUST NOT expose any mechanism by which standing, weight, precedence or privilege can differ between members on grounds of seniority, office, tenure, contribution or any other attribute. _(v2.3.0 per Decision 2 (DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Rathish, 2026-08-20): one-member-one-vote applies to binding ballots, which are personhood-gated under FR-123 (counted actions require verified personhood, also FR-002 per-scope nullifier). Verification gates whether an action COUNTS; it does NOT create weight differences among verified members. FR-021 applies in full to all verified (counted) members — no tier multiplier, no seniority weight, no other differentiation.)_ | BR-003, BR-010 | Must | Grace Mbeki | T, I, A |
 | FR-022 | Allow a member to leave a party at any time, taking immediate effect on their rights, with no exit approval, penalty or notice period. | BR-003 | Must | Grace Mbeki | T |
 | FR-023 | Withhold governance rights (proposing, voting, nominating, endorsing a nomination, initiating or signing a recall) from a new member until a published maturation period has elapsed since joining; and rate-limit each person's join/leave transitions per party and in aggregate per period. | BR-012 | Must | Rafael Duarte | T, A |
-| FR-064 | Enforce that a verified person holds active membership in at most one party at a time; joining a new party MUST automatically void membership in the current party; switching parties MUST reset the membership tenure clock to zero. This constraint MUST be enforced by a global membership-scope nullifier that cannot be bypassed by leaving and re-joining within the same session. _(Source: CR-v1.1.0; GATE1-DECISION-2026-08-09.md, Change 2.)_ | BR-003, BR-012 | Must | Rafael Duarte | T, A |
+| FR-064 | Enforce that a verified person holds active membership in at most one party at a time; switching parties MUST reset the membership tenure clock to zero. **v1 semantics (EXPLICIT-LEAVE — amended v2.15.0 per the FR-064-SEMANTICS ruling, option (a); Rathish, Human Approver, 2026-08-29):** a request to join a second party while any active membership exists MUST be refused, naming the current party; membership ends ONLY by the member's explicit, recorded leave action (FR-022), after which a new join proceeds. Nothing consequential happens by silence — auto-void would be a silent, costly state change to a membership the member cares about, against the platform's affirmative-action pattern. **v2 (deferred):** automatic voidance, and enforcement by a global membership-scope nullifier that cannot be bypassed by leaving and re-joining within the same session, are DEFERRED to DES-065 at the v2 seam swap, where one-active-membership is enforced cryptographically — the v1 explicit-leave behaviour is the subset the v2 mechanism formalises. _(SUPERSEDED wording, retained for the record, not deleted: "joining a new party MUST automatically void membership in the current party; … enforced by a global membership-scope nullifier" — superseded by this amendment. Original Source: CR-v1.1.0; GATE1-DECISION-2026-08-09.md, Change 2. Amendment source: FR-064-SEMANTICS ruling (a) — flag raised Doc 06 v2.3.0 §7 #20, closed Doc 06 v2.3.3. RTM note: the FR-064 Must row REMAINS OPEN pending the DES-065 build (v2); this ruling resolves the semantics, not the row.)_ | BR-003, BR-012 | Must | Rafael Duarte | T, A |
 | FR-068 | Apply a maturation requirement of at least one month of continuous membership at the eligibility snapshot for any vote or governance action; MUST waive this requirement for all members of a party during that party's first three calendar months of active status; during any such waiver the growth-surge defence controls mandated by FR-023 and FR-028 MUST remain fully active — the waiver relaxes tenure only and MUST NOT relax anti-capture mechanisms. _(Growth-surge defence verified by UT-0220. Source: CR-v1.1.0; GATE1-DECISION-2026-08-09.md, Change 5.)_ | BR-003, BR-012 | Must | Rafael Duarte | T, A |
 
 ### 4.7 Proposals, charter amendment, tiers and timelocks
@@ -1539,10 +1560,13 @@ Given an elected office-holder who voted in their official office capacity
 When that specific vote is examined
 Then the direction is publicly attributed — this is the sole permitted exception, governed by FR-048
 
-# FR-064 — single party membership constraint
+# FR-064 — single party membership constraint (v1 EXPLICIT-LEAVE; amended v2.15.0, FR-064-SEMANTICS ruling (a))
 Given a member of party A who requests to join party B
 When the join request is processed
-Then membership in party A is voided, membership in party B takes effect, and the tenure clock resets to zero
+Then the join is refused naming party A as the current membership, and membership in party A is unchanged
+Given a member of party A who has explicitly left party A (a recorded action, FR-022)
+When they request to join party B
+Then membership in party B takes effect and the membership tenure clock resets to zero
 When a member attempts to hold membership in two parties simultaneously through any mechanism
 Then no such dual-membership state exists and the attempt fails
 Given a member who left party A less than one month ago and joins party B
@@ -2667,7 +2691,7 @@ Then the transition is appended with timestamp and cause; the prior state is pre
 
 ## 11. Requirements prioritization & release plan (MoSCoW)
 
-**Counts (v2.14.1).** _(Maintenance rule: update this label on every version bump — it MUST match the document version number.)_ 21 BR · 133 FR minted (131 active + 2 superseded: FR-046, FR-062) · 28 NFR · 15 CON · 27 requirement-level RISK rows in §10 (RISK-01..16 + RISK-22..32; RISK-17..21 live in Doc 13) · 12 TDs.
+**Counts (v2.15.0).** _(Maintenance rule: update this label on every version bump — it MUST match the document version number.)_ 21 BR · 133 FR minted (131 active + 2 superseded: FR-046, FR-062) · 28 NFR · 15 CON · 27 requirement-level RISK rows in §10 (RISK-01..16 + RISK-22..32; RISK-17..21 live in Doc 13) · 12 TDs.
 _(v1.1.0 baseline: 13 BR · 73 FR · 26 NFR · 12 CON · 19 RISK · 7 TDs. v1.0.0 baseline: 12 BR · 61 FR · 26 NFR · 12 CON · 16 RISK · 6 TDs. Added by CR-v1.1.0: 1 BR, 12 FR, 3 RISK, 1 TD. Added by v2.0.0 re-entry: 7 BR, 40 FR, 2 NFR, 2 CON, 9 RISK, 3 TDs; 2 FRs superseded. Added by v2.1.0: 1 BR (BR-021), 7 FR (FR-114..FR-120), 2 RISK (RISK-31..32), 1 TD (TD-11). Added by v2.3.0: 8 FR (FR-121..FR-128, all Must), 1 CON (CON-015), 1 TD (TD-12); OI-19/OI-20 minted. No new BR or NFR. Added by v2.4.0: 1 FR (FR-129, Must — Charter-layer guard); OI-19 and OI-20 CLOSED; FR-125 finalised (no longer draft). New FRs have no DES/US yet — recorded-phasing posture, RTM catches up. Added by v2.5.0: 1 FR (FR-130, Must — provisional-party membership cap, anti-capture control; C-02 ruling, Rathish, 2026-08-22; US-0131 minted in Doc 05 v2.1.0; DES owed — same recorded-phasing posture; TC OPEN — Phase 3). Added by v2.6.0: 1 FR (FR-131, Must — v1 honesty notice; approver directive 2026-08-23; DES-098 minted by architect in Doc 03 v2.3.0 §10.13.6; US/TC/RTM owed at next catch-up; same recorded-phasing posture as FR-121..FR-130; TC OPEN — Phase 3). Added by v2.8.0: 2 FR (FR-132, Must — v1 phone-based SMS auth, DES-095 amended, ADR-025; FR-133, Must — v1 spam-resistance flag-don't-block, DES-099; approver directive 2026-08-23; both in recorded-phasing posture; TC OPEN — Phase 3). v2.11.0 amendment: FR-132 amended to add government-ID document check, verify-and-discard, DES-100 allowlist/denylist normative text, subject_id_hash deduplication (no new mint; Must count unchanged at 114); FR-133 amended to clarify ID-check/spam-layer scope asymmetry.)_
 
 | Priority | FR count | FR IDs |
@@ -2804,6 +2828,14 @@ per the refine loop; none exist at v1.0.0 or v1.1.0 (all v1.1.0 requirements sou
 
 **v2.14.1 session scope:** No new FRs minted. No IDs minted. Must count stays at 114. ISS-01 sweep (grep `FR-121..FR-130` across doc, 4 total occurrences): sites at preamble and requirement text fixed above; 2 additional occurrences are in §11 (Counts para. "Added by v2.6.0" and Must-set para. "v2.6.0: the Must set grows...") — both are contextually labelled historical changelog entries describing the v2.6.0 state (FR-130's TCs did not exist at v2.6.0 and the phrase was accurate then); retroactive amendment of historical records not appropriate. Line 153 (Change: block v2.6.0 entry) contains "same posture as FR-121..FR-130)" without adjacent "TC OPEN" phrase and was not enumerated as a defect site.
 
+**v2.15.0 amendment (approver ruling 2026-08-29; FR-064-SEMANTICS, option (a); Rathish, Human Approver):**
+- §4.6 FR-064 amended to the v1 EXPLICIT-LEAVE posture: a join request while any active membership exists is refused naming the current party; membership ends only by the member's explicit, recorded leave (FR-022); the tenure-clock reset on switching is unchanged. Automatic voidance and the bypass-proof nullifier enforcement are DEFERRED to DES-065 at the v2 seam swap (cryptographic one-active-membership; the v1 behaviour is the subset v2 formalises). Superseded auto-void wording annotated in place, retained for the record.
+- §8 FR-064 Gherkin replaced with explicit-leave scenarios: refusal naming the current party; leave-then-join success with tenure reset; dual-membership impossibility; the tenure gate unchanged.
+- §16.3 FR-064 row: v1 mechanism cell updated (explicit recorded leave, then join); v2 cell names DES-065.
+- §13 tracked routing (e) added: FR-130's RTM Must row (Doc 08 gap-log entry 125) is blocked by a missing DES in Doc 03 §5.2 — an architect-owed on-chain design for the provisional cap; no test can close it (the cap logic already passes TC-3511..TC-3516); routed to the architect, next Doc 03 increment.
+
+**v2.15.0 session scope:** No new FRs minted. No IDs minted. Must count stays at 114. Alignment note: the implemented drop (Doc 06 v2.3.2 Approved; UT-0821/UT-0822/UT-0859; TC-3523..TC-3525) already enforces the explicit-leave form — this amendment brings FR-064's text to the built-and-ruled semantics; no code change follows from it. The RTM's FR-064 Must row REMAINS OPEN pending DES-065 (v2): the ruling resolves the semantics half of Doc 08 gap-log entry 55 only; the tester's next Doc 08 version records that and retains the DES-065 half.
+
 ---
 
 ## 13. Open issues / TBD
@@ -2844,6 +2876,12 @@ per the refine loop; none exist at v1.0.0 or v1.1.0 (all v1.1.0 requirements sou
 | (b) Arabic native-speaker string review | UI strings require a native Arabic speaker review before launch; Doc 14 / technical-writer territory — pre-Gate 2 condition. | technical-writer | OPEN — pre-launch |
 | (c) Image-emblem DES (v1 is text-only) | v1 emblem is text-only (1–8 characters; `EMBLEM = { MIN_CHARS: 1, MAX_CHARS: 8 }` constant in `packages/protocol/src/constants.js` lines 144-147); an image-emblem DES is owed for v2 scope. Routed to architect — next Doc 03 increment. | architect | OPEN — v2 scope |
 | (d) DES-073 collision check — v2 on-chain contract gap | DES-073 collision check is implemented app-side in v1; absent from the v2 on-chain contract path (`PartyRegistry.openPetition`). Tracked v2 gap; routed to architect — next Doc 03 increment. | architect | OPEN — v2 gap |
+
+**Tracked routing (2026-08-29; recorded with the FR-064-SEMANTICS ruling, Rathish):**
+
+| Item | Description | Owner | Status |
+|------|-------------|-------|--------|
+| (e) FR-130 provisional-cap DES | FR-130's RTM Must row (Doc 08 gap-log entry 125) is blocked by a **missing DES in Doc 03 §5.2** — an architect-owed on-chain design for the provisional membership cap. **No test can close it:** the cap logic already passes (TC-3511..TC-3516; UT-0802..UT-0811, UT-0852..UT-0856; Doc 06 v2.3.2 Approved) — the broken link is the traceability CHAIN (no DES), not the evidence. Routed to the architect — next Doc 03 increment, together with the DES-097 production-store wiring. | architect | OPEN — blocks the FR-130 Must row until a DES is assigned |
 
 ---
 
@@ -3044,7 +3082,7 @@ Columns: **ID** · **Short name** · **Priority** · **v1 disposition** · **v1 
 | FR-061 | Sponsorship degrades, never denies | Must | IN-v1 | Queue-with-explanation mechanism; never charge, never deny | Same | N |
 | FR-062 | SUPERSEDED | — | SUPERSEDED-n/a | — | — | — |
 | FR-063 | Ballot-direction prohibition | Must | PARTIAL | Platform API never exposes ballot direction; DB holds direction (operator CAN see it); UT-0700/UT-0701 absence tests apply | MACI: ballot direction technically unavailable to any actor including operator | Y |
-| FR-064 | Single party membership constraint | Must | IN-v1 | DB constraint: one active party per account | Same; on-chain nullifier in v2 | N |
+| FR-064 | Single party membership constraint | Must | IN-v1 | DB constraint: one active party per account; switch only by explicit recorded leave, then join (v2.15.0 ruling (a)) | Same; DES-065 on-chain nullifier in v2 — auto-void deferred there | N |
 | FR-065 | Candidate feedback scoring | Must | IN-v1 | DB aggregate (asymmetric +3/−1); aggregate public | Same | N |
 | FR-066 | Mandatory pre-election debates | Must | IN-v1 | On-chain CID attestation; attendance attestation preserved | Same | N |
 | FR-067 | Candidacy from post-debate member vote | Must | IN-v1 | Post-debate vote determines candidacy eligibility | Same | N |
