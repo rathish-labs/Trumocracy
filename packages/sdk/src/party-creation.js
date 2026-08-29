@@ -23,9 +23,31 @@
  *
  * ─── Party-join MUST NOT call verifyEligibility (FR-020, §10.13.2) ──────────
  *
- * joinParty() is a non-counted action. verifyEligibility() is not called.
- * A test in the test file asserts this by spy/mock on any injected verifier.
- * The service constructor does NOT accept an eligibility verifier — by design.
+ * joinParty() and leaveParty() are non-counted actions. verifyEligibility() is
+ * not called. A test in the test file asserts this by spy/mock on any injected
+ * verifier. The service constructor does NOT accept an eligibility verifier —
+ * by design. The ONLY method that touches the seam is contributeToStrength(),
+ * which receives a verifier as an explicit per-call parameter because strength
+ * contribution is FR-123 counting action (a) — the join/leave paths cannot
+ * reach a verifier the service never holds.
+ *
+ * ─── One active party at a time (FR-064 one-active-membership invariant) ─────
+ *
+ * An account holds at most one ACTIVE membership. Joining a second party is
+ * refused (ALREADY_MEMBER_ELSEWHERE) until the member leaves the first — an
+ * explicit, recorded action. NOTE: FR-064's normative text describes an
+ * automatic void-on-join (and a v2 global membership-scope nullifier, DES-065);
+ * this v1 build enforces the stricter explicit-leave form per the 2026-08-28
+ * commissioning brief. The divergence is flagged for a product-owner
+ * reconciliation — see Doc 06 §7. Either form preserves the invariant; the
+ * tenure-clock reset comes free because every join appends a fresh joinedAt.
+ *
+ * ─── Membership history is append-only (FR-022, FR-081 pattern) ──────────────
+ *
+ * Leaving is never deletion. Every join and leave appends an event; history
+ * rows are shown active/inactive and are never removed (the platform's
+ * nothing-is-deleted rule). The store exposes no method that deletes or
+ * rewrites a membership event.
  *
  * ─── FR-130 — provisional membership cap ─────────────────────────────────────
  *
@@ -61,6 +83,7 @@ import {
   PETITION,
   PARTY_STATE,
 } from '@trumocracy/protocol';
+import { COUNTING_ACTION } from './eligibility.js';
 
 // ─── Typedefs ──────────────────────────────────────────────────────────────────
 
@@ -89,8 +112,30 @@ import {
  * @property {function(string, number): object} archivePetition  — (id, now) archives petition using the caller-supplied timestamp; immutable after this; throws on later mutation
  * @property {function(object): string} saveParty  — returns partyId
  * @property {function(string, object): object} updateParty  — returns updated party
- * @property {function(string, string): void} addMember  — (partyId, memberPseudonym)
- * @property {function(string): string[]} getMemberPseudonyms  — returns list of member pseudonyms
+ * @property {function(string, string, number): void} recordJoin  — (partyId, memberPseudonym, at)
+ *   appends a JOIN event; the member becomes ACTIVE in this party.
+ * @property {function(string, string, number): void} recordLeave  — (partyId, memberPseudonym, at)
+ *   appends a LEAVE event; the membership row becomes inactive. Never deletes history.
+ * @property {function(string): {partyId: string, joinedAt: number}|null} getActiveMembership
+ *   — (memberPseudonym) → the single active membership, or null.
+ * @property {function(string): object[]} getMembershipEvents
+ *   — (memberPseudonym) → append-only JOIN/LEAVE events in order, as copies.
+ * @property {function(string): string[]} getMemberPseudonyms  — returns ACTIVE member pseudonyms
+ * @property {function(string, string): void} recordStrengthContribution
+ *   — (partyId, memberPseudonym) marks a verified member as counted toward official strength.
+ * @property {function(string): string[]} getCountedPseudonyms
+ *   — (partyId) → pseudonyms currently counted toward the party's official strength.
+ */
+
+/**
+ * @typedef {Object} MembershipEvent
+ * One append-only membership event. Never mutated, never deleted.
+ *
+ * @property {number} seq              — monotonically increasing event sequence.
+ * @property {string} partyId
+ * @property {string} memberPseudonym
+ * @property {'JOIN'|'LEAVE'} action
+ * @property {number} at               — Unix seconds, from the injected service clock.
  */
 
 /**
@@ -125,8 +170,18 @@ export class InMemoryPartyStore {
     this._archivedPetitionIds = new Set();
     /** @type {Map<string, object>} */
     this._parties = new Map();
-    /** @type {Map<string, Set<string>>} partyId → Set of member pseudonyms */
+    /** @type {Map<string, Set<string>>} partyId → Set of ACTIVE member pseudonyms (derived index) */
     this._members = new Map();
+    /**
+     * Append-only membership event log (FR-022 / FR-081 pattern).
+     * Events are only ever appended; no store method deletes or rewrites one.
+     * @type {MembershipEvent[]}
+     */
+    this._membershipEvents = [];
+    /** @type {Map<string, {partyId: string, joinedAt: number}>} memberPseudonym → active membership (derived index) */
+    this._activeMembership = new Map();
+    /** @type {Map<string, Set<string>>} partyId → pseudonyms counted toward official strength (FR-123(a)) */
+    this._countedMembers = new Map();
     this._nextId = 1;
   }
 
@@ -270,6 +325,7 @@ export class InMemoryPartyStore {
     const id = party.id ?? this._newId();
     this._parties.set(id, { ...party, id });
     this._members.set(id, new Set());
+    this._countedMembers.set(id, new Set());
     return id;
   }
 
@@ -309,21 +365,109 @@ export class InMemoryPartyStore {
   }
 
   /**
+   * Append a JOIN event and mark the member ACTIVE in this party.
+   *
+   * The store records; the SERVICE enforces the one-active-party and FR-130
+   * invariants before calling. The caller supplies `at` (Unix seconds) from the
+   * injected clock — no Date.now() here (§2.6 determinism rule).
+   *
    * @param {string} partyId
    * @param {string} memberPseudonym
+   * @param {number} at
    */
-  addMember(partyId, memberPseudonym) {
+  recordJoin(partyId, memberPseudonym, at) {
     const members = this._members.get(partyId);
     if (!members) throw new Error(`party ${partyId} not found`);
+    this._membershipEvents.push({
+      seq: this._membershipEvents.length,
+      partyId,
+      memberPseudonym,
+      action: 'JOIN',
+      at,
+    });
     members.add(memberPseudonym);
+    this._activeMembership.set(memberPseudonym, { partyId, joinedAt: at });
   }
 
   /**
+   * Append a LEAVE event and mark the membership row inactive.
+   *
+   * Leaving is NEVER deletion (FR-022; nothing-is-deleted rule): the JOIN and
+   * LEAVE events both remain in the log forever. Consistency invariant enforced
+   * here: official strength counts current members only (FR-123(a)), so a
+   * departing member is also removed from the counted set — their strength
+   * contribution ends with their membership, while their history remains.
+   *
+   * @param {string} partyId
+   * @param {string} memberPseudonym
+   * @param {number} at
+   */
+  recordLeave(partyId, memberPseudonym, at) {
+    const members = this._members.get(partyId);
+    if (!members) throw new Error(`party ${partyId} not found`);
+    this._membershipEvents.push({
+      seq: this._membershipEvents.length,
+      partyId,
+      memberPseudonym,
+      action: 'LEAVE',
+      at,
+    });
+    members.delete(memberPseudonym);
+    this._activeMembership.delete(memberPseudonym);
+    this._countedMembers.get(partyId)?.delete(memberPseudonym);
+  }
+
+  /**
+   * @param {string} memberPseudonym
+   * @returns {{partyId: string, joinedAt: number}|null}
+   */
+  getActiveMembership(memberPseudonym) {
+    const active = this._activeMembership.get(memberPseudonym);
+    return active ? { ...active } : null;
+  }
+
+  /**
+   * All membership events for a member, in append order, as copies.
+   * The log itself cannot be mutated through this method.
+   *
+   * @param {string} memberPseudonym
+   * @returns {MembershipEvent[]}
+   */
+  getMembershipEvents(memberPseudonym) {
+    return this._membershipEvents
+      .filter((e) => e.memberPseudonym === memberPseudonym)
+      .map((e) => ({ ...e }));
+  }
+
+  /**
+   * ACTIVE member pseudonyms for a party.
    * @param {string} partyId
    * @returns {string[]}
    */
   getMemberPseudonyms(partyId) {
     return Array.from(this._members.get(partyId) ?? []);
+  }
+
+  /**
+   * Mark a verified member as counted toward the party's official strength
+   * (FR-123(a)). The SERVICE performs the eligibility check before calling.
+   *
+   * @param {string} partyId
+   * @param {string} memberPseudonym
+   */
+  recordStrengthContribution(partyId, memberPseudonym) {
+    const counted = this._countedMembers.get(partyId);
+    if (!counted) throw new Error(`party ${partyId} not found`);
+    counted.add(memberPseudonym);
+  }
+
+  /**
+   * Pseudonyms currently counted toward the party's official strength.
+   * @param {string} partyId
+   * @returns {string[]}
+   */
+  getCountedPseudonyms(partyId) {
+    return Array.from(this._countedMembers.get(partyId) ?? []);
   }
 }
 
@@ -673,21 +817,30 @@ export class PartyCreationService {
   }
 
   /**
-   * Join a party (FR-020, FR-130).
+   * Join a party (FR-020, FR-130, one-active-party invariant).
    *
    * Joining is a non-counted action. verifyEligibility() is NEVER called here.
-   * (FR-020: no approval, sponsorship, interview, invitation, fee, or veto.)
+   * (FR-020: no approval, sponsorship, interview, invitation, fee, or veto —
+   * the refusal codes below are code-checked invariants, not human gates.)
+   *
+   * One active party at a time (FR-064 invariant, explicit-leave form): a
+   * member holding an active membership in another party is refused with
+   * ALREADY_MEMBER_ELSEWHERE until they leave it — leaveParty() is the explicit,
+   * recorded action. A member already active in THIS party is refused with
+   * ALREADY_MEMBER (a double join would inflate the member count).
    *
    * For a provisional party (legalRegistrationVerified = false), joining
    * is refused at PROVISIONAL_MEMBER_CAP (100). The cap is an anti-capture
-   * control (FR-130, D2 ruling): it lifts ONLY via recordLegalRegistration(),
-   * by code, with no bypass parameter. A legally-registered party (FR-075)
-   * is uncapped.
+   * control (FR-130, Ruling 1 2026-08-26: UNCONDITIONAL, no grace): it lifts
+   * ONLY via recordLegalRegistration(), by code, with no bypass parameter.
+   * A legally-registered party (FR-075) is uncapped. The cap counts ACTIVE
+   * members: a leave frees a slot.
    *
    * @param {string} partyId
    * @param {string} memberPseudonym
-   * @returns {{ memberCount: number }}
-   * @throws {Error} with code 'PROVISIONAL_CAP_REACHED' when cap is exceeded.
+   * @returns {{ memberCount: number, joinedAt: number }}
+   * @throws {Error} with code 'PROVISIONAL_CAP_REACHED' | 'ALREADY_MEMBER' |
+   *   'ALREADY_MEMBER_ELSEWHERE' | 'NOT_FOUND' | 'NOT_ACTIVE'.
    */
   joinParty(partyId, memberPseudonym) {
     const party = this._store.findPartyById(partyId);
@@ -699,6 +852,23 @@ export class PartyCreationService {
     if (party.state !== PARTY_STATE.ACTIVE) {
       const err = new Error(`party ${partyId} is not ACTIVE`);
       err.code = 'NOT_ACTIVE';
+      throw err;
+    }
+
+    // One-active-party invariant (FR-064, explicit-leave form).
+    const active = this._store.getActiveMembership(memberPseudonym);
+    if (active) {
+      if (active.partyId === partyId) {
+        const err = new Error(`already an active member of party ${partyId}`);
+        err.code = 'ALREADY_MEMBER';
+        throw err;
+      }
+      const err = new Error(
+        `an account holds at most one active party membership. Leave party ` +
+          `${active.partyId} first (an explicit, recorded action) before joining party ${partyId}.`,
+      );
+      err.code = 'ALREADY_MEMBER_ELSEWHERE';
+      err.currentPartyId = active.partyId;
       throw err;
     }
 
@@ -717,9 +887,185 @@ export class PartyCreationService {
       throw err;
     }
 
-    this._store.addMember(partyId, memberPseudonym);
+    const now = this._clock();
+    this._store.recordJoin(partyId, memberPseudonym, now);
     const newCount = this._store.getMemberPseudonyms(partyId).length;
-    return { memberCount: newCount };
+    return { memberCount: newCount, joinedAt: now };
+  }
+
+  /**
+   * Leave a party (FR-022).
+   *
+   * Immediate effect, no exit approval, no penalty, no notice period. Leaving
+   * is a non-counted action: verifyEligibility() is NEVER called here.
+   *
+   * Leaving is never deletion: the store appends a LEAVE event and the full
+   * join/leave history remains, shown active/inactive (FR-081 pattern;
+   * nothing-is-deleted rule). If the member was counted toward the party's
+   * official strength, that contribution ends with the membership (FR-123(a):
+   * strength counts verified current members only) — the history does not.
+   *
+   * The party's state is deliberately NOT checked: leaving is a right, and no
+   * party state may hold a member in (FR-022 "no exit approval").
+   *
+   * @param {string} partyId
+   * @param {string} memberPseudonym
+   * @returns {{ memberCount: number, leftAt: number }}
+   * @throws {Error} with code 'NOT_FOUND' | 'NOT_A_MEMBER'.
+   */
+  leaveParty(partyId, memberPseudonym) {
+    const party = this._store.findPartyById(partyId);
+    if (!party) {
+      const err = new Error(`party ${partyId} not found`);
+      err.code = 'NOT_FOUND';
+      throw err;
+    }
+
+    const active = this._store.getActiveMembership(memberPseudonym);
+    if (!active || active.partyId !== partyId) {
+      const err = new Error(
+        `no active membership in party ${partyId} for this account`,
+      );
+      err.code = 'NOT_A_MEMBER';
+      throw err;
+    }
+
+    const now = this._clock();
+    this._store.recordLeave(partyId, memberPseudonym, now);
+    return { memberCount: this._store.getMemberPseudonyms(partyId).length, leftAt: now };
+  }
+
+  /**
+   * A member's full membership history, append-only, shown active/inactive.
+   *
+   * Folds the JOIN/LEAVE event log into rows: each JOIN opens a row; the next
+   * LEAVE for the same party closes it. Rows are never deleted — a member who
+   * joined, left, and rejoined has three events and two rows.
+   *
+   * @param {string} memberPseudonym
+   * @returns {Array<{partyId: string, joinedAt: number, leftAt: number|null, active: boolean}>}
+   */
+  membershipHistory(memberPseudonym) {
+    const rows = [];
+    for (const event of this._store.getMembershipEvents(memberPseudonym)) {
+      if (event.action === 'JOIN') {
+        rows.push({ partyId: event.partyId, joinedAt: event.at, leftAt: null, active: true });
+      } else {
+        // LEAVE closes the open row for this party.
+        const open = rows.find((r) => r.partyId === event.partyId && r.active);
+        if (open) {
+          open.leftAt = event.at;
+          open.active = false;
+        }
+      }
+    }
+    return rows;
+  }
+
+  /**
+   * The member's single active membership, or null (one-active-party invariant).
+   *
+   * @param {string} memberPseudonym
+   * @returns {{partyId: string, joinedAt: number}|null}
+   */
+  activeMembership(memberPseudonym) {
+    return this._store.getActiveMembership(memberPseudonym);
+  }
+
+  /**
+   * Honest join-vs-counting status for one member in one party (FR-122/FR-123).
+   *
+   * A joined member who is not counted is a REAL member who participates openly
+   * but does not yet count toward the party's official strength, binding votes,
+   * or candidacy. This read exists so the UI can state that distinction plainly
+   * (FR-131 clause (d) disclosure pattern) instead of implying that joining
+   * confers counting.
+   *
+   * No verifier is called — this reads recorded state only.
+   *
+   * @param {string} partyId
+   * @param {string} memberPseudonym
+   * @returns {{ member: boolean, counted: boolean }}
+   */
+  countingStatus(partyId, memberPseudonym) {
+    const active = this._store.getActiveMembership(memberPseudonym);
+    const member = Boolean(active && active.partyId === partyId);
+    const counted =
+      member && this._store.getCountedPseudonyms(partyId).includes(memberPseudonym);
+    return { member, counted };
+  }
+
+  /**
+   * Contribute to the party's official strength number — FR-123 counting
+   * action (a). This is the ONLY method on this service that touches the
+   * IEligibilityVerifier seam, and it receives the verifier as an explicit
+   * per-call parameter: the service holds no verifier, so the join/leave
+   * paths structurally cannot call one (FR-020 guarantee).
+   *
+   * The verifier is invoked with COUNTING_ACTION.STRENGTH_CONTRIBUTION — the
+   * normative call-site placement of Doc 03 §10.13.2(a). A member whose
+   * backing is not counting-eligible (e.g. open-tier: phone-verified but not
+   * ID-verified in v1) is refused with NOT_COUNTING_ELIGIBLE carrying the
+   * verifier's reason; the caller MUST surface the FR-131 clause (d)
+   * disclosure before showing the refusal.
+   *
+   * A party's official strength counts verified CURRENT members only:
+   * non-members are refused, a member is counted at most once, and leaving
+   * ends the contribution (store invariant).
+   *
+   * @param {string} partyId
+   * @param {string} memberPseudonym
+   * @param {import('./eligibility.js').ConventionalEligibilityVerifier|{verifyEligibility: Function}} verifier
+   *   — an IEligibilityVerifier backing (v1 conventional or v2 ZK; seam-identical).
+   * @returns {{ officialStrength: number }}
+   * @throws {Error} with code 'NOT_FOUND' | 'NOT_ACTIVE' | 'NOT_A_MEMBER' |
+   *   'NOT_COUNTING_ELIGIBLE' | 'ALREADY_COUNTED'.
+   */
+  contributeToStrength(partyId, memberPseudonym, verifier) {
+    const party = this._store.findPartyById(partyId);
+    if (!party) {
+      const err = new Error(`party ${partyId} not found`);
+      err.code = 'NOT_FOUND';
+      throw err;
+    }
+    if (party.state !== PARTY_STATE.ACTIVE) {
+      const err = new Error(`party ${partyId} is not ACTIVE`);
+      err.code = 'NOT_ACTIVE';
+      throw err;
+    }
+
+    const active = this._store.getActiveMembership(memberPseudonym);
+    if (!active || active.partyId !== partyId) {
+      const err = new Error(
+        `only a current member may contribute to a party's official strength`,
+      );
+      err.code = 'NOT_A_MEMBER';
+      throw err;
+    }
+
+    // FR-123(a) counting gate — the seam call site (Doc 03 §10.13.2(a)).
+    const result = verifier.verifyEligibility(
+      memberPseudonym,
+      party.jurisdiction,
+      COUNTING_ACTION.STRENGTH_CONTRIBUTION,
+    );
+    if (!result.eligible) {
+      const err = new Error(
+        `not eligible for the counting tier: ${result.reason ?? 'verification incomplete'}`,
+      );
+      err.code = 'NOT_COUNTING_ELIGIBLE';
+      err.reason = result.reason;
+      throw err;
+    }
+
+    if (this._store.getCountedPseudonyms(partyId).includes(memberPseudonym)) {
+      const err = new Error(`already counted toward this party's official strength`);
+      err.code = 'ALREADY_COUNTED';
+      throw err;
+    }
+
+    this._store.recordStrengthContribution(partyId, memberPseudonym);
+    return { officialStrength: this._store.getCountedPseudonyms(partyId).length };
   }
 
   /**
@@ -779,6 +1125,10 @@ export class PartyCreationService {
       partyId,
       state: party.state,
       memberCount,
+      // FR-123(a): the official strength number counts verified persons only.
+      // memberCount (everyone who joined) and officialStrength (who counts)
+      // are deliberately separate figures — joining is not counting.
+      officialStrength: this._store.getCountedPseudonyms(partyId).length,
       provisional,
       // FR-130: cap only applies when provisional.
       cap: provisional ? PROVISIONAL_MEMBER_CAP : null,
