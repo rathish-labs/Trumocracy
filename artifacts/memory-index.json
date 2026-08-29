@@ -4526,6 +4526,151 @@
     "Doc 02 ISS-B1 Low and Doc 06 ISS-C3-01 Low carried to next increment."
    ],
    "gate": "Gate 2 NOT READY (126 open Must rows). Merge SIGNED. Human (Rathish Kumar) executes git merge."
+  },
+  {
+   "id": "reviewer-qa-2026-08-29T1045",
+   "role": "reviewer-qa",
+   "file": "artifacts/reviewer-qa-2026-08-29T1045.md",
+   "timestamp": "2026-08-29T10:45:00Z",
+   "phase": "Verify — technical-mode document-review Cycle 1",
+   "product": "Trumocracy",
+   "scope": "Doc 03 v2.8.0 — v1 design-debt paydown (DES-101 FR-077, DES-102 FR-130, DES-097(b) store wiring)",
+   "summary": "FAIL 95%, 0C/1H/0M/0L. ISS-01 High: DES-101 rule 2 names error codes CLAUSE_MISSING and CLAUSE_ALTERED but actual codes in party.js are 'REQUIRED' and 'ALTERED'. All other code claims verified correct (DES-102 Party.sol insertion point, FR-130 cap at line 890, UT citations, CON-015 PENDING discipline, scope fence held). Route to architect for v2.8.1 rework.",
+   "artifacts_written": [
+    "artifacts/reviews/03-architecture-design-sdd-v2.8.0-technical-cycle1.md",
+    "artifacts/reviewer-qa-2026-08-29T1045.md"
+   ],
+   "review_verdicts": {
+    "03-architecture-design-sdd-v2.8.0": {
+     "score": 95,
+     "critical": 0,
+     "high": 1,
+     "medium": 0,
+     "low": 0,
+     "cycle": 1,
+     "verdict": "FAIL"
+    }
+   },
+   "key_finding": "ISS-01 High: DES-101 §10.13.10 rule 2 + §6 Surfaces + failure-modes paragraph use CLAUSE_MISSING and CLAUSE_ALTERED; actual error codes in packages/protocol/src/party.js lines 369/375 are 'REQUIRED' and 'ALTERED'",
+   "ids_touched": {
+    "DES": "DES-101, DES-102, DES-097(b)",
+    "FR": "FR-077, FR-130, FR-020",
+    "code_verified": "party.js:323-380, party-creation.js:890-898, Party.sol:166-213, party-creation.test.js UT-0802..0811, membership.test.js UT-0825"
+   },
+   "open_items": [
+    "Ravi Deshmukh (architect): produce Doc 03 v2.8.1 — fix ISS-01 in three §10.13.10 locations.",
+    "Option A (preferred): correct DES names to 'REQUIRED' and 'ALTERED' to match shipped code.",
+    "Option B: route to engineer to rename codes to CLAUSE_MISSING/CLAUSE_ALTERED; requires Doc 06 cycle.",
+    "Tester makes final FR-077 and FR-130 RTM row status call once DES-101/DES-102 Approved."
+   ],
+   "gate": "Gate 2 NOT READY. Doc 03 v2.8.0 FAILS review (cycle 1, High issue). Routes to architect for v2.8.1 rework."
+  },
+  {
+   "id": "reviewer-qa-2026-08-29T1100",
+   "role": "reviewer-qa",
+   "file": "artifacts/reviewer-qa-2026-08-29T1100.md",
+   "timestamp": "2026-08-29T11:00:00Z",
+   "phase": "Verify — technical-mode document-review Cycle 2",
+   "product": "Trumocracy",
+   "scope": "Doc 03 v2.8.1 — ISS-01 High rework (DES-101 error codes: REQUIRED/ALTERED, (field,code) pair semantics). Five fix sites: header Change block, §5.2 DES-101 row, §10.13.10 rule 2, §6 Surfaces, failure-modes paragraph.",
+   "summary": "PASS 100%, 0C/0H/0M/0L. ISS-01 (High) fully resolved. Architect took Option A (correct document to match shipped Approved code). All five sites verified against git diff and party.js. REQUIRED platform-wide claim verified (party.js:66/81/339/369). ALTERED uniqueness verified (party.js:375 only). clauses.js confirmed non-existent; NON_VIOLENCE_CLAUSE in constants.js:165. Two CLAUSE_* strings confined to v2.8.1 changelog (historical record). No regressions in v2.8.0 content. Doc 07 TC-3508..TC-3510 routing to tester assessed: correct per ownership rules; Doc 07 v2.3.0 Approved status stands for reviewed increment scope; v2.3.1 patch to absorb four TC corrections plus cycle-1 Low issues.",
+   "artifacts_written": [
+    "artifacts/reviews/03-architecture-design-sdd-v2.8.1-technical-cycle2.md",
+    "artifacts/reviewer-qa-2026-08-29T1100.md"
+   ],
+   "review_verdicts": {
+    "03-architecture-design-sdd-v2.8.1": {
+     "score": 100,
+     "critical": 0,
+     "high": 0,
+     "medium": 0,
+     "low": 0,
+     "cycle": 2,
+     "verdict": "PASS"
+    }
+   },
+   "code_verified": {
+    "party.js_REQUIRED": "lines 66(name), 81(pillars.*), 339, 369(nonViolenceClause/absent) — platform-wide confirmed",
+    "party.js_ALTERED": "line 375 only — unique to this gate confirmed",
+    "clauses.js": "does not exist in packages/protocol/src/",
+    "constants.js": "NON_VIOLENCE_CLAUSE at line 165 confirmed"
+   },
+   "ids_touched": {
+    "DES": "DES-101, DES-102, DES-097(b)",
+    "FR": "FR-077, FR-130"
+   },
+   "open_items": [
+    "Ravi Deshmukh (architect): set Doc 03 v2.8.1 Status: Approved.",
+    "Ji-woo Park (tester): produce Doc 07 v2.3.1 — absorb TC-3508..TC-3510 four corrections (wrong codes, non-existent clauses.js, wrong field charter.clause_nonviolence, wrong return shape) PLUS cycle-1 Low issues (ISS-01 stale pins, ISS-02 missing §9 R-##). Submit for cycle-1 doc review.",
+    "FR-077 and FR-130 RTM rows: tester makes final row-status call once Doc 03 DES-101/DES-102 Approved."
+   ],
+   "gate": "Gate 2 NOT READY. Doc 03 v2.8.1 PASSES review (cycle 2 PASS 100%). Routes to architect for Status: Approved. SOP may advance for Doc 03."
+  },
+  {
+   "id": "tester-2026-08-29T1130",
+   "role": "tester (own role — Doc 07 test cases + Doc 08 RTM author)",
+   "file": "artifacts/tester-2026-08-29T1130.md",
+   "timestamp": "2026-08-29T11:30:00Z",
+   "phase": "Verify — RTM status calls on the DES paydown + Doc 07 accuracy rework",
+   "product": "Trumocracy",
+   "branch": "design/architect-des-backlog",
+   "scope": "docs/07-test-cases-suites.md v2.3.0 -> v2.3.1 (In Review); docs/08-traceability-matrix.md v2.3.1 -> v2.4.0 (In Review). Source: Doc 03 v2.8.1 Approved (technical cycle-2 PASS 100%) — DES-101, DES-102, DES-097(b).",
+   "summary": "Applied the Doc 03 v2.8.1 DES paydown to the RTM and made the two status calls the tester owns. FR-130 CLOSES (COMPLETE): DES-102 + SCR-09/SCR-11 satisfy rule 1, and rule 4 holds because every clause has its own passing test (cap at 100 ACTIVE with a leave freeing exactly one slot UT-0825/UT-0862; automatic code-only lift UT-0809..0811; capability-absence of any operator/config/env early-lift path UT-0806). The v1 residual (audit-record tamper-EVIDENCE not tamper-PREVENTION; Party.join() still increments memberCount with no cap check) is an enforcement-TIER gap, not an unmet clause — and FR-011/FR-020/FR-022 already stand COMPLETE on the identical posture, so holding FR-130 alone to a stricter bar would be special-pleading. Residual and a revisit-when-on-chain-membership-goes-live flag recorded IN the row. FR-077 does NOT close — reclassified G-TRACE -> G-NOMECH. DES-101 closes its chain gap and the publication half passes, but rule 4 FAILS: FR-077 requires refusal at publication AND at every subsequent amendment, and nothing implements the amendment half at either tier — no application charter-amendment path exists (validateDraft runs only at createDraft/publishDraft) and on-chain Party.amendCharter overwrites charterHash/charterCID after checking only immutableClause[clauseId], never seeing the charter text, so a constitutional-tier amendment naming any other clauseId can install a charter with the clause stripped. Found by the tester; the architect s section 15 assessment had considered the publication half only. Amendment-time verification is UNDESIGNED and routed to the architect. DES-097(b) closes nothing (build enabler; no status improved). FR-064 untouched. Doc 07 v2.3.1 corrected four inaccuracies in TC-3508..TC-3510 against packages/protocol/src/party.js — fabricated codes CLAUSE_MISSING/CLAUSE_ALTERED (real: field charter.nonViolenceClause with code REQUIRED or ALTERED), a non-existent path src/clauses.js (real: NON_VIOLENCE_CLAUSE in src/constants.js), a wrong field name, and a wrong return shape — with NO TC status change, because the tests always asserted the real contract and only the document was wrong. Both cycle-1 Lows absorbed. Suite 542/542 green, unchanged.",
+   "artifacts_written": [
+    "docs/07-test-cases-suites.md (v2.3.1, In Review)",
+    "docs/08-traceability-matrix.md (v2.4.0, In Review)",
+    "artifacts/tester-2026-08-29T1130.md",
+    "artifacts/memory-index.json (updated — this entry appended)"
+   ],
+   "status_decisions": {
+    "FR-130": "CLOSES -> COMPLETE (was G-TRACE). Rule 4 holds: cap-at-100 (UT-0825/0802..0805/0862), code-only auto-lift (UT-0809..0811), capability-absence of operator early-lift (UT-0806). Residual disclosed in-row: v1 application-boundary enforcement with audit tamper-EVIDENCE; v2 Party.join() guard unbuilt. Row flagged for revisit when on-chain membership goes live.",
+    "FR-077": "DOES NOT CLOSE -> G-NOMECH (was G-TRACE). Chain closed by DES-101 + SCR-04/SCR-05; rule 4 FAILS — the amendment half of the guarantee has no mechanism at either tier. Party.amendCharter (packages/contracts/src/core/Party.sol ~line 350) never sees the charter text. Routed to architect.",
+    "FR-010 / production-store rows": "NO status change. DES-097(b) is a build enabler; a written design is not a running store; retention/erasure/hash classification PENDING CON-015.",
+    "FR-064": "UNTOUCHED — DES-065 is v2 and unbuilt; left exactly as v2.3.1 set it."
+   },
+   "counts": {
+    "must_rows": "138 (unchanged)",
+    "must_complete": "12 -> 13",
+    "must_open": "126 -> 125",
+    "completion": "8.7% -> 9.4%",
+    "total_rows": "16/145 -> 17/144",
+    "G-TRACE": "41 -> 39 (FR-077 and FR-130 both leave)",
+    "G-NOMECH": "10 -> 11 (FR-077 joins)",
+    "by_reason_total": "127 -> 126 against 125 distinct open (NFR-007 compound accounts for the +1)",
+    "stories_dod": "13 -> 14 of 134 (US-0131 newly done; US-0087 stays Partial)",
+    "doc07": "counts unchanged — 442 cases / 211 automated / 231 Blocked-or-no-mechanism"
+   },
+   "doc07_corrections": {
+    "(a) error codes": "CLAUSE_MISSING/CLAUSE_ALTERED do not exist -> (field, code, message) triples: field charter.nonViolenceClause with code REQUIRED (line 369) or ALTERED (line 375). REQUIRED is platform-wide (lines 66/81/339) so the FIELD scopes it; ALTERED is unique to this gate (single occurrence across protocol+sdk src).",
+    "(b) path": "packages/protocol/src/clauses.js DOES NOT EXIST -> NON_VIOLENCE_CLAUSE in packages/protocol/src/constants.js (~line 165)",
+    "(c) field name": "charter.clause_nonviolence -> charter.nonViolenceClause",
+    "(d) return shape": "{ error: 'CLAUSE_ALTERED' } -> { valid: false, errors: [{field, code, message}] }",
+    "status impact": "NONE — all three TCs remain Pass (inh.); the tests always asserted real behaviour, the document misdescribed it",
+    "cycle-1 ISS-01 (Low)": "source pins CODE v2.3.3 / SRS v2.15.0 / SDD v2.8.1; section 5.5 preamble no longer says an FR-064 ruling is awaited",
+    "cycle-1 ISS-02 (Low)": "section 9 R-13 added for party-creation.test.js 38/38; R-14 added for this version run",
+    "TC-3403": "stale \"verifier not designed\" reason updated — stays No mechanism for the amendment half only"
+   },
+   "verification": {
+    "consistency checks": "40/40 pass — headers, every by-reason count, sum vs distinct open, both status decisions with reasons in-row, DoD, section 7 heading, gate rule, corrections confined to TC rows, three TCs still Pass (inh.), Doc 07 counts unchanged, cross-doc pins",
+    "npm test": "542 passed / 0 failed, exit 0 — contracts 95 / protocol 126 / sdk 220 / ui 14 / indexer 16 / web 71 (unchanged)",
+    "primary sources read": "packages/protocol/src/party.js, constants.js, packages/contracts/src/core/Party.sol, packages/protocol/test/party-creation.test.js, Doc 03 DES-101/DES-102/DES-097(b)"
+   },
+   "ids_touched": {
+    "FR": "FR-130 (CLOSED), FR-077 (reclassified G-NOMECH), FR-010 (note only), FR-064 (untouched)",
+    "DES": "DES-101, DES-102, DES-097(b), DES-065 (referenced)",
+    "SCR": "SCR-04, SCR-05 (FR-077); SCR-09, SCR-11 (FR-130)",
+    "US": "US-0087 (stays Partial), US-0131 (newly meets DoD)",
+    "TC": "TC-3508..TC-3510 (corrected), TC-3403 (reason updated), TC-3511..TC-3516/TC-3528/TC-3529 (FR-130 evidence)",
+    "UT": "UT-0071..UT-0075, UT-0786, UT-0849..UT-0851, UT-0802..UT-0811, UT-0825, UT-0852..UT-0856, UT-0862",
+    "gap-log entries": "68 (FR-077 reclassified — note the number is 68, NOT 77), 125 (FR-130 retired with a closure record)"
+   },
+   "open_items": [
+    "Architect: amendment-time non-violence-clause verification is UNDESIGNED — FR-077 cannot close until a mechanism exists. Also owed: DES-065 (FR-064) and the DES-097(b) build.",
+    "Engineer: Party.join() cap guard (DES-102 rule 7) before on-chain membership goes live; the FR-130 row is flagged to be revisited at that point.",
+    "Tester: a dedicated amendment-path TC once a mechanism exists; Doc 07 v2.3.1 and Doc 08 v2.4.0 both need their own review cycles by a NEUTRAL reviewer (the tester authored both).",
+    "reviewer-qa: independent verification of the 125 open Must rows before merge sign-off."
+   ],
+   "gate": "Gate 2 NOT READY — 125 open Must rows against a zero-gap rule. v2.4.0 records the first Must row to close since v1.1.0, and it closed with no new code: one design element paid one chain gap over tests that were already green. The counterpart lesson is FR-077 — a DES pays a chain gap, but whether the row closes depends on whether the tests cover the WHOLE guarantee."
   }
  ]
 }

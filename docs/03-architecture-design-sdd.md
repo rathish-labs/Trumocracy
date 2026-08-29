@@ -2,14 +2,71 @@
 
 ```
 Document ID:   SDD-TRUMOCRACY
-Version:       2.7.1
-Status:        Approved
+Version:       2.8.1
+Status:        Approved — 03-architecture-design-sdd-v2.8.1-technical-cycle2.md (PASS 100%, 0C/0H/0M/0L)
 Owner:         Ravi Deshmukh — Principal Architect
 Approvers:     Rafael Duarte (Security), Chen Wei (Reliability), Dr. Lena Kowalczyk (Privacy),
                Aisha Nkemdirim (Elections & Voting)
-Source:        SRS-TRUMOCRACY v2.13.0
-Last updated:  2026-08-25
-Change:        v2.7.1 (2026-08-25) — §10.12.3 rework cycle 1 (FAIL 91%/0C/0H/1M/2L;
+Source:        SRS-TRUMOCRACY v2.15.0
+Last updated:  2026-08-29
+Change:        v2.8.1 (2026-08-29) — Rework cycle 1 against
+               artifacts/reviews/03-architecture-design-sdd-v2.8.0-technical-cycle1.md
+               (FAIL 95%, 0C/1H/0M/0L). ISS-01 (High): DES-101 named the clause-gate refusals
+               `CLAUSE_MISSING` / `CLAUSE_ALTERED`, which appear nowhere in the shipped
+               validator — a DES that misdescribes the code it governs, and one a tester
+               deriving assertions from it would have written wrong tests against. Corrected
+               to the implementation's actual contract at ALL FIVE sites (the reviewer
+               located three; the sweep found two more — the §5.2 DES-101 row and this Change
+               block): `validateDraft` identifies each error by its **(field, code) pair**,
+               and for this gate the field is `charter.nonViolenceClause` with `code:
+               'REQUIRED'` (absent/empty) and `code: 'ALTERED'` (present but not
+               byte-identical). Rule 2 now states the pair semantics explicitly and records
+               that `REQUIRED` is the platform-wide missing-field code — also emitted for
+               `name`, `pillars.*`, `emblem` — so it is the FIELD that scopes it to this
+               gate, while `ALTERED` is unique to the gate. Option A taken (correct the
+               document to the shipped, Approved code) rather than Option B (rename shipped
+               code to match a document written after it). Constant location corrected to
+               `packages/protocol/src/constants.js`.
+               FOUND WHILE FIXING — routed, not silently corrected: **Doc 07 v2.3.0
+               (Approved) carries the same wrong names plus three further inaccuracies** in
+               TC-3508..TC-3510 — the non-existent path `packages/protocol/src/clauses.js`
+               (the constant lives in `constants.js`), the field name
+               `charter.clause_nonviolence` (actual: `charter.nonViolenceClause`), and the
+               return shape `{ error: 'CLAUSE_ALTERED' }` (actual:
+               `{ valid: false, errors: [{field, code, message}] }`). The tests pass because
+               they assert the real behaviour; the DOCUMENT misdescribes it. Doc 07 is
+               tester-owned — routed to the tester, not edited here.
+               v2.8.0 (2026-08-29) — v1 DESIGN-DEBT PAYDOWN. Two Must rows (FR-077, FR-130)
+               have shipped, tested code but stayed OPEN in the RTM purely because no DES
+               existed in §5.2 — a chain defect no test can close. This increment writes the
+               missing design for both, plus the store-wiring specification the v1 persistence
+               build needs.
+               NEW: **DES-101** — non-violence clause verification gate (FR-077, §10.13.10):
+               verbatim-match rule, the (field, code) refusal contract, the
+               constant-as-single-source-of-truth rule, the ratification-freeze binding
+               (CON-013), and the v1→v2 enforcement-point pair. SCR binding: SCR-04, SCR-05.
+               NEW: **DES-102** — provisional-party membership cap (FR-130, §10.13.11): the
+               cap invariant at the membership-write boundary, UNCONDITIONAL until verified
+               legal registration (Ruling 1, 2026-08-26 — no grace window); the code-only
+               lift with no operator/bypass surface; ACTIVE-member counting semantics (a
+               leave frees exactly one slot); the v1 enforcement point (application service
+               + the DES-097(b) store, with the audit-record publication that makes the cap
+               externally checkable) and the v2 on-chain enforcement point (`Party.join()`,
+               between the `AlreadyMember` check and the `memberCount` increment);
+               capability-absence obligations. SCR binding: SCR-09, SCR-11. Closes Q12.
+               NEW: **DES-097(b)** — IPartyStore → Postgres store wiring (§10.13.12): the
+               22-method interface-to-relation mapping, the append-only membership event log
+               as the authoritative membership record, the retention boundary (composes with
+               DES-100's allowlist/denylist — NO raw identity, hashed-only, verify-and-discard),
+               transaction/concurrency rules for the invariants the in-memory store enforces
+               by single-threading (FR-130 cap, FR-064 one-active-party, FR-010 collision
+               TOCTOU), and the IS_INSECURE_MOCK=false promotion condition. Legally-gated
+               retention specifics are marked **PENDING CON-015** rather than guessed.
+               §5.2 gains the DES-101/DES-102 rows; §13 debt rows updated; §15 gains the
+               v2.8.0 trace table; §16 Q12 closed and the next-increment note narrowed.
+               SCOPE FENCE HELD: no v2 work pulled forward — DES-065 (FR-064 nullifier),
+               circuits, MACI and the anonymity guarantees remain v2; no product code written.
+               v2.7.1 (2026-08-25) — §10.12.3 rework cycle 1 (FAIL 91%/0C/0H/1M/2L;
                artifacts/reviews/03-architecture-design-sdd-v2.7.0-technical-cycle1.md):
                ISS-01 (Medium) `anon`-state copy analysis fully reworked — interpretive basis
                stated explicitly ("publicly linked through any published record", not
@@ -577,6 +634,17 @@ Six decisions carry the design; everything else follows from them.
 | DES-092 | Citizen-inaction fallback mechanism | Shared pattern applied in two contexts: (1) AUDIT PUBLICATION (SC-17) — after a steward-inaction window (value: §10.11) following a passed Guarded Layer first vote, ANY enrolled citizen may call `publishAuditRef(proposalId, auditRefHash)` to publish the audit reference; steward VACANCY triggers the fallback IMMEDIATELY (no window); the audit substance requirements (independence, scope, 30-day lead time) are UNCHANGED — the fallback changes who may publish, never what qualifies; (2) ISSUER ONBOARDING (SC-19) — after a steward-inaction window following a citizen petition for issuer-onboarding review (threshold: Open Layer quorum, 15%), a citizen-run coordination panel may open the onboarding technical review; stewards coordinate normally but cannot use inaction to suppress issuers serving specific demographic groups. Both fallbacks require a passed governance vote for final enactment (via `Governor.execute()`); the fallback changes only the coordination/publishing step. | FR-115, FR-116, BR-021 | Solidity; `ProtocolGovernance.publishAuditRef()`; citizen-petition tracking |
 | DES-090 | `TrustAnchorLifecycle` | Rotation: `rotateTrustAnchor(issuerId, newAnchorHash)` enacted only by a passed governance vote executed by code (ruling 4); activates a dual-anchor overlap window (old + new both accepted until `overlapEnd`) so a compliant rotation never blocks enrolment beyond the published window (closes SC-14). ROTATION ABORT (SC-18): `abortRotation(issuerId)` enacted by a passed governance vote at the same Open Layer bar (60%/15%) as the original rotation; transitions ROTATION_PENDING → ROTATION_ABORTED → ACTIVE (incumbent/pre-rotation hash restored as sole-accepted anchor); credentials signed with the pending anchor during the overlap window are rejected for new enrolments after abort enactment (no retroactive invalidation of already-completed enrolments). Rationale: without this path the only safe undo of a malicious rotation was full issuer revocation (REVOCATION_PENDING), which blocks ALL enrolments for 30+ days — a self-inflicted denial of service against legitimate users; ROTATION_ABORTED returns to ACTIVE with zero enrolment blocking. Revocation: `revokeTrustAnchor(issuerId)` enacted only by a passed governance vote executed by code; entering `REVOCATION_PENDING` at enactment is the public on-chain signal; `enrol()` against the affected anchor continues until `anchorEffectiveAt` (timelock expiry) and reverts `AnchorRevoked` from then on; the window between enactment and `anchorEffectiveAt` is the accepted RISK-30 residual (mitigated by per-issuer epoch cap); already-enrolled credentials untouched (closes SC-13). No operator or steward may call any lifecycle function directly — callable only from `Governor.execute()` with a validated `permittedActionClass` | FR-112, FR-113, DES-016, ADR-017, ADR-008 | Solidity; `Governor.execute()`; `permittedActionClass` binding |
 | DES-091 | `GovernanceConstants` module | OI-17 closure: publishes the full governance-constant table (§10.11 values). CLASSIFICATION (SC-16): each constant is normatively classified as Guarded Layer (requires Guarded Layer amendment to change) or Open Layer (requires Open Layer amendment to change); classification is listed in the §10.11 table's Amendment layer column. ANTI-CIRCULARITY RULE: the Guarded Layer super-process constants themselves (Tier-2 quorum, Tier-2 supermajority, inter-vote window, audit lead time, steward audit-inaction window) MUST be Guarded Layer minimum — an Open Layer coalition MUST NOT be able to lower the Guarded Layer bar by amending these constants at the Open Layer threshold; if the Guarded Layer quorum constant were lowered by an Open Layer vote, the Guarded Layer protection would be undermined at its foundation. SETTER MECHANISM (SC-16): "immutable-at-deployment" means the initial deployment values cannot be overridden by a constructor argument; the values are revisable post-deployment only by a `Governor.execute()` call carrying a passed vote at the constant's governing layer; the contract exposes a governance-controlled setter guarded by `onlyGovernor` — any call not routed through `Governor.execute()` reverts; this resolves the apparent tension between "immutable" and "revisable." | FR-119, NFR-017, BR-021 | Solidity; `onlyGovernor` setter guard; layer-keyed permittedActionClass |
+
+**v1 party-lifecycle design-debt paydown (v2.8.0 — FR-077, FR-130)**
+
+These two elements close chain gaps, not build gaps: both requirements already have shipped,
+tested implementations (Doc 06 v2.3.3 Approved), and both RTM Must rows stayed OPEN solely
+because §5.2 named no design element. Full normative specifications in §10.13.10 and §10.13.11.
+
+| ID | Component | Responsibility | Satisfies | Tech |
+|---|---|---|---|---|
+| DES-101 | non-violence clause verification gate | `NON_VIOLENCE_CLAUSE` (`packages/protocol/src/constants.js`) is the single source of truth; draft validation refuses publication on `field: 'charter.nonViolenceClause'` with `code: 'REQUIRED'` when the clause is absent and `code: 'ALTERED'` when it differs from the canonical text by any byte; no partial-credit, fuzzy or semantic match; no operator or configuration path may waive the check. Clause text is frozen in code pre-ratification (CON-013); changing it is a protocol governance action (ADR-010). v1 enforcement at protocol + service + web; v2 adds `PartyRegistry.publishDraft` as the trust-minimised enforcement point | FR-077, CON-013, SCR-04, SCR-05 | packages/protocol; packages/sdk; apps/web; (v2) PartyRegistry |
+| DES-102 | provisional-party membership cap | A platform-activated party whose legal registration is unverified is capped at `PROVISIONAL_MEMBER_CAP` = 100 **ACTIVE** members. The cap is checked at the membership-write boundary and is **UNCONDITIONAL** — no grace window, no queue, no override (Ruling 1, Rathish, 2026-08-26). It lifts by code only, on the recording of verified legal registration (FR-075); no operator, admin, configuration or bypass surface exists, and the absence is tested as a first-class control. Anti-capture invariant (C-02 ruling, Rathish, 2026-08-22) | FR-130, FR-075, BR-002, BR-012, SCR-09, SCR-11 | packages/protocol (constant); packages/sdk (v1 enforcement); DES-097(b) store; (v2) `Party.join()` |
 
 ### 5.3 Data model
 
@@ -1621,6 +1689,271 @@ These are exactly the three FR-123 COUNTING actions. The exclusion is from COUNT
 **Traces:** FR-003 (PARTIAL — reshaped), FR-020 (RESOLVED — BR-003/FR-020 contradiction closed 2026-08-24; government-ID check does not gate joining), FR-122, FR-123, FR-124 (composition confirmed), FR-132 (amended; re-scoped to COUNTING gate 2026-08-24), NFR-010, NFR-016, CON-002, CON-008, CON-015, DES-095 (amended), ADR-025 §(e) and §[AMENDMENT 2026-08-24].
 **Backs:** FR-132 (Doc 02 v2.12.0; owner Marcus Adeyemi; traces BR-006/BR-012; re-scoped to COUNTING gate by v2.12.0). US layer: owed — PO to derive US from FR-132 (v2.12.0) covering the ID-verification COUNTING-tier flow.
 
+### 10.13.10 DES-101 — non-violence clause verification gate (FR-077)
+
+**Why this element exists.** FR-077 ("non-violence clause verified by code; publication refused
+if absent or altered") has had a working implementation since Doc 06 v2.2.0 and passes at three
+layers, but §5.2 named no design element, so its RTM Must row stayed OPEN on a **chain** defect
+that no additional test can close. §18 C-02's closure note recorded "no further architect action
+required" for the *cap* concept; that note was about C-02, and it left FR-077's design link
+unwritten. This element writes it.
+
+**Element.** A single canonical clause string, held in `packages/protocol` as
+`NON_VIOLENCE_CLAUSE`, is the **sole source of truth**. Every layer that accepts, validates or
+publishes a party charter compares the submitted clause against that constant and refuses on any
+difference. The clause is a **constitutional precondition of party existence** (CON-013), not a
+form field.
+
+**Normative rules:**
+
+1. **Verbatim match, byte-for-byte.** A submitted charter satisfies the gate only when its
+   non-violence clause is **identical** to `NON_VIOLENCE_CLAUSE`. Comparison is exact: no
+   trimming beyond a single documented normalisation of leading/trailing whitespace, no case
+   folding, no Unicode-confusable tolerance, no fuzzy, semantic, keyword or
+   percentage-similarity match. A near-match is a **failure**, not a pass — a clause that
+   *almost* renounces violence is precisely the artefact this gate exists to reject.
+2. **Two distinguishable refusals.** `validateDraft` returns
+   `{ valid: false, errors: [...] }`, and each error is identified by its **(field, code)
+   pair** — not by a globally-unique code name. For this gate the field is
+   `charter.nonViolenceClause`, and the two refusals are:
+   - **absent or empty** → `{ field: 'charter.nonViolenceClause', code: 'REQUIRED' }`
+   - **present but not byte-identical** → `{ field: 'charter.nonViolenceClause', code: 'ALTERED' }`
+
+   `REQUIRED` is the platform-wide code for a missing mandatory field (it is also emitted for
+   `name`, `pillars.*` and `emblem`); the **field** is what scopes it to this gate. `ALTERED`
+   is unique to this gate — nothing else in the validator can be *altered*, because nothing
+   else has a canonical text to depart from. The two MUST NOT be collapsed into one code: a
+   drafter who omitted the clause and a drafter who edited it need different remedies, and an
+   auditor reading the refusal log needs to tell attempted-alteration from omission.
+3. **No waiver surface.** No operator, admin, configuration value, environment variable, feature
+   flag or constructor parameter may disable, soften or bypass the check. The absence of a waiver
+   path is a **capability-absence obligation** in the sense of §4/DES-075: it is asserted by test,
+   not merely by convention.
+4. **Frozen text; governance to change.** The clause text is frozen in code so it is verifiable by
+   anyone reading the repository. Changing it is a protocol governance action (ADR-010), never an
+   ordinary code edit. Approver ratification of the current engineer-authored text is recorded
+   (Ruling 2, Rathish, 2026-08-26; Doc 02 §4.22 is the normative home) and closes the former
+   CLAUSE-TEXT-01 flag.
+5. **Enforcement points.**
+   - **v1 (shipped):** `packages/protocol` validation is the reference rule; `packages/sdk`
+     `PartyCreationService` refuses at draft-create and re-checks at publish; `apps/web` surfaces
+     the named deficiency. Three layers, one constant.
+   - **v2 (owed at the on-chain increment):** `PartyRegistry.publishDraft` performs the same check
+     on the charter hash before a petition may open, making the gate trust-minimised rather than
+     application-enforced. This is the same v1→v2 shape as DES-074 (eight-pillar gate).
+6. **Surfaces.** **SCR-04** (party draft editor — the clause is displayed as non-editable
+   canonical text, so a drafter reads what they are adopting) and **SCR-05** (publish check &
+   deficiency report — the named `REQUIRED` / `ALTERED` refusal on
+   `charter.nonViolenceClause` renders here).
+
+**Failure modes considered.** (a) *Homoglyph substitution* — a visually identical clause with a
+Cyrillic character is `ALTERED`, correctly, because comparison is byte-wise; this is the
+reason no confusable-normalisation is permitted. (b) *Whitespace drift from copy-paste* — the
+single documented outer-trim keeps honest submissions from failing while leaving interior text
+exact. (c) *Localisation* — the canonical clause is stored and compared in its canonical language;
+a translated rendering MAY be displayed alongside for comprehension but MUST NOT be what is
+compared or stored, or the constant stops being a single source of truth.
+
+**Traces:** FR-077, CON-013, ADR-010, DES-074 (parallel gate). **Backs:** FR-077 (Doc 02 §4.22;
+owner Tomás Ferreira; traces BR-014). **Implemented by:** UT-0071..UT-0075 (protocol), UT-0786
+(sdk), UT-0849..UT-0851 (web); TC-3403, TC-3508..TC-3510.
+
+### 10.13.11 DES-102 — provisional-party membership cap (FR-130)
+
+**Why this element exists.** FR-130 was minted to give the wireframe-2.3 cap note a normative
+footing (C-02 ruling, Rathish, 2026-08-22). §18 C-02's closure note then recorded the cap as "the
+engineer's build-time obligation" and "no further architect action required on C-02 itself" —
+true of the *conflict*, but it left FR-130 with **no DES**, which is why the row has stayed OPEN
+through two feature drops despite complete, passing tests. This element supplies the missing
+design, and specifies the enforcement point at both delivery tiers.
+
+**Element.** A party that the platform has activated but whose **legal registration is not yet
+verified** is *provisional*. A provisional party admits at most `PROVISIONAL_MEMBER_CAP` = **100
+active members**. The cap is an anti-capture control: it bounds how much apparent political
+strength an unregistered entity can accumulate before it has accepted the accountability that
+legal registration carries.
+
+**Normative rules:**
+
+1. **The invariant.** For any party `P`: `legalRegistrationVerified(P) = false` ⟹
+   `activeMemberCount(P) ≤ 100`. This is an invariant on **state**, not a property of a code path,
+   and it MUST hold at every point at which membership is written.
+2. **Checked at the membership-write boundary.** The check belongs at the single boundary where a
+   membership record is created — not in the UI, not in a controller, not in a query. Any future
+   write path (import, migration, admin tool, batch job, restore) inherits the check by
+   construction because it must pass through that boundary. A cap enforced at the surface is a cap
+   that the next entry point silently bypasses.
+3. **UNCONDITIONAL until lift.** There is **no grace window, no queue, no waitlist, no
+   temporary overage, and no soft cap** (Ruling 1, Rathish, 2026-08-26; the 60-day grace concept
+   considered during requirements was never adopted and is explicitly not part of v1). The 101st
+   join is refused. The refusal is honest and named — `PROVISIONAL_CAP_REACHED`, carrying the cap
+   value — and the surface states the real reason rather than presenting a dead control.
+4. **ACTIVE-member semantics.** The cap counts **currently active** memberships. A member who
+   leaves frees **exactly one** slot; a departure MUST NOT permanently consume capacity, and a
+   rejoin MUST NOT double-count. The authoritative count is derived from the append-only
+   membership event log (DES-097(b)), never from a mutable counter that can drift from its log.
+5. **Lift is by code only.** The cap lifts when — and only when — verified legal registration is
+   recorded against the party (FR-075). At that moment the party becomes uncapped, automatically,
+   with no re-application and no human confirmation step. **No operator, admin, support,
+   configuration or flag path may lift the cap early**, and none may raise it. Specifically, no
+   `setProvisionalCapOverride`, no `bypassProvisionalCap`, no cap argument on the join path, and
+   no privileged caller: the **absence of every such surface is a first-class capability-absence
+   obligation** (§4, DES-075, DES-077) and is asserted by test.
+6. **What "verified legal registration" means, and its honest boundary.** The recording of legal
+   registration is an *external* fact entering the system: a jurisdiction's registrar has
+   registered the party. The design obligation here is that the **record** carries an evidence
+   reference and is append-only and publicly auditable; the **verification procedure** — who
+   checks the registrar's record, and against what — is an operational and legal question that
+   composes with CON-015 per jurisdiction and is **not** settled by this element. Until that
+   procedure is specified, the trigger is trusted input from the platform operator, and that
+   trust is disclosed, not hidden (see the residual below).
+7. **Enforcement points.**
+   - **v1 (shipped, application-authoritative):** the cap is checked in the SDK
+     `PartyCreationService` join path against `legalRegistrationVerified` on the party record and
+     the active-member count from the DES-097(b) store. In v1 membership lives in Postgres, not
+     on chain (DES-097 / ADR-024 §(b)), so the application boundary is the *only* enforcement
+     point that exists — which is precisely why rule 8's audit publication matters.
+   - **v2 (owed at the on-chain increment):** `Party.join()` gains the cap guard, placed **after**
+     the `AlreadyMember` check and **before** `memberCount += 1` — i.e. after identity and
+     duplicate resolution, before the state write, so a refused join costs the caller no
+     membership mutation. Two fields back it: a `legalRegistrationVerified` bool on the party and
+     a `recordLegalRegistration(evidenceRef)` entry point callable only from a passed governance
+     action or the registry that deployed the party — never from an EOA with an operator role.
+     A new error `ProvisionalCapReached(uint64 cap)` joins the existing error set. The v2 guard
+     makes the invariant trust-minimised; the v1 guard makes it *true today*.
+8. **Auditability in v1 (what makes an application-side cap checkable).** Because v1 enforces the
+   cap in the application, the cap state MUST be externally verifiable rather than merely
+   asserted: the party's provisional status, its cap value, its current active-member count, and
+   any legal-registration record (with evidence reference and timestamp) are published to the
+   audit-record contract subset (DES-097) and rendered on the party surface. An observer who does
+   not trust the operator can therefore detect a party operating over its cap, or a registration
+   recorded without evidence, from public data alone. **Tamper-evidence, not tamper-prevention** —
+   the same honest posture as T-05 in §10.13.7.
+9. **Surfaces.** **SCR-09** (activation record — provisional status, the cap, the current count,
+   and the plain-language reason the cap exists) and **SCR-11** (join / leave — where the
+   `PROVISIONAL_CAP_REACHED` refusal renders). Copy is subject to DES-085 (jargon filter) and
+   NFR-023 (grade-8); it MUST NOT imply the party is defective — a provisional party is a normal
+   party at an early stage.
+
+**Interaction with other controls.** The cap composes with, and does not replace: FR-020 (the cap
+is a **party-state** limit, never an admission judgement about a person — nobody is refused for
+who they are, and the 101st applicant is refused exactly as the 100th would have been had they
+arrived later); FR-125 (invite-gating is a rate-limiter, never an admission condition — the cap is
+neither); FR-023 (churn limits); and the FR-122/FR-123 counting distinction (the cap bounds
+*members*, which is a different quantity from *counted strength*).
+
+**Residual, recorded not hidden.** In v1 the cap is enforced by a single application service over
+a single database. An operator with direct database access can write a membership row that
+bypasses the service boundary. Rule 8's audit publication makes such a bypass **detectable**, not
+**impossible**; impossibility arrives with the v2 on-chain guard in rule 7. This residual is of
+the same class as T-05 (Charter Rule 3 deferred to v2) and is disclosed on the same basis.
+
+**Traces:** FR-130, FR-075, BR-002, BR-012, CON-015 (registration-verification procedure),
+DES-097(b) (store), DES-098 (disclosure discipline), C-02 ruling (2026-08-22), Ruling 1
+(2026-08-26). **Backs:** FR-130 (Doc 02 §4.44; owner Sofia Marchetti). **Implemented by:**
+UT-0802..UT-0811, UT-0825 (sdk), UT-0852..UT-0856, UT-0862 (web); TC-3511..TC-3516, TC-3528,
+TC-3529. **Closes:** §16 Q12.
+
+### 10.13.12 DES-097(b) — IPartyStore → Postgres store wiring
+
+**Why this element exists.** DES-097 (§10.13.5) fixed the v1 *stack* — conventional PWA +
+Postgres, chain as audit record. It did not specify the store itself. The SDK now defines a
+22-method `IPartyStore` interface with a working in-memory implementation
+(`IS_INSECURE_MOCK = true`), and several Must rows — FR-010 among them — are held open by the
+absence of the production backing rather than by any missing logic. This element specifies that
+backing so it can be built. **No ID is minted:** the RTM already cites "DES-097" for the
+production store, so this is a normative extension of DES-097 rather than a renumber.
+
+**Scope note.** This is a *design* specification. It does not build the backend, and it does not
+decide the legally-gated retention questions — those are marked PENDING CON-015 below.
+
+**1. The interface is the contract, and it is already fixed.** The production store implements the
+same 22-method `IPartyStore` the SDK defines; the service is written against the interface and
+MUST require no change when the backing swaps. The interface is enumerated in
+`packages/sdk/src/party-creation.js` (JSDoc `@typedef`) and mirrored in the app's type shim, with
+a test asserting the two member sets are equal (UT-0871) — that guard is what makes
+"implement the interface" a checkable claim rather than an intention.
+
+**2. Relation mapping (normative shape; column types indicative).**
+
+| Interface concern | Relation | Key / index | Notes |
+|---|---|---|---|
+| drafts (`saveDraft`, `findDraftById`, `updateDraft`) | `party_draft` | `draft_id` PK; index on `(drafter_pseudonym, jurisdiction)` | Charter stored as JSONB; `charter_fingerprint` a generated column for the FR-013 cooldown check |
+| petitions (`savePetition`, `findPetitionById`, `updatePetition`, `archivePetition`, `findPetitionsPastClose`, `findLivePetitionsByJurisdiction`, `findExpiredPetitionsByDrafter`) | `party_petition` | `petition_id` PK; index on `(jurisdiction, state)`; index on `(state, closes_at)` | `findPetitionsPastClose(now)` → `WHERE state = 'PETITION' AND closes_at < $1`; the `(state, closes_at)` index is what keeps the expiry sweep from becoming a table scan |
+| archive immutability | `party_petition.archived_at` + row-level rule | — | Once `archived_at IS NOT NULL`, every mutation MUST be refused (`ARCHIVED_IMMUTABLE`). Enforced by a `BEFORE UPDATE` trigger, not by application discipline alone — the immutability guarantee must survive a second writer |
+| parties (`saveParty`, `findPartyById`, `updateParty`, `findActivePartiesByJurisdiction`) | `party` | `party_id` PK; index on `(jurisdiction, state)`; **unique** on `(jurisdiction, normalized_name)` and `(jurisdiction, normalized_emblem)` for live rows | Carries `legal_registration_verified` + `legal_registration_evidence_ref` + `legal_registration_recorded_at` (DES-102 rule 6) |
+| membership events (`recordJoin`, `recordLeave`, `getMembershipEvents`) | `membership_event` | `(member_pseudonym, seq)`; index on `(party_id, action)` | **Append-only. INSERT only** — no UPDATE, no DELETE grant on this relation for the application role. This log is the authoritative membership record |
+| derived membership (`getActiveMembership`, `getMemberPseudonyms`) | materialised projection over `membership_event` | unique partial index enforcing at most one active membership per pseudonym | A projection, never a parallel source of truth; MUST be derivable by replaying the log |
+| counted strength (`recordStrengthContribution`, `getCountedPseudonyms`) | `counted_member` | unique `(party_id, member_pseudonym)` | v1 app-side uniqueness; the v2 nullifier path (DES-065) supersedes it |
+| `IS_INSECURE_MOCK` | — | — | Returns `false` for this backing **only** when §5's promotion conditions hold |
+
+**3. The append-only log is the membership record.** Membership is stored as an ordered
+`JOIN`/`LEAVE` event log, never as a mutable membership row that is deleted on leave. Leaving is
+recorded, not erased (FR-022, FR-107). Active membership and member counts are **derived**. Where
+a projection is materialised for read performance, it MUST be reconstructible from the log, and a
+CI check MUST assert projection-equals-replay on a seeded fixture — a projection that can silently
+diverge from its log is a counting bug waiting for an election.
+
+**4. Concurrency: the invariants the in-memory store gets for free.** The in-memory store is
+single-threaded, so three invariants hold without effort and MUST be re-established explicitly
+under concurrent writers:
+
+| Invariant | Requirement under concurrency |
+|---|---|
+| FR-130 cap (DES-102) | The count-then-insert sequence MUST be atomic. Either serialise on the party row (`SELECT … FOR UPDATE` on `party` before the count) or enforce by constraint; a plain read-then-write races and admits member 101 |
+| FR-064 one-active-party | Enforced by a **unique partial index** on the active-membership projection (one active row per `member_pseudonym`), not by an application pre-check alone — the pre-check is the friendly error, the index is the guarantee |
+| FR-010 name/emblem collision | The `publishDraft` TOCTOU re-check (already implemented, UT-0818) is necessary but not sufficient across processes; the **unique index** on `(jurisdiction, normalized_name)` / `(jurisdiction, normalized_emblem)` for live rows is the authority, and the application maps its violation to `NAME_COLLISION` / `EMBLEM_COLLISION` |
+
+Isolation level: `READ COMMITTED` plus the explicit locks and unique indexes above. The general
+rule: **every invariant currently guaranteed by single-threading MUST be re-expressed as a
+database constraint or an explicit lock** — never as an application-layer check alone.
+
+**5. Retention boundary — composes with DES-100, does not restate it.** DES-100 is the normative
+allowlist/denylist for identity-derived data; this store inherits it and adds nothing.
+
+- **Stored:** party/petition/draft content (public-class governance data); `member_pseudonym`
+  (the account-scoped pseudonym, not a person); membership events; `legal_registration_evidence_ref`.
+- **Never stored in this store, at any layer:** raw identity documents or images, name, date of
+  birth, document number, address, or any plaintext phone number. The credential surface
+  (`phone_hash`, `subject_id_hash`, `id_verified_flag`, `age_verified`, `issuing_region`,
+  `verified_at` — all HMAC-SHA-256 under a KMS-held pepper, verify-and-discard) lives in the
+  **restricted-class credential store of DES-100**, is referenced by pseudonym, and MUST NOT be
+  joined into the governance relations above. Two stores, one boundary: governance data is
+  public-class, identity-derived data is restricted-class, and no foreign key crosses that line
+  in a way that would let a single query resolve a member to a document.
+- **v1 honesty:** the operator CAN link account ↔ party in v1 by construction (T-01/T-02, FR-131(b)
+  disclosure). This element does not pretend otherwise; it bounds *what else* is retained.
+
+**6. PENDING CON-015 — legally-gated, deliberately unspecified here.** The following are **not**
+architect-decidable and MUST NOT be guessed into this design:
+
+| Item | Question | Gated on |
+|---|---|---|
+| Retention period | How long may `membership_event` rows and `legal_registration_evidence_ref` be retained, per jurisdiction? | CON-015 legal opinion (India DPDP first) |
+| Erasure-request handling | How does an erasure request compose with the append-only rule (FR-107) and with the pseudonymisation defence? | CON-015 + GDPR counsel; ADR-013 §2 erasure-by-non-collection is the starting posture |
+| Hash classification | Are `phone_hash` / `subject_id_hash` "personal data" under DPDP and GDPR? Classification changes the lawful basis and the retention answer | CON-015 + GDPR counsel (already routed, ADR-025 §(e) Q-3) |
+| Cross-border placement | May the store reside outside the pilot jurisdiction? | CON-015 |
+| Evidence-reference contents | May the legal-registration evidence reference contain a registrar document ID, or must it be a hash? | CON-015 |
+
+Until CON-015 answers land, the store is specified **structurally** (what relations exist, what the
+constraints are, what is never stored) and left **open** on duration and erasure. Building the
+schema does not require these answers; **promoting it to production does.**
+
+**7. Promotion condition (`IS_INSECURE_MOCK = false`).** This backing may return `false` — and
+therefore pass the CI promotion gate — only when **all** hold: (a) it implements all 22 interface
+methods with the UT-0871 shim guard green; (b) the append-only grants, immutability trigger and
+unique indexes of §2/§4 are in place and covered by tests that attempt the violation and expect
+refusal; (c) projection-equals-replay is asserted in CI; (d) the CON-015 retention answers of §6
+are recorded and the schema reflects them; (e) no DES-100 denylist field appears anywhere in the
+schema, asserted by the same class of scanner as DES-080. Until (a)–(e), the store returns `true`
+and is blocked past devnet — the honest position, and the same discipline the in-memory store
+already follows.
+
+**Traces:** DES-097, DES-100 (retention), DES-102 (cap), DES-080 (schema guard), ADR-024 §(b),
+ADR-013 §2, CON-002, CON-008, CON-015, FR-010, FR-013, FR-022, FR-064, FR-107, FR-130, NFR-010.
+**Enables (does not close):** the FR-010 production-store build and every row whose gap reads
+"production store pending DES-097". **US layer:** owed — PO to derive the persistence-build stories.
+
 ---
 
 ## 11. Situation & failure-mode analysis (per requirement)
@@ -1735,6 +2068,9 @@ not duplicated here. Architectural debt carried knowingly:
 | Region path stored as a string on-chain | readability for auditors | acceptable; measured, small | Low |
 | Participation profile (DES-064) off above dev | OI-13 unresolved | ship after Gate 1 re-affirmation resolves OI-13 | Open (governance) |
 | Fork feature flag off above dev | calldata vulnerability deferred at Gate 1 (FORK-CRIT) | design now finalised in DES-034; engineering fix required before flag is enabled | **High — security blocker** |
+| ~~FR-077 and FR-130 have shipped code but no DES~~ | ~~C-02 closure recorded the cap as a build obligation and left the design link unwritten; FR-077's link was never written~~ | **PAID DOWN v2.8.0** — DES-101 (§10.13.10) and DES-102 (§10.13.11) written; the two RTM chain gaps are closed at the design layer | Closed |
+| v1 party/membership store is in-memory (`IS_INSECURE_MOCK = true`) | production Postgres backing not built; blocked past devnet by the CI gate | **Design complete v2.8.0** — DES-097(b) (§10.13.12) specifies the mapping, constraints, retention boundary and promotion condition; the build remains owed, and §6's CON-015 answers gate promotion | Medium (blocked by CI) |
+| FR-130 cap is application-enforced in v1 | v1 has no on-chain membership (ADR-024 §(b)); the application boundary is the only enforcement point that exists | audit-record publication makes an over-cap party **detectable** today (DES-102 rule 8); the on-chain guard in `Party.join()` (DES-102 rule 7) makes it **impossible** at the v2 increment | Medium (disclosed) |
 
 ## 14. Test hooks designed in
 
@@ -1772,6 +2108,14 @@ pre-existing Phase-3, environment, external, or mechanism gaps per Doc 08 §gap-
 | FR-118 (seven entrenched rules; code rejection at submission) | DES-087 (ProtocolGovernance) | `entrenched` registry checked at `proposeAmendment()`; reverts `EntrenchedRule`; normative design in ADR-019 |
 | FR-119 (three-layer amendment structure; Guarded Layer / Tier-2 super-process) | DES-087 (ProtocolGovernance); DES-091 (GovernanceConstants) | Five-property state machine; constants from §10.11; normative design in ADR-019 |
 | FR-120 (unconditional fork right; fork flag off above dev) | DES-034 (fork with lineage) | Existing DES; no steward can block; fork flag status unchanged |
+
+**v2.8.0 v1 design-debt paydown (2026-08-29):**
+
+| Requirement | DES | Notes |
+|---|---|---|
+| FR-077 (non-violence clause verified by code; publication refused if absent or altered) | **DES-101** (§10.13.10) | Closes a **chain** gap, not a build gap: the implementation shipped at Doc 06 v2.2.0 and passes at protocol + sdk + web (UT-0071..0075, UT-0786, UT-0849..0851; TC-3403, TC-3508..3510). SCR binding added: SCR-04, SCR-05. Architect's assessment: with the DES link written, all four Doc 08 completion rules are satisfiable — the guarantee is a verbatim-match refusal that does **not** depend on proof soundness or on production persistence, the same shape as FR-011/DES-074 which is already COMPLETE. **The status call is the tester's**, per the Doc 08 RACI |
+| FR-130 (provisional cap 100 until verified legal registration; code-only lift; no operator path) | **DES-102** (§10.13.11) | Closes the chain gap and specifies both enforcement points (v1 application boundary; v2 `Party.join()`). SCR binding added: SCR-09, SCR-11. Implementation shipped and passes (UT-0802..0811, UT-0825, UT-0852..0856, UT-0862; TC-3511..3516, TC-3528, TC-3529). Architect's assessment: rules 1–3 are satisfied; **rule 4 is a judgement the tester owns** — the cap, the code-only lift and the absence of a bypass are all tested, but in v1 the invariant is application-enforced with audit-record tamper-evidence rather than chain-enforced tamper-prevention (DES-102 rule 8 and the recorded residual). This element does not assert the row closes; it removes the reason it could not |
+| FR-010 (production-persistent store), and every row whose gap reads "production store pending DES-097" | **DES-097(b)** (§10.13.12) | **Enables a build; closes no row.** Specifies the IPartyStore→Postgres mapping, the append-only membership log as the authoritative record, the concurrency re-expression of invariants the in-memory store gets from single-threading, the retention boundary (composing with DES-100 — no raw identity), and the `IS_INSECURE_MOCK = false` promotion condition. Retention duration, erasure handling and hash classification are **PENDING CON-015** and deliberately unspecified |
 
 **v2.2.0 design-system additions (§10.12, 2026-08-22):**
 
@@ -1839,7 +2183,7 @@ pre-existing Phase-3, environment, external, or mechanism gaps per Doc 08 §gap-
 | Q9 | **NFR-004's 0.1% duplicate rate is not internally measurable** by design. Requires out-of-band consented audited sample. | Yuki Sato | before Gate 2 |
 | Q10 | **OI-13: FR-062 vs NFR-001/NFR-024/TD-02.** Participation profiles making party membership public directly conflicts with the no-linkage guarantee. Resolution required from Rathish at Gate 1 re-affirmation. See §18 for design-side consequence. | Priya Raghunathan | Gate 1 re-affirmation |
 | Q11 | **Welcome screen (1.1) design specification needed.** The wireframe 1.1 Welcome screen has no backing FR, DES, SCR, or US. It is a pre-consent unauthenticated landing screen. Before engineering, a requirement and design element must be minted. What is the normative UX obligation for the landing screen, and who owns it? | Priya Raghunathan (PO) | Before Coding sprint 1 |
-| Q12 | **100-member provisional cap (wireframe 2.3) — accept or reject?** The wireframe note "Membership caps at 100 until legal verification completes" has no backing FR. The Product Owner must decide: mint a new FR defining the provisional cap (and its enforcement mechanism, relation to the petition lifecycle, and the "legal verification" trigger), or reject the concept and revise the wireframe copy. This must not be built without a decision. | Priya Raghunathan (PO) | Before design of petition-live screen |
+| ~~Q12~~ | ~~**100-member provisional cap (wireframe 2.3) — accept or reject?**~~ **CLOSED v2.8.0 (2026-08-29).** The PO accepted the concept and minted FR-130 (Doc 02 v2.5.0; C-02 ruling, Rathish, 2026-08-22); Ruling 1 (2026-08-26) fixed the cap as UNCONDITIONAL with no grace window. The remaining architect half — the enforcement mechanism, the relation to the petition lifecycle, and the "legal verification" trigger this question named — is now specified in **DES-102** (§10.13.11): membership-write-boundary check, code-only lift, capability-absence obligations, v1 application enforcement with audit-record tamper-evidence, and the v2 `Party.join()` guard. The verification *procedure* behind the trigger remains a CON-015 / operational question, recorded in DES-102 rule 6. | ~~Priya Raghunathan (PO)~~ Closed | ~~Before design of petition-live screen~~ Closed |
 | Q13 | **FR-125 non-invite fallback — design all four layers.** The mandatory non-invite fallback path (OI-19 ruling; FR-125(b) non-invite fallback ALWAYS available) has no wireframe screen, no DES, no SCR, no US. The Welcome screen (1.1) shows only "Explore" and "I have an invite". The fallback flow must be designed end-to-end. Owner of the DES and SCR: architect (next increment). Owner of the US: product-owner. | Ravi Deshmukh (architect) + Priya Raghunathan (PO) | Before Coding sprint covering FR-125 |
 | Q14 | **Party finance ledger screen — design owed.** The wireframe 1.6 "Finances — every rupee in and out" navigation row links to an undesigned screen. FR-050 (Must) requires the itemised public treasury record. DES-033 covers the on-chain mechanism; the UI is not designed. A ledger SCR, DES surface element, FE, and US are all owed. | Ravi Deshmukh (architect) + Priya Raghunathan (PO) | Before Coding sprint covering FR-050 |
 
@@ -1860,6 +2204,19 @@ CLOSED in §10.11 (v2.0.0, 2026-08-11); values normative for Design; revisable o
 the amendment boundary. **OI-18 (entrenched-charter scope)** — CLOSED by Rathish
 2026-08-11, option (c) two-tier core (OI-18-DECISION-2026-08-11.md); amendment boundary
 designed in DES-087 and the Guarded Layer (Tier-2) super-process state machine.
+
+**v2.8.0 narrowing of the next-increment scope (2026-08-29).** The paragraph below is the
+standing record of deliberately-phased DES work. Two of its rows are now paid down: **FR-077**
+(DES-101) and **FR-130** (DES-102) — both had shipped, passing implementations and were held open
+only by the missing design link, so they were the correct debt to retire first. The remainder of
+the phasing statement stands unchanged: FR-074..FR-076, FR-078..FR-081 and FR-087..FR-111 have
+neither DES nor implementation, and FR-121/FR-125..FR-129 likewise — for those, writing a DES
+alone closes no RTM row, so they stay in the next increment rather than being pulled forward for
+the appearance of progress. FR-064's DES (**DES-065**) already exists and is deliberately **not**
+touched here: that row waits on the v2 membership-scope nullifier build, which is v2 scope by the
+2026-08-29 FR-064-SEMANTICS ruling. FR-126/FR-127/FR-128 remain v2 by construction (on-device
+proving, nullifier-collision dedup, the subpoena test — all deferred with disclosure per
+§10.13.7 T-02).
 
 **Next-increment scope (recorded not hidden):** Full DES coverage of remaining v2.x
 requirement areas — FR-074..FR-111 beyond existing DES-064..DES-086, **and FR-121..FR-129
