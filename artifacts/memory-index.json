@@ -4250,6 +4250,86 @@
     "reviewer-qa: merge sign-off unblocked BY THIS LOOP, but still requires its own security scan and RTM zero-gaps verification."
    ],
    "gate": "Doc 06 review loop PASSED at cycle 3 -- SOP advances past the code-drop quality loop. Gate 2 still NOT READY: the RTM FR-064 Must row remains open pending the product-owner ruling, and an open Must row blocks Gate 2."
+  },
+  {
+   "id": "tester-2026-08-29T0530",
+   "role": "tester (own role — Doc 07 test cases + Doc 08 RTM author)",
+   "file": "artifacts/tester-2026-08-29T0530.md",
+   "timestamp": "2026-08-29T05:30:00Z",
+   "phase": "Verify — test-case design + RTM sync for the join/membership drop",
+   "product": "Trumocracy",
+   "branch": "build/v1-join-membership",
+   "scope": "docs/07-test-cases-suites.md v2.2.2 -> v2.3.0 (In Review); docs/08-traceability-matrix.md v2.2.5 -> v2.3.0 (In Review). Source drop: Doc 06 v2.3.2 Approved (cycle-3 PASS 97%, 997b2dc).",
+   "summary": "Authored the TS-MEMBERSHIP suite (TC-3517..TC-3540, 24 cases, all Automated / Pass (inh.) from Doc 06 v2.3.2) in Doc 07 and synced Doc 08 with the join/membership drop. UT mapping was derived by reading the four implementing test files line by line, which corrected FIVE off-by-one web UT ids in the hand-off brief (leave=UT-0860 not 0861; history=UT-0861 not 0862; cap=UT-0862 not 0863; join-not-counting=UT-0863 not 0865; FR-020 join=UT-0858 only). Doc 08: evidence extended on FR-020, FR-022 (both already COMPLETE), FR-064, FR-122, FR-123, FR-130, FR-131 (all STAY OPEN) and the FR-013 Should row (already complete, strengthened with the two DES-097 seam guards). FR-021 deliberately NOT extended — no vote-weight or tally evidence exists in this drop. FR-064 gap note rewritten to record TWO independent blockers (semantics: FR-064 text reads auto-void-on-join vs the implemented explicit-leave form, Flag FR-064-SEMANTICS, product-owner ruling owed in Doc 02; design: DES-065 is an unbuilt v2/Phase-3 nullifier) and its gap-log owner now names the product-owner. Summary counts UNCHANGED: 12 Must complete / 126 open; total 16/145. NO story newly meets DoD (13/134, checked story by story). TC-3481 amended but left Blocked — clause (d) is now built at the parties-directory surface (new TC-3534) but TC-3481 targets the unbuilt SCR-13/SCR-14 ballot surfaces. Both docs left In Review for their own neutral document-review cycles.",
+   "artifacts_written": [
+    "docs/07-test-cases-suites.md (v2.3.0, In Review)",
+    "docs/08-traceability-matrix.md (v2.3.0, In Review)",
+    "artifacts/tester-2026-08-29T0530.md",
+    "artifacts/memory-index.json (updated — this entry appended)"
+   ],
+   "tc_added": {
+    "range": "TC-3517..TC-3540 (24, suite TS-MEMBERSHIP)",
+    "TC-3517..TC-3520": "FR-020 join without approval; structural no-verifier guarantee; web no-approval-control sweep; seam spy — UT-0819, UT-0820, UT-0858, UT-0866",
+    "TC-3521..TC-3522": "FR-022 leave at will, immediate, no exit approval — UT-0823, UT-0860",
+    "TC-3523..TC-3525": "FR-064 one-active-party, EXPLICIT-LEAVE form (ALREADY_MEMBER_ELSEWHERE / ALREADY_MEMBER) — UT-0821, UT-0822, UT-0859",
+    "TC-3526..TC-3527": "Append-only membership history; leaving is never deletion — UT-0824, UT-0861",
+    "TC-3528..TC-3529": "FR-130 cap at the 100/101 boundary on ACTIVE members — UT-0825, UT-0862",
+    "TC-3530..TC-3533": "FR-122/FR-123 join is not counting; verified-members-only strength; seam scope — UT-0826, UT-0827, UT-0828, UT-0830, UT-0863, UT-0865",
+    "TC-3534..TC-3535": "FR-131(d) four-clause non-dismissable notice; FR-131(b) v1-honest join copy — UT-0864, UT-0869",
+    "TC-3536..TC-3538": "Clock determinism; ship-dark flag gating; jargon + absence scans — UT-0829, UT-0867, UT-0868, UT-0870",
+    "TC-3539..TC-3540": "DES-097 seam guards on the FR-013 expiry path — UT-0831 (interface-only facade), UT-0871 (.d.ts shim sync)"
+   },
+   "rtm_rows_changed": {
+    "FR-020": "COMPLETE -> COMPLETE (evidence extended: TC-3517..3520; UT-0819/0820/0858/0866)",
+    "FR-022": "COMPLETE -> COMPLETE (evidence extended: TC-3521/3522/3526/3527/3536; UT-0823/0824/0829/0860/0861)",
+    "FR-064": "G-PHASE3 OPEN -> G-PHASE3 OPEN (evidence extended TC-3523..3525; gap note rewritten with TWO blockers: FR-064-SEMANTICS product-owner ruling + unbuilt DES-065)",
+    "FR-122": "G-PHASE3 OPEN -> G-PHASE3 OPEN (evidence extended: TC-3530/3532/3533/3534)",
+    "FR-123": "G-PHASE3 OPEN -> G-PHASE3 OPEN (evidence extended: TC-3520/3530..3533)",
+    "FR-130": "G-TRACE OPEN -> G-TRACE OPEN (evidence extended: TC-3528/3529; still no DES in Doc 03 §5.2)",
+    "FR-131": "G-PHASE3 OPEN -> G-PHASE3 OPEN (evidence extended: TC-3534/3535; clause (d) built at parties-directory surface only; TC-3481 stays Blocked for SCR-13/SCR-14)",
+    "FR-013 (Should)": "complete -> complete (evidence strengthened: TC-3539/3540; UT-0831/0871)",
+    "FR-021": "UNTOUCHED — no vote-weight or tally evidence in this drop; extending it would be fabricated coverage"
+   },
+   "counts": {
+    "doc07": {
+     "cases": "418 -> 442",
+     "automated": "187 -> 211",
+     "blocked_or_nomech": "231 (unchanged)",
+     "anchors": "416 -> 440",
+     "expanded": "425 -> 449"
+    },
+    "doc08": {
+     "must_complete": "12 (unchanged)",
+     "must_open": "126 (unchanged)",
+     "total_complete": "16/145 (unchanged)",
+     "tc_total": "425 -> 449",
+     "passing_evidence": "171 -> 195 (107 inh. + 88 obs.)",
+     "stories_meeting_dod": "13 of 134 (unchanged)"
+    }
+   },
+   "verification": {
+    "tc anchors": "24 anchors TC-3517..TC-3540 — no gaps, no duplicates, no reused ids",
+    "ut existence": "all 27 UT ids cited in TS-MEMBERSHIP located in the four real test files — 0 not found",
+    "doc08 -> doc07 refs": "all 127 TC-34xx/35xx references resolve to a Doc 07 anchor — 0 dangling",
+    "arithmetic": "Doc07 442=418+24, 211=187+24; Doc08 449=425+24, 195=171+24, 107=83+24, 254 unchanged and 449-195=254"
+   },
+   "ids_touched": {
+    "TC": "TC-3517..TC-3540 (new); TC-3481 (status note amended, stays Blocked)",
+    "UT": "UT-0819..UT-0831, UT-0858..UT-0871 (cited, all verified in file)",
+    "FR": "FR-013, FR-020, FR-022, FR-064, FR-122, FR-123, FR-130, FR-131 (edited); FR-021 deliberately untouched",
+    "US": "US-0021, US-0024, US-0025, US-0073, US-0131, US-0133, US-0134",
+    "DES": "DES-013, DES-065, DES-095, DES-096, DES-097, DES-098, DES-100",
+    "ADR": "ADR-007, ADR-024, ADR-025",
+    "gap-log entries": "55, 114, 115, 117, 125"
+   },
+   "open_items": [
+    "Doc 07 v2.3.0 and Doc 08 v2.3.0 are In Review — each needs its own technical-mode document-review cycle by a NEUTRAL reviewer (not the tester, who authored both).",
+    "Product-owner: ruling owed on Flag FR-064-SEMANTICS recorded in Doc 02 — (a) annotate FR-064 with the v1 explicit-leave posture, or (b) uphold auto-void-on-join. Only blocker on FR-064 that design work cannot touch.",
+    "Architect: FR-130 still has no DES in Doc 03 §5.2 (G-TRACE) — the row cannot close without it.",
+    "Engineer: SCR-13/SCR-14 ballot surfaces owed before TC-3481 can leave Blocked.",
+    "reviewer-qa: independent verification of the 126 open Must rows before any merge sign-off."
+   ],
+   "gate": "Gate 2 NOT READY — 126 open Must rows against a zero-gap rule. This drop moved evidence, not the gate: 7 rows gained real coverage and 5 stay open for reasons no test can close (unassigned DES, unbuilt Phase-3 mechanisms, and one requirement whose wording the product-owner has yet to reconcile with the code)."
   }
  ]
 }
