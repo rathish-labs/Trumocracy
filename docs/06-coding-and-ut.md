@@ -2,11 +2,11 @@
 
 ```
 Document ID:   CODE-TRUMOCRACY
-Version:       2.3.0
+Version:       2.3.2
 Status:        In Review
 Owner:         Samuel Oyelaran — Engineering Lead
 Source:        SDD-TRUMOCRACY v2.7.1 §9 · ADR-011 · ADR-023 · ADR-024 · ADR-025
-Last updated:  2026-08-28
+Last updated:  2026-08-29
 ```
 
 > Built from SDD §9 and ADR-011. Records what was physically built, the unit-testing
@@ -15,6 +15,57 @@ Last updated:  2026-08-28
 
 ```
 Change history:
+  v2.3.2 (2026-08-29) — Rework cycle 2 against artifacts/reviews/06-coding-and-ut-v2.3.1-technical-cycle2.md
+               (FAIL 92%, 0C/0H/1M/2L). All three issues resolved:
+               ISS-C2-01 (Medium): the v2.3.1 ISS-01 fix stopped at the JS boundary —
+               apps/web/types/trumocracy-sdk.d.ts still declared the 21-method IPartyStore,
+               so a TypeScript store (the DES-097 Postgres backing will be one) could
+               `implements IPartyStore`, typecheck clean, and throw on the first
+               expirePetitions() sweep. findPetitionsPastClose(now: number): object[] added
+               to BOTH the IPartyStore interface and the InMemoryPartyStore class
+               declaration in the shim. Drift guard added per the reviewer's ask: new web
+               test UT-0871 (apps/web/test/sdk-types-sync.test.ts) parses the SDK JSDoc
+               typedef and the .d.ts shim and asserts the member sets are EQUAL both ways —
+               after two silent drifts on this seam (archivePetition arity at v2.2.0,
+               findPetitionsPastClose at v2.3.1), the next one is a red build.
+               ISS-C2-02 (Low): §5.0 v2.0.1 cycle-2 line corrected "pending" → PASS (97%);
+               v2.1.0 line's "merge sign-off withheld pending cycle-2 review" annotated
+               with the v2.2.0 cycle-2 PASS resolution.
+               ISS-C2-03 (Low): the v2.3.1+v2.3.2 rework is committed atomically — code +
+               tests (UT-0831, UT-0871, O(n) fold, UT-0822 restructure, .d.ts sync) in one
+               fix commit, Doc 06 in its companion docs commit; the fix and its proof land
+               together.
+               Suite: 542 tests (contracts 95 / protocol 126 / sdk 220 / ui 14 /
+               indexer 16 / web 71); dep-guard clean; tsc exits 0 in packages/ui and
+               apps/web. §3 counts updated (new UT-0871 row).
+
+  v2.3.1 (2026-08-29) — Rework cycle 1 against artifacts/reviews/06-coding-and-ut-v2.3.0-technical-cycle1.md
+               (FAIL 90%, 0C/0H/1M/3L). All four issues resolved:
+               ISS-01 (Medium): expirePetitions() no longer reaches into InMemoryPartyStore's
+               private _petitions Map (silent-no-op risk with any production store). New
+               IPartyStore interface method findPetitionsPastClose(now) — live petitions whose
+               closesAt < now — declared on the @typedef, implemented in InMemoryPartyStore
+               (production: WHERE state = PETITION AND closes_at < now), and expirePetitions()
+               routed through it; the service now touches interface methods only (code fix
+               committed 4148498). New regression test UT-0831: an interface-only store facade
+               (exactly the 22 @typedef methods, delegating to a real InMemoryPartyStore) is
+               injected into PartyCreationService; a past-close petition is still expired and
+               archived through it. Any renewed private-state access finds undefined on the
+               facade and the test fails — the seam break can no longer be silent.
+               ISS-02 (Low): §8 branch parenthetical updated build/v1-scaffold →
+               build/v1-join-membership (current working branch).
+               ISS-03 (Low): membershipHistory() fold reworked from rows.find() per LEAVE
+               event (O(n²) worst case) to a per-party open-row Map — a single O(n) pass,
+               identical behaviour; covered by the existing membership-history tests
+               (UT-0819..UT-0830 unchanged).
+               ISS-04 (Low): UT-0822 promoted from an it() inside UT-0821's describe block to
+               its own describe block; the RTM trace is now unambiguous. Test count unchanged.
+               Also: §5.0 review record updated (v2.2.0 cycle-2 PASS 97% recorded — line was
+               stale "pending"); §7 #20 upgraded from a flag to a tracked decision record
+               (FR-064-SEMANTICS) awaiting product-owner ruling. Suite: 541 tests
+               (contracts 95 / protocol 126 / sdk 220 / ui 14 / indexer 16 / web 70);
+               dep-guard clean; tsc exits 0 in packages/ui and apps/web. §3 counts updated.
+
   v2.3.0 (2026-08-28) — Join/membership feature drop (FR-020/021/022, FR-064 invariant,
                FR-122/FR-123 counting distinction, FR-130 cap at join, FR-131 clause (d)).
                SDK (party-creation.js): InMemoryPartyStore membership model reworked from a
@@ -330,7 +381,7 @@ all existing files and enforced by CI lint:
 
 ## 3. `UT-####` inventory
 
-Counts are actual as of this session (2026-08-28), verified by running `npm test`.
+Counts are actual as of this session (2026-08-29), verified by running `npm test`.
 
 | Range | Area | Package | Count |
 |---|---|---|---|
@@ -346,17 +397,19 @@ Counts are actual as of this session (2026-08-28), verified by running `npm test
 | UT-0700..0742 | client safety surfaces: receipt-free confirmation, warning banner, a11y | web | 16 |
 | UT-0750..0758 | PrivacyStatus component: state rendering, self-view contract, absence, backing-aware copy | ui | 14 |
 | UT-0760..0779 | IEligibilityVerifier seam, IBallotService seam: counting-tier gate, IS_INSECURE_MOCK delegation, nullifier, tally | sdk | 36 |
-| UT-0780..0818 | PartyCreationService + InMemoryPartyStore: IS_INSECURE_MOCK, validation gate, collision (incl. TOCTOU re-check), cooldown, FR-018 threshold gate (ISS-01), FR-130 cap, join-never-calls-verifier, status, determinism, archivedAt determinism (ISS-03) | sdk | 37 |
+| UT-0780..0818, UT-0831 | PartyCreationService + InMemoryPartyStore: IS_INSECURE_MOCK, validation gate, collision (incl. TOCTOU re-check), cooldown, FR-018 threshold gate (ISS-01), FR-130 cap, join-never-calls-verifier, status, determinism, archivedAt determinism (ISS-03), expirePetitions interface-only seam regression (v2.3.1 ISS-01) | sdk | 38 |
 | UT-0819..0830 | join/membership: join-without-permission, join/leave never call the seam, one-active-party (explicit leave), leave-at-will, append-only history, FR-130 100/101 boundary on ACTIVE members, strength counts verified members only, seam scope assertion, clock determinism, countingStatus | sdk | 22 |
 | UT-0841..0857 | party-creation web flow: emblem field, deficiency errors, collision surfaces, BR-020 disclosure, non-violence clause, ProvisionalStatus, jargon scan | web | 27 |
 | UT-0858..0870 | join/membership web flow: one-click join, no-approval absence, one-active-party refusal surface, leave, history active/inactive, cap at join surface, join ≠ counting figures, FR-131(d) notice (four clauses, non-dismissable), verified-member counting, seam spy, flag gating, jargon scan, v1-honest join copy, absence test | web | 27 |
+| UT-0871 | SDK type-shim sync guard: trumocracy-sdk.d.ts IPartyStore member set equals the JSDoc typedef (v2.3.2, ISS-C2-01) | web | 1 |
 | (SDK core) | identity, proofs, transports, verified reads, prediction, client, scopes | sdk | 124 |
-| **Total** | | | **540** |
+| **Total** | | | **542** |
 
-Note: the SDK total of 219 comprises 124 (core) + 36 (seams UT-0760..UT-0779) + 37
-(UT-0780..UT-0818 party-creation service) + 22 (new UT-0819..UT-0830 membership). The web
-total of 70 comprises 16 (original UT-0700..UT-0742) + 27 (UT-0841..UT-0857 party-creation
-web tests) + 27 (new UT-0858..UT-0870 join-membership web tests). The protocol total of 126
+Note: the SDK total of 220 comprises 124 (core) + 36 (seams UT-0760..UT-0779) + 38
+(UT-0780..UT-0818 + UT-0831 party-creation service) + 22 (UT-0819..UT-0830 membership). The web
+total of 71 comprises 16 (original UT-0700..UT-0742) + 27 (UT-0841..UT-0857 party-creation
+web tests) + 27 (UT-0858..UT-0870 join-membership web tests) + 1 (UT-0871 type-shim sync
+guard, v2.3.2). The protocol total of 126
 comprises 82 (original UT-0001..UT-0055) + 44 (UT-0060..UT-0086). Every `UT-####` maps to
 an `FR`/`NFR`/`RISK` in the RTM (Doc 08).
 (UT-#### IDs may each cover a describe-block with multiple `it()` assertions; the Count
@@ -414,9 +467,12 @@ the tests were written by the same person who wrote the bug.
 ### 5.0 Scaffold-drop technical review record
 
 Review history for this document:
-- v2.2.0 cycle 2: pending — routed to reviewer-qa after this rework.
-- v2.1.0 cycle 1: `artifacts/reviews/06-coding-and-ut-v2.1.0-technical-cycle1.md` — FAIL (84%, 0C/1H/2M/1L). ISS-01 (High): activateParty ungated; ISS-02 (Medium): TOCTOU at publishDraft; ISS-03 (Medium): Date.now() in archivePetition; ISS-04 (Low): §7 limitation missing. All four resolved in v2.2.0; merge sign-off withheld pending cycle-2 review.
-- v2.0.1 cycle 2: `artifacts/reviews/06-coding-and-ut-v2.0.1-technical-cycle2.md` — pending.
+- v2.3.2 cycle 3: pending — this rework; re-review owed (neutral reviewer, technical mode).
+- v2.3.1 cycle 2: `artifacts/reviews/06-coding-and-ut-v2.3.1-technical-cycle2.md` — FAIL (92%, 0C/0H/1M/2L). All four cycle-1 issues verified closed. ISS-C2-01 (Medium): the ISS-01 fix stopped at the JS boundary — `apps/web/types/trumocracy-sdk.d.ts` IPartyStore shim missing `findPetitionsPastClose`, so a TypeScript store could typecheck clean and throw at runtime; ISS-C2-02 (Low): two further stale §5.0 review-record lines (v2.0.1 "pending", v2.1.0 sign-off tail); ISS-C2-03 (Low): UT-0831 and the Low fixes not yet committed (and 4148498 bundled the fix with review artifacts). All three resolved in v2.3.2 (.d.ts synced in both blocks + UT-0871 drift guard; §5.0 corrected; rework committed atomically — fix commit + docs commit).
+- v2.3.0 cycle 1: `artifacts/reviews/06-coding-and-ut-v2.3.0-technical-cycle1.md` — FAIL (90%, 0C/0H/1M/3L). ISS-01 (Medium): expirePetitions reached into InMemoryPartyStore's private `_petitions` field — silent no-op with any production store; ISS-02 (Low): §8 stale branch name; ISS-03 (Low): membershipHistory O(n²) fold undocumented; ISS-04 (Low): UT-0822 as an `it()` inside UT-0821's describe block. All four resolved in v2.3.1 (interface method `findPetitionsPastClose` + regression test UT-0831; branch name fixed; fold reworked to O(n); UT-0822 given its own describe block).
+- v2.2.0 cycle 2: `artifacts/reviews/06-coding-and-ut-v2.2.0-technical-cycle2.md` — PASS (97%, reviewer-qa). Approved. (This line previously read "pending" — stale; corrected at v2.3.1.)
+- v2.1.0 cycle 1: `artifacts/reviews/06-coding-and-ut-v2.1.0-technical-cycle1.md` — FAIL (84%, 0C/1H/2M/1L). ISS-01 (High): activateParty ungated; ISS-02 (Medium): TOCTOU at publishDraft; ISS-03 (Medium): Date.now() in archivePetition; ISS-04 (Low): §7 limitation missing. All four resolved in v2.2.0; the cycle-2 review of that rework passed (v2.2.0 cycle 2, above — PASS 97%). (Tail previously read "merge sign-off withheld pending cycle-2 review" — resolved; corrected at v2.3.2.)
+- v2.0.1 cycle 2: `artifacts/reviews/06-coding-and-ut-v2.0.1-technical-cycle2.md` — PASS (97%). Approved. (Line previously read "pending" — stale; corrected at v2.3.2.)
 - v2.0.0 cycle 1: `artifacts/reviews/06-coding-and-ut-v2.0.0-technical-cycle1.md` — FAIL (94%, 0C/0H/1M/1L). ISS-01 tsconfig node type missing; ISS-02 §3 note ambiguous range notation. Reworked into v2.0.1.
 - v1.0.0 cycle 1: `artifacts/reviews/06-coding-and-ut-v1.0.0-technical-cycle1.md` — FAIL (48%)
 - v1.1.0: no cycle-1 review completed (superseded by v2.0.0 in this session)
@@ -580,16 +636,28 @@ When each module lands it must read its flag in the same commit.
     deterministically via the store; real endorsement feed wiring is a DES-097 integration
     task.
 20. **One-active-party is built in the EXPLICIT-LEAVE form; FR-064's text reads
-    auto-void-on-join (Flag: FR-064-SEMANTICS).** The 2026-08-28 commissioning brief directed:
-    "Joining a second party requires leaving the first (an explicit, recorded action)."
-    FR-064 (Doc 02 §4.6) reads: "joining a new party MUST automatically void membership in
-    the current party," enforced by a global membership-scope nullifier (DES-065 — a v2
-    chain mechanism). This drop enforces the invariant app-side in the stricter explicit-leave
-    form: a second join is refused (ALREADY_MEMBER_ELSEWHERE) until leaveParty() is called.
-    Both forms preserve at-most-one-active-membership, and auto-void can be layered on later
-    without breaking the invariant; the FR-064 tenure-clock reset holds either way (every
-    join appends a fresh joinedAt). Product-owner reconciliation of FR-064's wording (or an
-    annotation recording the v1 explicit-leave posture) is owed.
+    auto-void-on-join — TRACKED DECISION, product-owner ruling owed (Flag: FR-064-SEMANTICS).**
+    The 2026-08-28 commissioning brief directed: "Joining a second party requires leaving the
+    first (an explicit, recorded action)." FR-064 (Doc 02 §4.6) reads: "joining a new party
+    MUST automatically void membership in the current party," enforced by a global
+    membership-scope nullifier (DES-065 — a v2 chain mechanism). This drop enforces the
+    invariant app-side in the stricter explicit-leave form: a second join is refused
+    (ALREADY_MEMBER_ELSEWHERE) until leaveParty() is called. Both forms preserve
+    at-most-one-active-membership; the FR-064 tenure-clock reset holds either way (every
+    join appends a fresh joinedAt).
+    **Decision required** (Doc 02 is product-owner-owned; the engineer cannot edit FR-064):
+    - **(a) Annotate FR-064 with the v1 explicit-leave posture** — auto-void deferred to the
+      DES-065 membership nullifier at the v2 seam swap. **Engineer recommendation:** it
+      matches the 2026-08-28 commissioning brief (the more recent human direction), it is
+      the stricter form (no membership ever changes without an explicit, recorded member
+      action), and auto-void can be layered on later without breaking the invariant, the
+      event log, or any test in this drop.
+    - **(b) Uphold auto-void-on-join as v1 semantics** — joinParty() would then record an
+      implicit leave of the current party instead of refusing; a small, reversible service
+      change (the append-only event log already supports it).
+    Until the product-owner records (a) or (b) in Doc 02, this limitation stands, and the
+    RTM's FR-064 Must row must NOT be closed on the strength of this drop alone.
+    Raised 2026-08-28 (v2.3.0); recorded as a tracked decision 2026-08-29 (v2.3.1).
 21. **Official-strength contribution is v1 app-side state; no protocol/on-chain counterpart
     yet.** `contributeToStrength()` (FR-123(a)) records counted members in the party store;
     uniqueness is enforced by the counted-members set, not by the verifier's
@@ -608,7 +676,7 @@ When each module lands it must read its flag in the same commit.
 ## 8. Commit and branch conventions
 
 **Branch model:** trunk-based on `main`. Feature work runs on short-lived named branches
-(current: `build/v1-scaffold`) merged to `main` by pull request. The engineer NEVER merges
+(current: `build/v1-join-membership`) merged to `main` by pull request. The engineer NEVER merges
 their own work: `reviewer-qa` signs the merge (Doc 08 verification).
 
 **Conventional Commits** referencing `US-####` where a commit implements a story. The scaffold
