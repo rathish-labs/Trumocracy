@@ -1272,3 +1272,32 @@ Doc 05 v2.3.0 In Review (9 existing stories updated, 0 minted; full business rev
 | DEP-13 — government-ID document-check provider contract | **2026-09-19** | **24 days** | Rafael Duarte | **NOT STARTED** |
 
 **Gate 2:** NOT READY. RTM (Doc 08 v2.2.5): 138 Must rows / 12 COMPLETE / **126 OPEN** (8.7% completion). Gate-1-presentation blocker: Docs 01 and 05 still lack passing business-mode review reports.
+
+---
+
+## Non-violence entrenchment ruling — 2026-08-29
+
+**Ruling record:** `artifacts/status/DECISIONS-2026-08-29-NONVIOLENCE-ENTRENCHMENT.md` (Rathish, approver).
+
+### PREREQ-01 — named Phase-3 prerequisite (NEW)
+
+| Field | Value |
+|-------|-------|
+| **ID** | `PREREQ-01` — non-violence-clause entrenchment |
+| **Type** | **BLOCKING PREREQUISITE** to the on-chain governance increment. Ruled as its OWN tracked work item — explicitly **NOT** folded into that increment |
+| **What** | `Party.amendCharter` takes `(clauseId, hash, CID)`, never the charter text, and replaces the whole document hash — so an amendment naming any unrelated clause installs a charter without the CON-013 non-violence clause. Entrenchment does not help: the immutable set is a founding-time party choice, and the blob is replaced wholesale |
+| **Build required** | (1) charter as a clause map; (2) platform-immutable non-violence `clauseId`; (3) amendments carry their text — DES-101, Doc 03 §10.13.10.1 rules 1-3 |
+| **Closing evidence** | **DES-101 §10.13.10.1 rule 6 adversarial amendment test passes** — strip the clause while naming an unrelated one, assert refusal. This test **fails against today's code**; that is why it is the evidence |
+| **Gate** | The on-chain governance increment **MUST NOT ship** until the above is built and that test passes |
+| **Rationale (approver)** | CON-013 makes the non-violence clause a condition of a party's existence; a fix protecting it must be a hard gate, not a line item that can slip under sprint pressure |
+| **v1 impact** | **NONE — confirmed.** v1 runs no on-chain governance (ADR-024 §(b)); the amendment threat model has no v1 execution path; `party_governance` does not gate `amendCharter`. **PREREQ-01 does not block any v1 work** |
+| **Severity** | High — governance-integrity |
+| **Independently confirmed** | reviewer-qa, against `Party.sol` (both failure modes reproduced; zero non-violence checks in any contract) — `artifacts/reviews/03-architecture-design-sdd-v2.8.2-technical-cycle3.md` |
+| **Owner** | Engineer (build) - Architect (design, DONE at Doc 03 v2.8.2) - reviewer-qa (next security scan) |
+| **Status** | **OPEN — designed, unbuilt** |
+
+**Owed:** Doc 13 (PM) absorbs `PREREQ-01` into the Definition-B milestone set at its next version.
+
+**FR-077 note:** this ruling does not change the RTM row. FR-077 stays **OPEN (G-NOMECH)** — designed, unbuilt. `PREREQ-01` governs *when* the fix must land, not whether the row is closed.
+
+**Gate 2:** NOT READY — unchanged by this ruling. RTM (Doc 08 v2.4.0): 138 Must rows / 13 COMPLETE / **125 OPEN** (9.4%).

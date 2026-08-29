@@ -2,14 +2,99 @@
 
 ```
 Document ID:   TC-TRUMOCRACY
-Version:       2.3.0
-Status:        Approved — 07-test-cases-suites-v2.3.0-technical-cycle1.md (PASS 98%, 0C/0H/0M/2L; ISS-01/ISS-02 Low carried to the next increment)
+Version:       2.3.2
+Status:        Approved — 07-test-cases-suites-v2.3.2-technical-cycle2.md (PASS 100%, 0C/0H/0M/0L)
 Owner:         Ji-woo Park — Test Lead (tester)
 Source:        MTP-TRUMOCRACY v1.0.1 (docs/04-test-strategy-master-plan.md) · BKLG-TRUMOCRACY v2.3.0 (docs/05-product-backlog.md)
-               SRS-TRUMOCRACY v2.13.0 §8 Gherkin (docs/02-requirements-srs.md) · SDD-TRUMOCRACY v2.7.1 §5.2, §11, §14 (docs/03-architecture-design-sdd.md)
-               CODE-TRUMOCRACY v2.3.2 (docs/06-coding-and-ut.md) · SECURITY-RESCAN-SC15-21-2026-08-11.md
+               SRS-TRUMOCRACY v2.15.0 §8 Gherkin (docs/02-requirements-srs.md) · SDD-TRUMOCRACY v2.8.3 §5.2, §10.13.10, §10.13.10.1, §11, §14 (docs/03-architecture-design-sdd.md)
+               CODE-TRUMOCRACY v2.3.3 (docs/06-coding-and-ut.md) · SECURITY-RESCAN-SC15-21-2026-08-11.md
 Last updated:  2026-08-29
-Changelog:     v2.3.0 (2026-08-29) — TS-MEMBERSHIP suite added (TC-3517..TC-3540, 24 cases) covering the
+Changelog:     v2.3.2 (2026-08-29) — Upstream refresh for Doc 03 v2.8.2/v2.8.3 and the `PREREQ-01` approver
+               ruling (Rathish, 2026-08-29; artifacts/status/DECISIONS-2026-08-29-NONVIOLENCE-ENTRENCHMENT.md).
+               Source pin SDD v2.8.1 → **v2.8.3**, adding §10.13.10.1.
+               CONTEXT: the FR-077 amendment gap this document surfaced at v2.3.1 (and Doc 08
+               v2.4.0 acted on) has since been (a) independently reproduced by reviewer-qa against
+               Party.sol — both failure modes, zero non-violence checks in any contract; (b)
+               DESIGNED by the architect in Doc 03 v2.8.2 §10.13.10.1 — charter becomes a CLAUSE
+               MAP so amendCharter can only reach the clause it names instead of replacing the
+               whole document hash; the non-violence clauseId is PLATFORM-IMMUTABLE at
+               construction for every party rather than a founder choice; and amendments MUST
+               carry the text they change so the contract verifies rather than trusts; and (c)
+               ruled by the approver at Doc 03 v2.8.3 to be its own tracked work item
+               **PREREQ-01**, a BLOCKING PREREQUISITE to the on-chain governance increment rather
+               than a line item inside it, with DES-101 §10.13.10.1 rule 6's adversarial
+               amendment test as the closing evidence.
+               **NEW: TC-3541 minted** (next free id) — the adversarial amendment case: an
+               amendment naming an UNRELATED clause must not install a charter whose non-violence
+               clause has been stripped, plus the direct variant on a party that never entrenched
+               the clause. Status **No mechanism** (not Blocked): the instrument exists and the
+               case is executable today — it would FAIL — so the defect is against the
+               REQUIREMENT, not against the case (§0.1 vocabulary). Minted deliberately, not for
+               completeness: PREREQ-01's exit criterion IS this test, and an exit criterion that
+               lives only in a design document is untracked in the suite meant to prove it;
+               FR-077's RTM row also needed a TC covering the very clause that keeps it open.
+               TC-3403 reason note updated: the amendment half moves from *undesigned* to
+               **designed-and-unbuilt**, cross-referencing §10.13.10.1 and TC-3541, and stating
+               that PREREQ-01 governs WHEN the fix lands, not whether the case passes.
+               FR-077 section note (§5.4) updated with the same framing, and records that the fix
+               is **not exploitable in v1** (no on-chain governance, ADR-024 §(b)) — no v1 work is
+               blocked.
+               **NO TC STATUS CHANGED.** TC-3508..TC-3510 remain Pass (inh.) with the v2.3.1
+               corrections intact; TC-3403 remains No mechanism; every other case is untouched.
+               Counts (TC-3541 is the only movement): §2 suite table TS-PARTY 28→29 cases
+               (range TC-3489–TC-3516, TC-3541; automated 28 unchanged; Blocked/no-mechanism
+               0→1); Total 442→**443**, automated **211 unchanged**, Blocked-or-no-mechanism
+               231→**232**. Convention note: anchors 440→**441**, expanded 449→**450**.
+               §10: cases designed 442→443; **No mechanism 48→49**; every other exit figure
+               unchanged. No suite was re-run for this version — it is a documentation refresh
+               over unchanged code (last verified 542/542 green at v2.3.1, §9 R-14).
+               v2.3.1 (2026-08-29) — Accuracy rework of TC-3508..TC-3510 (FR-077 non-violence clause) plus
+               the two cycle-1 Lows from artifacts/reviews/07-test-cases-suites-v2.3.0-technical-cycle1.md
+               (PASS 98%, 0C/0H/0M/2L). The FR-077 rows described a contract that DOES NOT EXIST
+               in the code. Surfaced while the architect was writing DES-101 (Doc 03 v2.8.1) —
+               its cycle-1 High was that DES-101 named the same non-existent error codes; the
+               same wrong names were sitting in this document. Four corrections, all verified
+               against packages/protocol/src/party.js (~lines 363-380) by reading it:
+               (a) ERROR CODES: there is no CLAUSE_MISSING / CLAUSE_ALTERED. validateDraft
+               returns { valid, errors } where each error is a (field, code, message) triple;
+               this gate pushes field: 'charter.nonViolenceClause' with code 'REQUIRED' (absent
+               or empty, line 369) or 'ALTERED' (any byte mismatch, line 375). 'REQUIRED' is
+               platform-wide (also name line 66, pillars line 81, line 339) so the FIELD scopes
+               it; 'ALTERED' is unique to this gate (verified: single occurrence across
+               packages/protocol/src and packages/sdk/src).
+               (b) PATH: packages/protocol/src/clauses.js DOES NOT EXIST. The canonical text is
+               the NON_VIOLENCE_CLAUSE constant in packages/protocol/src/constants.js (~line 165).
+               (c) FIELD NAME: charter.clause_nonviolence -> charter.nonViolenceClause.
+               (d) RETURN SHAPE: { error: 'CLAUSE_ALTERED' } -> { valid: false, errors: [{field,
+               code, message}] }.
+               UT citations also corrected to the real per-case mapping (UT-0071 verbatim-passes;
+               UT-0072/0073 REQUIRED absent/null; UT-0074/0075 ALTERED rewrite/one-character).
+               **NO TC STATUS CHANGES.** All three remain Pass (inh.). The tests always asserted
+               the real behaviour — the document misdescribed it. This was a documentation
+               defect, not a test or code defect, and no evidence moved.
+               NEW FINDING recorded in the TC-3508..TC-3510 section note and routed to Doc 08:
+               FR-077 requires refusal at publication AND at "every subsequent amendment". These
+               cases cover PUBLICATION only, and nothing implements the amendment half — there
+               is no application charter-amendment path (validateDraft runs at createDraft and
+               publishDraft only), and on-chain Party.amendCharter
+               (packages/contracts/src/core/Party.sol ~line 350) overwrites charterHash/charterCID
+               after checking only immutableClause[clauseId]; it never sees the charter text.
+               Doc 08 v2.4.0 reclassifies FR-077 G-TRACE -> G-NOMECH on this finding and the row
+               stays OPEN. A dedicated amendment-path TC is owed once a mechanism exists.
+               DES-101 (Doc 03 v2.8.1 §10.13.10) now supplies FR-077's design link with SCR-04/
+               SCR-05 bound, so the section heading and Verifies columns cite it.
+               TC-3403 status note updated: its "verifier not designed" reason is superseded by
+               DES-101; it stays **No mechanism** for the amendment half only.
+               Cycle-1 ISS-01 (Low) absorbed: source pins CODE v2.3.2 -> v2.3.3, SRS v2.13.0 ->
+               v2.15.0, SDD v2.7.1 -> v2.8.1 (+ §10.13.10); §5.5 TS-MEMBERSHIP preamble note
+               updated — the FR-064-SEMANTICS product-owner ruling HAS been received (option (a)
+               EXPLICIT-LEAVE, SRS v2.15.0 Approved); FR-064 stays OPEN because DES-065 remains
+               unbuilt, not because a ruling is awaited.
+               Cycle-1 ISS-02 (Low) absorbed: §9 gains R-13 for packages/sdk/test/party-creation.test.js
+               (38/38), matching the per-file pattern R-06/R-07/R-08 set at v2.2.2.
+               Suite re-run 2026-08-29: 542/542 green, unchanged. Counts unchanged: 442 cases /
+               211 automated / 231 Blocked-or-no-mechanism; 440 anchors; 449 expanded.
+               v2.3.0 (2026-08-29) — TS-MEMBERSHIP suite added (TC-3517..TC-3540, 24 cases) covering the
                join/membership drop (Doc 06 v2.3.2 Approved, cycle-3 PASS 97%): FR-020 join without
                approval at service + web and the structural no-verifier guarantee (TC-3517..TC-3520);
                FR-022 leave-at-will, immediate, no exit approval (TC-3521..TC-3522); FR-064
@@ -201,18 +286,18 @@ TC ranges are the ones **reserved in Doc 04 §14**; the tester assigns the actua
 | `TS-CR1` | CR-v1.1.0 — FR-062..073; RISK-22..24 | L3–L6 | FR-062..073 · BR-013 · RISK-22..24 | TC-3300–TC-3345 | 46 | 0 | 46 |
 | `TS-GOV2` | Governance v2.0 — FR-074..FR-120 · NFR-027/028 · SC-15..21 security closure · Guarded Layer P1..P5 · FR-117 capability-absence · vacancy-immediate fallbacks · anti-circularity direct attack | L1–L6 | FR-074..FR-120 · NFR-027 · NFR-028 · SC-15..SC-21 · DES-087..DES-092 | TC-3400–TC-3469 | 70 | 0 | 70 |
 | `TS-SCAFFOLD` | Scaffold seam & design-system seed | L1–L5 | FR-082..086 · FR-122..124 · FR-131..132 · DES-093..096 · DES-100 · ADR-023..025 | TC-3470–TC-3488 | 19 | 16 | 3 |
-| `TS-PARTY` | Party creation protocol, service & web | L1–L5 | FR-010 · FR-011 · FR-012 · FR-013 · FR-018 · FR-020 · FR-077 · FR-130 · BR-020 · DES-073 · DES-074 · DES-097 | TC-3489–TC-3516 | 28 | 28 | 0 |
+| `TS-PARTY` | Party creation protocol, service & web | L1–L5 | FR-010 · FR-011 · FR-012 · FR-013 · FR-018 · FR-020 · FR-077 · FR-130 · BR-020 · DES-073 · DES-074 · DES-097 · DES-101 | TC-3489–TC-3516, TC-3541 | 29 | 28 | 1 |
 | `TS-MEMBERSHIP` | Join / leave / membership history & counting | L1–L5 | FR-020 · FR-022 · FR-064 · FR-122 · FR-123 · FR-130 · FR-131(b)(d) · FR-013 expiry seam · NFR-023 · DES-013 · DES-065 · DES-095 · DES-097 · ADR-007 · ADR-024/025 | TC-3517–TC-3540 | 24 | 24 | 0 |
-| | | | **Total** | | **442** | **211** | **231** |
+| | | | **Total** | | **443** | **211** | **232** |
 
-**211 of 442 cases have an implementing automated test.** (43 new TC-3300..TC-3342 are all Blocked; 70 new TC-3400..TC-3469 are all Blocked or No mechanism — no implementing contracts for TS-GOV2 exist in this drop; 16 of 19 new TC-3470..TC-3488 have passing automated tests — see §9 R-04/R-05 and TC-3488 v2.2.1; 3 are Blocked; all 28 new TC-3489..TC-3516 TS-PARTY cases are inherited Pass from Doc 06 v2.2.0; all 24 new TC-3517..TC-3540 TS-MEMBERSHIP cases are inherited Pass from Doc 06 v2.3.2.) Of those 211, **88 were executed and
+**211 of 443 cases have an implementing automated test.** (43 new TC-3300..TC-3342 are all Blocked; 70 new TC-3400..TC-3469 are all Blocked or No mechanism — no implementing contracts for TS-GOV2 exist in this drop; 16 of 19 new TC-3470..TC-3488 have passing automated tests — see §9 R-04/R-05 and TC-3488 v2.2.1; 3 are Blocked; all 28 new TC-3489..TC-3516 TS-PARTY cases are inherited Pass from Doc 06 v2.2.0; all 24 new TC-3517..TC-3540 TS-MEMBERSHIP cases are inherited Pass from Doc 06 v2.3.2.) Of those 211, **88 were executed and
 observed passing by the tester this session** under the Pass (obs.) convention; **107** are inherited-green cases (55 contract suite
 + 28 TS-PARTY + 24 TS-MEMBERSHIP); **16** are `apps/web` component
 cases that exist but were not executed this session.
 
 **Corroboration note (v2.3.0, and it cuts against the accounting above).** The tester executed `npm test` from the repo root on 2026-08-29 while running the Doc 06 v2.3.2 cycle-3 document review, and observed **542/542 green** including every file behind TS-PARTY and TS-MEMBERSHIP. Those 24 TS-MEMBERSHIP cases are therefore stronger than a bare inheritance — the tester saw the files pass. They are nevertheless recorded **Pass (inh.)** against the Doc 06 v2.3.2 pin, because the observation was made at file granularity during a review run rather than case-by-case against each TC, and because it keeps the TS-PARTY precedent and the Doc 08 dashboard buckets consistent. The stronger evidence is recorded in §0.2 and §9 (R-12) rather than used to upgrade the status.
 
-**TC-count conventions (ISS-07 resolution; updated v2.2.2).** This suite table uses the **expanded row count** (442 total): the TS-EXPL suite rows TC-3200..TC-3209 are listed as 10 individual cases here. Doc 08 §6 uses the **anchor count** (440 anchors = 299 pre-TS-GOV2 + 70 TS-GOV2 + 19 TS-SCAFFOLD + 28 TS-PARTY + 24 TS-MEMBERSHIP), treating TC-3200..TC-3209 as one collapsed anchor, then applies the expanded convention (440 − 1 + 10 = **449 designed test cases**). A 7-row counting difference between the two documents is expected and pre-existing (Doc 07 = 442 row-anchors; Doc 08 = 449 expanded TCs because the TS-EXPL collapsed range TC-3200–TC-3209 is expanded to 10 individual cells); the 449 expanded total is used in the Doc 08 §6 coverage dashboard.
+**TC-count conventions (ISS-07 resolution; updated v2.2.2).** This suite table uses the **expanded row count** (443 total): the TS-EXPL suite rows TC-3200..TC-3209 are listed as 10 individual cases here. Doc 08 §6 uses the **anchor count** (441 anchors = 299 pre-TS-GOV2 + 70 TS-GOV2 + 19 TS-SCAFFOLD + 29 TS-PARTY incl. TC-3541 + 24 TS-MEMBERSHIP), treating TC-3200..TC-3209 as one collapsed anchor, then applies the expanded convention (441 − 1 + 10 = **450 designed test cases**). A 7-row counting difference between the two documents is expected and pre-existing (Doc 07 = 443 row-anchors; Doc 08 = 450 expanded TCs because the TS-EXPL collapsed range TC-3200–TC-3209 is expanded to 10 individual cells); the 450 expanded total is used in the Doc 08 §6 coverage dashboard.
 
 ---
 
@@ -655,7 +740,9 @@ consequence.
 | R-09 | 2026-08-29 | Doc 06 v2.3.2 Approved (f70292a) | `packages/sdk/test/membership.test.js` | **22 / 22 pass** — observed in the full-suite run (R-12); TC status recorded Pass (inh.) against the Doc 06 pin | none |
 | R-10 | 2026-08-29 | same | `apps/web/test/join-membership.test.tsx` | **27 / 27 pass** — observed in R-12 | none |
 | R-11 | 2026-08-29 | same | `apps/web/test/sdk-types-sync.test.ts` (UT-0871 shim guard) | **1 / 1 pass** — observed in R-12 | none |
+| R-13 | 2026-08-29 | Doc 06 v2.3.2/v2.3.3 Approved | `packages/sdk/test/party-creation.test.js` (UT-0780..0818 + UT-0831) | **38 / 38 pass** — inherited from Doc 06 Approved; confirmed green in R-12 and again in R-14. _(Added v2.3.1 — cycle-1 ISS-02: the file was covered by §0.2 and the R-12 aggregate but lacked the per-file row the v2.2.2 R-06/R-07/R-08 pattern sets.)_ | none |
 | **R-12** | 2026-08-29 | same | **whole repository — `npm test` from the repo root** | **542 / 542 pass, 0 failed** — contracts 95 · protocol 126 · sdk 220 · ui 14 · indexer 16 · web 71. Run by the tester while performing the Doc 06 v2.3.2 cycle-3 document review; dep-guard clean; `tsc --noEmit` exit 0 in `apps/web` and `packages/ui` | none |
+| **R-14** | 2026-08-29 | Doc 03 v2.8.1 Approved · Doc 07 v2.3.1 rework | **whole repository — `npm test` from the repo root** | **542 / 542 pass, 0 failed** — contracts 95 · protocol 126 · sdk 220 · ui 14 · indexer 16 · web 71. Re-run to confirm the v2.3.1 documentation corrections changed no behaviour: the FR-077 rows were misdescribed, not mis-tested | none |
 | — | 2026-08-09 | same | `packages/contracts` (L1/L2/L3) | **not executed this session** (~5 min); result inherited from Doc 06 §3/§5 | — |
 | — | 2026-08-09 | same | `apps/web` (non-party-creation suite) | **not executed this session** | — |
 | — | — | — | `packages/circuits` (L4) | **no suite — circuits not compiled** | Blocked by Phase-2 ceremonies |
@@ -673,13 +760,13 @@ defect waiting to come back.**
 
 | Measure | Value |
 |---|---|
-| Cases designed | **442** (row-anchor count; see §2 convention note for the 449 expanded total) |
+| Cases designed | **443** (row-anchor count; see §2 convention note for the 450 expanded total) |
 | Cases with an implementing automated test | **211** (48%) — TS-CR1 and TS-GOV2 add zero automated tests; TS-SCAFFOLD adds 16 (R-04/R-05; TC-3488 added v2.2.1); TS-PARTY adds 28 (R-06/R-07/R-08; inherited from Doc 06 v2.2.0 Approved); TS-MEMBERSHIP adds 24 (R-09..R-12; inherited from Doc 06 v2.3.2 Approved, files observed green in R-12) |
 | Cases executed and observed passing this session | **88** (72 from 2026-08-09 + 16 from TS-SCAFFOLD on 2026-08-25; TC-3488 maps UT-0753 already in the 14/14 run). TS-PARTY and TS-MEMBERSHIP are **not** counted here — see the §2 corroboration note: their files were observed green in R-12 (2026-08-29, 542/542) but their status is held at Pass (inh.) against the Doc 06 pin. |
 | Cases inherited green from Doc 06 (contract suite, party-creation and membership suites) | **107** (55 from Doc 06 contract suite + 28 from TS-PARTY Doc 06 v2.2.0 Approved + 24 from TS-MEMBERSHIP Doc 06 v2.3.2 Approved) |
 | Cases automated but not executed this session (`apps/web` non-party-creation suite) | **16** |
 | Cases **Blocked** (code, circuit, environment or instrument absent) | **175** (140 pre-TS-GOV2 + 32 from TS-GOV2 + 3 from TS-SCAFFOLD: TC-3476 enrolment disclosure affordance, TC-3481 FR-131 clause (d) notice — **now partially delivered at the parties-directory surface (TC-3534) but still Blocked for the SCR-13/SCR-14 ballot surfaces**, TC-3487 audit-contract publication). TS-MEMBERSHIP adds **0** Blocked cases. |
-| Cases **No mechanism** (the product has nothing to test) | **48** (10 pre-TS-GOV2 + 38 new from TS-GOV2: FR-074..FR-111 have no DES; Doc 03 §16 deliberate phasing) |
+| Cases **No mechanism** (the product has nothing to test) | **49** (10 pre-TS-GOV2 + 38 from TS-GOV2: FR-074..FR-111 have no DES, Doc 03 §16 deliberate phasing; **+1 at v2.3.2: TC-3541**, the FR-077 adversarial amendment case — designed in Doc 03 §10.13.10.1, unbuilt, and the `PREREQ-01` closing evidence) |
 | Cases **Manual — not run** | **12** |
 | Observed test failures | **0** |
 | Open defects raised by this document | **2** (TD-07-01 Medium, TD-07-02 Low — both documentation) |
@@ -858,7 +945,7 @@ Each row status: **No mechanism** — the FR has no DES in Doc 03 §5.2 (deliber
 | TC-3400 | Country selection scopes party-political participation to exactly one jurisdiction | US-0084 · FR-074 | Exactly one country record accepted; second country refused; region tree and all residency-derived rights scoped to selection; change governed by FR-008 discipline | **No mechanism** — country-selection module and per-country eligibility rules not designed (Doc 03 §16) |
 | TC-3401 | Platform activation displayed as distinct from legal registration on every party-facing surface | US-0085 · FR-075 | Every party-facing surface states the distinction; no surface represents activation as legal registration; distinction displayed before any party action | **No mechanism** — legal-registration-status attestation and display surface not designed (Doc 03 §16) |
 | TC-3402 | Party creation refused when any mandatory constitution section is missing; every missing section named | US-0086 · FR-076 | Publication refused; every missing section named; no partial party record created; follows FR-011 pattern | **No mechanism** — digital constitution upload and machine-checkable section validation not designed (Doc 03 §16) |
-| TC-3403 | Non-violence clause verified by code; publication refused if absent or altered | US-0087 · FR-077 | Non-violence clause present and byte-identical to platform standard; alteration refused at submission; no human judgment in path | **No mechanism** — non-violence clause verifier not designed (Doc 03 §16) |
+| TC-3403 | Non-violence clause verified by code; publication refused if absent or altered | US-0087 · FR-077 | Non-violence clause present and byte-identical to platform standard; alteration refused at submission; no human judgment in path | **No mechanism** — _(reason updated v2.3.2)_ the publication half is implemented and passing (TC-3508..TC-3510). This case stays **No mechanism** for the **amendment** half of FR-077, but the reason has moved from *undesigned* to **designed-and-unbuilt**: **Doc 03 v2.8.3 §10.13.10.1** now specifies the mechanism — the charter becomes a **clause map** (so `amendCharter` can only reach the clause it names, instead of replacing the whole document hash), the non-violence `clauseId` is **platform-immutable** at construction for every party rather than a founder choice, and **amendments must carry the text** they change so the contract verifies rather than trusts. Its **closing evidence is DES-101 rule 6's adversarial amendment test** — now minted as **TC-3541**. The build is governed by **`PREREQ-01`** (approver ruling, Rathish, 2026-08-29), a blocking prerequisite to the on-chain governance increment. **PREREQ-01 governs WHEN the fix lands, not whether this case passes:** the product still has no amendment-time verification, so the status is unchanged |
 | TC-3404 | Party constitution amendable only through tiered proposal process; direct overwrite refused | US-0088 · FR-078 | Amendment accepted only via FR-025/FR-026 tiered process; direct overwrite reverts; entrenchment per FR-027 honoured | **No mechanism** — constitution-amendment integration not designed (Doc 03 §16) |
 | TC-3405 | Exactly three participation tiers (Supporter, Worker, Candidate); none changes voting weight | US-0089 · FR-079 | Tier set on join; weight unchanged at all tiers; no tier carries extra vote, standing, or precedence | **No mechanism** — participation tier metadata model not designed (Doc 03 §16) |
 | TC-3406 | Worker declaration accepted with no human approval; informed-consent event recorded append-only | US-0090 · FR-080 | Worker tier set without approval; consent event appended with timestamp; no approval path exists | **No mechanism** — Worker self-declaration and consent recording not designed (Doc 03 §16) |
@@ -1098,15 +1185,39 @@ Each row status: **Blocked — Phase 3** — DES assigned in Doc 03 §5.2 (see c
 |---|---|---|---|---|---|---|
 | TC-3507 | Member joins a provisional party without any approval step, verifier, or invitation; join accepted on identity proof alone | US-0024 · FR-020 · DES-013 · ADR-007 | Active provisional party below cap; member with valid identity proof (`IS_INSECURE_MOCK=true`; mock eligibility reference) | `joinParty()` succeeds immediately; no approval, sponsorship, interview, invitation, fee, or veto path exists in the code; membership record created; `partyStatus` member count increments | Automated — `packages/sdk/test/party-creation.test.js` · UT-0807 | **Pass (inh.)** — inherited from Doc 06 v2.2.0 Approved |
 
-### TC-3508..TC-3510 — FR-077 non-violence clause verbatim / non-removable (no DES — G-TRACE · US-0087)
+### TC-3508..TC-3510 — FR-077 non-violence clause verbatim / non-removable (DES-101 · SCR-04, SCR-05 · US-0087)
 
-_Note: FR-077 has no DES assigned in Doc 03 §5.2 (G-TRACE); the chain is broken at the DES link. The code and tests exist; this TC evidence is recorded honestly. The Must row in Doc 08 stays OPEN until DES is assigned._
+_Note (v2.3.1): **DES-101** (Doc 03 v2.8.1 §10.13.10) now supplies the design link FR-077 previously lacked, with SCR-04/SCR-05 bound; the G-TRACE chain gap is closed. **The FR-077 Must row in Doc 08 nevertheless stays OPEN, for a different and newly-identified reason.** FR-077 requires refusal at publication **and** at "every subsequent amendment". These three cases cover the **publication** half only. No case covers the amendment half, because nothing implements it: there is no charter-amendment path in the application (`validateDraft` runs at `createDraft` and `publishDraft` only), and on-chain `Party.amendCharter` (`packages/contracts/src/core/Party.sol` ~line 350) overwrites `charter.charterHash`/`charterCID` after checking only `immutableClause[clauseId]` — it never sees the charter text and performs no clause verification. Doc 08 reclassifies FR-077 **G-TRACE → G-NOMECH** on this finding._
+
+_Update (v2.3.2): the mechanism is now **designed** — Doc 03 v2.8.3 **§10.13.10.1** (clause-map charter; platform-immutable non-violence `clauseId`; amendments carry their text; whole-document replacement, if ever reintroduced, must re-verify). It is **not built**, so FR-077's Must row stays **OPEN (G-NOMECH)** and these three cases still cover the publication half only. The amendment-path TC owed at v2.3.1 is **minted at v2.3.2 as TC-3541**, and its build is governed by **`PREREQ-01`** — a blocking prerequisite to the on-chain governance increment (approver ruling, Rathish, 2026-08-29). Reviewer-qa independently reproduced both failure modes against `Party.sol` and found zero non-violence checks in any contract. **Not exploitable in v1** — v1 runs no on-chain governance (ADR-024 §(b)) — so no v1 work is blocked._
+
+_Correction note (v2.3.1): these three rows previously named error codes `CLAUSE_MISSING`/`CLAUSE_ALTERED`, a source file `packages/protocol/src/clauses.js`, a field `charter.clause_nonviolence`, and a return shape `{ error: ... }` — **none of which exist in the code**. Corrected against `packages/protocol/src/party.js` (~lines 363–380). **No TC status changes:** the tests always asserted the real contract; the document misdescribed it._
 
 | TC | Title | Verifies (US · FR) | Preconditions | Expected result | Automation | Status |
 |---|---|---|---|---|---|---|
-| TC-3508 | Non-violence clause verbatim text required — exact clause text accepted at protocol validation | US-0087 · FR-077 | Draft with `charter.clause_nonviolence` equal to the canonical verbatim text from `packages/protocol/src/clauses.js` | Clause validation passes; no `CLAUSE_MISSING` or `CLAUSE_ALTERED` error; draft eligible for service submission | Automated — `packages/protocol/test/party-creation.test.js` · UT-0071, UT-0072 | **Pass (inh.)** — inherited from Doc 06 v2.2.0 Approved |
-| TC-3509 | Non-violence clause altered — any modification to the verbatim text causes refusal | US-0087 · FR-077 | Draft with `charter.clause_nonviolence` differing from the canonical text by one character; second variant with whitespace difference | Both variants return `{ error: 'CLAUSE_ALTERED' }`; exact-match comparison enforced; no fuzzy or normalised comparison | Automated — `packages/protocol/test/party-creation.test.js` · UT-0073, UT-0074 | **Pass (inh.)** — inherited from Doc 06 v2.2.0 Approved |
-| TC-3510 | Non-violence clause absent — draft without clause field refused; web UI displays clause verbatim and marks it non-removable | US-0087 · FR-077 | Draft with `charter.clause_nonviolence` field absent or empty (protocol layer); party-creation web form rendered (web layer) | Protocol: `validateDraft` returns `{ error: 'CLAUSE_MISSING' }`; draft not persisted. Web: non-violence clause displayed verbatim (UT-0849); UI marks clause as non-removable / locked field (UT-0850, UT-0851); SDK enforces at service level (UT-0786) | Automated — `packages/protocol/test/party-creation.test.js` · UT-0075; `packages/sdk/test/party-creation.test.js` · UT-0786; `apps/web/test/party-creation.test.tsx` · UT-0849, UT-0850, UT-0851 | **Pass (inh.)** — inherited from Doc 06 v2.2.0 Approved |
+| TC-3508 | Non-violence clause verbatim text required — exact clause text accepted at protocol validation | US-0087 · FR-077 · DES-101 | Draft with `charter.nonViolenceClause` equal to the canonical constant `NON_VIOLENCE_CLAUSE` exported from `packages/protocol/src/constants.js` (~line 165) | `validateDraft(draft)` returns `{ valid: true, errors: [] }` for the clause gate — no error object carries `field: 'charter.nonViolenceClause'`; draft eligible for service submission | Automated — `packages/protocol/test/party-creation.test.js` · UT-0071 | **Pass (inh.)** — inherited from Doc 06 v2.2.0 Approved |
+| TC-3509 | Non-violence clause altered — any byte difference from the published text causes refusal | US-0087 · FR-077 · DES-101 | Draft with `charter.nonViolenceClause` materially rewritten ("This party may use violence."); second variant differing by a **single character** (the canonical text with its final period removed) | Both variants return `valid: false` and push an error object `{ field: 'charter.nonViolenceClause', code: 'ALTERED', message }`; byte-exact comparison — no fuzzy, normalised or semantic match, and a one-character delta is refused identically to a full rewrite | Automated — `packages/protocol/test/party-creation.test.js` · UT-0074, UT-0075 | **Pass (inh.)** — inherited from Doc 06 v2.2.0 Approved |
+| TC-3510 | Non-violence clause absent — draft refused at protocol and service; web displays it verbatim and non-editable | US-0087 · FR-077 · DES-101 · SCR-04, SCR-05 | Protocol layer: two drafts, one with `charter.nonViolenceClause` **deleted**, one with it **null**; service layer: draft missing the clause submitted to `PartyCreationService`; web layer: party-creation form rendered | Protocol: both return `valid: false` with an error `{ field: 'charter.nonViolenceClause', code: 'REQUIRED', message }`; draft not persisted. _(`REQUIRED` is a platform-wide code — also used for `name` and `pillars.*` — so the **field** is what scopes it to this gate; `ALTERED` is unique to this gate.)_ Service: `PartyCreationService.createDraft` refuses (UT-0786). Web: clause rendered verbatim (UT-0849), not an editable form control (UT-0850), and present verbatim in the submitted charter (UT-0851) | Automated — `packages/protocol/test/party-creation.test.js` · UT-0072, UT-0073; `packages/sdk/test/party-creation.test.js` · UT-0786; `apps/web/test/party-creation.test.tsx` · UT-0849, UT-0850, UT-0851 | **Pass (inh.)** — inherited from Doc 06 v2.2.0 Approved |
+
+### TC-3541 — FR-077 amendment half: adversarial amendment must not strip the non-violence clause (DES-101 §10.13.10.1 rule 6 · US-0087 · PREREQ-01)
+
+**Why this case exists, and why it is minted before it can pass.** DES-101 §10.13.10.1 rule 6 names
+*this* test as the **closing evidence** for FR-077's amendment half, and the approver's
+`PREREQ-01` ruling (Rathish, 2026-08-29) makes that evidence the **exit criterion of a blocking
+prerequisite**: the on-chain governance increment MUST NOT ship until this case passes. An exit
+criterion for a gate cannot live only in a design document — if it is not a first-class case here,
+the prerequisite is untracked in the suite that is supposed to prove it. Doc 07 §9's standing rule
+applies with unusual force: *a regression test whose case is not in the suite is a defect waiting to
+come back* — except this defect has not gone away yet.
+
+**Not exploitable in v1.** v1 runs no on-chain governance (ADR-024 §(b)), so no v1 work is blocked
+by this case. The exposure arrives with the on-chain governance increment.
+
+| TC | Title | Verifies (US · FR · DES) | Preconditions | Expected result | Automation | Status |
+|---|---|---|---|---|---|---|
+| TC-3541 | An amendment naming an **unrelated** clause cannot install a charter whose non-violence clause has been stripped | US-0087 · FR-077 · CON-013 · DES-101 §10.13.10.1 (rules 1–3, 6) · ADR-010 | A deployed party whose charter contains the verbatim `NON_VIOLENCE_CLAUSE`; a passed constitutional-tier proposal calling `Party.amendCharter(clauseId, newCharterHash, newCharterCID)` where `clauseId` names some **other** clause and the replacement document **omits or alters** the non-violence clause; a second variant that names the non-violence `clauseId` directly on a party whose founders did **not** entrench it | The amendment is **refused**. Naming the non-violence clause reverts `ClauseIsImmutable` because that `clauseId` is platform-immutable at construction for **every** party, independent of founder choice (rule 2); naming any other clause cannot reach the non-violence clause at all, because the charter is a **clause map** whose document hash is derived from the map rather than a single overwritable blob (rule 1); and the amendment is verified against the **text it carries** rather than trusted (rule 3). The party's non-violence clause is unchanged after both attempts | Designed, not automatable yet — the mechanism (clause-map charter, platform-immutable clauseId, amendments-carry-text) is **specified but not built**. The case is **executable today and would FAIL**, which is exactly its value: it is the regression test for a live hole in shipped contract code | **No mechanism** — the product has no amendment-time clause verification at either tier. This is a **defect against the requirement, not against the case** (§0.1). **Closing evidence for `PREREQ-01`**; FR-077's Must row (Doc 08) stays OPEN until this passes |
+
+---
 
 ### TC-3511..TC-3516 — FR-130 provisional membership cap · BR-020 disclosure (no DES — G-TRACE · US-0131)
 
@@ -1129,7 +1240,7 @@ _Note: FR-130 has no DES assigned in Doc 03 §5.2 (G-TRACE); the Must row stays 
 
 **Two things this suite does not claim.**
 
-1. **FR-064 is NOT closed by these cases.** The invariant is implemented in the **explicit-leave** form (a second join is *refused* until the member explicitly leaves), while FR-064's normative text in Doc 02 §4.6 reads **auto-void-on-join**. Doc 06 §7 #20 records this as a TRACKED DECISION (Flag: `FR-064-SEMANTICS`) awaiting a product-owner ruling, and the assigned design element **DES-065** is a v2/Phase-3 membership-scope nullifier that is not built. TC-3523..TC-3525 therefore evidence *the behaviour that exists*; the FR-064 Must row in Doc 08 stays **OPEN**. Testing the stricter form does not license closing a row whose requirement text says something else.
+1. **FR-064 is NOT closed by these cases.** The invariant is implemented in the **explicit-leave** form (a second join is *refused* until the member explicitly leaves), while FR-064's normative text in Doc 02 §4.6 reads **auto-void-on-join**. the product-owner ruling **has since been received** — option (a), v1 EXPLICIT-LEAVE (Rathish, Human Approver, 2026-08-29; Doc 02 **v2.15.0** §4.6 Approved, Doc 06 §7 #20 closed at v2.3.3), which ratifies the form these cases test. **FR-064 nevertheless stays OPEN**, and now for one reason only: the assigned design element **DES-065** is a v2/Phase-3 membership-scope nullifier that is not built. _(Updated v2.3.1 — the earlier wording said a ruling was "awaited"; cycle-1 ISS-01(c).)_ TC-3523..TC-3525 therefore evidence *the behaviour that exists*; the FR-064 Must row in Doc 08 stays **OPEN**. Testing the stricter form does not license closing a row whose requirement text says something else.
 2. **FR-021 gets nothing from this drop.** One-member-one-equal-vote is about tally weight; this drop adds no vote-weight or tally evidence, so no case here cites FR-021 and its RTM row is left untouched.
 
 **Shared preconditions.** `IS_INSECURE_MOCK=true`; `packages/sdk/src/party-creation.js` exports `PartyCreationService` and `InMemoryPartyStore`; the service is constructed with an **injected clock** (fixed `T0`) — no `Date.now()` on any asserted path (Doc 06 §2.6); the web cases render the parties directory at `apps/web/src/app/parties/page.tsx` behind the `party_governance` flag with a **stub-backed verifier over an EMPTY credential store**, so the demo visitor is honestly open-tier and no control can fake ID verification (Doc 06 §7 #22). Membership is an **append-only JOIN/LEAVE event log**; "leaving" is a recorded event, never a deletion.
