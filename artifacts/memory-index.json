@@ -4132,6 +4132,124 @@
     "Merge sign-off (reviewer-qa) blocked until cycle passes."
    ],
    "gate": "Gate 2 NOT READY -- Doc 06 v2.3.0 review loop FAIL cycle 1. Route to engineer for v2.3.1."
+  },
+  {
+   "id": "tester-2026-08-29T0430",
+   "role": "tester (acting as NEUTRAL REVIEWER -- document-review skill)",
+   "file": "artifacts/tester-2026-08-29T0430.md",
+   "timestamp": "2026-08-29T04:30:00Z",
+   "phase": "Verify -- technical-mode document-review, cycle 2",
+   "product": "Trumocracy",
+   "branch": "build/v1-join-membership",
+   "scope": "Doc 06 v2.3.1 + code drop (HEAD 4148498 + uncommitted v2.3.1 working-tree changes)",
+   "summary": "Ran technical-mode document review cycle 2 of Doc 06 v2.3.1 including the reworked code drop. All four cycle-1 issues independently verified CLOSED: ISS-01 (findPetitionsPastClose on IPartyStore, expirePetitions routed through it, no private-state access remains, UT-0831 interface-only facade regression), ISS-02 (branch name), ISS-03 (O(n) membershipHistory fold), ISS-04 (UT-0822 own describe). Suite green 541 tests (contracts 95 / protocol 126 / sdk 220 / ui 14 / indexer 16 / web 70) matching §3 exactly; dep-guard clean; tsc exits 0 in apps/web and packages/ui. ONE NEW MEDIUM ISS-C2-01: apps/web/types/trumocracy-sdk.d.ts still declares IPartyStore and InMemoryPartyStore with 21 methods -- findPetitionsPastClose missing -- so the ISS-01 interface fix stopped at the JS boundary and a TypeScript store can typecheck clean then throw at expirePetitions. VERDICT: FAIL 92% C=0 H=0 M=1 L=2.",
+   "artifacts_written": [
+    "artifacts/reviews/06-coding-and-ut-v2.3.1-technical-cycle2.md",
+    "artifacts/tester-2026-08-29T0430.md",
+    "artifacts/memory-index.json (updated -- this entry appended)"
+   ],
+   "review_verdict": {
+    "06-coding-and-ut-v2.3.1": {
+     "score": 92,
+     "critical": 0,
+     "high": 0,
+     "medium": 1,
+     "low": 2,
+     "cycle": 2,
+     "verdict": "FAIL"
+    }
+   },
+   "cycle1_issues_closed": {
+    "ISS-01": "CLOSED (JS) -- findPetitionsPastClose declared on typedef :113, implemented :311-319, expirePetitions routed :748-758; all 22 store call sites are declared methods; UT-0831 regression passes.",
+    "ISS-02": "CLOSED -- §8 reads build/v1-join-membership, matches git branch --show-current.",
+    "ISS-03": "CLOSED -- membershipHistory :963-982 per-party open-row Map, single O(n) pass, behaviour identical.",
+    "ISS-04": "CLOSED -- UT-0822 promoted to its own describe block; 22 tests unchanged."
+   },
+   "issues": {
+    "ISS-C2-01": "Medium -- apps/web/types/trumocracy-sdk.d.ts lines 113-135 and 141-163 declare 21 IPartyStore methods vs 22 in the JSDoc typedef; findPetitionsPastClose missing from both TS blocks. Same drift class v2.3.0 fixed for archivePetition. Fix: declare in both blocks + add a JSDoc-vs-d.ts guard.",
+    "ISS-C2-02": "Low -- Doc 06 §5.0 still stale: v2.0.1 cycle 2 marked pending though a PASS 97% report exists; v2.1.0 line still says merge sign-off withheld pending cycle-2 review though that review passed.",
+    "ISS-C2-03": "Low -- commit 4148498 bundles the code fix with the tester cycle-1 review report + memory note + memory-index (not atomically revertible per §8); UT-0831 is not in it and remains uncommitted."
+   },
+   "verification": {
+    "npm test": "exit 0 -- 541 passed, 0 failed (contracts 95 / protocol 126 / sdk 220 / ui 14 / indexer 16 / web 70); sdk membership.test.js 22, party-creation.test.js 38",
+    "npm run lint:deps": "exit 0 -- dep-guard: 7 workspace package(s) checked -- layering OK",
+    "npx tsc --noEmit (apps/web)": "exit 0, no output",
+    "npx tsc --noEmit (packages/ui)": "exit 0, no output",
+    "git branch --show-current": "build/v1-join-membership"
+   },
+   "ids_touched": {
+    "UT": "UT-0780..UT-0818, UT-0831 (new), UT-0819..UT-0830, UT-0858..UT-0870",
+    "FR": "FR-013, FR-016, FR-018, FR-020, FR-021, FR-022, FR-064, FR-122, FR-123, FR-130, FR-131",
+    "DES": "DES-065, DES-093..DES-097, DES-100",
+    "ADR": "ADR-011, ADR-024, ADR-025",
+    "US": "US-0024, US-0025, US-0073, US-0131, US-0133"
+   },
+   "open_items": [
+    "Engineer to rework Doc 06 to v2.3.2 addressing ISS-C2-01 (Medium, blocking) and ISS-C2-02/ISS-C2-03 (Low).",
+    "Cycle-3 review owed after rework; three cycles remain before the cap.",
+    "Product-owner ruling owed on Flag FR-064-SEMANTICS (Doc 06 §7 #20) before the RTM FR-064 Must row can close.",
+    "RTM (Doc 08) FR-064 Must row must stay OPEN on the strength of this drop.",
+    "Merge sign-off (reviewer-qa) blocked until the Doc 06 review loop passes."
+   ],
+   "gate": "Gate 2 NOT READY -- Doc 06 v2.3.1 review loop FAIL cycle 2. Route to engineer for v2.3.2."
+  },
+  {
+   "id": "tester-2026-08-29T0500",
+   "role": "tester (acting as NEUTRAL REVIEWER -- document-review skill)",
+   "file": "artifacts/tester-2026-08-29T0500.md",
+   "timestamp": "2026-08-29T05:00:00Z",
+   "phase": "Verify -- technical-mode document-review, cycle 3",
+   "product": "Trumocracy",
+   "branch": "build/v1-join-membership",
+   "scope": "Doc 06 v2.3.2 + code drop (HEAD f70292a on fix commit 3a273a1)",
+   "summary": "Ran technical-mode document review cycle 3 of Doc 06 v2.3.2. All three cycle-2 issues independently verified CLOSED. ISS-C2-01 (Medium) closed at the root: findPetitionsPastClose declared in BOTH shim blocks of apps/web/types/trumocracy-sdk.d.ts; member-set diff now jsdoc 22 / iface 22 / class 22, set-equal both ways; new drift guard UT-0871 (apps/web/test/sdk-types-sync.test.ts) MUTATION-TESTED by the reviewer against scratch copies and confirmed to fail on reintroduced drift, per block and in the reverse direction. ISS-C2-02 closed (§5.0 fully accurate against artifacts/reviews/ with correction provenance). ISS-C2-03 closed (atomic commits 3a273a1 fix+proof / f70292a docs; no cross-role artifacts; working tree holds only reviewer files). Suite green 542 (contracts 95 / protocol 126 / sdk 220 / ui 14 / indexer 16 / web 71) matching §3 row by row; dep-guard clean; tsc exits 0 in apps/web and packages/ui. Probed the unreported PartyCreationService half of the shim: in sync, 13/13, no hidden drift. One new Low ISS-C3-01 (that half is unguarded). VERDICT: PASS 97% C=0 H=0 M=0 L=1.",
+   "artifacts_written": [
+    "artifacts/reviews/06-coding-and-ut-v2.3.2-technical-cycle3.md",
+    "artifacts/tester-2026-08-29T0500.md",
+    "artifacts/memory-index.json (updated -- this entry appended)"
+   ],
+   "review_verdict": {
+    "06-coding-and-ut-v2.3.2": {
+     "score": 97,
+     "critical": 0,
+     "high": 0,
+     "medium": 0,
+     "low": 1,
+     "cycle": 3,
+     "verdict": "PASS"
+    }
+   },
+   "cycle2_issues_closed": {
+    "ISS-C2-01": "CLOSED (Medium) -- .d.ts synced in interface :126 and class :155; jsdoc/iface/class = 22/22/22 set-equal both ways; UT-0871 guard present and mutation-tested (MUT-A per-block detection, MUT-B reverse direction).",
+    "ISS-C2-02": "CLOSED (Low) -- §5.0 v2.0.1 line now PASS (97%) matching the on-disk report; v2.1.0 stale sign-off tail replaced with the v2.2.0 cycle-2 PASS resolution; provenance annotated.",
+    "ISS-C2-03": "CLOSED (Low) -- git log --stat -2 confirms 3a273a1 (fix + proof, 6 files) and f70292a (Doc 06 only); Conventional Commits with US-0024/0025/0073; no cross-role artifacts; clean working tree."
+   },
+   "issues": {
+    "ISS-C3-01": "Low (non-blocking) -- UT-0871 guards IPartyStore/InMemoryPartyStore only; the PartyCreationService half of the same shim is unguarded. Verified currently IN SYNC (13 implemented / 13 declared, both difference sets empty), so a residual exposure not a live defect. Suggested: extend UT-0871 with a sibling case."
+   },
+   "verification": {
+    "npm test": "exit 0 -- 542 passed, 0 failed (contracts 95 / protocol 126 / sdk 220 / ui 14 / indexer 16 / web 71); new apps/web/test/sdk-types-sync.test.ts = 1 test (UT-0871)",
+    "npm run lint:deps": "exit 0 -- dep-guard: 7 workspace package(s) checked -- layering OK",
+    "npx tsc --noEmit (apps/web)": "exit 0, no output",
+    "npx tsc --noEmit (packages/ui)": "exit 0, no output",
+    "git branch --show-current": "build/v1-join-membership",
+    "type-shim mutation test": "MUT-A remove from interface block only -> iface!=jsdoc (fails) while class==jsdoc (passes); MUT-B phantom JSDoc member -> iface!=jsdoc (fails). Guard is real.",
+    "PartyCreationService shim probe": "13 implemented / 13 declared; IMPLEMENTED-but-not-declared [] ; DECLARED-but-not-implemented []"
+   },
+   "ids_touched": {
+    "UT": "UT-0871 (NEW, no collision -- prior max UT-0870), UT-0831, UT-0780..UT-0818, UT-0819..UT-0830, UT-0841..UT-0870",
+    "FR": "FR-013, FR-016, FR-018, FR-020, FR-021, FR-022, FR-064, FR-122, FR-123, FR-130, FR-131",
+    "DES": "DES-065, DES-093..DES-097, DES-100",
+    "ADR": "ADR-011, ADR-024, ADR-025",
+    "US": "US-0024, US-0025, US-0073, US-0131, US-0133"
+   },
+   "open_items": [
+    "Engineer to set Doc 06 Status: Approved (PASS at cycle 3). No new version required. ISS-C3-01 optional additive hardening.",
+    "Product-owner ruling owed on Flag FR-064-SEMANTICS (Doc 06 §7 #20) -- option (a) annotate FR-064 with the v1 explicit-leave posture, or (b) uphold auto-void-on-join -- recorded in Doc 02.",
+    "Tester: keep RTM (Doc 08) FR-064 Must row OPEN until that ruling; map UT-0871 to the FR-013 expiry path / DES-097 seam; refresh Doc 07/08 to the 542-test baseline.",
+    "reviewer-qa: merge sign-off unblocked BY THIS LOOP, but still requires its own security scan and RTM zero-gaps verification."
+   ],
+   "gate": "Doc 06 review loop PASSED at cycle 3 -- SOP advances past the code-drop quality loop. Gate 2 still NOT READY: the RTM FR-064 Must row remains open pending the product-owner ruling, and an open Must row blocks Gate 2."
   }
  ]
 }
