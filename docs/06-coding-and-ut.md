@@ -2,11 +2,11 @@
 
 ```
 Document ID:   CODE-TRUMOCRACY
-Version:       2.2.0
-Status:        Approved — 06-coding-and-ut-v2.2.0-technical-cycle2.md
+Version:       2.3.0
+Status:        In Review
 Owner:         Samuel Oyelaran — Engineering Lead
 Source:        SDD-TRUMOCRACY v2.7.1 §9 · ADR-011 · ADR-023 · ADR-024 · ADR-025
-Last updated:  2026-08-25
+Last updated:  2026-08-28
 ```
 
 > Built from SDD §9 and ADR-011. Records what was physically built, the unit-testing
@@ -15,6 +15,45 @@ Last updated:  2026-08-25
 
 ```
 Change history:
+  v2.3.0 (2026-08-28) — Join/membership feature drop (FR-020/021/022, FR-064 invariant,
+               FR-122/FR-123 counting distinction, FR-130 cap at join, FR-131 clause (d)).
+               SDK (party-creation.js): InMemoryPartyStore membership model reworked from a
+               bare Set to an APPEND-ONLY membership event log (recordJoin/recordLeave;
+               addMember removed — it bypassed the one-active-party invariant and had no
+               external callers), with derived active-membership and counted-members indexes.
+               PartyCreationService: joinParty() now enforces one-active-party
+               (ALREADY_MEMBER_ELSEWHERE until an explicit recorded leave; ALREADY_MEMBER on
+               double join) and stamps joinedAt from the injected clock; new leaveParty()
+               (FR-022 — immediate, no approval, never deletes history), membershipHistory()
+               (active/inactive rows), activeMembership(), countingStatus() (join ≠ counting
+               read), contributeToStrength(partyId, member, verifier) — the ONLY seam call
+               site on this service, receiving the verifier as an explicit per-call parameter
+               with scope COUNTING_ACTION.STRENGTH_CONTRIBUTION (Doc 03 §10.13.2(a)); the
+               join/leave paths structurally cannot reach a verifier the service never holds
+               (FR-020). partyStatus() gains officialStrength (counts verified current members
+               only); a counted member who leaves stops counting (store invariant), history
+               remains. NOTE: one-active-party is built in the EXPLICIT-LEAVE form per the
+               2026-08-28 commissioning brief; FR-064's normative text reads auto-void-on-join
+               — divergence flagged, PO reconciliation owed (§7 limitation #20).
+               Web: parties directory page (apps/web/src/app/parties/page.tsx, gated on
+               party_governance flag) + PartyMembership component — join/leave/history cards,
+               FR-130 cap + BR-020 disclosure per card, join ≠ counting surface, and the
+               FR-131 clause (d) open-tier notice (four clauses (i)–(iv), rendered before the
+               refusal, no dismiss control) where an open-tier member attempts the strength-
+               contribution counting action. Demo verifier is stub-backed
+               (IS_INSECURE_MOCK=true, empty credential store — visitor is honestly open-tier;
+               no control can fake ID verification). i18n en+ar membership strings added;
+               en.parties.joinPrivate CORRECTED from the v2-only claim "Nobody gets that
+               list, including us" to v1-accurate disclosure copy (FR-131(b): the platform's
+               own records CAN link account↔party in v1) — ar mirrored (engineer draft,
+               native review owed). Types: trumocracy-sdk.d.ts updated (membership API,
+               eligibility seam exports, archivePetition(id, now) drift fixed).
+               New tests: UT-0819..UT-0830 (sdk membership, 22 tests) and UT-0858..UT-0870
+               (web join-membership flow, 27 tests). Suite: 540 tests (contracts 95 /
+               protocol 126 / sdk 219 / ui 14 / indexer 16 / web 70); dep-guard clean;
+               tsc exits 0 in packages/ui and apps/web. §3 counts updated; §7 limitations
+               #20–#22 added.
+
   v2.2.0 (2026-08-25) — Rework cycle 1 against artifacts/reviews/06-coding-and-ut-v2.1.0-technical-cycle1.md
                (FAIL 84%, 0C/1H/2M/1L). All four issues resolved:
                ISS-01 (High): activateParty() now computes required endorsements via
@@ -291,7 +330,7 @@ all existing files and enforced by CI lint:
 
 ## 3. `UT-####` inventory
 
-Counts are actual as of this session (2026-08-25), verified by running `npm test`.
+Counts are actual as of this session (2026-08-28), verified by running `npm test`.
 
 | Range | Area | Package | Count |
 |---|---|---|---|
@@ -308,15 +347,18 @@ Counts are actual as of this session (2026-08-25), verified by running `npm test
 | UT-0750..0758 | PrivacyStatus component: state rendering, self-view contract, absence, backing-aware copy | ui | 14 |
 | UT-0760..0779 | IEligibilityVerifier seam, IBallotService seam: counting-tier gate, IS_INSECURE_MOCK delegation, nullifier, tally | sdk | 36 |
 | UT-0780..0818 | PartyCreationService + InMemoryPartyStore: IS_INSECURE_MOCK, validation gate, collision (incl. TOCTOU re-check), cooldown, FR-018 threshold gate (ISS-01), FR-130 cap, join-never-calls-verifier, status, determinism, archivedAt determinism (ISS-03) | sdk | 37 |
+| UT-0819..0830 | join/membership: join-without-permission, join/leave never call the seam, one-active-party (explicit leave), leave-at-will, append-only history, FR-130 100/101 boundary on ACTIVE members, strength counts verified members only, seam scope assertion, clock determinism, countingStatus | sdk | 22 |
 | UT-0841..0857 | party-creation web flow: emblem field, deficiency errors, collision surfaces, BR-020 disclosure, non-violence clause, ProvisionalStatus, jargon scan | web | 27 |
+| UT-0858..0870 | join/membership web flow: one-click join, no-approval absence, one-active-party refusal surface, leave, history active/inactive, cap at join surface, join ≠ counting figures, FR-131(d) notice (four clauses, non-dismissable), verified-member counting, seam spy, flag gating, jargon scan, v1-honest join copy, absence test | web | 27 |
 | (SDK core) | identity, proofs, transports, verified reads, prediction, client, scopes | sdk | 124 |
-| **Total** | | | **491** |
+| **Total** | | | **540** |
 
-Note: the SDK total of 197 comprises 124 (core) + 36 (seams UT-0760..UT-0779) + 37 (new
-UT-0780..UT-0818 party-creation service; 5 tests added in v2.2.0 rework). The web total of
-43 comprises 16 (original UT-0700..UT-0742) + 27 (new UT-0841..UT-0857 party-creation web
-tests). The protocol total of 126 comprises 82 (original UT-0001..UT-0055) + 44 (new
-UT-0060..UT-0086). Every `UT-####` maps to an `FR`/`NFR`/`RISK` in the RTM (Doc 08).
+Note: the SDK total of 219 comprises 124 (core) + 36 (seams UT-0760..UT-0779) + 37
+(UT-0780..UT-0818 party-creation service) + 22 (new UT-0819..UT-0830 membership). The web
+total of 70 comprises 16 (original UT-0700..UT-0742) + 27 (UT-0841..UT-0857 party-creation
+web tests) + 27 (new UT-0858..UT-0870 join-membership web tests). The protocol total of 126
+comprises 82 (original UT-0001..UT-0055) + 44 (UT-0060..UT-0086). Every `UT-####` maps to
+an `FR`/`NFR`/`RISK` in the RTM (Doc 08).
 (UT-#### IDs may each cover a describe-block with multiple `it()` assertions; the Count
 column is the verified figure from `npm test`; ID ranges mark RTM block boundaries only.)
 
@@ -537,6 +579,31 @@ When each module lands it must read its flag in the same commit.
     — would allow premature activation. Tests in this drop seed endorsement counts
     deterministically via the store; real endorsement feed wiring is a DES-097 integration
     task.
+20. **One-active-party is built in the EXPLICIT-LEAVE form; FR-064's text reads
+    auto-void-on-join (Flag: FR-064-SEMANTICS).** The 2026-08-28 commissioning brief directed:
+    "Joining a second party requires leaving the first (an explicit, recorded action)."
+    FR-064 (Doc 02 §4.6) reads: "joining a new party MUST automatically void membership in
+    the current party," enforced by a global membership-scope nullifier (DES-065 — a v2
+    chain mechanism). This drop enforces the invariant app-side in the stricter explicit-leave
+    form: a second join is refused (ALREADY_MEMBER_ELSEWHERE) until leaveParty() is called.
+    Both forms preserve at-most-one-active-membership, and auto-void can be layered on later
+    without breaking the invariant; the FR-064 tenure-clock reset holds either way (every
+    join appends a fresh joinedAt). Product-owner reconciliation of FR-064's wording (or an
+    annotation recording the v1 explicit-leave posture) is owed.
+21. **Official-strength contribution is v1 app-side state; no protocol/on-chain counterpart
+    yet.** `contributeToStrength()` (FR-123(a)) records counted members in the party store;
+    uniqueness is enforced by the counted-members set, not by the verifier's
+    `isUniqueInScope()` nullifier record (which would wrongly block a legitimate
+    re-contribution after leave→rejoin under v1 semantics). The v2 path (DES-065 membership
+    nullifier; on-chain strength) replaces this at the seam swap. The FR-131 clause (d)
+    notice surface is built at the parties directory; the SCR-13/SCR-14 ballot surfaces
+    remain owed (voting is a later session).
+22. **The parties directory demo visitor is honestly open-tier.** The demo verifier is
+    stub-backed (IS_INSECURE_MOCK=true) with an EMPTY credential store: the counting attempt
+    always shows the FR-131 clause (d) refusal. No page control can mark the visitor
+    ID-verified — building that would fake the enrolment flow this repo has deliberately not
+    built (CON-015). The verified-member path is covered by tests (UT-0826/UT-0865) that
+    inject a DES-100-allowlist credential row directly.
 
 ## 8. Commit and branch conventions
 
