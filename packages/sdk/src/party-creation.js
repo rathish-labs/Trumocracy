@@ -953,22 +953,28 @@ export class PartyCreationService {
    *
    * Folds the JOIN/LEAVE event log into rows: each JOIN opens a row; the next
    * LEAVE for the same party closes it. Rows are never deleted — a member who
-   * joined, left, and rejoined has three events and two rows.
+   * joined, left, and rejoined has three events and two rows. Single pass —
+   * open rows are indexed per party, so the fold is O(n) over the event log
+   * (ISS-03, v2.3.1 rework).
    *
    * @param {string} memberPseudonym
    * @returns {Array<{partyId: string, joinedAt: number, leftAt: number|null, active: boolean}>}
    */
   membershipHistory(memberPseudonym) {
     const rows = [];
+    const openByParty = new Map();
     for (const event of this._store.getMembershipEvents(memberPseudonym)) {
       if (event.action === 'JOIN') {
-        rows.push({ partyId: event.partyId, joinedAt: event.at, leftAt: null, active: true });
+        const row = { partyId: event.partyId, joinedAt: event.at, leftAt: null, active: true };
+        rows.push(row);
+        openByParty.set(event.partyId, row);
       } else {
         // LEAVE closes the open row for this party.
-        const open = rows.find((r) => r.partyId === event.partyId && r.active);
+        const open = openByParty.get(event.partyId);
         if (open) {
           open.leftAt = event.at;
           open.active = false;
+          openByParty.delete(event.partyId);
         }
       }
     }

@@ -170,8 +170,12 @@ describe('UT-0821 one active party at a time — second join refused until expli
     expect(result.memberCount).toBe(1);
     expect(service.activeMembership('member-1').partyId).toBe(partyB);
   });
+});
 
-  it('UT-0822 a double join of the same party is refused (ALREADY_MEMBER)', () => {
+// ─── UT-0822 double join of the same party (FR-064 invariant) ─────────────────
+
+describe('UT-0822 a double join of the same party is refused (ALREADY_MEMBER)', () => {
+  it('the second join throws ALREADY_MEMBER and does not inflate the member count', () => {
     const { service, store } = makeService();
     const partyId = activatedParty(service, store);
     service.joinParty(partyId, 'member-1');

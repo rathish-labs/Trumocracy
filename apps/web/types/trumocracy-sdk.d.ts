@@ -123,6 +123,7 @@ declare module '@trumocracy/sdk' {
     savePetition(petition: object): string;
     updatePetition(id: string, data: object): object;
     archivePetition(id: string, now: number): object;
+    findPetitionsPastClose(now: number): object[];
     saveParty(party: object): string;
     updateParty(id: string, data: object): object;
     recordJoin(partyId: string, memberPseudonym: string, at: number): void;
@@ -151,6 +152,7 @@ declare module '@trumocracy/sdk' {
     savePetition(petition: object): string;
     updatePetition(id: string, data: object): object;
     archivePetition(id: string, now: number): object;
+    findPetitionsPastClose(now: number): object[];
     saveParty(party: object): string;
     updateParty(id: string, data: object): object;
     recordJoin(partyId: string, memberPseudonym: string, at: number): void;
