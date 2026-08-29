@@ -2,12 +2,23 @@
 
 ```
 Document ID:   BKLG-TRUMOCRACY
-Version:       2.2.0
+Version:       2.3.0
 Status:        In Review
 Owner:         Priya Raghunathan — Product Owner
 Source:        SRS-TRUMOCRACY (docs/02-requirements-srs.md v2.13.0), PR-TRUMOCRACY (docs/01-press-release-prfaq.md)
 Last updated:  2026-08-25
-Change:        v2.2.0 — Scaffold traceability gap closed (Rathish directive, 2026-08-25).
+Change:        v2.3.0 — Party-creation drop traceability update (2026-08-25).
+               Existing stories updated to reflect what the Doc 06 v2.2.0 Approved drop delivers:
+               US-0011/0013/0021/0022/0087/0131 → Status: Partial (service+UI layer complete,
+               IS_INSECURE_MOCK=true; production store pending DES-097 wiring; DoD not satisfied).
+               US-0014/0015/0024 → additional UT evidence noted (protocol+sdk+web drop).
+               No new stories minted — every flow component has an existing home. Gate-1 blocker
+               remains: no passing business-mode review exists for Doc 05; full review owed before
+               Gate-1 presentation.
+               UT coverage: protocol UT-0060..0086 · sdk UT-0780..0818 · web UT-0841..0857
+               (all confirmed green, Doc 06 v2.2.0 Approved).
+               TC ranges minted: TC-3489..TC-3516 (TS-PARTY, Doc 07 v2.2.2).
+               v2.2.0 — Scaffold traceability gap closed (Rathish directive, 2026-08-25).
                Three backing stories minted for the design-system code drop (commit 5320342 +
                session fix): US-0132 (FE-040 · EP-09, DES-093 token set + DES-094 PrivacyStatus,
                FR-082..086 / FR-124 / FR-131); US-0133 (new FE-057 · EP-01, IEligibilityVerifier
@@ -696,6 +707,13 @@ US-0011  Create a party draft pseudonymously      (FE-005 · EP-02)
 As a citizen with a programme, I want to draft a party without revealing who I am, so that I can
 publish ideas before I am ready to be a public figure.
 Owner: Tomás Ferreira   Priority: Must   Points: 5   Implements: FR-010   Depends on: US-0008
+Note: Status Partial — name/emblem collision detection + pseudonymous draft creation complete at
+  service+UI layer (IS_INSECURE_MOCK=true; production store pending DES-097 wiring). Contract-level
+  emblem field and name-collision check not implemented (G-NOMECH persists in RTM). DoD not
+  satisfied (RTM row OPEN). TC: TC-3489 (name collision), TC-3490 (emblem collision), TC-3491
+  (cross-jurisdiction allowed), TC-3492 (emblem UI validation), TC-3493 (collision UI surfacing),
+  TC-3515 (BR-020 disclosure). UT: UT-0064..0070/UT-0086 (protocol), UT-0787..0792 (sdk),
+  UT-0841..0847 (web) — Doc 06 v2.2.0 Approved.
 AC:
   Scenario: Draft created
     Given a verified citizen
@@ -726,6 +744,11 @@ US-0013  Declare my charter's own amendment rules      (FE-005 · EP-02)
 As a drafter, I want to set my party's amendment tiers, thresholds and timelocks, so that the party
 governs itself rather than being governed by our defaults.
 Owner: Tomás Ferreira   Priority: Should   Points: 5   Implements: FR-012   Depends on: US-0011
+Note: Status Partial — charter bounds validation (floor enforcement) and defaults application
+  complete at protocol+service level (IS_INSECURE_MOCK=true; production store pending DES-097
+  wiring). DoD not satisfied (RTM Should row now complete — see Doc 08 v2.2.4). TC: TC-3497
+  (charter defaults), TC-3498 (additive tier floor). UT: UT-0076..0082 (protocol) — Doc 06
+  v2.2.0 Approved.
 AC:
   Scenario: Custom rules within bounds
     Given a drafter setting a charter-tier supermajority of 70% within the platform bounds
@@ -745,6 +768,10 @@ US-0014  Be blocked from publishing an incomplete programme      (FE-006 · EP-0
 As a citizen deciding whether to endorse, I want every party to have covered all eight pillars, so
 that I am backing a programme rather than a slogan.
 Owner: Tomás Ferreira   Priority: Must   Points: 5   Implements: FR-011   Depends on: US-0011
+Note: RTM row COMPLETE (Doc 08 v1.1.0). Additional UT coverage added in Doc 06 v2.2.0:
+  UT-0060..0063 (protocol validateDraft), UT-0783..0786 (sdk service gate), UT-0845 (web UI
+  deficiency error surface). TC: TC-0009 (existing), TC-3494 (protocol), TC-3495 (sdk),
+  TC-3496 (web UI).
 AC:
   Scenario: Complete draft publishes
     Given a draft in which all eight pillars meet the published minimum-substance standard
@@ -760,6 +787,8 @@ US-0015  See exactly what each pillar requires before I write it      (FE-006 ·
 As a first-time drafter, I want to know what "sufficient" means for each pillar in advance, so that
 the completeness gate feels like a checklist rather than a rejection.
 Owner: Nadia Hassan   Priority: Must   Points: 3   Implements: FR-011, NFR-022, NFR-023   Depends on: US-0014
+Note: RTM row COMPLETE (Doc 08 v1.1.0) for FR-011. Web UI confirmation added in Doc 06 v2.2.0:
+  UT-0845 (web: pillar names appear in error summary). TC: TC-0009 (existing), TC-3496 (web UI).
 AC:
   Scenario: Standard shown up front
     Given a drafter opening any pillar
@@ -799,7 +828,13 @@ As any member, I want to know that every party constitution contains the standar
 and that its integrity is checked automatically, so that political commitment to non-violence cannot
 be quietly removed.
 Owner: Daniel Okonkwo   Priority: Must   Points: 3   Implements: FR-077   Depends on: US-0086
-Note: Not Ready pending DES — FR-077 has no DES assigned yet (Doc 03 §16 next-increment scope).
+Note: Status Partial — non-violence clause verbatim-check and absence/alteration refusal complete
+  at protocol+service+UI layer (IS_INSECURE_MOCK=true; production store pending DES-097 wiring).
+  Formal DES not yet assigned in Doc 03 §5.2 (G-TRACE persists; same recorded-phasing posture as
+  FR-074..FR-111). DoD not satisfied (RTM row OPEN: G-TRACE + G-PHASE3). TC: TC-3508 (clause
+  verbatim accepted), TC-3509 (absent/altered refused), TC-3510 (UI non-editable + verbatim
+  submission). UT: UT-0071..0075 (protocol), UT-0786 (sdk), UT-0849..0851 (web) — Doc 06
+  v2.2.0 Approved.
 AC:
   Scenario: Standard clause accepted
     Given a new or amended constitution where the non-violence clause matches the platform-standard text exactly
@@ -919,6 +954,12 @@ US-0021  Have a petition expire rather than linger forever      (FE-008 · EP-03
 As a citizen browsing petitions, I want stale petitions archived, so that the platform shows live
 politics rather than a graveyard.
 Owner: Tomás Ferreira   Priority: Should   Points: 3   Implements: FR-013   Depends on: US-0016
+Note: Status Partial — expiry, immutable-archive, and re-petition cooldown logic complete at
+  service level (IS_INSECURE_MOCK=true; production store pending DES-097 wiring). RTM Should row
+  now complete (Doc 08 v2.2.4 — prior gap was cooldown untested; now covered). DoD not
+  satisfied (production store pending). TC: TC-3499 (expiry→archive), TC-3500 (immutable archive
+  mutation refused), TC-3501 (archivedAt determinism), TC-3502 (cooldown refusal), TC-3503
+  (cooldown allows after window). UT: UT-0795..0801/UT-0817 (sdk) — Doc 06 v2.2.0 Approved.
 AC:
   Scenario: Expiry and archive
     Given a petition that reaches its expiry without meeting the threshold
@@ -935,6 +976,11 @@ As a drafter, I want the party to switch on automatically when the bar is met an
 is nobody to lobby, delay or bribe.
 Owner: Tomás Ferreira   Priority: Must   Points: 8   Implements: FR-018   Depends on: US-0019
 **Blocked pending OI-08** (dwell period unset; story not Ready until OI-08 closes — owner: Tomás Ferreira)
+Note: Status Partial — threshold gate complete at service level (refusal below threshold naming
+  counts; exact-threshold success; 500-endorsement floor — UT-0814..0816 sdk, Doc 06 v2.2.0
+  Approved). Dwell-period guarantee remains G-NOMECH (OI-08 unset; RTM row still OPEN). DoD not
+  satisfied. TC: TC-3504 (below threshold refused), TC-3505 (exact threshold passes), TC-3506
+  (500-floor binds).
 AC:
   Scenario: Threshold met and held
     Given a petition at or above threshold continuously for the published dwell period (example — non-normative; normative value set at OI-08 closure)
@@ -973,9 +1019,13 @@ registration — with no operator or manual lift path — so that an unverified 
 false membership strength before it is legally real.
 Owner: Sofia Marchetti   Priority: Must   Points: 3   Implements: FR-130   Depends on: US-0022, US-0085
 SCR: SCR-06 (Petition browser & detail — wireframe screen 2.3; provisional)
-Note: Not Ready pending DES — FR-130 has no DES assigned yet (Doc 03 §16 next-increment scope;
-  same recorded-phasing posture as FR-121..FR-129). TC: OPEN — Phase 3; no TC minted yet.
-  Status: Backlog.
+Note: Status Partial — 100-member provisional cap enforcement and code-only lift via
+  recordLegalRegistration() complete at service+UI layer (IS_INSECURE_MOCK=true; production store
+  pending DES-097 wiring). Formal DES not yet assigned in Doc 03 §5.2 (G-TRACE persists; same
+  recorded-phasing posture as FR-121..FR-129). DoD not satisfied (RTM row OPEN: G-TRACE + G-PHASE3).
+  TC: TC-3511 (member 101 refused), TC-3512 (cap lifts on legal registration), TC-3513 (no other
+  lift path), TC-3514 (cap boundary honest at UI), TC-3516 (BR-020 ProvisionalStatus disclosure).
+  UT: UT-0802..0811 (sdk), UT-0852..0856 (web) — Doc 06 v2.2.0 Approved.
 AC:
   Scenario: 100-member cap enforced on provisional party
     Given a provisional party (platform-activated per FR-018; legal registration not yet verified per FR-075)
@@ -1005,6 +1055,9 @@ AC:
 US-0024  Join a party without asking anyone      (FE-010 · EP-04)     [REFERENCE STORY = 3 points]
 As a citizen, I want to join any live party directly, so that no elite decides whether I belong.
 Owner: Grace Mbeki   Priority: Must   Points: 3   Implements: FR-020   Depends on: US-0022
+Note: RTM row COMPLETE (Doc 08 v1.1.0). Additional service-layer proof added in Doc 06 v2.2.0:
+  UT-0807 (joinParty MUST NOT call verifyEligibility — zero spy calls asserted). TC: TC-0015
+  (existing), TC-3507 (join-no-verifier).
 AC:
   Scenario: Direct join
     Given an active party and a verified citizen who is not a member
@@ -3104,7 +3157,7 @@ Coverage assertion at v2.0.0 — to be independently verified by the tester in t
   FR-112→US-0122 · FR-113→US-0123 ·
   FR-114→US-0124 · FR-115→US-0125 · FR-116→US-0126 · FR-117→US-0127 ·
   FR-118→US-0128 · FR-119→US-0129 · FR-120→US-0130.
-- **v2.1.0 addition (C-02 ruling, Rathish, 2026-08-22):** FR-130→US-0131. DES owed (same recorded-phasing posture as FR-121..FR-129; TC OPEN — Phase 3). US-0131 is Backlog / Not Ready pending DES.
+- **v2.1.0 addition (C-02 ruling, Rathish, 2026-08-22):** FR-130→US-0131. DES owed (same recorded-phasing posture as FR-121..FR-129). v2.3.0 update: US-0131 Status Partial — implementation exists (Doc 06 v2.2.0); TC-3511..TC-3516 minted (Doc 07 v2.2.2); RTM row OPEN (G-TRACE + G-PHASE3).
 - **v2.2.0 additions (scaffold traceability gap, Rathish directive, 2026-08-25):**
   FR-082..086→US-0092..0096 (existing) **and** US-0132 (design-system seam; DES-093/094 assigned) ·
   FR-122→US-0133 (IEligibilityVerifier seam; DES-095 assigned; ADR-024/025) ·
@@ -3136,9 +3189,18 @@ Coverage assertion at v2.0.0 — to be independently verified by the tester in t
   DES links are confirmed. FR-112..FR-120 have provisional DES links (see DES map above) subject
   to re-confirmation.
 - **v2.1.0 DES readiness gap (declared):** FR-130 (US-0131) has no DES assigned — same
-  recorded-phasing posture as FR-121..FR-129 (Doc 03 §16 next-increment scope). US-0131 is
-  marked "Not Ready pending DES" and satisfies DoR only after the architect assigns a DES in
-  the next Doc 03 increment.
+  recorded-phasing posture as FR-121..FR-129 (Doc 03 §16 next-increment scope). US-0131 satisfies
+  DoR only after the architect assigns a DES. v2.3.0: US-0131 implementation exists (Doc 06
+  v2.2.0) but formal DES gap persists; RTM row remains OPEN (G-TRACE + G-PHASE3).
+- **v2.3.0 TC assignments (party-creation drop, Doc 07 v2.2.2):**
+  US-0011→TC-3489..TC-3493/TC-3515 (FR-010 collision + emblem UI + BR-020) ·
+  US-0013→TC-3497..TC-3498 (FR-012 defaults + bounds) ·
+  US-0014→TC-3494..TC-3496 (FR-011 protocol+sdk+web) ·
+  US-0021→TC-3499..TC-3503 (FR-013 expiry/archive/cooldown) ·
+  US-0022→TC-3504..TC-3506 (FR-018 threshold gate) ·
+  US-0024→TC-3507 (FR-020 join-no-verifier) ·
+  US-0087→TC-3508..TC-3510 (FR-077 non-violence clause) ·
+  US-0131→TC-3511..TC-3516 (FR-130 cap + BR-020 ProvisionalStatus).
 - **v2.2.0 DES assignments (scaffold drop, Doc 03 v2.7.1):**
   FR-082..086, FR-124, FR-131 (US-0132) → DES-093 (token set), DES-094 (PrivacyStatus) — assigned.
   FR-122, FR-123, FR-132 (US-0133) → DES-095 (IEligibilityVerifier) — assigned; ADR-024/025.

@@ -6,7 +6,17 @@
  * and it can be dissolved or forked. There is no "approved", "featured" or "verified" state,
  * because every one of those would need someone to do the approving.
  */
-import { PILLARS, PETITION, FORK, BPS, TIER, CONSTITUTIONAL_TENURE_FLOOR_SECONDS } from './constants.js';
+import {
+  PILLARS,
+  PETITION,
+  FORK,
+  BPS,
+  TIER,
+  TIER_RULES,
+  CONSTITUTIONAL_TENURE_FLOOR_SECONDS,
+  EMBLEM,
+  NON_VIOLENCE_CLAUSE,
+} from './constants.js';
 import { parseRegion } from './regions.js';
 import { ProtocolError } from './governance.js';
 
@@ -139,6 +149,37 @@ export function validateCharter(charter) {
     errors.push({ field: 'immutableClauses', code: 'INVALID', message: 'immutableClauses must be an array' });
   }
 
+  // Additive bounds: for each tier, if a governance key is declared, it MUST
+  // meet the protocol floor. Undefined passes silently (applyCharterDefaults
+  // fills the gap). This loop covers all tiers so a charter cannot configure
+  // away protections in any tier, not just constitutional. (D6 additive only —
+  // existing checks above are unchanged. The CONSTITUTIONAL.minTenureSeconds
+  // check above uses CONSTITUTIONAL_TENURE_FLOOR_SECONDS = 90 days as its floor;
+  // this loop uses TIER_RULES[CONSTITUTIONAL].minTenureSeconds = 180 days,
+  // which is stricter, so both checks coexist harmlessly.)
+  const tierBoundKeys = [
+    'quorumBps',
+    'approvalBps',
+    'minTenureSeconds',
+    'timelockSeconds',
+    'discussionSeconds',
+    'minVotingSeconds',
+  ];
+  for (const [tier, rules] of Object.entries(TIER_RULES)) {
+    const tierOverride = charter?.tiers?.[tier];
+    if (tierOverride == null) continue;
+    for (const key of tierBoundKeys) {
+      const val = tierOverride[key];
+      if (val !== undefined && val !== null && val < rules[key]) {
+        errors.push({
+          field: `tiers.${tier}.${key}`,
+          code: 'BELOW_FLOOR',
+          message: `tier ${tier} ${key}=${val} is below the protocol floor ${rules[key]}`,
+        });
+      }
+    }
+  }
+
   return { valid: errors.length === 0, errors };
 }
 
@@ -153,6 +194,190 @@ export function canAmendClause(charter, clauseId) {
     return { allowed: true, reason: 'ENTRENCHED', requiredApprovalBps: entrenched.approvalBps, timelockSeconds: entrenched.timelockSeconds };
   }
   return { allowed: true, reason: 'AMENDABLE' };
+}
+
+// ─── Party-creation additions (v1 phase 1) ───────────────────────────────────
+
+/**
+ * Normalise a party name or emblem for collision detection (FR-010, DES-073).
+ *
+ * Folds applied (in order):
+ *   1. Unicode NFC (canonical composition — pre-composed and decomposed
+ *      variants of the same character collapse to the same form).
+ *   2. Lowercase (case-insensitive collision: "Forward" == "forward").
+ *   3. Trim (leading/trailing whitespace stripped).
+ *   4. Whitespace runs collapsed to a single U+0020 space
+ *      ("Forward  Party" == "Forward Party").
+ *
+ * Diacritics are NOT stripped — "café" ≠ "cafe" — because stripping
+ * diacritics would falsely flag as colliding two names that are visually
+ * and culturally distinct. Only forms that are visually indistinguishable
+ * after these folds are treated as collisions.
+ *
+ * @param {string} s
+ * @returns {string}
+ */
+export function normalizeCollisionKey(s) {
+  return String(s ?? '').normalize('NFC').toLowerCase().trim().replace(/\s+/g, ' ');
+}
+
+/**
+ * Compute a stable fingerprint of a draft for substantially-identical-charter
+ * detection (FR-013, D4 coordinator ruling 2026-08-25).
+ *
+ * "Substantially identical" = exact match of this fingerprint.
+ * Covers: all eight pillar texts (NFC-lowercased, whitespace-collapsed) and
+ * the charter governance parameters (petitionThresholdBps, tier overrides).
+ * Does NOT include: party name, emblem, jurisdiction — those are collision
+ * keys, not fingerprint keys. Does NOT use Date or randomness.
+ *
+ * @param {object} draft — { pillars?: object, charter?: object }
+ * @returns {string}
+ */
+export function charterFingerprint(draft) {
+  const pillars = draft?.pillars ?? {};
+  const charter = draft?.charter ?? {};
+
+  // Normalise each pillar text for stable comparison.
+  const normPillars = {};
+  for (const key of Object.keys(pillars).sort()) {
+    normPillars[key] = String(pillars[key] ?? '').normalize('NFC').toLowerCase().replace(/\s+/g, ' ').trim();
+  }
+
+  // Extract governance-relevant charter keys only.
+  const charterParams = {
+    petitionThresholdBps: charter.petitionThresholdBps ?? null,
+    tiers: {},
+  };
+  if (charter.tiers) {
+    for (const tier of Object.keys(charter.tiers).sort()) {
+      const t = charter.tiers[tier];
+      if (t == null) continue;
+      charterParams.tiers[tier] = {
+        quorumBps: t.quorumBps ?? null,
+        approvalBps: t.approvalBps ?? null,
+        minTenureSeconds: t.minTenureSeconds ?? null,
+        timelockSeconds: t.timelockSeconds ?? null,
+      };
+    }
+  }
+
+  return JSON.stringify({ pillars: normPillars, charter: charterParams });
+}
+
+/**
+ * Fill platform defaults into a charter wherever the charter is silent (FR-012).
+ *
+ * Returns a NEW object — never mutates the input. A charter may be stricter
+ * than the platform defaults; silence is filled with the platform minimum.
+ * Validation (validateCharter) is still required separately.
+ *
+ * @param {object} [charter]
+ * @returns {object}
+ */
+export function applyCharterDefaults(charter) {
+  const c = charter != null ? { ...charter } : {};
+
+  // Petition threshold: default to platform default (FR-012).
+  if (c.petitionThresholdBps == null) {
+    c.petitionThresholdBps = PETITION.DEFAULT_THRESHOLD_BPS;
+  }
+
+  // Per-tier governance parameters: fill with TIER_RULES where silent.
+  const sourceTiers = charter?.tiers ?? {};
+  c.tiers = {};
+  for (const [tier, defaults] of Object.entries(TIER_RULES)) {
+    const existing = sourceTiers[tier] ?? {};
+    c.tiers[tier] = {
+      quorumBps: existing.quorumBps ?? defaults.quorumBps,
+      approvalBps: existing.approvalBps ?? defaults.approvalBps,
+      minTenureSeconds: existing.minTenureSeconds ?? defaults.minTenureSeconds,
+      timelockSeconds: existing.timelockSeconds ?? defaults.timelockSeconds,
+      discussionSeconds: existing.discussionSeconds ?? defaults.discussionSeconds,
+      minVotingSeconds: existing.minVotingSeconds ?? defaults.minVotingSeconds,
+    };
+  }
+
+  return c;
+}
+
+/**
+ * Validate a complete party draft (FR-010, FR-011, FR-012, FR-077).
+ *
+ * Composes: validateVision (name + jurisdiction + all 8 pillars), emblem
+ * bounds check (D3), validateCharter (charter parameter floors), and the
+ * non-violence clause verbatim requirement (FR-077, CON-013).
+ *
+ * All errors are named per field; the error summary pattern (EightPillarForm)
+ * renders each as a link to its field. Errors from validateVision and
+ * validateCharter are included directly — no re-implementation.
+ *
+ * @param {object} draft
+ * @param {string} [draft.name]
+ * @param {string} [draft.jurisdiction]
+ * @param {object} [draft.pillars]
+ * @param {string} [draft.emblem]
+ * @param {object} [draft.charter]
+ * @returns {{ valid: boolean, errors: Array<{field: string, code: string, message: string}> }}
+ */
+export function validateDraft(draft) {
+  const errors = [];
+
+  // 1. Vision: name, jurisdiction, all 8 pillars (FR-011 names each deficient pillar).
+  const visionResult = validateVision({
+    name: draft?.name,
+    jurisdiction: draft?.jurisdiction,
+    pillars: draft?.pillars,
+  });
+  errors.push(...visionResult.errors);
+
+  // 2. Emblem (D3): 1–8 characters after trimming; required.
+  const emblemRaw = draft?.emblem;
+  if (emblemRaw == null || String(emblemRaw).trim().length === 0) {
+    errors.push({
+      field: 'emblem',
+      code: 'REQUIRED',
+      message: `party emblem is required (${EMBLEM.MIN_CHARS}–${EMBLEM.MAX_CHARS} characters after trimming)`,
+    });
+  } else {
+    const trimmed = String(emblemRaw).trim();
+    if (trimmed.length < EMBLEM.MIN_CHARS) {
+      errors.push({
+        field: 'emblem',
+        code: 'TOO_SHORT',
+        message: `emblem must be at least ${EMBLEM.MIN_CHARS} character after trimming`,
+      });
+    } else if (trimmed.length > EMBLEM.MAX_CHARS) {
+      errors.push({
+        field: 'emblem',
+        code: 'TOO_LONG',
+        message: `emblem must be at most ${EMBLEM.MAX_CHARS} characters after trimming`,
+      });
+    }
+  }
+
+  // 3. Charter: parameter floors (D6 additive — validateCharter is unchanged).
+  const charterResult = validateCharter(draft?.charter);
+  errors.push(...charterResult.errors);
+
+  // 4. Non-violence clause (FR-077, CON-013): must be present and verbatim.
+  //    This is the one deliberate exception to content-neutrality (ADR-013 §4).
+  const nvClause = draft?.charter?.nonViolenceClause;
+  if (nvClause == null || nvClause === '') {
+    errors.push({
+      field: 'charter.nonViolenceClause',
+      code: 'REQUIRED',
+      message: 'the platform non-violence clause is required in every charter (FR-077)',
+    });
+  } else if (nvClause !== NON_VIOLENCE_CLAUSE) {
+    errors.push({
+      field: 'charter.nonViolenceClause',
+      code: 'ALTERED',
+      message: 'the platform non-violence clause cannot be altered; it must appear exactly as published (FR-077)',
+    });
+  }
+
+  return { valid: errors.length === 0, errors };
 }
 
 /** Fork eligibility (ADR-008 §5): ≥10% of members, then a 30-day cooling-off period. */

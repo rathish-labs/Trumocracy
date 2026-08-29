@@ -2,14 +2,37 @@
 
 ```
 Document ID:   SRS-TRUMOCRACY
-Version:       2.13.0
-Status:        Approved
+Version:       2.14.1
+Status:        In Review
 Owner:         Priya Raghunathan — Product Owner
 Approvers:     Gate 1 — Priya Raghunathan (Product Owner), Ana-Maria Petrescu (Project Manager),
                Rathish (Human Approver — Gate 1 re-entry, v2.0.0)
 Source:        PR-TRUMOCRACY (docs/01-press-release-prfaq.md)
-Last updated:  2026-08-24
-Change:        v2.13.0 — Rework cycle 1 against business-mode review FAIL
+Last updated:  2026-08-26
+Change:        v2.14.1 — Rework cycle 1 against business-mode review FAIL
+               (artifacts/reviews/02-requirements-srs-v2.14.0-business-cycle1.md; 94%,
+               0C/0H/1M/0L). ISS-01 (Medium): §4.45 FR-131 preamble and §4.45 FR-131
+               requirement text — "same recorded-phasing posture as FR-121..FR-130. TC OPEN —
+               Phase 3" replaced with parenthetical variant at both sites: FR-130 exception
+               noted (TC-3511..TC-3516 now pass per Doc 07 v2.2.2 Approved; FR-130 RTM Must
+               row remains OPEN for G-TRACE — no DES assigned in Doc 03 §5.2). Sweep found 2
+               additional occurrences (§11 Counts para. and §11 Must-set para.) — both are
+               contextually labelled historical changelog entries describing the v2.6.0 state
+               and are not amended. No new FRs minted. No IDs minted. Must count stays at 114.
+               §11 Counts label → v2.14.1 (maintenance rule). §12 rework entry added.
+               v2.14.0 — Approver rulings 2026-08-26 applied (DECISIONS-2026-08-26-PARTY-CREATION-RULINGS.md).
+               Ruling 1 (FR-130): cap is UNCONDITIONAL — annotated in §4.44; 60-day grace never
+               adopted and explicitly NOT part of v1; TC note corrected (TC-3511..3516 pass in
+               Doc 07 v2.2.2; RTM row 125 OPEN G-TRACE pending DES assignment and DES-097).
+               Ruling 2 (FR-077): ratified non-violence clause text given normative home in §4.22
+               — verbatim text frozen before first-party-adoption; CON-013 cross-reference;
+               closes CLAUSE-TEXT-01. Ruling 3 (FR-013): re-petition cooldown decided policy
+               value 30 days annotated in §4.4 — closes COOLDOWN-01; REPETITION_COOLDOWN_SECONDS
+               verified. Ruling 4: tracked deferrals (a) jurisdiction seed list OI-04; (b) Arabic
+               string review; (c) image-emblem DES; (d) DES-073 v2-contract collision gap
+               recorded in §13. §12 v2.14.0 scope note added. §11 Counts label → v2.14.0.
+               No new FR minted. No IDs minted. Must count stays at 114.
+               v2.13.0 — Rework cycle 1 against business-mode review FAIL
                (artifacts/reviews/02-requirements-srs-v2.12.0-business-cycle1.md; 87%, 0C/1H/3M/1L).
                ISS-01 (High): FR-132 Scenario 6 ("No government ID — enrolment denied") replaced
                with two correct post-ruling scenarios — Scenario 6 (phone-only account creation
@@ -508,7 +531,7 @@ See §9.2.
 
 | ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
 |----|-------------------------------|-----------|----------|-------|-----------|
-| FR-013 | Place a published draft into a Petition state with a fixed expiry, archive an expired petition immutably, and impose a cooldown before the same drafter may re-petition with a substantially identical charter in the same jurisdiction. | BR-002 | Should | Tomás Ferreira | T |
+| FR-013 | Place a published draft into a Petition state with a fixed expiry, archive an expired petition immutably, and impose a cooldown before the same drafter may re-petition with a substantially identical charter in the same jurisdiction. _(v2.14.0 — Re-petition cooldown decided policy value: **30 days** (Rathish Kumar, 2026-08-26; DECISIONS-2026-08-26-PARTY-CREATION-RULINGS.md, Ruling 3; closes COOLDOWN-01). Implemented as `REPETITION_COOLDOWN_SECONDS = 30 × 86400 s` in `packages/protocol/src/constants.js` line 186 (verified). "Substantially identical" is determined by the normalized charter fingerprint (the built D4 definition — fingerprint comparison is the normative test for re-petition identity).)_ | BR-002 | Should | Tomás Ferreira | T |
 | FR-014 | Accept at most one endorsement per person per petition, accept it only from a person whose active residency scope lies within the petition's declared jurisdiction, and make endorsements non-transferable, non-purchasable and non-delegable. | BR-002, BR-006, BR-010 | Must | Tomás Ferreira | T, A |
 | FR-015 | Allow an endorser to withdraw an endorsement at any time before activation and decrement the count accordingly, without revealing who withdrew. | BR-002 | Should | Tomás Ferreira | T |
 | FR-016 | Compute the activation threshold entirely in code as a published percentage of the declared jurisdiction's eligible-population denominator, and MUST NOT permit any actor to set, waive, lower or override a threshold for an individual party. | BR-002, BR-008 | Must | Tomás Ferreira | T, I |
@@ -663,6 +686,12 @@ See §9.2.
 | FR-076 | Party creation requires a published founding-member set meeting the count set in the published platform rule for the relevant jurisdiction and a public digital constitution; the constitution MUST contain all mandatory sections with machine-checkable presence — governance rules, membership rules, financial rules, conflict-of-interest rules, candidate-selection rules, leadership and term rules, and the manifesto; the system MUST refuse publication and MUST name every missing section before party creation may proceed, following the same pattern as FR-011's mandatory policy pillars. _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ | BR-014, BR-019 | Must | Tomás Ferreira | T, D |
 | FR-077 | Every party constitution MUST contain the platform's standard non-violence clause (the text published by the platform); the system MUST refuse publication of any new constitution and MUST refuse every subsequent amendment if the non-violence clause is absent or has been altered from the standard text; the presence and integrity of the non-violence clause MUST be verified by code with no human judgment in the path. _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ | BR-014 | Must | Daniel Okonkwo | I, T |
 | FR-078 | Every party constitution MUST be versioned immutably following the discipline of FR-047 and MUST be amendable only through the tiered proposal process defined in FR-025 and FR-026; any section of the constitution MAY declare entrenchment per FR-027. _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ | BR-019, BR-008 | Must | Tomás Ferreira | T, I |
+
+> **Normative standard clause — FR-077 (v2.14.0; ratified 2026-08-26, Rathish Kumar; DECISIONS-2026-08-26-PARTY-CREATION-RULINGS.md, Ruling 2; closes CLAUSE-TEXT-01).** The platform's standard non-violence clause text — which FR-077 MUST require verbatim in every party constitution — is:
+>
+> > "This party will act through peaceful and lawful means only. No member may use, encourage, or support any form of violence in any activity connected to this party."
+>
+> **Normative notes (RFC 2119):** (i) This IS the standard non-violence clause that FR-077 requires; (ii) the clause MUST appear verbatim and non-removable in every party constitution; no platform actor, operator, founding member, or amendment process may remove or alter it; (iii) the clause is **frozen before first-party-adoption** — any later change is a breaking amendment requiring its own process (FR-119 super-process governs Tier-2 named absolutes; CON-013 is a named absolute — see §14 glossary and §4.39); (iv) implemented as the frozen `NON_VIOLENCE_CLAUSE` constant (`packages/protocol/src/constants.js` lines 165-168; verbatim match to the ratified text verified — DECISIONS-2026-08-26-PARTY-CREATION-RULINGS.md §3.2); (v) cross-reference: CON-013 (§9.1) records this as the platform's single deliberate exception to political-content neutrality.
 
 ### 4.23 Participation tiers — self-assigned, descriptive, never permissive
 
@@ -965,7 +994,7 @@ See §9.2.
 
 | ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
 |----|-------------------------------|-----------|----------|-------|-----------|
-| FR-130 | A provisional party — one that has been platform-activated per FR-018 but whose legal registration has not yet been externally verified and recorded per FR-075 — MUST be capped at 100 members; the cap MUST lift automatically, by code, on verified legal registration being recorded on the platform per FR-075; no operator or manual path may lift the cap before that event. This requirement is an anti-capture control: it prevents an unverified party accumulating membership strength before it is legally real. **Distinction:** this cap is wholly distinct from the endorsement threshold (FR-014, FR-016) and from the endorsement-floor constants (DES-010: max(byPopulation, byVerified, 500)) — those govern petition legitimacy; FR-130 governs post-activation provisional membership, a separate anti-capture layer. _(Source: C-02 ruling, Rathish, 2026-08-22; Doc 03 §10.12.6 C-02; artifacts/status/DECISIONS-2026-08-22-WIREFRAME-C01-C02.md. DES owed at next Doc 03 increment — same recorded-phasing posture as FR-121..FR-129. TC OPEN — Phase 3.)_ | BR-002, BR-012 | Must | Sofia Marchetti | T, I |
+| FR-130 | A provisional party — one that has been platform-activated per FR-018 but whose legal registration has not yet been externally verified and recorded per FR-075 — MUST be capped at 100 members; the cap MUST lift automatically, by code, on verified legal registration being recorded on the platform per FR-075; no operator or manual path may lift the cap before that event. This requirement is an anti-capture control: it prevents an unverified party accumulating membership strength before it is legally real. **Distinction:** this cap is wholly distinct from the endorsement threshold (FR-014, FR-016) and from the endorsement-floor constants (DES-010: max(byPopulation, byVerified, 500)) — those govern petition legitimacy; FR-130 governs post-activation provisional membership, a separate anti-capture layer. _(Source: C-02 ruling, Rathish, 2026-08-22; Doc 03 §10.12.6 C-02; artifacts/status/DECISIONS-2026-08-22-WIREFRAME-C01-C02.md. DES owed at next Doc 03 increment — same recorded-phasing posture as FR-121..FR-129. _TC note updated v2.14.0:_ TC-3511..TC-3516 now exist and pass (Doc 07 v2.2.2 Approved; implementation IS_INSECURE_MOCK=true); RTM row 125 remains OPEN (G-TRACE gap — no DES assigned in Doc 03 §5.2; production store pending DES-097). **Approver ruling 2026-08-26 (DECISIONS-2026-08-26-PARTY-CREATION-RULINGS.md, Ruling 1):** the cap is UNCONDITIONAL — no grace period applies; the "60-day grace" raised in the scoping discussion was NEVER adopted into this requirement and is explicitly NOT part of v1; the built code (`PROVISIONAL_MEMBER_CAP = 100`; lift via `recordLegalRegistration()` only; no operator or manual path) is the ruled behaviour. No amendment to the normative text is required — the requirement as written already reflects the unconditional ruling.)_ | BR-002, BR-012 | Must | Sofia Marchetti | T, I |
 
 ### 4.45 v1 honesty notice — voting authentication posture (DES-098)
 
@@ -985,11 +1014,13 @@ See §9.2.
 > provisional-party membership cap; the honesty-notice FR is FR-131. Cascade
 > annotation owed to Doc 03 at the next architect increment. DES-098 minted;
 > US/TC/RTM owed at the next catch-up — same recorded-phasing posture as
-> FR-121..FR-130. TC OPEN — Phase 3.)_
+> FR-121..FR-130 (FR-130 exception: TC-3511..TC-3516 now pass per Doc 07 v2.2.2
+> Approved; FR-130 RTM Must row remains OPEN for G-TRACE — no DES assigned in
+> Doc 03 §5.2). TC OPEN — Phase 3 applies to FR-121..FR-129.)_
 
 | ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
 |----|-------------------------------|-----------|----------|-------|-----------|
-| FR-131 | Wherever a vote is cast in a Definition-A (v1) deployment, the UI MUST display a plain-language honesty notice (designed as DES-098) before the ballot is confirmed. The notice MUST state: **(a)** this ballot uses conventional authentication and is NOT anonymous, NOT receipt-free, and NOT coercion-resistant; **(b)** the platform database CAN see vote direction and party membership in v1; **(c)** the cryptographic private ballot — where the platform is technically unable to see vote direction or party membership — is available when the platform upgrades to the Definition-B (v2) privacy layer. **(d) Open-tier non-counting disclosure (v2.12.0, Rathish, 2026-08-24):** in any v1 deployment using the FR-132/FR-123 counting-gate model, wherever an open-tier (phone-verified but not ID-verified) participant attempts a FR-123 counting action — contributing to official party strength, casting a binding vote, or standing as a candidate — the UI MUST display a plain-language notice stating: (i) their current participation is open-tier only; (ii) that specific action requires government-ID verification (FR-123); (iii) what specifically does not count for them (official strength contribution, binding vote, candidacy); and (iv) how to become a counting member by completing the government-ID check (FR-132 §(b)). This notice MUST be shown before the action is refused and MUST be non-dismissable. The notice MUST be: visible before confirmation; non-dismissable (the voter MUST acknowledge the notice to proceed); WCAG 2.2 AA compliant (DES-081); screen-reader accessible. The notice MUST appear on SCR-13 (ballot booth) and SCR-14 (post-vote confirmation). The v1 product — its UI, README, and all public-facing materials — MUST NOT use the words "private", "anonymous", "receipt-free", or "secure" to describe v1 voting behaviour, and MUST NOT present itself as providing the Definition-B (v2) cryptographic guarantees. _(Source: approver directive 2026-08-23, Rathish; DECISIONS-2026-08-23-V1-V2-SPLIT.md; approver ruling 2026-08-24, Rathish; DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md (clause (d) added — open-tier non-counting disclosure obligation). Follows the disclosed-limitation pattern: Doc 03 §13 Phase-1 public-tally disclosure; DES-063 (v2 coercion-safe confirmation surface is the v2 successor to DES-098). DES-098 minted; US/TC/RTM owed at next catch-up — same recorded-phasing posture as FR-121..FR-130. TC OPEN — Phase 3.)_ | BR-005, BR-009 | Must | Nadia Hassan | T, I |
+| FR-131 | Wherever a vote is cast in a Definition-A (v1) deployment, the UI MUST display a plain-language honesty notice (designed as DES-098) before the ballot is confirmed. The notice MUST state: **(a)** this ballot uses conventional authentication and is NOT anonymous, NOT receipt-free, and NOT coercion-resistant; **(b)** the platform database CAN see vote direction and party membership in v1; **(c)** the cryptographic private ballot — where the platform is technically unable to see vote direction or party membership — is available when the platform upgrades to the Definition-B (v2) privacy layer. **(d) Open-tier non-counting disclosure (v2.12.0, Rathish, 2026-08-24):** in any v1 deployment using the FR-132/FR-123 counting-gate model, wherever an open-tier (phone-verified but not ID-verified) participant attempts a FR-123 counting action — contributing to official party strength, casting a binding vote, or standing as a candidate — the UI MUST display a plain-language notice stating: (i) their current participation is open-tier only; (ii) that specific action requires government-ID verification (FR-123); (iii) what specifically does not count for them (official strength contribution, binding vote, candidacy); and (iv) how to become a counting member by completing the government-ID check (FR-132 §(b)). This notice MUST be shown before the action is refused and MUST be non-dismissable. The notice MUST be: visible before confirmation; non-dismissable (the voter MUST acknowledge the notice to proceed); WCAG 2.2 AA compliant (DES-081); screen-reader accessible. The notice MUST appear on SCR-13 (ballot booth) and SCR-14 (post-vote confirmation). The v1 product — its UI, README, and all public-facing materials — MUST NOT use the words "private", "anonymous", "receipt-free", or "secure" to describe v1 voting behaviour, and MUST NOT present itself as providing the Definition-B (v2) cryptographic guarantees. _(Source: approver directive 2026-08-23, Rathish; DECISIONS-2026-08-23-V1-V2-SPLIT.md; approver ruling 2026-08-24, Rathish; DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md (clause (d) added — open-tier non-counting disclosure obligation). Follows the disclosed-limitation pattern: Doc 03 §13 Phase-1 public-tally disclosure; DES-063 (v2 coercion-safe confirmation surface is the v2 successor to DES-098). DES-098 minted; US/TC/RTM owed at next catch-up — same recorded-phasing posture as FR-121..FR-130 (FR-130 exception: TC-3511..TC-3516 now pass per Doc 07 v2.2.2 Approved; FR-130 RTM Must row remains OPEN for G-TRACE — no DES assigned in Doc 03 §5.2). TC OPEN — Phase 3 applies to FR-121..FR-129.)_ | BR-005, BR-009 | Must | Nadia Hassan | T, I |
 
 _BR trace rationale: **BR-005** — "Manifestos, commitments and office-holders' governance votes MUST be publicly verifiable." Platform honesty about the properties of the voting mechanism is the complement of verifiability; in v1 the tally result IS on the audit record (FR-033/FR-054) but the mechanism is not private, and FR-131 ensures that distinction is stated plainly. **BR-009** — "Proving personhood and residency MUST NOT expose a member's real-world identity or make them targetable." The honesty notice protects members by ensuring informed consent about what v1 cannot guarantee before they vote, enabling them to make an informed decision about their exposure._
 
@@ -2636,7 +2667,7 @@ Then the transition is appended with timestamp and cause; the prior state is pre
 
 ## 11. Requirements prioritization & release plan (MoSCoW)
 
-**Counts (v2.13.0).** _(Maintenance rule: update this label on every version bump — it MUST match the document version number.)_ 21 BR · 133 FR minted (131 active + 2 superseded: FR-046, FR-062) · 28 NFR · 15 CON · 27 requirement-level RISK rows in §10 (RISK-01..16 + RISK-22..32; RISK-17..21 live in Doc 13) · 12 TDs.
+**Counts (v2.14.1).** _(Maintenance rule: update this label on every version bump — it MUST match the document version number.)_ 21 BR · 133 FR minted (131 active + 2 superseded: FR-046, FR-062) · 28 NFR · 15 CON · 27 requirement-level RISK rows in §10 (RISK-01..16 + RISK-22..32; RISK-17..21 live in Doc 13) · 12 TDs.
 _(v1.1.0 baseline: 13 BR · 73 FR · 26 NFR · 12 CON · 19 RISK · 7 TDs. v1.0.0 baseline: 12 BR · 61 FR · 26 NFR · 12 CON · 16 RISK · 6 TDs. Added by CR-v1.1.0: 1 BR, 12 FR, 3 RISK, 1 TD. Added by v2.0.0 re-entry: 7 BR, 40 FR, 2 NFR, 2 CON, 9 RISK, 3 TDs; 2 FRs superseded. Added by v2.1.0: 1 BR (BR-021), 7 FR (FR-114..FR-120), 2 RISK (RISK-31..32), 1 TD (TD-11). Added by v2.3.0: 8 FR (FR-121..FR-128, all Must), 1 CON (CON-015), 1 TD (TD-12); OI-19/OI-20 minted. No new BR or NFR. Added by v2.4.0: 1 FR (FR-129, Must — Charter-layer guard); OI-19 and OI-20 CLOSED; FR-125 finalised (no longer draft). New FRs have no DES/US yet — recorded-phasing posture, RTM catches up. Added by v2.5.0: 1 FR (FR-130, Must — provisional-party membership cap, anti-capture control; C-02 ruling, Rathish, 2026-08-22; US-0131 minted in Doc 05 v2.1.0; DES owed — same recorded-phasing posture; TC OPEN — Phase 3). Added by v2.6.0: 1 FR (FR-131, Must — v1 honesty notice; approver directive 2026-08-23; DES-098 minted by architect in Doc 03 v2.3.0 §10.13.6; US/TC/RTM owed at next catch-up; same recorded-phasing posture as FR-121..FR-130; TC OPEN — Phase 3). Added by v2.8.0: 2 FR (FR-132, Must — v1 phone-based SMS auth, DES-095 amended, ADR-025; FR-133, Must — v1 spam-resistance flag-don't-block, DES-099; approver directive 2026-08-23; both in recorded-phasing posture; TC OPEN — Phase 3). v2.11.0 amendment: FR-132 amended to add government-ID document check, verify-and-discard, DES-100 allowlist/denylist normative text, subject_id_hash deduplication (no new mint; Must count unchanged at 114); FR-133 amended to clarify ID-check/spam-layer scope asymmetry.)_
 
 | Priority | FR count | FR IDs |
@@ -2759,6 +2790,20 @@ per the refine loop; none exist at v1.0.0 or v1.1.0 (all v1.1.0 requirements sou
 
 **v2.13.0 session scope:** No new FRs minted. Must count stays at 114. §8 Gherkin sweep (grep for `denied`, `enrol`, `refus`, `government ID` across §8, lines 1141–2490) found only the pre-ruling Scenario 6 as a stale hit; all other Gherkin occurrences of those terms relate to FR-001 personhood enrolment (ZK-based, separate from government-ID gating) or correct post-ruling FR-132/FR-133 behaviours. No additional stale Gherkin survivors found beyond the replaced Scenario 6. ISS-04 addressed via integration with ISS-01 replacement (Scenario 6 is the explicit positive-path scenario). US/TC/RTM rows for FR-131..FR-133 remain OPEN — same recorded-phasing posture as v2.12.0.
 
+**v2.14.0 amendments (approver rulings 2026-08-26; DECISIONS-2026-08-26-PARTY-CREATION-RULINGS.md):**
+- FR-130 annotated (§4.44): cap UNCONDITIONAL confirmed (Ruling 1); 60-day grace never adopted and NOT part of v1; TC note corrected (TC-3511..3516 pass Doc 07 v2.2.2 Approved; RTM row 125 OPEN G-TRACE pending DES-097 and DES assignment in Doc 03 §5.2).
+- FR-077 normative home established (§4.22): ratified clause text inserted as the standard — verbatim, non-removable, frozen before first-party-adoption (Ruling 2; closes CLAUSE-TEXT-01); CON-013 cross-reference.
+- FR-013 annotated (§4.4): re-petition cooldown decided policy value 30 days (Ruling 3; closes COOLDOWN-01); `REPETITION_COOLDOWN_SECONDS` verified; "substantially identical" = normalized charter fingerprint.
+- §13 tracked deferrals added: (a) jurisdiction seed list pending OI-04/registry; (b) Arabic native-speaker string review (technical-writer, pre-launch); (c) image-emblem DES (architect, v2 scope); (d) DES-073 v2-contract collision check gap (architect, v2 gap) — per Ruling 4 (DECISIONS-2026-08-26-PARTY-CREATION-RULINGS.md).
+
+**v2.14.0 session scope:** No new FRs minted. No IDs minted. Must count stays at 114. All edits are annotations and normative-home additions; no normative text deleted or renumbered. §16.3 rows for FR-010/011/012/013/130 verified accurate — no changes required. §8 Gherkin not touched (no Gherkin change required by any ruling).
+
+**v2.14.1 rework (rework cycle 1; review FAIL artifacts/reviews/02-requirements-srs-v2.14.0-business-cycle1.md; 94%, 0C/0H/1M/0L):**
+- §4.45 FR-131 preamble (rationale block, italic annotation): "same recorded-phasing posture as FR-121..FR-130. TC OPEN — Phase 3." replaced with parenthetical variant — FR-130 exception added (TC-3511..TC-3516 now pass per Doc 07 v2.2.2 Approved; FR-130 RTM Must row remains OPEN for G-TRACE — no DES assigned in Doc 03 §5.2); "TC OPEN — Phase 3 applies to FR-121..FR-129" stated explicitly. (ISS-01 Medium, site 1.)
+- §4.45 FR-131 requirement text (table row inline citation): identical fix — "same recorded-phasing posture as FR-121..FR-130. TC OPEN — Phase 3." → parenthetical variant. (ISS-01 Medium, site 2.)
+
+**v2.14.1 session scope:** No new FRs minted. No IDs minted. Must count stays at 114. ISS-01 sweep (grep `FR-121..FR-130` across doc, 4 total occurrences): sites at preamble and requirement text fixed above; 2 additional occurrences are in §11 (Counts para. "Added by v2.6.0" and Must-set para. "v2.6.0: the Must set grows...") — both are contextually labelled historical changelog entries describing the v2.6.0 state (FR-130's TCs did not exist at v2.6.0 and the phrase was accurate then); retroactive amendment of historical records not appropriate. Line 153 (Change: block v2.6.0 entry) contains "same posture as FR-121..FR-130)" without adjacent "TC OPEN" phrase and was not enumerated as a defect site.
+
 ---
 
 ## 13. Open issues / TBD
@@ -2790,6 +2835,15 @@ per the refine loop; none exist at v1.0.0 or v1.1.0 (all v1.1.0 requirements sou
 **SC-13/SC-14 carry-forward status:** SC-13 (HIGH) and SC-14 (MEDIUM) from the SC-01 re-scan (artifacts/reviews/SECURITY-RESCAN-SC-01-2026-08-10.md §4): resolved IN PRINCIPLE at requirements level by FR-112/FR-113 under ruling 4 (trust-anchor lifecycle governance is a member-vote action executed by code). The Doc 03 design change implementing FR-112/FR-113 is owed after Gate 1 and remains open against the architect until then.
 
 **Fork-initiation carry-forward status:** Fork initiation calldata vulnerability is still open; `fork` flag is OFF above dev (Gate 1 decision §6). Unchanged by v2.0.0; FR-053 and the member-rights fork entry in FR-102 inherit this status.
+
+**Tracked deferrals (2026-08-26; DECISIONS-2026-08-26-PARTY-CREATION-RULINGS.md, Ruling 4):**
+
+| Deferral | Description | Owner | Status |
+|----------|-------------|-------|--------|
+| (a) Jurisdiction seed list (OI-04 sub-item) | 5-region jurisdiction seed list pending OI-04 / registry-service backing. OI-04-PILOT (India/Aadhaar) is resolved (§13 OI-04 above); the broader seed-list design for the 5-region set remains open pending the registry-service design decision. | product-owner / architect | OPEN — pending registry-service backing |
+| (b) Arabic native-speaker string review | UI strings require a native Arabic speaker review before launch; Doc 14 / technical-writer territory — pre-Gate 2 condition. | technical-writer | OPEN — pre-launch |
+| (c) Image-emblem DES (v1 is text-only) | v1 emblem is text-only (1–8 characters; `EMBLEM = { MIN_CHARS: 1, MAX_CHARS: 8 }` constant in `packages/protocol/src/constants.js` lines 144-147); an image-emblem DES is owed for v2 scope. Routed to architect — next Doc 03 increment. | architect | OPEN — v2 scope |
+| (d) DES-073 collision check — v2 on-chain contract gap | DES-073 collision check is implemented app-side in v1; absent from the v2 on-chain contract path (`PartyRegistry.openPetition`). Tracked v2 gap; routed to architect — next Doc 03 increment. | architect | OPEN — v2 gap |
 
 ---
 

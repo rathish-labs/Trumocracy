@@ -2,11 +2,11 @@
 
 ```
 Document ID:   CODE-TRUMOCRACY
-Version:       2.0.1
-Status:        Approved
+Version:       2.2.0
+Status:        Approved — 06-coding-and-ut-v2.2.0-technical-cycle2.md
 Owner:         Samuel Oyelaran — Engineering Lead
 Source:        SDD-TRUMOCRACY v2.7.1 §9 · ADR-011 · ADR-023 · ADR-024 · ADR-025
-Last updated:  2026-08-24
+Last updated:  2026-08-25
 ```
 
 > Built from SDD §9 and ADR-011. Records what was physically built, the unit-testing
@@ -15,7 +15,46 @@ Last updated:  2026-08-24
 
 ```
 Change history:
-  v2.0.1 (2026-08-24) — Rework cycle 1 against artifacts/reviews/06-coding-and-ut-v2.0.0-technical-cycle1.md
+  v2.2.0 (2026-08-25) — Rework cycle 1 against artifacts/reviews/06-coding-and-ut-v2.1.0-technical-cycle1.md
+               (FAIL 84%, 0C/1H/2M/1L). All four issues resolved:
+               ISS-01 (High): activateParty() now computes required endorsements via
+               petitionThreshold() (governance.js — max(thresholdBps×pop/BPS,
+               thresholdBps×verified/BPS, 500)) using the petition's stored
+               jurisdictionPopulation and jurisdictionVerified fields. Refuses with
+               THRESHOLD_NOT_MET (carrying .current and .required) when below threshold.
+               No human step, no bypass parameter. Seven SDK call sites updated: each seeds
+               threshold-met endorsements via seedThresholdMet() before activateParty().
+               goodDraft fixture extended with jurisdictionPopulation/jurisdictionVerified.
+               New tests UT-0814 (refusal below threshold naming counts), UT-0815 (exact
+               threshold succeeds), UT-0816 (500-floor binds when percentage < floor).
+               ISS-02 (Medium): publishDraft() re-runs name/emblem collision check (same
+               normalisation, petitions AND active parties, same-jurisdiction) to close the
+               TOCTOU window between createDraft and publishDraft. New test UT-0818 (draft
+               created, colliding petition published concurrently, publishDraft refused).
+               ISS-03 (Medium): InMemoryPartyStore.archivePetition(id) → archivePetition(id,
+               now); expirePetitions passes the injected clock value t. No Date.now()
+               anywhere in the file. IPartyStore typedef updated. New test UT-0817
+               (archivedAt equals the injected expiry time — deterministic).
+               ISS-04 (Low): §7 limitation #19 added (activateParty gate at service layer;
+               production wiring must supply real endorsement counts).
+               Suite: 491 tests (contracts 95 / protocol 126 / sdk 197 / ui 14 /
+               indexer 16 / web 43); dep-guard clean; tsc exits 0 in packages/ui and
+               apps/web. §3 counts updated.
+
+  v2.1.0 (2026-08-25) — Party-creation feature drop (US-0014/US-0015/US-0131).
+               Protocol additions (additive): PROVISIONAL_MEMBER_CAP, EMBLEM, NON_VIOLENCE_CLAUSE,
+               REPETITION_COOLDOWN_SECONDS, validateDraft, applyCharterDefaults, charterFingerprint,
+               normalizeCollisionKey, additive validateCharter tier bounds (D6). SDK:
+               InMemoryPartyStore (IS_INSECURE_MOCK=true), PartyCreationService (clock-injected).
+               Web: EightPillarForm extended (emblem + jurisdiction select + charter section + BR-020
+               disclosure), ProvisionalStatus component (FR-130), petitions/new page wired to
+               InMemoryPartyStore demo service. i18n: new party-creation strings en+ar (translation
+               quality flag owed for Doc 14). Types: trumocracy-protocol.d.ts + trumocracy-sdk.d.ts
+               updated. Suite: 486 tests (all green); dep-guard clean; tsc --noEmit 0 errors.
+               §3 counts updated. §5 review record added. §7 limitations extended. ISS-03 (v2.0.1)
+               date corrected (2026-08-24 → 2026-08-25).
+
+  v2.0.1 (2026-08-25) — Rework cycle 1 against artifacts/reviews/06-coding-and-ut-v2.0.0-technical-cycle1.md
                (FAIL 94%, 0C/0H/1M/1L). ISS-01 (Medium): removed "node" from
                packages/ui/tsconfig.json types array — browser-only UI library has no Node API
                surface; vitest/globals covers test-file globals; tsc --noEmit now exits 0.
@@ -258,6 +297,7 @@ Counts are actual as of this session (2026-08-25), verified by running `npm test
 |---|---|---|---|
 | UT-0001..0028 | governance rules: tiers, surge, tally, eligibility, schedule, thresholds | protocol | 41 |
 | UT-0030..0055 | party lifecycle, vision/charter validation, regions, anonymity guard, issuer invariant, flags | protocol | 41 |
+| UT-0060..0086 | party-creation: validateDraft, emblem, non-violence clause, defaults, fingerprint, normalizeCollisionKey, additive charter bounds | protocol | 44 |
 | UT-0100..0125 | deployment, enrolment, petitions, activation, membership | contracts | 25 |
 | UT-0200..0230 | proposals, quorum, supermajority, surge, entrenchment, timelock | contracts | 11 |
 | UT-0300..0361, SEC-* | adversarial, one suite per RISK; capability-absence; ship-dark; security regressions | contracts | 34 |
@@ -267,14 +307,18 @@ Counts are actual as of this session (2026-08-25), verified by running `npm test
 | UT-0700..0742 | client safety surfaces: receipt-free confirmation, warning banner, a11y | web | 16 |
 | UT-0750..0758 | PrivacyStatus component: state rendering, self-view contract, absence, backing-aware copy | ui | 14 |
 | UT-0760..0779 | IEligibilityVerifier seam, IBallotService seam: counting-tier gate, IS_INSECURE_MOCK delegation, nullifier, tally | sdk | 36 |
+| UT-0780..0818 | PartyCreationService + InMemoryPartyStore: IS_INSECURE_MOCK, validation gate, collision (incl. TOCTOU re-check), cooldown, FR-018 threshold gate (ISS-01), FR-130 cap, join-never-calls-verifier, status, determinism, archivedAt determinism (ISS-03) | sdk | 37 |
+| UT-0841..0857 | party-creation web flow: emblem field, deficiency errors, collision surfaces, BR-020 disclosure, non-violence clause, ProvisionalStatus, jargon scan | web | 27 |
 | (SDK core) | identity, proofs, transports, verified reads, prediction, client, scopes | sdk | 124 |
-| **Total** | | | **383** |
+| **Total** | | | **491** |
 
-Note: the SDK total of 160 comprises 124 (core) + 36 (seams UT-0760..UT-0779). The UI total of
-14 comprises 10 (original UT-0750..UT-0757) + 4 (new UT-0758 backing-aware copy tests, this
-session). Every `UT-####` maps to an `FR`/`NFR`/`RISK` in the RTM (Doc 08). (UT-#### IDs may
-each cover a describe-block with multiple `it()` assertions; the Count column is the verified
-figure from `npm test`; ID ranges mark RTM block boundaries only.)
+Note: the SDK total of 197 comprises 124 (core) + 36 (seams UT-0760..UT-0779) + 37 (new
+UT-0780..UT-0818 party-creation service; 5 tests added in v2.2.0 rework). The web total of
+43 comprises 16 (original UT-0700..UT-0742) + 27 (new UT-0841..UT-0857 party-creation web
+tests). The protocol total of 126 comprises 82 (original UT-0001..UT-0055) + 44 (new
+UT-0060..UT-0086). Every `UT-####` maps to an `FR`/`NFR`/`RISK` in the RTM (Doc 08).
+(UT-#### IDs may each cover a describe-block with multiple `it()` assertions; the Count
+column is the verified figure from `npm test`; ID ranges mark RTM block boundaries only.)
 
 ## 4. Capability-absence testing
 
@@ -328,8 +372,10 @@ the tests were written by the same person who wrote the bug.
 ### 5.0 Scaffold-drop technical review record
 
 Review history for this document:
+- v2.2.0 cycle 2: pending — routed to reviewer-qa after this rework.
+- v2.1.0 cycle 1: `artifacts/reviews/06-coding-and-ut-v2.1.0-technical-cycle1.md` — FAIL (84%, 0C/1H/2M/1L). ISS-01 (High): activateParty ungated; ISS-02 (Medium): TOCTOU at publishDraft; ISS-03 (Medium): Date.now() in archivePetition; ISS-04 (Low): §7 limitation missing. All four resolved in v2.2.0; merge sign-off withheld pending cycle-2 review.
+- v2.0.1 cycle 2: `artifacts/reviews/06-coding-and-ut-v2.0.1-technical-cycle2.md` — pending.
 - v2.0.0 cycle 1: `artifacts/reviews/06-coding-and-ut-v2.0.0-technical-cycle1.md` — FAIL (94%, 0C/0H/1M/1L). ISS-01 tsconfig node type missing; ISS-02 §3 note ambiguous range notation. Reworked into v2.0.1.
-- v2.0.1 cycle 2: pending — review runs after this version.
 - v1.0.0 cycle 1: `artifacts/reviews/06-coding-and-ut-v1.0.0-technical-cycle1.md` — FAIL (48%)
 - v1.1.0: no cycle-1 review completed (superseded by v2.0.0 in this session)
 
@@ -453,6 +499,44 @@ When each module lands it must read its flag in the same commit.
     flow's interaction with phone-number-based recovery requires engineering decisions that are
     "NOT made in this ADR" and that "a DES owed before the enrolment sprint." No recovery path
     is implemented; this placeholder is flagged for the enrolment sprint.
+12. **InMemoryPartyStore is IS_INSECURE_MOCK=true.** `packages/sdk/src/party-creation.js`'s
+    `InMemoryPartyStore` is in-memory persistence, blocked past devnet by the CI promotion gate.
+    The production Postgres-backed store (DES-097) is later wiring. The IS_INSECURE_MOCK
+    delegation chain is enforced: InMemoryPartyStore → PartyCreationService → CI gate.
+13. **Jurisdiction seed data is not the production registry.** `apps/web/src/config/jurisdictions.ts`
+    contains a curated set of five pilot-region codes and approximate population denominators for
+    demo use. Production: the DES-007 population oracle and live registry service replace this
+    seed. Population figures are approximations only.
+14. **Emblem is text-only (Phase 1).** An image emblem requires a dedicated DES (flagged at
+    D3 ruling 2026-08-25). Text emblems (1–8 chars) are implemented; image emblems are blocked
+    pending that DES.
+15. **NON_VIOLENCE_CLAUSE text requires approver ratification (Flag: CLAUSE-TEXT-01).** The
+    clause text in `packages/protocol/src/constants.js` is engineer-authored per D5 (2026-08-25)
+    and must receive explicit approver ratification before Gate 2. The text is frozen in code so
+    it is verifiable; any change requires a protocol governance action (ADR-010).
+16. **REPETITION_COOLDOWN_SECONDS requires approver ratification (Flag: COOLDOWN-01).** No
+    published figure found in Doc 02/03. Engineer-chosen at 30 days (2 592 000 s). Needs
+    ratification.
+17. **Arabic party-creation strings are a working-draft engineer translation.** The new i18n
+    strings in `apps/web/src/i18n/ar.ts` (party-creation section) are engineer-authored and
+    flagged for translation-quality review at Doc 14 (the technical-writer phase).
+18. **PrivacyStatus not rendered in the party-creation demo flow.** The petitions/new page demo
+    has no authenticated session; DES-094 clause 1 would return null. Rendering PrivacyStatus
+    without a session would be dishonest (it would imply a session-backed guarantee that does not
+    exist). The absence is deliberate and documented in the page source comment.
+19. **`activateParty` threshold gate is at the SDK service layer; production wiring must
+    supply accurate endorsement counts.** `PartyCreationService.activateParty()` now enforces
+    the FR-018 / FR-016 threshold by calling `petitionThreshold()` (protocol governance.js)
+    with the jurisdiction denominators stored on the petition row (`jurisdictionPopulation`,
+    `jurisdictionVerified`). Activation is refused with `THRESHOLD_NOT_MET` (carrying `.current`
+    and `.required`) when `petition.endorsements` falls short. No human step, no bypass
+    parameter. The gate is correct for all code using this service. However, the
+    `petition.endorsements` field is kept accurate by the production persistence layer
+    (DES-097 Postgres-backed store); the service reads what the store provides. A store that
+    does not correctly increment the endorsement count — or that wires a wrong on-chain oracle
+    — would allow premature activation. Tests in this drop seed endorsement counts
+    deterministically via the store; real endorsement feed wiring is a DES-097 integration
+    task.
 
 ## 8. Commit and branch conventions
 
