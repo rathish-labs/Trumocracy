@@ -2,14 +2,33 @@
 
 ```
 Document ID:   SDD-TRUMOCRACY
-Version:       2.8.2
-Status:        Approved — 03-architecture-design-sdd-v2.8.2-technical-cycle3.md (PASS 100%, 0C/0H/0M/0L)
+Version:       2.8.3
+Status:        Approved — 03-architecture-design-sdd-v2.8.3-technical-cycle4.md (PASS 100%, 0C/0H/0M/0L)
 Owner:         Ravi Deshmukh — Principal Architect
 Approvers:     Rafael Duarte (Security), Chen Wei (Reliability), Dr. Lena Kowalczyk (Privacy),
                Aisha Nkemdirim (Elections & Voting)
 Source:        SRS-TRUMOCRACY v2.15.0
 Last updated:  2026-08-29
-Change:        v2.8.2 (2026-08-29) — DES-101 completed for FR-077's SECOND HALF (§10.13.10.1).
+Change:        v2.8.3 (2026-08-29) — APPROVER RULING APPLIED (Rathish, 2026-08-29;
+               artifacts/status/DECISIONS-2026-08-29-NONVIOLENCE-ENTRENCHMENT.md). The
+               non-violence-clause amendment weakness found at v2.8.2 is recorded as its OWN
+               tracked work item — **`PREREQ-01`** — and is explicitly **NOT folded into the
+               on-chain governance increment**. It is a **BLOCKING PREREQUISITE**: that
+               increment MUST NOT ship until the charter-as-clause-map refactor, the
+               platform-immutable non-violence `clauseId`, and amendments-carrying-their-text
+               are built and §10.13.10.1 rule 6's adversarial test — the one that fails
+               against today's code — passes. Approver's rationale: CON-013 makes the clause a
+               condition of a party's existence, so its protection must be a hard gate, not a
+               line item that can slip under sprint pressure. Confirmed NOT exploitable in v1
+               (no on-chain governance path, ADR-024 §(b)) — v1 work is NOT blocked.
+               Edits: §13 debt row upgraded from "build owed in the Phase-3 increment" to the
+               ruled `PREREQ-01` blocking prerequisite with the adversarial test named as
+               closing evidence; §10.13.10.1 gains a "Governance status — PREREQ-01"
+               paragraph and its security note records the ruling plus reviewer-qa's
+               independent confirmation. No design changed — the mechanism specified at v2.8.2
+               is unaltered; this version records its governance standing. Doc 13 absorbs
+               `PREREQ-01` into the Definition-B milestone set at its next version.
+               v2.8.2 (2026-08-29) — DES-101 completed for FR-077's SECOND HALF (§10.13.10.1).
                Self-correction: v2.8.0's §15 assessment claimed FR-077's RTM row was closeable
                once the DES link existed. That was WRONG, and the tester's rule-4 check caught
                it (Doc 08 v2.4.0): FR-077 requires refusal at publication AND at "every
@@ -1841,16 +1860,27 @@ charter text**, so it cannot inspect the clause even in principle. Two distinct 
 
 **Status — honest.** FR-077's RTM row stays **OPEN (G-NOMECH)**. This subsection converts it from
 *undesigned* to *designed-and-unbuilt*: the mechanism is now specified, and the row closes when the
-clause-map refactor and rule 6's adversarial test land. The implementation sits in the same
-Phase-3 increment as the governance/proposal lifecycle that drives `amendCharter`.
+clause-map refactor and rule 6's adversarial test land.
 
-**Security note (routed).** Item 2 above is a live weakness in shipped contract code, not merely a
-documentation gap: a party may today amend away the non-violence commitment that CON-013 makes a
-condition of its existence. The `party_governance` flag is on in every environment, so this is not
-flag-contained. It is recorded in §13 and routed to reviewer-qa for the next security scan and to
-the engineer for the Phase-3 governance increment. No exploit path exists in v1 deployments,
-because v1 runs no on-chain governance (ADR-024 §(b)) — the exposure arrives with the on-chain
-governance increment, and must be fixed **before** it does.
+**Governance status — `PREREQ-01` (approver ruling, Rathish, 2026-08-29).** The build of rules 1–3
+is **not** a line item inside the on-chain governance increment; it is a **separately tracked,
+blocking prerequisite to it**. The on-chain governance increment MUST NOT ship until rule 6's
+adversarial test passes. The approver's rationale: CON-013 makes the non-violence clause a
+condition of a party's existence, so a fix protecting it has to be a hard gate rather than
+something that can slip under sprint pressure. Recorded in §13, in
+`artifacts/status/DECISIONS-2026-08-29-NONVIOLENCE-ENTRENCHMENT.md`, and in the running gate
+status. Doc 13 absorbs `PREREQ-01` into the Definition-B milestone set at its next version.
+
+**Security note (routed; ruled `PREREQ-01`).** Item 2 above is a live weakness in shipped contract
+code, not merely a documentation gap: a party may today amend away the non-violence commitment that
+CON-013 makes a condition of its existence. The `party_governance` flag is on in every environment,
+so this is not flag-contained. Independently confirmed by reviewer-qa against `Party.sol` (both
+failure modes reproduced; zero non-violence checks found in any contract). It is recorded in §13
+and routed to reviewer-qa for the next security scan and to the engineer. No exploit path exists in
+v1 deployments, because v1 runs no on-chain governance (ADR-024 §(b)) — **v1 work is not blocked**.
+The exposure arrives with the on-chain governance increment, and the approver has ruled (2026-08-29)
+that it MUST be fixed **before** that increment ships, as the separately tracked blocking
+prerequisite `PREREQ-01` rather than as a line item within it.
 
 **Traces:** FR-077, FR-027 (entrenchment), FR-078 (constitution amendable only via tiered
 process), CON-013, ADR-010, DES-017 (ratchet), DES-022 (entrenched clauses), DES-074 (parallel
@@ -2170,7 +2200,7 @@ not duplicated here. Architectural debt carried knowingly:
 | Participation profile (DES-064) off above dev | OI-13 unresolved | ship after Gate 1 re-affirmation resolves OI-13 | Open (governance) |
 | Fork feature flag off above dev | calldata vulnerability deferred at Gate 1 (FORK-CRIT) | design now finalised in DES-034; engineering fix required before flag is enabled | **High — security blocker** |
 | ~~FR-077 and FR-130 have shipped code but no DES~~ | ~~C-02 closure recorded the cap as a build obligation and left the design link unwritten; FR-077's link was never written~~ | **PAID DOWN v2.8.0** — DES-101 (§10.13.10) and DES-102 (§10.13.11) written; both RTM chain gaps closed at the design layer. FR-130's row then CLOSED (Doc 08 v2.4.0); FR-077's did not — see the row below | Closed |
-| **`Party.amendCharter` can strip the non-violence clause** — it takes `(clauseId, hash, CID)`, never the charter text, and replaces the whole document hash, so an amendment naming any unrelated clause installs a charter without the CON-013 clause; entrenchment does not help, because the immutable set is a founding-time party choice and the blob is replaced wholesale | found 2026-08-29 while completing DES-101 for FR-077's amendment half; the publication gate was designed and the amendment gate was not | **Designed v2.8.2** (§10.13.10.1): clause-map charter + platform-immutable clauseId + amendments carrying their text + adversarial-amendment regression test. **Build owed in the Phase-3 governance increment, and required BEFORE it ships.** Not exploitable in v1 (no on-chain governance, ADR-024 §(b)) | **High — governance-integrity blocker for the on-chain increment** |
+| **`Party.amendCharter` can strip the non-violence clause** — it takes `(clauseId, hash, CID)`, never the charter text, and replaces the whole document hash, so an amendment naming any unrelated clause installs a charter without the CON-013 clause; entrenchment does not help, because the immutable set is a founding-time party choice and the blob is replaced wholesale | found 2026-08-29 while completing DES-101 for FR-077's amendment half; the publication gate was designed and the amendment gate was not | **Designed v2.8.2** (§10.13.10.1). **APPROVER RULING 2026-08-29 (Rathish; artifacts/status/DECISIONS-2026-08-29-NONVIOLENCE-ENTRENCHMENT.md): this fix is its OWN tracked work item — `PREREQ-01` — and is NOT folded into the on-chain governance increment.** It is a **BLOCKING PREREQUISITE**: the on-chain governance increment MUST NOT ship until the charter-as-clause-map refactor, the platform-immutable non-violence `clauseId`, and amendments-carry-their-text are built AND DES-101 §10.13.10.1 rule 6's adversarial test passes. Closing evidence is that test — the one that fails against today's code. Rationale (approver): CON-013 makes the clause a condition of a party's existence, so its protection must be a hard gate, not a line item that can slip under sprint pressure. Confirmed NOT exploitable in v1 (no on-chain governance path, ADR-024 §(b)) — **does not block any v1 work** | **High — `PREREQ-01`, ruled blocking prerequisite for the on-chain governance increment** |
 | v1 party/membership store is in-memory (`IS_INSECURE_MOCK = true`) | production Postgres backing not built; blocked past devnet by the CI gate | **Design complete v2.8.0** — DES-097(b) (§10.13.12) specifies the mapping, constraints, retention boundary and promotion condition; the build remains owed, and §6's CON-015 answers gate promotion | Medium (blocked by CI) |
 | FR-130 cap is application-enforced in v1 | v1 has no on-chain membership (ADR-024 §(b)); the application boundary is the only enforcement point that exists | audit-record publication makes an over-cap party **detectable** today (DES-102 rule 8); the on-chain guard in `Party.join()` (DES-102 rule 7) makes it **impossible** at the v2 increment | Medium (disclosed) |
 

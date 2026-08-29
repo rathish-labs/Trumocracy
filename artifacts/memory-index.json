@@ -4714,6 +4714,144 @@
     "Ji-woo Park (tester): Doc 07 v2.3.1 patch owed (TC-3508..3510 four corrections + cycle-1 Low issues)."
    ],
    "gate": "Gate 2 NOT READY. Doc 03 v2.8.2 PASSES review (cycle 3 PASS 100%). Routes to architect for Status: Approved."
+  },
+  {
+   "id": "tester-2026-08-29T1215",
+   "role": "tester (own role — Doc 07 test cases + Doc 08 RTM author)",
+   "file": "artifacts/tester-2026-08-29T1215.md",
+   "timestamp": "2026-08-29T12:15:00Z",
+   "phase": "Verify — upstream refresh for Doc 03 v2.8.2/v2.8.3 and the PREREQ-01 approver ruling",
+   "product": "Trumocracy",
+   "branch": "design/architect-des-backlog",
+   "scope": "docs/07-test-cases-suites.md v2.3.1 -> v2.3.2 (In Review); docs/08-traceability-matrix.md v2.4.0 -> v2.4.1 (In Review). Upstream: Doc 03 v2.8.2 Approved (section 10.13.10.1 designs FR-077 amendment half) and v2.8.3 In Review (approver ruling: PREREQ-01 blocking prerequisite).",
+   "summary": "Refreshed both tester-owned documents for the Doc 03 v2.8.2/v2.8.3 upstream motion WITHOUT re-adjudicating anything. The FR-077 amendment gap the tester surfaced at Doc 08 v2.4.0 has since been independently reproduced by reviewer-qa against Party.sol, DESIGNED by the architect (section 10.13.10.1: charter as a CLAUSE MAP with the document hash derived from the map so amendCharter can only reach the clause it names; non-violence clauseId PLATFORM-IMMUTABLE at construction for every party; amendments CARRY THE TEXT they change), and RULED by the approver into its own tracked work item PREREQ-01 — a blocking prerequisite to the on-chain governance increment, explicitly not folded into it, with DES-101 rule 6 adversarial amendment test as closing evidence. NONE of that changes the row: FR-077 stays OPEN / G-NOMECH because designed is not built — the same principle applied to DES-097(b) at v2.4.0. MINTED TC-3541 (next free id) for the adversarial amendment case, status No mechanism (NOT Blocked: the instrument exists and the case is executable today and would FAIL, so per section 0.1 the defect is against the REQUIREMENT not the case). Minted deliberately because PREREQ-01 exit criterion IS that test — an exit criterion living only in a design document is untracked in the suite meant to prove it — and because FR-077 RTM row previously cited no TC covering the clause that keeps it open. Verified mechanically (42/42 checks) that NO Must-row count and NO status moved.",
+   "artifacts_written": [
+    "docs/07-test-cases-suites.md (v2.3.2, In Review)",
+    "docs/08-traceability-matrix.md (v2.4.1, In Review)",
+    "artifacts/tester-2026-08-29T1215.md",
+    "artifacts/memory-index.json (updated — this entry appended)"
+   ],
+   "tc_minted": {
+    "TC-3541": "FR-077 amendment half — an amendment naming an UNRELATED clause must not install a charter whose non-violence clause has been stripped, plus the direct variant on a party that never entrenched the clause. Status: No mechanism. Automation: designed, not automatable yet (mechanism specified in Doc 03 section 10.13.10.1 but unbuilt); the case is executable today and WOULD FAIL, which is its value. Closing evidence for PREREQ-01. Suite: TS-PARTY (range extended to TC-3489-TC-3516, TC-3541)."
+   },
+   "unchanged_verified": {
+    "must_rows": "138",
+    "must_complete": "13",
+    "must_open": "125",
+    "completion": "9.4%",
+    "total_rows": "17/144",
+    "stories_dod": "14 of 134",
+    "by_reason": "G-PHASE3 47 / G-NOMECH 11 / G-NOENV 9 / G-EXTERNAL 5 / G-UI 6 / G-UNMEASURABLE 4 / G-CIRCUIT 5 / G-TRACE 39 = 126 vs 125 distinct open",
+    "FR-077": "OPEN, G-NOMECH — status UNCHANGED; note enriched only",
+    "FR-130": "still COMPLETE with v1 tamper-evidence residual and revisit-when-on-chain-membership-goes-live flag intact",
+    "FR-064": "untouched",
+    "TC-3508..TC-3510": "still Pass (inh.) with the v2.3.1 corrections intact",
+    "TC-3403": "still No mechanism; reason note refreshed only"
+   },
+   "counts_that_did_move": {
+    "reason": "TC-3541 was minted — these are test-case counts, not requirement counts",
+    "doc07": "TS-PARTY 28->29 cases (automated 28 unchanged, Blocked/no-mech 0->1); Total 442->443; automated 211 unchanged; Blocked-or-no-mech 231->232; anchors 440->441; expanded 449->450; section 10 No mechanism 48->49",
+    "doc08": "section 6 TC total 449->450; not-executed/not-executable 254->255; passing evidence 195 UNCHANGED (a No-mechanism case adds to the gap bucket, never to evidence)"
+   },
+   "other_changes": {
+    "Doc 07 pins": "SDD v2.8.1 -> v2.8.3 (+ section 10.13.10.1)",
+    "Doc 08 pins": "SDD v2.8.1 -> v2.8.3 (+ section 10.13.10.1); TC v2.3.1 -> v2.3.2",
+    "Doc 08 FR-077 row": "TC column now cites TC-3541; note records the designed mechanism, PREREQ-01, and that PREREQ-01 governs WHEN the fix lands not WHETHER the row closes; records not-exploitable-in-v1 (ADR-024 (b))",
+    "Doc 08 gap-log 68": "same enrichment; OWNER moved architect -> engineer (PREREQ-01 build); phase target \"design fix required first\" -> \"before the on-chain governance increment ships\"",
+    "Doc 08 section 9 sign-off": "deliberately NOT amended — no figure in it changed"
+   },
+   "verification": {
+    "checks": "42/42 mechanical checks pass — headers/pins incl. no stale SDD v2.8.1, every Must-row figure held constant, every by-reason figure held constant, FR-077 still G-NOMECH, FR-130 still COMPLETE, FR-064 untouched, TC-3541 minted exactly once, count knock-ons reconciled (443=442+1; 450=449+1; 255=450-195), TC-3508..3510 still Pass (inh.)",
+    "suite": "NOT re-run — documentation refresh over unchanged code; last verified 542/542 green at Doc 07 v2.3.1 (section 9 R-14). No suite claim was made for this version."
+   },
+   "ids_touched": {
+    "TC": "TC-3541 MINTED (No mechanism; prior max TC-3540 — no reuse); TC-3403 note only; TC-3508..TC-3510 untouched",
+    "FR": "FR-077 (note enriched, status unchanged); FR-130 / FR-064 / FR-010 read and verified unchanged",
+    "DES": "DES-101 section 10.13.10 + section 10.13.10.1, DES-102",
+    "other": "CON-013, ADR-010, ADR-024 (b), US-0087, PREREQ-01",
+    "gap-log entries": "68 (note + owner + phase target)"
+   },
+   "open_items": [
+    "Engineer: build PREREQ-01 (clause-map charter, platform-immutable non-violence clauseId, amendments-carry-text) and make TC-3541 pass — blocking prerequisite to the on-chain governance increment.",
+    "Tester: FR-077 closes only when TC-3541 passes; FR-130 still flagged for revisit when on-chain membership goes live.",
+    "Neutral reviewer: Doc 07 v2.3.2 and Doc 08 v2.4.1 both need review cycles (the tester authored both).",
+    "reviewer-qa: independent verification of the 125 open Must rows before merge sign-off.",
+    "Main session: commits this round — the tester committed nothing."
+   ],
+   "gate": "Gate 2 NOT READY — 125 open Must rows against a zero-gap rule, unchanged by this refresh. The upstream work made FR-077 path to closure legible (designed, ruled, with a named test as its exit criterion) without moving it one row closer to closed."
+  },
+  {
+   "id": "reviewer-qa-2026-08-29T1130",
+   "role": "reviewer-qa",
+   "file": "artifacts/reviewer-qa-2026-08-29T1130.md",
+   "timestamp": "2026-08-29T11:30:00Z",
+   "phase": "Verify — three concurrent technical-mode document reviews",
+   "product": "Trumocracy",
+   "scope": "Doc 03 v2.8.3 (cycle 4 of 5); Doc 07 v2.3.2 (cycle 2 of 5); Doc 08 v2.4.1 (cycle 1 of 5)",
+   "summary": "All three PASS 100%, 0C/0H/0M/0L. Doc 03 v2.8.3: ruling recorded faithfully against DECISIONS file, no design changed (rules 1-6 byte-identical), v1 non-exploitability matches cycle-3 verification. Doc 07 v2.3.2: TC-3508..TC-3510 accuracy confirmed against party.js+test file; TC-3541 No mechanism classification correct (EVM harness operational, case executable today and would fail, product defect not instrument gap); count arithmetic 442->443 correct. Doc 08 v2.4.1: FR-130 COMPLETE re-derived (four rules satisfied, same v1 enforcement-tier precedent as FR-011/020/022); FR-077 OPEN/G-NOMECH with TC-3541+PREREQ-01 correctly recorded; gap-log 68 owner transfer architect->engineer correct (design half delivered at Doc 03 v2.8.3).",
+   "artifacts_written": [
+    "artifacts/reviews/03-architecture-design-sdd-v2.8.3-technical-cycle4.md",
+    "artifacts/reviews/07-test-cases-suites-v2.3.2-technical-cycle2.md",
+    "artifacts/reviews/08-traceability-matrix-v2.4.1-technical-cycle1.md",
+    "artifacts/reviewer-qa-2026-08-29T1130.md"
+   ],
+   "review_verdicts": {
+    "03-architecture-design-sdd-v2.8.3": { "score": 100, "critical": 0, "high": 0, "medium": 0, "low": 0, "cycle": 4, "verdict": "PASS" },
+    "07-test-cases-suites-v2.3.2": { "score": 100, "critical": 0, "high": 0, "medium": 0, "low": 0, "cycle": 2, "verdict": "PASS" },
+    "08-traceability-matrix-v2.4.1": { "score": 100, "critical": 0, "high": 0, "medium": 0, "low": 0, "cycle": 1, "verdict": "PASS" }
+   },
+   "independent_positions": {
+    "FR-130_closure": "AGREED — COMPLETE. Four rules satisfied. v1 enforcement-tier gap same posture as FR-011/020/022. Residual disclosed. Consistent precedent.",
+    "TC-3541_classification": "AGREED — No mechanism (not Blocked). EVM harness operational (95/95 green). Case executable today, would fail. Product defect, not instrument gap. §0.1 correctly applied.",
+    "gap_log_68_owner": "AGREED — architect->engineer correct. Design obligation discharged at Doc 03 v2.8.3. Build obligation belongs to engineer (PREREQ-01)."
+   },
+   "code_verified": {
+    "party.js_363-380": "field charter.nonViolenceClause; code REQUIRED (null/absent); ALTERED (byte mismatch); return { valid, errors }",
+    "party-creation.test.js": "UT-0072/73 assert REQUIRED on charter.nonViolenceClause; UT-0074/75 assert ALTERED on same field"
+   },
+   "ids_touched": {
+    "DES": "DES-101, DES-102",
+    "FR": "FR-077 (OPEN/G-NOMECH), FR-130 (COMPLETE re-confirmed)",
+    "TC": "TC-3541 (minted), TC-3403, TC-3508..TC-3510",
+    "PREREQ-01": "ruling by Rathish 2026-08-29 — blocking prerequisite to on-chain governance increment"
+   },
+   "open_items": [
+    "Ravi Deshmukh (architect): Doc 03 v2.8.3 Status: Approved.",
+    "Ji-woo Park (tester): Doc 07 v2.3.2 Status: Approved; Doc 08 v2.4.1 Status: Approved.",
+    "Engineer: PREREQ-01 build must land BEFORE on-chain governance increment ships.",
+    "TC-3541 stays No mechanism until PREREQ-01 built and adversarial amendment test passes.",
+    "FR-077 stays OPEN (G-NOMECH) until mechanism built and TC-3541 passes."
+   ],
+   "rtm_summary": { "must": 138, "complete": 13, "open": 125, "completion": "9.4%", "gate2_ready": false },
+   "gate": "Gate 2 NOT READY. All three documents PASS 100% cycle. Doc 03 v2.8.3, Doc 07 v2.3.2, Doc 08 v2.4.1 all route to Status: Approved. PREREQ-01 does not block v1 work. 125 open Must rows unchanged."
+  },
+  {
+   "id": "reviewer-qa-2026-08-29T1145-merge-signoff",
+   "role": "reviewer-qa",
+   "file": "artifacts/reviewer-qa-2026-08-29T1145-merge-signoff.md",
+   "timestamp": "2026-08-29T11:45:00Z",
+   "phase": "Verify — merge sign-off (design/architect-des-backlog)",
+   "product": "Trumocracy",
+   "scope": "Merge sign-off for design/architect-des-backlog → main. Commits 88860b4, 9912f60 plus uncommitted final state (Doc 03 v2.8.3, Doc 07 v2.3.2, Doc 08 v2.4.1 Approved; DECISIONS file; GATE-STATUS PREREQ-01; review reports and memory notes).",
+   "summary": "SIGNED — merge of design/architect-des-backlog to main. Documents-only branch confirmed (git diff --stat fe102a4..HEAD: zero packages/apps/services/tools files). 542/542 tests green (95/126/220/14/16/71); lint:deps OK; tsc exit 0 both apps/web and packages/ui. All three documents Approved with real passing reports. PREREQ-01 consistently recorded in Doc 03 §10.13.10.1, §13, DECISIONS file (10 hits), GATE-STATUS (5 hits). FR-130 COMPLETE re-derived; FR-077 OPEN G-NOMECH. RTM 138/13/125. RTM zero-gap is Gate-2 condition, not merge condition (2026-08-25 ruling).",
+   "merge_signoff": "SIGNED — design/architect-des-backlog → main",
+   "test_run": "542/542 passed: contracts 95, protocol 126, sdk 220, ui 14, indexer 16, web 71",
+   "lint_deps": "7 packages, layering OK, exit 0",
+   "tsc": "apps/web exit 0; packages/ui exit 0",
+   "branch_scope": "documents-only — zero product code files in committed diff or working tree",
+   "documents_approved": {
+    "Doc_03_v2.8.3": "Approved — 03-architecture-design-sdd-v2.8.3-technical-cycle4.md (PASS 100%); loop: v2.8.0 FAIL 95% → v2.8.1 PASS 100% → v2.8.2 PASS 100% → v2.8.3 PASS 100%",
+    "Doc_07_v2.3.2": "Approved — 07-test-cases-suites-v2.3.2-technical-cycle2.md (PASS 100%)",
+    "Doc_08_v2.4.1": "Approved — 08-traceability-matrix-v2.4.1-technical-cycle1.md (PASS 100%)"
+   },
+   "open_items": [
+    "Engineer: PREREQ-01 build must land before on-chain governance increment ships.",
+    "PM: absorb PREREQ-01 into Doc 13 Definition-B milestone set.",
+    "Gate 2 NOT READY: 125 open Must rows.",
+    "FR-077 OPEN until TC-3541 passes.",
+    "FR-064/DES-065: undesigned, v2."
+   ],
+   "gate": "Gate 2 NOT READY (125 open Must rows). Merge SIGNED. Human (Rathish Kumar) executes git merge."
   }
  ]
 }
