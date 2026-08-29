@@ -1,5 +1,5 @@
 /**
- * UT-0780..UT-0830 — PartyCreationService + InMemoryPartyStore.
+ * UT-0780..UT-0818, UT-0831 — PartyCreationService + InMemoryPartyStore.
  *
  * Traces: FR-010, FR-011, FR-012, FR-013, FR-018, FR-020, FR-075, FR-077,
  *         FR-130, BR-020, CON-013, DES-073, DES-097.
@@ -647,5 +647,59 @@ describe('UT-0818 publishDraft TOCTOU collision re-check (ISS-02 fix)', () => {
       thrown = e;
     }
     expect(thrown?.code).toBe('NAME_COLLISION');
+  });
+});
+
+// ─── UT-0831 expirePetitions uses only the IPartyStore interface (ISS-01 fix) ─
+
+describe('UT-0831 expirePetitions reaches only the IPartyStore interface — no private-state access (ISS-01 fix)', () => {
+  /**
+   * Every method declared on the IPartyStore @typedef, and nothing else. The
+   * facade below exposes exactly these, delegating to a real InMemoryPartyStore.
+   * Any service access to private backing state (e.g. `_petitions`) finds
+   * `undefined` on the facade — which is exactly the silent production no-op
+   * that ISS-01 (Doc 06 v2.3.0 cycle-1 Medium) described. This test fails if
+   * the seam break ever comes back.
+   */
+  const IPARTY_STORE_METHODS = [
+    'IS_INSECURE_MOCK',
+    'findDraftById',
+    'findPetitionById',
+    'findPartyById',
+    'findLivePetitionsByJurisdiction',
+    'findActivePartiesByJurisdiction',
+    'findExpiredPetitionsByDrafter',
+    'saveDraft',
+    'updateDraft',
+    'savePetition',
+    'updatePetition',
+    'archivePetition',
+    'findPetitionsPastClose',
+    'saveParty',
+    'updateParty',
+    'recordJoin',
+    'recordLeave',
+    'getActiveMembership',
+    'getMembershipEvents',
+    'getMemberPseudonyms',
+    'recordStrengthContribution',
+    'getCountedPseudonyms',
+  ];
+
+  it('UT-0831 expires a past-close petition through an interface-only store facade', () => {
+    const backing = new InMemoryPartyStore();
+    const facade = Object.fromEntries(
+      IPARTY_STORE_METHODS.map((m) => [m, (...args) => backing[m](...args)]),
+    );
+    const svc = new PartyCreationService(facade, vi.fn(() => T0));
+
+    const { draftId } = svc.createDraft(goodDraft(), 'drafter-a');
+    const { petitionId, closesAt } = svc.publishDraft(draftId);
+
+    const expired = svc.expirePetitions(closesAt + 1);
+
+    expect(expired).toContain(petitionId);
+    expect(backing.findPetitionById(petitionId).state).toBe(PARTY_STATE.EXPIRED);
+    expect(backing.findPetitionById(petitionId).archivedAt).toBe(closesAt + 1);
   });
 });

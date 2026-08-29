@@ -4089,6 +4089,443 @@
     "Gate 2 NOT READY: 126 of 138 Must rows open"
    ],
    "gate": "Gate 1 APPROVED unconditionally 2026-08-11 (Rathish). Gate 2 NOT READY -- 126 of 138 Must rows open. Doc 02 v2.14.1 review loop CLOSED (cycle 2 PASS). Owning role to set Status: Approved."
+  },
+  {
+   "id": "tester-2026-08-28T1000",
+   "role": "tester (acting as NEUTRAL REVIEWER -- document-review skill)",
+   "file": "artifacts/tester-2026-08-28T1000.md",
+   "timestamp": "2026-08-28T10:00:00Z",
+   "phase": "Verify -- technical-mode document-review, cycle 1",
+   "product": "Trumocracy",
+   "branch": "build/v1-party-creation",
+   "scope": "Doc 06 v2.3.0 + code drop (commits 40c7af2, d5c36e2, 38a4341)",
+   "summary": "Ran technical-mode document review of Doc 06 v2.3.0 including the join/membership code drop. Suite green 540 tests (contracts 95 / protocol 126 / sdk 219 / ui 14 / indexer 16 / web 70). Dep-guard clean. tsc exits 0. FR-131(d) four-clause notice complete and non-dismissable. joinPrivate corrected to v1-accurate copy. FR-064 divergence flagged in §7 #20. One Medium defect ISS-01: expirePetitions() breaks IPartyStore seam, silently no-ops in production. VERDICT: FAIL 90% C=0 H=0 M=1 L=3.",
+   "artifacts_written": [
+    "artifacts/reviews/06-coding-and-ut-v2.3.0-technical-cycle1.md",
+    "artifacts/tester-2026-08-28T1000.md",
+    "artifacts/memory-index.json (updated -- this entry appended)"
+   ],
+   "review_verdict": {
+    "06-coding-and-ut-v2.3.0": {
+     "score": 90,
+     "critical": 0,
+     "high": 0,
+     "medium": 1,
+     "low": 3,
+     "cycle": 1,
+     "verdict": "FAIL"
+    }
+   },
+   "issues": {
+    "ISS-01": "Medium -- expirePetitions() accesses _store._petitions directly (not in IPartyStore interface); silent no-op in production; not in §7.",
+    "ISS-02": "Low -- §8 stale branch name (build/v1-scaffold vs actual build/v1-party-creation).",
+    "ISS-03": "Low -- membershipHistory() O(n^2) fold undocumented in §7.",
+    "ISS-04": "Low -- UT-0822 as it() label inside UT-0821 describe() block, ambiguous RTM traceability."
+   },
+   "ids_touched": {
+    "FR": "FR-020, FR-021, FR-022, FR-064, FR-122, FR-123, FR-130, FR-131",
+    "UT": "UT-0819..UT-0830, UT-0858..UT-0870"
+   },
+   "open_items": [
+    "Engineer to rework Doc 06 to v2.3.1 addressing ISS-01 (Medium) and ISS-02/03/04 (Low).",
+    "Cycle-2 review owed after rework.",
+    "Merge sign-off (reviewer-qa) blocked until cycle passes."
+   ],
+   "gate": "Gate 2 NOT READY -- Doc 06 v2.3.0 review loop FAIL cycle 1. Route to engineer for v2.3.1."
+  },
+  {
+   "id": "tester-2026-08-29T0430",
+   "role": "tester (acting as NEUTRAL REVIEWER -- document-review skill)",
+   "file": "artifacts/tester-2026-08-29T0430.md",
+   "timestamp": "2026-08-29T04:30:00Z",
+   "phase": "Verify -- technical-mode document-review, cycle 2",
+   "product": "Trumocracy",
+   "branch": "build/v1-join-membership",
+   "scope": "Doc 06 v2.3.1 + code drop (HEAD 4148498 + uncommitted v2.3.1 working-tree changes)",
+   "summary": "Ran technical-mode document review cycle 2 of Doc 06 v2.3.1 including the reworked code drop. All four cycle-1 issues independently verified CLOSED: ISS-01 (findPetitionsPastClose on IPartyStore, expirePetitions routed through it, no private-state access remains, UT-0831 interface-only facade regression), ISS-02 (branch name), ISS-03 (O(n) membershipHistory fold), ISS-04 (UT-0822 own describe). Suite green 541 tests (contracts 95 / protocol 126 / sdk 220 / ui 14 / indexer 16 / web 70) matching §3 exactly; dep-guard clean; tsc exits 0 in apps/web and packages/ui. ONE NEW MEDIUM ISS-C2-01: apps/web/types/trumocracy-sdk.d.ts still declares IPartyStore and InMemoryPartyStore with 21 methods -- findPetitionsPastClose missing -- so the ISS-01 interface fix stopped at the JS boundary and a TypeScript store can typecheck clean then throw at expirePetitions. VERDICT: FAIL 92% C=0 H=0 M=1 L=2.",
+   "artifacts_written": [
+    "artifacts/reviews/06-coding-and-ut-v2.3.1-technical-cycle2.md",
+    "artifacts/tester-2026-08-29T0430.md",
+    "artifacts/memory-index.json (updated -- this entry appended)"
+   ],
+   "review_verdict": {
+    "06-coding-and-ut-v2.3.1": {
+     "score": 92,
+     "critical": 0,
+     "high": 0,
+     "medium": 1,
+     "low": 2,
+     "cycle": 2,
+     "verdict": "FAIL"
+    }
+   },
+   "cycle1_issues_closed": {
+    "ISS-01": "CLOSED (JS) -- findPetitionsPastClose declared on typedef :113, implemented :311-319, expirePetitions routed :748-758; all 22 store call sites are declared methods; UT-0831 regression passes.",
+    "ISS-02": "CLOSED -- §8 reads build/v1-join-membership, matches git branch --show-current.",
+    "ISS-03": "CLOSED -- membershipHistory :963-982 per-party open-row Map, single O(n) pass, behaviour identical.",
+    "ISS-04": "CLOSED -- UT-0822 promoted to its own describe block; 22 tests unchanged."
+   },
+   "issues": {
+    "ISS-C2-01": "Medium -- apps/web/types/trumocracy-sdk.d.ts lines 113-135 and 141-163 declare 21 IPartyStore methods vs 22 in the JSDoc typedef; findPetitionsPastClose missing from both TS blocks. Same drift class v2.3.0 fixed for archivePetition. Fix: declare in both blocks + add a JSDoc-vs-d.ts guard.",
+    "ISS-C2-02": "Low -- Doc 06 §5.0 still stale: v2.0.1 cycle 2 marked pending though a PASS 97% report exists; v2.1.0 line still says merge sign-off withheld pending cycle-2 review though that review passed.",
+    "ISS-C2-03": "Low -- commit 4148498 bundles the code fix with the tester cycle-1 review report + memory note + memory-index (not atomically revertible per §8); UT-0831 is not in it and remains uncommitted."
+   },
+   "verification": {
+    "npm test": "exit 0 -- 541 passed, 0 failed (contracts 95 / protocol 126 / sdk 220 / ui 14 / indexer 16 / web 70); sdk membership.test.js 22, party-creation.test.js 38",
+    "npm run lint:deps": "exit 0 -- dep-guard: 7 workspace package(s) checked -- layering OK",
+    "npx tsc --noEmit (apps/web)": "exit 0, no output",
+    "npx tsc --noEmit (packages/ui)": "exit 0, no output",
+    "git branch --show-current": "build/v1-join-membership"
+   },
+   "ids_touched": {
+    "UT": "UT-0780..UT-0818, UT-0831 (new), UT-0819..UT-0830, UT-0858..UT-0870",
+    "FR": "FR-013, FR-016, FR-018, FR-020, FR-021, FR-022, FR-064, FR-122, FR-123, FR-130, FR-131",
+    "DES": "DES-065, DES-093..DES-097, DES-100",
+    "ADR": "ADR-011, ADR-024, ADR-025",
+    "US": "US-0024, US-0025, US-0073, US-0131, US-0133"
+   },
+   "open_items": [
+    "Engineer to rework Doc 06 to v2.3.2 addressing ISS-C2-01 (Medium, blocking) and ISS-C2-02/ISS-C2-03 (Low).",
+    "Cycle-3 review owed after rework; three cycles remain before the cap.",
+    "Product-owner ruling owed on Flag FR-064-SEMANTICS (Doc 06 §7 #20) before the RTM FR-064 Must row can close.",
+    "RTM (Doc 08) FR-064 Must row must stay OPEN on the strength of this drop.",
+    "Merge sign-off (reviewer-qa) blocked until the Doc 06 review loop passes."
+   ],
+   "gate": "Gate 2 NOT READY -- Doc 06 v2.3.1 review loop FAIL cycle 2. Route to engineer for v2.3.2."
+  },
+  {
+   "id": "tester-2026-08-29T0500",
+   "role": "tester (acting as NEUTRAL REVIEWER -- document-review skill)",
+   "file": "artifacts/tester-2026-08-29T0500.md",
+   "timestamp": "2026-08-29T05:00:00Z",
+   "phase": "Verify -- technical-mode document-review, cycle 3",
+   "product": "Trumocracy",
+   "branch": "build/v1-join-membership",
+   "scope": "Doc 06 v2.3.2 + code drop (HEAD f70292a on fix commit 3a273a1)",
+   "summary": "Ran technical-mode document review cycle 3 of Doc 06 v2.3.2. All three cycle-2 issues independently verified CLOSED. ISS-C2-01 (Medium) closed at the root: findPetitionsPastClose declared in BOTH shim blocks of apps/web/types/trumocracy-sdk.d.ts; member-set diff now jsdoc 22 / iface 22 / class 22, set-equal both ways; new drift guard UT-0871 (apps/web/test/sdk-types-sync.test.ts) MUTATION-TESTED by the reviewer against scratch copies and confirmed to fail on reintroduced drift, per block and in the reverse direction. ISS-C2-02 closed (§5.0 fully accurate against artifacts/reviews/ with correction provenance). ISS-C2-03 closed (atomic commits 3a273a1 fix+proof / f70292a docs; no cross-role artifacts; working tree holds only reviewer files). Suite green 542 (contracts 95 / protocol 126 / sdk 220 / ui 14 / indexer 16 / web 71) matching §3 row by row; dep-guard clean; tsc exits 0 in apps/web and packages/ui. Probed the unreported PartyCreationService half of the shim: in sync, 13/13, no hidden drift. One new Low ISS-C3-01 (that half is unguarded). VERDICT: PASS 97% C=0 H=0 M=0 L=1.",
+   "artifacts_written": [
+    "artifacts/reviews/06-coding-and-ut-v2.3.2-technical-cycle3.md",
+    "artifacts/tester-2026-08-29T0500.md",
+    "artifacts/memory-index.json (updated -- this entry appended)"
+   ],
+   "review_verdict": {
+    "06-coding-and-ut-v2.3.2": {
+     "score": 97,
+     "critical": 0,
+     "high": 0,
+     "medium": 0,
+     "low": 1,
+     "cycle": 3,
+     "verdict": "PASS"
+    }
+   },
+   "cycle2_issues_closed": {
+    "ISS-C2-01": "CLOSED (Medium) -- .d.ts synced in interface :126 and class :155; jsdoc/iface/class = 22/22/22 set-equal both ways; UT-0871 guard present and mutation-tested (MUT-A per-block detection, MUT-B reverse direction).",
+    "ISS-C2-02": "CLOSED (Low) -- §5.0 v2.0.1 line now PASS (97%) matching the on-disk report; v2.1.0 stale sign-off tail replaced with the v2.2.0 cycle-2 PASS resolution; provenance annotated.",
+    "ISS-C2-03": "CLOSED (Low) -- git log --stat -2 confirms 3a273a1 (fix + proof, 6 files) and f70292a (Doc 06 only); Conventional Commits with US-0024/0025/0073; no cross-role artifacts; clean working tree."
+   },
+   "issues": {
+    "ISS-C3-01": "Low (non-blocking) -- UT-0871 guards IPartyStore/InMemoryPartyStore only; the PartyCreationService half of the same shim is unguarded. Verified currently IN SYNC (13 implemented / 13 declared, both difference sets empty), so a residual exposure not a live defect. Suggested: extend UT-0871 with a sibling case."
+   },
+   "verification": {
+    "npm test": "exit 0 -- 542 passed, 0 failed (contracts 95 / protocol 126 / sdk 220 / ui 14 / indexer 16 / web 71); new apps/web/test/sdk-types-sync.test.ts = 1 test (UT-0871)",
+    "npm run lint:deps": "exit 0 -- dep-guard: 7 workspace package(s) checked -- layering OK",
+    "npx tsc --noEmit (apps/web)": "exit 0, no output",
+    "npx tsc --noEmit (packages/ui)": "exit 0, no output",
+    "git branch --show-current": "build/v1-join-membership",
+    "type-shim mutation test": "MUT-A remove from interface block only -> iface!=jsdoc (fails) while class==jsdoc (passes); MUT-B phantom JSDoc member -> iface!=jsdoc (fails). Guard is real.",
+    "PartyCreationService shim probe": "13 implemented / 13 declared; IMPLEMENTED-but-not-declared [] ; DECLARED-but-not-implemented []"
+   },
+   "ids_touched": {
+    "UT": "UT-0871 (NEW, no collision -- prior max UT-0870), UT-0831, UT-0780..UT-0818, UT-0819..UT-0830, UT-0841..UT-0870",
+    "FR": "FR-013, FR-016, FR-018, FR-020, FR-021, FR-022, FR-064, FR-122, FR-123, FR-130, FR-131",
+    "DES": "DES-065, DES-093..DES-097, DES-100",
+    "ADR": "ADR-011, ADR-024, ADR-025",
+    "US": "US-0024, US-0025, US-0073, US-0131, US-0133"
+   },
+   "open_items": [
+    "Engineer to set Doc 06 Status: Approved (PASS at cycle 3). No new version required. ISS-C3-01 optional additive hardening.",
+    "Product-owner ruling owed on Flag FR-064-SEMANTICS (Doc 06 §7 #20) -- option (a) annotate FR-064 with the v1 explicit-leave posture, or (b) uphold auto-void-on-join -- recorded in Doc 02.",
+    "Tester: keep RTM (Doc 08) FR-064 Must row OPEN until that ruling; map UT-0871 to the FR-013 expiry path / DES-097 seam; refresh Doc 07/08 to the 542-test baseline.",
+    "reviewer-qa: merge sign-off unblocked BY THIS LOOP, but still requires its own security scan and RTM zero-gaps verification."
+   ],
+   "gate": "Doc 06 review loop PASSED at cycle 3 -- SOP advances past the code-drop quality loop. Gate 2 still NOT READY: the RTM FR-064 Must row remains open pending the product-owner ruling, and an open Must row blocks Gate 2."
+  },
+  {
+   "id": "tester-2026-08-29T0530",
+   "role": "tester (own role — Doc 07 test cases + Doc 08 RTM author)",
+   "file": "artifacts/tester-2026-08-29T0530.md",
+   "timestamp": "2026-08-29T05:30:00Z",
+   "phase": "Verify — test-case design + RTM sync for the join/membership drop",
+   "product": "Trumocracy",
+   "branch": "build/v1-join-membership",
+   "scope": "docs/07-test-cases-suites.md v2.2.2 -> v2.3.0 (In Review); docs/08-traceability-matrix.md v2.2.5 -> v2.3.0 (In Review). Source drop: Doc 06 v2.3.2 Approved (cycle-3 PASS 97%, 997b2dc).",
+   "summary": "Authored the TS-MEMBERSHIP suite (TC-3517..TC-3540, 24 cases, all Automated / Pass (inh.) from Doc 06 v2.3.2) in Doc 07 and synced Doc 08 with the join/membership drop. UT mapping was derived by reading the four implementing test files line by line, which corrected FIVE off-by-one web UT ids in the hand-off brief (leave=UT-0860 not 0861; history=UT-0861 not 0862; cap=UT-0862 not 0863; join-not-counting=UT-0863 not 0865; FR-020 join=UT-0858 only). Doc 08: evidence extended on FR-020, FR-022 (both already COMPLETE), FR-064, FR-122, FR-123, FR-130, FR-131 (all STAY OPEN) and the FR-013 Should row (already complete, strengthened with the two DES-097 seam guards). FR-021 deliberately NOT extended — no vote-weight or tally evidence exists in this drop. FR-064 gap note rewritten to record TWO independent blockers (semantics: FR-064 text reads auto-void-on-join vs the implemented explicit-leave form, Flag FR-064-SEMANTICS, product-owner ruling owed in Doc 02; design: DES-065 is an unbuilt v2/Phase-3 nullifier) and its gap-log owner now names the product-owner. Summary counts UNCHANGED: 12 Must complete / 126 open; total 16/145. NO story newly meets DoD (13/134, checked story by story). TC-3481 amended but left Blocked — clause (d) is now built at the parties-directory surface (new TC-3534) but TC-3481 targets the unbuilt SCR-13/SCR-14 ballot surfaces. Both docs left In Review for their own neutral document-review cycles.",
+   "artifacts_written": [
+    "docs/07-test-cases-suites.md (v2.3.0, In Review)",
+    "docs/08-traceability-matrix.md (v2.3.0, In Review)",
+    "artifacts/tester-2026-08-29T0530.md",
+    "artifacts/memory-index.json (updated — this entry appended)"
+   ],
+   "tc_added": {
+    "range": "TC-3517..TC-3540 (24, suite TS-MEMBERSHIP)",
+    "TC-3517..TC-3520": "FR-020 join without approval; structural no-verifier guarantee; web no-approval-control sweep; seam spy — UT-0819, UT-0820, UT-0858, UT-0866",
+    "TC-3521..TC-3522": "FR-022 leave at will, immediate, no exit approval — UT-0823, UT-0860",
+    "TC-3523..TC-3525": "FR-064 one-active-party, EXPLICIT-LEAVE form (ALREADY_MEMBER_ELSEWHERE / ALREADY_MEMBER) — UT-0821, UT-0822, UT-0859",
+    "TC-3526..TC-3527": "Append-only membership history; leaving is never deletion — UT-0824, UT-0861",
+    "TC-3528..TC-3529": "FR-130 cap at the 100/101 boundary on ACTIVE members — UT-0825, UT-0862",
+    "TC-3530..TC-3533": "FR-122/FR-123 join is not counting; verified-members-only strength; seam scope — UT-0826, UT-0827, UT-0828, UT-0830, UT-0863, UT-0865",
+    "TC-3534..TC-3535": "FR-131(d) four-clause non-dismissable notice; FR-131(b) v1-honest join copy — UT-0864, UT-0869",
+    "TC-3536..TC-3538": "Clock determinism; ship-dark flag gating; jargon + absence scans — UT-0829, UT-0867, UT-0868, UT-0870",
+    "TC-3539..TC-3540": "DES-097 seam guards on the FR-013 expiry path — UT-0831 (interface-only facade), UT-0871 (.d.ts shim sync)"
+   },
+   "rtm_rows_changed": {
+    "FR-020": "COMPLETE -> COMPLETE (evidence extended: TC-3517..3520; UT-0819/0820/0858/0866)",
+    "FR-022": "COMPLETE -> COMPLETE (evidence extended: TC-3521/3522/3526/3527/3536; UT-0823/0824/0829/0860/0861)",
+    "FR-064": "G-PHASE3 OPEN -> G-PHASE3 OPEN (evidence extended TC-3523..3525; gap note rewritten with TWO blockers: FR-064-SEMANTICS product-owner ruling + unbuilt DES-065)",
+    "FR-122": "G-PHASE3 OPEN -> G-PHASE3 OPEN (evidence extended: TC-3530/3532/3533/3534)",
+    "FR-123": "G-PHASE3 OPEN -> G-PHASE3 OPEN (evidence extended: TC-3520/3530..3533)",
+    "FR-130": "G-TRACE OPEN -> G-TRACE OPEN (evidence extended: TC-3528/3529; still no DES in Doc 03 §5.2)",
+    "FR-131": "G-PHASE3 OPEN -> G-PHASE3 OPEN (evidence extended: TC-3534/3535; clause (d) built at parties-directory surface only; TC-3481 stays Blocked for SCR-13/SCR-14)",
+    "FR-013 (Should)": "complete -> complete (evidence strengthened: TC-3539/3540; UT-0831/0871)",
+    "FR-021": "UNTOUCHED — no vote-weight or tally evidence in this drop; extending it would be fabricated coverage"
+   },
+   "counts": {
+    "doc07": {
+     "cases": "418 -> 442",
+     "automated": "187 -> 211",
+     "blocked_or_nomech": "231 (unchanged)",
+     "anchors": "416 -> 440",
+     "expanded": "425 -> 449"
+    },
+    "doc08": {
+     "must_complete": "12 (unchanged)",
+     "must_open": "126 (unchanged)",
+     "total_complete": "16/145 (unchanged)",
+     "tc_total": "425 -> 449",
+     "passing_evidence": "171 -> 195 (107 inh. + 88 obs.)",
+     "stories_meeting_dod": "13 of 134 (unchanged)"
+    }
+   },
+   "verification": {
+    "tc anchors": "24 anchors TC-3517..TC-3540 — no gaps, no duplicates, no reused ids",
+    "ut existence": "all 27 UT ids cited in TS-MEMBERSHIP located in the four real test files — 0 not found",
+    "doc08 -> doc07 refs": "all 127 TC-34xx/35xx references resolve to a Doc 07 anchor — 0 dangling",
+    "arithmetic": "Doc07 442=418+24, 211=187+24; Doc08 449=425+24, 195=171+24, 107=83+24, 254 unchanged and 449-195=254"
+   },
+   "ids_touched": {
+    "TC": "TC-3517..TC-3540 (new); TC-3481 (status note amended, stays Blocked)",
+    "UT": "UT-0819..UT-0831, UT-0858..UT-0871 (cited, all verified in file)",
+    "FR": "FR-013, FR-020, FR-022, FR-064, FR-122, FR-123, FR-130, FR-131 (edited); FR-021 deliberately untouched",
+    "US": "US-0021, US-0024, US-0025, US-0073, US-0131, US-0133, US-0134",
+    "DES": "DES-013, DES-065, DES-095, DES-096, DES-097, DES-098, DES-100",
+    "ADR": "ADR-007, ADR-024, ADR-025",
+    "gap-log entries": "55, 114, 115, 117, 125"
+   },
+   "open_items": [
+    "Doc 07 v2.3.0 and Doc 08 v2.3.0 are In Review — each needs its own technical-mode document-review cycle by a NEUTRAL reviewer (not the tester, who authored both).",
+    "Product-owner: ruling owed on Flag FR-064-SEMANTICS recorded in Doc 02 — (a) annotate FR-064 with the v1 explicit-leave posture, or (b) uphold auto-void-on-join. Only blocker on FR-064 that design work cannot touch.",
+    "Architect: FR-130 still has no DES in Doc 03 §5.2 (G-TRACE) — the row cannot close without it.",
+    "Engineer: SCR-13/SCR-14 ballot surfaces owed before TC-3481 can leave Blocked.",
+    "reviewer-qa: independent verification of the 126 open Must rows before any merge sign-off."
+   ],
+   "gate": "Gate 2 NOT READY — 126 open Must rows against a zero-gap rule. This drop moved evidence, not the gate: 7 rows gained real coverage and 5 stay open for reasons no test can close (unassigned DES, unbuilt Phase-3 mechanisms, and one requirement whose wording the product-owner has yet to reconcile with the code)."
+  },
+  {
+   "id": "tester-2026-08-29T0600",
+   "role": "tester (acting as NEUTRAL REVIEWER — document-review skill)",
+   "file": "artifacts/tester-2026-08-29T0600.md",
+   "timestamp": "2026-08-29T06:00:00Z",
+   "phase": "Verify — document-review, two cycle-1 reviews (business + technical)",
+   "product": "Trumocracy",
+   "branch": "build/v1-join-membership (HEAD caef333; docs/02 + docs/06 modified in working tree)",
+   "scope": "Doc 02 v2.15.0 (business, cycle 1) and Doc 06 v2.3.3 (technical, cycle 1) — both implement the FR-064-SEMANTICS approver ruling, option (a) v1 EXPLICIT-LEAVE (Rathish, Human Approver, 2026-08-29). Reviewer owns NEITHER document.",
+   "summary": "Ran two neutral document-review cycles on the documents implementing the FR-064-SEMANTICS ruling. BOTH PASS. Doc 02 v2.15.0 (business): 97%, 0C/0H/0M/1L — amendment matches the ruling exactly on the three things easiest to get wrong (explicit-leave stated normatively; auto-void DEFERRED to a named destination DES-065 rather than abandoned; old wording SUPERSEDED in place, not deleted). Full-file sweep found no site stating unqualified auto-void as v1 behaviour. Gherkin verified against the built tests: UT-0821 (ALREADY_MEMBER_ELSEWHERE + currentPartyId + \"explicit, recorded action\"), UT-0859 (party A membership unchanged), UT-0824 (fresh joinedAt = tenure reset), UT-0822 (dual-membership impossibility) — all four scenarios matched. v2.14.1 PASS 97% housekeeping claim verified at source. Must count 114 verified; no IDs minted. One Low ISS-B1: the deferred anti-bypass property (\"cannot be bypassed by leaving and re-joining within the same session\") is deferred without naming the v1 compensating controls (FR-023 rate limit, FR-068 maturation), even though v1 explicit-leave DEPENDS on leave/rejoin being a permitted flow. Doc 06 v2.3.3 (technical): 98%, 0C/0H/0M/0L — no issues found after targeted probing. Verified NO code changed since the cycle-3 baseline 997b2dc (diff touches docs/ and artifacts/ only) AND re-ran the full suite anyway because v2.3.3 asserts a number: 542 passed / 0 failed, exit 0. Section 7 #20 correctly rewritten TRACKED DECISION -> RESOLVED (a); every claim cross-checked against Doc 02 v2.15.0 including the section number (4.6). Section 5.0 records the cycle-3 PASS accurately and CARRIES ISS-C3-01 explicitly instead of dropping it; that surface re-verified still in sync (13 impl / 13 decl). Crucially BOTH documents state that the ruling resolves the SEMANTICS, not the RTM row — neither tries to close FR-064.",
+   "artifacts_written": [
+    "artifacts/reviews/02-requirements-srs-v2.15.0-business-cycle1.md",
+    "artifacts/reviews/06-coding-and-ut-v2.3.3-technical-cycle1.md",
+    "artifacts/tester-2026-08-29T0600.md",
+    "artifacts/memory-index.json (updated — this entry appended)"
+   ],
+   "review_verdicts": {
+    "02-requirements-srs-v2.15.0": {
+     "mode": "business",
+     "score": 97,
+     "critical": 0,
+     "high": 0,
+     "medium": 0,
+     "low": 1,
+     "cycle": 1,
+     "verdict": "PASS",
+     "per_criterion": "B1 98 / B2 98 / B3 98 / B4 94 / B5 97 / B6 98 -> 97.25%"
+    },
+    "06-coding-and-ut-v2.3.3": {
+     "mode": "technical",
+     "score": 98,
+     "critical": 0,
+     "high": 0,
+     "medium": 0,
+     "low": 0,
+     "cycle": 1,
+     "verdict": "PASS",
+     "per_criterion": "T1 97 / T2 98 / T3 98 / T4 97 / T5 97 / T6 98 -> 97.50%"
+    }
+   },
+   "issues": {
+    "ISS-B1": "Low (Doc 02, B4) — section 4.6 FR-064 \"v2 (deferred)\" clause. The superseded wording carried a distinct anti-abuse property (nullifier \"cannot be bypassed by leaving and re-joining within the same session\") now deferred to DES-065, but v1 explicit-leave DEPENDS on leave/rejoin being an ordinary permitted flow (UT-0824, UT-0827 test it as supported). The vector IS bounded by FR-023 (join/leave rate limiting) and FR-068 (one-month maturation, exercised by FR-064s own retained fourth Gherkin scenario) — but the cross-reference is absent at the point of deferral. Fix: one clause naming the v1 compensating controls. Non-blocking.",
+    "Doc 06 v2.3.3": "NO issues at any severity. Probed the defect classes that previously bit this document (stale review record, silently dropped Low, undisclosed code change, unverified numeric claim) — all clean."
+   },
+   "verification": {
+    "no code delta": "git diff --name-only 997b2dc..HEAD filtered for non-docs/, non-artifacts/ paths returns nothing; working tree holds only docs/02 and docs/06",
+    "npm test (re-run this cycle)": "542 passed, 0 failed, exit 0 — contracts 95 / protocol 126 / sdk 220 / ui 14 / indexer 16 / web 71",
+    "ISS-C3-01 carried-Low surface": "PartyCreationService shim 13 impl / 13 decl; both difference sets empty — still in sync",
+    "v2.14.1 housekeeping claim": "artifacts/reviews/02-requirements-srs-v2.14.1-business-cycle2.md reads PASS 97% 0C/0H/0M/0L (reviewer sre) — Doc 02s record accurate",
+    "Doc 02 auto-void sweep": "no site states unqualified auto-void as v1 behaviour; remaining hits are the v2.15.0 Change block, the SUPERSEDED annotation inside FR-064, section 12, and section 16.3s v2 column",
+    "Doc 06 stale-language sweep": "all remaining FR-064 / auto-void / TRACKED DECISION hits are historical changelog entries describing the v2.3.0 / v2.3.1 state",
+    "Gherkin vs built behaviour": "all four scenarios matched by real assertions — UT-0821, UT-0859, UT-0824, UT-0822",
+    "section 4.6 cross-reference": "heading directly above the amended FR-064 row is \"4.6 Membership: open onboarding and equal standing\" — Doc 06 section 7 #20 cite is correct",
+    "Must count": "114 verified against the section 11 MoSCoW table, FR-064 present in the Must set; section 11 label bumped to Counts (v2.15.0); no IDs minted"
+   },
+   "ids_touched": {
+    "FR": "FR-064 (amended, reviewed); FR-022, FR-023, FR-068 (cross-references checked); FR-130 (Doc 02 routing item (e) verified against Doc 08 gap-log 125)",
+    "UT": "UT-0821, UT-0822, UT-0824, UT-0827, UT-0859, UT-0871 (assertions read)",
+    "TC": "TC-3511..TC-3516, TC-3523..TC-3525 (citations checked)",
+    "DES": "DES-065 (v2 deferral destination), DES-097",
+    "docs": "Doc 02 v2.15.0, Doc 06 v2.3.3, Doc 08 gap-log entries 55 and 125",
+    "prior_issues": "ISS-C3-01 (my cycle-3 Low — carried, re-verified in sync)"
+   },
+   "open_items": [
+    "Product-owner: set Doc 02 Status: Approved (PASS cycle 1). ISS-B1 (Low) — fold the FR-023/FR-068 cross-reference into the next version; do not cut a version for it.",
+    "Engineer: set Doc 06 Status: Approved (PASS cycle 1). ISS-C3-01 stays non-gating backlog.",
+    "Tester (me), Doc 08 next version: FR-064 Must row STAYS OPEN — record that gap-log entry 55s SEMANTICS half is closed by ruling while the DES-065 half remains. A split, not a close.",
+    "Architect: DES-065 (v2 membership-scope nullifier FR-064 waits on) and the FR-130 provisional-cap DES newly routed in Doc 02 section 13(e).",
+    "reviewer-qa: merge sign-off still requires its own security scan + RTM zero-gaps verification.",
+    "No commits made by the reviewer this round, by instruction — the main session commits."
+   ],
+   "gate": "Gate 2 remains NOT READY. The ruling removed an ambiguity, not a gap: FR-064 still open pending DES-065, FR-130 still open pending a DES, Doc 08 still carries 126 open Must rows against a zero-gap rule. Both documents are honest about that, which is why they passed."
+  },
+  {
+   "id": "reviewer-qa-2026-08-29T1000",
+   "role": "reviewer-qa",
+   "file": "artifacts/reviewer-qa-2026-08-29T1000.md",
+   "timestamp": "2026-08-29T10:00:00Z",
+   "phase": "Verify — technical-mode document-review Cycle 1",
+   "product": "Trumocracy",
+   "scope": "Doc 07 v2.3.0 and Doc 08 v2.3.0 — TS-MEMBERSHIP drop (US-0024 US-0025 US-0073 US-0131 US-0133)",
+   "summary": "Ran technical-mode document-review Cycle 1 on Doc 07 v2.3.0 (PASS 98%, 0C/0H/0M/2L) and Doc 08 v2.3.0 (FAIL 97%, 0C/0H/1M/1L). Doc 07 advances to Approved. Doc 08 routes to tester for v2.3.1 rework. Independently verified 220/220 SDK tests and 71/71 web tests green. All 24 TC-3517..TC-3540 UT mappings and assertions verified against actual test source.",
+   "artifacts_written": [
+    "artifacts/reviews/07-test-cases-suites-v2.3.0-technical-cycle1.md",
+    "artifacts/reviews/08-traceability-matrix-v2.3.0-technical-cycle1.md",
+    "artifacts/reviewer-qa-2026-08-29T1000.md"
+   ],
+   "review_verdicts": {
+    "07-test-cases-suites-v2.3.0": {
+     "score": 98,
+     "critical": 0,
+     "high": 0,
+     "medium": 0,
+     "low": 2,
+     "cycle": 1,
+     "verdict": "PASS"
+    },
+    "08-traceability-matrix-v2.3.0": {
+     "score": 97,
+     "critical": 0,
+     "high": 0,
+     "medium": 1,
+     "low": 1,
+     "cycle": 1,
+     "verdict": "FAIL"
+    }
+   },
+   "test_runs": {
+    "sdk": "220/220 passed (vitest v3.2.7) — membership.test.js 22, party-creation.test.js 38",
+    "web": "71/71 passed (vitest v3.2.7) — join-membership.test.tsx 27, sdk-types-sync.test.ts 1"
+   },
+   "key_findings": {
+    "doc07_ISS-01": "Low — source pins stale (CODE v2.3.2→v2.3.3, SRS v2.13.0→v2.15.0) and §5.5 preamble note says awaiting FR-064 ruling when ruling is done",
+    "doc07_ISS-02": "Low — party-creation.test.js 38/38 in §0.2 and R-12 but lacks dedicated §9 R-## row",
+    "doc08_ISS-01": "Medium — cluster of stale references post-FR-064-SEMANTICS ruling: source pins, FR-064 gap note (says ruling owed when it was received), gap-log entry 55 (says awaiting ruling), §9 tester sign-off (says two blockers when one resolved). FR-064 Must row correctly stays OPEN for DES-065.",
+    "doc08_ISS-02": "Low — §6 Stories row 12 vs text 13, pre-existing v2.2.5 cycle-2 ISS-01 unfixed"
+   },
+   "ids_touched": {
+    "TC": "TC-3517..TC-3540 (all 24 verified)",
+    "UT": "UT-0819..UT-0831, UT-0858..UT-0871 (all verified in source)",
+    "FR": "FR-013, FR-020, FR-021, FR-022, FR-064, FR-122, FR-123, FR-130, FR-131 (Doc 08 rows checked)",
+    "gap_log": "entries 55, 114, 115, 117, 125"
+   },
+   "open_items": [
+    "Ji-woo Park (tester): produce Doc 08 v2.3.1 (ISS-01 Medium + ISS-02 Low fixed); submit for cycle-2 review.",
+    "Ji-woo Park (tester): set Doc 07 v2.3.0 Status: Approved; address Low issues (ISS-01 + ISS-02) in v2.3.1 maintenance patch.",
+    "FR-064 Must row stays OPEN pending DES-065 (v2/Phase-3). No action from this role.",
+    "FR-130 Must row stays OPEN pending architect DES (routed in Doc 02 §13 item (e))."
+   ],
+   "gate": "Gate 2 NOT READY. Doc 07 v2.3.0 PASSES review (Approved). Doc 08 v2.3.0 FAILS review (FAIL cycle 1, 126 open Must rows, Medium issue in gap documentation). Merge sign-off withheld pending Doc 08 rework and zero-gap RTM."
+  },
+  {
+   "id": "reviewer-qa-2026-08-29T1015",
+   "role": "reviewer-qa",
+   "file": "artifacts/reviewer-qa-2026-08-29T1015.md",
+   "timestamp": "2026-08-29T10:15:00Z",
+   "phase": "Verify — technical-mode document-review Cycle 2",
+   "product": "Trumocracy",
+   "scope": "Doc 08 v2.3.1 — cycle-1 rework (ISS-01 Medium + ISS-02 Low resolved)",
+   "summary": "Ran technical-mode document-review Cycle 2 on Doc 08 v2.3.1. PASS 100%, 0C/0H/0M/0L. All cycle-1 issues resolved: source pins updated, FR-064 gap note and gap-log entry 55 correctly show SPLIT (semantics RESOLVED / DES-065 OPEN), §9 sign-off corrected, Stories row corrected 12→13. Ruling citations verified against Doc 02 v2.15.0 Approved and Doc 06 v2.3.3 Approved. Diff confirms exactly the claimed seven changed locations with no collateral changes.",
+   "artifacts_written": [
+    "artifacts/reviews/08-traceability-matrix-v2.3.1-technical-cycle2.md",
+    "artifacts/reviewer-qa-2026-08-29T1015.md"
+   ],
+   "review_verdicts": {
+    "08-traceability-matrix-v2.3.1": {
+     "score": 100,
+     "critical": 0,
+     "high": 0,
+     "medium": 0,
+     "low": 0,
+     "cycle": 2,
+     "verdict": "PASS"
+    }
+   },
+   "ids_touched": {
+    "FR": "FR-064 (gap note verified), FR-130 (gap-log 125 confirmed untouched)",
+    "gap_log": "55 (SPLIT verified correct), 125 (untouched confirmed)",
+    "source_docs_verified": "Doc 02 v2.15.0 §4.6 Approved; Doc 06 v2.3.3 §7 #20 RESOLVED (a)"
+   },
+   "open_items": [
+    "Ji-woo Park: set Doc 08 v2.3.1 Status: Approved.",
+    "Doc 07 v2.3.1 Low-only maintenance patch still owed (Doc 07 ISS-01 + ISS-02 from cycle-1).",
+    "FR-064 Must row stays OPEN pending DES-065 (v2/Phase-3).",
+    "FR-130 Must row stays OPEN pending architect DES.",
+    "Gate 2 NOT READY: 126 open Must rows."
+   ],
+   "gate": "Gate 2 NOT READY. Doc 08 v2.3.1 PASSES review (cycle 2 PASS 100%). Both Doc 07 v2.3.0 and Doc 08 v2.3.1 now cleared for Status: Approved. 126 open Must rows still block Gate 2."
+  },
+  {
+   "id": "reviewer-qa-2026-08-29T1030-merge-signoff",
+   "role": "reviewer-qa",
+   "file": "artifacts/reviewer-qa-2026-08-29T1030-merge-signoff.md",
+   "timestamp": "2026-08-29T10:30:00Z",
+   "phase": "Verify — merge sign-off (build/v1-join-membership)",
+   "product": "Trumocracy",
+   "scope": "Merge sign-off for build/v1-join-membership → main. Code commits 40c7af2, d5c36e2, 4148498, 3a273a1. All review loops closed.",
+   "summary": "SIGNED — merge of build/v1-join-membership to main. All conditions verified: 542/542 tests green; lint:deps OK; tsc exit 0 (apps/web + packages/ui); all four documents Approved (Doc 06 v2.3.3 PASS 98%, Doc 07 v2.3.0 PASS 98%, Doc 08 v2.3.1 PASS 100%, Doc 02 v2.15.0 PASS 97%); no out-of-scope feature; IS_INSECURE_MOCK discipline clean; FR-131(b)/(d) copy verified. RTM zero-gap (126 open Must rows) is a Gate-2 condition not a merge condition per 2026-08-25 ruling.",
+   "merge_signoff": "SIGNED — build/v1-join-membership → main",
+   "test_run": "542/542 passed: contracts 95, protocol 126, sdk 220, ui 14, indexer 16, web 71",
+   "lint_deps": "7 packages, layering OK, exit 0",
+   "tsc": "apps/web exit 0; packages/ui exit 0",
+   "ids_touched": {
+    "US": "US-0024, US-0025, US-0073, US-0131, US-0133",
+    "TC": "TC-3517..TC-3540",
+    "FR": "FR-020, FR-022, FR-064, FR-122, FR-123, FR-130, FR-131"
+   },
+   "open_items": [
+    "126 open Must rows — Gate-2 blocker, not a merge blocker (2026-08-25 ruling).",
+    "FR-064 Must row OPEN pending DES-065 (v2/Phase-3).",
+    "FR-130 Must row OPEN pending architect DES (Doc 02 §13(e)).",
+    "Doc 07 v2.3.1 maintenance patch owed (ISS-01 + ISS-02 Low).",
+    "Doc 02 ISS-B1 Low and Doc 06 ISS-C3-01 Low carried to next increment."
+   ],
+   "gate": "Gate 2 NOT READY (126 open Must rows). Merge SIGNED. Human (Rathish Kumar) executes git merge."
   }
  ]
 }

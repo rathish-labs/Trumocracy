@@ -108,8 +108,48 @@ export const ar: Messages = {
     joinLead:
       'لا يحتاج هذا إلى موافقة أحد. تنضم فتصبح عضوًا. ويمكنك المغادرة متى شئت ولا يستطيع أحد منعك.',
     joinEqual: 'لكل عضو صوت واحد بالضبط، وأنت منهم، من يومك الأول.',
-    joinPrivate: 'لا يُعطى الحزب قائمة بأعضائه. لا أحد يحصل على تلك القائمة، ولا نحن.',
+    // v1-accurate copy (FR-131(b)) — mirrors en.ts; engineer-authored working
+    // draft, flagged for native-speaker review (Doc 06 §7 limitation).
+    joinPrivate:
+      'عضويتك لا تُنشر للعموم. في هذه النسخة من المنصة، يمكن لسجلاتنا نحن أن تربط حسابك بالحزب ' +
+      'الذي تنضم إليه. هذا الربط لا يُنشر أبدًا. نقول هذا بوضوح بدل أن نعد بأكثر مما نستطيع الوفاء به.',
     joinConfirm: 'انضم الآن',
+    // ─── Membership flow (FR-020/021/022, FR-064, FR-130) ───
+    memberBadge: 'أنت عضو',
+    joined: 'أصبحت الآن عضوًا في هذا الحزب.',
+    leave: 'غادر هذا الحزب',
+    leaveHelp: 'المغادرة تسري فورًا. لا خطوة موافقة ولا عقوبة.',
+    left: 'لقد غادرت هذا الحزب.',
+    onePartyRule: 'يمكنك الانتماء إلى حزب واحد في كل مرة. مغادرة حزب والانضمام إلى آخر خيارك دائمًا.',
+    alreadyMemberElsewhere: (name: string) =>
+      `أنت عضو بالفعل في ${name}. يمكنك الانتماء إلى حزب واحد في كل مرة. ` +
+      `غادر ${name} أولًا، ثم انضم إلى هذا الحزب.`,
+    membershipHistoryTitle: 'سجل عضويتك',
+    membershipHistoryLead: 'الانضمام والمغادرة كلاهما يُسجَّل. لا شيء هنا يُحذف أبدًا.',
+    historyJoined: (date: string) => `انضممت في ${date}`,
+    historyLeft: (date: string) => `غادرت في ${date}`,
+    historyActive: 'عضو الآن',
+    historyInactive: 'لم تعد عضوًا',
+    officialStrength: (n: number) => `${n.toLocaleString('ar')} من الأعضاء المحسوبين`,
+    memberCount: (n: number) => `${n.toLocaleString('ar')} عضوًا`,
+    // ─── Counting tier (FR-122/FR-123, FR-131 clause (d)) ───
+    countingTitle: 'هل تُحسب عضويتي؟',
+    countingOpenBody:
+      'أنت عضو حقيقي في هذا الحزب. يمكنك القراءة والنقاش والدعم والتنظيم. ' +
+      'لكن الانضمام ليس هو الاحتساب. حتى تجتاز فحص هوية حكومية، لست جزءًا من رقم القوة الرسمي لهذا الحزب.',
+    countingCountedBody: 'أنت محسوب في رقم القوة الرسمي لهذا الحزب.',
+    countMe: 'احسبني في القوة الرسمية',
+    // إشعار البند (د) من FR-131 — يُعرض قبل رفض الإجراء؛ لا يمكن إغلاقه.
+    openTierNoticeTitle: 'هذا الإجراء يحتاج خطوة إضافية',
+    openTierNoticeCurrent: 'أنت الآن تشارك في المستوى المفتوح. انضممت برقم هاتف فقط.',
+    openTierNoticeNeedsId: 'الاحتساب يحتاج أولًا إلى فحص هوية حكومية.',
+    openTierNoticeWhatDoesNotCount:
+      'حتى ذلك الحين، ثلاثة أشياء لا تُحسب لك: لست جزءًا من رقم القوة الرسمي للحزب، ' +
+      'وصوتك لا يقرر في القرارات الملزمة، ولا يمكنك الترشح.',
+    openTierNoticeHowTo:
+      'لكي تُحسب، أكمل فحص الهوية الحكومية. هذا الفحص غير مفعّل بعد في هذه النسخة. ' +
+      'كل شيء آخر في عضويتك يعمل الآن.',
+    openTierNoticeRefused: 'طلبك لم يُحسب. لا شيء آخر تغيّر.',
   },
   petitions: {
     newTitle: 'ابدأ حزبًا',

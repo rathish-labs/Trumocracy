@@ -116,8 +116,55 @@ export const en = {
       'Nobody has to approve this. You join, and you are a member. You can leave at any time and ' +
       'nobody can stop you.',
     joinEqual: 'Every member has exactly one vote, including you, from your first day.',
-    joinPrivate: 'The party is not given a list of its members. Nobody gets that list, including us.',
+    // v1-accurate copy (FR-131(b) disclosure duty). The earlier "nobody gets that
+    // list, including us" claim was true only of the v2 backing and is NOT true of
+    // the v1 conventional backing — the platform's own records CAN link an account
+    // to its party. Say so plainly rather than promise more than v1 keeps.
+    joinPrivate:
+      'Your membership is not made public. In this version of the platform, our own records can ' +
+      'link your account to the party you join. That link is never published. We tell you this ' +
+      'plainly instead of promising more than we can keep.',
     joinConfirm: 'Join now',
+    // ─── Membership flow (FR-020/021/022, FR-064, FR-130) ───
+    memberBadge: 'You are a member',
+    joined: 'You are now a member of this party.',
+    leave: 'Leave this party',
+    leaveHelp: 'Leaving takes effect at once. There is no approval step and no penalty.',
+    left: 'You have left this party.',
+    onePartyRule:
+      'You can belong to one party at a time. Leaving one and joining another is always your choice.',
+    alreadyMemberElsewhere: (name: string) =>
+      `You are already a member of ${name}. You can belong to one party at a time. ` +
+      `Leave ${name} first, then join this one.`,
+    membershipHistoryTitle: 'Your membership history',
+    membershipHistoryLead: 'Joining and leaving are both recorded. Nothing here is ever deleted.',
+    historyJoined: (date: string) => `Joined ${date}`,
+    historyLeft: (date: string) => `Left ${date}`,
+    historyActive: 'Member now',
+    historyInactive: 'No longer a member',
+    officialStrength: (n: number) => `${n.toLocaleString()} counted members`,
+    memberCount: (n: number) => `${n.toLocaleString()} members`,
+    // ─── Counting tier (FR-122/FR-123, FR-131 clause (d)) ───
+    countingTitle: 'Does my membership count?',
+    countingOpenBody:
+      'You are a real member of this party. You can read, discuss, support and organise. ' +
+      'But joining is not the same as counting. Until you pass a government ID check, you are ' +
+      'not part of this party’s official strength number.',
+    countingCountedBody: 'You are counted in this party’s official strength number.',
+    countMe: 'Count me in the official strength',
+    // FR-131 clause (d) notice — shown before the action is refused; non-dismissable.
+    openTierNoticeTitle: 'This action needs one more step',
+    openTierNoticeCurrent:
+      'Right now you take part in the open tier. You joined with a phone number only.',
+    openTierNoticeNeedsId: 'Being counted needs a government ID check first.',
+    openTierNoticeWhatDoesNotCount:
+      'Until then, three things do not count for you: you are not part of the party’s official ' +
+      'strength number, your vote does not decide a binding decision, and you cannot stand as a ' +
+      'candidate.',
+    openTierNoticeHowTo:
+      'To be counted, complete the government ID check. That check is not switched on yet in this ' +
+      'version. Everything else about your membership works now.',
+    openTierNoticeRefused: 'Your request was not counted. Nothing else has changed.',
   },
   petitions: {
     newTitle: 'Start a party',
