@@ -111,6 +111,11 @@ const advanceTo = (service, windowId, stage) => {
 /**
  * Assert a method takes no eligibility verifier. Reading `.length` is not enough — a
  * parameter with a default is not counted — so inspect the declared parameter list.
+ *
+ * This alone is NOT the guarantee: a differently-named parameter would slip past the
+ * regex. It is one leg of a three-part check, and the other two are the real ones — the
+ * spy assertion (`verifyEligibility` was never called) and the structural assertion
+ * (`service._verifier` is undefined, so the service holds no verifier to reach).
  */
 const takesNoVerifier = (fn) => {
   const params = fn.toString().slice(fn.toString().indexOf('('), fn.toString().indexOf(')') + 1);

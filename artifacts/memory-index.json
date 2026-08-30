@@ -1,4 +1,4 @@
-{
+﻿{
  "notes": [
   {
    "id": "product-owner-2026-08-08T1610",
@@ -4796,9 +4796,33 @@
     "artifacts/reviewer-qa-2026-08-29T1130.md"
    ],
    "review_verdicts": {
-    "03-architecture-design-sdd-v2.8.3": { "score": 100, "critical": 0, "high": 0, "medium": 0, "low": 0, "cycle": 4, "verdict": "PASS" },
-    "07-test-cases-suites-v2.3.2": { "score": 100, "critical": 0, "high": 0, "medium": 0, "low": 0, "cycle": 2, "verdict": "PASS" },
-    "08-traceability-matrix-v2.4.1": { "score": 100, "critical": 0, "high": 0, "medium": 0, "low": 0, "cycle": 1, "verdict": "PASS" }
+    "03-architecture-design-sdd-v2.8.3": {
+     "score": 100,
+     "critical": 0,
+     "high": 0,
+     "medium": 0,
+     "low": 0,
+     "cycle": 4,
+     "verdict": "PASS"
+    },
+    "07-test-cases-suites-v2.3.2": {
+     "score": 100,
+     "critical": 0,
+     "high": 0,
+     "medium": 0,
+     "low": 0,
+     "cycle": 2,
+     "verdict": "PASS"
+    },
+    "08-traceability-matrix-v2.4.1": {
+     "score": 100,
+     "critical": 0,
+     "high": 0,
+     "medium": 0,
+     "low": 0,
+     "cycle": 1,
+     "verdict": "PASS"
+    }
    },
    "independent_positions": {
     "FR-130_closure": "AGREED — COMPLETE. Four rules satisfied. v1 enforcement-tier gap same posture as FR-011/020/022. Residual disclosed. Consistent precedent.",
@@ -4822,7 +4846,13 @@
     "TC-3541 stays No mechanism until PREREQ-01 built and adversarial amendment test passes.",
     "FR-077 stays OPEN (G-NOMECH) until mechanism built and TC-3541 passes."
    ],
-   "rtm_summary": { "must": 138, "complete": 13, "open": 125, "completion": "9.4%", "gate2_ready": false },
+   "rtm_summary": {
+    "must": 138,
+    "complete": 13,
+    "open": 125,
+    "completion": "9.4%",
+    "gate2_ready": false
+   },
    "gate": "Gate 2 NOT READY. All three documents PASS 100% cycle. Doc 03 v2.8.3, Doc 07 v2.3.2, Doc 08 v2.4.1 all route to Status: Approved. PREREQ-01 does not block v1 work. 125 open Must rows unchanged."
   },
   {
@@ -4852,6 +4882,283 @@
     "FR-064/DES-065: undesigned, v2."
    ],
    "gate": "Gate 2 NOT READY (125 open Must rows). Merge SIGNED. Human (Rathish Kumar) executes git merge."
+  },
+  {
+   "id": "reviewer-qa-2026-08-29T2215",
+   "role": "reviewer-qa",
+   "file": "artifacts/reviewer-qa-2026-08-29T2215.md",
+   "timestamp": "2026-08-29T22:15:00Z",
+   "phase": "Verify (Coding & UT review)",
+   "product": "Trumocracy",
+   "summary": "Two technical-mode cycle-1 reviews: Doc 06 v2.4.0 PASS 97% 0C/0H/0M/2L; Doc 03 v2.9.0 PASS 98% 0C/0H/0M/1L. Suite 608 green, dep-guard clean, tsc clean.",
+   "review_reports": [
+    "artifacts/reviews/06-coding-and-ut-v2.4.0-technical-cycle1.md",
+    "artifacts/reviews/03-architecture-design-sdd-v2.9.0-technical-cycle1.md"
+   ],
+   "verdicts": {
+    "doc06_v2_4_0_cycle1": "PASS 97% 0C/0H/0M/2L",
+    "doc03_v2_9_0_cycle1": "PASS 98% 0C/0H/0M/1L"
+   }
+  },
+  {
+   "id": "reviewer-qa-2026-08-29T2230",
+   "role": "reviewer-qa",
+   "file": "artifacts/reviewer-qa-2026-08-29T2230.md",
+   "timestamp": "2026-08-29T22:30:00Z",
+   "phase": "Verify (Coding & UT review cycle 2)",
+   "product": "Trumocracy",
+   "summary": "Cycle-2 rework reviews: Doc 06 v2.4.1 PASS 100% 0C/0H/0M/0L; Doc 03 v2.9.1 PASS 100% 0C/0H/0M/0L. Comment-only fixes confirmed: UT-0876/0879 SCOPE comments; takesNoVerifier three-part documentation; DES-105 table entry corrected to debate-stage cutoff.",
+   "review_reports": [
+    "artifacts/reviews/06-coding-and-ut-v2.4.1-technical-cycle2.md",
+    "artifacts/reviews/03-architecture-design-sdd-v2.9.1-technical-cycle2.md"
+   ],
+   "verdicts": {
+    "doc06_v2_4_1_cycle2": "PASS 100% 0C/0H/0M/0L",
+    "doc03_v2_9_1_cycle2": "PASS 100% 0C/0H/0M/0L"
+   }
+  },
+  {
+   "id": "tester-2026-08-29T1330",
+   "role": "tester (own role — Doc 07 test cases + Doc 08 RTM author)",
+   "file": "artifacts/tester-2026-08-29T1330.md",
+   "timestamp": "2026-08-29T13:30:00Z",
+   "phase": "Verify — TS-PROPOSALS suite + RTM status calls on the proposals & debate drop",
+   "product": "Trumocracy",
+   "branch": "build/v1-proposals (commit c04b4f2)",
+   "scope": "docs/07-test-cases-suites.md v2.3.2 -> v2.4.0 (In Review); docs/08-traceability-matrix.md v2.4.1 -> v2.5.0 (In Review). Source: Doc 06 v2.4.1, Doc 03 v2.9.1 (DES-103 tiers, DES-104 authorship/competing proposals, DES-105 deliberative lifecycle, DES-106 decision trail, section 10.13.13).",
+   "summary": "Authored TS-PROPOSALS (TC-3542..TC-3561, 20 cases, all Pass (inh.) from Doc 06 v2.4.1) after reading all three proposal test files line by line, and applied the four completion rules to six RTM rows. TWO ROWS CLOSE: FR-079 (DES-103; exactly three tiers, auto-Supporter on join, votingWeightForTier returns 1 for EVERY tier so no configuration can differentiate weight, unknown tier refused loudly; no SCR needed as FR-079 has no UI clause) and FR-090 (DES-104 + SCR-12; public authorship, any-Worker-may-compete, equal standing proven positively AND as capability-absence, and differently-phrased spellings of one question grouping into ONE window — without which same-window is defeated by rephrasing). THREE ROWS DO NOT CLOSE, reclassified G-TRACE -> G-NOMECH: FR-080 (rule 4 fails — the informed-consent clause requires the UI to state BEFORE confirmation that Worker status is PERMANENT FOR THE TERM and makes the participation record public; the shipped copy states publicity of what is put forward only and states permanence NOWHERE, and there is no confirmation step to precede; rule 1 ALSO fails because FR-080 has a UI obligation but DES-103 binds no SCR), FR-091 (order guarantees complete but governance.js schedule() is unwired so the per-published-timelines clause has no mechanism, Doc 06 section 7 #25), FR-092 (trail append-only but FR-092 enumerates vote result / enacted consequence / implementation status / measured outcome, none recorded here since the service holds no vote, AND third-party reconstruction needs unbuilt DES-097 anchoring). FR-024 evidence extended, status unchanged. FR-122/FR-123 evidence extended, both stay G-PHASE3. Suite verified 608/608 green.",
+   "artifacts_written": [
+    "docs/07-test-cases-suites.md (v2.4.0, In Review)",
+    "docs/08-traceability-matrix.md (v2.5.0, In Review)",
+    "artifacts/tester-2026-08-29T1330.md",
+    "artifacts/memory-index.json (updated — this entry appended)"
+   ],
+   "tc_added": {
+    "range": "TC-3542..TC-3561 (20, suite TS-PROPOSALS)",
+    "TC-3542": "FR-079 three tiers, auto-Supporter, weight 1 every tier, unknown refused — UT-0087, UT-0088",
+    "TC-3543..TC-3544": "FR-024/FR-090/FR-080 Worker gate as a pure function of tier; web disclosure-not-judgement — UT-0089, UT-0832, UT-0872, UT-0873",
+    "TC-3545..TC-3547": "authoring never calls the seam; non-member refused whatever tier; floors not content — UT-0834, UT-0833, UT-0095, UT-0832",
+    "TC-3548..TC-3551": "FR-090 one window incl. rephrasing; capability-absence; web equal standing; entry closes at ballot — UT-0835..0838, UT-0094, UT-0095, UT-0874..0877",
+    "TC-3552..TC-3555": "FR-091 eight stages in order; skip/reverse/no-op refusals; capability-absence x3 layers; deliberation = records not outcomes — UT-0090..0094, UT-0839..0842, UT-0878..0880",
+    "TC-3556..TC-3558": "FR-122/123 BINDING_VOTE admission gate, refusal names what they KEEP, coercion notice before the ask, service holds no vote — UT-0843..0845, UT-0881, UT-0882",
+    "TC-3559..TC-3561": "FR-092 append-only trail + copies-out + no delete path; surface admits the v1 limit; jargon/absence scan — UT-0846..0848, UT-0883, UT-0884"
+   },
+   "rtm_decisions": {
+    "FR-024": "COMPLETE -> COMPLETE (evidence extended only)",
+    "FR-079": "G-TRACE+G-PHASE3 -> COMPLETE. DES-103; every clause tested; no SCR required (no UI clause)",
+    "FR-080": "G-TRACE+G-PHASE3 -> G-NOMECH (STAYS OPEN). Rule 4: informed-consent disclosure states permanence nowhere and there is no confirmation step. Rule 1: UI obligation but no SCR bound by DES-103",
+    "FR-090": "G-TRACE+G-PHASE3 -> COMPLETE. DES-104 + SCR-12; equal standing proven positively and as capability-absence; one window even for rephrased questions. REVISIT FLAG for section 10.13.13 open question (b)",
+    "FR-091": "G-TRACE+G-PHASE3 -> G-NOMECH (STAYS OPEN). Order half complete; per-published-timelines clause has no mechanism (schedule() unwired). Stage-taxonomy vs ADR-008 PROPOSAL_STATE reconciliation also recorded",
+    "FR-092": "G-TRACE+G-PHASE3 -> G-NOMECH (STAYS OPEN). Four of seven enumerated trail elements unrecorded (service holds no vote) + third-party reconstruction needs unbuilt DES-097 anchoring",
+    "FR-122": "G-PHASE3 unchanged; evidence extended (open-tier may deliberate; refusal names what they keep)",
+    "FR-123": "G-PHASE3 unchanged; evidence extended (BINDING_VOTE admission only seam call site; coercion notice before the ask; no vote held)"
+   },
+   "counts": {
+    "must_rows": "138 (unchanged)",
+    "must_complete": "13 -> 15",
+    "must_open": "125 -> 123",
+    "completion": "9.4% -> 10.9%",
+    "total_rows": "17/144 -> 19/142",
+    "G-TRACE": "39 -> 34 (all five rows leave)",
+    "G-NOMECH": "11 -> 14 (FR-080, FR-091, FR-092 join)",
+    "by_reason_total": "126 -> 124 vs 123 distinct open (NFR-007 compound = +1)",
+    "stories_dod": "14 -> 16 of 134 (US-0089 and US-0100 newly done; US-0090/US-0101/US-0102 not)",
+    "doc07": "Total 443 -> 463; automated 211 -> 231; Blocked/no-mech 232 unchanged; anchors 441 -> 461; expanded 450 -> 470; inherited green 107 -> 127",
+    "doc08_dashboard": "FR-Must 13/101 -> 15/99; TC 450 -> 470; passing evidence 195 -> 215 (127 inh. + 88 obs.); not-executable 255 unchanged"
+   },
+   "suite": "608/608 green, exit 0 — contracts 95 / protocol 150 / sdk 244 / ui 14 / indexer 16 / web 89 (542 + 66 new: protocol 24, sdk 24, web 18). Verified by the tester, recorded as Doc 07 section 9 R-15.",
+   "open_questions_recorded": {
+    "(a) stage taxonomy": "FR-091's eight named stages differ from ADR-008 PROPOSAL_STATE — recorded in FR-091's row and gap entry 82; if reconciliation changes the published stage set it changes what the row must test",
+    "(b) PROPOSING as counting action": "The brief said yes; COUNTING_ACTION is an approver-ratified 3-value allowlist and FR-024/FR-090/OI-14 gate authoring on self-declared Worker tier. The FR-conformant reading was built and FR-090 was closed against it, with a REVISIT FLAG in the row and on TC-3545 if the approver rules otherwise"
+   },
+   "ids_touched": {
+    "TC": "TC-3542..TC-3561 MINTED (prior max TC-3541 — no reuse)",
+    "UT": "UT-0087..UT-0095 (protocol), UT-0832..UT-0848 (sdk), UT-0872..UT-0884 (web) — all read in file",
+    "FR": "FR-024, FR-079, FR-080, FR-090, FR-091, FR-092, FR-122, FR-123",
+    "DES": "DES-103, DES-104, DES-105, DES-106, DES-095, DES-085, DES-018",
+    "SCR": "SCR-12 (FR-090, FR-091, FR-092)",
+    "US": "US-0031, US-0089 (newly done), US-0090, US-0100 (newly done), US-0101, US-0102, US-0133",
+    "gap-log entries": "70 and 81 RETIRED; 71, 82, 83 reclassified to G-NOMECH with owners re-pointed"
+   },
+   "open_items": [
+    "Engineer: FR-080 permanence disclosure + confirmation step; FR-091 timeline wiring (schedule()); FR-092 trail completion for the four unrecorded elements.",
+    "Architect: SCR binding for FR-080; stage-taxonomy reconciliation (section 10.13.13 (a)); DES-097 anchoring for FR-092 with sre (Doc 13 S-8).",
+    "Approver: ruling on section 10.13.13 (b) — whether PROPOSING is an FR-123 counting action. FR-090 closed against the FR-conformant reading and carries a revisit flag.",
+    "Neutral reviewer: Doc 07 v2.4.0 and Doc 08 v2.5.0 both need review cycles (the tester authored both).",
+    "reviewer-qa: independent verification of the 123 open Must rows before merge sign-off.",
+    "Main session: commits — the tester committed nothing."
+   ],
+   "gate": "Gate 2 NOT READY — 123 open Must rows against a zero-gap rule. Five DES elements paid five chain gaps and TWO rows closed; the same lesson as v2.4.0 — a DES pays a chain gap, whether the row closes depends on whether the tests cover the whole guarantee."
+  },
+  {
+   "id": "tester-2026-08-29T1415",
+   "role": "tester (own role — Doc 07 test cases + Doc 08 RTM author)",
+   "file": "artifacts/tester-2026-08-29T1415.md",
+   "timestamp": "2026-08-29T14:15:00Z",
+   "phase": "Verify — FR-080 single-row re-assessment after the defect was fixed",
+   "product": "Trumocracy",
+   "branch": "build/v1-proposals",
+   "scope": "docs/07-test-cases-suites.md v2.4.0 -> v2.4.1 (In Review); docs/08-traceability-matrix.md v2.5.0 -> v2.5.1 (In Review). Upstream: Doc 06 v2.4.2, Doc 03 v2.9.2 (DES-103 two-step consent event, SCR-15 + SCR-12 bound).",
+   "summary": "Re-applied the four completion rules to FR-080 only, after the engineer BUILT the informed-consent event I found missing at v2.5.0 rather than recording it. VERDICT: FR-080 CLOSES -> COMPLETE. Rule 1 satisfied: DES-103 now binds SCR-15 (Nomination & disclosure consent; the section 10.12.4 screen table records the Worker declaration as sharing that consent pattern) and SCR-12. Rule 4 satisfied, and the copy is genuine not a gesture: permanence is now stated (\"This lasts for the whole term. You cannot undo it partway through.\" — duration AND irrevocability, previously stated nowhere) and the participation record is stated with a trailing clause that explicitly closes the narrow reading I flagged (\"not only the proposals you put forward, but what you take part in\"). The consent event is structurally real — verified in the component, not from the summary: declare-worker sets consent-pending state ONLY, the SOLE call to onDeclareWorker is confirm-worker inside the panel, cancel-worker records nothing; UT-0885 asserts the filing form is NULL while the panel shows, so \"before ... confirmed\" has a real moment; UT-0886 asserts declining records nothing, which is what makes it consent rather than an unavoidable notice. Minted TC-3562 (UT-0885) and TC-3563 (UT-0886); rewrote TC-3544 scope note and the suite preamble FR-080 exclusion. Recorded residual routed not hidden: Doc 03 section 10.12.5 class (i) still calls FR-080 SCR-less, but two of its three stated gaps are resolved and the third is shared-surface tidiness, not a missing link — routed to the architect rather than used to hold the row open on a technicality. Web suite 91/91 verified; total 608 -> 610.",
+   "artifacts_written": [
+    "docs/07-test-cases-suites.md (v2.4.1, In Review)",
+    "docs/08-traceability-matrix.md (v2.5.1, In Review)",
+    "artifacts/tester-2026-08-29T1415.md",
+    "artifacts/memory-index.json (updated — this entry appended)"
+   ],
+   "verdict": {
+    "FR-080": "G-NOMECH (open at v2.5.0) -> COMPLETE at v2.5.1. Rule 1 fixed by SCR-15+SCR-12 binding on DES-103; rule 4 fixed by the two-step consent event stating permanence and the participation record BEFORE confirmation, with the filing form unreachable at that moment and declining recording nothing."
+   },
+   "tc_added": {
+    "TC-3562": "FR-080 both facts stated BEFORE confirmation; filing form unreachable at that moment — UT-0885",
+    "TC-3563": "FR-080 declining changes nothing; member stays a Supporter — UT-0886"
+   },
+   "counts": {
+    "must_rows": "138 (unchanged)",
+    "must_complete": "15 -> 16",
+    "must_open": "123 -> 122",
+    "completion": "10.9% -> 11.6%",
+    "total_rows": "19/142 -> 20/141",
+    "G-NOMECH": "14 -> 13 (FR-080 leaves)",
+    "G-TRACE": "34 (unchanged)",
+    "by_reason_total": "124 -> 123 vs 122 distinct open",
+    "stories_dod": "16 -> 17 of 134 (US-0090 newly done)",
+    "doc07": "TS-PROPOSALS 20 -> 22 cases; Total 463 -> 465; automated 231 -> 233; anchors 461 -> 463; expanded 470 -> 472; inherited green 127 -> 129",
+    "doc08_dashboard": "FR-Must 15/99 -> 16/98; TC 470 -> 472; evidence 215 -> 217 (129 inh. + 88 obs.); not-executable 255 unchanged"
+   },
+   "unchanged_verified": {
+    "FR-079": "COMPLETE",
+    "FR-090": "COMPLETE (revisit flag for section 10.13.13 (b) intact)",
+    "FR-091": "OPEN G-NOMECH (schedule() unwired)",
+    "FR-092": "OPEN G-NOMECH (four enumerated trail elements unrecorded + reconstruction unbuilt)",
+    "FR-024": "COMPLETE",
+    "FR-122/FR-123": "G-PHASE3",
+    "FR-077": "G-NOMECH",
+    "FR-130": "COMPLETE",
+    "FR-064": "open"
+   },
+   "verification": {
+    "checks": "40 substantive checks pass — headers/versions/statuses, every by-reason figure, sum vs distinct open, FR-080 closure with SCR-15/SCR-12 in-row, all other rows verified unchanged, DoD 17, section 7 heading 122, gap entry 71 retired, gate rule 122, 22 TC anchors with nothing beyond TC-3563, UT-0885/0886 present in the web test file",
+    "suite": "web 91/91 verified by the tester (89 -> 91); suite total 608 -> 610"
+   },
+   "ids_touched": {
+    "TC": "TC-3562, TC-3563 MINTED (prior max TC-3561); TC-3544 scope note rewritten",
+    "UT": "UT-0885, UT-0886 (read in file); UT-0872, UT-0873, UT-0832 re-verified",
+    "FR": "FR-080 (CLOSED); all other rows verified unchanged",
+    "DES": "DES-103",
+    "SCR": "SCR-15, SCR-12",
+    "US": "US-0090 (newly meets DoD)",
+    "gap-log entries": "71 RETIRED"
+   },
+   "open_items": [
+    "Architect: reconcile Doc 03 section 10.12.5 class (i) entry for 3.6 (now partly stale); FR-091 stage-taxonomy reconciliation; DES-097 anchoring for FR-092.",
+    "Engineer: FR-091 timeline wiring (schedule()); FR-092 trail completion for the four unrecorded elements.",
+    "Approver: ruling on section 10.13.13 (b) — whether PROPOSING is an FR-123 counting action (FR-090 carries the revisit flag).",
+    "Neutral reviewer: Doc 07 v2.4.1 and Doc 08 v2.5.1 both need review cycles (the tester authored both).",
+    "reviewer-qa: independent verification of the 122 open Must rows before merge sign-off.",
+    "Coordinator commits — the tester committed nothing."
+   ],
+   "gate": "Gate 2 NOT READY — 122 open Must rows against a zero-gap rule. Of the five G-NOMECH reclassifications this matrix has made, FR-080 is the first fixed within the same day it was raised: the gap note was specific enough to act on, which is what a gap note is for."
+  },
+  {
+   "id": "tester-2026-08-29T1445",
+   "role": "tester (own role — Doc 07 test cases + Doc 08 RTM author)",
+   "file": "artifacts/tester-2026-08-29T1445.md",
+   "timestamp": "2026-08-29T14:45:00Z",
+   "phase": "Verify — upstream source-pin sync before the neutral review cycles",
+   "product": "Trumocracy",
+   "branch": "build/v1-proposals",
+   "scope": "docs/07-test-cases-suites.md v2.4.1 -> v2.4.2 (In Review); docs/08-traceability-matrix.md v2.5.1 -> v2.5.2 (In Review). Upstream: Doc 03 v2.9.3 Approved (cycle-2 PASS 100%), Doc 06 v2.4.3 Approved (cycle-1 PASS 100%).",
+   "summary": "Pin sync only, plus the judgement asked for: read both upstream deltas against every row decided at v2.5.0/v2.5.1 and confirmed NEITHER bears on a row decision. Doc 07 pins SDD v2.9.2->v2.9.3 and CODE v2.4.2->v2.4.3; Doc 08 the same two plus TC v2.4.1->v2.4.2. DELTA 1 (Doc 03 v2.9.3): closed the stale section 10.12.5 class (i) row that listed FR-080 as having no dedicated SCR and no DES surface element — the EXACT entry the tester routed to the architect while closing FR-080 at v2.5.1, found independently by Doc 03 own cycle-1 review. Verified struck through and CLOSED at line 1520 (DES-103 named as surface element, SCR-15 as binding; contradicting Wireframe->SCR 3.6 row aligned). Routing marked DISCHARGED inside the FR-080 row rather than deleted, so the raise-and-close is both visible. Cross-reference tidying: no TC implication. DELTA 2 (Doc 06 v2.4.3): workerGateHow widened to state BOTH FR-080 facts at the step-1 gate (en and ar); UT-0872 gained two assertions inside its existing block; no new UT id, no behaviour change, web 91/91 re-verified so the suite is unchanged at 610. FR-080 status UNCHANGED (COMPLETE) with reasoning on record: the normative clause is the disclosure BEFORE confirmation and the CONSENT PANEL is the clause-bearing surface — that was the v2.5.1 basis and it is untouched, so the row would have closed without this change. What the change fixes is a sub-normative honesty gap (the gate line is the standing reminder existing Workers see, and a narrower first impression still misleads). Evidence strengthened, status not re-adjudicated. TC-3544 row text deliberately left unedited — still accurate, and editing case text during a pin sync would blur what this version did.",
+   "artifacts_written": [
+    "docs/07-test-cases-suites.md (v2.4.2, In Review)",
+    "docs/08-traceability-matrix.md (v2.5.2, In Review)",
+    "artifacts/tester-2026-08-29T1445.md",
+    "artifacts/memory-index.json (updated — this entry appended)"
+   ],
+   "pins_now": {
+    "Doc 07": "SRS v2.15.0, SDD v2.9.3, CODE v2.4.3, BKLG v2.3.0, MTP v1.0.1",
+    "Doc 08": "SRS v2.15.0, SDD v2.9.3, BKLG v2.3.0, CODE v2.4.3, MTP v1.0.1, TC v2.4.2"
+   },
+   "deltas_assessed": {
+    "Doc 03 v2.9.3": "Closed the stale section 10.12.5 class (i) FR-080 debt row (the tester-routed residual) and aligned a contradicting wireframe/SCR cross-reference. Bears on a row decision: NO — tidying; the SCR-15 binding it documents was already in place at v2.9.2 and was the rule-1 basis at v2.5.1. Routing now DISCHARGED.",
+    "Doc 06 v2.4.3": "workerGateHow now states both FR-080 facts at the step-1 gate; UT-0872 +2 assertions. Bears on a row decision: NO — FR-080 stays COMPLETE. Closure rested on the consent panel (the clause-bearing surface for \"before ... confirmed\"), not the gate. Evidence STRENGTHENED below the normative line; row would have closed without it."
+   },
+   "unchanged_verified": {
+    "must_rows": "138",
+    "must_complete": "16",
+    "must_open": "122",
+    "completion": "11.6%",
+    "total_rows": "20/141",
+    "by_reason": "G-PHASE3 47 / G-NOMECH 13 / G-NOENV 9 / G-EXTERNAL 5 / G-UI 6 / G-UNMEASURABLE 4 / G-CIRCUIT 5 / G-TRACE 34 = 123 vs 122 distinct",
+    "stories_dod": "17 of 134",
+    "test_cases": "472 with 217 passing evidence",
+    "doc07": "Total 465 / automated 233 / Blocked-or-no-mech 232; TS-PROPOSALS 22 cases; no TC minted (nothing beyond TC-3563)",
+    "rows": "FR-079, FR-090 COMPLETE; FR-091, FR-092 OPEN G-NOMECH; FR-024, FR-122, FR-123, FR-077, FR-130, FR-064 all unchanged",
+    "suite": "610 (web 91/91 re-verified)"
+   },
+   "ids_touched": {
+    "FR": "FR-080 (residual marked discharged; status unchanged COMPLETE). All other rows read and verified unchanged.",
+    "TC": "none minted, none re-statused; TC-3544 referenced in the changelogs only",
+    "UT": "UT-0872 (+2 assertions upstream, no new id)",
+    "DES": "DES-103",
+    "SCR": "SCR-15, SCR-12"
+   },
+   "open_items": [
+    "Neutral reviewer: Doc 07 v2.4.2 and Doc 08 v2.5.2 both need review cycles (the tester authored both).",
+    "Engineer: FR-091 timeline wiring (schedule()); FR-092 trail completion for the four unrecorded elements.",
+    "Architect: FR-091 stage-taxonomy reconciliation (Doc 03 section 10.13.13 (a)); DES-097 anchoring for FR-092.",
+    "Approver: ruling on section 10.13.13 (b) — whether PROPOSING is an FR-123 counting action (FR-090 carries the revisit flag).",
+    "reviewer-qa: independent verification of the 122 open Must rows before merge sign-off."
+   ],
+   "gate": "Gate 2 NOT READY — 122 open Must rows against a zero-gap rule. Unchanged by this sync, which is the correct outcome: a pin sync that moved a count would mean something other than pins had changed."
   }
- ]
+ ],
+ "reviewer-qa-2026-08-29T2245": {
+  "date": "2026-08-29",
+  "summary": "Cycle-1 reviews for FR-080 informed-consent fix (v2.4.2/v2.9.2 drop). Doc 06 v2.4.2 PASS 98% 0C/0H/0M/1L — FR-080 compliance confirmed, consent panel satisfies both clauses. Doc 03 v2.9.2 FAIL 95% 0C/0H/1M/1L — DES-103 normative content correct but §10.12.5 class (i) design-debt table and Wireframe→SCR 3.6 row not updated, creating false open gap.",
+  "file": "artifacts/reviewer-qa-2026-08-29T2245.md",
+  "ids_touched": [
+   "FR-080",
+   "DES-103",
+   "SCR-15",
+   "SCR-12",
+   "UT-0885",
+   "UT-0886",
+   "Doc06-v2.4.2",
+   "Doc03-v2.9.2"
+  ],
+  "role": "reviewer-qa"
+ },
+ "reviewer-qa-2026-08-29T2300": {
+  "date": "2026-08-29",
+  "summary": "Rework verifications. Doc 03 v2.9.3 PASS 100% 0C/0H/0M/0L — §10.12.5 class(i) row struck through and closed, Wireframe→SCR and SCR→Wireframe tables now agree. Doc 06 v2.4.3 PASS 100% 0C/0H/0M/0L — workerGateHow (EN+AR) now states both FR-080 facts, UT-0872 extended with genuine guards.",
+  "file": "artifacts/reviewer-qa-2026-08-29T2300.md",
+  "ids_touched": [
+   "Doc03-v2.9.3",
+   "Doc06-v2.4.3",
+   "UT-0872",
+   "ISS-01",
+   "ISS-02"
+  ],
+  "role": "reviewer-qa"
+ },
+ "reviewer-qa-2026-08-29T2315": {
+  "id": "reviewer-qa-2026-08-29T2315",
+  "role": "reviewer-qa",
+  "file": "artifacts/reviewer-qa-2026-08-29T2315.md",
+  "date": "2026-08-29",
+  "documents": ["07-test-cases-suites", "08-traceability-matrix"],
+  "verdicts": {
+   "doc07-v2.4.2-cycle1": "PASS 98% 0C/0H/0M/1L",
+   "doc08-v2.5.2-cycle1": "PASS 97% 0C/0H/0M/1L"
+  },
+  "ids_touched": [
+   "FR-079", "FR-080", "FR-090", "FR-091", "FR-092",
+   "TC-3542..TC-3563",
+   "UT-0087..UT-0095", "UT-0832..UT-0848", "UT-0872..UT-0886",
+   "DES-103", "DES-104", "SCR-12", "SCR-15",
+   "US-0089", "US-0090", "US-0100", "US-0131"
+  ]
+ }
 }

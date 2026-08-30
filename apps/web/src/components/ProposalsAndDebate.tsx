@@ -164,6 +164,12 @@ function TierDeclaration({
   onDeclareWorker: () => void;
 }) {
   const t = useT();
+  // FR-080: the declaration is a two-step informed-consent event. Step 1 explains why the
+  // tier exists; step 2 states what the member is about to accept and asks them to confirm.
+  // A one-click control would make "before a Worker declaration is confirmed the UI MUST
+  // state…" unsatisfiable — there would be no "before".
+  const [consenting, setConsenting] = useState(false);
+
   if (tier !== PARTICIPATION_TIER.SUPPORTER) {
     return (
       <p data-testid="tier-state" data-tier={tier}>
@@ -171,6 +177,30 @@ function TierDeclaration({
       </p>
     );
   }
+
+  if (consenting) {
+    return (
+      <aside
+        role="note"
+        aria-labelledby="worker-consent-title"
+        data-testid="worker-consent"
+        className="banner"
+      >
+        <h3 id="worker-consent-title">{t.debate.workerConsentTitle}</h3>
+        {/* Both clauses are required by FR-080 and neither may be softened. */}
+        <p data-testid="consent-permanent">{t.debate.workerConsentPermanent}</p>
+        <p data-testid="consent-public-record">{t.debate.workerConsentPublicRecord}</p>
+        <p data-testid="consent-no-approval">{t.debate.workerConsentNoApproval}</p>
+        <button type="button" onClick={onDeclareWorker} data-testid="confirm-worker">
+          {t.debate.workerConsentConfirm}
+        </button>
+        <button type="button" onClick={() => setConsenting(false)} data-testid="cancel-worker">
+          {t.debate.workerConsentCancel}
+        </button>
+      </aside>
+    );
+  }
+
   return (
     <aside
       role="note"
@@ -183,7 +213,7 @@ function TierDeclaration({
       <p>{t.debate.workerGateHow}</p>
       {/* The gate must never read as a judgement on the proposal. */}
       <p data-testid="worker-gate-not-judgement">{t.debate.workerGateNotJudgement}</p>
-      <button type="button" onClick={onDeclareWorker} data-testid="declare-worker">
+      <button type="button" onClick={() => setConsenting(true)} data-testid="declare-worker">
         {t.debate.workerGateAction}
       </button>
     </aside>

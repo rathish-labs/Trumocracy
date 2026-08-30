@@ -2,14 +2,54 @@
 
 ```
 Document ID:   SDD-TRUMOCRACY
-Version:       2.9.0
-Status:        In Review
+Version:       2.9.3
+Status:        Approved — 03-architecture-design-sdd-v2.9.3-technical-cycle2.md (PASS 100%, 0C/0H/0M/0L)
 Owner:         Ravi Deshmukh — Principal Architect
 Approvers:     Rafael Duarte (Security), Chen Wei (Reliability), Dr. Lena Kowalczyk (Privacy),
                Aisha Nkemdirim (Elections & Voting)
 Source:        SRS-TRUMOCRACY v2.15.0
 Last updated:  2026-08-29
-Change:        v2.9.0 (2026-08-29) — PROPOSALS & DEBATE design, written ALONGSIDE the code
+Change:        v2.9.3 (2026-08-29) — Rework cycle 1 against
+               artifacts/reviews/03-architecture-design-sdd-v2.9.2-technical-cycle1.md
+               (FAIL 95%, 0C/0H/1M/1L). Both findings were cross-references left stale when
+               DES-103 closed the gap they describe — the tester had independently routed
+               the same debt entry to the architect, so two roles found it separately.
+               ISS-01 (Medium): §10.12.5 class (i) still listed FR-080 as having "no
+               dedicated SCR, no DES surface element" and needing both. DES-103 IS that
+               surface element and SCR-15 is bound; the row is now struck through and
+               closed, with the genuine residual named (SCR-15 stays shared with candidacy
+               nomination — a screen-inventory question, not a missing link). This tracker
+               is operationally live: a tester or PM reading it would have treated a closed
+               gap as open.
+               ISS-02 (Low): the Wireframe → SCR table's 3.6 row called the Worker
+               declaration "related but distinct" from SCR-15 and cited the now-closed debt
+               entry as authority, directly contradicting the SCR → Wireframe table's
+               SCR-15 row. Aligned to match, with the contradiction recorded rather than
+               quietly overwritten.
+               v2.9.2 (2026-08-29) — DES-103 completed for FR-080's informed-consent clause,
+               after the TESTER's rule-4 check found the shipped surface did not satisfy it
+               (Doc 08 v2.5.0). FR-080 requires the UI to state, BEFORE the declaration is
+               confirmed, that Worker status is permanent for the term AND makes the
+               member's participation record public. The drop's copy said only that it makes
+               "what you put forward public for the term" — narrower on the second fact,
+               silent on permanence — and there was NO confirmation step at all, so the
+               requirement's "before … confirmed" had no moment to attach to. DES-103 now
+               specifies the two-step consent event normatively (§5.2 row + §10.13.13), binds
+               SCR-15 and SCR-12 (rule 1 also failed for want of an SCR on a requirement with
+               an explicit UI obligation), and states that a one-click declaration is
+               forbidden by construction. Code and tests landed with it (UT-0885/UT-0886).
+               v2.9.1 (2026-08-29) — Rework cycle 1 against
+               artifacts/reviews/03-architecture-design-sdd-v2.9.0-technical-cycle1.md
+               (PASS 98%, 0C/0H/0M/1L — reworked anyway). ISS-01 (Low): the §5.2 DES-105
+               row justified the competing-entry cutoff as "admitting one after the ballot
+               opens would change what people already voted on", but entry actually closes
+               one stage EARLIER, at debate, when no vote has been cast — the reason given
+               was therefore not the reason the code implements. Corrected to name the
+               debate cutoff and the actual rationale (the deliberation has by then been
+               framed around a fixed set of options). §10.13.13's DES-104 subsection was
+               already correct. Fixed despite passing: a design document that misstates the
+               behaviour it governs is the exact defect class that produced the v2.8.0 High.
+               v2.9.0 (2026-08-29) — PROPOSALS & DEBATE design, written ALONGSIDE the code
                drop it governs (the lesson from the party-creation and join/membership
                features, where the surface shipped and the RTM row stayed open for want of
                a DES). Four new elements in §5.2, normative specifications in §10.13.13:
@@ -718,9 +758,9 @@ because §5.2 named no design element. Full normative specifications in §10.13.
 | ID | Component | Responsibility | Satisfies | Tech |
 |---|---|---|---|---|
 | DES-101 | non-violence clause verification gate | `NON_VIOLENCE_CLAUSE` (`packages/protocol/src/constants.js`) is the single source of truth; draft validation refuses publication on `field: 'charter.nonViolenceClause'` with `code: 'REQUIRED'` when the clause is absent and `code: 'ALTERED'` when it differs from the canonical text by any byte; no partial-credit, fuzzy or semantic match; no operator or configuration path may waive the check. Clause text is frozen in code pre-ratification (CON-013); changing it is a protocol governance action (ADR-010). v1 enforcement at protocol + service + web; v2 adds `PartyRegistry.publishDraft` as the trust-minimised enforcement point | FR-077, CON-013, SCR-04, SCR-05 | packages/protocol; packages/sdk; apps/web; (v2) PartyRegistry |
-| DES-103 | participation tiers | Three tiers per party — Supporter (assigned on join), Worker (self-declared, no approval), Candidate. Descriptive metadata ONLY: `votingWeightForTier()` returns 1 for every tier and no configuration can differentiate weight, standing or precedence (FR-021 unchanged). The single thing tier governs is proposal AUTHORSHIP, and for an anonymity reason, not a merit one: authorship is public (FR-090) and a Supporter is anonymous unconditionally (FR-082), so a Supporter cannot author without destroying their own anonymity | FR-079, FR-080, FR-021, FR-082 | packages/protocol (proposals.js); apps/web |
+| DES-103 | participation tiers + Worker informed-consent event | Three tiers per party — Supporter (assigned on join), Worker (self-declared, no approval), Candidate. Descriptive metadata ONLY: `votingWeightForTier()` returns 1 for every tier and no configuration can differentiate weight, standing or precedence (FR-021 unchanged). The single thing tier governs is proposal AUTHORSHIP, and for an anonymity reason, not a merit one: authorship is public (FR-090) and a Supporter is anonymous unconditionally (FR-082), so a Supporter cannot author without destroying their own anonymity. **The Worker declaration is a TWO-STEP informed-consent event (FR-080):** step 1 explains why the tier exists; step 2 states, BEFORE confirmation, both required facts — the declaration is **permanent for the term**, and it makes the member's **participation record** public for the term (not merely the proposals they file) — plus that nobody reviews it. Declining leaves the member a Supporter. A one-click declaration is forbidden by construction: without a confirmation step there is no "before" for FR-080's disclosure to attach to | FR-079, FR-080, FR-021, FR-082, SCR-12, SCR-15 | packages/protocol (proposals.js); apps/web |
 | DES-104 | proposal authorship & competing proposals | Authoring requires Worker tier or above (OI-14) — a disclosure step, never an approval step; no pre-screening, moderation or veto path exists (FR-024). Proposals answering the same question share a DECISION WINDOW keyed by a normalised question string; every proposal in a window has EQUAL STANDING — one stage, one schedule, no ordering privilege, no weight/rank/priority field, and no capability by which one author can withdraw, remove, merge, reject, prioritise or veto another's proposal. The author never owns the ballot alone; that absence is a first-class capability-absence control | FR-024, FR-090, BR-015, BR-003, SCR-12 | packages/protocol; packages/sdk (ProposalService); apps/web |
-| DES-105 | deliberative lifecycle stage machine | The eight FR-091 stages — proposal → review → discussion → debate → vote → decision → implementation → measurement — advanced exactly one step at a time. `assertStageTransition` refuses skipping (`STAGE_SKIPPED`, naming what was skipped), reversal (`STAGE_REVERSED`) and no-ops; `advanceStage()` takes no target, no `force`, no `skipTo` and no actor, so there is nothing for a human to veto. Review/discussion/debate are DELIBERATIVE: they produce records, never outcomes. A competing proposal may join only while the window still accepts entries — admitting one after the ballot opens would change what people already voted on | FR-091, BR-014, BR-008, SCR-12 | packages/protocol; packages/sdk |
+| DES-105 | deliberative lifecycle stage machine | The eight FR-091 stages — proposal → review → discussion → debate → vote → decision → implementation → measurement — advanced exactly one step at a time. `assertStageTransition` refuses skipping (`STAGE_SKIPPED`, naming what was skipped), reversal (`STAGE_REVERSED`) and no-ops; `advanceStage()` takes no target, no `force`, no `skipTo` and no actor, so there is nothing for a human to veto. Review/discussion/debate are DELIBERATIVE: they produce records, never outcomes. A competing proposal may join only while the window still accepts entries (proposal / review / discussion); **once the window reaches debate, entry is refused** — the deliberation has by then been framed around a fixed set of options, and admitting another would change the question people have been arguing about | FR-091, BR-014, BR-008, SCR-12 | packages/protocol; packages/sdk |
 | DES-106 | permanent decision trail | Every event in a decision window — opened, proposal filed (with author), deliberation posted, stage advanced, ballot admission — appends to a per-window log that is never updated and never deleted (FR-107). Reads return copies, so a caller mutating what it received changes nothing. **v1 boundary, disclosed not papered over:** the trail is held in the application store, which makes it complete but not yet independently checkable; FR-092's "reconstructable by any third party from public data alone" additionally requires the DES-097 audit-record anchoring (stage S-8), which is not built. The surface states this in plain words rather than implying more | FR-092, FR-107, BR-014, BR-019 | packages/sdk; apps/web; (owed) DES-097 anchoring |
 | DES-102 | provisional-party membership cap | A platform-activated party whose legal registration is unverified is capped at `PROVISIONAL_MEMBER_CAP` = 100 **ACTIVE** members. The cap is checked at the membership-write boundary and is **UNCONDITIONAL** — no grace window, no queue, no override (Ruling 1, Rathish, 2026-08-26). It lifts by code only, on the recording of verified legal registration (FR-075); no operator, admin, configuration or bypass surface exists, and the absence is tested as a first-class control. Anti-capture invariant (C-02 ruling, Rathish, 2026-08-22) | FR-130, FR-075, BR-002, BR-012, SCR-09, SCR-11 | packages/protocol (constant); packages/sdk (v1 enforcement); DES-097(b) store; (v2) `Party.join()` |
 
@@ -1433,7 +1473,7 @@ Review scope: all 15 wireframe screens examined for (a) every `privacy(...)` com
 | 3.3 Cast a vote | SCR-13 | Full coverage — ballot booth. |
 | 3.4 Vote confirmed | SCR-14 (partial) | Post-vote tally present (consistent with SCR-14 result surface); independent-verifier flow (verify-it-yourself) absent. DES-063 confirmation treatment and FR-055 independent-verifier aspect absent from wireframe. See §10.12.5 class (i). |
 | 3.5 Accountability dashboard | SCR-20 (partial), SCR-17 (partial) | Transparency dashboard (SCR-20) + commitment tracking (SCR-17) combined; filtering log and manifesto version history absent. |
-| 3.6 The one-way door | SCR-15 (partial) | SCR-15 covers candidacy nomination disclosure; Worker self-declaration (FR-080) is related but distinct. Design debt — see §10.12.5 class (i). |
+| 3.6 The one-way door | SCR-15 (partial) | SCR-15 covers candidacy nomination disclosure (FR-037/FR-038) **and the Worker self-declaration consent event (FR-080)** — the two share the consent pattern, which is why one SCR carries both. The Worker half is designed in **DES-103** (two-step informed consent) and built at Doc 06 v2.4.2. Partial because the two flows still share one screen entry rather than each holding their own. _(v2.9.3: this row previously read "related but distinct … design debt, see §10.12.5 class (i)", which contradicted the SCR-15 row of the SCR → Wireframe table and pointed at a debt entry now closed.)_ |
 
 **SCR → Wireframe (23 SCRs):**
 
@@ -1477,7 +1517,7 @@ Kept in two distinct classes per the approver directive; the classes capture dif
 | 1.5 Verified (post-enrolment confirmation) | No SCR; no dedicated DES for the confirmation UI state. DES-001 covers enrolment mechanics; the "Verified · private / Only you see this" confirmation screen is not designed. | DES gap: mint a DES for the post-enrolment success-state UI, including the FR-124(a) self-view copy obligation. |
 | 2.2 Create — constitution | No SCR, no DES. FR-076 (mandatory constitution sections) and FR-077 (non-violence clause presence check) are backed requirements but no screen-level design exists. SCR-04 covers eight pillars only. | SCR and DES gap: constitution-authoring screen needs its own SCR (with FR-076 + FR-077 traces) and DES element. |
 | 3.4 Vote confirmed | SCR-14 partial coverage exists (post-vote tally present). DES-063 covers coercion-safe confirmation at architecture level. FR-055 independent-verifier flow absent from wireframe. | Remaining design debt: confirmation-screen coercion-safe treatment (DES-063 UX detail) and the independent-verifier flow (FR-055) are not wireframed. Note as DES gap under SCR-14. |
-| 3.6 One-way door (Worker self-declaration) | SCR-15 covers candidacy nomination disclosure (FR-037..038). Worker self-declaration (FR-080) has no dedicated SCR, no DES surface element, and no US explicitly covering the "permanent / public from here on" UI treatment. | DES and SCR gap: Worker self-declaration informed-consent UI (FR-080) needs a dedicated surface element and SCR. |
+| ~~3.6 One-way door (Worker self-declaration)~~ | ~~Worker self-declaration (FR-080) has no dedicated SCR, no DES surface element, and no US explicitly covering the "permanent / public from here on" UI treatment.~~ **CLOSED v2.9.3.** **DES-103** (§5.2, §10.13.13) is that surface element: it specifies the two-step informed-consent event normatively — the disclosure states, before confirmation, that the declaration is permanent for the term and makes the member's participation record public, and declining records nothing. **SCR-15** is bound (with SCR-12 where it is reached); SCR-15 already covers the consent pattern this shares. Built and tested at Doc 06 v2.4.2 (UT-0885/UT-0886); the FR-080 RTM row CLOSED at Doc 08 v2.5.1. **Residual (not a design gap):** SCR-15 remains shared with candidacy nomination (FR-037/FR-038); whether the Worker declaration eventually earns its own SCR is a screen-inventory question, not a missing link. | Closed — DES-103 + SCR-15 |
 
 **Class (ii) — Required screens absent from the wireframe entirely:**
 
@@ -2128,9 +2168,23 @@ single point of trust this architecture exists to remove.
 Candidate above it. `votingWeightForTier()` returns **1** for every tier and there is no
 configuration, charter override or flag that can make it return anything else — the rule is
 exposed as a function precisely so a test can assert it rather than infer it from an
-absence. Worker is **self-declared**: the platform records the declaration, nobody approves
-it, and the UI states before confirmation that the declaration is public for the term
-(FR-080's informed-consent event).
+absence.
+
+Worker is **self-declared**, and the declaration is FR-080's **informed-consent event**, so
+its surface is normative rather than incidental. It MUST be two steps: an explanation of why
+the tier exists, then — **before** confirmation — a disclosure stating **both** required
+facts and asking the member to accept them:
+
+1. the declaration is **permanent for the term** and cannot be undone partway through; and
+2. it makes the member's **participation record** public for the term — the record of what
+   they take part in, not only the proposals they put forward.
+
+The disclosure MUST also state that nobody reviews the declaration (FR-080's no-approval
+clause), and declining MUST leave the member a Supporter with nothing recorded. A one-click
+declaration is forbidden by construction: with no confirmation step there is no "before" for
+the disclosure to precede, and the requirement becomes unsatisfiable rather than merely
+unmet. Bound surfaces: **SCR-15** (the consent pattern — the §10.12.4 screen table already
+names the Worker declaration as sharing it) and **SCR-12** where it is reached.
 
 **DES-104 — authorship and competing proposals (FR-024, FR-090).**
 

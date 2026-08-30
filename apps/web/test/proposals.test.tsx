@@ -122,6 +122,11 @@ describe('UT-0872 the Worker gate explains a disclosure step and never judges th
     expect(within(gate).getByText(/authorship is public|do so in the open/i)).toBeTruthy();
     // FR-080: nobody approves it.
     expect(within(gate).getByText(/Nobody approves it/i)).toBeTruthy();
+    // The gate is step 1 of the consent event, so it must not understate what step 2 asks
+    // the member to accept — an initial impression narrower than the truth still misleads.
+    const gateText = gate.textContent ?? '';
+    expect(gateText).toMatch(/lasts for the term/i);
+    expect(gateText).toMatch(/record of taking part.*public/i);
     // It must not read as a judgement on the proposal's merit.
     expect(screen.getByTestId('worker-gate-not-judgement').textContent).toMatch(
       /not about whether your idea is good/i,
@@ -133,9 +138,42 @@ describe('UT-0872 the Worker gate explains a disclosure step and never judges th
     expect(screen.queryByTestId('file-proposal')).toBeNull();
   });
 
-  it('declaring Worker opens the filing form — no approval step appears anywhere', () => {
+  it('UT-0885 states BOTH FR-080 facts before the declaration is confirmed', () => {
     renderFlow(buildFixture());
     fireEvent.click(screen.getByTestId('declare-worker'));
+
+    // Not yet a Worker — the disclosure comes first, which is what "before … confirmed"
+    // requires. A one-click declaration would have no "before" to attach to.
+    expect(screen.queryByTestId('file-proposal')).toBeNull();
+
+    const consent = screen.getByTestId('worker-consent');
+    // (i) permanent for the term
+    expect(within(consent).getByTestId('consent-permanent').textContent).toMatch(
+      /lasts for the whole term|cannot undo/i,
+    );
+    // (ii) the PARTICIPATION RECORD becomes public — not merely what is put forward
+    expect(within(consent).getByTestId('consent-public-record').textContent).toMatch(
+      /record of taking part.*public/i,
+    );
+    // FR-080: still no approval by anyone.
+    expect(within(consent).getByTestId('consent-no-approval').textContent).toMatch(
+      /Nobody reviews this/i,
+    );
+  });
+
+  it('UT-0886 declining leaves the member a Supporter and files nothing', () => {
+    renderFlow(buildFixture());
+    fireEvent.click(screen.getByTestId('declare-worker'));
+    fireEvent.click(screen.getByTestId('cancel-worker'));
+
+    expect(screen.getByTestId('worker-gate')).toBeTruthy();
+    expect(screen.queryByTestId('file-proposal')).toBeNull();
+  });
+
+  it('confirming the declaration opens the filing form — no approval step appears anywhere', () => {
+    renderFlow(buildFixture());
+    fireEvent.click(screen.getByTestId('declare-worker'));
+    fireEvent.click(screen.getByTestId('confirm-worker'));
 
     expect(screen.getByTestId('file-proposal')).toBeTruthy();
     // No control on this surface asks anyone for permission.
@@ -183,8 +221,10 @@ describe('UT-0874 a competing proposal stands equally with the original (FR-090)
   it('UT-0876 offers NO control that lets one author act on another’s proposal', () => {
     renderFlow(withTwo());
 
-    // The fairness property rendered: no withdraw/remove/reject/merge/prioritise control
-    // exists on this surface, because the service exposes no such capability.
+    // SCOPE: this is the UI half — it checks the surface does not CLAIM a capability it
+    // does not have. The primary guard for the FR-090 fairness property is UT-0836, which
+    // asserts the absence on the ProposalService surface itself; if the service ever grew
+    // such a method, UT-0836 fails whether or not anyone wired a button to it.
     for (const btn of screen.getAllByRole('button')) {
       expect(btn.textContent ?? '').not.toMatch(
         /withdraw|remove|delete|reject|merge|prioriti|make primary|veto/i,
@@ -219,6 +259,9 @@ describe('UT-0878 the eight lifecycle stages are shown in order, with the curren
     expect(stages[0].getAttribute('data-state')).toBe('now'); // PROPOSAL
   });
 
+  // SCOPE: UI half again — the enforcement lives in the protocol rule
+  // (assertStageTransition, UT-0091/0092) and the service signature (UT-0842). This asserts
+  // only that the surface offers no control implying a skip is possible.
   it('UT-0879 offers no control that skips a stage', () => {
     const f = buildFixture();
     f.service.fileProposal(f.partyId, draftFor('Move meetings'), MEMBER, 'WORKER');

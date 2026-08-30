@@ -2,8 +2,8 @@
 
 ```
 Document ID:   CODE-TRUMOCRACY
-Version:       2.4.0
-Status:        In Review
+Version:       2.4.3
+Status:        Approved — 06-coding-and-ut-v2.4.3-technical-cycle1.md (PASS 100%, 0C/0H/0M/0L)
 Owner:         Samuel Oyelaran — Engineering Lead
 Source:        SDD-TRUMOCRACY v2.7.1 §9 · ADR-011 · ADR-023 · ADR-024 · ADR-025
 Last updated:  2026-08-29
@@ -15,6 +15,52 @@ Last updated:  2026-08-29
 
 ```
 Change history:
+  v2.4.3 (2026-08-29) — Rework cycle 1 against artifacts/reviews/06-coding-and-ut-v2.4.2-technical-cycle1.md
+               (PASS 98%, 0C/0H/0M/1L — reworked rather than carried). ISS-01 (Low):
+               `workerGateHow` still carried the v2.4.0 narrower framing ("makes what you
+               put forward public for the term"). The consent panel corrected it before
+               confirmation so FR-080 compliance was intact, but the gate is step 1 of the
+               same consent event and existing Workers see that line as their standing
+               reminder — an initial impression narrower than the truth is still a
+               misleading impression, which is the §2 rule 2 concern. Copy now states both
+               facts at the gate too: it lasts for the term, and it makes the member's
+               record of taking part public for that time (en + ar). UT-0872 extended to
+               assert both at the gate, so the narrow framing cannot come back unnoticed.
+               Suite unchanged at 610.
+  v2.4.2 (2026-08-29) — FR-080 informed-consent fix, found by the TESTER's rule-4 check
+               (Doc 08 v2.5.0), not by the code review. The Worker declaration shipped as a
+               ONE-CLICK control whose copy said it makes "what you put forward public for
+               the term". FR-080 requires the UI to state, BEFORE confirmation, that the
+               declaration is PERMANENT for the term AND makes the member's PARTICIPATION
+               RECORD public — a broader fact than the proposals they file — and a one-click
+               control has no "before" for that disclosure to precede. This was a real
+               honesty defect in the drop: a permanent, publicity-increasing status change
+               taken on one click without stating either consequence.
+               Fixed: the declaration is now two steps (apps/web ProposalsAndDebate
+               TierDeclaration) — the existing gate explains WHY the tier exists, then a
+               consent panel states permanence, participation-record publicity, and that
+               nobody reviews it, with confirm/decline. Declining leaves the member a
+               Supporter and records nothing. New i18n en+ar strings (ar engineer draft,
+               §7 #17). New tests UT-0885 (both required facts stated, and the filing form
+               is NOT reachable before confirmation) and UT-0886 (declining changes
+               nothing). Design landed with it: Doc 03 v2.9.2 DES-103 now specifies the
+               two-step consent event normatively and binds SCR-15/SCR-12.
+               Suite: 610 tests (contracts 95 / protocol 150 / sdk 244 / ui 14 / indexer 16 /
+               web 91). §3 counts updated.
+  v2.4.1 (2026-08-29) — Rework cycle 1 against artifacts/reviews/06-coding-and-ut-v2.4.0-technical-cycle1.md
+               (PASS 97%, 0C/0H/0M/2L — reworked anyway, since both findings were about a
+               test claiming more than it checks). ISS-01 (Low): UT-0876 and UT-0879 in
+               apps/web/test/proposals.test.tsx read as though they were the primary
+               fairness and lifecycle guards; they are the UI half only. Each now carries a
+               SCOPE comment naming the real guard — UT-0836 on the ProposalService surface
+               for FR-090, and assertStageTransition (UT-0091/0092) plus the service
+               signature (UT-0842) for FR-091 — so a later reader cannot mistake a
+               button-text scan for the enforcement. ISS-02 (Low): the takesNoVerifier()
+               helper in packages/sdk/test/proposals.test.js now documents that an aliased
+               parameter name would slip past its regex, and that it is one leg of a
+               three-part check whose real legs are the spy assertion and the structural
+               `_verifier === undefined` assertion. No test behaviour changed; suite
+               unchanged at 608.
   v2.4.0 (2026-08-29) — PROPOSALS & DEBATE feature drop (FR-024, FR-079, FR-080, FR-090,
                FR-091, FR-092; FR-122/FR-123 counting distinction; FR-031/NFR-003 vote-step
                honesty). Built at the two layers that were empty — the contracts layer
@@ -463,16 +509,18 @@ Counts are actual as of this session (2026-08-29), verified by running `npm test
 | UT-0871 | SDK type-shim sync guard: trumocracy-sdk.d.ts IPartyStore member set equals the JSDoc typedef (v2.3.2, ISS-C2-01) | web | 1 |
 | UT-0087..0095 | proposals reference rules: participation tiers (weight always 1), Worker-tier authoring gate, eight-stage order, skip/reverse/no-op refusals, capability absence, deliberative stages, competing-entry window, draft floors, question-key grouping | protocol | 24 |
 | UT-0832..0848 | ProposalService: Worker-tier authoring, authoring never calls the seam, competing proposals in one window with equal standing, the fairness capability-absence set, entry closed after the ballot opens, open-tier deliberation, records-not-outcomes, one-step lifecycle, BINDING_VOTE admission gate, refusal states what is kept, no vote is cast, append-only trail, clock determinism | sdk | 24 |
+| UT-0885..0886 | FR-080 Worker informed-consent event: both required facts stated before confirmation (permanent for the term; participation record public), filing unreachable until confirmed, declining changes nothing (v2.4.2) | web | 2 |
 | UT-0872..0884 | proposals & debate web flow: Worker gate reads as disclosure not judgement, no filing form for a Supporter, both proposals rendered identically, both authors named, no control acts on another's proposal, provenance-not-precedence tag, eight-stage track, no skip control, open-tier deliberation stated and exercised, non-dismissable coercion notice before the ballot, honest open-tier refusal, trail order + v1 note, jargon and absence scans | web | 18 |
 | (SDK core) | identity, proofs, transports, verified reads, prediction, client, scopes | sdk | 124 |
-| **Total** | | | **608** |
+| **Total** | | | **610** |
 
 Note: the SDK total of 244 comprises 124 (core) + 36 (seams UT-0760..UT-0779) + 38
 (UT-0780..UT-0818 + UT-0831 party-creation service) + 22 (UT-0819..UT-0830 membership) + 24
 (UT-0832..UT-0848 proposals, v2.4.0). The web total of 89 comprises 16 (original
 UT-0700..UT-0742) + 27 (UT-0841..UT-0857 party-creation web tests) + 27 (UT-0858..UT-0870
 join-membership web tests) + 1 (UT-0871 type-shim sync guard, v2.3.2) + 18 (UT-0872..UT-0884
-proposals & debate, v2.4.0). The protocol total of 150 comprises 126 (as below) + 24
+proposals & debate, v2.4.0) + 2 (UT-0885..UT-0886 Worker informed consent, v2.4.2). The
+protocol total of 150 comprises 126 (as below) + 24
 (UT-0087..UT-0095 proposals, v2.4.0); that 126
 comprises 82 (original UT-0001..UT-0055) + 44 (UT-0060..UT-0086). Every `UT-####` maps to
 an `FR`/`NFR`/`RISK` in the RTM (Doc 08).
@@ -531,7 +579,10 @@ the tests were written by the same person who wrote the bug.
 ### 5.0 Scaffold-drop technical review record
 
 Review history for this document:
-- v2.4.0 cycle 1: pending — proposals & debate drop; re-review owed (neutral reviewer, technical mode).
+- v2.4.3 cycle 1: `artifacts/reviews/06-coding-and-ut-v2.4.3-technical-cycle1.md` — PASS (100%, 0C/0H/0M/0L). Approved 2026-08-29.
+- v2.4.2 cycle 1: `artifacts/reviews/06-coding-and-ut-v2.4.2-technical-cycle1.md` — PASS (98%, 0C/0H/0M/1L). The reviewer confirmed both FR-080 clauses are genuinely satisfied by the consent copy, not gestured at. The Low (stale gate copy) is reworked into v2.4.3.
+- v2.4.1 cycle 2: `artifacts/reviews/06-coding-and-ut-v2.4.1-technical-cycle2.md` — PASS (100%, 0C/0H/0M/0L). Approved 2026-08-29.
+- v2.4.0 cycle 1: `artifacts/reviews/06-coding-and-ut-v2.4.0-technical-cycle1.md` — PASS (97%, 0C/0H/0M/2L). Both Lows reworked into v2.4.1 rather than carried: they were tests reading as though they were the primary guard when they were the UI half only, which is the failure §2 rule 2 exists to prevent.
 - v2.3.3 cycle 1: `artifacts/reviews/06-coding-and-ut-v2.3.3-technical-cycle1.md` — PASS (98%, 0C/0H/0M/0L). Approved 2026-08-29. (This line read "pending" until v2.4.0 — corrected; the same stale-review-record defect the loop caught at v2.3.1 and v2.3.2.)
 - v2.3.2 cycle 3: `artifacts/reviews/06-coding-and-ut-v2.3.2-technical-cycle3.md` — PASS (97%, 0C/0H/0M/1L). Approved 2026-08-29. Surviving Low ISS-C3-01 (extend UT-0871 to the PartyCreationService shim block — additive hardening; verified in sync at review time) carries as a non-gating backlog item.
 - v2.3.1 cycle 2: `artifacts/reviews/06-coding-and-ut-v2.3.1-technical-cycle2.md` — FAIL (92%, 0C/0H/1M/2L). All four cycle-1 issues verified closed. ISS-C2-01 (Medium): the ISS-01 fix stopped at the JS boundary — `apps/web/types/trumocracy-sdk.d.ts` IPartyStore shim missing `findPetitionsPastClose`, so a TypeScript store could typecheck clean and throw at runtime; ISS-C2-02 (Low): two further stale §5.0 review-record lines (v2.0.1 "pending", v2.1.0 sign-off tail); ISS-C2-03 (Low): UT-0831 and the Low fixes not yet committed (and 4148498 bundled the fix with review artifacts). All three resolved in v2.3.2 (.d.ts synced in both blocks + UT-0871 drift guard; §5.0 corrected; rework committed atomically — fix commit + docs commit).
