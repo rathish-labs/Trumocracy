@@ -2,8 +2,8 @@
 
 ```
 Document ID:   CODE-TRUMOCRACY
-Version:       2.3.3
-Status:        Approved — 06-coding-and-ut-v2.3.3-technical-cycle1.md (PASS 98%, 0C/0H/0M/0L)
+Version:       2.4.0
+Status:        In Review
 Owner:         Samuel Oyelaran — Engineering Lead
 Source:        SDD-TRUMOCRACY v2.7.1 §9 · ADR-011 · ADR-023 · ADR-024 · ADR-025
 Last updated:  2026-08-29
@@ -15,7 +15,52 @@ Last updated:  2026-08-29
 
 ```
 Change history:
-  v2.3.3 (2026-08-29) — Recorded-decision closure (documents only; NO code change). The
+  v2.4.0 (2026-08-29) — PROPOSALS & DEBATE feature drop (FR-024, FR-079, FR-080, FR-090,
+               FR-091, FR-092; FR-122/FR-123 counting distinction; FR-031/NFR-003 vote-step
+               honesty). Built at the two layers that were empty — the contracts layer
+               already had the consensus lifecycle (Governor/GovernanceRules, UT-0200..0230)
+               and is NOT duplicated or modified by this drop.
+               PROTOCOL (new packages/protocol/src/proposals.js): PARTICIPATION_TIER +
+               canAuthorProposal + votingWeightForTier (FR-079/FR-080 — every tier weighs 1,
+               exposed as a function so the guarantee is asserted rather than inferred);
+               PROPOSAL_STAGE/STAGE_ORDER/DELIBERATIVE_STAGES/COMPETING_ENTRY_STAGES +
+               nextStage + assertStageTransition (FR-091 — refuses STAGE_SKIPPED naming what
+               was skipped, STAGE_REVERSED, STAGE_UNCHANGED; no force/skipTo parameter
+               exists); validateProposalDraft (published floors only, never content
+               judgement) and normalizeQuestionKey (FR-090 decision-window grouping).
+               SDK (new packages/sdk/src/proposals.js): IProposalStore typedef,
+               InMemoryProposalStore (IS_INSECURE_MOCK=true) and ProposalService —
+               fileProposal (one entry point for original AND competing, because the
+               distinction carries no power), proposalsInWindow, decisionWindows,
+               postDeliberation (open to open-tier members; deliberative stages only),
+               deliberation, advanceStage (one step, no target parameter), admitToBallot
+               (the ONE seam call site, scope BINDING_VOTE), participationStatus (takes no
+               verifier, so a status read can never trigger verification) and decisionTrail.
+               The service holds NO verifier, so authoring and deliberation structurally
+               cannot reach one. It casts, stores and counts NO vote — IBallotService owns
+               that (DES-096) and the private-ballot mechanism is v2.
+               Also: PartyCreationService.partyStatus() now returns `jurisdiction` and
+               `name` (additive; public party data the FR-123 seam call sites need to scope
+               a counting action without reaching into the store).
+               WEB: /proposals page (flag-gated on party_governance) + ProposalsAndDebate
+               component — Worker self-declaration surface, filing form, the competing-
+               proposal list with equal affordances, the eight-stage track, the deliberation
+               thread, the ballot step carrying the non-dismissable coercion-resistance
+               notice, and the decision trail with its honest v1 note. i18n en+ar `debate`
+               section (named `debate` because a pre-existing `proposals` key holds a
+               proposal's BALLOT state — a duplicate key would have silently overwritten
+               one of them; ar is an engineer draft, native review owed per §7 #17).
+               Types: trumocracy-protocol.d.ts + trumocracy-sdk.d.ts extended for the new
+               exports (the UT-0871 shim-sync guard covers IPartyStore only; these are new
+               modules, so their declarations are added by hand — see §7 #23).
+               New tests: UT-0087..UT-0095 (protocol, 24), UT-0832..UT-0848 (sdk, 24),
+               UT-0872..UT-0884 (web, 18). Suite: 608 tests (contracts 95 / protocol 150 /
+               sdk 244 / ui 14 / indexer 16 / web 89); dep-guard clean; tsc exits 0 in
+               packages/ui and apps/web. §3 counts updated; §7 limitations #23–#25 added.
+               DESIGN LANDED WITH THE CODE: DES-103..DES-106 written into Doc 03 v2.9.0 in
+               the same session, so the FR rows can close rather than sit at
+               "surface built, row open".
+               v2.3.3 (2026-08-29) — Recorded-decision closure (documents only; NO code change). The
                FR-064-SEMANTICS ruling landed: option (a), v1 EXPLICIT-LEAVE (Rathish,
                Human Approver, 2026-08-29). §7 #20 closed as RESOLVED (a). FR-064's text is
                amended in Doc 02 v2.15.0 §4.6 — the auto-void wording is superseded and
@@ -416,14 +461,19 @@ Counts are actual as of this session (2026-08-29), verified by running `npm test
 | UT-0841..0857 | party-creation web flow: emblem field, deficiency errors, collision surfaces, BR-020 disclosure, non-violence clause, ProvisionalStatus, jargon scan | web | 27 |
 | UT-0858..0870 | join/membership web flow: one-click join, no-approval absence, one-active-party refusal surface, leave, history active/inactive, cap at join surface, join ≠ counting figures, FR-131(d) notice (four clauses, non-dismissable), verified-member counting, seam spy, flag gating, jargon scan, v1-honest join copy, absence test | web | 27 |
 | UT-0871 | SDK type-shim sync guard: trumocracy-sdk.d.ts IPartyStore member set equals the JSDoc typedef (v2.3.2, ISS-C2-01) | web | 1 |
+| UT-0087..0095 | proposals reference rules: participation tiers (weight always 1), Worker-tier authoring gate, eight-stage order, skip/reverse/no-op refusals, capability absence, deliberative stages, competing-entry window, draft floors, question-key grouping | protocol | 24 |
+| UT-0832..0848 | ProposalService: Worker-tier authoring, authoring never calls the seam, competing proposals in one window with equal standing, the fairness capability-absence set, entry closed after the ballot opens, open-tier deliberation, records-not-outcomes, one-step lifecycle, BINDING_VOTE admission gate, refusal states what is kept, no vote is cast, append-only trail, clock determinism | sdk | 24 |
+| UT-0872..0884 | proposals & debate web flow: Worker gate reads as disclosure not judgement, no filing form for a Supporter, both proposals rendered identically, both authors named, no control acts on another's proposal, provenance-not-precedence tag, eight-stage track, no skip control, open-tier deliberation stated and exercised, non-dismissable coercion notice before the ballot, honest open-tier refusal, trail order + v1 note, jargon and absence scans | web | 18 |
 | (SDK core) | identity, proofs, transports, verified reads, prediction, client, scopes | sdk | 124 |
-| **Total** | | | **542** |
+| **Total** | | | **608** |
 
-Note: the SDK total of 220 comprises 124 (core) + 36 (seams UT-0760..UT-0779) + 38
-(UT-0780..UT-0818 + UT-0831 party-creation service) + 22 (UT-0819..UT-0830 membership). The web
-total of 71 comprises 16 (original UT-0700..UT-0742) + 27 (UT-0841..UT-0857 party-creation
-web tests) + 27 (UT-0858..UT-0870 join-membership web tests) + 1 (UT-0871 type-shim sync
-guard, v2.3.2). The protocol total of 126
+Note: the SDK total of 244 comprises 124 (core) + 36 (seams UT-0760..UT-0779) + 38
+(UT-0780..UT-0818 + UT-0831 party-creation service) + 22 (UT-0819..UT-0830 membership) + 24
+(UT-0832..UT-0848 proposals, v2.4.0). The web total of 89 comprises 16 (original
+UT-0700..UT-0742) + 27 (UT-0841..UT-0857 party-creation web tests) + 27 (UT-0858..UT-0870
+join-membership web tests) + 1 (UT-0871 type-shim sync guard, v2.3.2) + 18 (UT-0872..UT-0884
+proposals & debate, v2.4.0). The protocol total of 150 comprises 126 (as below) + 24
+(UT-0087..UT-0095 proposals, v2.4.0); that 126
 comprises 82 (original UT-0001..UT-0055) + 44 (UT-0060..UT-0086). Every `UT-####` maps to
 an `FR`/`NFR`/`RISK` in the RTM (Doc 08).
 (UT-#### IDs may each cover a describe-block with multiple `it()` assertions; the Count
@@ -481,7 +531,8 @@ the tests were written by the same person who wrote the bug.
 ### 5.0 Scaffold-drop technical review record
 
 Review history for this document:
-- v2.3.3 cycle 1: pending — recorded-decision closure of §7 #20 (no code change); re-review owed (neutral reviewer, technical mode).
+- v2.4.0 cycle 1: pending — proposals & debate drop; re-review owed (neutral reviewer, technical mode).
+- v2.3.3 cycle 1: `artifacts/reviews/06-coding-and-ut-v2.3.3-technical-cycle1.md` — PASS (98%, 0C/0H/0M/0L). Approved 2026-08-29. (This line read "pending" until v2.4.0 — corrected; the same stale-review-record defect the loop caught at v2.3.1 and v2.3.2.)
 - v2.3.2 cycle 3: `artifacts/reviews/06-coding-and-ut-v2.3.2-technical-cycle3.md` — PASS (97%, 0C/0H/0M/1L). Approved 2026-08-29. Surviving Low ISS-C3-01 (extend UT-0871 to the PartyCreationService shim block — additive hardening; verified in sync at review time) carries as a non-gating backlog item.
 - v2.3.1 cycle 2: `artifacts/reviews/06-coding-and-ut-v2.3.1-technical-cycle2.md` — FAIL (92%, 0C/0H/1M/2L). All four cycle-1 issues verified closed. ISS-C2-01 (Medium): the ISS-01 fix stopped at the JS boundary — `apps/web/types/trumocracy-sdk.d.ts` IPartyStore shim missing `findPetitionsPastClose`, so a TypeScript store could typecheck clean and throw at runtime; ISS-C2-02 (Low): two further stale §5.0 review-record lines (v2.0.1 "pending", v2.1.0 sign-off tail); ISS-C2-03 (Low): UT-0831 and the Low fixes not yet committed (and 4148498 bundled the fix with review artifacts). All three resolved in v2.3.2 (.d.ts synced in both blocks + UT-0871 drift guard; §5.0 corrected; rework committed atomically — fix commit + docs commit).
 - v2.3.0 cycle 1: `artifacts/reviews/06-coding-and-ut-v2.3.0-technical-cycle1.md` — FAIL (90%, 0C/0H/1M/3L). ISS-01 (Medium): expirePetitions reached into InMemoryPartyStore's private `_petitions` field — silent no-op with any production store; ISS-02 (Low): §8 stale branch name; ISS-03 (Low): membershipHistory O(n²) fold undocumented; ISS-04 (Low): UT-0822 as an `it()` inside UT-0821's describe block. All four resolved in v2.3.1 (interface method `findPetitionsPastClose` + regression test UT-0831; branch name fixed; fold reworked to O(n); UT-0822 given its own describe block).
@@ -680,6 +731,28 @@ When each module lands it must read its flag in the same commit.
     ID-verified — building that would fake the enrolment flow this repo has deliberately not
     built (CON-015). The verified-member path is covered by tests (UT-0826/UT-0865) that
     inject a DES-100-allowlist credential row directly.
+23. **The type-shim sync guard (UT-0871) covers `IPartyStore` only.** The new proposals
+    modules add exports to both `trumocracy-protocol.d.ts` and `trumocracy-sdk.d.ts`
+    (`PARTICIPATION_TIER`, `PROPOSAL_STAGE`, `STAGE_ORDER`, `ProposalService`,
+    `InMemoryProposalStore`, `IProposalStore`, …) which are hand-written and **not** covered
+    by a member-set equality test. `tsc --noEmit` catches a *missing* declaration the moment
+    the app uses it, but not a declaration that drifts from the JSDoc in a way the app never
+    exercises — the same class of gap ISS-C2-01 found. Extending UT-0871 to the proposals
+    surfaces is owed (it is also the standing ISS-C3-01 backlog item for
+    `PartyCreationService`).
+24. **FR-092's public-reconstruction half is not built.** `decisionTrail()` is complete and
+    append-only, but it lives in the application store. FR-092 requires the trail be
+    "reconstructable end-to-end by any third party from public data alone", which needs the
+    DES-097 audit-record anchoring (Doc 13 stage S-8). The web surface states this plainly
+    (`trail-v1-note`) rather than implying the record is already independently checkable.
+    The FR-092 RTM row does **not** close on this drop.
+25. **The proposals demo advances stages by a button; production advances on a timeline.**
+    FR-091 requires stage transitions "executed by code per published timelines". The
+    service enforces the *order* (one step, no skip, no veto), which is the anti-capture
+    half, but the *schedule* — driving transitions from `governance.js` `schedule()` — is
+    not wired in this drop. The demo control can only ever move one step, because the
+    service exposes no other move. Timeline wiring is owed before the FR-091 row can claim
+    the "per published timelines" clause.
 
 ## 8. Commit and branch conventions
 

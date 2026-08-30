@@ -218,6 +218,104 @@ declare module '@trumocracy/sdk' {
     partyStatus(partyId: string): PartyStatus;
   }
 
+  // ─── Proposals & debate (DES-103..DES-106) ───────────────────────────────────
+
+  /** Injectable persistence seam for ProposalService. */
+  export interface IProposalStore {
+    IS_INSECURE_MOCK(): boolean;
+    saveWindow(window: object): string;
+    findWindowById(id: string): object | null;
+    findWindowByQuestion(partyId: string, questionKey: string): object | null;
+    findWindowsByParty(partyId: string): object[];
+    updateWindowStage(windowId: string, change: { stage: string; at: number }): object;
+    saveProposal(proposal: object): string;
+    findProposalById(id: string): object | null;
+    findProposalsByWindow(windowId: string): object[];
+    appendDeliberation(record: object): string;
+    findDeliberationsByWindow(windowId: string): object[];
+    appendTrailEvent(event: object): void;
+    getTrail(windowId: string): object[];
+    isAdmittedToBallot(windowId: string, memberPseudonym: string): boolean;
+    recordBallotAdmission(windowId: string, memberPseudonym: string): void;
+  }
+
+  /** IS_INSECURE_MOCK=true; blocked past devnet. Postgres backing is later wiring. */
+  export class InMemoryProposalStore implements IProposalStore {
+    IS_INSECURE_MOCK(): true;
+    saveWindow(window: object): string;
+    findWindowById(id: string): object | null;
+    findWindowByQuestion(partyId: string, questionKey: string): object | null;
+    findWindowsByParty(partyId: string): object[];
+    updateWindowStage(windowId: string, change: { stage: string; at: number }): object;
+    saveProposal(proposal: object): string;
+    findProposalById(id: string): object | null;
+    findProposalsByWindow(windowId: string): object[];
+    appendDeliberation(record: object): string;
+    findDeliberationsByWindow(windowId: string): object[];
+    appendTrailEvent(event: object): void;
+    getTrail(windowId: string): object[];
+    isAdmittedToBallot(windowId: string, memberPseudonym: string): boolean;
+    recordBallotAdmission(windowId: string, memberPseudonym: string): void;
+  }
+
+  /** A stored row (proposal, deliberation record or trail event) returned as a copy. */
+  export type ProposalRecord = Record<string, unknown>;
+
+  export interface DecisionWindowSummary {
+    windowId: string;
+    question: string;
+    stage: string;
+    openedAt: number;
+    proposalCount: number;
+  }
+
+  export interface ParticipationStatus {
+    member: boolean;
+    mayAuthor: boolean;
+    mayDeliberate: boolean;
+    admittedToBallot: boolean;
+    stage: string;
+  }
+
+  /**
+   * The v1 proposals & debate flow (FR-024/079/080/090/091/092/123).
+   *
+   * Holds NO eligibility verifier: authoring and deliberation structurally cannot reach
+   * the seam. Only admitToBallot() receives one, per call, with scope BINDING_VOTE.
+   * Casts, stores and counts NO vote — that is IBallotService (DES-096).
+   */
+  export class ProposalService {
+    constructor(store: IProposalStore, membership: unknown, clock?: () => number);
+    IS_INSECURE_MOCK(): boolean;
+    fileProposal(
+      partyId: string,
+      draft: { question: string; title: string; body: string; tier: number },
+      authorPseudonym: string,
+      participationTier: string,
+    ): { proposalId: string; windowId: string; isOriginal: boolean; competingCount: number };
+    proposalsInWindow(windowId: string): ProposalRecord[];
+    decisionWindows(partyId: string): DecisionWindowSummary[];
+    postDeliberation(
+      windowId: string,
+      memberPseudonym: string,
+      text: string,
+      proposalId?: string | null,
+    ): { deliberationId: string; stage: string };
+    deliberation(windowId: string): ProposalRecord[];
+    advanceStage(windowId: string): { windowId: string; from: string; to: string };
+    admitToBallot(
+      windowId: string,
+      memberPseudonym: string,
+      verifier: { verifyEligibility(memberId: string, regionId: string, scope: string): EligibilityResult },
+    ): { admitted: true; windowId: string; member: string };
+    participationStatus(
+      windowId: string,
+      memberPseudonym: string,
+      participationTier?: string,
+    ): ParticipationStatus;
+    decisionTrail(windowId: string): ProposalRecord[];
+  }
+
   // ─── IEligibilityVerifier seam (DES-095, ADR-024/ADR-025) ────────────────────
 
   export const COUNTING_ACTION: {

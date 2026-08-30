@@ -11,6 +11,12 @@ export * from './governance.js';
 export * from './regions.js';
 export * from './flags.js';
 export * from './party.js';
+export * from './proposals.js';
+// proposals.js exports: PARTICIPATION_TIER, DEFAULT_PARTICIPATION_TIER, canAuthorProposal,
+// votingWeightForTier, PROPOSAL_STAGE, STAGE_ORDER, DELIBERATIVE_STAGES,
+// COMPETING_ENTRY_STAGES, ProposalError, stageIndex, isDeliberativeStage,
+// acceptsCompetingProposal, nextStage, assertStageTransition, PROPOSAL,
+// validateProposalDraft, normalizeQuestionKey — FR-024/079/080/090/091.
 // party.js new exports: validateDraft, applyCharterDefaults, charterFingerprint,
 // normalizeCollisionKey, NON_VIOLENCE_CLAUSE, PROVISIONAL_MEMBER_CAP, EMBLEM,
 // REPETITION_COOLDOWN_SECONDS — all additive, picked up via '*' above.

@@ -144,6 +144,64 @@ declare module '@trumocracy/protocol' {
   /** Cooldown for re-petitioning with a substantially identical charter (FR-013, COOLDOWN-01). */
   export const REPETITION_COOLDOWN_SECONDS: number;
 
+  // ─── Proposals, tiers & deliberative lifecycle (DES-103..DES-105) ────────────
+
+  /** The eight FR-091 lifecycle stage names. */
+  export type ProposalStage =
+    | 'PROPOSAL'
+    | 'REVIEW'
+    | 'DISCUSSION'
+    | 'DEBATE'
+    | 'VOTE'
+    | 'DECISION'
+    | 'IMPLEMENTATION'
+    | 'MEASUREMENT';
+
+  /** Participation tiers (FR-079). Descriptive only — never a voting weight. */
+  export type ParticipationTierName = 'SUPPORTER' | 'WORKER' | 'CANDIDATE';
+
+  export const PARTICIPATION_TIER: { readonly [K in ParticipationTierName]: K };
+  export const DEFAULT_PARTICIPATION_TIER: 'SUPPORTER';
+
+  /** May a member at this tier author a proposal? (FR-024, FR-090, OI-14) */
+  export function canAuthorProposal(participationTier: string): boolean;
+
+  /** Always 1 — no tier confers weight (FR-079, FR-021). Throws on an unknown tier. */
+  export function votingWeightForTier(participationTier: string): number;
+
+  export const PROPOSAL_STAGE: { readonly [K in ProposalStage]: K };
+  export const STAGE_ORDER: readonly ProposalStage[];
+  export const DELIBERATIVE_STAGES: readonly ProposalStage[];
+  export const COMPETING_ENTRY_STAGES: readonly ProposalStage[];
+
+  export function stageIndex(stage: string): number;
+  export function isDeliberativeStage(stage: string): boolean;
+  export function acceptsCompetingProposal(stage: string): boolean;
+  export function nextStage(stage: string): ProposalStage | null;
+  /** Only one step forward is legal (FR-091). Throws STAGE_SKIPPED/REVERSED/UNCHANGED. */
+  export function assertStageTransition(from: string, to: string): { valid: true };
+
+  export const PROPOSAL: {
+    readonly QUESTION_MIN_CHARS: number;
+    readonly QUESTION_MAX_CHARS: number;
+    readonly TITLE_MIN_CHARS: number;
+    readonly TITLE_MAX_CHARS: number;
+    readonly BODY_MIN_CHARS: number;
+    readonly BODY_MAX_CHARS: number;
+  };
+
+  export interface ProposalDraft {
+    question: string;
+    title: string;
+    body: string;
+    tier: number;
+  }
+
+  export function validateProposalDraft(draft: ProposalDraft): ValidationResult;
+
+  /** Groups differently-phrased spellings of one question into one decision window. */
+  export function normalizeQuestionKey(question: string): string;
+
   export interface Draft {
     name?: string;
     jurisdiction?: string;

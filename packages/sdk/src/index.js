@@ -53,3 +53,12 @@ export {
   InMemoryPartyStore,
   PartyCreationService,
 } from './party-creation.js';
+
+// ─── Proposals & debate (DES-103..DES-106) ───────────────────────────────────
+// IProposalStore + InMemoryProposalStore + ProposalService: the v1 authoring,
+// competing-proposal, deliberation and lifecycle flow. Runs UP TO the ballot and
+// hands off at admitToBallot() — it never casts, stores or counts a vote.
+export {
+  InMemoryProposalStore,
+  ProposalService,
+} from './proposals.js';

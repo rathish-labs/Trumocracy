@@ -2,14 +2,41 @@
 
 ```
 Document ID:   SDD-TRUMOCRACY
-Version:       2.8.3
-Status:        Approved — 03-architecture-design-sdd-v2.8.3-technical-cycle4.md (PASS 100%, 0C/0H/0M/0L)
+Version:       2.9.0
+Status:        In Review
 Owner:         Ravi Deshmukh — Principal Architect
 Approvers:     Rafael Duarte (Security), Chen Wei (Reliability), Dr. Lena Kowalczyk (Privacy),
                Aisha Nkemdirim (Elections & Voting)
 Source:        SRS-TRUMOCRACY v2.15.0
 Last updated:  2026-08-29
-Change:        v2.8.3 (2026-08-29) — APPROVER RULING APPLIED (Rathish, 2026-08-29;
+Change:        v2.9.0 (2026-08-29) — PROPOSALS & DEBATE design, written ALONGSIDE the code
+               drop it governs (the lesson from the party-creation and join/membership
+               features, where the surface shipped and the RTM row stayed open for want of
+               a DES). Four new elements in §5.2, normative specifications in §10.13.13:
+               **DES-103** participation tiers (FR-079/FR-080) — three tiers, descriptive
+               only, weight identical across all three; tier governs authorship for an
+               ANONYMITY reason, not a merit one.
+               **DES-104** proposal authorship & competing proposals (FR-024/FR-090) — the
+               decision-window model, equal standing, and the capability-absence set that
+               makes "the author never owns the ballot alone" checkable rather than merely
+               asserted.
+               **DES-105** deliberative lifecycle (FR-091) — the eight stages, one step at
+               a time, with no skip/force/veto parameter anywhere in the surface.
+               **DES-106** permanent decision trail (FR-092/FR-107) — append-only, copies
+               out; and an honest v1 boundary: the trail is complete but held by us, so
+               FR-092's "reconstructable from public data alone" additionally needs the
+               DES-097 audit anchoring that is not built.
+               CONFLICT RECORDED, NOT SILENTLY RESOLVED (§10.13.13 "Two open questions"):
+               (a) FR-091's eight named stages are a DIFFERENT taxonomy from ADR-008's
+               `PROPOSAL_STATE` consensus machine — both are implemented, the mapping is
+               recorded, and which is normative at the v2 seam is owed to the architect and
+               the PO; (b) the brief for this drop asked that PROPOSING be an FR-123
+               counting action, but the COUNTING_ACTION allowlist is an approver-ratified
+               three-value set (DES-100, 2026-08-24) and FR-024/FR-090/OI-14 gate authoring
+               on self-declared Worker tier instead. The FR-conformant reading is built;
+               the divergence is flagged for an approver ruling rather than resolved by
+               extending a ratified allowlist.
+               v2.8.3 (2026-08-29) — APPROVER RULING APPLIED (Rathish, 2026-08-29;
                artifacts/status/DECISIONS-2026-08-29-NONVIOLENCE-ENTRENCHMENT.md). The
                non-violence-clause amendment weakness found at v2.8.2 is recorded as its OWN
                tracked work item — **`PREREQ-01`** — and is explicitly **NOT folded into the
@@ -691,6 +718,10 @@ because §5.2 named no design element. Full normative specifications in §10.13.
 | ID | Component | Responsibility | Satisfies | Tech |
 |---|---|---|---|---|
 | DES-101 | non-violence clause verification gate | `NON_VIOLENCE_CLAUSE` (`packages/protocol/src/constants.js`) is the single source of truth; draft validation refuses publication on `field: 'charter.nonViolenceClause'` with `code: 'REQUIRED'` when the clause is absent and `code: 'ALTERED'` when it differs from the canonical text by any byte; no partial-credit, fuzzy or semantic match; no operator or configuration path may waive the check. Clause text is frozen in code pre-ratification (CON-013); changing it is a protocol governance action (ADR-010). v1 enforcement at protocol + service + web; v2 adds `PartyRegistry.publishDraft` as the trust-minimised enforcement point | FR-077, CON-013, SCR-04, SCR-05 | packages/protocol; packages/sdk; apps/web; (v2) PartyRegistry |
+| DES-103 | participation tiers | Three tiers per party — Supporter (assigned on join), Worker (self-declared, no approval), Candidate. Descriptive metadata ONLY: `votingWeightForTier()` returns 1 for every tier and no configuration can differentiate weight, standing or precedence (FR-021 unchanged). The single thing tier governs is proposal AUTHORSHIP, and for an anonymity reason, not a merit one: authorship is public (FR-090) and a Supporter is anonymous unconditionally (FR-082), so a Supporter cannot author without destroying their own anonymity | FR-079, FR-080, FR-021, FR-082 | packages/protocol (proposals.js); apps/web |
+| DES-104 | proposal authorship & competing proposals | Authoring requires Worker tier or above (OI-14) — a disclosure step, never an approval step; no pre-screening, moderation or veto path exists (FR-024). Proposals answering the same question share a DECISION WINDOW keyed by a normalised question string; every proposal in a window has EQUAL STANDING — one stage, one schedule, no ordering privilege, no weight/rank/priority field, and no capability by which one author can withdraw, remove, merge, reject, prioritise or veto another's proposal. The author never owns the ballot alone; that absence is a first-class capability-absence control | FR-024, FR-090, BR-015, BR-003, SCR-12 | packages/protocol; packages/sdk (ProposalService); apps/web |
+| DES-105 | deliberative lifecycle stage machine | The eight FR-091 stages — proposal → review → discussion → debate → vote → decision → implementation → measurement — advanced exactly one step at a time. `assertStageTransition` refuses skipping (`STAGE_SKIPPED`, naming what was skipped), reversal (`STAGE_REVERSED`) and no-ops; `advanceStage()` takes no target, no `force`, no `skipTo` and no actor, so there is nothing for a human to veto. Review/discussion/debate are DELIBERATIVE: they produce records, never outcomes. A competing proposal may join only while the window still accepts entries — admitting one after the ballot opens would change what people already voted on | FR-091, BR-014, BR-008, SCR-12 | packages/protocol; packages/sdk |
+| DES-106 | permanent decision trail | Every event in a decision window — opened, proposal filed (with author), deliberation posted, stage advanced, ballot admission — appends to a per-window log that is never updated and never deleted (FR-107). Reads return copies, so a caller mutating what it received changes nothing. **v1 boundary, disclosed not papered over:** the trail is held in the application store, which makes it complete but not yet independently checkable; FR-092's "reconstructable by any third party from public data alone" additionally requires the DES-097 audit-record anchoring (stage S-8), which is not built. The surface states this in plain words rather than implying more | FR-092, FR-107, BR-014, BR-019 | packages/sdk; apps/web; (owed) DES-097 anchoring |
 | DES-102 | provisional-party membership cap | A platform-activated party whose legal registration is unverified is capped at `PROVISIONAL_MEMBER_CAP` = 100 **ACTIVE** members. The cap is checked at the membership-write boundary and is **UNCONDITIONAL** — no grace window, no queue, no override (Ruling 1, Rathish, 2026-08-26). It lifts by code only, on the recording of verified legal registration (FR-075); no operator, admin, configuration or bypass surface exists, and the absence is tested as a first-class control. Anti-capture invariant (C-02 ruling, Rathish, 2026-08-22) | FR-130, FR-075, BR-002, BR-012, SCR-09, SCR-11 | packages/protocol (constant); packages/sdk (v1 enforcement); DES-097(b) store; (v2) `Party.join()` |
 
 ### 5.3 Data model
@@ -2084,6 +2115,102 @@ already follows.
 ADR-013 §2, CON-002, CON-008, CON-015, FR-010, FR-013, FR-022, FR-064, FR-107, FR-130, NFR-010.
 **Enables (does not close):** the FR-010 production-store build and every row whose gap reads
 "production store pending DES-097". **US layer:** owed — PO to derive the persistence-build stories.
+
+### 10.13.13 DES-103..DES-106 — proposals & debate (FR-024, FR-079/080, FR-090, FR-091, FR-092)
+
+**Scope.** The v1 flow from "a member has a question" up to — and stopping at — the point a
+ballot opens. It does not cast, store, count or tally a vote: `admitToBallot()` asks the
+eligibility seam whether a member's ballot would COUNT and then hands off to IBallotService
+(DES-096). A service that both decided who may vote and counted the votes would be the
+single point of trust this architecture exists to remove.
+
+**DES-103 — participation tiers (FR-079, FR-080).** Supporter on joining; Worker and
+Candidate above it. `votingWeightForTier()` returns **1** for every tier and there is no
+configuration, charter override or flag that can make it return anything else — the rule is
+exposed as a function precisely so a test can assert it rather than infer it from an
+absence. Worker is **self-declared**: the platform records the declaration, nobody approves
+it, and the UI states before confirmation that the declaration is public for the term
+(FR-080's informed-consent event).
+
+**DES-104 — authorship and competing proposals (FR-024, FR-090).**
+
+1. **Who may author, and why.** Worker tier or above (OI-14, 2026-08-11). The reason is
+   anonymity, not merit: authorship is public (FR-090) and Supporters are anonymous
+   unconditionally (FR-082), so a Supporter cannot author without breaking their own
+   anonymity. Every refusal on this path MUST say that the tier is self-declarable, so the
+   gate reads as the disclosure step it is and never as a judgement on the proposal.
+2. **The decision window.** Proposals answering the same question share one window, keyed by
+   `normalizeQuestionKey()` (NFKC, case-folded, whitespace-collapsed — the same shape as
+   `normalizeCollisionKey` for party names). Two members phrasing one question differently
+   are answering one question, and their proposals belong together.
+3. **Equal standing is enforced by absence.** All proposals in a window share one stage and
+   one schedule; none carries a `weight`, `rank`, `priority`, `standing`, `primary` or
+   `featured` field; and the service exposes **no** `withdrawProposal`, `removeProposal`,
+   `rejectCompeting`, `mergeProposal`, `acceptAsAmendment`, `prioritiseProposal`,
+   `setPrimaryProposal`, `closeWindow` or `vetoProposal`. `isOriginal` is **provenance, not
+   precedence** — nothing in the service consults it to decide anything. This is a
+   capability-absence obligation in the §4/DES-075 sense: asserted by test, on both the
+   service surface and the rendered surface.
+4. **Entry closes when the ballot opens.** A competing proposal may join while the window is
+   at proposal / review / discussion. Once it reaches debate, entry is refused
+   (`WINDOW_CLOSED_TO_ENTRIES`, naming the stage): admitting a new option after people have
+   begun deciding would change the question they were asked.
+
+**DES-105 — the deliberative lifecycle (FR-091).** Eight stages, advanced one at a time.
+`assertStageTransition(from, to)` is the authority and refuses by name: `STAGE_SKIPPED`
+(carrying which stages were skipped), `STAGE_REVERSED`, `STAGE_UNCHANGED`;
+`advanceStage(windowId)` takes the window and nothing else — no target stage, no `force`, no
+`skipTo`, no `reason`, no actor. FR-091's "no stage MAY be skipped, reordered, or
+human-vetoed" is therefore a property of the type signature rather than of a check someone
+could forget. Review, discussion and debate are **deliberative**: `postDeliberation()` can
+change no stage, no proposal and no outcome, and is open to **every** member including
+open-tier Supporters — deliberation is participation, not a counting action (FR-122).
+
+**DES-106 — the permanent decision trail (FR-092, FR-107).** Append-only per window;
+`appendTrailEvent` is the only writer and the store exposes no update, delete or rewrite
+path; reads return copies. The trail records authorship, so agenda-setting is visible.
+**Honest v1 boundary:** the trail is complete but held in the application store. FR-092
+additionally requires it be "reconstructable end-to-end by any third party from public data
+alone", which needs the DES-097 audit-record anchoring (Doc 13 stage S-8) — not built. The
+surface says so in plain words. The FR-092 row therefore does **not** close on this drop,
+and that is recorded rather than argued around.
+
+**Counting-tier placement.** Exactly one call site in this flow reaches the eligibility
+seam: `admitToBallot()`, with scope `BINDING_VOTE` (§10.13.2(b)). The service holds **no**
+verifier, so authoring and deliberation structurally cannot reach one. A refusal at the gate
+MUST state what the member keeps — membership, deliberation, reading the trail — because
+verification gates counting, never participation (FR-020, FR-122).
+
+**Vote-step honesty.** Where the surface reaches the VOTE stage it renders the
+coercion-resistance notice (DES-098 family / FR-031 / NFR-003) **before** the member is
+asked to act, non-dismissable, disappearing automatically when `maci_voting` is on.
+
+#### Two open questions this increment records rather than resolves
+
+**(a) FR-091's stage list vs ADR-008's `PROPOSAL_STATE`.** FR-091 names eight *deliberative*
+stages; `PROPOSAL_STATE` (governance.js, mirrored on-chain in v2) names eight *consensus*
+states — draft, discussion, voting, tallying, succeeded_timelock, executed, defeated,
+cancelled. They are different taxonomies answering different questions ("where is this
+decision in its public process?" vs "what is the ballot's state?"), and four names in each
+have no counterpart in the other. v1 implements FR-091's list as the citizen-facing
+lifecycle and leaves `PROPOSAL_STATE` as the ballot state it already was. **Owed:** which is
+normative at the v2 on-chain seam, and whether FR-091's text should name the mapping. Routed
+to the architect and the product-owner.
+
+**(b) Whether PROPOSING should be an FR-123 counting action.** The commissioning brief for
+this drop stated that proposing, like voting, is a counting action gated through
+IEligibilityVerifier. The current normative record says otherwise, in three places:
+`COUNTING_ACTION` is an approver-ratified three-value allowlist (STRENGTH_CONTRIBUTION,
+BINDING_VOTE, CANDIDACY — DES-100, ratified 2026-08-24) whose seam *throws*
+`NotACountingAction` on anything else; FR-024 forbids pre-screening; and FR-090/OI-14 gate
+authoring on **self-declared Worker tier**, an anonymity property. Making authoring a
+counting action would extend a ratified allowlist and would mean an unverified member may
+join, deliberate and vote-but-not-count, yet may not *speak* by proposing — which inverts
+"verification gates counting, never participation". **This drop implements the FR-conformant
+reading** (Worker tier gates authoring; BINDING_VOTE gates the ballot) and flags the
+divergence. **Owed:** an approver ruling. If the answer is that proposing must be gated,
+that is a DES-100 allowlist amendment plus an FR-024/FR-090 amendment, not a code change
+alone.
 
 ---
 
