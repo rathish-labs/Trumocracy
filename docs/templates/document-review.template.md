@@ -24,7 +24,7 @@
 <!-- those versions. hooks/check_gates.py now tolerates the aliases and falls back to the    -->
 <!-- report's filename, but tolerance is a safety net, not a licence: a report that needs    -->
 <!-- the fallback is flagged in the hook's diagnostics as needing canonicalising.            -->
-<!-- Self-check before saving:  python3 hooks/check_gates.py --audit                          -->
+<!-- Self-check before saving:  node hooks/run_gates.cjs --audit                              -->
 
 ```
 Reviewed document: <NN-document-filename>.md

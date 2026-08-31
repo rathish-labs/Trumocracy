@@ -147,8 +147,9 @@ metadata block (the SubagentStop hook reads these fields).
 > bare semver. Ten reports across four documents got this wrong; the hook could not identify any of
 > them, so for those versions the automated gate enforced nothing. `hooks/check_gates.py` now
 > accepts the aliases and falls back to the report's filename, but it flags any report that needed
-> the fallback. **Verify before you finish:** `python3 hooks/check_gates.py --audit` prints which
-> documents pass and which block, and names the report it matched.
+> the fallback. **Verify before you finish:** `node hooks/run_gates.cjs --audit` prints which
+> documents pass and which block, and names the report it matched. The gate is **live** as of
+> 2026-08-31 — a mis-formatted report now blocks real stops, it no longer merely fails to count.
 
 ```
 Reviewed document: 03-architecture-and-design.md

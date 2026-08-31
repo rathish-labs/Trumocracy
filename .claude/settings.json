@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 \"$CLAUDE_PROJECT_DIR/hooks/check_gates.py\""
+            "command": "node \"$CLAUDE_PROJECT_DIR/hooks/run_gates.cjs\""
           }
         ]
       }

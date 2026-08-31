@@ -5332,6 +5332,12 @@
         "F-5 Docs 04, 05, 14 have no passing review at current versions — Gate-2 blockers"
       ],
       "gate": "NOT certifying Gate-2 readiness: 122 of 138 Must rows open, no audit, no environment, no rollback drilled, every proof from a mock verifier. The gate stays shut."
+    },
+    {
+      "file": "artifacts/gate-activation-test-2026-08-31T0615.md",
+      "role": "claude",
+      "date": "2026-08-31",
+      "summary": "Gate-activation control test — read Doc 04 version (1.0.2), wrote memory note, registered in index. Not product work."
     }
   ],
   "reviewer-qa-2026-08-29T2245": {

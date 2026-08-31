@@ -1,17 +1,15 @@
 #!/usr/bin/env python3
-"""VEKTOR SubagentStop gate-keeper.
+"""VEKTOR gate-keeper — SubagentStop hook + Gate-2 certification.
 
-Wired as a SubagentStop hook in .claude/settings.json. Enforces two invariants
-from CLAUDE.md (the org handbook) every time a subagent finishes:
+Wired as a SubagentStop hook in .claude/settings.json. Enforces the invariants
+from CLAUDE.md (the org handbook). They do NOT all run at the same moment:
+
+PER-STOP (every time a subagent finishes) — invariants (a) and (c):
 
   (a) MEMORY PROTOCOL — the subagent must have written a session-memory note to
       artifacts/<role>-<timestamp>.md AND registered it in
       artifacts/memory-index.json. We detect this by requiring a *fresh* note
       (recently modified) that is referenced by the index.
-
-  (b) GATE PROGRESSION — progression past a gate is blocked until the RTM
-      (docs/08-*.md) shows ZERO gaps in its Must rows. If the RTM exists and any
-      gap is found, the stop is blocked.
 
   (c) REVIEW-AND-REWORK LOOP — progression is blocked until every major document
       that exists has a PASSING (or ESCALATED) document-review report in
@@ -23,11 +21,30 @@ from CLAUDE.md (the org handbook) every time a subagent finishes:
       "approve-as-is" decision (who approved + date) — escalation alone, or a
       "rework"/"reject" decision, does NOT satisfy the gate.
 
+GATE-2 CERTIFICATION ONLY (`--gate2`, never on a subagent stop) — invariant (b):
+
+  (b) RTM ZERO-GAP — the RTM (docs/08-*.md) must show ZERO open Must rows.
+
+      APPROVER RULING 2026-08-30 (Rathish), implementing the earlier ruling of
+      2026-08-25: RTM zero-gap is a **Gate-2 readiness condition, not a merge or
+      per-stop condition**. Running it on every subagent stop contradicted that
+      ruling and would have blocked all incremental work — there are 122 open
+      Must rows *by design* at this point in the programme, which is the RTM
+      doing its job, not a defect. Invariant (b) therefore runs only when the
+      project-manager assembles the Gate-2 packet:
+
+          python hooks/check_gates.py --gate2
+
+      Per-stop enforcement keeps exactly the checks that ARE per-stop: review
+      report validity (c) and memory-protocol integrity (a).
+
 Blocking contract (Claude Code hooks): emit JSON {"decision": "block",
 "reason": ...} on stdout. The reason is fed back to the model so it can fix the
 omission and stop again. A clean stop emits nothing and exits 0.
 
-Stdlib only — no third-party dependencies.
+Stdlib only — no third-party dependencies. Invoked through hooks/run_gates.sh,
+which resolves a Python 3 interpreter portably and BLOCKS (rather than exiting
+127 and failing open) when it cannot find one.
 """
 
 import json
@@ -41,11 +58,38 @@ from pathlib import Path
 # was modified within this many seconds. Override via VEKTOR_NOTE_MAX_AGE_SEC.
 DEFAULT_NOTE_MAX_AGE_SEC = 900  # 15 minutes
 
-# Tokens that mark an explicit gap anywhere in the RTM.
-GAP_TOKENS = re.compile(r"(\bGAP\b|\bMISSING\b|\bTODO\b|\bTBD\b|❌|:x:|no\s+coverage)", re.IGNORECASE)
+# ── RTM structured state ────────────────────────────────────────────────────
+# APPROVER RULING 2026-08-30 (Rathish): the RTM gap scanner MUST read structured
+# state, not match prose. The previous scanner matched the words GAP / MISSING /
+# TODO / TBD anywhere in the file, so the RTM's own honest narrative about its
+# gaps — which is the document working correctly — tripped it. An RTM that
+# cannot describe a gap without being blocked for describing it is a scanner
+# defect, not a document defect.
+#
+# The structured state is the per-row status marker the RTM's §3 legend defines:
+#   "✅ COMPLETE"  ·  "☐ OPEN (reason code in the last column)"
+# One marker per Must row, authored deliberately, and read here from anywhere on
+# the row's line rather than from a fixed cell index. Position-independence
+# matters: 4 Must rows currently carry unescaped pipes in prose (reviewer-qa F-4),
+# which shifts every downstream cell and silently defeats positional parsing —
+# the same class of defect that hid FR-078 from a row-wise recount at v2.5.4.
+MUST_ROW_SECTIONS = re.compile(r"^###\s+3\.[12]\s", re.IGNORECASE)
+# Only a heading at the SAME level or shallower ends a section. §3.1 contains a
+# `#### v2.0.0 Must FR additions` sub-heading partway through; treating that as a
+# section boundary truncated the scan and lost 60 Must rows — silently, and with
+# the derived count still looking plausible. A structural parser that under-counts
+# without saying so is the failure this whole change exists to remove.
+SECTION_END_HEADING = re.compile(r"^#{1,3}\s")
+STATUS_COMPLETE = "✅"
+STATUS_OPEN = "☐"
 
-# Cell values that count as "empty" for a Must row's required trace columns.
-EMPTY_CELLS = {"", "-", "–", "—", "n/a", "na", "none", "tbd", "?", "todo", "gap"}
+# §9's gate-verdict table publishes the RTM's own determination. Parsed as an
+# independent corroborating signal: a disagreement between the derived count and
+# the published one is itself a reportable defect in the RTM.
+PUBLISHED_OPEN_RE = re.compile(r"^\|\s*Open Must rows\s*\|([^|]*)\|([^|]*)\|", re.MULTILINE)
+PUBLISHED_COMPLETE_RE = re.compile(
+    r"^\|\s*Must rows with a complete chain\s*\|([^|]*)\|([^|]*)\|", re.MULTILINE
+)
 
 # Major documents that MUST carry a passing (or escalated) document-review report
 # before progression. Keyed by the numbered doc prefix → review mode. Mirrors the
@@ -70,6 +114,11 @@ PLACEHOLDER_VERSIONS = {"", "<semver>", "<version>", "x.y.z", "0.0.0", "n/a", "t
 
 # Verdicts in a review report that satisfy the gate (case-insensitive).
 SATISFYING_VERDICTS = {"pass", "escalated"}
+
+# Placeholder values that mean "this field was not really filled in" — used only
+# for the ESCALATED "Approved by:" field, where an unnamed approver must not count
+# as a recorded human decision.
+UNFILLED = {"", "-", "–", "—", "n/a", "na", "none", "tbd", "?", "todo", "pending", "_pending_"}
 
 
 def block(reason: str) -> None:
@@ -155,42 +204,132 @@ def find_rtm(root: Path) -> Path | None:
     return matches[0] if matches else None
 
 
-def scan_rtm_for_gaps(rtm: Path) -> list[str]:
-    """Return human-readable gap descriptions found in the RTM (empty list = clean)."""
-    gaps: list[str] = []
+def read_rtm_must_rows(rtm: Path) -> dict:
+    """Read the RTM's STRUCTURED Must-row state. No prose matching.
+
+    Returns:
+      must / complete / open  — derived by counting the per-row ✅ / ☐ status
+                                markers in the Must-row sections (§3.1 FRs, §3.2 NFRs)
+      published_open / published_complete
+                              — the RTM's own §9 gate-verdict figures, parsed
+                                independently as a cross-check
+      open_rows               — the identifier of each open Must row, for reporting
+      discrepancies           — where the two signals disagree
+
+    Two independent signals are read because either alone can be wrong: a derived
+    count can mis-parse, and a published count can go stale (it did, at v2.5.4,
+    when a formatting defect hid FR-078 from a recount). Agreement is strong
+    evidence; disagreement is a defect worth naming rather than silently resolving."""
     # encoding is explicit for the same reason as in check_memory_protocol: the RTM
     # is UTF-8 (em-dashes, checkboxes) and a cp1252 default read crashes the hook.
     text = rtm.read_text(encoding="utf-8", errors="replace")
-    for lineno, line in enumerate(text.splitlines(), start=1):
-        # Explicit gap markers anywhere in the matrix.
-        if GAP_TOKENS.search(line):
-            gaps.append(f"line {lineno}: explicit gap marker → {line.strip()}")
+
+    must = complete = 0
+    open_rows: list[str] = []
+    in_must_section = False
+    for line in text.splitlines():
+        if SECTION_END_HEADING.match(line):
+            in_must_section = bool(MUST_ROW_SECTIONS.match(line))
             continue
-        # Empty required trace cell in a Must row of a markdown table.
-        if line.lstrip().startswith("|") and re.search(r"\bMust\b", line, re.IGNORECASE):
+        if not in_must_section or not line.lstrip().startswith("|"):
+            continue
+        has_complete = STATUS_COMPLETE in line
+        has_open = STATUS_OPEN in line
+        if has_complete == has_open:
+            # Neither marker (header/separator/continuation) or — a malformed row —
+            # both. Not a countable requirement row either way.
+            continue
+        must += 1
+        if has_complete:
+            complete += 1
+        else:
             cells = [c.strip() for c in line.strip().strip("|").split("|")]
-            # Skip separator rows like | --- | --- |
-            if all(set(c) <= {"-", ":", " "} for c in cells):
-                continue
-            if any(c.lower() in EMPTY_CELLS for c in cells):
-                gaps.append(f"line {lineno}: Must row has an empty trace cell → {line.strip()}")
-    return gaps
+            ident = next(
+                (re.sub(r"[*`]", "", c) for c in cells[:3] if re.search(r"\b(FR|NFR)-\d+", c)),
+                cells[1] if len(cells) > 1 else "(unidentified row)",
+            )
+            open_rows.append(ident.strip()[:80])
+
+    def _published(rx: re.Pattern) -> int | None:
+        # The COMPILED pattern is passed, not its .pattern string: re.search on a
+        # bare string drops the MULTILINE flag, so `^` would only match at the very
+        # start of the file and every lookup would silently return None.
+        m = rx.search(text)
+        if not m:
+            return None
+        found = re.search(r"\d+", m.group(2))
+        return int(found.group(0)) if found else None
+
+    published_open = _published(PUBLISHED_OPEN_RE)
+    published_complete = _published(PUBLISHED_COMPLETE_RE)
+
+    discrepancies: list[str] = []
+    # A figure that cannot be found is UNKNOWN, not agreement. Reporting an absent
+    # cross-check as "the two signals agree" is a false reassurance — exactly what
+    # this scanner is meant to stop producing.
+    if published_open is None:
+        discrepancies.append(
+            "§9's 'Open Must rows' figure could not be read — the cross-check on the "
+            "derived count is UNAVAILABLE, not satisfied"
+        )
+    if published_complete is None:
+        discrepancies.append(
+            "§9's 'Must rows with a complete chain' figure could not be read — the "
+            "cross-check on the derived count is UNAVAILABLE, not satisfied"
+        )
+    if published_open is not None and published_open != len(open_rows):
+        discrepancies.append(
+            f"§9 publishes {published_open} open Must rows; counting the row status "
+            f"markers in §3.1/§3.2 gives {len(open_rows)}"
+        )
+    if published_complete is not None and published_complete != complete:
+        discrepancies.append(
+            f"§9 publishes {published_complete} complete Must rows; counting the row "
+            f"status markers gives {complete}"
+        )
+
+    return {
+        "must": must,
+        "complete": complete,
+        "open": len(open_rows),
+        "open_rows": open_rows,
+        "published_open": published_open,
+        "published_complete": published_complete,
+        "discrepancies": discrepancies,
+    }
 
 
-def check_gate_progression(root: Path) -> None:
-    """Invariant (b): block while the RTM has any Must-row gap."""
+def check_rtm_zero_gap(root: Path) -> None:
+    """Invariant (b) — GATE-2 CERTIFICATION ONLY, never on a subagent stop.
+
+    Per the approver ruling of 2026-08-30 this is not reachable from main()'s
+    per-stop path; it runs only under `--gate2`. See the module docstring."""
     rtm = find_rtm(root)
     if rtm is None:
-        # No RTM yet (pre-Coding phases) — nothing to gate on here.
-        return
-    gaps = scan_rtm_for_gaps(rtm)
-    if gaps:
-        listed = "\n  - ".join(gaps[:20])
         block(
-            "Gate blocked: the RTM (docs/08) has gaps in Must rows — a gap in any Must "
-            "row is a defect that blocks the gate. Close every gap (each FR/NFR must "
-            "trace up to a BR and down to a DES, a US, and a TC), then stop:\n  - "
-            + listed
+            "Gate 2 cannot be certified: no RTM found at docs/08-*.md. The RTM is the "
+            "traceability evidence for Gate 2 — it must exist and show zero open Must rows."
+        )
+    state = read_rtm_must_rows(rtm)
+
+    if state["discrepancies"]:
+        listed = "\n  - ".join(state["discrepancies"])
+        block(
+            "Gate 2 cannot be certified: the RTM disagrees with itself about its own Must-row "
+            "state, so no count here can be trusted. Reconcile §9's published figures with the "
+            "per-row status markers in §3.1/§3.2, then re-certify:\n  - " + listed
+        )
+
+    if state["open"]:
+        shown = state["open_rows"][:20]
+        listed = "\n  - ".join(shown)
+        more = f"\n  … and {state['open'] - len(shown)} more" if state["open"] > len(shown) else ""
+        block(
+            f"Gate 2 BLOCKED: the RTM has {state['open']} open Must rows of {state['must']} "
+            f"({state['complete']} complete). CLAUDE.md: a gap in any Must row is a defect that "
+            "blocks the gate — every FR/NFR must trace up to a BR and down to a DES, a US, and a "
+            "TC whose test passes. This is a Gate-2 readiness condition only (ruling 2026-08-25); "
+            "it does NOT block merges or incremental work. Open rows:\n  - " + listed + more
         )
 
 
@@ -327,7 +466,7 @@ def report_satisfies(fields: dict, doc_name: str, version: str,
     if verdict == "escalated":
         decision = fields.get("human decision", "").strip().lower()
         approver = fields.get("approved by", "").strip()
-        approver_set = bool(approver) and approver.lower() not in EMPTY_CELLS
+        approver_set = bool(approver) and approver.lower() not in UNFILLED
         return decision in {"approve-as-is", "approve as-is", "approved"} and approver_set
     # PASS must independently satisfy the bar: score >= 95 and zero C/H/M.
     if _int(fields.get("score")) < 95:
@@ -434,18 +573,41 @@ def audit(root: Path) -> int:
             why = f"report exists but fails the bar: {near}" if near else "no report for this version"
             print(f"  BLOCK  {doc.name} v{version} ({mode}) - {why}")
 
+    print(f"\n  Documents blocking the review loop: {blocked}   [PER-STOP - invariant (c)]")
+
     rtm = find_rtm(root)
     if rtm is not None:
-        gaps = scan_rtm_for_gaps(rtm)
-        print(f"\n  RTM Must-row gaps: {len(gaps)}"
-              + ("  (Gate-2 condition, not a merge condition - ruling 2026-08-25)" if gaps else ""))
-    print(f"\n  Documents blocking the review loop: {blocked}")
+        s = read_rtm_must_rows(rtm)
+        print(f"\nRTM Must-row state (structured; invariant (b))")
+        print(f"  derived from row status markers: {s['must']} Must rows, "
+              f"{s['complete']} COMPLETE, {s['open']} OPEN")
+        print(f"  published by RTM section 9:      {s['published_complete']} COMPLETE, "
+              f"{s['published_open']} OPEN")
+        if s["discrepancies"]:
+            for d in s["discrepancies"]:
+                print(f"  ** UNVERIFIED: {d}")
+        else:
+            print("  the two independent signals AGREE")
+        print(f"  Gate 2 traceability criterion: "
+              f"{'MET' if not s['open'] else 'NOT MET'}")
+        print("  NOT a per-stop or merge condition - Gate-2 readiness only "
+              "(rulings 2026-08-25, 2026-08-30).")
+        print("  Certify with: node hooks/run_gates.cjs --gate2")
     return 1 if blocked else 0
 
 
 def main() -> None:
     if "--audit" in sys.argv:
         sys.exit(audit(project_dir()))
+
+    # Invariant (b) — Gate-2 certification. Deliberately NOT on the per-stop path.
+    if "--gate2" in sys.argv:
+        check_rtm_zero_gap(project_dir())
+        print(json.dumps({
+            "decision": "allow",
+            "reason": "Gate-2 traceability criterion MET: zero open Must rows in the RTM.",
+        }))
+        sys.exit(0)
 
     data = read_hook_input()
     # Avoid infinite stop loops: if we already blocked once and the model is
@@ -455,7 +617,8 @@ def main() -> None:
 
     root = project_dir()
     check_memory_protocol(root)
-    check_gate_progression(root)
+    # Invariant (b) is intentionally absent here: RTM zero-gap is a Gate-2
+    # readiness condition, not a per-stop one (rulings 2026-08-25, 2026-08-30).
     check_review_reports(root)
     allow()
 
