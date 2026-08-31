@@ -1,6 +1,8 @@
 # Document Review — Doc 03 Architecture / SDD v2.1.1 (Technical, Cycle 2)
 
 ```
+Reviewed document: 03-architecture-design-sdd.md
+Document version: 2.1.1
 document:       docs/03-architecture-design-sdd.md
 version:        2.1.1
 mode:           technical

@@ -11,3 +11,7 @@ coverage/
 .env.local
 .DS_Store
 artifacts/**/node_modules/
+
+# Python bytecode (hooks/ is stdlib Python run by the SubagentStop gate)
+__pycache__/
+*.py[cod]

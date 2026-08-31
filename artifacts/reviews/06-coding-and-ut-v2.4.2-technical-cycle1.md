@@ -1,6 +1,8 @@
 # Document Review — Doc 06 Coding & UT v2.4.2 (technical, cycle 1)
 
 ```
+Reviewed document: 06-coding-and-ut.md
+Document version: 2.4.2
 Document:    Coding & Unit Testing — Trumocracy (CODE-TRUMOCRACY)
 Version:     2.4.2
 Review mode: technical

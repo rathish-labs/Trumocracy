@@ -1,6 +1,8 @@
 # Document Review — Doc 07 Test Cases & Suites v2.4.2 (technical, cycle 1)
 
 ```
+Reviewed document: 07-test-cases-suites.md
+Document version: 2.4.2
 Document:    Test Cases & Suites — Trumocracy (TC-TRUMOCRACY)
 Version:     2.4.2
 Review mode: technical

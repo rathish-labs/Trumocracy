@@ -1,6 +1,8 @@
 # Code-Drop Technical Review — Doc 06 Coding & UT v2.4.0, Cycle 1 of 5
 
 ```
+Reviewed document: 06-coding-and-ut.md
+Document version: 2.4.0
 Document:       CODE-TRUMOCRACY
 Document version: 2.4.0
 Cycle:          1 of 5

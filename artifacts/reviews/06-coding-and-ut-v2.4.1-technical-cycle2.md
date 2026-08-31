@@ -1,6 +1,8 @@
 # Technical Review — Doc 06 Coding & UT v2.4.1, Cycle 2 of 5
 
 ```
+Reviewed document: 06-coding-and-ut.md
+Document version: 2.4.1
 Document:       CODE-TRUMOCRACY
 Document version: 2.4.1
 Cycle:          2 of 5

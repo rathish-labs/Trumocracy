@@ -1,6 +1,8 @@
 # Technical Review — Doc 03 Architecture & Design SDD v2.9.1, Cycle 2 of 5
 
 ```
+Reviewed document: 03-architecture-design-sdd.md
+Document version: 2.9.1
 Document:       SDD-TRUMOCRACY
 Document version: 2.9.1
 Cycle:          2 of 5

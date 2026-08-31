@@ -1,6 +1,8 @@
 # Document Review — Doc 03 SDD v2.9.2 (technical, cycle 1)
 
 ```
+Reviewed document: 03-architecture-design-sdd.md
+Document version: 2.9.2
 Document:    Architecture Design — SDD (SDD-TRUMOCRACY)
 Version:     2.9.2
 Review mode: technical

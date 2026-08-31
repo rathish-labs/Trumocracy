@@ -1301,3 +1301,77 @@ Doc 05 v2.3.0 In Review (9 existing stories updated, 0 minted; full business rev
 **FR-077 note:** this ruling does not change the RTM row. FR-077 stays **OPEN (G-NOMECH)** — designed, unbuilt. `PREREQ-01` governs *when* the fix must land, not whether the row is closed.
 
 **Gate 2:** NOT READY — unchanged by this ruling. RTM (Doc 08 v2.4.0): 138 Must rows / 13 COMPLETE / **125 OPEN** (9.4%).
+
+---
+
+## 2026-08-30 — GOVERNANCE-INFRASTRUCTURE FINDINGS + Doc 08 review-strain flag
+
+Recorded on the approver's instruction (Rathish, 2026-08-30) after the `build/v1-proposals`
+merge sign-off surfaced that the mechanical gate was not enforcing anything.
+
+### A. The SubagentStop gate was not running — THREE compounding causes, not one
+
+The sign-off reported one defect (report field names). Investigation found three, each
+independently sufficient to disable the gate. **All three are now fixed.**
+
+| # | Defect | Effect | Status |
+|---|---|---|---|
+| **A-1** | `.claude/settings.json` invokes **`python3`**; this machine has Python 3.12 at `%LOCALAPPDATA%\Programs\Python\Python312\python.exe`, **not on PATH**, and Windows installs `python.exe` (no `python3` alias). The command exits **127, command not found** | **The hook never executed at all** — for any document, any invariant, for the life of the project. This is the primary cause and the only one that fails **OPEN** | **NOT changed — deliberately. See §C: fixing this alone would make things worse** |
+| **A-2** | 10 review reports across 4 documents used `Document:` / `Version:` where the hook reads `Reviewed document:` / `Document version:`, with a document **title or ID** as the value where a **filename** is required | The hook could not identify those reports. Fails **CLOSED** (spurious block), so it is noise rather than a safety hole — but it is what a reader would have hit first | **FIXED** — 17 reports canonicalised additively; parser now tolerates aliases and falls back to the mandated filename |
+| **A-3** | `check_gates.py` called `read_text()` with **no encoding** in two places (`check_memory_protocol`, `scan_rtm_for_gaps`). On Windows the default is cp1252; both target files are UTF-8 | **`UnicodeDecodeError` — the hook crashes** rather than emitting its JSON block contract. Would have disabled invariants (a) and (b) even with A-1 fixed. Pre-existing, unrelated to the field names | **FIXED** — explicit `utf-8` / `utf-8-sig` |
+
+**Would any past verdict have changed if the gate had been running? NO.** Every one of the 10
+mis-formatted reports was re-checked against the bar the hook applies (score ≥ 95 AND
+C=H=M=0). All ten stated verdicts match what the hook would have computed — including
+`03 v2.9.2`, correctly FAILed at 95% because it carried one Medium. **The braces were not
+fastened; the belt held.** The reviewers applied the bar correctly by hand throughout.
+
+**Verified, not assumed.** The real `hooks/check_gates.py` was executed with the interpreter
+found on disk. Doc 06 v2.4.3 now resolves to PASS; the review-loop check blocks only Docs 04,
+05 and 14, which genuinely have no report at their current version (reviewer-qa F-5).
+Positive and negative controls confirm the relaxation is to **identity only** — wrong
+document, wrong version, `FAIL`, score 94, one Medium, and un-approved `ESCALATED` are all
+still refused.
+
+### B. NEW: `python3 hooks/check_gates.py --audit`
+
+A silent hook is indistinguishable from an absent one. `--audit` prints, without blocking,
+which documents pass, which block, and which report satisfied each. This is how the next
+occurrence gets diagnosed in seconds instead of four review cycles.
+
+### C. ⚠ APPROVER RULING OWED — do NOT re-enable the hook until this is decided
+
+**Fixing A-1 (pointing the hook at a working interpreter) would, today, block every single
+subagent stop in the project.** Invariant (b) blocks whenever the RTM shows any Must-row gap,
+and the RTM has 122 open Must rows by design. The scanner also matches the *word* "gap" in
+ordinary prose, so Doc 08's own narrative about gaps trips it.
+
+This directly contradicts the standing ruling of **2026-08-25**: RTM zero-gap is a **Gate-2
+condition, not an incremental-merge condition**. The hook enforces it at *every subagent stop*.
+
+Two questions for the approver — **a governance decision, not a tooling fix, so it has not been
+made unilaterally**:
+1. Should invariant (b) fire only at Gate-2 assembly rather than on every stop?
+2. Should the gap scanner stop matching prose (structural markers only)?
+
+`settings.json` is deliberately left pointing at `python3` until this is ruled. The gate is
+therefore still dormant — but now *knowably* dormant, and `--audit` gives the same answer on
+demand.
+
+### D. Doc 08 — flagged for EXTRA SCRUTINY on its next increment
+
+_(Correction for the record: it was **v2.7.0**, not v2.5.2, that passed on cycle 5/5. v2.5.2
+passed on cycle 1 at 97%.)_
+
+| Field | Value |
+|-------|-------|
+| **Document** | `docs/08-traceability-matrix.md` — the RTM |
+| **Signal** | Ran the **full 5-cycle loop** in one round and passed on the **last cycle before mandatory human escalation**. Trajectory **85 → 83 → 86 → 93 → 95** |
+| **Margin** | Passed at **exactly the 95% bar**. The reviewer **disclosed** that raising criterion T2 from 95 to 96 during scoring **moved the verdict**; at T2=95 the score is 94.8 and the document ESCALATES |
+| **Pattern** | Cycles 2 and 3 each introduced **new defects via their own corrections**, twice at High. Two Highs — a wrong G-TRACE count and mislabelled evidence figures — were created by fixes, and both drifted **optimistic** |
+| **Root cause of one High** | A cosmetic formatting Low (gap-log rows concatenated onto one physical line) carried four cycles made a live open Must row invisible to any row-wise count. **The formatting Low caused the counting High** |
+| **Now accepted** | 14 Lows **formally accepted** in the document's `Status:` line, with a fix-first order. A recorded acceptance stops the clock; a silent carry does not |
+| **Open debt it carries** | `TD-RTM-01` (UT-0841..UT-0848 defined twice — engineer) · `TD-RTM-02` (Doc 07 and Doc 08 disagree on the test-case denominator by 7 — tester) |
+| **Instruction for the next increment** | **Give Doc 08 extra scrutiny.** It is under the most review strain of any document and sits closest to its threshold. Specifically: (1) re-verify every count **mechanically**, never by reading — the two Highs were both count errors that reading passed; (2) treat formatting defects in §7 as **correctness** defects, because row-wise counts depend on rows rendering as rows; (3) check that each correction did not stop one location short, the failure mode of three consecutive cycles; (4) expect the next version to start a **fresh** 5-cycle budget — v2.7.0 passed, so the cap is not carried forward |
+| **Owner** | Ji-woo Park (tester, author) · reviewer-qa (Accountable for RTM zero-gaps) |
+| **Status** | **Approved at v2.7.0 — flagged for extra scrutiny at v2.8.0+** |

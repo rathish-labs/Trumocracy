@@ -1,6 +1,8 @@
 # Document Review — Doc 08 Traceability Matrix v2.5.2 (technical, cycle 1)
 
 ```
+Reviewed document: 08-traceability-matrix.md
+Document version: 2.5.2
 Document:    Traceability Matrix — Trumocracy (RTM-TRUMOCRACY)
 Version:     2.5.2
 Review mode: technical
