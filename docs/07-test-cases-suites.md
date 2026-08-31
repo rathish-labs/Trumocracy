@@ -2,14 +2,54 @@
 
 ```
 Document ID:   TC-TRUMOCRACY
-Version:       2.4.2
-Status:        Approved — 07-test-cases-suites-v2.4.2-technical-cycle1.md (PASS 98%, 0C/0H/0M/1L; ISS-01 Low carried — §9 lacks an R-17 confirmatory re-run row, per the R-14 precedent)
+Version:       2.4.4
+Status:        Approved — 07-test-cases-suites-v2.4.4-technical-cycle2.md (PASS 99%, 0C/0H/0M/1L; ISS-01 Low carried — §9 lacks an R-17 confirmatory re-run row, per the R-14 precedent, accepted at the v2.4.2 PASS)
 Owner:         Ji-woo Park — Test Lead (tester)
 Source:        MTP-TRUMOCRACY v1.0.1 (docs/04-test-strategy-master-plan.md) · BKLG-TRUMOCRACY v2.3.0 (docs/05-product-backlog.md)
-               SRS-TRUMOCRACY v2.15.0 §8 Gherkin (docs/02-requirements-srs.md) · SDD-TRUMOCRACY v2.9.3 §5.2, §10.13.10, §10.13.10.1, §10.13.13, §11, §14 (docs/03-architecture-design-sdd.md)
+               SRS-TRUMOCRACY v2.16.0 §8 Gherkin (docs/02-requirements-srs.md) · SDD-TRUMOCRACY v2.10.0 §5.2, §10.13.10, §10.13.10.1, §10.13.13, §11, §14 (docs/03-architecture-design-sdd.md)
                CODE-TRUMOCRACY v2.4.3 (docs/06-coding-and-ut.md) · SECURITY-RESCAN-SC15-21-2026-08-11.md
-Last updated:  2026-08-29
-Changelog:     v2.4.2 (2026-08-29) — **Source-pin sync only. No TC added, changed or re-statused; no
+Last updated:  2026-08-30
+Changelog:     v2.4.4 (2026-08-30) — **Rework cycle 1 against
+               artifacts/reviews/07-test-cases-suites-v2.4.3-technical-cycle1.md (FAIL 92%,
+               0C/1H/0M/1L). No TC added, changed, re-statused or re-run; no count moved; the
+               suite is unchanged at 610 green.**
+               **ISS-01 (High) FIXED — the fourth and most load-bearing place was missed.**
+               v2.4.3 claimed "the revisit note on TC-3545 is DISCHARGED" while **TC-3545's own
+               row text was left unedited**, still reading "is flagged for an approver ruling; if
+               it is ruled a counting action this case and FR-090's row must be revisited" — a
+               statement made false by the 2026-08-30 ruling, and a self-contradiction inside the
+               very version whose purpose was to remove exactly that staleness. v2.4.3 corrected
+               the narrative notes that DESCRIBE the case and missed the case itself, which is the
+               text the RTM cites. TC-3545's Expected-result cell now records the ruling, quotes
+               the superseded sentence for the record rather than deleting it, and states that
+               **the condition never triggered** — the approver ruled PROPOSING is NOT a counting
+               action, so neither this case nor FR-090's row needs revisiting.
+               **ISS-02 (Low) FIXED:** provenance corrected — the two open questions were first
+               recorded in this document at **v2.4.0** (the TS-PROPOSALS drop), not v2.4.1/v2.4.2.
+               v2.4.3 (2026-08-30) — **Ruling sync only. No TC added, changed, re-statused or
+               re-run; no count moved; the suite is unchanged at 610 green.** Doc 03 §10.13.13's
+               two open questions — recorded in this document at v2.4.0 as owed, and
+               written into the TS-PROPOSALS notes where they bore on status — were both RULED by
+               the human approver on 2026-08-30
+               (artifacts/status/DECISIONS-2026-08-30-PROPOSING-AND-STAGE-TAXONOMY.md; applied at
+               Doc 02 v2.16.0 and Doc 03 v2.10.0). This version corrects the three places where
+               this document asserted a ruling was OWED, which is no longer true. **(a) FR-091's
+               eight stages vs ADR-008's PROPOSAL_STATE: COMPLEMENTARY, each canonical at its own
+               layer** — not competing, so no reconciliation is owed. Critically for this document,
+               **the published stage set is UNCHANGED**, so TC-3552..TC-3555 are unaffected and
+               stand exactly as written; the note that this reconciliation "bears directly on what
+               the row must test" is corrected — it does not. **(b) PROPOSING is NOT an FR-123
+               counting action; the built reading is confirmed** (gating authorship on verification
+               status is a participation restriction FR-020 prohibits), so **TC-3543/TC-3545 stand
+               unchanged and the revisit note on TC-3545 is DISCHARGED.** Neither FR-091's nor
+               FR-092's row status moves: both stay honestly OPEN (G-NOMECH) for the same reasons
+               as before — FR-091 on the unwired "per published timelines" clause, FR-092 on the
+               absent ballot layer and the unbuilt DES-097 anchoring. Source pins advanced
+               (SRS v2.15.0→v2.16.0, SDD v2.9.3→v2.10.0). Housekeeping: v2.4.2 technical cycle-1
+               review PASSED (98%, 0C/0H/0M/1L; ISS-01 Low carried — §9 lacks an R-17 confirmatory
+               re-run row, per the R-14 precedent; carried again here, as this version runs
+               nothing).
+               v2.4.2 (2026-08-29) — **Source-pin sync only. No TC added, changed or re-statused; no
                count moved.** Both upstream documents took a further rework cycle after Doc 07
                v2.4.1 was authored and are now **Approved at 100%**: SDD v2.9.2→**v2.9.3** and
                CODE v2.4.2→**v2.4.3**. Neither delta bears on a test case.
@@ -109,6 +149,7 @@ Changelog:     v2.4.2 (2026-08-29) — **Source-pin sync only. No TC added, chan
                approver-ratified 3-value allowlist and FR-024/FR-090/OI-14 gate authoring on
                self-declared Worker tier, so the FR-conformant reading was built and the
                divergence flagged; TC-3545 carries the revisit note.
+               [SUPERSEDED at v2.4.3/v2.4.4 — both questions RULED 2026-08-30; see those entries.]
                §2 suite table: TS-PROPOSALS row added; Total 443→**463**, automated 211→**231**,
                Blocked-or-no-mechanism **232 unchanged** (this drop adds none). Convention note:
                anchors 441→**461**, expanded 450→**470**. §8: 3 mapping rows added + a fresh
@@ -1449,7 +1490,7 @@ _Note: both cases are **guards**, not feature tests. Each was minted from a defe
 - **FR-091** — the **order** half is fully covered (TC-3552..TC-3554). The clause "stage transitions executed by code **per published timelines**" is not: `governance.js` `schedule()` is not wired into the service (Doc 06 §7 #25), and the demo advances by a button that can only ever move one step.
 - **FR-092** — the trail is append-only and complete *for the events the service sees* (TC-3559), but FR-092 also names the **vote result, enacted consequence, implementation status and measured outcome** — none of which this layer records — and requires end-to-end reconstruction **by any third party from public data alone**, which needs DES-097 audit anchoring (Doc 06 §7 #24). TC-3560 asserts the surface says so honestly rather than implying the record is already independently checkable.
 
-**Two open questions recorded upstream (Doc 03 §10.13.13), both bearing on status.** (a) FR-091's eight named stages are a **different taxonomy** from ADR-008's `PROPOSAL_STATE` — a reconciliation is owed and the RTM records it against FR-091. (b) Whether **PROPOSING** should be an FR-123 *counting action*: the commissioning brief said yes, but `COUNTING_ACTION` is an approver-ratified **3-value allowlist** and FR-024/FR-090/OI-14 gate authoring on **self-declared Worker tier** instead. The FR-conformant reading was built and the divergence flagged for an approver ruling; TC-3543/TC-3545 test what FR-090 as written requires, and FR-090's RTM row carries a revisit flag.
+**Both upstream open questions are now RULED (Rathish, Human Approver, 2026-08-30; `artifacts/status/DECISIONS-2026-08-30-PROPOSING-AND-STAGE-TAXONOMY.md`; applied at Doc 03 v2.10.0 §10.13.13).** _(Recorded here at v2.4.0 as owed; updated v2.4.4 — no test case changes either way.)_ **(a) FR-091's stages vs ADR-008's `PROPOSAL_STATE` — COMPLEMENTARY, both canonical at their own layer**, with the mapping recorded as the bridge and a normative seam rule (at v2 the chain owns ballot state; `VOTE`/`DECISION`/`IMPLEMENTATION` derive from it). **The published stage set is unchanged, so nothing about TC-3552..TC-3555 changes** — the reconciliation this note previously called owed is discharged, and it never bore on what these cases assert. **(b) PROPOSING is NOT an FR-123 counting action** — the built reading is confirmed; gating authorship on verification status would be a participation restriction FR-020 prohibits. **TC-3543/TC-3545 test what FR-090 as written requires and stand unchanged; FR-090's RTM revisit flag is discharged.**
 
 **Shared preconditions.** `IS_INSECURE_MOCK=true`; the service is constructed with an **injected clock** (no `Date.now()` on any asserted path); `packages/protocol/src/proposals.js` exports `PARTICIPATION_TIER`, `PROPOSAL_STAGE`, `STAGE_ORDER`; `packages/sdk/src/proposals.js` exports `ProposalService` and `InMemoryProposalStore`; web cases render the proposals-and-debate surface with a stub-backed verifier over an empty credential store, so the demo member is honestly open-tier.
 
@@ -1460,7 +1501,7 @@ _Note: both cases are **guards**, not feature tests. Each was minted from a defe
 | TC-3542 | Exactly three participation tiers exist; a joiner is a Supporter by default; **no tier confers weight under any configuration** | US-0089 · FR-079, FR-021 · DES-103 | A member joins a party without declaring anything; tier constants inspected | Exactly **three** tiers are named and no privileged fourth can be named (UT-0088). A joiner is a **Supporter** without declaring anything. `votingWeightForTier()` returns **1 for every tier** — no multiplier exists, so tier cannot confer weight, standing or precedence (FR-021 unchanged). An **unknown** tier is refused rather than silently weighted — the failure is loud, not a default-to-zero | Automated — `packages/protocol/test/proposals.test.js` · UT-0087, UT-0088 | **Pass (inh.)** — inherited from Doc 06 v2.4.1 |
 | TC-3543 | Authoring requires Worker tier or above, and the rule is a **pure function of tier** — it takes no approver, reviewer or reason | US-0031, US-0100 · FR-024, FR-090 · DES-104 | Draft authored at each tier | Worker and Candidate may author; a **Supporter may not**, and the stated reason is *anonymity*, not merit — authorship is public (FR-090) and Supporters participate without a public name. The rule's signature accepts **no approver, no reviewer and no reason**, so there is nothing for a gatekeeper to hold (UT-0089). At the service layer a Worker's authorship is **recorded publicly**, and the Supporter refusal says the tier is **self-declarable** — a disclosure step, never an approval step (UT-0832) | Automated — `packages/protocol/test/proposals.test.js` · UT-0089; `packages/sdk/test/proposals.test.js` · UT-0832 | **Pass (inh.)** — inherited from Doc 06 v2.4.1 |
 | TC-3544 | Web: the Worker gate reads as a **disclosure**, never a judgement; a Supporter is not offered the form; declaring opens it with no approval control anywhere | US-0090, US-0031 · FR-024, FR-080 · DES-103 · SCR-12 | Proposals surface rendered for a Supporter | The gate states that authorship is public / done in the open, that **"Nobody approves it"**, and — as its own assertion — that this is **"not about whether your idea is good… only about whether your name is public"**. A Supporter is **not offered the filing form at all** (UT-0873). On declaring Worker the form opens and **no button anywhere** matches `/approve\|request\|permission\|await\|pending review/` (UT-0872). _**Scope (updated v2.4.1):** this case covers the no-approval and not-a-judgement halves of FR-080 at **step 1** of the declaration. FR-080's **informed-consent clause** — the disclosure that must be stated *before confirmation* — is covered by **TC-3562**, and the right to decline by **TC-3563**. The v2.4.0 note recorded that clause as unimplemented; it was **built, not recorded** (Doc 06 v2.4.2 / Doc 03 v2.9.2 DES-103), and FR-080's Must row **closes** at Doc 08 v2.5.1._ | Automated — `apps/web/test/proposals.test.tsx` · UT-0872, UT-0873 | **Pass (inh.)** — inherited from Doc 06 v2.4.1 |
-| TC-3545 | Authoring **never** calls the eligibility seam — it is not a counting action | US-0100 · FR-020, FR-090, FR-123 · DES-104 · ADR-025 | A spied verifier in scope; a Worker files a proposal | The verifier is **not called**, and the authoring entry point **takes no verifier parameter** — the guarantee is structural, not merely behavioural. This is the FR-conformant reading of the OI-14 gate: authoring is gated on self-declared tier, not on ID verification. _(Doc 03 §10.13.13 open question (b) — whether PROPOSING should instead be an FR-123 counting action — is flagged for an approver ruling; if it is ruled a counting action this case and FR-090's row must be revisited.)_ | Automated — `packages/sdk/test/proposals.test.js` · UT-0834 | **Pass (inh.)** — inherited from Doc 06 v2.4.1 |
+| TC-3545 | Authoring **never** calls the eligibility seam — it is not a counting action | US-0100 · FR-020, FR-090, FR-123 · DES-104 · ADR-025 | A spied verifier in scope; a Worker files a proposal | The verifier is **not called**, and the authoring entry point **takes no verifier parameter** — the guarantee is structural, not merely behavioural. This is the FR-conformant reading of the OI-14 gate: authoring is gated on self-declared tier, not on ID verification. _(**RULED 2026-08-30** — Rathish, Human Approver; artifacts/status/DECISIONS-2026-08-30-PROPOSING-AND-STAGE-TAXONOMY.md §1; Doc 03 v2.10.0 §10.13.13(b). This case previously carried: "Doc 03 §10.13.13 open question (b) — whether PROPOSING should instead be an FR-123 counting action — is flagged for an approver ruling; if it is ruled a counting action this case and FR-090's row must be revisited." **The approver ruled that PROPOSING is NOT a counting action** — gating authorship on verification status would be a participation restriction FR-020 prohibits — **so the condition never triggers: this case and FR-090's row stand unchanged and need no revisit.** The FR-conformant reading this case asserts is confirmed correct.)_ | Automated — `packages/sdk/test/proposals.test.js` · UT-0834 | **Pass (inh.)** — inherited from Doc 06 v2.4.1 |
 | TC-3546 | A non-member cannot author, **whatever tier they claim** | US-0100 · FR-090 · DES-104 | A non-member submits a draft declaring Worker, then Candidate | Refused in both cases — a self-declared tier is not a membership claim, so tier self-declaration cannot be used to bypass membership | Automated — `packages/sdk/test/proposals.test.js` · UT-0833 | **Pass (inh.)** — inherited from Doc 06 v2.4.1 |
 | TC-3547 | Drafts are checked against **published floors**, never judged on content, and each deficiency is named as a (field, code) pair | US-0031 · FR-024 · DES-104 | Complete draft; drafts missing fields; body below the substance floor and above the ceiling; unknown tier; every declared tier | A complete draft is accepted. Missing fields are named individually as **(field, code)** pairs, matching the party-draft convention already used by `validateDraft`. A body **below the substance floor** and one **above the ceiling** are both refused; an **unknown tier** is refused; and **every declared tier is accepted** — the platform never judges which tier a proposal claims, only that it is one of the published three (UT-0095). The service names each deficiency on the same contract (UT-0832) | Automated — `packages/protocol/test/proposals.test.js` · UT-0095; `packages/sdk/test/proposals.test.js` · UT-0832 | **Pass (inh.)** — inherited from Doc 06 v2.4.1 |
 
@@ -1490,7 +1531,7 @@ _Note: UT-0885 and UT-0886 are `it()` labels within the `UT-0872` describe block
 
 ### TC-3552..TC-3555 — FR-091 lifecycle order and deliberation (DES-105 · US-0101 · SCR-12) — **row stays OPEN**
 
-_Note: these four cases cover FR-091's **order** guarantees, which they cover completely. They do **not** cover the clause "stage transitions executed by code **per published timelines**": `governance.js` `schedule()` exists but is **not wired** into the proposal service, and the demo advances by a button (Doc 06 §7 #25). FR-091's Must row stays **OPEN (G-NOMECH)** on that clause. Doc 03 §10.13.13 also records that these eight stages are a **different taxonomy** from ADR-008's `PROPOSAL_STATE`; that reconciliation is owed and is recorded against the row._
+_Note: these four cases cover FR-091's **order** guarantees, which they cover completely. They do **not** cover the clause "stage transitions executed by code **per published timelines**": `governance.js` `schedule()` exists but is **not wired** into the proposal service, and the demo advances by a button (Doc 06 §7 #25). FR-091's Must row stays **OPEN (G-NOMECH)** on that clause. The taxonomy question Doc 03 §10.13.13 recorded against these eight stages was **RULED 2026-08-30** — FR-091's stages and ADR-008's `PROPOSAL_STATE` are **complementary, each canonical at its own layer**, not competing — and the **published stage set is unchanged**, so these four cases are unaffected and stay as written. The row stays open on the timelines clause alone._
 
 | TC | Title | Verifies (US · FR · DES) | Preconditions | Expected result | Automation | Status |
 |---|---|---|---|---|---|---|
