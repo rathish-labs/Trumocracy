@@ -19,3 +19,6 @@ __pycache__/
 # Gate observability log — one line per hook run, written by hooks/run_gates.cjs.
 # Machine-local evidence that the gate is actually executing; not shared state.
 .claude/gate-runs.log
+
+# TypeScript incremental build caches (dirtied by every typecheck; never product state)
+*.tsbuildinfo

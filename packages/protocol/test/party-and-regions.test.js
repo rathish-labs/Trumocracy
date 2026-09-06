@@ -299,6 +299,17 @@ describe('UT-0053 feature flags — risky capabilities ship dark', () => {
     }
   });
 
+  it('UT-0888 the maci_voting description states the FR-131 v1 truth, not the retired framing', () => {
+    // Doc 09 v1.3.0 REL-LIM-18 site (1). FR-131 (Doc 02 §4.45): the banned words may appear
+    // only negated; the description must not say votes "are anonymous".
+    const desc = FLAGS.MACI_VOTING.description;
+    expect(desc).not.toMatch(/votes are anonymous/i);
+    expect(desc).not.toMatch(/\bis anonymous\b/i);
+    expect(desc).toMatch(/NOT anonymous/);
+    expect(desc).toMatch(/CAN see vote direction/);
+    expect(desc).toMatch(/FR-131/);
+  });
+
   it('rejects unknown flags and environments loudly', () => {
     expect(() => isEnabled('nope', 'prod')).toThrowError(/unknown feature flag/);
     expect(() => isEnabled('elections', 'production')).toThrowError(/unknown environment/);

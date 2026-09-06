@@ -19,6 +19,8 @@ import { ReceiptFreedomBanner } from '@/components/ReceiptFreedomBanner';
 import { PetitionProgress } from '@/components/PetitionProgress';
 import { EightPillarForm } from '@/components/EightPillarForm';
 import { PILLARS, petitionOutcome } from '@trumocracy/protocol';
+import { en } from '@/i18n/en';
+import { ar } from '@/i18n/ar';
 
 const wrap = (ui: ReactElement, flags: Record<string, boolean> = {}) =>
   render(
@@ -104,6 +106,63 @@ describe('UT-0710 the not-yet-receipt-free warning', () => {
     // Fail safe: an unread flag must not silently suppress a safety warning.
     wrap(<ReceiptFreedomBanner />);
     expect(screen.getByRole('note')).toBeTruthy();
+  });
+});
+
+describe('UT-0887 the vote-surface banner states the FR-131 v1 truth and carries no banned word', () => {
+  /**
+   * FR-131 (Doc 02 §4.45), closing sentence: the v1 product MUST NOT use "private",
+   * "anonymous", "receipt-free" or "secure" to describe v1 voting behaviour. FR-131(a)
+   * requires the notice to say the vote is NOT anonymous, NOT receipt-free and NOT
+   * coercion-resistant — so those words may appear only immediately negated.
+   * Doc 09 v1.3.0 REL-LIM-18 site (3): this banner is the one string a citizen reads.
+   * The retired copy said "Your vote is private" and "Nobody can see that a vote was yours".
+   */
+  const BANNED = /\b(private|anonymous|receipt-free|secure)\b/gi;
+  const affirmativeBannedWords = (text: string): string[] =>
+    [...text.matchAll(BANNED)]
+      .filter((m) => !/\bnot\s+$/i.test(text.slice(0, m.index ?? 0)))
+      .map((m) => m[0]);
+
+  const renderedBanner = (): string => {
+    wrap(<ReceiptFreedomBanner maciEnabled={false} />);
+    return screen.getByRole('note').textContent ?? '';
+  };
+
+  it('uses no banned word except immediately negated, and never "private" or "secure" at all', () => {
+    const text = renderedBanner();
+    expect(affirmativeBannedWords(text)).toEqual([]);
+    // "private" and "secure" have no mandated negated use in this notice.
+    expect(text).not.toMatch(/\b(private|secure)\b/i);
+  });
+
+  it('states FR-131 (a), (b) and (c) — not the retired framing', () => {
+    const text = renderedBanner().toLowerCase();
+    // (a) conventional authentication; NOT anonymous / receipt-free / coercion-resistant.
+    expect(text).toContain('not anonymous');
+    expect(text).toContain('not receipt-free');
+    expect(text).toContain('not coercion-resistant');
+    // (b) the platform CAN see vote direction and party membership.
+    expect(text).toContain('can see how you voted');
+    expect(text).toContain('which party you belong to');
+    // (c) the ballot the platform cannot see comes with a later upgrade, not on yet.
+    expect(text).toContain('not switched on yet');
+    // The retired claims are gone.
+    expect(text).not.toContain('nobody can see that a vote was yours');
+    expect(text).not.toContain('your vote is private');
+  });
+
+  it('renders the en source strings themselves, so the guard is on the shipped copy', () => {
+    const text = renderedBanner();
+    expect(text).toContain(en.banner.notReceiptFreeTitle);
+    expect(text).toContain(en.banner.notReceiptFreeBody);
+  });
+
+  it('the Arabic banner carries the same truth, not the retired "your vote is secret" claim', () => {
+    expect(ar.banner.notReceiptFreeTitle).not.toContain('صوتك سري');
+    expect(ar.banner.notReceiptFreeBody).not.toContain('لا يستطيع أحد أن يرى أن هذا الصوت صوتك');
+    expect(ar.banner.notReceiptFreeTitle).toContain('ليس مجهول الهوية');
+    expect(ar.banner.notReceiptFreeBody).toContain('تستطيع أن ترى كيف صوّتّ');
   });
 });
 

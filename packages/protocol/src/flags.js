@@ -41,7 +41,10 @@ export const FLAGS = Object.freeze({
     key: 'maci_voting',
     description:
       'Receipt-free voting via MACI with a threshold coordinator committee (ADR-006). ' +
-      'Until this is on, votes are anonymous but NOT receipt-free — the UI must say so.',
+      'Until this is on, a vote is cast through conventional authentication: it is NOT ' +
+      'anonymous, NOT receipt-free and NOT coercion-resistant, and the platform database ' +
+      'CAN see vote direction. The UI must state this plainly before the ballot (FR-131). ' +
+      'The normative wording is FR-131 (Doc 02 §4.45), not this string.',
     defaults: { dev: true, staging: false, prod: false },
     onChain: true,
     removeBy: 'Phase 3 — becomes mandatory, flag retires',

@@ -130,7 +130,8 @@ export interface SelfViewToken {
  *
  * Doc 03 §10.12.3 — three states with exact wireframe copy and colour bindings:
  *   anon — Anonymous: dot --grey-soft, bg #ECEEF5, text #41496b
- *   ver  — Verified — private: dot --green, bg --green-soft, text #1f5a42
+ *   ver  — Verified (v1 fail-honest default) / Verified — private (v2 ZK backing only —
+ *          clause 7, same rule as the subtitle): dot --green, bg --green-soft, text #1f5a42
  *   pub  — Public: dot --amber, bg #FDF3E0, text #8a5b10
  */
 export type PrivacyState = 'anon' | 'ver' | 'pub';
@@ -189,6 +190,27 @@ const VER_SUBTITLE_V1 = 'Your vote counts. How you voted is never made public.' 
  */
 const VER_SUBTITLE_V2 = 'Your vote counts. Your identity is not stored.' as const;
 
+// ─── ver-state title constants — backing-aware by the same clause-7 rule as the subtitle ─
+
+/**
+ * v1 title — fail-honest default (conventional backing; all cases where unlinkable ≠ true).
+ *
+ * Carries no FR-131 banned word. "private" MUST NOT appear on a voting-adjacent status badge
+ * against a v1 conventional backing (FR-131 closing sentence, Doc 02 §4.45; Doc 09 v1.3.0
+ * REL-LIM-18 pre-mount blocker, 2026-09-02; approver direction 2026-09-05). Doc 03 §10.12.3
+ * v2.7.0 had read the word as describing "status visibility" and ruled the title compliant —
+ * that reading is overruled; the SDD's v1 sub-table row and its banned-words note owe an
+ * architect cascade (recorded in Doc 06 v2.5.0 §7). UT-0759 asserts the four-path rule.
+ */
+const VER_TITLE_V1 = 'Verified' as const;
+
+/**
+ * v2 title — rendered ONLY when backingProperties.unlinkable === true (ZK backing), the one
+ * case in which "private" is true of the ballot. Verbatim from the v2.7.1 backing-aware
+ * sub-table (row: "v2 (ZK): unlinkable = true"). Same proxy annotation as VER_SUBTITLE_V2.
+ */
+const VER_TITLE_V2 = 'Verified — private' as const;
+
 // ─── State configuration (verbatim from Doc 03 §10.12.3 table) ───────────────────
 
 type StateConfig = {
@@ -200,7 +222,7 @@ type StateConfig = {
   readonly textColor: string;
   /** CSS class string matching the wireframe convention: "privacy <state>". */
   readonly cssClass: string;
-  /** The title line — approved copy, verbatim from DES-094. MUST NOT be changed. */
+  /** The title line — approved copy. For `ver` this is the fail-honest v1 default (clause 7). */
   readonly title: string;
   /** The subtitle line — approved copy, verbatim from DES-094. MUST NOT be changed. */
   readonly subtitle: string;
@@ -217,7 +239,8 @@ type StateConfig = {
  * used when backingProperties is absent or unlinkable !== true. The component overrides it to
  * VER_SUBTITLE_V2 when backingProperties.unlinkable === true (clause 7). Do not change the
  * `ver.subtitle` field here to VER_SUBTITLE_V2 — that would hardcode the v2 claim, which
- * clause 7 expressly prohibits.
+ * clause 7 expressly prohibits. The same rule applies to `ver.title` (VER_TITLE_V1 here;
+ * VER_TITLE_V2 only when unlinkable === true) — FR-131, Doc 09 REL-LIM-18 pre-mount blocker.
  */
 const STATE_CONFIG: Readonly<Record<PrivacyState, StateConfig>> = {
   anon: {
@@ -233,9 +256,9 @@ const STATE_CONFIG: Readonly<Record<PrivacyState, StateConfig>> = {
     background: '#E7F1EC', // var(--green-soft)
     textColor:  '#1f5a42',
     cssClass:   'privacy ver',
-    title:      'Verified — private',
-    // Clause 7 fail-honest default — overridden to VER_SUBTITLE_V2 by the component
-    // when backingProperties.unlinkable === true. See the component body.
+    // Clause 7 fail-honest defaults — overridden to VER_TITLE_V2 / VER_SUBTITLE_V2 by the
+    // component when backingProperties.unlinkable === true. See the component body.
+    title:      VER_TITLE_V1,
     subtitle:   VER_SUBTITLE_V1,
   },
   pub: {
@@ -256,9 +279,10 @@ const STATE_CONFIG: Readonly<Record<PrivacyState, StateConfig>> = {
  * Renders the authenticated holder's participation-tier state in their own authenticated
  * session. Returns null for any non-conforming selfView token (clause 1 — fail-closed).
  *
- * For the `ver` state, pass `backingProperties` to select the correct subtitle (clause 7):
- *   - `backingProperties.unlinkable === true`  → v2 subtitle (ZK backing)
- *   - All other cases (absent prop, false, undefined) → v1 subtitle (fail-honest default)
+ * For the `ver` state, pass `backingProperties` to select the correct title and subtitle
+ * (clause 7):
+ *   - `backingProperties.unlinkable === true`  → v2 title + subtitle (ZK backing)
+ *   - All other cases (absent prop, false, undefined) → v1 title + subtitle (fail-honest default)
  *
  * @example
  * // v1 conventional backing — no prop needed (fail-honest default):
@@ -294,6 +318,13 @@ export function PrivacyStatus({ state, selfView, backingProperties }: PrivacySta
       ? VER_SUBTITLE_V2
       : cfg.subtitle;
 
+  // The title follows the same rule (FR-131; Doc 09 REL-LIM-18 pre-mount blocker): the word
+  // "private" renders only against a backing that has declared it true.
+  const title: string =
+    state === 'ver' && backingProperties?.unlinkable === true
+      ? VER_TITLE_V2
+      : cfg.title;
+
   // Inline styles use the exact hex values from DES-094 rather than CSS custom property
   // references, so the component renders correctly in environments that do not load
   // tokens.css (e.g. jsdom in tests). CSS custom properties from tokens.css are still the
@@ -323,7 +354,7 @@ export function PrivacyStatus({ state, selfView, backingProperties }: PrivacySta
       className={cfg.cssClass}
       style={containerStyle}
       role="status"
-      aria-label={cfg.title}
+      aria-label={title}
     >
       {/* Decorative dot — hidden from assistive technology; the aria-label above carries
           the accessible name. Clause 6: this element carries no data beyond what rendering
@@ -331,7 +362,7 @@ export function PrivacyStatus({ state, selfView, backingProperties }: PrivacySta
       <span aria-hidden="true" style={dotStyle} />
       <span className="privacy-content" style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
         <span className="privacy-title" style={{ fontWeight: 600, fontSize: '13px', lineHeight: 1.2 }}>
-          {cfg.title}
+          {title}
         </span>
         <span className="privacy-subtitle" style={{ fontSize: '11px', lineHeight: 1.3 }}>
           {subtitle}
