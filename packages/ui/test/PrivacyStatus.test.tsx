@@ -1,5 +1,5 @@
 /**
- * UT-0750..UT-0758 — PrivacyStatus component (DES-094 v2.7.1).
+ * UT-0750..UT-0759 — PrivacyStatus component (DES-094 v2.7.1).
  *
  * These tests protect the normative binding clauses of the privacy-status component
  * (Doc 03 §10.12.3 v2.7.1). They are written in the spirit of UT-0700/UT-0701 (safety
@@ -11,6 +11,10 @@
  *   - unlinkable: false → v1 subtitle
  *   - unlinkable: true → v2 subtitle (ZK backing)
  *   - malformed/partial prop → v1 subtitle (fail-honest)
+ *
+ * UT-0759 covers the same four paths for the `ver` TITLE (FR-131; Doc 09 v1.3.0 REL-LIM-18
+ * pre-mount blocker): "Verified" is the v1 fail-honest default; "Verified — private" renders
+ * only when unlinkable: true.
  *
  * Traces: DES-094, DES-095, FR-082..086, FR-124, FR-131, NFR-001, NFR-002, NFR-024.
  */
@@ -33,7 +37,8 @@ describe('UT-0750 PrivacyStatus renders each state with exact approved copy', ()
     // Clause 7 (Doc 03 §10.12.3 v2.7.1): absent backingProperties → fail-honest default →
     // v1 subtitle. The v2 subtitle MUST NOT be shown unless unlinkable === true explicitly.
     render(<PrivacyStatus state="ver" selfView={VALID_SELF_VIEW} />);
-    expect(screen.getByText('Verified — private')).toBeTruthy();
+    // Title is backing-aware too (UT-0759): the v1 default carries no FR-131 banned word.
+    expect(screen.getByText('Verified')).toBeTruthy();
     expect(screen.getByText('Your vote counts. How you voted is never made public.')).toBeTruthy();
   });
 
@@ -47,7 +52,7 @@ describe('UT-0750 PrivacyStatus renders each state with exact approved copy', ()
     render(<PrivacyStatus state="ver" selfView={VALID_SELF_VIEW} />);
     const status = screen.getByRole('status');
     expect(status).toBeTruthy();
-    expect(status.getAttribute('aria-label')).toBe('Verified — private');
+    expect(status.getAttribute('aria-label')).toBe('Verified');
   });
 });
 
@@ -187,5 +192,48 @@ describe('UT-0758 PrivacyStatus ver subtitle backing-aware selection (clause 7 �
     render(<PrivacyStatus state="ver" selfView={VALID_SELF_VIEW} backingProperties={partialBacking} />);
     expect(screen.getByText('Your vote counts. How you voted is never made public.')).toBeTruthy();
     expect(screen.queryByText('Your vote counts. Your identity is not stored.')).toBeNull();
+  });
+});
+
+describe('UT-0759 PrivacyStatus ver-state title is backing-aware and carries no FR-131 banned word', () => {
+  /**
+   * Doc 09 v1.3.0 REL-LIM-18 pre-mount blocker (2026-09-02): the `ver` title
+   * "Verified — private" put a banned word on a voting-adjacent status badge against the v1
+   * conventional backing. The title now follows the clause-7 rule the subtitle already
+   * follows: the v1 fail-honest default is "Verified"; "Verified — private" renders ONLY when
+   * the backing declares unlinkable === true. Four-path pattern (absent / false / true /
+   * malformed), as UT-0758.
+   * Traces: FR-131 (Doc 02 §4.45 closing sentence), DES-094 clause 7, Doc 09 REL-LIM-18.
+   */
+  const BANNED = /\b(private|anonymous|receipt-free|secure)\b/i;
+
+  it('absent backingProperties renders the v1 title "Verified" with no banned word', () => {
+    render(<PrivacyStatus state="ver" selfView={VALID_SELF_VIEW} />);
+    expect(screen.getByText('Verified')).toBeTruthy();
+    expect(screen.queryByText('Verified — private')).toBeNull();
+    const status = screen.getByRole('status');
+    expect(status.getAttribute('aria-label')).toBe('Verified');
+    expect(status.textContent ?? '').not.toMatch(BANNED);
+  });
+
+  it('unlinkable: false renders the v1 title (explicit conventional backing)', () => {
+    const v1Backing: BackingProperties = { unlinkable: false };
+    render(<PrivacyStatus state="ver" selfView={VALID_SELF_VIEW} backingProperties={v1Backing} />);
+    expect(screen.getByText('Verified')).toBeTruthy();
+    expect(screen.queryByText('Verified — private')).toBeNull();
+  });
+
+  it('unlinkable: true renders the v2 title "Verified — private" — the one case it is true', () => {
+    const v2Backing: BackingProperties = { unlinkable: true };
+    render(<PrivacyStatus state="ver" selfView={VALID_SELF_VIEW} backingProperties={v2Backing} />);
+    expect(screen.getByText('Verified — private')).toBeTruthy();
+    expect(screen.getByRole('status').getAttribute('aria-label')).toBe('Verified — private');
+  });
+
+  it('malformed/partial prop (no unlinkable field) renders the v1 title (fail-honest)', () => {
+    const partialBacking: BackingProperties = { onePersonOneVote: false };
+    render(<PrivacyStatus state="ver" selfView={VALID_SELF_VIEW} backingProperties={partialBacking} />);
+    expect(screen.getByText('Verified')).toBeTruthy();
+    expect(screen.queryByText('Verified — private')).toBeNull();
   });
 });

@@ -2,11 +2,11 @@
 
 ```
 Document ID:   CODE-TRUMOCRACY
-Version:       2.4.3
-Status:        Approved — 06-coding-and-ut-v2.4.3-technical-cycle1.md (PASS 100%, 0C/0H/0M/0L)
+Version:       2.5.1
+Status:        Approved — 06-coding-and-ut-v2.5.1-technical-cycle2.md (PASS 98%, 0C/0H/0M/2L; ISS-C2-01, ISS-C2-02 carried as non-gating — see §5.0)
 Owner:         Samuel Oyelaran — Engineering Lead
 Source:        SDD-TRUMOCRACY v2.7.1 §9 · ADR-011 · ADR-023 · ADR-024 · ADR-025
-Last updated:  2026-08-29
+Last updated:  2026-09-05
 ```
 
 > Built from SDD §9 and ADR-011. Records what was physically built, the unit-testing
@@ -15,6 +15,70 @@ Last updated:  2026-08-29
 
 ```
 Change history:
+  v2.5.1 (2026-09-05) — Rework cycle 1 against artifacts/reviews/06-coding-and-ut-v2.5.0-technical-cycle1.md
+               (PASS 96%, 0C/0H/0M/6L — all six reworked rather than carried, as at v2.4.1).
+               ISS-01 (Low): §7 item 26's "left in place" list omitted three residual sweep
+               hits — packages/protocol/src/proposals.js:23,67 (FR-082 Supporter property,
+               the protocol twin of the sdk hit), packages/sdk/src/ballot.js:68 ("absent in
+               v2 for receipt-freeness" — a v2 property) and the ar.ts landing string
+               "بقاء اسمك سريًا" (the Arabic mirror of the en.ts endorsement copy) — added,
+               and the Arabic landing string routed to the product-owner together with its
+               English counterpart. ISS-02 (Low): §7 item 17 covered only party-creation
+               Arabic; widened to name the ar.ts vote-surface banner strings, flagged for
+               native-speaker review BEFORE any Arabic-locale customer deployment (a
+               mistranslated coercion warning is a safety defect). ISS-03 (Low): the new en
+               banner body carried one 27-word and one 22-word sentence; both split
+               (en + ar), no assertion of UT-0887 changed and the suite is unchanged at 619;
+               the reading-level statement is now recorded in §4a beside the DES-verbatim
+               deviation — the residual density is compelled by FR-131's own mandated
+               vocabulary ("not receipt-free", "not coercion-resistant"). ISS-04 (Low):
+               apps/web/tsconfig.tsbuildinfo, a tracked TypeScript incremental cache, is
+               dirtied by the §4a-mandated typecheck; reverted and kept out of this drop's
+               commit, and untracked in a separate chore(infra) commit with *.tsbuildinfo
+               ignored (pre-existing hygiene surfaced by this drop, not a product change).
+               ISS-05 (Low): packages/ui/test/PrivacyStatus.test.tsx header docblock read
+               "UT-0750..UT-0758" and described only the subtitle four-path; now
+               UT-0750..UT-0759 with the title four-path beside it. ISS-06 (Low): the owed
+               SDD cascade (§7 item 26(a)) now also names Doc 03 §10.12.3's three-state
+               reference table `ver` title cell and its v2.7.1 normative note, which scopes
+               the "informational reference copy" caveat to the subtitle only and so
+               under-covers the title now that the title is backing-aware too.
+  v2.5.0 (2026-09-05) — REL-LIM-18 closed in code: the five FR-131-violating strings and the
+               PrivacyStatus pre-mount blocker (Doc 09 v1.3.0, sre → engineer 2026-09-02;
+               approver direction 2026-09-05). The document (Doc 09) told the v1 truth while
+               the product still asserted the retired "votes are anonymous but not
+               receipt-free" framing. Fixed, each replacement stating the FR-131 (Doc 02
+               §4.45) v1 truth — a v1 vote is cast through conventional authentication and is
+               NOT anonymous, NOT receipt-free and NOT coercion-resistant; the platform
+               database CAN see vote direction and party membership; the ballot the platform
+               cannot see arrives with the v2 privacy layer:
+               (1) packages/protocol/src/flags.js MACI_VOTING.description;
+               (2) packages/contracts/src/core/Governor.sol NatSpec (both sentences);
+               (3) apps/web/src/i18n/en.ts banner.notReceiptFreeTitle/Body — the rendered
+               vote-surface copy a citizen reads (was "Your vote is private…" / "Nobody can
+               see that a vote was yours"), now stating FR-131 (a), (b) and (c) with the four
+               banned words appearing only negated. The Arabic mirror in ar.ts carried the
+               same claim ("صوتك سري" — your vote is secret) and is rewritten the same way
+               (working-draft engineer translation; §7 item 17 applies);
+               (4) packages/sdk/src/client.js #tenureSignals comment;
+               (5) apps/web/src/components/ReceiptFreedomBanner.tsx doc comment — now cites
+               FR-131 as the normative wording and forbids copying warning text out of code.
+               Pre-mount blocker: packages/ui/src/PrivacyStatus.tsx `ver` title
+               "Verified — private" is now backing-aware by the same clause-7 rule as the
+               subtitle — v1 fail-honest default "Verified"; "Verified — private" only when
+               backingProperties.unlinkable === true. Doc 03 §10.12.3 v2.7.0's "status
+               visibility" reading of the word is overruled (Doc 09 v1.3.0 ISS-03; approver
+               2026-09-05) — SDD cascade owed (§7 item 26; §4a recorded deviation).
+               Regression guards: UT-0887 (web, 4) asserts the rendered banner uses no banned
+               word except immediately negated, never "private"/"secure" at all, states
+               (a)/(b)/(c), and that the Arabic banner carries the same truth; UT-0759 (ui,
+               4) asserts the four-path title rule; UT-0888 (protocol, 1) guards the flag
+               description. UT-0751/UT-0753 expectations updated. Full sweep of
+               packages/*/src and apps/web/src for "anonymous", "private", "receipt-free",
+               "secure" and the retired phrases: no further v1-voting claim (§7 item 26 names
+               the non-voting hits left in place and routed). Suite 610 → 619; typecheck and
+               dep-guard clean. §3 note's web sub-total corrected (it read 89; its own
+               addends summed to 91).
   v2.4.3 (2026-08-29) — Rework cycle 1 against artifacts/reviews/06-coding-and-ut-v2.4.2-technical-cycle1.md
                (PASS 98%, 0C/0H/0M/1L — reworked rather than carried). ISS-01 (Low):
                `workerGateHow` still carried the v2.4.0 narrower framing ("makes what you
@@ -486,7 +550,7 @@ all existing files and enforced by CI lint:
 
 ## 3. `UT-####` inventory
 
-Counts are actual as of this session (2026-08-29), verified by running `npm test`.
+Counts are actual as of this session (2026-09-05), verified by running `npm test`.
 
 | Range | Area | Package | Count |
 |---|---|---|---|
@@ -500,7 +564,7 @@ Counts are actual as of this session (2026-08-29), verified by running `npm test
 | UT-0500..0525 | indexer projection: determinism, ordering, divergence, reader-blindness | indexer | 16 |
 | UT-0600..0612 | deployment promotion gate | contracts | 13 |
 | UT-0700..0742 | client safety surfaces: receipt-free confirmation, warning banner, a11y | web | 16 |
-| UT-0750..0758 | PrivacyStatus component: state rendering, self-view contract, absence, backing-aware copy | ui | 14 |
+| UT-0750..0759 | PrivacyStatus component: state rendering, self-view contract, absence, backing-aware copy; backing-aware `ver` title four-path — no FR-131 banned word on the v1 default (UT-0759, v2.5.0) | ui | 18 |
 | UT-0760..0779 | IEligibilityVerifier seam, IBallotService seam: counting-tier gate, IS_INSECURE_MOCK delegation, nullifier, tally | sdk | 36 |
 | UT-0780..0818, UT-0831 | PartyCreationService + InMemoryPartyStore: IS_INSECURE_MOCK, validation gate, collision (incl. TOCTOU re-check), cooldown, FR-018 threshold gate (ISS-01), FR-130 cap, join-never-calls-verifier, status, determinism, archivedAt determinism (ISS-03), expirePetitions interface-only seam regression (v2.3.1 ISS-01) | sdk | 38 |
 | UT-0819..0830 | join/membership: join-without-permission, join/leave never call the seam, one-active-party (explicit leave), leave-at-will, append-only history, FR-130 100/101 boundary on ACTIVE members, strength counts verified members only, seam scope assertion, clock determinism, countingStatus | sdk | 22 |
@@ -508,22 +572,27 @@ Counts are actual as of this session (2026-08-29), verified by running `npm test
 | UT-0858..0870 | join/membership web flow: one-click join, no-approval absence, one-active-party refusal surface, leave, history active/inactive, cap at join surface, join ≠ counting figures, FR-131(d) notice (four clauses, non-dismissable), verified-member counting, seam spy, flag gating, jargon scan, v1-honest join copy, absence test | web | 27 |
 | UT-0871 | SDK type-shim sync guard: trumocracy-sdk.d.ts IPartyStore member set equals the JSDoc typedef (v2.3.2, ISS-C2-01) | web | 1 |
 | UT-0087..0095 | proposals reference rules: participation tiers (weight always 1), Worker-tier authoring gate, eight-stage order, skip/reverse/no-op refusals, capability absence, deliberative stages, competing-entry window, draft floors, question-key grouping | protocol | 24 |
+| UT-0888 | `maci_voting` flag description states the FR-131 v1 truth, not the retired "votes are anonymous" framing (REL-LIM-18 site 1, v2.5.0) | protocol | 1 |
 | UT-0832..0848 | ProposalService: Worker-tier authoring, authoring never calls the seam, competing proposals in one window with equal standing, the fairness capability-absence set, entry closed after the ballot opens, open-tier deliberation, records-not-outcomes, one-step lifecycle, BINDING_VOTE admission gate, refusal states what is kept, no vote is cast, append-only trail, clock determinism | sdk | 24 |
 | UT-0885..0886 | FR-080 Worker informed-consent event: both required facts stated before confirmation (permanent for the term; participation record public), filing unreachable until confirmed, declining changes nothing (v2.4.2) | web | 2 |
+| UT-0887 | vote-surface honesty banner (REL-LIM-18 site 3): rendered copy uses no FR-131 banned word except immediately negated and never "private"/"secure"; states FR-131 (a), (b), (c); retired claims absent; en source strings are what renders; Arabic mirror carries the same truth (v2.5.0) | web | 4 |
 | UT-0872..0884 | proposals & debate web flow: Worker gate reads as disclosure not judgement, no filing form for a Supporter, both proposals rendered identically, both authors named, no control acts on another's proposal, provenance-not-precedence tag, eight-stage track, no skip control, open-tier deliberation stated and exercised, non-dismissable coercion notice before the ballot, honest open-tier refusal, trail order + v1 note, jargon and absence scans | web | 18 |
 | (SDK core) | identity, proofs, transports, verified reads, prediction, client, scopes | sdk | 124 |
-| **Total** | | | **610** |
+| **Total** | | | **619** |
 
 Note: the SDK total of 244 comprises 124 (core) + 36 (seams UT-0760..UT-0779) + 38
 (UT-0780..UT-0818 + UT-0831 party-creation service) + 22 (UT-0819..UT-0830 membership) + 24
-(UT-0832..UT-0848 proposals, v2.4.0). The web total of 89 comprises 16 (original
+(UT-0832..UT-0848 proposals, v2.4.0). The web total of 95 comprises 16 (original
 UT-0700..UT-0742) + 27 (UT-0841..UT-0857 party-creation web tests) + 27 (UT-0858..UT-0870
 join-membership web tests) + 1 (UT-0871 type-shim sync guard, v2.3.2) + 18 (UT-0872..UT-0884
-proposals & debate, v2.4.0) + 2 (UT-0885..UT-0886 Worker informed consent, v2.4.2). The
-protocol total of 150 comprises 126 (as below) + 24
-(UT-0087..UT-0095 proposals, v2.4.0); that 126
-comprises 82 (original UT-0001..UT-0055) + 44 (UT-0060..UT-0086). Every `UT-####` maps to
-an `FR`/`NFR`/`RISK` in the RTM (Doc 08).
+proposals & debate, v2.4.0) + 2 (UT-0885..UT-0886 Worker informed consent, v2.4.2) + 4
+(UT-0887 vote-surface banner, v2.5.0). (Through v2.4.3 this sentence stated the web total as
+89 while its own addends summed to 91 and `npm test` reported 91 — corrected at v2.5.0.) The
+protocol total of 151 comprises 126 (as below) + 24 (UT-0087..UT-0095 proposals, v2.4.0) + 1
+(UT-0888 flag description, v2.5.0); that 126 comprises 82 (original UT-0001..UT-0055) + 44
+(UT-0060..UT-0086). The ui total of 18 comprises 14 (UT-0750..UT-0758) + 4 (UT-0759, v2.5.0).
+Every `UT-####` maps to an `FR`/`NFR`/`RISK` in the RTM (Doc 08) — the three new blocks'
+TC rows are owed to the tester (§7 item 26).
 (UT-#### IDs may each cover a describe-block with multiple `it()` assertions; the Count
 column is the verified figure from `npm test`; ID ranges mark RTM block boundaries only.)
 
@@ -562,6 +631,21 @@ following bars. A reviewer failing to find one of these is a reviewer who has be
 | **Capability-absence tests** | Where a guarantee is the absence of something, a test asserts that absence (§4, §2.5) | Test file and CI |
 | **Clause 7 backing-aware tests** | Where a component selects content based on backing properties, the four-path test (absent/false/true/malformed) is present | UT-0758 pattern |
 
+**Recorded deviation from the "Honesty copy matches DES verbatim" bar (v2.5.0).** The `ver`-state
+v1 title in `packages/ui/src/PrivacyStatus.tsx` is "Verified", not the "Verified — private" that
+the Doc 03 §10.12.3 backing-aware sub-table lists for its v1 row. FR-131 (Doc 02 §4.45) is
+normative over the SDD's copy table; Doc 09 v1.3.0 (REL-LIM-18, ISS-03) routed the word as a
+pre-mount blocker; the approver directed the correction on 2026-09-05. The v2 row ("Verified —
+private", unlinkable === true) is unchanged and still matches verbatim. The SDD cascade is owed
+to the architect (§7 item 26); until it lands, UT-0759 is the record of the intended copy.
+
+**Reading level of the new vote-surface banner (v2.5.1, §2.2 / NFR-023).** The en banner body
+is eight sentences, the longest 17 words, after the v2.5.1 split; the jargon filter is clean
+(UT-0884 scans the proposals surface that mounts it; UT-0887 guards the copy itself). It reads
+denser than the retired copy because FR-131(a) mandates the vocabulary "not anonymous, not
+receipt-free and not coercion-resistant" — that residue is compelled by the requirement and is
+recorded here rather than softened away.
+
 The technical-mode review verdict is recorded against Doc 06's current version per CLAUDE.md
 (§ "Review-and-rework loop"). The review report goes in `artifacts/reviews/` with filename
 `06-coding-and-ut-v<version>-technical-cycle<k>.md`.
@@ -579,6 +663,7 @@ the tests were written by the same person who wrote the bug.
 ### 5.0 Scaffold-drop technical review record
 
 Review history for this document:
+- v2.5.0 cycle 1: `artifacts/reviews/06-coding-and-ut-v2.5.0-technical-cycle1.md` — PASS (96%, 0C/0H/0M/6L, reviewer: tester). All six Lows reworked into v2.5.1 rather than carried (ISS-01 sweep enumeration, ISS-02 §7 item 17 scope, ISS-03 banner sentence length, ISS-04 tracked tsbuildinfo, ISS-05 test header, ISS-06 SDD cascade scope).
 - v2.4.3 cycle 1: `artifacts/reviews/06-coding-and-ut-v2.4.3-technical-cycle1.md` — PASS (100%, 0C/0H/0M/0L). Approved 2026-08-29.
 - v2.4.2 cycle 1: `artifacts/reviews/06-coding-and-ut-v2.4.2-technical-cycle1.md` — PASS (98%, 0C/0H/0M/1L). The reviewer confirmed both FR-080 clauses are genuinely satisfied by the consent copy, not gestured at. The Low (stale gate copy) is reworked into v2.4.3.
 - v2.4.1 cycle 2: `artifacts/reviews/06-coding-and-ut-v2.4.1-technical-cycle2.md` — PASS (100%, 0C/0H/0M/0L). Approved 2026-08-29.
@@ -732,13 +817,22 @@ When each module lands it must read its flag in the same commit.
 16. **REPETITION_COOLDOWN_SECONDS requires approver ratification (Flag: COOLDOWN-01).** No
     published figure found in Doc 02/03. Engineer-chosen at 30 days (2 592 000 s). Needs
     ratification.
-17. **Arabic party-creation strings are a working-draft engineer translation.** The new i18n
-    strings in `apps/web/src/i18n/ar.ts` (party-creation section) are engineer-authored and
-    flagged for translation-quality review at Doc 14 (the technical-writer phase).
+17. **Arabic strings are a working-draft engineer translation — including the vote-surface
+    coercion warning.** The i18n strings in `apps/web/src/i18n/ar.ts` (party-creation
+    section, and since v2.5.0 the vote-surface safety copy `banner.notReceiptFreeTitle` /
+    `banner.notReceiptFreeBody`) are engineer-authored and flagged for translation-quality
+    review at Doc 14 (the technical-writer phase). **(v2.5.1)** The banner strings MUST have a
+    native-speaker review before any Arabic-locale customer deployment: a mistranslated coercion
+    warning is a safety defect, not a polish item. UT-0887 guards their substance (no retired
+    "your vote is secret" claim; the platform-can-see statement present), not their fluency.
 18. **PrivacyStatus not rendered in the party-creation demo flow.** The petitions/new page demo
     has no authenticated session; DES-094 clause 1 would return null. Rendering PrivacyStatus
     without a session would be dishonest (it would imply a session-backed guarantee that does not
     exist). The absence is deliberate and documented in the page source comment.
+    **(v2.5.0)** The Doc 09 v1.3.0 REL-LIM-18 pre-mount blocker on this component — the `ver`
+    title "Verified — private" — is cleared: the title is backing-aware (UT-0759), and the v1
+    fail-honest default carries no FR-131 banned word. The non-render decision above is
+    unchanged; the component is still mounted on no shipped surface.
 19. **`activateParty` threshold gate is at the SDK service layer; production wiring must
     supply accurate endorsement counts.** `PartyCreationService.activateParty()` now enforces
     the FR-018 / FR-016 threshold by calling `petitionThreshold()` (protocol governance.js)
@@ -804,6 +898,39 @@ When each module lands it must read its flag in the same commit.
     not wired in this drop. The demo control can only ever move one step, because the
     service exposes no other move. Timeline wiring is owed before the FR-091 row can claim
     the "per published timelines" clause.
+26. **REL-LIM-18 is closed in code; four cascades are owed elsewhere; three non-voting strings
+    are deliberately left in place.** (v2.5.0) The five FR-131-violating strings and the
+    PrivacyStatus pre-mount blocker are fixed at this version (change history). *Owed:*
+    (a) **architect, Doc 03** — §10.12.3 backing-aware sub-table v1 row title and the "FR-131
+    banned-words analysis" note that ruled "Verified — private" compliant (overruled by Doc 09
+    v1.3.0 ISS-03 and the approver, 2026-09-05); **(v2.5.1)** the §10.12.3 three-state
+    reference table's `ver` title cell ("Verified — private") and its v2.7.1 normative note,
+    which scopes the "informational reference copy" caveat to the `ver` *subtitle* only and so
+    now under-covers the title — an engineer taking that row as the title spec would hardcode
+    the v2 claim, the exact failure the note exists to prevent; and §13 "Public tallies in Phase 1", whose
+    mitigation column still instructs the client to state that "Phase-1 votes are anonymous but
+    not receipt-free" — the retired framing the code no longer carries. (b) **sre, Doc 09** —
+    the REL-LIM-18 row and the §"What this release does not do" bullet still describe the five
+    strings as shipped; they are fixed at this commit and the row should move to closed with
+    the commit SHA. (c) **tester, Doc 07/08** — TC rows for UT-0887, UT-0759 and UT-0888, and
+    the FR-131 RTM row. (d) **DES-098 acknowledgement step** — FR-131 requires that "the voter
+    MUST acknowledge the notice to proceed"; the banner is non-dismissable but has no
+    acknowledge control. That is SCR-13 story scope, not this defect fix, and it stays owed.
+    *Left in place, outside FR-131's "v1 voting behaviour" and named here so the next sweep
+    does not rediscover them:* `packages/sdk/src/proposals.js` (AUTHORSHIP_REQUIRES_WORKER_TIER
+    message) and `ProposalsAndDebate.tsx` say "Supporters are anonymous" — the FR-082
+    participation-tier property, not the ballot; `apps/web/src/i18n/en.ts` landing copy
+    "Support a new party with your name kept private" describes petition endorsement, not
+    voting, but is the same class of claim UT-0869 corrected for `joinPrivate` and is routed
+    to the product-owner as a candidate — together with its Arabic mirror in `ar.ts`
+    ("بقاء اسمك سريًا", your name kept secret), since the two must be decided together;
+    `packages/protocol/src/proposals.js` (lines ~23 and ~67) repeats the FR-082 "a Supporter is
+    anonymous" property — the protocol twin of the sdk hit; `packages/sdk/src/ballot.js`
+    (`choice` typedef) says the field is "absent in v2 for receipt-freeness" — a v2 property,
+    not a v1 claim; the `private_endorsement` flag description names an unbuilt Phase-4 charter
+    option. None describes v1 voting. (v2.5.1: the three sites the v2.5.0 cycle-1 review found
+    missing from this list — ISS-01 — are the protocol proposals.js twin, ballot.js and the
+    Arabic landing mirror.)
 
 ## 8. Commit and branch conventions
 

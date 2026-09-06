@@ -1,13 +1,21 @@
 'use client';
 
 /**
- * The honesty banner (SDD §13 architectural debt, ADR-006, FR-031/NFR-003).
+ * The honesty banner on the vote surface (FR-131, Doc 02 §4.45; DES-098; ADR-006; NFR-003).
  *
- * Phase 1 tallies votes in the open. That means a vote is **anonymous but not
- * receipt-free**: nobody can see that a vote was yours, but a person standing over your
- * shoulder can still see what you did on your own screen, and there is no silent override
- * yet. The SDD is explicit that "the client MUST state plainly that Phase-1 votes are
- * anonymous but not receipt-free".
+ * The normative wording is FR-131 itself — not any string in this codebase, and not the
+ * SDD §13 architectural-debt line that once told the client to call Phase-1 votes "anonymous
+ * but not receipt-free". That framing is retired (approver directive 2026-08-23,
+ * DECISIONS-2026-08-23-V1-V2-SPLIT.md; Doc 09 REL-LIM-18). The v1 truth the banner states:
+ *   (a) a v1 vote is cast through conventional authentication and is NOT anonymous, NOT
+ *       receipt-free and NOT coercion-resistant;
+ *   (b) the platform database CAN see vote direction and party membership in v1;
+ *   (c) the ballot where the platform is technically unable to see vote direction arrives
+ *       with the Definition-B (v2) privacy layer, and is not on yet.
+ * The copy MUST NOT use "private", "anonymous", "receipt-free" or "secure" to describe v1
+ * voting behaviour (FR-131, closing sentence) — those words may appear only negated.
+ * UT-0887 asserts this against the rendered banner so the retired framing cannot come back.
+ * Do not copy warning text out of this file into any document; cite FR-131.
  *
  * So this banner is persistent, not dismissible, and is not softened. A coercion warning a
  * citizen can close is a coercion warning they will close, and the person it protects is

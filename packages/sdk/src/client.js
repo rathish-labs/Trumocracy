@@ -451,9 +451,12 @@ export class TrumocracyClient {
    * Tenure-proof signals, in `Governor.propose` / `Governor.vote` order:
    * `[partyRootAtSnapshot, partyId, scope, actionNullifier, tenureSeconds]`.
    *
-   * Note there is **no commitment** in this array. The chain learns that *some* member
-   * with sufficient tenure acted, and nothing else — which is why a vote is anonymous
-   * even though it is public.
+   * Note there is **no commitment** in this array. From these signals alone the chain learns
+   * that *some* member with sufficient tenure acted, and nothing else. That is a property of
+   * the signal array, not of v1 voting: in a v1 (Definition-A) deployment the ballot is cast
+   * through conventional authentication, so the platform CAN see who voted and how, and the
+   * vote is NOT anonymous, NOT receipt-free and NOT coercion-resistant (FR-131, Doc 02 §4.45).
+   * Do not describe a v1 vote as anonymous.
    */
   #tenureSignals({ partyRoot, partyId, scope, secret, tenureSeconds }) {
     return [

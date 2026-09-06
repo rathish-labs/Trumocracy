@@ -6975,5 +6975,65 @@
     ],
     "routed_to": "PM transcription, then neutral reviewer (tester) - cycle 5 review. If this version still fails to reach >=95% with zero Critical/High/Medium, the verdict becomes ESCALATED and the project-manager must present the surviving issues to the human for a recorded decision (approve-as-is / rework / reject) - the loop does not run a cycle 6.",
     "registration_note": "This fragment exists because the technical-writer subagent has no Edit tool (and no Bash tool) this session, and artifacts/memory-index.json is 6,479 lines (~420KB) as of this session's read - a whole-file Write risks truncation or corruption of a file every other role's SubagentStop hook depends on. Same constraint and same fragment pattern as artifacts/pending-index-entry-architect-2026-08-31T2030.json, and the identical pattern the prior technical-writer cycle-4 session used and documented in its own now-merged 'technical-writer-2026-09-01T1400-doc14-cycle4-spec' entry (registration_note field, same file). Project-manager (or any session with Edit) should merge this object's single key as a new top-level sibling of the 'notes' array's closing bracket in artifacts/memory-index.json, matching the convention already used from 'reviewer-qa-2026-08-29T2245' onward (top-level keys, not array elements), then delete this fragment file. The cycle-5 spec file itself (artifacts/technical-writer-2026-09-01T1600-doc14-cycle5-spec.md) already carries the full session-memory note in its own 'Session memory' section, per the task's delivery format; this fragment is the mechanical index registration only."
+  },
+  "tester-2026-09-05T1500-doc06-v2.5.0-review": {
+    "file": "artifacts/tester-2026-09-05T1500-doc06-v2.5.0-review.md",
+    "role": "tester",
+    "date": "2026-09-05",
+    "timestamp": "2026-09-05T15:00",
+    "phase": "Verify — document-review loop (technical mode, cycle 1 of 5)",
+    "scope": "Neutral technical review of Doc 06 Coding & UT v2.5.0 and the REL-LIM-18 code drop it records (the FR-131 v1-honesty fix at six sites). Reviewer is the tester; the owner is the engineer (Samuel Oyelaran) — author != reviewer. Read-only: no product code, no test and no Doc 06 edit was made.",
+    "summary": "PASS — 96%, 0 Critical / 0 High / 0 Medium / 6 Low. Ran the suite independently: 619 tests, zero failures (contracts 95, protocol 151, sdk 244, ui 18, indexer 16, web 95), typecheck exit 0, dep-guard clean — matching the drop's claim exactly. Verified FR-131 compliance of all six replacement strings including the rendered EN banner and its Arabic mirror: each states (a) conventional authentication / NOT anonymous, receipt-free, coercion-resistant, (b) the platform database CAN see vote direction and party membership, (c) the private ballot arrives with v2 and is not on; the four banned words appear only negated and 'private'/'secure' are absent from citizen-facing copy. Judged 'not coercion-proof' and 'privacy upgrade' acceptable under FR-131's closing sentence. Audited UT-0887's affirmativeBannedWords negation guard as sound and strict-erring; UT-0759's four-path matches the UT-0758 pattern with aria-label following the title. Independent sweep of packages/*/src and apps/web/src confirms no remaining v1-voting claim. Doc 06 §3 arithmetic re-derived and correct (619; web 95, protocol 151, ui 18, sdk 244), including its unprompted correction of the stale 89 web sub-total. The §4a recorded deviation from the 'Honesty copy matches DES verbatim' bar is adequate and honest. Six Low findings: ISS-01 incomplete §7 item 26 residue list (protocol/src/proposals.js:23,67; sdk/src/ballot.js:68; ar.ts:53); ISS-02 §7 item 17 does not cover the new Arabic vote-surface safety copy; ISS-03 no reading-level record for a denser banner body; ISS-04 tracked tsconfig.tsbuildinfo dirtied by the mandated typecheck; ISS-05 stale UT-0750..0758 test-file header; ISS-06 owed SDD cascade omits the §10.12.3 three-state table note. None blocks the pass bar. Follow-up owed to the tester: TC rows for UT-0887/UT-0759/UT-0888 in Doc 07 and the FR-131 Must row in the Doc 08 RTM, which is OPEN and blocks Gate 2.",
+    "artifacts": [
+      "artifacts/reviews/06-coding-and-ut-v2.5.0-technical-cycle1.md",
+      "artifacts/tester-2026-09-05T1500-doc06-v2.5.0-review.md"
+    ],
+    "routed_to": "project-manager -> engineer (Samuel Oyelaran): PASS; set Doc 06 Status: Approved citing this report and add the v2.5.0 line to §5.0. Then tester for Doc 07 TC rows + the Doc 08 FR-131 RTM row; architect for the Doc 03 §10.12.3 cascade; sre to close REL-LIM-18 with the commit SHA; reviewer-qa for independent RTM zero-gap verification and merge sign-off."
+  },
+  "tester-2026-09-05T1630-doc06-v2.5.1-review": {
+    "file": "artifacts/tester-2026-09-05T1630-doc06-v2.5.1-review.md",
+    "role": "tester",
+    "date": "2026-09-05",
+    "timestamp": "2026-09-05T16:30",
+    "phase": "Verify — review-and-rework loop (document-review skill, technical mode)",
+    "scope": "Neutral technical review of Doc 06 Coding & UT v2.5.1 and the uncommitted REL-LIM-18 code drop it records — rework cycle 2 of 5. Verified closure of cycle-1 issues ISS-01..ISS-06, checked for regression, scored on the T1-T6 technical rubric. Reviewer is the tester; the engineer (Samuel Oyelaran) owns Doc 06 and the code, so author != reviewer. No document, product code or test was edited.",
+    "summary": "PASS — 98%, 0 Critical / 0 High / 0 Medium / 2 Low. All six cycle-1 Lows genuinely closed and verified at source: ISS-01 (§7 item 26 now names protocol/src/proposals.js ~23/~67, sdk/src/ballot.js choice typedef and the ar.ts:53 landing string, routed with its en.ts:50 counterpart); ISS-02 (§7 item 17 widened to the ar.ts banner keys with native-speaker review required before any Arabic-locale customer deployment); ISS-03 (en banner body split to 8 sentences, 93 words, lengths 8/10/14/9/18/17/6/11; ar mirrored; §4a reading-level statement added; UT-0887 assertions still hold; jargon filter clean); ISS-04 (apps/web/tsconfig.tsbuildinfo reverted, absent from git status); ISS-05 (PrivacyStatus.test.tsx header now UT-0750..UT-0759 with the ver TITLE four-path); ISS-06 (§7 item 26(a) now names the Doc 03 §10.12.3 three-state table ver title cell and its subtitle-scoped v2.7.1 normative note). No regression: npm test 619 passing, zero failures (contracts 95, protocol 151, sdk 244, ui 18, indexer 16, web 95); typecheck exit 0; dep-guard layering OK; all six v2.5.0 REL-LIM-18 fixes intact; independent banned-word sweep of packages/*/src, apps/web/src and services/*/src finds no affirmative v1-voting use of private/anonymous/receipt-free/secure. Two new Lows: ISS-C2-01 (§4a states the longest banner sentence is 17 words; it is 18) and ISS-C2-02 (ISS-04's untrack + *.tsbuildinfo ignore is deferred to a chore(infra) commit recorded only in the change history, not in the §7 register). Doc 06 internals consistent: Version 2.5.1 / Status In Review, §3 Total 619 unchanged, §5.0 records the v2.5.0 cycle-1 PASS and that all six Lows were reworked. Nothing committed. Still owed to me: TC rows for UT-0887/UT-0759/UT-0888 and the FR-131 RTM Must row (Docs 07/08), which is currently OPEN and blocks Gate 2.",
+    "artifacts": [
+      "artifacts/reviews/06-coding-and-ut-v2.5.1-technical-cycle2.md",
+      "artifacts/tester-2026-09-05T1630-doc06-v2.5.1-review.md"
+    ],
+    "routed_to": "engineer (Samuel Oyelaran) — set Doc 06 Status: Approved citing artifacts/reviews/06-coding-and-ut-v2.5.1-technical-cycle2.md and add the v2.5.1 cycle-2 line to §5.0; optionally fold ISS-C2-01/ISS-C2-02 into a v2.5.2 patch or carry them in §5.0. Then: tester (Docs 07/08 TC + FR-131 RTM row), architect (Doc 03 §10.12.3 cascade + §13 line 2739), sre (Doc 09 close REL-LIM-18 with the commit SHA), product-owner (en.ts:50 / ar.ts:53 landing pair)."
+  },
+  "engineer-2026-09-05T1700": {
+    "file": "artifacts/engineer-2026-09-05T1700.md",
+    "role": "engineer (owning role - Doc 06 and product code)",
+    "date": "2026-09-05",
+    "timestamp": "2026-09-05T17:00:00Z",
+    "phase": "Coding & UT - v1 build; defect fix for Doc 09 v1.3.0 REL-LIM-18 (FR-131 violations in code) under US-0134",
+    "scope": "Made the code match the corrected Doc 09: fixed the five FR-131-violating strings (flags.js MACI_VOTING.description; Governor.sol NatSpec x2; en.ts vote-surface banner - the one a citizen reads - plus its Arabic mirror in ar.ts; client.js #tenureSignals comment; ReceiptFreedomBanner.tsx doc comment) and the PrivacyStatus.tsx pre-mount blocker (ver title now backing-aware by the clause-7 rule: v1 default 'Verified', 'Verified - private' only when unlinkable === true). Added regression guards UT-0887 (web, 4), UT-0759 (ui, 4), UT-0888 (protocol, 1). Full sweep of packages/*/src and apps/web/src: no remaining v1-voting claim; non-voting survivors named in Doc 06 section 7 item 26. Doc 06 v2.4.3 -> v2.5.0 -> v2.5.1 (rework of six Lows) -> Approved.",
+    "summary": "Suite 610 -> 619, zero failures; typecheck and dep-guard clean; gate audit exit 0. Reviews: v2.5.0 cycle 1 PASS 96% (0C/0H/0M/6L, tester) - all six Lows reworked into v2.5.1; v2.5.1 cycle 2 PASS 98% (0C/0H/0M/2L) - ISS-C2-01 (section 4a longest sentence is 18 words, not 17) and ISS-C2-02 (tsbuildinfo untracking recorded in change history, not section 7) carried as non-gating per the v2.3.2 precedent, to fold into the next Doc 06 version; the tsbuildinfo untracking itself done in a separate chore(infra) commit. Decisions: backing-aware title rather than blanket-neutral (the v2 ZK row still matches the SDD verbatim; only the v1 row deviates, by approver direction 2026-09-05 over the SDD v2.7.0 status-visibility reading - recorded as a section 4a deviation with the SDD cascade owed); negation-aware banned-word test because FR-131(a) mandates the negated words; scope held to v1 voting behaviour - FR-082 Supporter anonymity and the petition-endorsement landing copy (en + ar) left in place and routed to the product-owner; Arabic banner fixed in the same drop. Committed on trunk, not pushed; the engineer does not merge.",
+    "artifacts": [
+      "artifacts/engineer-2026-09-05T1700.md",
+      "docs/06-coding-and-ut.md",
+      "packages/protocol/src/flags.js",
+      "packages/contracts/src/core/Governor.sol",
+      "apps/web/src/i18n/en.ts",
+      "apps/web/src/i18n/ar.ts",
+      "packages/sdk/src/client.js",
+      "apps/web/src/components/ReceiptFreedomBanner.tsx",
+      "packages/ui/src/PrivacyStatus.tsx",
+      "packages/ui/test/PrivacyStatus.test.tsx",
+      "apps/web/test/safety-surfaces.test.tsx",
+      "packages/protocol/test/party-and-regions.test.js"
+    ],
+    "ids_touched": {
+      "FR": "FR-131",
+      "DES": "DES-094 (clause 7), DES-098",
+      "US": "US-0134",
+      "UT": "UT-0751, UT-0753, UT-0759, UT-0887, UT-0888",
+      "REL-LIM": "REL-LIM-18",
+      "reviews": "06-coding-and-ut-v2.5.0-technical-cycle1 (PASS 96%), 06-coding-and-ut-v2.5.1-technical-cycle2 (PASS 98%)"
+    },
+    "routed_to": "architect (Doc 03 section 10.12.3 v1 row title + banned-words note + three-state table ver title cell and its v2.7.1 note; section 13 Phase-1 mitigation wording); sre (Doc 09 REL-LIM-18 to closed with the commit SHA; pre-mount blocker cleared); tester (Doc 07/08 TC rows for UT-0887/0759/0888; FR-131 RTM Must row); product-owner (petition-endorsement landing copy en + ar); US-0134 (DES-098 acknowledge-to-proceed control still not built); technical-writer / native speaker (Arabic banner review before any Arabic-locale customer deployment); reviewer-qa (merge sign-off)."
   }
 }

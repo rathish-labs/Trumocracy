@@ -22,10 +22,14 @@ import {GovernanceRules as G} from "./GovernanceRules.sol";
  *         opens has no power over it, which closes the "see the proposal, flood the party,
  *         vote" sequence (ADR-008 §2).
  *
- *      Phase 1 tallies votes publicly (anonymous but not receipt-free). Phase 3 routes
- *      ballots through MACI for receipt-freeness (ADR-006); the `maci_voting` flag switches
- *      the path, and while it is off the client is required to tell citizens plainly that
- *      their vote is anonymous but not yet coercion-resistant.
+ *      Phase 1 tallies votes publicly. In a v1 (Definition-A) deployment the ballot is cast
+ *      through conventional authentication, so a vote is NOT anonymous, NOT receipt-free and
+ *      NOT coercion-resistant, and the platform database CAN see vote direction (FR-131,
+ *      Doc 02 §4.45). Phase 3 routes ballots through MACI for receipt-freeness (ADR-006); the
+ *      `maci_voting` flag switches the path, and while it is off the client is required to
+ *      tell citizens plainly, before the ballot, that their vote is not anonymous and that
+ *      the platform can see how they voted. Do not describe a v1 vote as anonymous, private,
+ *      receipt-free or secure anywhere in this contract's documentation.
  */
 contract Governor {
     bytes32 public constant CIRCUIT_TENURE = keccak256("tenure_member");

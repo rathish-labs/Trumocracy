@@ -397,12 +397,14 @@ export const en = {
     done: 'Done',
   },
   banner: {
-    notReceiptFreeTitle: 'Your vote is private, but it is not yet coercion-proof',
+    notReceiptFreeTitle: 'In this version, your vote is not anonymous and not coercion-proof',
     notReceiptFreeBody:
-      'Nobody can see that a vote was yours. But right now the counting happens in the open, so ' +
-      'somebody standing over you could still work out how you voted from what is on your screen. ' +
-      'The part that fixes this is not switched on yet. Do not vote in front of somebody who is ' +
-      'pressuring you.',
+      'This version signs you in the ordinary way. Your vote is not anonymous, not receipt-free ' +
+      "and not coercion-resistant. Trumocracy's own records can see how you voted and which " +
+      'party you belong to. Nobody outside Trumocracy sees this on any public page. But the ' +
+      'record exists, and it could be shown if somebody pressures you to prove how you voted. ' +
+      'A ballot that hides how you voted even from Trumocracy is coming in a later privacy ' +
+      'upgrade. It is not switched on yet. Do not vote in front of somebody who is pressuring you.',
     notReceiptFreeMore: 'What is missing',
   },
   errors: {
