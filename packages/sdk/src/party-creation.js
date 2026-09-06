@@ -1143,6 +1143,11 @@ export class PartyCreationService {
     return {
       partyId,
       state: party.state,
+      // Public party data. Callers that must scope a counting action to the party's
+      // jurisdiction (the FR-123 seam call sites) read it from here rather than
+      // reaching into the store.
+      jurisdiction: party.jurisdiction,
+      name: party.name,
       memberCount,
       // FR-123(a): the official strength number counts verified persons only.
       // memberCount (everyone who joined) and officialStrength (who counts)

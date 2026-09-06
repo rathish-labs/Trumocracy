@@ -2,14 +2,266 @@
 
 ```
 Document ID:   SDD-TRUMOCRACY
-Version:       2.8.3
-Status:        Approved — 03-architecture-design-sdd-v2.8.3-technical-cycle4.md (PASS 100%, 0C/0H/0M/0L)
+Version:       2.11.2
+Status:        Approved — 03-architecture-design-sdd-v2.11.2-technical-cycle4.md (PASS 95%,
+               0C/0H/0M/5L). Score sat AT the bar (95.05%), not above it — recorded because it
+               matters to anyone reading this as comfortably passed. Five Lows accepted and
+               carried, none warranting escalation alone or together; **fix first on any future
+               touch:** (1) §16 Q17's body still reads "exercises neither" after its title was
+               corrected to three representations — and the v2.11.2 changelog over-claims that
+               this was "corrected in both its title and body", which it was not; (2) the
+               `Source:` pin reads SRS v2.16.0 and is three versions stale (Doc 02 is Approved at
+               v2.16.3 — no normative requirement text changed across the delta, verified by the
+               reviewer); (3) the changelog's "Still routed … Doc 02 §13 (h)" line is now wrong —
+               that routing was discharged at Doc 02 v2.16.3; (4) §10.13.12's `Traces:` footer
+               lists FR-107 among DES-097(b)'s related IDs (not a §5.2 register link, and the next
+               line says "Enables (does not close)"); (5) §10.13.3 did not receive the DES-096
+               accessor clause, though §13 now carries the owned debt row.
 Owner:         Ravi Deshmukh — Principal Architect
 Approvers:     Rafael Duarte (Security), Chen Wei (Reliability), Dr. Lena Kowalczyk (Privacy),
                Aisha Nkemdirim (Elections & Voting)
-Source:        SRS-TRUMOCRACY v2.15.0
-Last updated:  2026-08-29
-Change:        v2.8.3 (2026-08-29) — APPROVER RULING APPLIED (Rathish, 2026-08-29;
+Source:        SRS-TRUMOCRACY v2.16.0
+Last updated:  2026-08-30
+Change:        v2.11.2 (2026-08-30) — Rework cycle 3 against
+               artifacts/reviews/03-architecture-design-sdd-v2.11.1-technical-cycle3.md
+               (FAIL 90%, 0C/0H/1M/5L). All nine cycle-2 findings were verified fixed at their
+               locations against source; nothing in §10.13.13(a) needed rework.
+               **ISS-01 (Medium) FIXED — and it is the same defect v2.11.1's changelog had just
+               named as the lesson of its own cycle.** §15's new FR-107 row says "**Do not read
+               this as a DES assignment**" and defers to Doc 08 — while **§5.2's DES-106 row still
+               listed FR-107 in its `Satisfies` column** and **§10.13.13's DES-106 heading still
+               read "(FR-092, FR-107)"**. §15's own lead-in declares §5.2 to be the register that
+               provides the `FR/NFR → DES` half, so a link in §5.2 **is** a link claimed: the
+               document published the very link it disclaimed, against a **Must** row Doc 08 holds
+               OPEN for want of exactly that DES. Both removed; FR-107's relationship to DES-106
+               (append-only property for the decision trail only, not a discharge) is stated in
+               both places instead.
+               **Lows FIXED.** (1) The SDK decode array's ordinal hazard was written in the present
+               tense, implying a live mis-decode; `PROPOSAL_STATE_ENUM` has **zero call sites
+               repo-wide** — it is declared ahead of its consumer, so the hazard is **latent today
+               and arms at the seam swap**. Tense corrected, concern unchanged. (2) The owed
+               **DES-096 ballot-state accessor** existed only as §10.13.13(a) prose, unowned and
+               absent from every register; it is now a **§13 debt-register row owned by Ravi
+               Deshmukh**, due before the v1 ballot layer. (3) FR-107's gap class corrected to
+               `G-TRACE + G-PHASE3`, matching Doc 08. (4) **Q17 still counted two** representations
+               after the sub-table had established three; corrected in both its title and body.
+               (5) §15's DES-104 row now records Doc 08 v2.6.0's new **Q16 revisit flag** on
+               FR-090, while noting the row correctly stays COMPLETE.
+               **Still routed elsewhere, unfixed here (not architect-owned):** Doc 02 §13 (h) and
+               the two engineer-owned stale code comments at packages/sdk/src/proposals.js:295 and
+               packages/protocol/src/proposals.js:103-108.
+               v2.11.1 (2026-08-30) — Rework cycle 2 against
+               artifacts/reviews/03-architecture-design-sdd-v2.11.0-technical-cycle2.md
+               (FAIL 84%, 0C/0H/5M/4L). Both cycle-1 Highs were confirmed genuinely fixed, and
+               §10.13.13(a)'s central argument needs no rework. **Four of the five Mediums are the
+               same corrections applied ONE LOCATION SHORT — the v2.11.0 fixes stopped at the
+               section boundary.** That is the lesson of this cycle and it is recorded as such.
+               **ISS-01 (Medium) FIXED:** §16 **Q15** still carried "v1 holds no vote (ADR-024
+               §(b))" — the exact mis-citation corrected in §10.13.13, in one of the three
+               locations the cycle-1 finding had named, and directly contradicting **Q16 two rows
+               above it**, which already used the corrected narrow form.
+               **ISS-02 (Medium) FIXED:** §5.2's **DES-105 row** still published the **v2-only**
+               seam rule while §10.13.13 bound it in both versions — one normative MUST at two
+               scopes, in the row an implementer actually reads. Now binds both, and cites DES-096.
+               **ISS-03 (Medium) FIXED — there are THREE ballot-state representations, not two.**
+               `PROPOSAL_STATE_ENUM` (`packages/sdk/src/constants.js:42`) is the SDK's
+               **ordinal-indexed decode array** for `Governor.State`, and it is **the fragile
+               one**: it resolves states by POSITION, so reordering the Solidity enum silently
+               remaps every decoded state with no name ever compared and nothing raising an error.
+               It also spells the state `timelocked`, agreeing with the chain against the protocol
+               mirror's `SUCCEEDED_TIMELOCK`. The reconciliation sub-table now carries all three,
+               and Q17 names the ordinal-indexing hazard as the differential case to write first.
+               **ISS-04 (Medium) FIXED — and it was the withdrawn illustration's defect, reprised.**
+               The mapping's `Cancelled` row still read "(none — **the window ends**)", asserting a
+               window termination on three counts it cannot support: no capability implements it
+               (DES-104 exposes no `closeWindow`), **Q15 routes terminal outcomes as OPEN**, and
+               this version's own new warning says nothing enforces termination. It also ignored
+               the one-to-many cardinality the section rests on — `cancelDuringDiscussion(proposalId, …)`
+               withdraws **one proposal**, not the window; the others continue.
+               **ISS-05 (Medium) FIXED — the new §15 sub-table asserted a link that does not
+               exist.** It mapped **FR-107 → DES-106** and marked the row "OPEN (G-NOMECH)", while
+               **Doc 08 records FR-107 as `G-TRACE`, DES = none** (gap-log entry 98, Erik
+               Lindqvist) — a stronger claim: a DES is owed from the architect, not a build. DES-106
+               satisfies FR-107's append-only property **for the decision trail only**; FR-107 is
+               platform-wide and still undesigned. A sub-table added to close a traceability
+               omission had itself invented a traceability link.
+               **Lows FIXED:** the v1 half of the seam rule had **nothing to derive from** —
+               DES-096 exposes no ballot-state accessor, so the rule is unsatisfiable against that
+               interface and DES-096 MUST gain one before the v1 ballot layer is built (recorded,
+               not left for the implementer to hit); the DES-104 correction note misattributed the
+               v2.9.1 fix to the §5.2 DES-104 row (it was DES-105); §15 dated DES-103..DES-106 to
+               v2.9.1 (minted **v2.9.0**); §16 listed Q16/Q17 before Q15 and left Q17's owner as an
+               unnamed "engineer" (**Samuel Oyelaran**, per the named-owner rule).
+               v2.11.0 (2026-08-30) — Rework cycle 1 against
+               artifacts/reviews/03-architecture-design-sdd-v2.10.0-technical-cycle1.md
+               (FAIL 80%, 0C/2H/4M/3L). **Ruling (b) survived review in every particular and is
+               untouched. Ruling (a)'s CONCLUSION also survives — the two taxonomies are
+               complementary, and every structural argument for that holds — but the MAPPING TABLE
+               that carried it did not survive checking against the chain, and is rebuilt here.**
+               **ISS-01 (High) FIXED — `Cancelled` was said to be "reachable from any pre-execution
+               state". It is not.** The only cancellation entrypoint is
+               `Governor.cancelDuringDiscussion` (Governor.sol:397), whose own comment states the
+               rule: a proposer may withdraw before voting opens, and not after (FR-029). Once
+               voting opens there is no abort. §5.6 of this document already said this correctly,
+               so v2.10.0 introduced an internal contradiction; §5.6 is the reference and the table
+               is aligned to it.
+               **ISS-02 (High) FIXED — the table mapped PROPOSAL and REVIEW to a `DRAFT` state that
+               has no producer.** `Governor.State` has SEVEN members and no `Draft`
+               (Governor.sol:41-49); `stateAt()` never returns `DRAFT`; nothing in the repository
+               produces `PROPOSAL_STATE.DRAFT`; and §5.6's proposal model begins at `discussion`.
+               The ballot machine simply has no state before `Discussion`. Consequence for the
+               section's central warning: the chain's single pre-vote period spans **FOUR** FR-091
+               stages, not three — so a name-equating implementer skips **THREE**, not "two". The
+               warning had **understated its own trap**, which is the worst direction for a warning
+               to err. Both corrected. A new sub-table reconciles the two enums outright:
+               `SUCCEEDED_TIMELOCK`/`Timelocked` are one state under two names, and
+               `PROPOSAL_STATE.DRAFT` is recorded as VESTIGIAL.
+               **ISS-03 (Medium) FIXED — `proposalState()` does not exist.** The function is
+               `stateAt(sched, now, {executed, cancelled, outcome})` at governance.js:210. The
+               purity argument was sound; the name was invented. Corrected here and in the decision
+               record — the same class of error as the v2.8.x invented error codes, found again by
+               review rather than by the author.
+               **ISS-04 (Medium) FIXED:** the JS mirror and the on-chain enum are now reconciled
+               explicitly instead of being used interchangeably; §16 **Q17** MINTED — neither enum
+               is exercised by differential.test.mjs, which matters more now that the ballot layer
+               is declared authoritative over derived stage positions.
+               **ISS-05 (Medium) FIXED — and this was the consequential one.** v2.10.0 scoped the
+               derivation rule to the v2 seam alone, justified by "v1 holds no ballot (ADR-024
+               §(b))". That mis-cited: ADR-024 §(b) removes on-chain EXECUTION in v1 and puts votes
+               in Postgres; **DES-096 (§10.13.3) specifies a v1 ballot backing outright** (database
+               `castBallot`, SQL `computeTally`). The rule therefore left the drift failure mode
+               unbound at exactly the point where v1 first holds a vote. **The rule now binds the
+               ballot layer in BOTH versions** — authority is whatever backing IBallotService is
+               bound to (v1 database, v2 chain). The narrower true claim — that the layer built in
+               THIS drop holds no vote — is stated where it belongs.
+               **ISS-06 (Medium) FIXED:** the cardinality argument is sound and stands, but its
+               illustration ("one SUCCEEDED_TIMELOCK and two DEFEATED") asserted a
+               **winner-selection rule nothing specifies** — Governor gives each proposal an
+               independent binary ballot and DES-104 deliberately removes every window-closing
+               capability. Illustration withdrawn; the absence it exposed is MINTED as §16 **Q16**:
+               two competing proposals can both pass and no rule says what then happens. That is a
+               real gap between FR-090's "same decision window" and the ballot model, and the
+               answer must NOT be to quietly add a window-closing capability.
+               **Lows FIXED:** ISS-07 — "terminates at DECISION" is now marked a design intention,
+               not built behaviour (`advanceStage()` consults no outcome and would advance a
+               defeated window; not yet live because this layer holds no vote, but it must be built
+               WITH the ballot layer). ISS-08 — DES-104 item 4's lead-in read "Entry closes when
+               the ballot opens" while its own next sentence said debate; the §5.2 row was
+               corrected for this exact sentence at v2.9.1 and the lead-in was left behind.
+               ISS-09 — §15 gained the missing DES-103..DES-106 sub-table.
+               **Routed, not fixed here (engineer-owned):** two stale code comments at
+               packages/sdk/src/proposals.js:295 and packages/protocol/src/proposals.js:103-108.
+               v2.10.0 (2026-08-30) — The two open questions §10.13.13 recorded rather than
+               resolved at v2.9.3 are now BOTH RULED (Rathish, Human Approver, 2026-08-30;
+               artifacts/status/DECISIONS-2026-08-30-PROPOSING-AND-STAGE-TAXONOMY.md).
+               **No shipped code changes; both rulings confirm what is built.**
+               **(a) FR-091 vs ADR-008's PROPOSAL_STATE — COMPLEMENTARY, both canonical at their
+               own layer.** The architect was asked to confirm rather than force a choice, and the
+               finding is not close: they are different kinds of thing about different subjects.
+               The cardinality is the proof — FR-091's stage belongs to the DECISION WINDOW, which
+               under DES-104 may hold several competing proposals, while PROPOSAL_STATE belongs to
+               ONE proposal's ballot, so a window with three competing proposals has one FR-091
+               stage and three PROPOSAL_STATE values at resolution (one SUCCEEDED_TIMELOCK, two
+               DEFEATED). One-to-many cannot be a renaming. Three further properties agree:
+               total-and-monotone vs branching-with-terminal-exits; stored (advanceStage) vs
+               derived (proposalState() is a pure function, nothing stores it); and different spans
+               (review/debate/measurement have no chain counterpart, tallying/timelock have no
+               FR-091 counterpart). The full MAPPING is recorded as the bridge, with an explicit
+               warning that the two `discussion` names are a COLLISION, NOT an identity — ADR-008
+               §6's DISCUSSION is the whole mandatory pre-vote period and spans FR-091's
+               review + discussion + debate, so an implementer equating them by name builds a
+               machine that silently skips two stages. NORMATIVE SEAM RULE added: at the v2 seam
+               the chain is the sole authority on ballot state and FR-091's VOTE/DECISION/
+               IMPLEMENTATION MUST be DERIVED from PROPOSAL_STATE, never tracked independently —
+               which makes the real failure mode (two stored copies of one fact drifting, a window
+               showing IMPLEMENTATION while the chain says DEFEATED) unrepresentable rather than
+               merely discouraged. FR-091's text does NOT need to name the mapping: the mapping is
+               a design artifact, and binding a requirement to an enum ADR-024 has scheduled to
+               change would be a step backwards. v1 unaffected (no ballot; ADR-024 §(b)).
+               **(b) PROPOSING is NOT an FR-123 counting action — the built reading is CONFIRMED.**
+               The commissioning brief said it was; the ruling is that the brief was wrong and the
+               drop was right to refuse it. Decisive reason: gating authorship on verification
+               status is a participation restriction FR-020 prohibits (reviewer-qa reached this
+               independently). No amendment to FR-024/FR-090/DES-100 — each already says what the
+               ruling confirms. A DIRECTIONAL WARNING is recorded on both failure modes: adding a
+               verifier call to the authoring path violates the ruling; deleting canAuthorProposal()
+               misreads it — the OI-14 Worker-tier condition sits on the orthogonal
+               privacy-disclosure axis and is unchanged. Both guarded by test (UT-0834; UT-0089/
+               UT-0832). §5.2 DES-104 and DES-105 rows carry the rulings; ADR-008 and FR-020 added
+               to their trace columns. §16 Q15 MINTED (routed to the PO, not ruled here): FR-091's
+               text does not say what happens to a DEFEATED or CANCELLED decision — under the
+               mapping such a window terminates at DECISION, and terminating is not skipping, but
+               the requirement does not say so. Surfaced by doing the mapping honestly; not a v1
+               defect (v1 holds no vote). Housekeeping: v2.9.3 technical cycle-2 review PASSED
+               (100%, 0C/0H/0M/0L).
+               v2.9.3 (2026-08-29) — Rework cycle 1 against
+               artifacts/reviews/03-architecture-design-sdd-v2.9.2-technical-cycle1.md
+               (FAIL 95%, 0C/0H/1M/1L). Both findings were cross-references left stale when
+               DES-103 closed the gap they describe — the tester had independently routed
+               the same debt entry to the architect, so two roles found it separately.
+               ISS-01 (Medium): §10.12.5 class (i) still listed FR-080 as having "no
+               dedicated SCR, no DES surface element" and needing both. DES-103 IS that
+               surface element and SCR-15 is bound; the row is now struck through and
+               closed, with the genuine residual named (SCR-15 stays shared with candidacy
+               nomination — a screen-inventory question, not a missing link). This tracker
+               is operationally live: a tester or PM reading it would have treated a closed
+               gap as open.
+               ISS-02 (Low): the Wireframe → SCR table's 3.6 row called the Worker
+               declaration "related but distinct" from SCR-15 and cited the now-closed debt
+               entry as authority, directly contradicting the SCR → Wireframe table's
+               SCR-15 row. Aligned to match, with the contradiction recorded rather than
+               quietly overwritten.
+               v2.9.2 (2026-08-29) — DES-103 completed for FR-080's informed-consent clause,
+               after the TESTER's rule-4 check found the shipped surface did not satisfy it
+               (Doc 08 v2.5.0). FR-080 requires the UI to state, BEFORE the declaration is
+               confirmed, that Worker status is permanent for the term AND makes the
+               member's participation record public. The drop's copy said only that it makes
+               "what you put forward public for the term" — narrower on the second fact,
+               silent on permanence — and there was NO confirmation step at all, so the
+               requirement's "before … confirmed" had no moment to attach to. DES-103 now
+               specifies the two-step consent event normatively (§5.2 row + §10.13.13), binds
+               SCR-15 and SCR-12 (rule 1 also failed for want of an SCR on a requirement with
+               an explicit UI obligation), and states that a one-click declaration is
+               forbidden by construction. Code and tests landed with it (UT-0885/UT-0886).
+               v2.9.1 (2026-08-29) — Rework cycle 1 against
+               artifacts/reviews/03-architecture-design-sdd-v2.9.0-technical-cycle1.md
+               (PASS 98%, 0C/0H/0M/1L — reworked anyway). ISS-01 (Low): the §5.2 DES-105
+               row justified the competing-entry cutoff as "admitting one after the ballot
+               opens would change what people already voted on", but entry actually closes
+               one stage EARLIER, at debate, when no vote has been cast — the reason given
+               was therefore not the reason the code implements. Corrected to name the
+               debate cutoff and the actual rationale (the deliberation has by then been
+               framed around a fixed set of options). §10.13.13's DES-104 subsection was
+               already correct. Fixed despite passing: a design document that misstates the
+               behaviour it governs is the exact defect class that produced the v2.8.0 High.
+               v2.9.0 (2026-08-29) — PROPOSALS & DEBATE design, written ALONGSIDE the code
+               drop it governs (the lesson from the party-creation and join/membership
+               features, where the surface shipped and the RTM row stayed open for want of
+               a DES). Four new elements in §5.2, normative specifications in §10.13.13:
+               **DES-103** participation tiers (FR-079/FR-080) — three tiers, descriptive
+               only, weight identical across all three; tier governs authorship for an
+               ANONYMITY reason, not a merit one.
+               **DES-104** proposal authorship & competing proposals (FR-024/FR-090) — the
+               decision-window model, equal standing, and the capability-absence set that
+               makes "the author never owns the ballot alone" checkable rather than merely
+               asserted.
+               **DES-105** deliberative lifecycle (FR-091) — the eight stages, one step at
+               a time, with no skip/force/veto parameter anywhere in the surface.
+               **DES-106** permanent decision trail (FR-092/FR-107) — append-only, copies
+               out; and an honest v1 boundary: the trail is complete but held by us, so
+               FR-092's "reconstructable from public data alone" additionally needs the
+               DES-097 audit anchoring that is not built.
+               CONFLICT RECORDED, NOT SILENTLY RESOLVED (§10.13.13 "Two open questions"):
+               (a) FR-091's eight named stages are a DIFFERENT taxonomy from ADR-008's
+               `PROPOSAL_STATE` consensus machine — both are implemented, the mapping is
+               recorded, and which is normative at the v2 seam is owed to the architect and
+               the PO; (b) the brief for this drop asked that PROPOSING be an FR-123
+               counting action, but the COUNTING_ACTION allowlist is an approver-ratified
+               three-value set (DES-100, 2026-08-24) and FR-024/FR-090/OI-14 gate authoring
+               on self-declared Worker tier instead. The FR-conformant reading is built;
+               the divergence is flagged for an approver ruling rather than resolved by
+               extending a ratified allowlist.
+               v2.8.3 (2026-08-29) — APPROVER RULING APPLIED (Rathish, 2026-08-29;
                artifacts/status/DECISIONS-2026-08-29-NONVIOLENCE-ENTRENCHMENT.md). The
                non-violence-clause amendment weakness found at v2.8.2 is recorded as its OWN
                tracked work item — **`PREREQ-01`** — and is explicitly **NOT folded into the
@@ -691,6 +943,10 @@ because §5.2 named no design element. Full normative specifications in §10.13.
 | ID | Component | Responsibility | Satisfies | Tech |
 |---|---|---|---|---|
 | DES-101 | non-violence clause verification gate | `NON_VIOLENCE_CLAUSE` (`packages/protocol/src/constants.js`) is the single source of truth; draft validation refuses publication on `field: 'charter.nonViolenceClause'` with `code: 'REQUIRED'` when the clause is absent and `code: 'ALTERED'` when it differs from the canonical text by any byte; no partial-credit, fuzzy or semantic match; no operator or configuration path may waive the check. Clause text is frozen in code pre-ratification (CON-013); changing it is a protocol governance action (ADR-010). v1 enforcement at protocol + service + web; v2 adds `PartyRegistry.publishDraft` as the trust-minimised enforcement point | FR-077, CON-013, SCR-04, SCR-05 | packages/protocol; packages/sdk; apps/web; (v2) PartyRegistry |
+| DES-103 | participation tiers + Worker informed-consent event | Three tiers per party — Supporter (assigned on join), Worker (self-declared, no approval), Candidate. Descriptive metadata ONLY: `votingWeightForTier()` returns 1 for every tier and no configuration can differentiate weight, standing or precedence (FR-021 unchanged). The single thing tier governs is proposal AUTHORSHIP, and for an anonymity reason, not a merit one: authorship is public (FR-090) and a Supporter is anonymous unconditionally (FR-082), so a Supporter cannot author without destroying their own anonymity. **The Worker declaration is a TWO-STEP informed-consent event (FR-080):** step 1 explains why the tier exists; step 2 states, BEFORE confirmation, both required facts — the declaration is **permanent for the term**, and it makes the member's **participation record** public for the term (not merely the proposals they file) — plus that nobody reviews it. Declining leaves the member a Supporter. A one-click declaration is forbidden by construction: without a confirmation step there is no "before" for FR-080's disclosure to attach to | FR-079, FR-080, FR-021, FR-082, SCR-12, SCR-15 | packages/protocol (proposals.js); apps/web |
+| DES-104 | proposal authorship & competing proposals | Authoring requires Worker tier or above (OI-14) — a disclosure step, never an approval step; no pre-screening, moderation or veto path exists (FR-024). Proposals answering the same question share a DECISION WINDOW keyed by a normalised question string; every proposal in a window has EQUAL STANDING — one stage, one schedule, no ordering privilege, no weight/rank/priority field, and no capability by which one author can withdraw, remove, merge, reject, prioritise or veto another's proposal. The author never owns the ballot alone; that absence is a first-class capability-absence control. **Counting-tier placement (ruled 2026-08-30, §10.13.13(b)):** authoring is OPEN participation, **NOT** an FR-123 counting action — no verification gate stands on it, because gating authorship on verification status is a participation restriction FR-020 prohibits. The Worker-tier condition is the orthogonal self-declared disclosure step and is unchanged | FR-024, FR-090, FR-020, BR-015, BR-003, SCR-12 | packages/protocol; packages/sdk (ProposalService); apps/web |
+| DES-105 | deliberative lifecycle stage machine | The eight FR-091 stages — proposal → review → discussion → debate → vote → decision → implementation → measurement — advanced exactly one step at a time. `assertStageTransition` refuses skipping (`STAGE_SKIPPED`, naming what was skipped), reversal (`STAGE_REVERSED`) and no-ops; `advanceStage()` takes no target, no `force`, no `skipTo` and no actor, so there is nothing for a human to veto. Review/discussion/debate are DELIBERATIVE: they produce records, never outcomes. A competing proposal may join only while the window still accepts entries (proposal / review / discussion); **once the window reaches debate, entry is refused** — the deliberation has by then been framed around a fixed set of options, and admitting another would change the question people have been arguing about. **Layer boundary (ruled 2026-08-30, §10.13.13(a)):** these eight stages are the PUBLIC-PROCESS taxonomy and are canonical at that layer; ADR-008's `PROPOSAL_STATE` is canonical for the BALLOT. They are complementary, not competing — different subjects (window vs one proposal's ballot), one-to-many at resolution. **The ballot layer is the sole authority on ballot state IN BOTH VERSIONS** — the DES-096 database backing in v1, `Governor.State` at the v2 seam — and `VOTE`/`DECISION`/`IMPLEMENTATION` MUST be DERIVED from whatever backing `IBallotService` is bound to, never tracked independently. _(v2.11.1: this row published the v2-only scope after §10.13.13 had been corrected to bind both versions — one normative MUST at two scopes, and this row is the one an implementer reads.)_ | FR-091, BR-014, BR-008, SCR-12, ADR-008, DES-096 | packages/protocol; packages/sdk |
+| DES-106 | permanent decision trail | Every event in a decision window — opened, proposal filed (with author), deliberation posted, stage advanced, ballot admission — appends to a per-window log that is never updated and never deleted (FR-107). Reads return copies, so a caller mutating what it received changes nothing. **v1 boundary, disclosed not papered over:** the trail is held in the application store, which makes it complete but not yet independently checkable; FR-092's "reconstructable by any third party from public data alone" additionally requires the DES-097 audit-record anchoring (stage S-8), which is not built. The surface states this in plain words rather than implying more | FR-092, BR-014, BR-019 _(**NOT FR-107** — v2.11.2: this column listed FR-107, publishing the very `FR → DES` link §15 disclaims. DES-106 gives FR-107's append-only property **for the decision trail only**; FR-107 is platform-wide and undesigned, and Doc 08 holds its Must row OPEN as `G-TRACE + G-PHASE3` with DES = none, owner Erik Lindqvist. §5.2 is the register §15 points to for the `FR/NFR → DES` half, so a link here is a link claimed.)_ | packages/sdk; apps/web; (owed) DES-097 anchoring |
 | DES-102 | provisional-party membership cap | A platform-activated party whose legal registration is unverified is capped at `PROVISIONAL_MEMBER_CAP` = 100 **ACTIVE** members. The cap is checked at the membership-write boundary and is **UNCONDITIONAL** — no grace window, no queue, no override (Ruling 1, Rathish, 2026-08-26). It lifts by code only, on the recording of verified legal registration (FR-075); no operator, admin, configuration or bypass surface exists, and the absence is tested as a first-class control. Anti-capture invariant (C-02 ruling, Rathish, 2026-08-22) | FR-130, FR-075, BR-002, BR-012, SCR-09, SCR-11 | packages/protocol (constant); packages/sdk (v1 enforcement); DES-097(b) store; (v2) `Party.join()` |
 
 ### 5.3 Data model
@@ -1402,7 +1658,7 @@ Review scope: all 15 wireframe screens examined for (a) every `privacy(...)` com
 | 3.3 Cast a vote | SCR-13 | Full coverage — ballot booth. |
 | 3.4 Vote confirmed | SCR-14 (partial) | Post-vote tally present (consistent with SCR-14 result surface); independent-verifier flow (verify-it-yourself) absent. DES-063 confirmation treatment and FR-055 independent-verifier aspect absent from wireframe. See §10.12.5 class (i). |
 | 3.5 Accountability dashboard | SCR-20 (partial), SCR-17 (partial) | Transparency dashboard (SCR-20) + commitment tracking (SCR-17) combined; filtering log and manifesto version history absent. |
-| 3.6 The one-way door | SCR-15 (partial) | SCR-15 covers candidacy nomination disclosure; Worker self-declaration (FR-080) is related but distinct. Design debt — see §10.12.5 class (i). |
+| 3.6 The one-way door | SCR-15 (partial) | SCR-15 covers candidacy nomination disclosure (FR-037/FR-038) **and the Worker self-declaration consent event (FR-080)** — the two share the consent pattern, which is why one SCR carries both. The Worker half is designed in **DES-103** (two-step informed consent) and built at Doc 06 v2.4.2. Partial because the two flows still share one screen entry rather than each holding their own. _(v2.9.3: this row previously read "related but distinct … design debt, see §10.12.5 class (i)", which contradicted the SCR-15 row of the SCR → Wireframe table and pointed at a debt entry now closed.)_ |
 
 **SCR → Wireframe (23 SCRs):**
 
@@ -1446,7 +1702,7 @@ Kept in two distinct classes per the approver directive; the classes capture dif
 | 1.5 Verified (post-enrolment confirmation) | No SCR; no dedicated DES for the confirmation UI state. DES-001 covers enrolment mechanics; the "Verified · private / Only you see this" confirmation screen is not designed. | DES gap: mint a DES for the post-enrolment success-state UI, including the FR-124(a) self-view copy obligation. |
 | 2.2 Create — constitution | No SCR, no DES. FR-076 (mandatory constitution sections) and FR-077 (non-violence clause presence check) are backed requirements but no screen-level design exists. SCR-04 covers eight pillars only. | SCR and DES gap: constitution-authoring screen needs its own SCR (with FR-076 + FR-077 traces) and DES element. |
 | 3.4 Vote confirmed | SCR-14 partial coverage exists (post-vote tally present). DES-063 covers coercion-safe confirmation at architecture level. FR-055 independent-verifier flow absent from wireframe. | Remaining design debt: confirmation-screen coercion-safe treatment (DES-063 UX detail) and the independent-verifier flow (FR-055) are not wireframed. Note as DES gap under SCR-14. |
-| 3.6 One-way door (Worker self-declaration) | SCR-15 covers candidacy nomination disclosure (FR-037..038). Worker self-declaration (FR-080) has no dedicated SCR, no DES surface element, and no US explicitly covering the "permanent / public from here on" UI treatment. | DES and SCR gap: Worker self-declaration informed-consent UI (FR-080) needs a dedicated surface element and SCR. |
+| ~~3.6 One-way door (Worker self-declaration)~~ | ~~Worker self-declaration (FR-080) has no dedicated SCR, no DES surface element, and no US explicitly covering the "permanent / public from here on" UI treatment.~~ **CLOSED v2.9.3.** **DES-103** (§5.2, §10.13.13) is that surface element: it specifies the two-step informed-consent event normatively — the disclosure states, before confirmation, that the declaration is permanent for the term and makes the member's participation record public, and declining records nothing. **SCR-15** is bound (with SCR-12 where it is reached); SCR-15 already covers the consent pattern this shares. Built and tested at Doc 06 v2.4.2 (UT-0885/UT-0886); the FR-080 RTM row CLOSED at Doc 08 v2.5.1. **Residual (not a design gap):** SCR-15 remains shared with candidacy nomination (FR-037/FR-038); whether the Worker declaration eventually earns its own SCR is a screen-inventory question, not a missing link. | Closed — DES-103 + SCR-15 |
 
 **Class (ii) — Required screens absent from the wireframe entirely:**
 
@@ -2085,6 +2341,293 @@ ADR-013 §2, CON-002, CON-008, CON-015, FR-010, FR-013, FR-022, FR-064, FR-107, 
 **Enables (does not close):** the FR-010 production-store build and every row whose gap reads
 "production store pending DES-097". **US layer:** owed — PO to derive the persistence-build stories.
 
+### 10.13.13 DES-103..DES-106 — proposals & debate (FR-024, FR-079/080, FR-090, FR-091, FR-092)
+
+**Scope.** The v1 flow from "a member has a question" up to — and stopping at — the point a
+ballot opens. It does not cast, store, count or tally a vote: `admitToBallot()` asks the
+eligibility seam whether a member's ballot would COUNT and then hands off to IBallotService
+(DES-096). A service that both decided who may vote and counted the votes would be the
+single point of trust this architecture exists to remove.
+
+**DES-103 — participation tiers (FR-079, FR-080).** Supporter on joining; Worker and
+Candidate above it. `votingWeightForTier()` returns **1** for every tier and there is no
+configuration, charter override or flag that can make it return anything else — the rule is
+exposed as a function precisely so a test can assert it rather than infer it from an
+absence.
+
+Worker is **self-declared**, and the declaration is FR-080's **informed-consent event**, so
+its surface is normative rather than incidental. It MUST be two steps: an explanation of why
+the tier exists, then — **before** confirmation — a disclosure stating **both** required
+facts and asking the member to accept them:
+
+1. the declaration is **permanent for the term** and cannot be undone partway through; and
+2. it makes the member's **participation record** public for the term — the record of what
+   they take part in, not only the proposals they put forward.
+
+The disclosure MUST also state that nobody reviews the declaration (FR-080's no-approval
+clause), and declining MUST leave the member a Supporter with nothing recorded. A one-click
+declaration is forbidden by construction: with no confirmation step there is no "before" for
+the disclosure to precede, and the requirement becomes unsatisfiable rather than merely
+unmet. Bound surfaces: **SCR-15** (the consent pattern — the §10.12.4 screen table already
+names the Worker declaration as sharing it) and **SCR-12** where it is reached.
+
+**DES-104 — authorship and competing proposals (FR-024, FR-090).**
+
+1. **Who may author, and why.** Worker tier or above (OI-14, 2026-08-11). The reason is
+   anonymity, not merit: authorship is public (FR-090) and Supporters are anonymous
+   unconditionally (FR-082), so a Supporter cannot author without breaking their own
+   anonymity. Every refusal on this path MUST say that the tier is self-declarable, so the
+   gate reads as the disclosure step it is and never as a judgement on the proposal.
+2. **The decision window.** Proposals answering the same question share one window, keyed by
+   `normalizeQuestionKey()` (NFKC, case-folded, whitespace-collapsed — the same shape as
+   `normalizeCollisionKey` for party names). Two members phrasing one question differently
+   are answering one question, and their proposals belong together.
+3. **Equal standing is enforced by absence.** All proposals in a window share one stage and
+   one schedule; none carries a `weight`, `rank`, `priority`, `standing`, `primary` or
+   `featured` field; and the service exposes **no** `withdrawProposal`, `removeProposal`,
+   `rejectCompeting`, `mergeProposal`, `acceptAsAmendment`, `prioritiseProposal`,
+   `setPrimaryProposal`, `closeWindow` or `vetoProposal`. `isOriginal` is **provenance, not
+   precedence** — nothing in the service consults it to decide anything. This is a
+   capability-absence obligation in the §4/DES-075 sense: asserted by test, on both the
+   service surface and the rendered surface.
+4. **Entry closes when the debate opens** _(v2.11.0: the lead-in read "when the ballot opens",
+   which contradicted its own next sentence. v2.11.1: the correction note said the **DES-104** §5.2
+   row had been fixed for this at v2.9.1; it was the **DES-105** row.)_. A competing proposal may join
+   while the window is at proposal / review / discussion. Once it reaches debate, entry is refused
+   (`WINDOW_CLOSED_TO_ENTRIES`, naming the stage): admitting a new option after people have
+   begun deciding would change the question they were asked.
+
+**DES-105 — the deliberative lifecycle (FR-091).** Eight stages, advanced one at a time.
+`assertStageTransition(from, to)` is the authority and refuses by name: `STAGE_SKIPPED`
+(carrying which stages were skipped), `STAGE_REVERSED`, `STAGE_UNCHANGED`;
+`advanceStage(windowId)` takes the window and nothing else — no target stage, no `force`, no
+`skipTo`, no `reason`, no actor. FR-091's "no stage MAY be skipped, reordered, or
+human-vetoed" is therefore a property of the type signature rather than of a check someone
+could forget. Review, discussion and debate are **deliberative**: `postDeliberation()` can
+change no stage, no proposal and no outcome, and is open to **every** member including
+open-tier Supporters — deliberation is participation, not a counting action (FR-122).
+
+**DES-106 — the permanent decision trail (FR-092).** _(v2.11.2: this heading read "(FR-092, FR-107)". DES-106 serves FR-107's append-only property for the decision trail only; it does not discharge FR-107, whose Must row Doc 08 holds OPEN for want of a DES — see §15.)_ Append-only per window;
+`appendTrailEvent` is the only writer and the store exposes no update, delete or rewrite
+path; reads return copies. The trail records authorship, so agenda-setting is visible.
+**Honest v1 boundary:** the trail is complete but held in the application store. FR-092
+additionally requires it be "reconstructable end-to-end by any third party from public data
+alone", which needs the DES-097 audit-record anchoring (Doc 13 stage S-8) — not built. The
+surface says so in plain words. The FR-092 row therefore does **not** close on this drop,
+and that is recorded rather than argued around.
+
+**Counting-tier placement.** Exactly one call site in this flow reaches the eligibility
+seam: `admitToBallot()`, with scope `BINDING_VOTE` (§10.13.2(b)). The service holds **no**
+verifier, so authoring and deliberation structurally cannot reach one. A refusal at the gate
+MUST state what the member keeps — membership, deliberation, reading the trail — because
+verification gates counting, never participation (FR-020, FR-122).
+
+**Vote-step honesty.** Where the surface reaches the VOTE stage it renders the
+coercion-resistance notice (DES-098 family / FR-031 / NFR-003) **before** the member is
+asked to act, non-dismissable, disappearing automatically when `maci_voting` is on.
+
+#### Both open questions RESOLVED (Rathish, Human Approver, 2026-08-30)
+
+_Recorded at v2.9.3 as open; ruled 2026-08-30 —
+`artifacts/status/DECISIONS-2026-08-30-PROPOSING-AND-STAGE-TAXONOMY.md`. **Neither ruling
+changes any shipped code**; both confirm what is built._
+
+##### (a) FR-091's stage list vs ADR-008's `PROPOSAL_STATE` — ✅ COMPLEMENTARY, both canonical
+
+The architect was asked to confirm whether these are the same model at two layers, or genuinely
+competing models one of which must be named normative. **The finding is the former, and it is not
+a close call.** They are not two candidate models of one thing; they are different kinds of thing
+about different subjects. Four structural properties settle it, any one of which would suffice:
+
+1. **Different subjects — and the cardinality is the proof.** FR-091's stage belongs to the
+   **decision window**, which under DES-104 may hold several competing proposals answering one
+   question; the stage is stored on the window, and a proposal carries only its `windowId`.
+   `PROPOSAL_STATE` belongs to **one proposal's ballot**. A window holding three competing
+   proposals therefore has **one** FR-091 stage and **three** ballot states, which resolve
+   independently of one another. A one-to-many relation cannot be a renaming.
+   _(v2.11.0 correction: this argument previously illustrated the resolution as "one
+   `SUCCEEDED_TIMELOCK` and two `DEFEATED`". That asserted a **winner-selection rule that nothing
+   in this architecture specifies** — `Governor` gives each proposal an independent binary ballot,
+   and DES-104 deliberately removes every window-closing capability. The cardinality argument is
+   unaffected and stands; the illustration was withdrawn. The absence it exposed is recorded as
+   **§16 Q16**.)_
+2. **Total and monotone vs branching with terminal exits.** FR-091 is a sequence every decision
+   walks in order, never skipping. The ballot machine branches to terminal outcomes — `DEFEATED`,
+   `CANCELLED` — which are not positions in any sequence.
+3. **Stored vs derived.** FR-091's stage is stored and advanced explicitly by
+   `advanceStage(windowId)`. `stateAt(sched, now, { executed, cancelled, outcome })`
+   (`packages/protocol/src/governance.js:210`) is a **pure function** of schedule, tally and
+   flags — nothing stores it. A stored position and a derived value are not one variable.
+   _(v2.11.0 correction: v2.10.0 called this function `proposalState()`, which exists nowhere in
+   the repository. The purity argument was correct; the name was invented. Corrected here and in
+   the decision record.)_
+4. **Different spans.** FR-091 covers *review*, *debate* (before a ballot exists) and *measurement*
+   (after enactment), none of which the chain models. `PROPOSAL_STATE` covers *tallying* and the
+   *timelock*, neither of which FR-091 names.
+
+**Ruling: both are canonical at their own layer.** FR-091 is normative for the **public process** —
+where a decision stands in its public life. `PROPOSAL_STATE` is normative for the **ballot** — what
+the chain enforces about a vote. Neither is normative over the other, because neither answers the
+other's question. **The mapping is the bridge:**
+
+**THREE representations express the ballot state, and no two of them agree exactly** — reconciled
+here because the seam rule below makes one of them authoritative _(v2.11.1: this passage said
+"two". The SDK decode array was missed, and it is the one with a live failure mode.)_:
+
+| | Values | Where |
+|---|---|---|
+| `Governor.State` (**on-chain, authoritative at v2**) | `Discussion`, `Voting`, `Tallying`, `Defeated`, `Timelocked`, `Executed`, `Cancelled` — **7** | `packages/contracts/src/core/Governor.sol:41-49` |
+| `PROPOSAL_STATE` (JS reference mirror) | `draft`, `discussion`, `voting`, `tallying`, `succeeded_timelock`, `executed`, `defeated`, `cancelled` — **8** | `packages/protocol/src/governance.js:19-28` |
+| `PROPOSAL_STATE_ENUM` (**SDK decode array — ordinal-indexed**) | `discussion`, `voting`, `tallying`, `defeated`, `timelocked`, `executed`, `cancelled` — **7**, positionally aligned to `Governor.State` | `packages/sdk/src/constants.js:42` |
+
+Three divergences, recorded rather than smoothed over.
+**(i) One state, three spellings.** The on-chain `Timelocked` is `SUCCEEDED_TIMELOCK` in the
+protocol mirror and `timelocked` in the SDK decode array. The SDK agrees with the chain; the
+protocol mirror does not.
+**(ii) `PROPOSAL_STATE.DRAFT` is vestigial** — it has no producer anywhere in the repository:
+`stateAt()` never returns it, no contract declares a `Draft` member, and §5.6's proposal model
+begins at `discussion`. It is therefore **not** used in the mapping below, and it is the reason the
+protocol mirror has eight values where the other two have seven.
+**(iii) The SDK array is ORDINAL-INDEXED, which makes it the fragile one — latent today, live at
+the seam swap.** It decodes a `Governor.State` by **position**, so reordering the Solidity enum
+would silently remap every decoded state — a `Defeated` proposal rendering as `Tallying`, with
+nothing raising an error because no name is ever compared. **It has zero call sites repo-wide**
+(`packages/sdk/src/constants.js:43` is its only occurrence), so nothing is mis-decoding anything
+today; it is declared ahead of the consumer. The hazard arms the moment it is wired, which is
+exactly when the derivation rule below starts to matter — the rule makes the chain authoritative,
+and this array is how the chain's answer would reach the application. _(v2.11.2: stated in the
+present tense at v2.11.1, implying a live mis-decode. Correcting the tense, not the concern.)_
+
+**No differential test pins any of the three to another** — `differential.test.mjs` exercises none
+of them. Closing that is an engineer/tester obligation recorded in §16 **Q17**, which now names the
+ordinal-indexing hazard as the case to write first.
+
+| FR-091 public-process stage | Ballot state | Relationship |
+|---|---|---|
+| `PROPOSAL` | `Discussion` | the ballot machine has **no pre-discussion state**; it begins here |
+| `REVIEW` | `Discussion` | " |
+| `DISCUSSION` | `Discussion` | **name collision, not identity** — see the warning below |
+| `DEBATE` | `Discussion` | the chain's single pre-vote period spans **all four** |
+| `VOTE` | `Voting` | 1:1 |
+| `DECISION` | `Tallying` → `Defeated` \| `Timelocked` | one process stage contains the ballot's outcome branch |
+| `IMPLEMENTATION` | `Executed` | FR-026's timelock elapses inside `Timelocked`; enactment lands in `Executed` |
+| `MEASUREMENT` | *(none)* | the ballot machine has no post-enactment outcome state; FR-092's measured outcome is off-chain |
+| *(no stage — and the window does NOT end)* | `Cancelled` | **reachable only during the discussion period**, and it cancels **one proposal**, not the window — see below |
+
+> ⚠ **The `discussion` name collision is the trap in this mapping, and it is worse than a name.**
+> ADR-008 §6's pre-vote period (T2: 7 days, T3: 14 days) is a **single** ballot state spanning
+> **four** FR-091 stages — `PROPOSAL`, `REVIEW`, `DISCUSSION`, `DEBATE`. An implementer who equates
+> the two `discussion`s by name builds a stage machine that silently skips **three** stages.
+> _(v2.11.0 correction: v2.10.0 mapped `PROPOSAL` and `REVIEW` to a `DRAFT` state that has no
+> producer, and consequently understated its own trap as "skips two". The ballot machine simply has
+> no state before `Discussion`.)_
+
+> ⚠ **`Cancelled` is NOT reachable from any pre-execution state.** The only cancellation entrypoint
+> is `Governor.cancelDuringDiscussion(...)` (`Governor.sol:397`), whose own contract comment states
+> the rule: *"A proposer may withdraw before voting opens, and not after (FR-029)."* Once voting
+> opens the proposal runs to an outcome; there is no abort. §5.6 already stated this correctly
+> ("proposer withdraws (discussion only)"). _(v2.11.0 correction: v2.10.0's table said "reachable
+> from any pre-execution state", contradicting both the contract and §5.6 of this document. §5.6 is
+> the reference; this table is aligned to it.)_
+>
+> **And it cancels ONE PROPOSAL, not the window.** _(v2.11.1: the row read "(none — the window
+> ends)", which asserted a window termination on three counts it cannot support — no capability
+> implements it (DES-104 deliberately exposes no `closeWindow`), **Q15 routes the question of
+> terminal outcomes as OPEN**, and this section's own warning below says nothing enforces
+> termination. It also ignored the one-to-many cardinality this section rests on: a window may hold
+> several competing proposals, and `cancelDuringDiscussion(proposalId, …)` withdraws exactly one of
+> them. The others continue. This was the same defect class as the withdrawn
+> "one-`SUCCEEDED_TIMELOCK`-two-`DEFEATED`" illustration two paragraphs above — asserting a
+> resolution rule nothing specifies — reintroduced in the correction that removed it.)_
+
+**The seam rule — derivation direction (normative, and it binds in BOTH versions).** The seam
+question is not "which taxonomy wins" but "which layer owns each fact":
+
+> **The ballot layer is the sole authority on ballot state.** The citizen-facing FR-091 stages
+> `VOTE`, `DECISION` and `IMPLEMENTATION` MUST be **derived** from the state held by whatever
+> backing `IBallotService` (DES-096) is bound to, and MUST NOT be tracked independently of it. In
+> **v1** that authority is the **database backing** (DES-096: `castBallot` writes, `computeTally`
+> aggregates); at the **v2 seam swap** it becomes the **chain** (`Governor.State`). The stages
+> `PROPOSAL`, `REVIEW`, `DISCUSSION`, `DEBATE` and `MEASUREMENT` have no ballot-layer counterpart
+> and remain owned by the application layer in both versions.
+
+This is what the ruling buys. A "pick one taxonomy" answer would have invited the real failure
+mode — **two stored copies of one fact drifting apart**, a window displaying `IMPLEMENTATION` while
+the ballot layer says `Defeated`. Derivation makes that unrepresentable rather than merely
+discouraged.
+
+> ⚠ **The v1 half of this rule has nothing to derive FROM yet, and that is an owed design change.**
+> DES-096's interface (§10.13.3) exposes `castBallot`, `changeBallot`, `computeTally` and
+> `getTallyProperties` — **no ballot-state accessor**. A rule requiring `VOTE` / `DECISION` /
+> `IMPLEMENTATION` to derive from the ballot layer cannot be satisfied against an interface that
+> never reports the ballot's state, so **DES-096 MUST gain a state accessor before the v1 ballot
+> layer is built** — otherwise the only way to render those three stages is to track them
+> independently, which is exactly what this rule forbids. Recorded here rather than left for the
+> implementer to discover at the point of use. _(v2.11.1: added — v2.11.0 extended the rule to v1
+> without checking that v1's seam could carry it.)_
+>
+> _(**v2.11.0 correction — the scope was wrong, in the direction that mattered.** v2.10.0 scoped
+> this rule to the v2 seam alone, on the stated ground that "v1 holds no ballot (ADR-024 §(b))".
+> That mis-cited: ADR-024 §(b) removes on-chain **execution** in v1 and puts votes in Postgres — it
+> does not remove the ballot. **DES-096 (§10.13.3) specifies a v1 ballot backing outright**, with a
+> database `castBallot` and a SQL `computeTally`. The rule as first written therefore left the
+> drift failure mode unbound at exactly the point where v1 first holds a vote, which is the first
+> place it can occur. What IS true, and all that was ever true, is narrower: **the proposals and
+> debate layer built in this drop holds no vote** — it stops at `admitToBallot()` and hands off —
+> so nothing in the shipped code derives anything yet. The rule is restated above to bind the
+> ballot layer in both versions.)_
+
+**Should FR-091's text name the mapping? No.** FR-091 is a requirement about the public process and
+is complete as written for that subject. The mapping is a *design* artifact and belongs here.
+Binding a requirement to an on-chain enum that ADR-024 has already scheduled to change would be a
+step backwards.
+
+**Surfaced by doing the mapping — routed, not ruled (Doc 02 §13 (h), §16 Q15).** FR-091 says no
+stage MAY be skipped, but a **defeated** or **cancelled** decision cannot be implemented or
+measured: such a window **should terminate at `DECISION`**. Terminating is not skipping — yet
+FR-091's text does not say so, so a future implementer could read it as obliging an implementation
+stage for a proposal the members rejected. That is a **requirement clarification owed to the
+product-owner**, not an architect's call.
+
+> ⚠ **"Terminates at `DECISION`" is a design intention, not a property of the built code.**
+> `advanceStage(windowId)` consults no outcome and would advance a defeated window straight on to
+> `IMPLEMENTATION`. Nothing today prevents it. This is **not yet a live defect** — the layer built
+> in this drop holds no vote, so no window can reach a defeated state to be advanced past — but it
+> becomes one the moment the ballot layer lands, and it must be built **together with** that layer
+> rather than after it. Recorded here so the phrase is never read as describing today's behaviour.
+> _(v2.11.0: added. v2.10.0 asserted the termination as though the machine enforced it.)_
+
+##### (b) Whether PROPOSING is an FR-123 counting action — ✅ NO. The built reading is confirmed
+
+The commissioning brief for this drop stated that proposing, like voting, is a counting action
+gated through `IEligibilityVerifier`. **The ruling is that the brief was wrong and this drop was
+right to refuse it.** Proposing/authoring is **OPEN participation**: any member, phone-verified, no
+government-ID gate, no verifier call. Only **voting** is the FR-123 counting action.
+
+**The decisive reason is FR-020:** gating authorship on verification status is a *participation
+restriction*, which FR-020 prohibits absolutely. reviewer-qa reached the same conclusion
+independently while reviewing the drop. Three further lines agree — DES-100's `COUNTING_ACTION` is
+an approver-ratified three-value allowlist (`STRENGTH_CONTRIBUTION`, `BINDING_VOTE`, `CANDIDACY`,
+ratified 2026-08-24) whose seam throws `NotACountingAction` on anything else; FR-024 forbids
+pre-screening; and gating authorship would mean an unverified member may join, deliberate and
+vote-but-not-count yet may not *speak* by proposing, inverting "verification gates counting, never
+participation".
+
+**No amendment follows, and that is the point.** FR-024, FR-090 and DES-100 already say what the
+ruling confirms; each carries a confirming annotation and nothing normative changed. Had the ruling
+gone the other way it would have required a DES-100 allowlist amendment plus an FR-024/FR-090
+amendment — governance work through the SOP, not a code change.
+
+> ⚠ **Read this ruling on the right axis, in both directions.** "Open participation … no ID gate"
+> speaks to the **verification** axis (FR-122/FR-123). It does **not** remove the OI-14 requirement
+> that an author hold **Worker tier or above** — that sits on the orthogonal **privacy-disclosure**
+> axis (Doc 02 §4.41 TWO-AXIS NOTE), is **self-declared** with nobody approving it (FR-080), and
+> exists for an **anonymity** reason: authorship is public (FR-090) and a Supporter is anonymous
+> unconditionally (FR-082). A future increment that **adds a verifier call to the authoring path
+> violates this ruling**; one that **deletes `canAuthorProposal()` misreads it**. Both failure
+> modes are guarded by test: UT-0834 (the service holds no verifier and `fileProposal` takes none)
+> and UT-0089 / UT-0832 (the authoring rule takes no approver and Worker tier is required).
+
 ---
 
 ## 11. Situation & failure-mode analysis (per requirement)
@@ -2202,6 +2745,7 @@ not duplicated here. Architectural debt carried knowingly:
 | ~~FR-077 and FR-130 have shipped code but no DES~~ | ~~C-02 closure recorded the cap as a build obligation and left the design link unwritten; FR-077's link was never written~~ | **PAID DOWN v2.8.0** — DES-101 (§10.13.10) and DES-102 (§10.13.11) written; both RTM chain gaps closed at the design layer. FR-130's row then CLOSED (Doc 08 v2.4.0); FR-077's did not — see the row below | Closed |
 | **`Party.amendCharter` can strip the non-violence clause** — it takes `(clauseId, hash, CID)`, never the charter text, and replaces the whole document hash, so an amendment naming any unrelated clause installs a charter without the CON-013 clause; entrenchment does not help, because the immutable set is a founding-time party choice and the blob is replaced wholesale | found 2026-08-29 while completing DES-101 for FR-077's amendment half; the publication gate was designed and the amendment gate was not | **Designed v2.8.2** (§10.13.10.1). **APPROVER RULING 2026-08-29 (Rathish; artifacts/status/DECISIONS-2026-08-29-NONVIOLENCE-ENTRENCHMENT.md): this fix is its OWN tracked work item — `PREREQ-01` — and is NOT folded into the on-chain governance increment.** It is a **BLOCKING PREREQUISITE**: the on-chain governance increment MUST NOT ship until the charter-as-clause-map refactor, the platform-immutable non-violence `clauseId`, and amendments-carry-their-text are built AND DES-101 §10.13.10.1 rule 6's adversarial test passes. Closing evidence is that test — the one that fails against today's code. Rationale (approver): CON-013 makes the clause a condition of a party's existence, so its protection must be a hard gate, not a line item that can slip under sprint pressure. Confirmed NOT exploitable in v1 (no on-chain governance path, ADR-024 §(b)) — **does not block any v1 work** | **High — `PREREQ-01`, ruled blocking prerequisite for the on-chain governance increment** |
 | v1 party/membership store is in-memory (`IS_INSECURE_MOCK = true`) | production Postgres backing not built; blocked past devnet by the CI gate | **Design complete v2.8.0** — DES-097(b) (§10.13.12) specifies the mapping, constraints, retention boundary and promotion condition; the build remains owed, and §6's CON-015 answers gate promotion | Medium (blocked by CI) |
+| **DES-096 exposes no ballot-state accessor, so the v1 half of the derivation rule has nothing to derive FROM** — its interface (§10.13.3) is `castBallot`, `changeBallot`, `computeTally`, `getTallyProperties` and no more | §10.13.13(a) makes the ballot layer authoritative over the FR-091 `VOTE`/`DECISION`/`IMPLEMENTATION` stages in **both** versions; that rule is unsatisfiable against an interface which never reports the ballot's state, and the only way to render those stages without one is to track them independently — precisely what the rule forbids. Recorded at v2.11.1 in §10.13.13(a) prose only; entered here at v2.11.2 so it is **owned and tracked** rather than discoverable only by the implementer who hits it | **DES-096 MUST gain a ballot-state accessor before the v1 ballot layer is built.** Not urgent today — the proposals layer derives nothing, stopping at `admitToBallot()` — and it blocks no current work | Medium — **Ravi Deshmukh (architect)**; owed before the v1 ballot layer |
 | FR-130 cap is application-enforced in v1 | v1 has no on-chain membership (ADR-024 §(b)); the application boundary is the only enforcement point that exists | audit-record publication makes an over-cap party **detectable** today (DES-102 rule 8); the on-chain guard in `Party.join()` (DES-102 rule 7) makes it **impossible** at the v2 increment | Medium (disclosed) |
 
 ## 14. Test hooks designed in
@@ -2300,6 +2844,20 @@ pre-existing Phase-3, environment, external, or mechanism gaps per Doc 08 §gap-
 |---|---|---|
 | FR-131 (honesty notice — non-vote `anon` contexts); ADR-025 §(c-ii) (phone number at rest as identity data); Doc 02 H-16 (`phone_hash` derived identity data); Doc 02 H-18 (`subject_id_hash` retained); T-01/T-02 (operator-side linkage and subpoena deferral) | DES-094 amended — `anon`-state copy analysis fully reworked (ISS-01): interpretive basis stated explicitly; India/TRAI subpoena chain acknowledged; disclosure gap for non-vote contexts addressed via clause 8 (new normative obligation for data-practices disclosure adjacent to `anon` pill on screens 1.2/1.6/2.3); `anon` subtitle unchanged; clause 7 annotated (ISS-02: `unlinkable` is proxy for full "no identity at rest" guarantee; design-review invariant for future backings); normative note added at three-state table header (ISS-03). | Review cycle 1 rework (FAIL 91%/0C/0H/1M/2L; artifacts/reviews/03-architecture-design-sdd-v2.7.0-technical-cycle1.md). No new DES or ADR minted. US layer: engineer to implement clause 8 data-practices disclosure link as part of PrivacyStatus.tsx host-screen integration in the enrolment sprint. |
 
+**v2.11.0 proposals & debate trace rows (DES-103..DES-106, §10.13.13, 2026-08-29/30):** _(added
+v2.11.0 — these four elements were minted at **v2.9.0** and shipped without a §15 sub-table, unlike
+every other DES family in this section. v2.11.1: the minting version read "v2.9.1" here; v2.9.1 was
+the first rework cycle, not the mint.)_
+
+| Requirement | DES | Notes |
+|---|---|---|
+| FR-079 (three tiers; descriptive only; no weight differentiation); FR-021 (unchanged) | **DES-103** (participation tiers) | `votingWeightForTier()` returns 1 for every tier with no configuration able to change it — exposed as a rule so a test asserts it rather than inferring it from an absence. **RTM row CLOSED** (Doc 08 v2.5.0) |
+| FR-080 (Worker self-declared; informed-consent event before confirmation); FR-082/FR-083 (disclosure scope) | **DES-103** (two-step consent event) | Normative surface: step 1 explains, step 2 states permanence **and** participation-record publicity **before** confirmation, plus no-approval. A one-click declaration is forbidden by construction — with no confirmation step there is no "before" for the disclosure to precede. Bound to **SCR-15** (+ SCR-12 where reached). **RTM row CLOSED** (Doc 08 v2.5.1) |
+| FR-024 (no pre-screening); FR-090 (public authorship; competing proposals, equal standing); FR-020 (no participation restriction) | **DES-104** (authorship & competing proposals) | Worker-tier gate is a **disclosure** step on the privacy axis, never an approval step and never a verification gate (ruled 2026-08-30). Equal standing enforced by **absence**: no weight/rank/priority field and no withdraw/reject/merge/prioritise/veto capability. **FR-090 RTM row CLOSED** (Doc 08 v2.5.0); FR-024 extended. **Doc 08 v2.6.0 added a REVISIT FLAG to that row** (v2.11.2: recorded here): **Q16** names FR-090 and is open, so if the rule answering it alters what "the same decision window" guarantees, the row and TC-3548/TC-3549 must be re-derived. The row stays COMPLETE — Q16 concerns post-vote resolution, outside FR-090's stated guarantee |
+| FR-091 (eight stages in sequence; no skip, reorder or human veto; deliberative stages produce records) | **DES-105** (stage machine) | Order guarantees complete and structural — `advanceStage(windowId)` takes no target, force, skip or actor, so the guarantee is a property of the type signature. **RTM row OPEN (G-NOMECH)** on the unwired "per published timelines" clause only. Layer boundary and the ballot-layer derivation rule: §10.13.13(a). See **Q15**, **Q16**, **Q17** |
+| FR-092 (permanent decision trail, third-party reconstructable) | **DES-106** (decision trail) | Append-only per window; `appendTrailEvent` the only writer; reads return copies. **RTM row OPEN (G-NOMECH)** on two counts: the four enumerated elements this layer cannot hold (no vote here) and the unbuilt DES-097 anchoring |
+| FR-107 (nothing deleted; append-only state-transition lifecycle) | **partially served by DES-106 — NOT discharged by it** | ⚠ **Do not read this as a DES assignment.** DES-106 satisfies FR-107's append-only property **for the decision trail only**. FR-107 is platform-wide — *every governed entity* active-or-inactive, transitions appended with timestamp and cause, plus the FR-085 confidential-class carve-out — and that lifecycle is **still undesigned**. **Doc 08 correctly records FR-107 as `G-TRACE + G-PHASE3` with DES = none** (§3.1; gap-log entry 98, owner Erik Lindqvist): a DES is owed *from the architect*, which is a stronger claim than a build being owed. _(v2.11.1: the v2.11.0 table mapped FR-107 → DES-106 and marked its row "OPEN (G-NOMECH)", contradicting Doc 08 on both the link and the gap class — a §15 sub-table added to fix a traceability omission had itself asserted a traceability link that does not exist.)_ |
+
 ## 16. Open questions
 
 | # | Question | Owner | Needed by |
@@ -2318,6 +2876,9 @@ pre-existing Phase-3, environment, external, or mechanism gaps per Doc 08 §gap-
 | ~~Q12~~ | ~~**100-member provisional cap (wireframe 2.3) — accept or reject?**~~ **CLOSED v2.8.0 (2026-08-29).** The PO accepted the concept and minted FR-130 (Doc 02 v2.5.0; C-02 ruling, Rathish, 2026-08-22); Ruling 1 (2026-08-26) fixed the cap as UNCONDITIONAL with no grace window. The remaining architect half — the enforcement mechanism, the relation to the petition lifecycle, and the "legal verification" trigger this question named — is now specified in **DES-102** (§10.13.11): membership-write-boundary check, code-only lift, capability-absence obligations, v1 application enforcement with audit-record tamper-evidence, and the v2 `Party.join()` guard. The verification *procedure* behind the trigger remains a CON-015 / operational question, recorded in DES-102 rule 6. | ~~Priya Raghunathan (PO)~~ Closed | ~~Before design of petition-live screen~~ Closed |
 | Q13 | **FR-125 non-invite fallback — design all four layers.** The mandatory non-invite fallback path (OI-19 ruling; FR-125(b) non-invite fallback ALWAYS available) has no wireframe screen, no DES, no SCR, no US. The Welcome screen (1.1) shows only "Explore" and "I have an invite". The fallback flow must be designed end-to-end. Owner of the DES and SCR: architect (next increment). Owner of the US: product-owner. | Ravi Deshmukh (architect) + Priya Raghunathan (PO) | Before Coding sprint covering FR-125 |
 | Q14 | **Party finance ledger screen — design owed.** The wireframe 1.6 "Finances — every rupee in and out" navigation row links to an undesigned screen. FR-050 (Must) requires the itemised public treasury record. DES-033 covers the on-chain mechanism; the UI is not designed. A ledger SCR, DES surface element, FE, and US are all owed. | Ravi Deshmukh (architect) + Priya Raghunathan (PO) | Before Coding sprint covering FR-050 |
+| Q15 | **FR-091 does not say what happens to a DEFEATED or CANCELLED decision.** Surfaced 2026-08-30 while mapping FR-091 to ADR-008's `PROPOSAL_STATE` (§10.13.13(a)). FR-091 requires every proposal to move through all eight stages in sequence with **no stage skipped**; a defeated or cancelled decision cannot be implemented or measured, so under the recorded mapping such a window **terminates at `DECISION`**. Terminating is not skipping — but the requirement's text does not say so, leaving a future implementer free to read it as obliging an implementation stage for a proposal the members rejected. **This is a requirement clarification, not an architect's call** — the architect surfaces it and routes it. **Not a defect in what is built:** the proposals and debate layer holds no vote — it stops at `admitToBallot()` and hands off to `IBallotService` — so no window can yet reach a defeated state. _(v2.11.1: this row previously read "v1 holds no vote (ADR-024 §(b))" — the same mis-citation corrected in §10.13.13 at v2.11.0 and missed here, one of the three locations the cycle-1 finding named. ADR-024 §(b) removes on-chain **execution** in v1; **DES-096 §10.13.3 specifies a v1 ballot backing**. It also contradicted **Q16** two rows above, which already used the corrected narrow form.)_ Recorded in Doc 02 §13 tracked routing (h). | Priya Raghunathan (PO) | Before the ballot layer is built |
+| Q16 | **Nothing specifies how a decision window with several competing proposals RESOLVES.** Surfaced 2026-08-30 at the v2.10.0 review, while checking the cardinality argument in §10.13.13(a). FR-090 requires every competing proposal to be presented with equal standing and voted **in the same decision window**; `Governor` gives each proposal an **independent binary ballot**; and DES-104 deliberately exposes **no** window-closing, merging, ranking or primary-selection capability — that absence is a first-class anti-capture control and MUST NOT be quietly removed to answer this. So two competing proposals answering one question can **both pass**, and no rule says what then happens. This is a genuine gap between FR-090's "same decision window" and the ballot model, not an implementation detail. It is **not a v1 defect** — the layer built in this drop holds no vote — but it MUST be answered before the ballot layer is built, and the answer is a **requirement decision** (what does the party get when both options win?) before it is an architecture one. Related: **Q15**. | Priya Raghunathan (PO) + Ravi Deshmukh (architect) | Before the ballot layer is built |
+| Q17 | **None of the THREE ballot-state representations is covered by a differential test.** _(v2.11.2: this row said "neither … enum", counting two, after the reconciliation sub-table had established three.)_ `Governor.State` (Solidity, 7 values), `PROPOSAL_STATE` (JS mirror, 8 values) and `PROPOSAL_STATE_ENUM` (SDK ordinal-indexed decode array, 7 values) all express the same machine, differ by name in one state (`Timelocked` / `SUCCEEDED_TIMELOCK`), and differ by one **vestigial** value (`PROPOSAL_STATE.DRAFT` has no producer anywhere — `stateAt()` never returns it and no contract declares it). `differential.test.mjs` exercises neither. §10.13.13(a) now makes the ballot layer authoritative over derived stage positions, which raises the cost of an undetected divergence between the reference mirror and the chain. **Write the ordinal-indexing case first:** `PROPOSAL_STATE_ENUM` decodes by position, so a Solidity enum reorder silently remaps every state with nothing to raise an error. Also owed: a decision on whether to retire `PROPOSAL_STATE.DRAFT` or give it a producer. | Ji-woo Park (tester) + Samuel Oyelaran (Engineering Lead) | Before the v2 seam swap |
 
 **Confirmations recorded (2026-08-23; DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md §4):**
 

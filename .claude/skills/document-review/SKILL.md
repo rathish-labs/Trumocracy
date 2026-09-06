@@ -139,7 +139,17 @@ Write one report **per review cycle** to
 `artifacts/reviews/<NN>-<slug>-v<version>-<mode>-cycle<k>.md`
 (e.g. `artifacts/reviews/03-architecture-and-design-v1.1.0-technical-cycle2.md`), built from
 `docs/templates/document-review.template.md`. It MUST start with this exact, machine-parseable
-metadata block (the SubagentStop hook reads these fields):
+metadata block (the SubagentStop hook reads these fields).
+
+> ⚠ **The first two field names are the ones that drift, and drift disables the gate.** Write
+> `Reviewed document:` (**not** `Document:`) with the **filename** as its value — not a document
+> title and not an ID like `CODE-TRUMOCRACY` — and `Document version:` (**not** `Version:`) with a
+> bare semver. Ten reports across four documents got this wrong; the hook could not identify any of
+> them, so for those versions the automated gate enforced nothing. `hooks/check_gates.py` now
+> accepts the aliases and falls back to the report's filename, but it flags any report that needed
+> the fallback. **Verify before you finish:** `node hooks/run_gates.cjs --audit` prints which
+> documents pass and which block, and names the report it matched. The gate is **live** as of
+> 2026-08-31 — a mis-formatted report now blocks real stops, it no longer merely fails to count.
 
 ```
 Reviewed document: 03-architecture-and-design.md

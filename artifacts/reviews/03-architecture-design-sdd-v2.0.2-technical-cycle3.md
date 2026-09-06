@@ -1,6 +1,8 @@
 # Document Review — Cycle 3
 
 ```
+Reviewed document: 03-architecture-design-sdd.md
+Document version: 2.0.2
 document:       SDD-TRUMOCRACY (docs/03-architecture-design-sdd.md)
 version:        2.0.2
 mode:           technical

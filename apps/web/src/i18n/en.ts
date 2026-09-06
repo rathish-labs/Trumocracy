@@ -166,6 +166,122 @@ export const en = {
       'version. Everything else about your membership works now.',
     openTierNoticeRefused: 'Your request was not counted. Nothing else has changed.',
   },
+  // ─── Proposals & debate (FR-024, FR-079/080, FR-090, FR-091, FR-092, FR-123) ───
+  // Distinct from `proposals` below, which names a proposal's BALLOT state (voting,
+  // tallying, executed). This section is the authoring and deliberation flow.
+  debate: {
+    title: 'Proposals',
+    lead:
+      'Anyone in a party can put a question to the members. Anyone else can answer it with a ' +
+      'different proposal. Nobody decides on their own which answer people get to choose from.',
+    empty: 'No questions have been put to this party yet.',
+    // Decision window — the group of proposals answering one question.
+    questionLabel: 'The question',
+    windowStage: 'Stage now',
+    proposalCount: (n: number) => (n === 1 ? '1 proposal' : `${n} proposals`),
+    competingLead:
+      'These proposals all answer the same question. They stand equally. The person who asked ' +
+      'first has no say over the others.',
+    byAuthor: (who: string) => `Put forward by ${who}`,
+    originalTag: 'Asked the question',
+    competingTag: 'Answering the same question',
+    // Filing
+    fileTitle: 'Put a proposal to the members',
+    fileLead:
+      'Say what question you are answering and what you would do. Nobody screens this. It goes ' +
+      'to the members as written.',
+    questionField: 'The question you are answering',
+    questionHelp:
+      'If someone has already asked this question, your proposal joins theirs and members choose ' +
+      'between them.',
+    titleField: 'A short name for your proposal',
+    bodyField: 'What you would do, and why',
+    tierField: 'How big a decision is this?',
+    fileConfirm: 'Put this to the members',
+    filed: 'Your proposal is now with the members.',
+    // Worker-tier gate (FR-024/FR-080 — a disclosure step, never an approval step)
+    workerGateTitle: 'Putting a proposal forward is public',
+    workerGateBody:
+      'Members who put proposals forward do so in the open, under a name other members can see. ' +
+      'Supporters take part without a public name, so a Supporter cannot be the author of a ' +
+      'proposal.',
+    // The gate is step 1 of the FR-080 consent event, so it must not understate what step 2
+    // asks the member to accept: an initial impression narrower than the truth is still a
+    // misleading impression, and existing Workers see this line as their standing reminder.
+    workerGateHow:
+      'You can say you are a Worker at any time. Nobody approves it — you decide. It lasts for ' +
+      'the term, and it makes your record of taking part in this party public for that time.',
+    workerGateAction: 'Say I am a Worker',
+    // FR-080 informed-consent event — shown BEFORE the declaration is confirmed. Both
+    // facts are required by the requirement and neither may be softened: the change is
+    // permanent for the term, and it makes the participation record public, not merely
+    // the thing being put forward.
+    workerConsentTitle: 'Before you say you are a Worker',
+    workerConsentPermanent:
+      'This lasts for the whole term. You cannot undo it partway through.',
+    workerConsentPublicRecord:
+      'Your record of taking part in this party becomes public for the term — not only the ' +
+      'proposals you put forward, but what you take part in.',
+    workerConsentNoApproval: 'Nobody reviews this. When you confirm, it is done.',
+    workerConsentConfirm: 'I understand — make me a Worker',
+    workerConsentCancel: 'Not now',
+    workerGateNotJudgement:
+      'This is not about whether your idea is good. It is only about whether your name is public.',
+    // Lifecycle (FR-091)
+    stageNames: {
+      PROPOSAL: 'Put forward',
+      REVIEW: 'First read',
+      DISCUSSION: 'Discussion',
+      DEBATE: 'Debate',
+      VOTE: 'Vote',
+      DECISION: 'Decision',
+      IMPLEMENTATION: 'Being carried out',
+      MEASUREMENT: 'Checking what happened',
+    },
+    stageLead:
+      'Every question goes through the same steps in the same order. No step is skipped and ' +
+      'nobody can jump one.',
+    stageDone: 'Done',
+    stageNow: 'Now',
+    stageToCome: 'To come',
+    competingClosed:
+      'The members are past the point where a new proposal can join this question. It would ' +
+      'change what people have already been asked.',
+    // Deliberation (FR-091 — records, never outcomes)
+    discussionTitle: 'What members have said',
+    discussionLead:
+      'Anything said here is kept. It is a record of the discussion — it does not decide ' +
+      'anything on its own.',
+    discussionEmpty: 'Nothing has been said yet.',
+    discussionField: 'Say what you think',
+    discussionSend: 'Add to the discussion',
+    discussionOpenToAll:
+      'Every member can take part in this, including members who have not done a government ID ' +
+      'check.',
+    discussionClosed: 'The discussion for this question has closed.',
+    // Ballot admission (FR-123 counting gate)
+    ballotTitle: 'The vote',
+    ballotLead: 'Members choose between the proposals above.',
+    ballotCheck: 'Check whether my vote counts',
+    ballotAdmitted: 'Your vote counts in this decision.',
+    ballotNotOpen: 'The vote has not opened yet.',
+    // Decision trail (FR-092)
+    trailTitle: 'Everything that happened, in order',
+    trailLead:
+      'Every step is written down as it happens and never changed. You can read the whole story ' +
+      'of a decision from start to finish.',
+    trailEvents: {
+      WINDOW_OPENED: 'Question asked',
+      PROPOSAL_FILED: 'Proposal put forward',
+      DELIBERATION_POSTED: 'Someone spoke',
+      STAGE_ADVANCED: 'Moved to the next step',
+      BALLOT_ADMISSION: 'A member was admitted to the vote',
+    },
+    // v1 honesty about the trail's reach (FR-092 partial)
+    trailV1Note:
+      'In this version the record is kept by us. Publishing it so that anyone can check it ' +
+      'without trusting us is not switched on yet. We would rather say that than imply more.',
+  },
   petitions: {
     newTitle: 'Start a party',
     newLead:

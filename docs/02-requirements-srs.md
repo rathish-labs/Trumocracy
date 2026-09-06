@@ -2,14 +2,101 @@
 
 ```
 Document ID:   SRS-TRUMOCRACY
-Version:       2.15.0
-Status:        Approved — 02-requirements-srs-v2.15.0-business-cycle1.md (PASS 97%, 0C/0H/0M/1L; ISS-B1 Low carried)
+Version:       2.16.3
+Status:        Approved — 02-requirements-srs-v2.16.3-business-cycle4.md (PASS 96%, 0C/0H/0M/3L).
+               Three Lows carried, all non-blocking and all recommended by the reviewer for
+               cleanup on the next version that touches §13 or FR-064 rather than a dedicated
+               rework cycle: ISS-01 (§4.6 FR-064's "v2 (deferred)" clause lacks the FR-023/FR-068
+               cross-reference, open since v2.15.0); ISS-02 (the v2.16.0 changelog entry still
+               carries an unquoted echo of the corrected mis-citation — confined to historical
+               narration, not a live status field, which is why it is a Low here where the same
+               defect class was a High in Doc 07/08); ISS-03 (a wording nit in §13 (h)).
 Owner:         Priya Raghunathan — Product Owner
 Approvers:     Gate 1 — Priya Raghunathan (Product Owner), Ana-Maria Petrescu (Project Manager),
                Rathish (Human Approver — Gate 1 re-entry, v2.0.0)
 Source:        PR-TRUMOCRACY (docs/01-press-release-prfaq.md)
-Last updated:  2026-08-29
-Change:        v2.15.0 — FR-064 amended to the v1 EXPLICIT-LEAVE posture per the FR-064-SEMANTICS
+Last updated:  2026-08-30
+Change:        v2.16.3 (2026-08-30) — **One-line factual correction, routed in from the Doc 03
+               v2.11.1 review (cycle 3), which found this document carrying a mis-citation
+               verbatim after Doc 03 had corrected its own copy.** §13 tracked routing **(h)** read
+               "**Not a defect in what is built:** v1 holds no vote (ADR-024 §(b))". That
+               **mis-cites ADR-024**: §(b) removes on-chain **execution** in v1 and puts votes in
+               Postgres — it does not remove the ballot, and **DES-096 (Doc 03 §10.13.3) specifies
+               a v1 ballot backing outright** (database `castBallot`, SQL `computeTally`). The
+               narrow claim that is true, and all that was ever true, is that **the proposals and
+               debate layer** holds no vote: it stops at `admitToBallot()` and hands off to
+               `IBallotService`. Corrected, with the superseded wording quoted in place per the
+               annotate-don't-delete convention. No requirement text, priority, owner or status
+               changes; (h) remains OPEN and product-owner-owned. Doc 02 v2.16.2 had PASSED cycle 3
+               at 98% — this correction was found downstream, not by that review.
+               v2.16.2 (2026-08-30) — Both v2.16.1 Lows fixed. **Neither had to be fixed** — the
+               pass bar permits carried Lows and v2.16.1 PASSED at 97% — but ISS-03 is the exact
+               defect class that produced two Highs elsewhere in this session's review round
+               ("the correction applied one location short"), so it is closed rather than carried.
+               **ISS-03 (Low) FIXED:** v2.16.1 added a pointer from FR-091's Gherkin to §13 (f)'s
+               unwired-automation admission, and did not apply the same treatment to **FR-090**,
+               the row that §13 (i) newly names. FR-090's §4.25 row read "Built and closed as
+               written" with nothing indicating an open question stands against it. Both FR-090's
+               row and its §8 Gherkin block now name **§13 (i) / Doc 03 §16 Q16** — that the
+               requirement does not say what the party gets when **both** competing proposals
+               pass — while stating plainly that the RTM row closes honestly, because post-vote
+               window resolution is outside FR-090's stated guarantee and outside what v1 holds.
+               Both notes repeat the constraint that matters: **the answer MUST NOT introduce a
+               window-closing capability**, whose absence is the anti-capture control FR-090's own
+               last Gherkin scenario asserts.
+               **ISS-04 (Low) FIXED:** §13's new tracked-routing rows were ordered (f), (g), (i),
+               (h); now (f), (g), (h), (i).
+               ISS-01 (the FR-064 cross-reference gap, carried from v2.15.0) is carried again.
+               v2.16.1 (2026-08-30) — Two additions made AFTER v2.16.0's review had already begun,
+               recorded as their own version rather than folded silently into a reviewed text.
+               **(1) §13 tracked routing (i) — NEW, surfaced at the Doc 03 v2.10.0 review:**
+               FR-090 requires competing proposals to be voted in the SAME decision window, the
+               ballot model gives each proposal an INDEPENDENT binary ballot, and DES-104
+               deliberately exposes no window-closing, merging or ranking capability — so two
+               competing proposals can BOTH PASS and no rule says what the party then gets. A
+               requirement decision before an architecture one, and the answer MUST NOT be to add
+               a window-closing capability, whose absence is a deliberate anti-capture control.
+               Not a v1 defect (the proposals layer holds no vote). Doc 03 §16 Q16.
+               **(2) ISS-02 (Low) from the v2.16.0 review FIXED:** §8's FR-091 Gherkin carried two
+               scenarios with nothing distinguishing the one that is built from the one that is
+               not. A note now records that the order/no-skip scenario passes while "per published
+               timelines" is unwired, pointing at §13 (f) — so the Gherkin is not read as a
+               statement of current behaviour — and cross-references §13 (h) / Q15.
+               ISS-01 (Low, the FR-064 cross-reference gap) is carried unchanged from v2.15.0.
+               v2.16.0 — PROPOSING-NOT-COUNTING-GATED ruling applied (Rathish, Human Approver,
+               2026-08-30; artifacts/status/DECISIONS-2026-08-30-PROPOSING-AND-STAGE-TAXONOMY.md).
+               **NO normative requirement text is amended by this version** — the ruling CONFIRMS
+               the reading already built and already written here. Proposing/authoring is OPEN
+               participation, NOT an FR-123 counting action: no verification gate, no government-ID
+               check and no IEligibilityVerifier call stands on the authoring path; only VOTING is
+               the counting action. Gating authorship on verification status would be a
+               participation restriction, which FR-020 prohibits. The commissioning brief for the
+               proposals drop had said the opposite; that instruction is SUPERSEDED by the FR-020
+               constraint, and the engineer's FR-conformant build is confirmed correct.
+               **The OI-14 Worker-tier condition is UNCHANGED** and is not a verification gate —
+               the two sit on orthogonal axes (§4.41 TWO-AXIS NOTE): Worker tier is the
+               self-declared privacy-disclosure step (FR-080, nobody approves it), required because
+               authorship is public and a Supporter is anonymous unconditionally. Confirming
+               annotations added to FR-024 (§4.7), FR-090 (§4.25) and FR-123 (§4.41); FR-123's
+               annotation records the counting-action set as CONFIRMED CLOSED at its three clauses
+               and states that a fourth member requires an amendment to FR-123 and DES-100, never a
+               code change alone. §13: tracked routing (f) FR-091 "per published timelines"
+               unwired and (g) FR-092 ballot layer + DES-097 anchoring — both recorded as honestly
+               OPEN (G-NOMECH), no ruling sought; (h) NEW — FR-091's text does not say what happens
+               to a DEFEATED or CANCELLED decision, surfaced while mapping FR-091 to
+               ADR-008's PROPOSAL_STATE and routed to the product-owner as a clarification owed
+               before the ballot layer is built (not a defect in v1, which holds no vote);
+               (e) FR-130 provisional-cap DES CLOSED (DES-102, Doc 03 v2.8.0; row closed Doc 08
+               v2.4.0). Housekeeping: v2.15.0 business cycle-1 review PASSED (97%,
+               0C/0H/0M/1L; ISS-B1 Low carried).
+               §13 addendum (same date, after the Doc 03 v2.10.0 review): tracked routing (i)
+               added — FR-090's "same decision window" and the ballot model's independent binary
+               ballots leave it unspecified how a window with several competing proposals
+               RESOLVES; two can both pass and no rule says what the party then gets (Doc 03 §16
+               Q16). A requirement decision before an architecture one, and the answer MUST NOT be
+               to add a window-closing capability, whose absence is a deliberate anti-capture
+               control (DES-104). Not a v1 defect — the proposals layer holds no vote.
+               v2.15.0 — FR-064 amended to the v1 EXPLICIT-LEAVE posture per the FR-064-SEMANTICS
                ruling, option (a) (Rathish, Human Approver, 2026-08-29; flag raised in Doc 06
                v2.3.0 §7 #20, closed at Doc 06 v2.3.3): joining a second party does NOT
                auto-void the first — a member MUST explicitly, on the record, leave their
@@ -580,7 +667,7 @@ See §9.2.
 
 | ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
 |----|-------------------------------|-----------|----------|-------|-----------|
-| FR-024 | Allow any matured member to submit a proposal, declaring its tier, with no pre-screening, moderation or approval by any member, office-holder or platform actor. _(v2.1.0 per OI-14 decision: submitting a proposal — original or competing — requires Worker tier or above, because authorship is public (FR-090) and an anonymous Supporter cannot author without breaking their own anonymity. This is not a gate: Worker tier is self-declared (FR-080), so any member who wishes to author simply declares. Supporters retain full voting rights.)_ | BR-003, BR-008 | Must | Tomás Ferreira | T, D |
+| FR-024 | Allow any matured member to submit a proposal, declaring its tier, with no pre-screening, moderation or approval by any member, office-holder or platform actor. _(v2.1.0 per OI-14 decision: submitting a proposal — original or competing — requires Worker tier or above, because authorship is public (FR-090) and an anonymous Supporter cannot author without breaking their own anonymity. This is not a gate: Worker tier is self-declared (FR-080), so any member who wishes to author simply declares. Supporters retain full voting rights.)_ _(**v2.16.0 — CONFIRMED, not amended (PROPOSING-NOT-COUNTING-GATED ruling; Rathish, Human Approver, 2026-08-30; artifacts/status/DECISIONS-2026-08-30-PROPOSING-AND-STAGE-TAXONOMY.md §1):** submitting a proposal is **OPEN participation — NOT an FR-123 counting action**. No verification gate, no government-ID check and no `IEligibilityVerifier` call stands on the authoring path; only **voting** on a proposal is the FR-123 counting action. Gating authorship on verification status would be a participation restriction, which **FR-020 prohibits**. **The OI-14 Worker-tier requirement above is UNCHANGED and is not a verification gate** — the two sit on orthogonal axes (§4.41 TWO-AXIS NOTE): Worker tier is the self-declared *privacy-disclosure* step (FR-080, nobody approves it), required because authorship is public and a Supporter is anonymous unconditionally; the *verification* axis imposes nothing here. The commissioning brief for the proposals drop had stated that proposing was a counting action; **that instruction is SUPERSEDED by the FR-020 constraint** and the FR-conformant reading — which is what was built — is confirmed. Recorded so that no future increment re-gates authorship: adding a verifier call to the authoring path violates this ruling; deleting the Worker-tier rule misreads it.)_ | BR-003, BR-008 | Must | Tomás Ferreira | T, D |
 | FR-025 | Enforce distinct, monotonically escalating quorum and supermajority requirements across at least four proposal tiers — ordinary, policy, charter, entrenched — and MUST reject the enactment of any proposal that fails either the quorum or the supermajority for its declared tier. | BR-008, BR-012 | Must | Tomás Ferreira | T |
 | FR-026 | Impose a mandatory timelock between a proposal passing and taking effect, of a duration that increases with tier, during which the pending change is public and no actor can shorten, waive or bypass it. | BR-008, BR-012 | Must | Tomás Ferreira | T, I |
 | FR-027 | Permit a charter to designate specific founding clauses as **entrenched**, and enforce for those clauses the highest tier, the longest timelock, and a quorum satisfiable only by members whose membership predates the proposal by a published minimum age. | BR-012 | Must | Rafael Duarte | T, A |
@@ -757,7 +844,7 @@ See §9.2.
 | FR-087 | Parties MAY form committees, including a steering committee capped at 30 members and working groups; a committee's only permitted output is a proposal that enters the ordinary proposal lifecycle defined in §4.26 with no special status, precedence, or extra weight; committee composition and meeting minutes MUST be public. _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ | BR-015, BR-014 | Must | Tomás Ferreira | T, I |
 | FR-088 | Committees MAY hold only capabilities that cannot change who wins, who votes, or who is a member — specifically: event organisation, campaign coordination, facilitation, vendor management, and publishing; election administration, membership verification, vote counting, eligibility determination, and data-integrity operations MUST be executed by code with no committee or human path available; any configuration that grants a committee a capability that touches an election or membership outcome MUST be rejected by the system. _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ | BR-015, BR-008 | Must | Rafael Duarte | I, A, T |
 | FR-089 | Committee membership MUST expire mechanically at term end (contract expiry) with no human renewal path; continuation of a committee into a new term requires a fresh member vote; expiry MUST be code-enforced following the same discipline as office terms in FR-041. _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ | BR-015 | Must | Rafael Duarte | T, I |
-| FR-090 | Proposal authorship MUST be public; any member MAY submit a competing proposal on the same question; every competing proposal MUST be presented with equal standing and voted in the same decision window as the original proposal. _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ _(v2.1.0 per OI-14 decision: authorship is public; authoring — original or competing — requires Worker tier or above; the right to submit a competing proposal is unchanged for any Worker-tier-or-above member; Supporters retain full voting rights on every proposal and may self-declare Worker at any time to author.)_ | BR-015, BR-003 | Must | Tomás Ferreira | T, D |
+| FR-090 | Proposal authorship MUST be public; any member MAY submit a competing proposal on the same question; every competing proposal MUST be presented with equal standing and voted in the same decision window as the original proposal. _(Source: Vision re-entry v2.0.0; Rathish, 2026-08-10.)_ _(v2.1.0 per OI-14 decision: authorship is public; authoring — original or competing — requires Worker tier or above; the right to submit a competing proposal is unchanged for any Worker-tier-or-above member; Supporters retain full voting rights on every proposal and may self-declare Worker at any time to author.)_ _(**v2.16.0 — CONFIRMED, not amended (PROPOSING-NOT-COUNTING-GATED ruling; Rathish, Human Approver, 2026-08-30):** the right to submit an original or competing proposal is **OPEN participation**, not an FR-123 counting action — no verification gate stands on it (FR-020). The OI-14 Worker-tier condition is unchanged and is a self-declared disclosure step on a different axis; see the fuller annotation on FR-024 (§4.7) and the decision record. Built and closed as written: **DES-104**, TC-3543/TC-3545/TC-3546/TC-3548..TC-3551, UT-0089/UT-0095, UT-0832..UT-0838, UT-0874..UT-0877.)_ _(**v2.16.2 — OPEN ITEM NAMED ON THIS ROW: §13 tracked routing (i) / Doc 03 §16 Q16.** What this requirement guarantees is built and its RTM row is COMPLETE. What it does **not** say is what the party gets when **two competing proposals in one window BOTH PASS** — the ballot model gives each proposal an independent binary ballot, and DES-104 deliberately exposes no window-closing, merging or ranking capability. Post-vote window resolution is outside this requirement's stated guarantee and outside what v1 holds, which is why the row closes honestly; it is named here so a reader of FR-090 meets the open question rather than only a reader of §13. **The answer MUST NOT be a window-closing capability** — that absence is a deliberate anti-capture control.)_ | BR-015, BR-003 | Must | Tomás Ferreira | T, D |
 
 > **✅ v2.1.0 — OI-14 DECIDED (Rathish, 2026-08-11):** Worker tier and above may author; authorship stays public; Supporters retain full voting rights and may self-declare Worker at any time to author. See GATE1-DECISION-2026-08-11.md §3.
 
@@ -901,7 +988,7 @@ See §9.2.
 | ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
 |----|-------------------------------|-----------|----------|-------|-----------|
 | FR-122 | Allow any citizen — without completing personhood verification — to access the platform for open-tier participation: reading, following, watching, and other low-stakes actions that do not count toward any official total; no verification requirement may be imposed as a condition of open-tier access; the open tier MUST NOT be counted toward any party's official strength number, any binding ballot eligibility, or any candidacy eligibility under any configuration. _(Source: DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Decision 2; Rathish, 2026-08-20.)_ | BR-003, BR-016 | Must | Grace Mbeki | T, I |
-| FR-123 | Require proof of unique personhood (the FR-069 enrolment nullifier) for every action that COUNTS: (a) contributing to a party's official strength number; (b) voting in a binding decision; (c) standing as a candidate. A party's published strength number MUST count verified persons only; open-tier (unverified) participation MUST NOT be added to or used to inflate the strength number by any path or configuration. This is the normative boundary of Decision 2: verification gates COUNTING, never joining. _(Source: DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Decision 2; Rathish, 2026-08-20.)_ | BR-006, BR-010, BR-016 | Must | Marcus Adeyemi | T, A |
+| FR-123 | Require proof of unique personhood (the FR-069 enrolment nullifier) for every action that COUNTS: (a) contributing to a party's official strength number; (b) voting in a binding decision; (c) standing as a candidate. A party's published strength number MUST count verified persons only; open-tier (unverified) participation MUST NOT be added to or used to inflate the strength number by any path or configuration. This is the normative boundary of Decision 2: verification gates COUNTING, never joining. _(Source: DECISIONS-2026-08-20-PILOT-VERIFICATION.md, Decision 2; Rathish, 2026-08-20.)_ _(**v2.16.0 — the counting-action set is CONFIRMED CLOSED at the three clauses above (Rathish, Human Approver, 2026-08-30; DECISIONS-2026-08-30-PROPOSING-AND-STAGE-TAXONOMY.md §1).** **PROPOSING is NOT a counting action** and MUST NOT be added to the set: authoring is open participation, gated only by the self-declared Worker tier on the orthogonal privacy axis. Rationale: gating authorship on verification status is a participation restriction prohibited by FR-020, and would invert this section's own design rule — an unverified member could join, deliberate and vote-but-not-count, yet not *speak* by proposing. The design-layer expression of clauses (a)–(c) is the approver-ratified three-value `COUNTING_ACTION` allowlist (DES-100, ratified 2026-08-24: `STRENGTH_CONTRIBUTION`, `BINDING_VOTE`, `CANDIDACY`), whose seam throws `NotACountingAction` on anything else; **adding a fourth member requires an amendment to this requirement and to DES-100, never a code change alone.** FR-123 is unamended.)_ | BR-006, BR-010, BR-016 | Must | Marcus Adeyemi | T, A |
 
 > **v1 BACKING ANNOTATION (v2.12.0, 2026-08-24; DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md):**
 > FR-122 and FR-123 are **unamended**. The 2026-08-24 ruling names the government-ID document
@@ -1800,6 +1887,11 @@ When both are presented in the decision window
 Then both appear with equal standing and are voted in the same window
 When any actor attempts to suppress, delay, or deprioritise a competing proposal
 Then no such capability exists and the attempt is refused
+# NOTE (v2.16.2): every scenario above is built and passing. What this requirement does NOT
+# specify is the case where BOTH competing proposals pass: each proposal carries an independent
+# binary ballot and no window-closing, merging or ranking capability exists (deliberately — see
+# the last scenario above, which is the anti-capture control). See §13 tracked routing (i) /
+# Doc 03 §16 Q16. Answering it MUST NOT introduce the capability the scenario above forbids.
 
 # FR-091 — eight-stage proposal lifecycle; stage-skip attempt refused
 Given a proposal at the review stage
@@ -1808,6 +1900,13 @@ Then the transition is refused; the proposal stays at its current stage
 Given a proposal that has completed all prior stages correctly
 When each stage transition is executed by code per published timelines
 Then the transition is recorded append-only with a timestamp and cause
+# NOTE (v2.16.1): the FIRST scenario above (order / no-skip) is built and passing. The SECOND
+# ("per published timelines") is NOT built — `schedule()` exists in packages/protocol but the
+# proposal service never calls it, and the demo advances by a button. FR-091's RTM Must row is
+# OPEN (G-NOMECH) on that clause alone; see §13 tracked routing (f). Recorded here so this
+# Gherkin is not read as a statement of current behaviour.
+# See also §13 (h) / Doc 03 §16 Q15: this requirement does not yet say what becomes of a
+# DEFEATED or CANCELLED decision, which cannot be implemented or measured.
 
 # FR-092 — permanent decision trail reconstructable from public data alone
 Given any completed decision
@@ -2881,7 +2980,16 @@ per the refine loop; none exist at v1.0.0 or v1.1.0 (all v1.1.0 requirements sou
 
 | Item | Description | Owner | Status |
 |------|-------------|-------|--------|
-| (e) FR-130 provisional-cap DES | FR-130's RTM Must row (Doc 08 gap-log entry 125) is blocked by a **missing DES in Doc 03 §5.2** — an architect-owed on-chain design for the provisional membership cap. **No test can close it:** the cap logic already passes (TC-3511..TC-3516; UT-0802..UT-0811, UT-0852..UT-0856; Doc 06 v2.3.2 Approved) — the broken link is the traceability CHAIN (no DES), not the evidence. Routed to the architect — next Doc 03 increment, together with the DES-097 production-store wiring. | architect | OPEN — blocks the FR-130 Must row until a DES is assigned |
+| (e) FR-130 provisional-cap DES | FR-130's RTM Must row (Doc 08 gap-log entry 125) is blocked by a **missing DES in Doc 03 §5.2** — an architect-owed on-chain design for the provisional membership cap. **No test can close it:** the cap logic already passes (TC-3511..TC-3516; UT-0802..UT-0811, UT-0852..UT-0856; Doc 06 v2.3.2 Approved) — the broken link is the traceability CHAIN (no DES), not the evidence. Routed to the architect — next Doc 03 increment, together with the DES-097 production-store wiring. **CLOSED 2026-08-29** by **DES-102** (Doc 03 v2.8.0 §10.13.11); the FR-130 row CLOSED at Doc 08 v2.4.0. | architect | ✓ Closed 2026-08-29 |
+
+**Tracked routing (2026-08-30; recorded with the PROPOSING / STAGE-TAXONOMY rulings, Rathish; artifacts/status/DECISIONS-2026-08-30-PROPOSING-AND-STAGE-TAXONOMY.md):**
+
+| Item | Description | Owner | Status |
+|------|-------------|-------|--------|
+| (f) FR-091 "per published timelines" — automation half unwired | FR-091's **order** guarantees are complete and fully tested (no skip, no reversal, no veto; the capability absence holds at all three layers). The clause "stage transitions executed by code **per published timelines**" is **not built**: `schedule()` exists in `packages/protocol/src/governance.js` but the proposal service never calls it, and the demo advances by a button. **No ruling sought — recorded as honestly OPEN (G-NOMECH).** A row does not close on a fragment: the anti-capture half is done, the automation half is not. Neither 2026-08-30 ruling changes the published stage set, so nothing about this row's test obligation changes. | engineer (wiring) / architect (schedule seam) | OPEN — blocks the FR-091 Must row |
+| (g) FR-092 permanent decision trail — two missing halves | **No ruling sought — recorded as honestly OPEN (G-NOMECH)**, failing on two independent counts. **(1)** The trail records none of the *vote result*, *enacted consequence*, *implementation status* or *measured outcome* this requirement enumerates — correctly, because the layer built holds no vote; the **ballot layer** is owed. **(2)** "Reconstructable end-to-end by any third party from **public data alone**" additionally requires the **DES-097 audit-record anchoring** (Doc 13 stage S-8), which is not built — the trail today is complete but held in the application store, which makes it authoritative to us and not independently checkable by anyone else. The surface states this in plain words rather than implying more. | engineer (ballot layer) / architect + engineer (DES-097 anchoring) | OPEN — blocks the FR-092 Must row |
+| (h) FR-091 text — terminal outcomes are unaddressed | **Surfaced 2026-08-30 while mapping FR-091 to `PROPOSAL_STATE` (Doc 03 §10.13.13); a requirement clarification owed to the product-owner, not an architect's call.** FR-091 says every proposal MUST move through all eight stages in sequence and **no stage MAY be skipped**. A **defeated** or **cancelled** decision cannot be implemented or measured: under the recorded mapping such a window **terminates at `decision`** and does not advance. Terminating is not skipping — but FR-091's text does not say so, so a future implementer could read it as obliging an implementation stage for a proposal the members rejected. **Not a defect in what is built:** the **proposals and debate layer** holds no vote — it stops at `admitToBallot()` and hands off to `IBallotService` — so no window can yet reach a defeated state. _(v2.16.3: this read "v1 holds no vote (ADR-024 §(b))". That **mis-cites**: ADR-024 §(b) removes on-chain **execution** in v1 and puts votes in Postgres; **DES-096 specifies a v1 ballot backing outright**, so v1 does hold a vote. Corrected in Doc 03 at v2.11.0 and carried here verbatim until the v2.11.1 review flagged this copy.)_ Needed before the ballot layer is built. | product-owner | OPEN — clarification owed; does not block v1 |
+| (i) FR-090 — nothing says how a window with several competing proposals RESOLVES | **Surfaced 2026-08-30 at the Doc 03 v2.10.0 review** (Doc 03 §16 **Q16**), while checking the FR-091/`Governor.State` cardinality argument. FR-090 requires competing proposals to be presented with equal standing and voted **in the same decision window**; the ballot model gives each proposal an **independent binary ballot**; and DES-104 deliberately exposes **no** window-closing, merging, ranking or primary-selection capability — that absence is a first-class anti-capture control (the author never owns the ballot alone) and **MUST NOT be quietly removed to answer this**. Consequence: **two competing proposals answering one question can both pass, and no rule says what the party then gets.** This is a gap between FR-090's text and the ballot model, not an implementation detail. **Not a v1 defect** — the proposals layer holds no vote — but it MUST be answered before the ballot layer is built, and it is a **requirement decision first**: what does the party get when both options win? | product-owner (decision) + architect (mechanism) | OPEN — needed before the ballot layer |
 
 ---
 

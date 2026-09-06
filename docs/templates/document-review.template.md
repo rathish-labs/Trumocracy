@@ -15,6 +15,16 @@
 <!-- Emit PASS only when Score ≥ 95 AND Critical = High = Medium = 0.                        -->
 <!-- On ESCALATED (cycle 5 cap reached) add the recorded human-decision fields below; only  -->
 <!-- "Human decision: approve-as-is" with a named "Approved by:" lets the SOP advance.       -->
+<!--                                                                                        -->
+<!-- ⚠ THE FIRST TWO FIELDS ARE THE ONES THAT DRIFT. Write them EXACTLY as:                 -->
+<!--     Reviewed document:  (NOT "Document:")   — value is the FILENAME, not a title or ID -->
+<!--     Document version:   (NOT "Version:")    — value is a bare semver, e.g. 2.4.3        -->
+<!-- Ten reports across four documents used "Document:"/"Version:" with a TITLE as the value.-->
+<!-- The hook could not identify any of them, so the automated gate silently did nothing for -->
+<!-- those versions. hooks/check_gates.py now tolerates the aliases and falls back to the    -->
+<!-- report's filename, but tolerance is a safety net, not a licence: a report that needs    -->
+<!-- the fallback is flagged in the hook's diagnostics as needing canonicalising.            -->
+<!-- Self-check before saving:  node hooks/run_gates.cjs --audit                              -->
 
 ```
 Reviewed document: <NN-document-filename>.md

@@ -11,3 +11,11 @@ coverage/
 .env.local
 .DS_Store
 artifacts/**/node_modules/
+
+# Python bytecode (hooks/ is stdlib Python run by the SubagentStop gate)
+__pycache__/
+*.py[cod]
+
+# Gate observability log — one line per hook run, written by hooks/run_gates.cjs.
+# Machine-local evidence that the gate is actually executing; not shared state.
+.claude/gate-runs.log

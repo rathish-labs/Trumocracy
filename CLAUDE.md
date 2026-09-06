@@ -250,10 +250,13 @@ on its own — if it isn't written down, it doesn't exist.
 - It then registers that note in `artifacts/memory-index.json` (starts as `{}`).
 - Later agents practice **selective recall** — they load only the relevant notes, not
   everything.
-- A **SubagentStop** hook (`hooks/check_gates.py`) fails the stop if the note is missing or
-  the index was not updated, blocks progression past a gate until the RTM (Doc 08) shows
-  zero gaps, and blocks progression until each major document's current version has a
-  **passing (or human-approved ESCALATED) `document-review` report** in `artifacts/reviews/`.
+- A **SubagentStop** hook (`hooks/check_gates.py`, launched by `hooks/run_gates.cjs`) fails the
+  stop if the note is missing or the index was not updated, and blocks progression until each
+  major document's current version has a **passing (or human-approved ESCALATED)
+  `document-review` report** in `artifacts/reviews/`. **The RTM (Doc 08) zero-gap check is a
+  Gate-2 readiness condition, not a per-stop or merge condition** (approver rulings 2026-08-25
+  and 2026-08-30) — the project-manager certifies it when assembling the Gate-2 packet with
+  `node hooks/run_gates.cjs --gate2`. `--audit` reports every invariant without blocking.
 
 ## Coding & UT rule
 

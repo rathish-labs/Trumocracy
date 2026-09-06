@@ -6,6 +6,8 @@
 
 <!-- MACHINE-PARSEABLE METADATA -->
 ```
+Reviewed document: 02-requirements-srs.md
+Document version: 2.11.0
 document:       docs/02-requirements-srs.md
 document_id:    SRS-TRUMOCRACY
 version:        2.11.0
