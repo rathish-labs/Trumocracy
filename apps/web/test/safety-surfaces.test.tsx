@@ -18,7 +18,20 @@ import { VoteConfirmation } from '@/components/VoteConfirmation';
 import { ReceiptFreedomBanner } from '@/components/ReceiptFreedomBanner';
 import { PetitionProgress } from '@/components/PetitionProgress';
 import { EightPillarForm } from '@/components/EightPillarForm';
-import { PILLARS, petitionOutcome } from '@trumocracy/protocol';
+import HomePage from '@/app/page';
+import {
+  PILLARS,
+  petitionOutcome,
+  NON_VIOLENCE_CLAUSE,
+  PARTICIPATION_TIER,
+  petitionThreshold,
+} from '@trumocracy/protocol';
+import {
+  InMemoryPartyStore,
+  PartyCreationService,
+  InMemoryProposalStore,
+  ProposalService,
+} from '@trumocracy/sdk';
 import { en } from '@/i18n/en';
 import { ar } from '@/i18n/ar';
 
@@ -265,5 +278,132 @@ describe('UT-0740 the client collects nothing about its reader', () => {
     }
     // Reading about a party must not create a record of who is interested in it.
     expect(typeof (globalThis as Record<string, unknown>).gtag).toBe('undefined');
+  });
+});
+
+// ─── UT-0889 endorsement-copy honesty guard (FR-131 clause (e)) ──────────────
+//
+// DECISIONS-2026-09-06-ENDORSEMENT-COPY.md §5.4, Ruling B (approver-confirmed §11):
+// "your name kept private" and "we never learn which party you support" quoted a v2
+// (Definition-B) target property as shipped v1 behaviour. Backing a party is a public act
+// by design (Doc 14 §2.2); the v1 operator database CAN link the account to the backing
+// (FR-014/FR-015) and to party membership (FR-131(b)). This guard is the UT-0869 pattern
+// applied to the landing page's endorsement copy, its "What we promise" list, and the
+// FR-082 refusal message the same ruling reaches (§5.3).
+
+describe('UT-0889 the landing page states the truth about backing a party, not a v2 privacy claim', () => {
+  const BANNED = ['private', 'anonymous', 'receipt-free', 'secure'];
+  // §2.2 jargon filter (DES-085, NFR-023), the house pattern also applied at UT-0857/0868/0884:
+  // (v2.7.0, ISS-03, 06-coding-and-ut-v2.6.0-technical-cycle1.md — the two new landing strings
+  // had no jargon scan of their own).
+  const JARGON = [
+    'wallet',
+    'seed phrase',
+    'private key',
+    'gas',
+    'token',
+    'mint',
+    'on-chain',
+    'blockchain',
+    'crypto',
+    'nullifier',
+    'hash',
+  ];
+
+  it('neither corrected string contains banned blockchain jargon (§2.2, DES-085)', () => {
+    for (const jargon of JARGON) {
+      expect(
+        en.home.steps[1].body.toLowerCase(),
+        `home.steps[1].body contains jargon "${jargon}"`,
+      ).not.toContain(jargon.toLowerCase());
+      expect(
+        en.home.promises[0].toLowerCase(),
+        `home.promises[0] contains jargon "${jargon}"`,
+      ).not.toContain(jargon.toLowerCase());
+    }
+  });
+
+  it('home.steps[1].body: no "kept private"; states the public-act, name-not-shown and record-linkage facts', () => {
+    const body = en.home.steps[1].body;
+    expect(body).not.toContain('kept private');
+    expect(body).toContain('public act');
+    expect(body).toContain('name is not shown');
+    expect(body).toContain('our own records can link');
+    for (const word of BANNED) {
+      expect(body.toLowerCase(), `"${word}" found in home.steps[1].body`).not.toContain(word);
+    }
+  });
+
+  it('home.promises[0]: no "never learn"; states "never publish"', () => {
+    const promise = en.home.promises[0];
+    expect(promise).not.toContain('never learn');
+    expect(promise).toContain('never publish');
+    for (const word of BANNED) {
+      expect(promise.toLowerCase(), `"${word}" found in home.promises[0]`).not.toContain(word);
+    }
+  });
+
+  it('the corrected en source strings are what renders on the landing page', () => {
+    wrap(<HomePage />);
+    expect(screen.getByText(en.home.steps[1].body)).toBeTruthy();
+    expect(screen.getByText(en.home.promises[0])).toBeTruthy();
+  });
+
+  it('the Arabic mirror is honest: no "kept secret" in the endorsement step, no "we never know" about party membership', () => {
+    // The retired string was "...بقاء اسمك سريًا..." ("...your name kept secret...").
+    // A bare substring ban on "سري" is brittle: it also matches ordinary, unrelated words
+    // that merely share the root — "سريعًا" ("quickly") and "تسري" ("takes effect", already
+    // present at ar.ts parties.leaveHelp) (v2.7.0, ISS-06,
+    // 06-coding-and-ut-v2.6.0-technical-cycle1.md). Assert the exact retired phrase instead,
+    // so the guard cannot false-positive against an honest sentence and still catches the
+    // one string it exists to catch.
+    expect(ar.home.steps[1].body).not.toContain('اسمك سريًا');
+    expect(ar.home.promises[0]).not.toContain('لا نعرف');
+  });
+
+  it('the sdk authorship-refusal message no longer claims Supporters are anonymous (§5.3)', () => {
+    const partyStore = new InMemoryPartyStore();
+    const parties = new PartyCreationService(partyStore);
+    const draft = {
+      name: 'Commons Forward',
+      jurisdiction: 'IN/KA',
+      pillars: Object.fromEntries(
+        PILLARS.map((p: string) => [p, `Commons Forward on ${p}. `.repeat(30)]),
+      ),
+      emblem: 'CF',
+      charter: { nonViolenceClause: NON_VIOLENCE_CLAUSE },
+      jurisdictionPopulation: 1_000,
+      jurisdictionVerified: 1_000,
+    };
+    const { draftId } = parties.createDraft(draft, 'drafter');
+    const { petitionId } = parties.publishDraft(draftId);
+    partyStore.updatePetition(petitionId, {
+      endorsements: petitionThreshold({ eligiblePopulation: 1_000, verifiedResidents: 1_000 }),
+    });
+    const { partyId } = parties.activateParty(petitionId);
+    parties.joinParty(partyId, 'demo-member');
+
+    const proposalStore = new InMemoryProposalStore();
+    const service = new ProposalService(proposalStore, parties);
+
+    let thrown: { code?: string; message?: string } | undefined;
+    try {
+      service.fileProposal(
+        partyId,
+        {
+          question: 'Should the party meet in the evening instead?',
+          title: 'Evening meetings',
+          body: 'A full explanation of what this proposal would do and why. '.repeat(3),
+          tier: 1,
+        },
+        'demo-member',
+        PARTICIPATION_TIER.SUPPORTER,
+      );
+    } catch (e) {
+      thrown = e as { code?: string; message?: string };
+    }
+    expect(thrown?.code).toBe('AUTHORSHIP_REQUIRES_WORKER_TIER');
+    expect(thrown?.message).not.toContain('Supporters are anonymous');
+    expect(thrown?.message).toContain("a Supporter's participation is never published");
   });
 });

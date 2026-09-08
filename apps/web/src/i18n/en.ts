@@ -47,8 +47,10 @@ export const en = {
       {
         title: 'Back the parties you believe in',
         body:
-          'Support a new party with your name kept private. When enough people in your area back it, ' +
-          'the party starts. Nobody decides this. The count does.',
+          'Backing a party is a public act, on purpose. Your name is not shown, but the backing goes ' +
+          'on the public record, and our own records can link it to your account. Only back a party ' +
+          'you are content to be seen supporting. When enough people in your area back it, the party ' +
+          'starts. Nobody decides this. The count does.',
       },
       {
         title: 'Have an equal say',
@@ -59,7 +61,8 @@ export const en = {
     ],
     promisesTitle: 'What we promise',
     promises: [
-      'We never learn which party you support.',
+      'We never publish which party you belong to. In this version of the platform, our own records ' +
+        'can see it, and we say so plainly rather than promise more.',
       'Nobody can remove you, block you, or stop your party.',
       'Every rule is written down, and the same rules apply to everyone.',
       'We do not count your visits, and we do not keep a record of what you read here.',

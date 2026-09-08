@@ -399,3 +399,18 @@ That consequence is stated so it is not discovered later.
 | ENROL-COPY (j) | §7.1 enrolment/verification claims — not ruled | product-owner (sre consulted) | OPEN — tracked, non-blocking |
 | ARABIC-I18N | Two new Arabic strings added to the pre-launch review set | technical-writer | OPEN — pre-Gate 2 |
 | US-0134 | DES-098 acknowledge-to-proceed control still unbuilt | engineer | OPEN — unchanged by this record |
+
+---
+
+## 11. Approver decision — RECORDED 2026-09-06 (Rathish Kumar, approver; transcribed by the project-manager)
+
+| Put to the approver (§9) | Decision | Consequence |
+|---|---|---|
+| 1. Ruling B and the §4 replacement copy | **CONFIRMED** — "name kept private" is an overclaim | R-1 applied by the engineer this session (en + ar, one commit) |
+| 2. Second finding §5 (`home.promises[0]`) | **CONFIRMED** — "the same class of FR-131 violation"; a known anonymity falsehood on the public landing page must not survive the repo going public | R-2 applied by the engineer this session |
+| 2. Third finding §5.3 (FR-082 "Supporters are anonymous" strings) | **Reached by the approved clause (e)** — not severed by the approver; applied under clause (e) rather than left to fail the next sweep | R-4 applied by the engineer this session (MUST sites; SHOULD markers at the engineer's judgement) |
+| 3. Doc 02 amendment — FR-131 clause (e) + widened closing sentence | **APPROVED** — "Draft and apply FR-131 clause (e) in Doc 02; let Doc 08 reopen and re-close through its loop" | Anchored spec applied → Doc 02 **v2.17.0, In Review**; business review by a neutral reviewer per `artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-RELEASE-PREP.md`; Doc 07/08 re-cut by the tester |
+
+Status of this record: **RULED and APPROVER-CONFIRMED.** Open items ENDORSE-COPY, FR-082-COPY and
+DOC02-v2.17.0 (§10) move to the engineer / project-manager for execution in the same session.
+ENROL-COPY (j) and ARABIC-I18N remain OPEN as recorded.

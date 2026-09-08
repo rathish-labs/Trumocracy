@@ -2,21 +2,100 @@
 
 ```
 Document ID:   SRS-TRUMOCRACY
-Version:       2.16.3
-Status:        Approved — 02-requirements-srs-v2.16.3-business-cycle4.md (PASS 96%, 0C/0H/0M/3L).
-               Three Lows carried, all non-blocking and all recommended by the reviewer for
-               cleanup on the next version that touches §13 or FR-064 rather than a dedicated
+Version:       2.17.1
+Status:        Approved — 02-requirements-srs-v2.17.1-business-cycle2.md (PASS 96%, 0C/0H/0M/7L; reviewer: reviewer-qa, neutral,
+               PM-assigned; seven Lows carried, non-blocking, to fold at the next touch: ISS-01 scenario numbering 1-5,8,9; ISS-02 three pointers cite Scenario 8 alone (9 also applies); ISS-03 two Scenario-8 steps restate rules rather than assert outcomes; ISS-04 one capitalised Grade-8 in the v2.17.0 change entry; ISS-05/06/07 the long-carried FR-064, v2.16.0-entry and (h) items). Previously: In Review — v2.17.1, review-loop rework **cycle 2 of 5** against
+               artifacts/reviews/02-requirements-srs-v2.17.0-business-cycle1.md (business,
+               cycle 1 — **FAIL 86%, 0 Critical / 0 High / 3 Medium / 7 Low**; reviewer:
+               reviewer-qa (Rafael Duarte), neutral, PM-assigned). The reviewer verified every
+               factual claim in the v2.17.0 delta against primary sources and found no
+               substantive error; what failed was the amendment's **cascade inside this
+               document**. A PATCH bump is correct per the reviewer's routing: **no normative
+               meaning changes** — v2.17.1 completes and correctly frames a ruling already made.
+               **Fixed, by issue id:** ISS-01 (Medium) — §8 FR-131 Scenario 8 added for clause (e)
+               and the block's header comment de-scoped from the ballot; ISS-02 (Medium) — §4.45's
+               heading and rationale widened from ballot-only to the participation-act posture,
+               with the existing ballot rationale retained because it remains correct for clauses
+               (a)–(d); ISS-03 (Medium) — clause (e)'s operative prohibition recast under RFC 2119
+               with a positive subject and MUST NOT (the negated-subject MUST was literally null),
+               and "grade-8" aligned to NFR-023's casing; ISS-04 (Low) — the approver confirmation
+               is now stated as recorded fact at all five live sites; ISS-05 (Low) — the clause (e)
+               safe-harbour is subordinated to the reader test, which is stated to govern; ISS-06
+               (Low) — "governed by" softened to "addressed by" with the §13 (j) open question
+               named; ISS-07 (Low) — §12 session-scope entries added for v2.17.0 and v2.17.1;
+               ISS-08 and ISS-10 (Low) — the §16.3 FR-131 and FR-132 rows corrected, §16.3 being
+               touched by this version; ISS-09 (Low) — the bare "§2.5" cross-reference in §13 (j)
+               qualified to Doc 06 §2.5.
+               **The ruling behind clause (e) is approver-CONFIRMED:** Rathish Kumar, 2026-09-06,
+               artifacts/status/DECISIONS-2026-09-06-ENDORSEMENT-COPY.md §11 (decisions 1–3).
+               v2.17.0's "presented for approver confirmation" framing was true when authored at
+               10:00 and is superseded by that record.
+               Carried from v2.16.3 (Approved — 02-requirements-srs-v2.16.3-business-cycle4.md,
+               PASS 96%, 0C/0H/0M/3L): three Lows, all non-blocking, all re-verified still present
+               by the v2.17.0 reviewer (there ISS-11 / ISS-12 / ISS-13), and all recommended for
+               cleanup on the next version that touches their sections rather than a dedicated
                rework cycle: ISS-01 (§4.6 FR-064's "v2 (deferred)" clause lacks the FR-023/FR-068
                cross-reference, open since v2.15.0); ISS-02 (the v2.16.0 changelog entry still
                carries an unquoted echo of the corrected mis-citation — confined to historical
                narration, not a live status field, which is why it is a Low here where the same
                defect class was a High in Doc 07/08); ISS-03 (a wording nit in §13 (h)).
+               v2.17.1 touches §13 but edits only block (j), does not touch FR-064, and does not
+               rewrite historical changelog narration; all three Lows are therefore carried again
+               and remain open.
 Owner:         Priya Raghunathan — Product Owner
 Approvers:     Gate 1 — Priya Raghunathan (Product Owner), Ana-Maria Petrescu (Project Manager),
                Rathish (Human Approver — Gate 1 re-entry, v2.0.0)
 Source:        PR-TRUMOCRACY (docs/01-press-release-prfaq.md)
-Last updated:  2026-08-30
-Change:        v2.16.3 (2026-08-30) — **One-line factual correction, routed in from the Doc 03
+Last updated:  2026-09-06
+Change:        v2.17.1 (2026-09-06) — **Review-loop rework, cycle 2 of 5**, against
+               artifacts/reviews/02-requirements-srs-v2.17.0-business-cycle1.md (FAIL 86%;
+               0C / 0H / 3M / 7L). No normative meaning changes — a PATCH bump that completes
+               v2.17.0's cascade inside this document. Adds §8 FR-131 **Scenario 8** (clause (e))
+               and de-scopes that block's header comment from the ballot; widens §4.45's heading
+               and rationale to the participation-act posture without deleting the ballot
+               rationale; recasts clause (e)'s operative prohibition under RFC 2119 ("public-facing
+               strings … MUST NOT assert", replacing a negated-subject MUST that obliged nothing);
+               subordinates clause (e)'s safe-harbour to its reader test; softens "governed by" to
+               "addressed by" for enrolment claims and names §13 (j) as the open question; adds §12
+               session-scope entries for v2.17.0 and v2.17.1; corrects the §16.3 FR-131 and FR-132
+               rows; qualifies §13 (j)'s bare "§2.5" to **Doc 06 §2.5**; and records the approver's
+               confirmation of the underlying ruling at every live site. No new BR/FR/NFR minted;
+               no ID reused or renumbered; Must count unchanged. Spec
+               artifacts/product-owner-2026-09-06T2030-doc02-v2171-spec.md.
+               v2.17.0 (2026-09-06) — **FR-131 (§4.45) amended: the honesty duty is extended from
+               "v1 voting behaviour" to every v1 participation act.** Recorded by the product-owner
+               ruling of 2026-09-06 (artifacts/status/DECISIONS-2026-09-06-ENDORSEMENT-COPY.md,
+               Ruling B), **CONFIRMED by the approver (Rathish Kumar) 2026-09-06 —
+               DECISIONS-2026-09-06-ENDORSEMENT-COPY.md §11**. **Why:** the 2026-09-05 FR-131 sweep
+               (commit 0a5c542) correctly left the landing-page string "Support a new party with
+               your name kept private" (and its Arabic mirror "بقاء اسمك سريًا") in place, because
+               it describes petition **endorsement**, not voting, and FR-131's closing sentence was
+               scoped literally to "v1 voting behaviour". The claim is nevertheless false twice
+               over: the v1 operator database CAN link the account to the endorsement (necessarily
+               so — FR-014's one-per-person rule and FR-015's withdraw-your-own rule cannot be
+               satisfied in v1 without that link), and backing is **public by design** (Doc 14 §2.2:
+               "a public act, on purpose"; "only back a petition if you are comfortable being seen
+               to support it"; the fully private alternative is the `private_endorsement` charter
+               option, a Phase-4 flag OFF in every v1 deployment). The landing page and the approved
+               User Guide contradicted each other on the one fact that determines whether a citizen
+               in a hostile jurisdiction is safe. **What changed:** new **clause (e)** — the duty is
+               about **claims**, not a word list, and covers voting, endorsing/backing, joining or
+               belonging to a party, and supporting a party, **in every language**, with the test
+               being what an ordinary Grade-8 reader would take the claim to mean; and the closing
+               sentence widened from "v1 voting behaviour" to "or any other v1 participation act",
+               with an explicit carve-out preserving clause (a)'s mandated negated forms so the
+               FR-131(a) ballot banner and UT-0887 are unaffected. The superseded closing-sentence
+               wording is quoted verbatim in the requirement's Source annotation per the
+               annotate-don't-delete convention. **What did NOT change:** no requirement is added or
+               removed; FR-014, FR-015, FR-017, FR-082 and §16.3/§16.4/§16.5 are untouched; no ID is
+               reused or renumbered; `private_endorsement` stays Phase 4; the endorsement design is
+               not altered — this is a truth-in-copy amendment, not a policy change. **Also:** §13
+               gains a tracked-routing block **(j)** for the enrolment/verification landing copy,
+               which is explicitly **outside** clause (e) and **not ruled** on this evidence (H-17:
+               the ID-check vendor does see the document; FR-132 §(e) is a contractual, not
+               technical, control). Product-code corrections are routed to the engineer by the
+               decision record (§8 R-1..R-4) and are not made by this document.
+               v2.16.3 (2026-08-30) — **One-line factual correction, routed in from the Doc 03
                v2.11.1 review (cycle 3), which found this document carrying a mis-citation
                verbatim after Doc 03 had corrected its own copy.** §13 tracked routing **(h)** read
                "**Not a defect in what is built:** v1 holds no vote (ADR-024 §(b))". That
@@ -1104,7 +1183,7 @@ See §9.2.
 |----|-------------------------------|-----------|----------|-------|-----------|
 | FR-130 | A provisional party — one that has been platform-activated per FR-018 but whose legal registration has not yet been externally verified and recorded per FR-075 — MUST be capped at 100 members; the cap MUST lift automatically, by code, on verified legal registration being recorded on the platform per FR-075; no operator or manual path may lift the cap before that event. This requirement is an anti-capture control: it prevents an unverified party accumulating membership strength before it is legally real. **Distinction:** this cap is wholly distinct from the endorsement threshold (FR-014, FR-016) and from the endorsement-floor constants (DES-010: max(byPopulation, byVerified, 500)) — those govern petition legitimacy; FR-130 governs post-activation provisional membership, a separate anti-capture layer. _(Source: C-02 ruling, Rathish, 2026-08-22; Doc 03 §10.12.6 C-02; artifacts/status/DECISIONS-2026-08-22-WIREFRAME-C01-C02.md. DES owed at next Doc 03 increment — same recorded-phasing posture as FR-121..FR-129. _TC note updated v2.14.0:_ TC-3511..TC-3516 now exist and pass (Doc 07 v2.2.2 Approved; implementation IS_INSECURE_MOCK=true); RTM row 125 remains OPEN (G-TRACE gap — no DES assigned in Doc 03 §5.2; production store pending DES-097). **Approver ruling 2026-08-26 (DECISIONS-2026-08-26-PARTY-CREATION-RULINGS.md, Ruling 1):** the cap is UNCONDITIONAL — no grace period applies; the "60-day grace" raised in the scoping discussion was NEVER adopted into this requirement and is explicitly NOT part of v1; the built code (`PROVISIONAL_MEMBER_CAP = 100`; lift via `recordLegalRegistration()` only; no operator or manual path) is the ruled behaviour. No amendment to the normative text is required — the requirement as written already reflects the unconditional ruling.)_ | BR-002, BR-012 | Must | Sofia Marchetti | T, I |
 
-### 4.45 v1 honesty notice — voting authentication posture (DES-098)
+### 4.45 v1 honesty notice and honesty-of-claim duty — participation-act posture (DES-098)
 
 > **Rationale:** The Definition-A (v1) deployment uses conventional database-backed
 > authentication for ballot casting. The Definition-B (v2) private receipt-free ballot
@@ -1114,6 +1193,17 @@ See §9.2.
 > and DES-063 (the v2 coercion-safe confirmation surface is its successor). DES-098 was
 > minted by the architect in Doc 03 v2.3.0 §10.13.6 and awaited its backing FR — that FR
 > is FR-131.
+>
+> **Scope, from v2.17.0 (do not read this section as ballot-only).** The paragraph above
+> states the origin of FR-131 and remains correct for clauses (a)–(d), which govern the
+> pre-ballot and open-tier notices. From v2.17.0 FR-131 **also** governs the honesty of
+> **claims** about **any** v1 participation act — casting a vote, endorsing or backing a
+> petition, joining or belonging to a party, or supporting a party — across every
+> public-facing surface in every language, and is **not confined to the ballot**: see
+> clause (e) and §8 FR-131 Scenario 8. This widening exists because a ballot-scoped scope
+> statement, read literally, is precisely what allowed two false landing strings to ship on
+> 2026-09-05 (DECISIONS-2026-09-06-ENDORSEMENT-COPY.md §1, §6); a reader who stops at the
+> paragraph above would repeat that reasoning.
 >
 > _(Source: approver directive 2026-08-23, Rathish; decision record
 > artifacts/status/DECISIONS-2026-08-23-V1-V2-SPLIT.md; Design: DES-098, Doc 03
@@ -1128,7 +1218,7 @@ See §9.2.
 
 | ID | Requirement (the system MUST…) | Traces to | Priority | Owner | Verify by |
 |----|-------------------------------|-----------|----------|-------|-----------|
-| FR-131 | Wherever a vote is cast in a Definition-A (v1) deployment, the UI MUST display a plain-language honesty notice (designed as DES-098) before the ballot is confirmed. The notice MUST state: **(a)** this ballot uses conventional authentication and is NOT anonymous, NOT receipt-free, and NOT coercion-resistant; **(b)** the platform database CAN see vote direction and party membership in v1; **(c)** the cryptographic private ballot — where the platform is technically unable to see vote direction or party membership — is available when the platform upgrades to the Definition-B (v2) privacy layer. **(d) Open-tier non-counting disclosure (v2.12.0, Rathish, 2026-08-24):** in any v1 deployment using the FR-132/FR-123 counting-gate model, wherever an open-tier (phone-verified but not ID-verified) participant attempts a FR-123 counting action — contributing to official party strength, casting a binding vote, or standing as a candidate — the UI MUST display a plain-language notice stating: (i) their current participation is open-tier only; (ii) that specific action requires government-ID verification (FR-123); (iii) what specifically does not count for them (official strength contribution, binding vote, candidacy); and (iv) how to become a counting member by completing the government-ID check (FR-132 §(b)). This notice MUST be shown before the action is refused and MUST be non-dismissable. The notice MUST be: visible before confirmation; non-dismissable (the voter MUST acknowledge the notice to proceed); WCAG 2.2 AA compliant (DES-081); screen-reader accessible. The notice MUST appear on SCR-13 (ballot booth) and SCR-14 (post-vote confirmation). The v1 product — its UI, README, and all public-facing materials — MUST NOT use the words "private", "anonymous", "receipt-free", or "secure" to describe v1 voting behaviour, and MUST NOT present itself as providing the Definition-B (v2) cryptographic guarantees. _(Source: approver directive 2026-08-23, Rathish; DECISIONS-2026-08-23-V1-V2-SPLIT.md; approver ruling 2026-08-24, Rathish; DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md (clause (d) added — open-tier non-counting disclosure obligation). Follows the disclosed-limitation pattern: Doc 03 §13 Phase-1 public-tally disclosure; DES-063 (v2 coercion-safe confirmation surface is the v2 successor to DES-098). DES-098 minted; US/TC/RTM owed at next catch-up — same recorded-phasing posture as FR-121..FR-130 (FR-130 exception: TC-3511..TC-3516 now pass per Doc 07 v2.2.2 Approved; FR-130 RTM Must row remains OPEN for G-TRACE — no DES assigned in Doc 03 §5.2). TC OPEN — Phase 3 applies to FR-121..FR-129.)_ | BR-005, BR-009 | Must | Nadia Hassan | T, I |
+| FR-131 | Wherever a vote is cast in a Definition-A (v1) deployment, the UI MUST display a plain-language honesty notice (designed as DES-098) before the ballot is confirmed. The notice MUST state: **(a)** this ballot uses conventional authentication and is NOT anonymous, NOT receipt-free, and NOT coercion-resistant; **(b)** the platform database CAN see vote direction and party membership in v1; **(c)** the cryptographic private ballot — where the platform is technically unable to see vote direction or party membership — is available when the platform upgrades to the Definition-B (v2) privacy layer. **(d) Open-tier non-counting disclosure (v2.12.0, Rathish, 2026-08-24):** in any v1 deployment using the FR-132/FR-123 counting-gate model, wherever an open-tier (phone-verified but not ID-verified) participant attempts a FR-123 counting action — contributing to official party strength, casting a binding vote, or standing as a candidate — the UI MUST display a plain-language notice stating: (i) their current participation is open-tier only; (ii) that specific action requires government-ID verification (FR-123); (iii) what specifically does not count for them (official strength contribution, binding vote, candidacy); and (iv) how to become a counting member by completing the government-ID check (FR-132 §(b)). This notice MUST be shown before the action is refused and MUST be non-dismissable. The notice MUST be: visible before confirmation; non-dismissable (the voter MUST acknowledge the notice to proceed); WCAG 2.2 AA compliant (DES-081); screen-reader accessible. The notice MUST appear on SCR-13 (ballot booth) and SCR-14 (post-vote confirmation). **(e) Honesty-of-claim across every v1 participation act (v2.17.0; product-owner ruling 2026-09-06, CONFIRMED by the approver (Rathish Kumar) 2026-09-06; DECISIONS-2026-09-06-ENDORSEMENT-COPY.md §11):** the disclosure duty in this requirement is a duty about **claims**, not about a list of words, and it is **not confined to the ballot**. In a Definition-A (v1) deployment, public-facing strings, screens, READMEs and other materials — **in any language** — MUST NOT assert that a **participation act** is unknowable to Trumocracy, where a *participation act* means casting a vote, endorsing or backing a petition, joining or belonging to a party, or supporting a party. **The test is what an ordinary reader at the grade-8 reading level (NFR-023) would take the claim to mean, not whether a banned word appears:** a claim FAILS this clause if such a reader would conclude from it that Trumocracy itself cannot link them to the act, because under conventional authentication (ADR-024, ADR-025) the v1 operator database CAN — and for endorsement necessarily does, since FR-014 ("at most one endorsement per person per petition") and FR-015 (withdrawing one's own endorsement) cannot be satisfied in v1 without that link. Where a v1 participation act is additionally **public by design** — petition endorsement is (Doc 14 §2.2: "a public act, on purpose"; the fully private alternative is the `private_endorsement` charter option, a Phase-4 flag that is OFF in every v1 deployment) — the copy MUST say so plainly and MUST NOT describe that act as kept private, secret or hidden. Copy that states what the platform does **not publish**, and separately states what the platform's **own records can see**, **and makes no contrary claim elsewhere in the same string**, SATISFIES this clause; the approved pattern is `apps/web/src/i18n/en.ts` `parties.joinPrivate`, guarded by UT-0869. **Where the safe-harbour and the reader test above appear to disagree, the reader test governs.** This clause governs **participation acts only**: claims about personhood enrolment and identity verification are addressed by FR-132 §(d) and by §16.4 H-16/H-17/H-18 and are expressly outside this clause; whether those provisions fully reach the enrolment landing copy is the open question tracked at §13 tracked routing (j). The v1 product — its UI, README, and all public-facing materials, in every language — MUST NOT use the words "private", "anonymous", "receipt-free", or "secure" to describe v1 voting behaviour **or any other v1 participation act as defined in clause (e)**, and MUST NOT present itself as providing the Definition-B (v2) cryptographic guarantees; where clause (a) mandates those words, they MUST appear only in the negated form clause (a) requires. _(Source: approver directive 2026-08-23, Rathish; DECISIONS-2026-08-23-V1-V2-SPLIT.md; approver ruling 2026-08-24, Rathish; DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md (clause (d) added — open-tier non-counting disclosure obligation). **Clause (e) and the widened closing sentence added at v2.17.0** by the product-owner ruling of 2026-09-06 (artifacts/status/DECISIONS-2026-09-06-ENDORSEMENT-COPY.md, Ruling B), **CONFIRMED by the approver (Rathish Kumar) on 2026-09-06 — DECISIONS-2026-09-06-ENDORSEMENT-COPY.md §11**; the class had by then been litigated twice string-by-string (party membership, 2026-09-05, UT-0869; petition endorsement, 2026-09-06) and clause (e) exists so it need not be litigated a third time. **SUPERSEDED closing-sentence wording, retained for the record, not deleted:** "The v1 product — its UI, README, and all public-facing materials — MUST NOT use the words 'private', 'anonymous', 'receipt-free', or 'secure' to describe v1 voting behaviour, and MUST NOT present itself as providing the Definition-B (v2) cryptographic guarantees." Clause (e) does not weaken clause (a): the mandated "NOT anonymous / NOT receipt-free / NOT coercion-resistant" text and its UT-0887 negation-aware guard are preserved by the carve-out. Follows the disclosed-limitation pattern: Doc 03 §13 Phase-1 public-tally disclosure; DES-063 (v2 coercion-safe confirmation surface is the v2 successor to DES-098). DES-098 minted; US/TC/RTM owed at next catch-up — same recorded-phasing posture as FR-121..FR-130 (FR-130 exception: TC-3511..TC-3516 now pass per Doc 07 v2.2.2 Approved; FR-130 RTM Must row remains OPEN for G-TRACE — no DES assigned in Doc 03 §5.2). TC OPEN — Phase 3 applies to FR-121..FR-129. **Clause (e) acceptance criterion: §8 FR-131 Scenario 8 (added at v2.17.1 per the cycle-1 review, ISS-01).** Clause (e) TC still owed: a UT-0869-pattern guard on the landing copy is routed to the engineer (DECISIONS-2026-09-06-ENDORSEMENT-COPY.md §5.4, R-3); until that TC lands the clause is additionally verified by inspection (I).)_ | BR-005, BR-009 | Must | Nadia Hassan | T, I |
 
 _BR trace rationale: **BR-005** — "Manifestos, commitments and office-holders' governance votes MUST be publicly verifiable." Platform honesty about the properties of the voting mechanism is the complement of verifiability; in v1 the tally result IS on the audit record (FR-033/FR-054) but the mechanism is not private, and FR-131 ensures that distinction is stated plainly. **BR-009** — "Proving personhood and residency MUST NOT expose a member's real-world identity or make them targetable." The honesty notice protects members by ensuring informed consent about what v1 cannot guarantee before they vote, enabling them to make an informed decision about their exposure._
 
@@ -2373,7 +2463,7 @@ And the cap remains in place until legal registration is code-verified
 ```
 
 ```gherkin
-# FR-131 — v1 honesty notice: UI MUST state voting is NOT anonymous/receipt-free/coercion-resistant before ballot confirmation
+# FR-131 — v1 honesty notice AND honesty-of-claim duty. Clauses (a)-(c): UI MUST state voting is NOT anonymous/receipt-free/coercion-resistant before ballot confirmation. Clause (d): open-tier non-counting disclosure. Clause (e), from v2.17.0: honesty of claims about EVERY v1 participation act, on every public-facing surface, in every language — not confined to the ballot.
 # Design: DES-098 (Doc 03 §10.13.6). Follows disclosed-limitation pattern: Doc 03 §13 Phase-1 public-tally disclosure.
 
 # Scenario 1: Honesty notice displayed before ballot confirmation (SCR-13 ballot booth)
@@ -2411,6 +2501,22 @@ And the notice states in plain language: (i) the participant's current participa
 And the notice is non-dismissable: the participant cannot proceed with the counting action without the notice being presented
 And the counting action is refused
 And the participant's account and all open-tier access are unaffected by the refusal of the counting action
+
+# Scenario 8: FR-131 clause (e) — honesty of claims about any v1 participation act (v2.17.1, cycle-1 ISS-01)
+Given a Definition-A (v1) deployment of Trumocracy
+And any public-facing string, screen, README or other material, in any language, that describes a participation act — casting a vote, endorsing or backing a petition, joining or belonging to a party, or supporting a party
+When an ordinary reader at the grade-8 reading level (NFR-023) reads it
+Then the material does not lead that reader to conclude that Trumocracy itself cannot link them to the act
+And where the participation act is public by design — petition endorsement is, per Doc 14 §2.2, while the private_endorsement charter option is OFF in every v1 deployment — the material says so plainly and does not describe the act as kept private, secret or hidden
+And the material does not use "private", "anonymous", "receipt-free" or "secure" of any v1 participation act, except in the negated form clause (a) requires
+And material that instead states separately what the platform does not publish and what the platform's own records can see, and makes no contrary claim elsewhere in the same string, passes — the approved pattern being apps/web/src/i18n/en.ts parties.joinPrivate, guarded by UT-0869
+And where the safe-harbour and the reader test disagree, the reader test governs
+
+# Scenario 9: Absence test — the claim class does not survive anywhere in a v1 surface (clause (e), UT-0869 pattern)
+Given every public-facing surface of a v1 deployment, in every language, including the README and the landing copy
+When each surface is read against the clause (e) reader test rather than searched for a list of banned words
+Then zero materials assert or imply that a v1 participation act is unknowable to Trumocracy
+And a claim that contains none of the four banned words still FAILS if an ordinary grade-8 reader would take it to mean the act is unknowable to Trumocracy
 ```
 
 ```gherkin
@@ -2935,6 +3041,10 @@ per the refine loop; none exist at v1.0.0 or v1.1.0 (all v1.1.0 requirements sou
 
 **v2.15.0 session scope:** No new FRs minted. No IDs minted. Must count stays at 114. Alignment note: the implemented drop (Doc 06 v2.3.2 Approved; UT-0821/UT-0822/UT-0859; TC-3523..TC-3525) already enforces the explicit-leave form — this amendment brings FR-064's text to the built-and-ruled semantics; no code change follows from it. The RTM's FR-064 Must row REMAINS OPEN pending DES-065 (v2): the ruling resolves the semantics half of Doc 08 gap-log entry 55 only; the tester's next Doc 08 version records that and retains the DES-065 half.
 
+**v2.17.0 session scope:** No new FRs minted (FR-131 clause (e) carries the honesty-of-claim duty across every v1 participation act; no normative gap requiring a new ID). No IDs minted, reused or renumbered. Must count stays at 114. FR-131 amended with clause (e) and a widened closing sentence; §13 tracked routing (j) added (enrolment / verification landing copy — not ruled). The superseded closing sentence is quoted in place per annotate-don't-delete. US/TC/RTM rows for FR-131 remain OPEN — same recorded-phasing posture as v2.12.0/v2.13.0; the clause (e) TC (a UT-0869-pattern guard on the landing copy) is routed to the engineer, and Doc 07/08 re-cut FR-131's chain in the same session.
+
+**v2.17.1 session scope:** No new FRs minted. No IDs minted, reused or renumbered. Must count stays at 114. No normative meaning changed — this is the cycle-2 rework of v2.17.0 against artifacts/reviews/02-requirements-srs-v2.17.0-business-cycle1.md (FAIL 86%, 0C/0H/3M/7L), completing the cascade the amendment obliged: §8 FR-131 Scenarios 8 and 9 added for clause (e) and the block header de-scoped from the ballot (ISS-01); §4.45's heading and rationale widened to the participation-act posture with the ballot rationale retained (ISS-02); clause (e)'s operative prohibition recast under RFC 2119 with a positive subject and MUST NOT (ISS-03); the approver confirmation of 2026-09-06 recorded at all live sites (ISS-04); the clause (e) safe-harbour subordinated to its reader test (ISS-05); "governed by" softened to "addressed by" for enrolment claims (ISS-06); this entry and the v2.17.0 entry added (ISS-07); §16.3's FR-131 and FR-132 rows corrected (ISS-08, ISS-10); §13 (j)'s bare "§2.5" qualified to Doc 06 §2.5 (ISS-09). The three Lows carried from v2.16.3 (FR-064's missing cross-reference; the v2.16.0 changelog echo; the §13 (h) wording nit) are carried again — v2.17.1 touches none of those sites.
+
 ---
 
 ## 13. Open issues / TBD
@@ -2990,6 +3100,12 @@ per the refine loop; none exist at v1.0.0 or v1.1.0 (all v1.1.0 requirements sou
 | (g) FR-092 permanent decision trail — two missing halves | **No ruling sought — recorded as honestly OPEN (G-NOMECH)**, failing on two independent counts. **(1)** The trail records none of the *vote result*, *enacted consequence*, *implementation status* or *measured outcome* this requirement enumerates — correctly, because the layer built holds no vote; the **ballot layer** is owed. **(2)** "Reconstructable end-to-end by any third party from **public data alone**" additionally requires the **DES-097 audit-record anchoring** (Doc 13 stage S-8), which is not built — the trail today is complete but held in the application store, which makes it authoritative to us and not independently checkable by anyone else. The surface states this in plain words rather than implying more. | engineer (ballot layer) / architect + engineer (DES-097 anchoring) | OPEN — blocks the FR-092 Must row |
 | (h) FR-091 text — terminal outcomes are unaddressed | **Surfaced 2026-08-30 while mapping FR-091 to `PROPOSAL_STATE` (Doc 03 §10.13.13); a requirement clarification owed to the product-owner, not an architect's call.** FR-091 says every proposal MUST move through all eight stages in sequence and **no stage MAY be skipped**. A **defeated** or **cancelled** decision cannot be implemented or measured: under the recorded mapping such a window **terminates at `decision`** and does not advance. Terminating is not skipping — but FR-091's text does not say so, so a future implementer could read it as obliging an implementation stage for a proposal the members rejected. **Not a defect in what is built:** the **proposals and debate layer** holds no vote — it stops at `admitToBallot()` and hands off to `IBallotService` — so no window can yet reach a defeated state. _(v2.16.3: this read "v1 holds no vote (ADR-024 §(b))". That **mis-cites**: ADR-024 §(b) removes on-chain **execution** in v1 and puts votes in Postgres; **DES-096 specifies a v1 ballot backing outright**, so v1 does hold a vote. Corrected in Doc 03 at v2.11.0 and carried here verbatim until the v2.11.1 review flagged this copy.)_ Needed before the ballot layer is built. | product-owner | OPEN — clarification owed; does not block v1 |
 | (i) FR-090 — nothing says how a window with several competing proposals RESOLVES | **Surfaced 2026-08-30 at the Doc 03 v2.10.0 review** (Doc 03 §16 **Q16**), while checking the FR-091/`Governor.State` cardinality argument. FR-090 requires competing proposals to be presented with equal standing and voted **in the same decision window**; the ballot model gives each proposal an **independent binary ballot**; and DES-104 deliberately exposes **no** window-closing, merging, ranking or primary-selection capability — that absence is a first-class anti-capture control (the author never owns the ballot alone) and **MUST NOT be quietly removed to answer this**. Consequence: **two competing proposals answering one question can both pass, and no rule says what the party then gets.** This is a gap between FR-090's text and the ballot model, not an implementation detail. **Not a v1 defect** — the proposals layer holds no vote — but it MUST be answered before the ballot layer is built, and it is a **requirement decision first**: what does the party get when both options win? | product-owner (decision) + architect (mechanism) | OPEN — needed before the ballot layer |
+
+**Tracked routing (2026-09-06; recorded with the ENDORSEMENT-COPY ruling, product-owner, CONFIRMED by the approver (Rathish Kumar) 2026-09-06; artifacts/status/DECISIONS-2026-09-06-ENDORSEMENT-COPY.md §11):**
+
+| Item | Description | Owner | Status |
+|------|-------------|-------|--------|
+| (j) Enrolment / verification landing copy — **not ruled** | The 2026-09-06 endorsement-copy ruling amended FR-131 with clause (e), which is scoped to **participation acts** (vote, endorse/back, join/belong, support) and expressly **not** to enrolment or identity-verification claims. Two landing strings make enrolment claims and are left **un-ruled on the evidence available**, rather than swept in silently. **(1)** `apps/web/src/i18n/en.ts` `home.steps[0].body` — "We never see your documents, your name or your address, and we do not keep them" — against **§16.4 H-17**: the third-party ID-check vendor **does** see the government-ID document, and FR-132 §(e)'s non-retention clause is a **legal and contractual** control, not a technical guarantee. Whether "we" honestly excludes a vendor the citizen never chose is a genuine question; the answer may be a wording change, a Doc 14 cross-reference, or nothing. **(2)** `home.promises[3]` — "We do not count your visits, and we do not keep a record of what you read here" — believed true (the **Doc 06 §2.5** absence-test pattern; UT-0870) but **not verified against a deployed build**; it asserts a fact about production, so the **sre** is consulted before it is ruled. Neither is a v1 blocker and neither is part of the endorsement ruling. | product-owner (decision); sre (consulted on (2)) | OPEN — not ruled; non-blocking |
 
 ---
 
@@ -3257,8 +3373,8 @@ Columns: **ID** · **Short name** · **Priority** · **v1 disposition** · **v1 
 | FR-128 | No stored identity; subpoena test | Must | PARTIAL | No identity documents stored in any form; operator DB CAN be compelled to disclose member↔party mapping and vote direction — subpoena test NOT met in v1 | ZK: operator technically cannot comply; no mapping exists | Y |
 | FR-129 | Attestor-plurality Charter guard | Must | IN-v1 | Single-issuer permanence requires Charter-level re-entry; config flag attempt refused | Same | N |
 | FR-130 | Provisional-party membership cap (100; anti-capture) | Must | IN-v1 | 100-member cap code-enforced; lifts automatically on verified legal registration | Same | N |
-| FR-131 | v1 honesty notice (DES-098) | Must | IN-v1 | Non-dismissable plain-language UI notice before each ballot in v1; states NOT anonymous, NOT receipt-free, NOT coercion-resistant; carries one-account-per-phone caveat (FR-132) | — (v1-only requirement; v2 replaces with FR-030/031/NFR-003 cryptographic guarantees + DES-063 coercion-safe confirmation surface) | N |
-| FR-132 | v1 identity verification — two-layer gating: phone for account creation/open-tier; government-ID check for FR-123 counting actions only (DES-095 amended, DES-100, ADR-025) | Must | IN-v1 | Phone SMS for account creation and open-tier access (FR-020/FR-122 absolute; MUST NOT refuse membership for absence of ID); government-ID document check required only for FR-123 counting actions (official strength contribution, binding vote, candidacy); verify-and-discard (allowlist: id_verified_flag, age_verified, issuing_region, subject_id_hash, phone_hash, verified_at; all else discarded); subject_id_hash deduplication at counting-verification (not account creation); "real-person verified" posture for counting tier; MUST NOT claim anonymity or one-person-one-vote; honesty caveat carried by FR-131 notice (DES-098) clauses (d)/(e); vendor no-retention contract required; CON-015 governs legal classification | RETIRED on v2 ZK-enrolment swap-in (DES-095 backing switches to ZK nullifier per ADR-024/ADR-025; one-person-one-vote guarantee becomes true by construction; phone_hash and subject_id_hash storage eliminated) | Y |
+| FR-131 | v1 honesty notice and honesty-of-claim duty (DES-098) | Must | IN-v1 | Non-dismissable plain-language UI notice before each ballot in v1; states NOT anonymous, NOT receipt-free, NOT coercion-resistant; carries one-account-per-phone caveat (FR-132); from v2.17.0 also the honesty-of-claim duty across every v1 participation act on every public-facing surface in every language (clause (e); §8 Scenarios 8-9) | — (v1-only requirement; v2 replaces with FR-030/031/NFR-003 cryptographic guarantees + DES-063 coercion-safe confirmation surface) | N |
+| FR-132 | v1 identity verification — two-layer gating: phone for account creation/open-tier; government-ID check for FR-123 counting actions only (DES-095 amended, DES-100, ADR-025) | Must | IN-v1 | Phone SMS for account creation and open-tier access (FR-020/FR-122 absolute; MUST NOT refuse membership for absence of ID); government-ID document check required only for FR-123 counting actions (official strength contribution, binding vote, candidacy); verify-and-discard (allowlist: id_verified_flag, age_verified, issuing_region, subject_id_hash, phone_hash, verified_at; all else discarded); subject_id_hash deduplication at counting-verification (not account creation); "real-person verified" posture for counting tier; MUST NOT claim anonymity or one-person-one-vote; honesty caveat carried by the FR-131 notice (DES-098) clause (d), and by FR-132 §(d)/§(e); vendor no-retention contract required; CON-015 governs legal classification | RETIRED on v2 ZK-enrolment swap-in (DES-095 backing switches to ZK nullifier per ADR-024/ADR-025; one-person-one-vote guarantee becomes true by construction; phone_hash and subject_id_hash storage eliminated) | Y |
 | FR-133 | v1 spam-resistance layer — flag-don't-block (DES-099); scope: spam layer only, not the FR-123 counting gate | Must | IN-v1 | VoIP/virtual-number intelligence + velocity/device anti-fraud; flagged numbers rate-limited, not hard-blocked; false-positive path first-class; flag events restricted-class; scope explicitly excludes FR-132 counting-gate (ID check gates FR-123 counting actions; spam layer never excludes from platform membership) | Becomes defence-in-depth in v2 (ZK nullifier provides uniqueness guarantee; spam layer may be retained or retired by architect decision at v2 design increment) | N |
 
 #### 16.3.2 Non-Functional Requirements (NFR-001..NFR-028)
