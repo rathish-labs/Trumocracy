@@ -18,13 +18,18 @@ import { VoteConfirmation } from '@/components/VoteConfirmation';
 import { ReceiptFreedomBanner } from '@/components/ReceiptFreedomBanner';
 import { PetitionProgress } from '@/components/PetitionProgress';
 import { EightPillarForm } from '@/components/EightPillarForm';
+import { SiteHeader } from '@/components/SiteHeader';
 import HomePage from '@/app/page';
+import VerifyPage from '@/app/verify/page';
 import {
   PILLARS,
   petitionOutcome,
   NON_VIOLENCE_CLAUSE,
   PARTICIPATION_TIER,
   petitionThreshold,
+  FLAGS,
+  isEnabled,
+  permanentFlags,
 } from '@trumocracy/protocol';
 import {
   InMemoryPartyStore,
@@ -405,5 +410,175 @@ describe('UT-0889 the landing page states the truth about backing a party, not a
     expect(thrown?.code).toBe('AUTHORSHIP_REQUIRES_WORKER_TIER');
     expect(thrown?.message).not.toContain('Supporters are anonymous');
     expect(thrown?.message).toContain("a Supporter's participation is never published");
+  });
+});
+
+// ─── UT-0890 the /verify page is flag-gated dark, and its honesty placeholder is itself
+// honest ─────────────────────────────────────────────────────────────────────────────────
+//
+// DECISIONS-2026-09-08-VERIFY-PAGE.md §1 (approver ruling): the /verify page's copy states
+// the verify-and-discard enrolment design (FR-132 §(b); ADR-003; DES-100) as current fact,
+// but enrolment is unbuilt (StubIdDocumentChecker.IS_INSECURE_MOCK() = true, Doc 06 §7) and
+// blocked on CON-015. §5 (product-owner's choice, remedy (a)): the route is gated behind a
+// new `enrolment_ui` flag (dev on; staging/prod off) and shows an honest placeholder
+// otherwise (§5.3, NORMATIVE text). This guard is the UT-0869/UT-0889 pattern: assert the
+// source string, assert it is what actually renders, assert the retired claim is gone from
+// the DOM. Cites FR-131 clause (e) (the Grade-8-reader honesty test), FR-132 §(d)/(e)
+// (anonymity/one-person-one-vote claims), §16.4 H-15 (same-document dedup is not 1p1v),
+// H-17 (the vendor sees the document) and H-18 (subject_id_hash is a stable linkable id).
+
+describe('UT-0890 the /verify page is flag-gated dark, and its honesty placeholder is itself honest', () => {
+  const RETIRED_CLAIMS = [
+    'never leaves your phone',
+    'and nothing else',
+    'cannot be traced back to you',
+    'never run by a government',
+    'Everything happens on your phone',
+  ];
+  const BANNED = ['private', 'anonymous', 'receipt-free', 'secure'];
+  const JARGON = [
+    'wallet',
+    'seed phrase',
+    'private key',
+    'gas',
+    'token',
+    'mint',
+    'on-chain',
+    'blockchain',
+    'crypto',
+    'nullifier',
+    'hash',
+  ];
+  const newEnValues = () => [
+    en.verify.unavailableTitle,
+    en.verify.unavailableBody,
+    en.verify.unavailablePlannedTitle,
+    ...en.verify.unavailablePlanned,
+  ];
+
+  // A. The flag ships dark and carries its debt
+  it('isEnabled(enrolment_ui, ...) is off in staging/prod and on in dev', () => {
+    expect(isEnabled('enrolment_ui', 'prod')).toBe(false);
+    expect(isEnabled('enrolment_ui', 'staging')).toBe(false);
+    expect(isEnabled('enrolment_ui', 'dev')).toBe(true);
+  });
+
+  it('permanentFlags() stays empty — the new flag carries a removeBy', () => {
+    expect(permanentFlags()).toEqual([]);
+  });
+
+  it('FLAGS.ENROLMENT_UI.description cites CON-015 and FR-132', () => {
+    const desc = FLAGS.ENROLMENT_UI.description;
+    expect(desc).toContain('CON-015');
+    expect(desc).toContain('FR-132');
+  });
+
+  // B. With the flag off, no unbuilt guarantee reaches the DOM
+  it('with the flag off, the honesty placeholder renders title, body, planned title and all four planned items', () => {
+    wrap(<VerifyPage />, { enrolment_ui: false });
+    expect(screen.getByTestId('verify-unavailable')).toBeTruthy();
+    expect(screen.getByText(en.verify.unavailableTitle)).toBeTruthy();
+    expect(screen.getByText(en.verify.unavailableBody)).toBeTruthy();
+    expect(screen.getByText(en.verify.unavailablePlannedTitle)).toBeTruthy();
+    for (const item of en.verify.unavailablePlanned) {
+      expect(screen.getByText(item)).toBeTruthy();
+    }
+  });
+
+  it('the rendered DOM carries none of the retired enrolment claims', () => {
+    const { container } = wrap(<VerifyPage />, { enrolment_ui: false });
+    const text = container.textContent ?? '';
+    for (const claim of RETIRED_CLAIMS) {
+      expect(text, `retired claim "${claim}" found in the DOM with the flag off`).not.toContain(claim);
+    }
+  });
+
+  it('the enrolment controls are entirely absent with the flag off', () => {
+    wrap(<VerifyPage />, { enrolment_ui: false });
+    expect(screen.queryByTestId('start-verification')).toBeNull();
+    expect(screen.queryByTestId('kept-list')).toBeNull();
+    expect(screen.queryByTestId('not-kept-list')).toBeNull();
+  });
+
+  it('SiteHeader renders no anchor to /verify/ with the flag off', () => {
+    const { container } = wrap(<SiteHeader />, { enrolment_ui: false });
+    const anchors = Array.from(container.querySelectorAll('a'));
+    expect(anchors.some((a) => (a.getAttribute('href') ?? '').startsWith('/verify'))).toBe(false);
+  });
+
+  // C. With the flag on (the dev posture), the screen is intact
+  it('with the flag on, the enrolment screen renders and the nav link is present — the copy is gated, not deleted', () => {
+    wrap(<VerifyPage />, { enrolment_ui: true });
+    expect(screen.getByText(en.verify.onDeviceBody)).toBeTruthy();
+    expect(screen.queryByTestId('start-verification')).not.toBeNull();
+
+    const { container } = wrap(<SiteHeader />, { enrolment_ui: true });
+    const anchors = Array.from(container.querySelectorAll('a'));
+    expect(anchors.some((a) => (a.getAttribute('href') ?? '').startsWith('/verify'))).toBe(true);
+  });
+
+  // D. The new copy is itself honest
+  it('none of the four new en.verify.* values contains a FR-131 banned word', () => {
+    for (const value of newEnValues()) {
+      for (const word of BANNED) {
+        expect(value.toLowerCase(), `"${word}" found in "${value}"`).not.toContain(word);
+      }
+    }
+  });
+
+  it('none of the four new en.verify.* values contains DES-085/§2.2 jargon', () => {
+    for (const value of newEnValues()) {
+      for (const term of JARGON) {
+        expect(value.toLowerCase(), `"${term}" found in "${value}"`).not.toContain(term);
+      }
+    }
+  });
+
+  it('unavailablePlanned states the H-17/H-15/CON-015 facts, not a rosier story', () => {
+    const joined = en.verify.unavailablePlanned.join(' ');
+    expect(joined).toContain('will see your document');
+    expect(joined).toContain('promise written into a contract');
+    expect(joined).toContain('will not prove that each person has only one account');
+    expect(joined).toContain('None of this is built');
+    expect(joined).toContain('legal opinion');
+  });
+
+  it('unavailableBody states the v1 truth positively: nobody is checked at all', () => {
+    expect(en.verify.unavailableBody).toContain('nobody is checked at all');
+  });
+
+  // E. The Arabic mirror exists and is a translation
+  it('ar.verify and en.verify have the same key set', () => {
+    expect(new Set(Object.keys(ar.verify))).toEqual(new Set(Object.keys(en.verify)));
+  });
+
+  it('the Arabic mirror is complete and is not a copy-paste of the English', () => {
+    expect(ar.verify.unavailablePlanned).toHaveLength(4);
+    const pairs: [string, string][] = [
+      [ar.verify.unavailableTitle, en.verify.unavailableTitle],
+      [ar.verify.unavailableBody, en.verify.unavailableBody],
+      [ar.verify.unavailablePlannedTitle, en.verify.unavailablePlannedTitle],
+      ...ar.verify.unavailablePlanned.map(
+        (v, i): [string, string] => [v, en.verify.unavailablePlanned[i]],
+      ),
+    ];
+    for (const [arValue, enValue] of pairs) {
+      expect(arValue.length).toBeGreaterThan(0);
+      expect(arValue).not.toBe(enValue);
+    }
+  });
+
+  it('no Arabic value contains a Latin-script banned word', () => {
+    const arValues = [
+      ar.verify.unavailableTitle,
+      ar.verify.unavailableBody,
+      ar.verify.unavailablePlannedTitle,
+      ...ar.verify.unavailablePlanned,
+    ];
+    for (const value of arValues) {
+      for (const word of BANNED) {
+        expect(value.toLowerCase(), `"${word}" found in Arabic string "${value}"`).not.toContain(word);
+      }
+    }
   });
 });

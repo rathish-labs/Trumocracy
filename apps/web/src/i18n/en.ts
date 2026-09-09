@@ -69,6 +69,10 @@ export const en = {
     ],
     cta: 'Get started',
   },
+  // DECISIONS-2026-09-08-VERIFY-PAGE.md §5.5 item 5: the strings below describe the DESIGNED
+  // enrolment screen (FR-132 §(b), DES-100, ADR-003). Enrolment is not built (Doc 06 §7), so
+  // this whole block renders only in `dev` (flag `enrolment_ui`, off in staging/prod). It is
+  // NOT a v1 claim — see `unavailable*` below for what actually ships.
   verify: {
     title: 'Show that you are a real person',
     lead:
@@ -94,6 +98,25 @@ export const en = {
       'Your date of birth',
       'A photo, a scan, or a fingerprint',
       'Your phone number or email',
+    ],
+    // Honesty placeholder shown when `enrolment_ui` is off (DECISIONS-2026-09-08-VERIFY-PAGE.md
+    // §5.3, NORMATIVE — exact text, asserted by UT-0890).
+    unavailableTitle: 'This step is not built yet',
+    unavailableBody:
+      'There is nothing to do on this page. Today anyone can make an account, join a party, ' +
+      'read, discuss and support one, and nobody is checked at all.',
+    unavailablePlannedTitle: 'What is planned, and what it will and will not do',
+    unavailablePlanned: [
+      'Later, one check will be added. You will be asked once for a government ID document, and ' +
+        'only if you want your membership counted in a party’s official size, to cast a vote ' +
+        'that decides something, or to stand as a candidate.',
+      'An outside company will do that check, and that company will see your document. It is ' +
+        'meant to delete it afterwards. That is a promise written into a contract, not ' +
+        'something the maths makes impossible.',
+      'Even then, the check will not prove that each person has only one account. Someone with ' +
+        'two valid ID documents could have two.',
+      'None of this is built. It cannot start until a legal opinion for the first pilot country ' +
+        'is finished.',
     ],
   },
   parties: {

@@ -36,13 +36,19 @@ to fail if the copy is wrong, and check whether a new guard is owed.
 
 **What this rule does *not* cover.** Claims about **personhood enrolment or identity
 verification** — for example, what the government-ID check does or does not see or keep — are
-a different class, **addressed by** `FR-132`(d), not by the rule above. One shipped, navigable
-surface (`/verify`) makes exactly this kind of claim today. Whether its copy is honest is an
-**open, unruled question**: the closest tracked item, Doc 02 §13 (j), covers the
-**landing-page** enrolment strings (`home.steps[0].body`, `home.promises[3]`; Doc 06 §7 item
-26) — **`/verify`'s own copy is not yet in any register.** If your change touches enrolment or
-identity-verification copy, route it through the product-owner role too — the same caution as
-for a participation-act claim, for a question that is not yet settled.
+a different class, **addressed by** `FR-132`(d), not by the rule above. Two landing strings,
+`home.steps[0].body` and `home.promises[3]`, make this kind of claim and remain an **open,
+unruled question** — Doc 02 §13 (j) items (1) and (2). The `/verify` page's own copy was the
+same class of claim; that question is now **ruled and closed** (Doc 02 §13 (j)(3);
+[decision record](artifacts/status/DECISIONS-2026-09-08-VERIFY-PAGE.md)): the page sits behind
+the `enrolment_ui` flag, off in the public build because enrolment is not built and cannot
+start until `CON-015` (a legal opinion) clears, where it shows a short honesty notice instead
+of the design copy — see [Doc 14 §1.2](docs/14-user-guide.md) for the citizen-facing account.
+The placeholder's exact text is pinned by `UT-0890`
+(`apps/web/test/safety-surfaces.test.tsx`); changing it will fail the suite. If your change
+touches enrolment or identity-verification copy, route it through the product-owner role too —
+the same caution as for a participation-act claim. Two of these questions are still unsettled —
+Doc 02 §13 (j) items (1) and (2).
 
 ## 2. How the repo is run
 
@@ -104,7 +110,7 @@ project that has no admin key anywhere else, either.
 npm ci                     # not npm install — installs exactly what package-lock.json pins
 npm run lint:deps          # dependency-direction check (ADR-011)
 npm run typecheck          # packages/ui, apps/web
-npm test                   # 625 tests at the time of writing (2026-09-06); ~3 minutes —
+npm test                   # 640 tests at the time of writing (2026-09-08); ~3 minutes —
                             # the contracts suite runs on an in-process EVM (solc-js +
                             # EthereumJS), no network needed
 npm run test:protocol      # just the reference implementation, in milliseconds — the fast loop
@@ -154,9 +160,10 @@ with no such test is not evidence the absence holds.
   §1 exists to prevent, and it has already been the source of two corrected overclaims in this
   project's history.
 - Enrolment or identity-verification copy (what the government-ID check does or does not see,
-  keep, or discard) — for example, the `/verify` page — without routing through the
-  product-owner first. This is a separate, currently **open and unruled** question; the closest
-  tracked item, Doc 02 §13 (j), covers only the landing-page strings, not `/verify`'s own copy.
+  keep, or discard) — including the retained `/verify` design strings, which render only in
+  `dev` behind the `enrolment_ui` flag and must be re-litigated before that flag is turned on —
+  without routing through the product-owner first. Doc 02 §13 (j) items (1) and (2), the two
+  landing-page strings, remain a separate, currently **open and unruled** question.
 
 ## 7. Agent workflow (optional)
 

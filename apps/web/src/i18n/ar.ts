@@ -71,6 +71,9 @@ export const ar: Messages = {
     ],
     cta: 'ابدأ',
   },
+  // DECISIONS-2026-09-08-VERIFY-PAGE.md §5.5 item 5: mirrors the en.ts comment — these strings
+  // describe the DESIGNED enrolment screen (FR-132 §(b), DES-100, ADR-003), not built (Doc 06
+  // §7). Renders only in `dev` (flag `enrolment_ui`). NOT a v1 claim.
   verify: {
     title: 'أثبت أنك شخص حقيقي',
     lead: 'يحدث هذا مرة واحدة. يثبت أنك شخص حقيقي واحد، ولا يخبر أحدًا بهويتك.',
@@ -87,6 +90,22 @@ export const ar: Messages = {
     keptTitle: 'ما يُحفظ وما لا يُحفظ',
     kept: ['رمز قصير يعني «شخص حقيقي واحد»، ولا يمكن تتبعه إليك.'],
     notKept: ['اسمك', 'عنوانك', 'تاريخ ميلادك', 'صورة أو مسح أو بصمة', 'رقم هاتفك أو بريدك'],
+    // Draft translation of en.ts `unavailable*` (§5.4 — DRAFT, subject to Doc 02 §13 tracked
+    // deferral (b), native-speaker review, pre-Gate-2). Introduces no claim the English does not.
+    unavailableTitle: 'هذه الخطوة غير مُنجزة بعد',
+    unavailableBody:
+      'لا يوجد ما تفعله في هذه الصفحة. اليوم يستطيع أي شخص إنشاء حساب والانضمام إلى حزب والقراءة ' +
+      'والنقاش والدعم، ولا يخضع أحد لأي تحقق.',
+    unavailablePlannedTitle: 'ما هو مخطط له، وما الذي سيفعله وما لن يفعله',
+    unavailablePlanned: [
+      'لاحقًا ستُضاف خطوة تحقق واحدة. سيُطلب منك مرة واحدة وثيقة هوية حكومية، وذلك فقط إذا أردت أن ' +
+        'تُحتسب عضويتك في العدد الرسمي لحزب، أو أن تصوّت تصويتًا يقرّر شيئًا، أو أن ترشّح نفسك.',
+      'ستقوم شركة خارجية بهذا التحقق، وسترى تلك الشركة وثيقتك. ومن المفترض أن تحذفها بعد ذلك. هذا ' +
+        'وعد مكتوب في عقد، وليس أمرًا تمنعه الرياضيات.',
+      'وحتى عندئذ، لن يثبت هذا التحقق أن لكل شخص حسابًا واحدًا فقط. ومن يملك وثيقتَي هوية صالحتين ' +
+        'يمكن أن يملك حسابين.',
+      'لا شيء من هذا مُنجز، ولا يمكن أن يبدأ قبل اكتمال رأي قانوني في أول بلد تجريبي.',
+    ],
   },
   parties: {
     title: 'الأحزاب',

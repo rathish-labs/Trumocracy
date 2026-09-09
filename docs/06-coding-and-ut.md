@@ -2,12 +2,26 @@
 
 ```
 Document ID:   CODE-TRUMOCRACY
-Version:       2.7.0
-Status:        Approved — 06-coding-and-ut-v2.7.0-technical-cycle2.md (PASS 96%, 0C/0H/0M/3L; reviewer: tester, neutral,
-               PM-assigned; three Lows carried, non-blocking, to fold at the next touch: ISS-C2-01 the item 26(c) closure pins Doc 07/08 at v2.6.0/v2.9.0 while v2.7.0/v2.10.0 are in review; ISS-C2-02 the v2.7.0 change entry still names Doc 02 v2.17.0 as In Review (v2.17.1 is Approved); ISS-C2-03 the tightened Arabic assertion narrows the guard to the exact old phrase). Previously: In Review
+Version:       2.8.1
+Status:        Approved — 06-coding-and-ut-v2.8.1-technical-cycle2.md (PASS 97%, 0C/0H/0M/3L; reviewer: tester, neutral,
+               PM-assigned; three Lows carried, non-blocking, to fold at the next touch: §5.0 review-history two cycles stale; v2.8.1 'not done' list overtaken by the concurrent Doc 02 v2.17.3 / README cycle-2 closures; §3 repaired sentence points at §7 item 26 where item 28 now registers UT-0890's owed row). Previously: In Review — review-loop rework cycle 2 of 5 against
+               06-coding-and-ut-v2.8.0-technical-cycle1.md (FAIL 95%, 0C/0H/1M/3L; reviewer:
+               tester Ji-woo Park, neutral, PM-assigned). ISS-01 (Medium) fixed in §3 and §7
+               item 26(c); ISS-02/ISS-03/ISS-04 (Low) folded in the change history, §6 and §3
+               respectively — see the v2.8.1 change-history entry for detail. Neutral
+               reviewer for cycle 2: tester (per
+               artifacts/status/REVIEW-ASSIGNMENT-2026-09-08-VERIFY-PAGE.md). Previously:
+               In Review — neutral reviewer assigned before dispatch: tester (per
+               artifacts/status/REVIEW-ASSIGNMENT-2026-09-08-VERIFY-PAGE.md). Previously:
+               Approved — 06-coding-and-ut-v2.7.0-technical-cycle2.md (PASS 96%, 0C/0H/0M/3L;
+               reviewer: tester, neutral, PM-assigned; three Lows carried, non-blocking, to
+               fold at the next touch: ISS-C2-01 the item 26(c) closure pins Doc 07/08 at
+               v2.6.0/v2.9.0 while v2.7.0/v2.10.0 are in review; ISS-C2-02 the v2.7.0 change
+               entry still names Doc 02 v2.17.0 as In Review (v2.17.1 is Approved); ISS-C2-03
+               the tightened Arabic assertion narrows the guard to the exact old phrase).
 Owner:         Samuel Oyelaran — Engineering Lead
 Source:        SDD-TRUMOCRACY v2.13.0 §9 · ADR-011 · ADR-023 · ADR-024 · ADR-025
-Last updated:  2026-09-06
+Last updated:  2026-09-08
 ```
 
 > Built from SDD §9 and ADR-011. Records what was physically built, the unit-testing
@@ -16,6 +30,141 @@ Last updated:  2026-09-06
 
 ```
 Change history:
+  v2.8.1 (2026-09-08) — Rework cycle 2 of 5 against
+               artifacts/reviews/06-coding-and-ut-v2.8.0-technical-cycle1.md (FAIL 95%,
+               0C/0H/1M/3L; reviewer: tester Ji-woo Park, neutral, PM-assigned). The reviewer
+               verified both v2.8.0 items (the hook wording and the `/verify` remedy)
+               independently against the code at HEAD — including non-vacuity checks on
+               UT-0890's negatives and the byte-exactness of the new copy against DECISIONS
+               §5.3/§5.4 — and confirmed the suite (640/640), typecheck and lint:deps all
+               green; nothing there is touched by this rework. Patch bump, not minor: **no
+               product code, no test, no `UT-####`, no count, no flag and no normative text
+               changes** — every fix is two owed-work corrections, one date and one sentence
+               of explanatory prose (the house precedent this cycle's own report cites: Doc 07
+               v2.8.0 -> v2.8.1, Doc 08 v2.11.2 -> v2.11.3, both patches on the same shape of
+               fix). **ISS-01 (Medium) — fixed, in both locations, without touching Doc 07 or
+               Doc 08.** §3's UT-inventory closing note wrongly claimed UT-0889's TC rows were
+               still owed alongside UT-0890's; the sentence is now restricted to UT-0890 only,
+               with a dated `(v2.8.1, ISS-01 correction: …)` annotation appended (not deleting
+               the v2.7.0 annotation before it) recording that Doc 07 **v2.8.1** (Approved)
+               mints `TC-3570`..`TC-3576` for UT-0889 and Doc 08 **v2.11.3** (Approved, closed
+               on the cap) carries them. §7 item 26(c)'s sentence ("The only `TC` row still
+               owed by the tester is UT-0889's") is preserved verbatim and a dated correction
+               is appended immediately after it, stating the same two facts and that the sole
+               owed row today is UT-0890's. Every claim re-verified against Doc 07/08 on disk
+               at HEAD, not from memory: Doc 07 header confirmed **v2.8.1, Approved**, `grep`
+               confirmed `TC-3570`..`TC-3576` minted for UT-0889 (six IDs, the sixth from the
+               DES-085 jargon-scan `it`); Doc 08 header confirmed **v2.11.3, Approved, cycle 5
+               of 5, no escalation**, line 530 confirmed "**UT-0889** -> **TC-3570** … all
+               five **Pass (obs.)** on R-18", and the §3.2 NFR-023 row confirmed carrying the
+               `TC-3576` link. Neither Doc 07 nor Doc 08 is edited by this version. **ISS-02
+               (Low) folded** — the v2.8.0 change-history sentence "`--audit` still exits 0
+               with the unchanged format" is qualified to what is true and reproducible: the
+               output format and RTM section are unchanged, the hook compiles clean, the
+               exit-0 observation was made at v2.7.0 before this version's own bump, and at
+               v2.8.0 itself `--audit` exits 1 by design (a report, not a hook decision) until
+               this version's and Doc 02's reviews land. **ISS-03 (Low) folded** — §6's
+               `enrolment_ui` paragraph said the flag is "counted in the `permanentFlags()`
+               assertion", which read as the opposite of `permanentFlags()`'s actual filter
+               (`!removeBy`); corrected to say the flag stays **out of** `permanentFlags()`
+               and the standing `=== []` assertion continues to hold. **ISS-04 (Low)
+               folded** — §3's "Counts are actual as of this session (2026-09-05)" is advanced
+               to "as of v2.8.1 (2026-09-08)", version-relative so it cannot go stale again on
+               the next count change. Suite, typecheck and lint:deps are **unchanged from
+               v2.8.0** (per the report's §7, none of the four issues touch code): **640
+               tests** (contracts 95 / protocol 151 / sdk 244 / ui 18 / indexer 16 / web 116);
+               `npm run typecheck` exit 0; `npm run lint:deps` "7 workspace package(s)
+               checked — layering OK". `node hooks/run_gates.cjs --audit` exits 1 (a report,
+               not a hook decision): `06-coding-and-ut.md v2.8.1` blocks with **no report for
+               this version** — expected, the tester's cycle-2 review has not landed yet; did
+               not self-appoint. Not done in this session, unchanged from v2.8.0: the
+               README/CONTRIBUTING `/verify` inventory line (technical-writer); Doc 07/08 TC
+               row for UT-0890 (tester, owed, next touch); the still-open
+               `home.steps[0].body`/`home.promises[3]` question (item 26, unchanged); the
+               DES-098 acknowledge-to-proceed control (item 26(d), unchanged); ARABIC-I18N
+               native-speaker review (unchanged); Doc 02 v2.17.x's own review loop
+               (product-owner/reviewer-qa, not this role's to do).
+  v2.8.0 (2026-09-08) — Two independent items under
+               artifacts/status/DECISIONS-2026-09-08-VERIFY-PAGE.md, both owned by the
+               engineer per artifacts/status/REVIEW-ASSIGNMENT-2026-09-08-VERIFY-PAGE.md.
+               **(1) Stop-hook block wording (approver decision 3).** The `hooks/check_gates.py`
+               review-loop block text ("Run the `document-review` skill with a NEUTRAL
+               (non-owner) reviewer …") read, to whichever agent stopped last, as an
+               instruction to author the missing report — the root cause of the recurring
+               self-appointment defect (AL-CANDIDATE-3, tester's evidence 2026-09-06). Reworded
+               (`check_review_reports`'s block message, and the module docstring's invariant-(c)
+               paragraph) so it states the fact (which document version(s) lack a passing/
+               human-approved-ESCALATED report), says plainly "Do NOT author that report
+               yourself", names reviewer assignment as the project-manager's decision recorded
+               in `artifacts/status/REVIEW-ASSIGNMENT-*.md` BEFORE dispatch, states that a
+               report written to clear one's own stop does not count as a cycle, and directs
+               the blocked agent (if it is the document's owner, or not its assigned reviewer)
+               to record the block in its session note and stop. The bar (score >= 95% AND
+               zero critical/high/medium), the owner-reworks-a-new-version rule and the 5-cycle
+               cap + named-approver ESCALATE requirement are all unchanged; the `{listed}`
+               document-line format and every other hook message (the `--audit` output, the
+               memory-protocol messages, the RTM section) are untouched. `hooks/run_gates.cjs`
+               was checked and quotes none of the old text — no edit needed there.
+               `node hooks/run_gates.cjs --audit`'s **output format and the RTM section are
+               unchanged** from v2.7.0's shape, and `python -m py_compile hooks/check_gates.py`
+               compiles clean (stdlib-only preserved). The exit-**0** run was observed while
+               Doc 06 was still **v2.7.0**, before this version's own bump; at **v2.8.0 itself
+               `--audit` exits 1**, because this document (and, separately, Doc 02) block the
+               review loop — by design a **report**, not a hook decision — returning to 0 once
+               this version's review report and Doc 02's land (v2.8.1, ISS-02). **(2)
+               `/verify` page — approver decision 1, product-owner's choice
+               (a) applied (DECISIONS §5).** The page's copy ("The document never leaves your
+               phone", "What gets sent is a short proof … and nothing else", "A short code …
+               which cannot be traced back to you") stated the verify-and-discard enrolment
+               design (FR-132 §(b), ADR-003, DES-100) as current fact while enrolment is
+               unbuilt (`StubIdDocumentChecker.IS_INSECURE_MOCK()` = true, §7) and the Phase-1
+               adapter is blocked on CON-015. Remedy (a), flag-gate: new flag `enrolment_ui`
+               (`packages/protocol/src/flags.js`; `dev: true, staging: false, prod: false`;
+               `onChain: false`; `removeBy`: the enrolment sprint, blocked on CON-015;
+               `permanentFlags()` stays `[]`) and its client key
+               (`apps/web/src/config/flags.tsx` `FLAG.ENROLMENT_UI`). `apps/web/src/app/verify/
+               page.tsx` reads `useFlag(FLAG.ENROLMENT_UI)`: off (everywhere but `dev`) renders
+               ONLY the honesty placeholder (DECISIONS §5.3, NORMATIVE text) — what exists today
+               (nothing), what is planned, and what the planned check will and will not do
+               (H-17 vendor sees the document; H-15 same-document dedup is not 1p1v; CON-015
+               blocks the start) — with a link to `/parties/`; on, the existing screen renders
+               unchanged, byte-for-byte. `apps/web/src/components/SiteHeader.tsx`'s `/verify/`
+               nav item renders only when the flag is on. The module docstring
+               (`verify/page.tsx`) is rewritten to state the file implements the DESIGNED
+               screen, not a built one; a matching comment heads the `verify.*` block in both
+               `apps/web/src/i18n/en.ts` and `ar.ts` (design copy, renders in `dev` only, not a
+               v1 claim). No existing `verify.*` string is deleted — they remain the enrolment
+               sprint's starting copy. Guard: **UT-0890**
+               (`apps/web/test/safety-surfaces.test.tsx`), the UT-0869/UT-0889 pattern, all 15
+               assertions of DECISIONS §5.6 A–E (flag defaults + `permanentFlags()` + description
+               citations; placeholder renders with the flag off and the five retired claims are
+               absent from the DOM and the enrolment controls are gone; the screen and nav link
+               are intact with the flag on; the four new strings carry no FR-131 banned word and
+               no §2.2 jargon and do state the H-17/H-15/CON-015 facts and the "nobody is checked
+               at all" v1 truth; the Arabic mirror has the same key set, is complete, is not a
+               copy-paste of the English, and carries no banned word). §3 registers the new
+               `UT-0890` row (Total 625 -> 640, +15); §6 registers the `enrolment_ui` flag row;
+               §7 item 28 (new) records that `/verify` is flag-gated off in the public build —
+               distinct from, and not a ruling on, the still-OPEN `home.steps[0].body`/
+               `home.promises[3]` question item 26 already tracks (DECISIONS-2026-09-08 §5.7:
+               that question is explicitly NOT ruled by this remedy). The
+               `apps/web/types/trumocracy-protocol.d.ts` type shim gained the missing
+               `permanentFlags()` declaration (it was absent; `tsc --noEmit` caught it the
+               moment the new test imported it — the same class of gap ISS-C3-01/item 23
+               already tracks for other shim surfaces). TC row for UT-0890 is OWED to the
+               tester at the next Doc 07/08 touch (Doc 08 v2.11.3 just closed on the cap — not
+               reopened for this row, per the review assignment). Suite: **640 tests**
+               (contracts 95 / protocol 151 / sdk 244 / ui 18 / indexer 16 / web 116, +15 over
+               v2.7.0's 625 — UT-0890); `npm run typecheck` exits 0 in `packages/ui` and
+               `apps/web`; `npm run lint:deps` reports "7 workspace package(s) checked —
+               layering OK". Not done in this session: Doc 02 v2.17.2's own document-review
+               loop (reviewer-qa, assigned); this Doc 06 v2.8.0's own document-review loop
+               (tester, assigned); the README/CONTRIBUTING `/verify` inventory line
+               (technical-writer); Doc 07/08 TC/RTM rows for UT-0890 (tester, owed); the
+               still-open `home.steps[0].body`/`home.promises[3]` question (item 26,
+               unchanged); the DES-098 acknowledge-to-proceed control (item 26(d), unchanged);
+               ARABIC-I18N native-speaker review (unchanged, now also covering the four new
+               `ar.ts` `verify.unavailable*` strings).
   v2.7.0 (2026-09-06) — Rework cycle 2 against
                artifacts/reviews/06-coding-and-ut-v2.6.0-technical-cycle1.md (FAIL 94%,
                0C/0H/1M/5L, reviewer: tester Ji-woo Park, neutral). The reviewer accepted the
@@ -683,7 +832,8 @@ all existing files and enforced by CI lint:
 
 ## 3. `UT-####` inventory
 
-Counts are actual as of this session (2026-09-05), verified by running `npm test`.
+Counts are actual as of v2.8.1 (2026-09-08), verified by running `npm test` (v2.8.1, ISS-04:
+version-relative wording so this line cannot go stale again on the next count change).
 
 | Range | Area | Package | Count |
 |---|---|---|---|
@@ -712,28 +862,38 @@ Counts are actual as of this session (2026-09-05), verified by running `npm test
 | UT-0872..0884 | proposals & debate web flow: Worker gate reads as disclosure not judgement, no filing form for a Supporter, both proposals rendered identically, both authors named, no control acts on another's proposal, provenance-not-precedence tag, eight-stage track, no skip control, open-tier deliberation stated and exercised, non-dismissable coercion notice before the ballot, honest open-tier refusal, trail order + v1 note, jargon and absence scans | web | 18 |
 | UT-0889 | endorsement-copy honesty guard (FR-131 clause (e); DECISIONS-2026-09-06-ENDORSEMENT-COPY.md §5.4): `home.steps[1].body` states public-act/name-not-shown/records-can-link, no "kept private"; `home.promises[0]` states "never publish", no "never learn"; neither string contains "private"/"anonymous"/"receipt-free"/"secure"; en source strings render on the landing page; Arabic mirror carries no "اسمك سريًا" phrase or "لا نعرف" claim (v2.7.0: tightened from a bare "سري" substring ban — ISS-06); the sdk AUTHORSHIP_REQUIRES_WORKER_TIER refusal no longer claims Supporters are anonymous; jargon filter clean over both new strings (v2.7.0, ISS-03) (v2.6.0; v2.7.0) | web | 6 |
 | (SDK core) | identity, proofs, transports, verified reads, prediction, client, scopes | sdk | 124 |
-| **Total** | | | **625** |
+| UT-0890 | `/verify` page flag-gated dark, honesty placeholder itself honest (DECISIONS-2026-09-08-VERIFY-PAGE.md §1/§5; FR-131(e); FR-132 §(d)/(e); §16.4 H-15/H-17/H-18; CON-015): `enrolment_ui` off in staging/prod, on in dev; `permanentFlags()` stays `[]`; description cites CON-015/FR-132; flag-off placeholder shows all four new strings and the retired claims (`never leaves your phone`, `and nothing else`, `cannot be traced back to you`, `never run by a government`, `Everything happens on your phone`) are absent from the DOM, the enrolment controls are gone, and the nav carries no `/verify/` link; flag-on the screen and nav link are intact; the four new strings carry no FR-131 banned word and no §2.2 jargon, state the H-17/H-15/CON-015 facts and "nobody is checked at all"; the Arabic mirror has the same key set, is complete, is not a copy-paste, and carries no banned word (v2.8.0) | web | 15 |
+| **Total** | | | **640** |
 
 Note: the SDK total of 244 comprises 124 (core) + 36 (seams UT-0760..UT-0779) + 38
 (UT-0780..UT-0818 + UT-0831 party-creation service) + 22 (UT-0819..UT-0830 membership) + 24
-(UT-0832..UT-0848 proposals, v2.4.0). The web total of 101 comprises 16 (original
+(UT-0832..UT-0848 proposals, v2.4.0). The web total of 116 comprises 16 (original
 UT-0700..UT-0742) + 27 (UT-0841..UT-0857 party-creation web tests) + 27 (UT-0858..UT-0870
 join-membership web tests) + 1 (UT-0871 type-shim sync guard, v2.3.2) + 18 (UT-0872..UT-0884
 proposals & debate, v2.4.0) + 2 (UT-0885..UT-0886 Worker informed consent, v2.4.2) + 4
 (UT-0887 vote-surface banner, v2.5.0) + 6 (UT-0889 endorsement-copy guard: 5 at v2.6.0, +1
-jargon-scan assertion at v2.7.0, ISS-03). (Through
+jargon-scan assertion at v2.7.0, ISS-03) + 15 (UT-0890 `/verify` flag-gate guard, v2.8.0).
+(Through
 v2.4.3 this sentence stated the web total as 89 while its own addends summed to 91 and
 `npm test` reported 91 — corrected at v2.5.0.) The
 protocol total of 151 comprises 126 (as below) + 24 (UT-0087..UT-0095 proposals, v2.4.0) + 1
 (UT-0888 flag description, v2.5.0); that 126 comprises 82 (original UT-0001..UT-0055) + 44
 (UT-0060..UT-0086). The ui total of 18 comprises 14 (UT-0750..UT-0758) + 4 (UT-0759, v2.5.0).
-Every `UT-####` maps to an `FR`/`NFR`/`RISK` in the RTM (Doc 08) — the new UT-0889 block's
-TC row is owed to the tester (§7 item 26). **(v2.7.0, ISS-01 correction:** the
+Every `UT-####` maps to an `FR`/`NFR`/`RISK` in the RTM (Doc 08) — the **UT-0890** block's
+TC row is owed to the tester (§7 item 26; per the review assignment, Doc 08 not reopened for
+it mid-session). **(v2.7.0, ISS-01 correction:** the
 UT-0887/UT-0759/UT-0888 TC rows are **not** owed — Doc 07 v2.6.0 / Doc 08 v2.9.0, both
 Approved 2026-09-06, carry `TC-3564`..`TC-3569` for them. The FR-131 Must row is not "owed" in
 the sense of missing documentation either: Doc 08 v2.9.0 records it **OPEN (G-PHASE3)**, a
 requirement-completeness gap on the unbuilt DES-098 acknowledge control (item 26(d)), not a
-TC-authoring gap.)
+TC-authoring gap.) **(v2.8.1, ISS-01 correction:** the v2.8.0 text above this annotation read
+"the UT-0889 and UT-0890 blocks' TC rows are owed" — **UT-0889's are not.** Doc 07 **v2.8.1**
+(Approved) mints `TC-3570`..`TC-3576` for it and Doc 08 **v2.11.3** (Approved, closed on the
+cap) carries them (line 530: "**UT-0889** → **TC-3570** … all five **Pass (obs.)** on R-18";
+`TC-3576` linked from the §3.2 NFR-023 row). The only `TC` row owed to the tester is
+**UT-0890's**, per `REVIEW-ASSIGNMENT-2026-09-08-VERIFY-PAGE.md`; Doc 08 closed on the cap
+and is not reopened for it mid-session. Doc 07/08 are not edited by this correction — both
+are Approved and correct.)
 (UT-#### IDs may each cover a describe-block with multiple `it()` assertions; the Count
 column is the verified figure from `npm test`; ID ranges mark RTM block boundaries only.)
 
@@ -887,6 +1047,7 @@ All of these are recorded in the scan and routed; none is closed by silence.
 | `delegation` | on | off | off | yes | Phase 4 — pending capture analysis |
 | `treasury` | on | on | **off** | yes | Phase 3 — pending per-jurisdiction legal review |
 | `fork` | on | on | **off** | yes | Phase 3 |
+| `enrolment_ui` | on | **off** | **off** | no | Enrolment sprint — blocked on CON-015 |
 | `l1_force_inclusion` | on | on | on | no | never — permanent escape hatch |
 | `sponsored_gas` | on | on | on | no | never — degrades to self-pay, never to denial |
 
@@ -902,6 +1063,16 @@ policy, not by accident, and their degrades-gracefully behaviour is separately t
 them — and those modules do not exist yet. Until they do, those five flags gate nothing
 on-chain, which is harmless only because the capability they name is entirely unimplemented.
 When each module lands it must read its flag in the same commit.
+
+**`enrolment_ui` (v2.8.0).** Gates the `/verify` route only — a UI screen, not a contract
+path. `onChain: false` is correct and precedented (`l1_force_inclusion`, `sponsored_gas`):
+there is no contract path to leave live, because the enrolment backing does not exist yet.
+Unlike those two "never" flags, `enrolment_ui` carries a real `removeBy` (the enrolment
+sprint, blocked on CON-015), so it stays **out of** `permanentFlags()` (which returns only
+flags with no `removeBy`) and the standing `permanentFlags() === []` assertion (UT-0890)
+continues to hold, like every other non-permanent flag (v2.8.1, ISS-03). UT-0055 (which
+enumerates the on-chain-relevant flags by name) is unaffected — `enrolment_ui` is not
+on-chain-relevant.
 
 ## 7. Known limitations of this drop
 
@@ -1091,6 +1262,12 @@ When each module lands it must read its flag in the same commit.
     records it **OPEN (G-PHASE3)** (Doc 08 line 16, 81-82) — a requirement-completeness gap (the
     ballot-surface acknowledge control, item (d) below, is unbuilt), not a documentation gap.
     The only `TC` row still owed by the tester is **UT-0889's** (new at v2.6.0/this version).
+    **(v2.8.1, ISS-01 correction:** UT-0889's TC row is **no longer owed** — Doc 07 **v2.8.1**
+    (Approved) mints `TC-3570`..`TC-3576` for it and Doc 08 **v2.11.3** (Approved, closed on
+    the cap) carries them (line 530: "**UT-0889** → **TC-3570** … all five **Pass (obs.)** on
+    R-18"). The sole owed `TC` row today is **UT-0890's** (§7 item 28), per
+    `REVIEW-ASSIGNMENT-2026-09-08-VERIFY-PAGE.md`; Doc 08 closed on the cap and is not
+    reopened for it mid-session. Doc 07/08 are not edited by this correction.)
     (d) **DES-098 acknowledgement step** — FR-131 requires that "the voter
     MUST acknowledge the notice to proceed"; the banner is non-dismissable but has no
     acknowledge control. That is SCR-13 story scope, not this defect fix, and it stays owed —
@@ -1157,6 +1334,29 @@ When each module lands it must read its flag in the same commit.
     `chore(infra)` commit that had, at cycle-2 review time, not yet landed. It has since landed
     (commit `84e2203`): `git ls-files apps/web/tsconfig.tsbuildinfo` returns nothing (untracked)
     and `.gitignore` carries a `*.tsbuildinfo` entry. Nothing further owed.
+28. **`/verify` is flag-gated off in the public build (approver decision 1,
+    `DECISIONS-2026-09-08-VERIFY-PAGE.md` §1; product-owner's choice, remedy (a), §5).** The
+    page's copy described the verify-and-discard enrolment design (FR-132 §(b), ADR-003,
+    DES-100) as current fact while enrolment is unbuilt (item 1 above,
+    `StubIdDocumentChecker.IS_INSECURE_MOCK()` = true) and the Phase-1 vendor adapter is
+    blocked on **CON-015**. The route now reads the `enrolment_ui` flag (§6): off in
+    staging/prod, on in `dev` only. With the flag off — i.e. in every environment above `dev`
+    — a citizen who reaches `/verify/` (the home CTA still links there) sees only the
+    honesty placeholder fixed at `DECISIONS-2026-09-08-VERIFY-PAGE.md` §5.3: what exists
+    today (no check at all), what is planned, and what the planned check will and will not
+    do; the header nav's `/verify/` link does not render either. The eleven existing
+    `verify.*` strings (`title`, `lead`, `onDeviceTitle`, `onDeviceBody`, `chooseIssuer`,
+    `chooseIssuerHelp`, `issuerRunByState`, `issuerIndependent`, `start`, `keptTitle`,
+    `kept`, `notKept`) are **not deleted** — they remain the enrolment sprint's starting
+    copy and render only in `dev`, headed by a comment in `en.ts`/`ar.ts` stating they
+    describe the design and are not a v1 claim. Guarded by **UT-0890**
+    (`apps/web/test/safety-surfaces.test.tsx`). **This is a distinct question from, and does
+    not rule on,** the still-**OPEN** `home.steps[0].body`/`home.promises[3]` question item 26
+    already tracks (that pair is `DECISIONS-2026-09-06-ENDORSEMENT-COPY.md` §7.1 / Doc 02
+    §13 tracked routing (j) — `DECISIONS-2026-09-08-VERIFY-PAGE.md` §5.7 is explicit that it
+    does not rule those two items; they stay open, unruled, for the product-owner). Nothing
+    in this item clears CON-015 or is progress on enrolment — it removes a false public
+    surface and builds nothing (DECISIONS §5.7).
 
 ## 8. Commit and branch conventions
 

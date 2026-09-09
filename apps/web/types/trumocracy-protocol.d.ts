@@ -52,6 +52,8 @@ declare module '@trumocracy/protocol' {
     env: 'dev' | 'staging' | 'prod',
     overrides?: Record<string, boolean>,
   ): boolean;
+  /** Flags with no removal target — CI/tests assert this stays empty (ADR-011 "ship dark"). */
+  export function permanentFlags(): FlagDefinition[];
 
   export interface ValidationError {
     field: string;

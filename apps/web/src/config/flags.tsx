@@ -90,4 +90,5 @@ export const FLAG = {
   TREASURY: 'treasury',
   FORK: 'fork',
   PRIVATE_ENDORSEMENT: 'private_endorsement',
+  ENROLMENT_UI: 'enrolment_ui',
 } as const;

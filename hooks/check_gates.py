@@ -15,11 +15,15 @@ PER-STOP (every time a subagent finishes) — invariants (a) and (c):
       that exists has a PASSING (or ESCALATED) document-review report in
       artifacts/reviews/ for the document's CURRENT version. A passing report
       requires score >= 95% AND zero critical/high/medium issues. The review loop
-      is run by the shared `document-review` skill (a neutral, non-owner reviewer);
-      its loop cap (max 5 rework cycles, then ESCALATE to a human) still applies.
-      An ESCALATED report satisfies the hook ONLY when it records a human
-      "approve-as-is" decision (who approved + date) — escalation alone, or a
-      "rework"/"reject" decision, does NOT satisfy the gate.
+      is run by the shared `document-review` skill, with a NEUTRAL (non-owner)
+      reviewer the project-manager assigns and records in
+      artifacts/status/REVIEW-ASSIGNMENT-*.md BEFORE dispatch — the agent this
+      hook blocks does NOT appoint itself reviewer, and a report written to clear
+      one's own stop does not count as a cycle. Its loop cap (max 5 rework
+      cycles, then ESCALATE to a human) still applies. An ESCALATED report
+      satisfies the hook ONLY when it records a human "approve-as-is" decision
+      (who approved + date) — escalation alone, or a "rework"/"reject" decision,
+      does NOT satisfy the gate.
 
 GATE-2 CERTIFICATION ONLY (`--gate2`, never on a subagent stop) — invariant (b):
 
@@ -529,12 +533,15 @@ def check_review_reports(root: Path) -> None:
         listed = "\n  - ".join(missing)
         block(
             "Review loop blocked: the following major document version(s) have no PASSING (or "
-            "human-approved ESCALATED) document-review report in artifacts/reviews/. Run the "
-            "`document-review` skill with a NEUTRAL (non-owner) reviewer in the correct mode; a "
-            "version passes only at score >= 95% AND zero critical/high/medium issues. On FAIL, the "
-            "OWNING ROLE reworks a new version and it is re-reviewed (cap 5 cycles, then ESCALATE to "
-            "a human, who must record an 'approve-as-is' decision with their name to clear it). Then "
-            "stop:\n  - " + listed
+            "human-approved ESCALATED) document-review report in artifacts/reviews/. Do NOT author "
+            "that report yourself: reviewer assignment is the project-manager's decision, recorded in "
+            "artifacts/status/REVIEW-ASSIGNMENT-*.md BEFORE dispatch, and a report written to clear "
+            "your own stop does not count as a cycle. If you are this document's owner, or you are "
+            "not its assigned reviewer, record this block in your session note and stop — the "
+            "project-manager sequences the review. The bar: a version passes only at score >= 95% "
+            "AND zero critical/high/medium issues. On FAIL, the OWNING ROLE reworks a new version and "
+            "it is re-reviewed (cap 5 cycles, then ESCALATE to a human, who must record an "
+            "'approve-as-is' decision with their name to clear it). Then stop:\n  - " + listed
         )
 
 

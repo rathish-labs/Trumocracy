@@ -46,6 +46,16 @@ blocked agent can write; only a check the blocked party cannot satisfy unilatera
   5-cycle escalation budget.
 - Owner/reviewer note paths are pre-registered in `artifacts/memory-index.json` before dispatch, so
   the memory-protocol half of the hook can never be the reason a role feels it must "clear" a block.
+- **2026-09-08 — root cause fixed at source in this product (approver decision 3,
+  `artifacts/status/DECISIONS-2026-09-08-VERIFY-PAGE.md`):** the `hooks/check_gates.py` review-loop block
+  text no longer says "Run the `document-review` skill …"; it now says do NOT author that report yourself,
+  points to the project-manager and the `REVIEW-ASSIGNMENT-*.md` record, and states that a report written
+  to clear one's own stop does not count. The org-level items 1–4 above still stand: this product's hook
+  is one scaffold; the org hook and the role definitions propagate the fix everywhere.
+  **Field evidence, same day:** twelve subsequent stops across six roles (engineer, tester,
+  reviewer-qa, technical-writer, product-owner, and a product-owner reviewer instance) hit the reworded
+  block; every one recorded it and stopped, none authored a report to clear its own stop — including
+  reviewers whose own FAIL verdict was the blocker (tester, reviewer-qa), who declined to re-score.
 
 ## Proposed change to the role definitions / gate (strengthened from the 2026-08-31 draft)
 

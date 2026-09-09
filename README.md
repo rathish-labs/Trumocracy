@@ -29,9 +29,10 @@ the operator's own database can see how each account voted and which party it be
 The private ballot the rest of this README describes is the **v2 design** (MACI,
 zero-knowledge enrolment) and **is not built**.
 
-**v1 also checks that you are a real, legal-age person — not that you are a *unique* one.**
-Someone who holds two legitimate government identity documents can pass the check twice and
-hold two counting accounts. One-person-one-vote is a v2 property; v1 does not guarantee it
+**v1's design also checks that you are a real, legal-age person — not that you are a *unique*
+one.** That check is not built yet (see "What is actually built", below). When it is built,
+someone who holds two legitimate government identity documents will be able to pass it twice
+and hold two counting accounts. One-person-one-vote is a v2 property; v1 does not guarantee it
 (`FR-132`(d), Doc 02 §4.46), and no public-facing material for this version should be read as
 promising otherwise.
 
@@ -107,7 +108,8 @@ packages/sdk/         TypeScript client: proofs, transports, verified reads
 packages/ui/          shared React components (design tokens; e.g. PrivacyStatus, not yet
                       mounted on any shipped surface — see Doc 06 §7)
 apps/web/             the citizen-facing PWA — three flagged demo features plus one
-                      placeholder page (see "What is actually built", below)
+                      flag-gated route that shows a placeholder in the public build
+                      (see "What is actually built", below)
 services/indexer/     event-sourced read model — a cache, never an authority
 tools/evm-harness/    solc-js + EthereumJS: offline, deterministic contract tests
 tools/dep-guard/      enforces the dependency direction from ADR-011
@@ -117,23 +119,28 @@ artifacts/            session notes and decision records from every VEKTOR agent
 
 ## What is actually built, and what is a demo
 
-Three application features are wired end to end behind feature flags, and one further page is
-in the navigation but is not one of them:
+Three application features are wired end to end behind feature flags, and a fourth route,
+`/verify`, exists behind its own flag, off by default in the public build:
 
 - **party creation** — write a charter, open it as a petition (`/petitions/new`);
 - **join and membership** — join an open party with a phone number (`/parties`, carries the
   FR-131 clause (d) open-tier/counting-tier notice);
 - **proposals and debate** — put an idea to the members, including the vote-surface honesty
   banner (`/proposals`);
-- **`/verify`** — a **placeholder** enrolment screen, linked from the site's primary navigation.
-  It is **not** behind a feature flag and is wired to nothing. Its copy describes the planned
-  **v2** enrolment design (a proof that "never leaves your phone", a code "which cannot be
-  traced back to you") — not v1 behaviour. Whether that copy is an honest description of a
-  future page or an overclaim on a shipped one is an **open, unruled question.** The closest
-  tracked item, Doc 02 §13 (j), covers the **landing-page** enrolment strings
-  (`home.steps[0].body`, `home.promises[3]`; Doc 06 §7 item 26) — **this page's own copy is not
-  yet in any register.** It is named here so the inventory is complete, not because the
-  question is tracked or settled.
+- **`/verify`** — the planned identity-check screen. It sits behind the feature flag
+  `enrolment_ui`, which is **on in dev and off in staging and production**. In the public build
+  the link does not appear in the site's navigation, and the page itself shows a short notice:
+  no check exists yet, and a plain description of what the planned check will and will not do.
+  Enrolment is not built and cannot start until a legal opinion for the first pilot country is
+  finished (`CON-015`). The fuller design copy — the enrolment sprint's starting point, not a
+  promise of the words the finished page will use — stays in the code and renders only when the
+  flag is on in `dev`. It must be checked and rewritten before that flag turns on: some of it is
+  wrong even about the planned check — the outside company that will run it does see the
+  document, this pilot has only one government-run check to offer (not the several the text
+  describes), and a scrambled version of the document is kept, not nothing. See
+  [Doc 14 §1.2](docs/14-user-guide.md) for the citizen-facing account of this plan, and Doc 02
+  §13 (j)(3) — ruled and closed 2026-09-08 — for the decision, recorded in full at
+  [`artifacts/status/DECISIONS-2026-09-08-VERIFY-PAGE.md`](artifacts/status/DECISIONS-2026-09-08-VERIFY-PAGE.md).
 
 The three flagged features are **static-export demo pages** (`apps/web`, Next.js
 `output: 'export'`). They use **in-memory stores** — nothing you do on them persists, and
@@ -154,7 +161,7 @@ carries the same warning at the top.
 npm ci                     # ~18s on a clean clone; no network calls beyond the registry
 npm run lint:deps          # dependency-direction check (ADR-011)
 npm run typecheck          # packages/ui, apps/web
-npm test                   # 625 tests at the time of writing (2026-09-06); ~3 minutes —
+npm test                   # 640 tests at the time of writing (2026-09-08); ~3 minutes —
                             # the contracts suite deploys the protocol on an in-process EVM
 npm run test:protocol      # just the reference implementation, in milliseconds — the fast loop
 npm run compile:contracts  # solc-js compile
