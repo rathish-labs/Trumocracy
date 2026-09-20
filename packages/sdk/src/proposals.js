@@ -229,8 +229,9 @@ export class ProposalService {
     if (!canAuthorProposal(participationTier)) {
       fail(
         'AUTHORSHIP_REQUIRES_WORKER_TIER',
-        'authoring a proposal requires Worker tier or above, because authorship is public ' +
-          'and Supporters are anonymous. Worker tier is self-declared — no one approves it.',
+        "authoring a proposal requires Worker tier or above, because authorship is public " +
+          "and a Supporter's participation is never published. Worker tier is self-declared " +
+          "— no one approves it.",
         { currentTier: participationTier, selfDeclarable: true },
       );
     }

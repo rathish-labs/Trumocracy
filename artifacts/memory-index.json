@@ -7035,5 +7035,1086 @@
       "reviews": "06-coding-and-ut-v2.5.0-technical-cycle1 (PASS 96%), 06-coding-and-ut-v2.5.1-technical-cycle2 (PASS 98%)"
     },
     "routed_to": "architect (Doc 03 section 10.12.3 v1 row title + banned-words note + three-state table ver title cell and its v2.7.1 note; section 13 Phase-1 mitigation wording); sre (Doc 09 REL-LIM-18 to closed with the commit SHA; pre-mount blocker cleared); tester (Doc 07/08 TC rows for UT-0887/0759/0888; FR-131 RTM Must row); product-owner (petition-endorsement landing copy en + ar); US-0134 (DES-098 acknowledge-to-proceed control still not built); technical-writer / native speaker (Arabic banner review before any Arabic-locale customer deployment); reviewer-qa (merge sign-off)."
+  },
+  "architect-2026-09-06T1000-fr131-cascade": {
+    "file": "artifacts/architect-2026-09-06T1000-fr131-cascade.md",
+    "role": "architect (owning role - Doc 03 SDD and Doc 04 test strategy)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T10:00:00Z",
+    "phase": "Design - FR-131 cascade closure (Doc 06 v2.5.1 s7 item 26(a); engineer note artifacts/engineer-2026-09-05T1700.md; commit 0a5c542)",
+    "scope": "Anchored FIND/REPLACE spec for Doc 03 s10.12.3 (three-state table ver title cell, backing-aware sub-table v1 row, the v2.7.0 banned-words note, the v2.7.1 normative note) and s13 \"Public tallies in Phase 1\"; and Doc 04 A-02.6 / OPEN-01, which still say \"votes are anonymous but not receipt-free\". PM transcribes with apply-spec.cjs.",
+    "summary": "From the note: Role: architect (Ravi Deshmukh, Principal Architect) · Phase: Design (maintenance cascade) Product: Trumocracy · Documents owned: Doc 03 (SDD), Doc 04 (Test Strategy) Deliverable: artifacts/architect-2026-09-06T1000-fr131-cascade-spec.md — a 26-operation anchored FIND/REPLACE spec for the project-manager to transcribe mechanically. I wrote nothing under docs/ (no Edit tool; whole-file Write on these documents truncates them — it destroyed Doc 04 once). I did not open or write artifacts/memory-index.json. --- Doc 06 v2.5.1 §7 item 26(a) and artifacts/engineer-2026-09-05T1700.md (commit 0a5c542, merged to main in PR #19 as 84e2203) routed an FR-131 cascade to me. The code and Doc 09 v1.3.0 now tell the v1 truth; the SDD and the test strategy still carried the retired framing — \"votes are anonymous but not receipt-free\" — and the v2.7.0 architect ruling that the ver title \"Verified — privat …",
+    "artifacts": [
+      "artifacts/architect-2026-09-06T1000-fr131-cascade.md",
+      "artifacts/architect-2026-09-06T1000-fr131-cascade-spec.md"
+    ],
+    "routed_to": "project-manager (transcription), then neutral technical review of Doc 03 and Doc 04."
+  },
+  "sre-2026-09-06T1000-rel-lim-18-close": {
+    "file": "artifacts/sre-2026-09-06T1000-rel-lim-18-close.md",
+    "role": "sre (owning role - Doc 09 release notes)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T10:00:00Z",
+    "phase": "Launch - close REL-LIM-18 in Doc 09 citing commit 0a5c542 (Doc 06 v2.5.1 s7 item 26(b))",
+    "scope": "Anchored FIND/REPLACE spec moving REL-LIM-18 to Closed with the commit SHA, correcting every Doc 09 sentence that still describes the five strings as shipped, and clearing the PrivacyStatus pre-mount blocker. PM transcribes with apply-spec.cjs.",
+    "summary": "From the note: Role: sre (Chen Wei — Reliability Lead) Date: 2026-09-06 Trigger: Doc 06 v2.5.1 §7 item 26(b); artifacts/engineer-2026-09-05T1700.md Artifacts: artifacts/sre-2026-09-06T1000-rel-lim-18-spec.md (anchored FIND/REPLACE spec, 11 ops) artifacts/sre-2026-09-06T1000-rel-lim-18-close.md (this note) Target: docs/09-release-notes.md v1.4.0 Approved - v1.5.0 In Review Index: pre-registered by the project-manager; NOT modified by this session Doc 06 v2.5.1 §7 item 26(b) routed the REL-LIM-18 closure to the sre. I verified the closure against HEAD myself, then authored an 11-op anchored FIND/REPLACE spec for Doc 09 v1.5.0. I did not edit docs/ — the project-manager transcribes the spec mechanically. I released nothing and deployed nothing. Gate 2 is not approved, and Doc 09's own verdict on release 0.1.0 remains HALTED for the two reasons that each block it on their own (RTM Must-row gaps; undrilled  …",
+    "artifacts": [
+      "artifacts/sre-2026-09-06T1000-rel-lim-18-close.md",
+      "artifacts/sre-2026-09-06T1000-rel-lim-18-spec.md"
+    ],
+    "routed_to": "project-manager (transcription), then neutral business review of Doc 09."
+  },
+  "tester-2026-09-06T1000-fr131-tc-rtm": {
+    "file": "artifacts/tester-2026-09-06T1000-fr131-tc-rtm.md",
+    "role": "tester (owning role - Doc 07 test cases and Doc 08 RTM)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T10:00:00Z",
+    "phase": "Verify - TC rows for UT-0887/UT-0759/UT-0888 and the FR-131 RTM Must row (Doc 06 v2.5.1 s7 item 26(c)); TC-2614 retired-framing correction",
+    "scope": "Anchored FIND/REPLACE spec for Doc 07 (new TC rows, TC-2614 expected-result wording, orphan check, counts) and Doc 08 (FR-131 forward-trace row, gap-log entry 117, summary counts, DoD check) with an honest ruling on whether the FR-131 Must row closes. PM transcribes with apply-spec.cjs.",
+    "summary": "From the note: Role: tester (Ji-woo Park, Test Lead) · owning role for Doc 07 (test cases) and Doc 08 (RTM) · Phase: Verify Trigger: Doc 06 v2.5.1 §7 item 26(c) + artifacts/engineer-2026-09-05T1700.md — commit 0a5c542 (PR #19, merged to main as 84e2203) closed Doc 09 REL-LIM-18 in code under US-0134 and added three UT blocks with no TC rows. Deliverables: one anchored FIND/REPLACE spec covering both documents — artifacts/tester-2026-09-06T1000-fr131-tc-rtm-spec.md (38 ops) — and this note. No docs/ file was written by me (delivery format is a spec the project-manager transcribes); no product code was touched (engineer-exclusive). --- 1. Read the code before writing about it. apps/web/test/safety-surfaces.test.tsx (UT-0887, 4 assertions), packages/ui/test/PrivacyStatus.test.tsx (UT-0759, 4 assertions; UT-0751/UT-0753 changed expectations), packages/protocol/test/party-and-regions.test.js (UT-0888, 1 ass …",
+    "artifacts": [
+      "artifacts/tester-2026-09-06T1000-fr131-tc-rtm.md",
+      "artifacts/tester-2026-09-06T1000-fr131-tc-rtm-spec.md"
+    ],
+    "routed_to": "project-manager (transcription), then neutral technical review of Doc 07 and Doc 08."
+  },
+  "product-owner-2026-09-06T1000-endorsement-copy-ruling": {
+    "file": "artifacts/product-owner-2026-09-06T1000-endorsement-copy-ruling.md",
+    "role": "product-owner (decider - Doc 02 requirements; FR-131 honesty rulings)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T10:00:00Z",
+    "phase": "Define - ruling on the landing-page petition-endorsement copy \"name kept private\" (en) / \"بقاء اسمك سريًا\" (ar), routed by Doc 06 v2.5.1 s7 item 26",
+    "scope": "Decide whether anonymous endorsement is a legitimate v1 property (FR-015/FR-017, Doc 02 s16 v1 posture) or an overclaim of the FR-131 class; record the ruling in artifacts/status/DECISIONS-2026-09-06-ENDORSEMENT-COPY.md; if a Doc 02 change is needed, an anchored spec.",
+    "summary": "From the note: Role: product-owner (Priya Raghunathan, Doc 02 owner; FR-131 requirement owner: Nadia Hassan) · Phase: Define (honesty ruling routed in from Coding & UT) · Product: Trumocracy · Trigger: Doc 06 v2.5.1 §7 item 26 + artifacts/engineer-2026-09-05T1700.md (open item routed to product-owner) after the FR-131 sweep at commit 0a5c542 · Approver: Rathish, 2026-09-06 — confirmation sought, not yet given. Two pieces of work this session: (1) the endorsement-copy ruling (the task), and (2) two document-review cycles run as a neutral reviewer on architect-owned Docs 03 and 04, demanded by the SubagentStop review-loop hook (see §\"Review-loop work\" below). Ruled one question the engineer correctly declined to decide: is \"anonymous endorsement\" a legitimate v1 property, or another overclaim of the class corrected once already for party membership (joinPrivate, UT-0869)? Ruling: B — overclaim; the copy  …",
+    "artifacts": [
+      "artifacts/product-owner-2026-09-06T1000-endorsement-copy-ruling.md",
+      "artifacts/product-owner-2026-09-06T1000-endorsement-copy-spec.md",
+      "artifacts/status/DECISIONS-2026-09-06-ENDORSEMENT-COPY.md"
+    ],
+    "routed_to": "engineer (if the copy must change - product code, next build session); project-manager."
+  },
+  "reviewer-qa-2026-09-06T1300-doc03-04-review": {
+    "file": "artifacts/reviewer-qa-2026-09-06T1300-doc03-04-review.md",
+    "role": "reviewer-qa (neutral reviewer, document-review skill, technical mode)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T13:00:00Z",
+    "phase": "Design - technical review of Doc 03 v2.12.0 and Doc 04 v1.3.0 (FR-131 cascade closure), per artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-FR131-CASCADE.md",
+    "scope": "Scores and lists issues only; never edits. Reports artifacts/reviews/03-architecture-design-sdd-v2.12.0-technical-cycle1.md and artifacts/reviews/04-test-strategy-master-plan-v1.3.0-technical-cycle1.md.",
+    "summary": "From the note: Role: reviewer-qa (Rafael Duarte) — NEUTRAL REVIEWER, document-review skill, technical mode Date: 2026-09-06 Assignment: artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-FR131-CASCADE.md (PM, Ana-Maria Petrescu) Scope: Score two documents. Read-only: no document, code or test artifact was edited. artifacts/memory-index.json NOT modified (pre-registered by the PM, per instruction). Not done: No merge sign-off, no Gate-2 readiness summary — this was a document-review cycle, not a Gate-2 verification. Nothing was committed. Loaded CLAUDE.md and the document-review skill, then reviewed, in technical mode: Document Version Owner Report Verdict Score C/H/M/L --------------------- docs/03-architecture-design-sdd.md 2.12.0 architect artifacts/reviews/03-architecture-design-sdd-v2.12.0-technical-cycle1.md FAIL 89% 0/1/2/2 docs/04-test-strategy-master-plan.md 1.3.0 architect artifacts/reviews/04-test …",
+    "artifacts": [
+      "artifacts/reviewer-qa-2026-09-06T1300-doc03-04-review.md"
+    ],
+    "routed_to": "project-manager; architect for any rework."
+  },
+  "reviewer-qa-2026-09-06T1400-doc07-08-review": {
+    "file": "artifacts/reviewer-qa-2026-09-06T1400-doc07-08-review.md",
+    "role": "reviewer-qa (neutral reviewer, document-review skill, technical mode)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T14:00:00Z",
+    "phase": "Verify - technical review of Doc 07 v2.5.0 and Doc 08 v2.8.0 (FR-131 TC rows and RTM ruling), per artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-FR131-CASCADE.md",
+    "scope": "Scores and lists issues only; never edits. Reports artifacts/reviews/07-test-cases-suites-v2.5.0-technical-cycle1.md and artifacts/reviews/08-traceability-matrix-v2.8.0-technical-cycle1.md.",
+    "summary": "From the note: Role: reviewer-qa (Rafael Duarte) — NEUTRAL REVIEWER, document-review skill, technical mode Assigned by: artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-FR131-CASCADE.md (project-manager) Scope: Doc 07 v2.5.0 and Doc 08 v2.8.0 ONLY. Docs 03/04 are another reviewer-qa instance. Date: 2026-09-06 Wrote: artifacts/reviews/07-test-cases-suites-v2.5.0-technical-cycle1.md artifacts/reviews/08-traceability-matrix-v2.8.0-technical-cycle1.md this note Edited: NOTHING in docs/ or in product code. Read-only by design. memory-index.json NOT touched (pre-registered by the PM). Nothing committed. 1. Read CLAUDE.md, the review assignment (including the 2026-09-06 01:23 incident section), the document-review skill, docs/templates/document-review.template.md, Doc 07 v2.5.0 and Doc 08 v2.8.0 end to end, and the git diff of both against HEAD. 2. Ran npm test from the repo root myself — 619 passed / 619, 0 fai …",
+    "artifacts": [
+      "artifacts/reviewer-qa-2026-09-06T1400-doc07-08-review.md"
+    ],
+    "routed_to": "project-manager; tester for any rework."
+  },
+  "tester-2026-09-06T1400-doc09-review": {
+    "file": "artifacts/tester-2026-09-06T1400-doc09-review.md",
+    "role": "tester (neutral reviewer, document-review skill, business mode)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T14:00:00Z",
+    "phase": "Launch - business review of Doc 09 v1.5.0 (REL-LIM-18 closure), per artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-FR131-CASCADE.md",
+    "scope": "Scores and lists issues only; never edits. Report artifacts/reviews/09-release-notes-v1.5.0-business-cycle1.md.",
+    "summary": "From the note: Role: tester (Ji-woo Park) — NEUTRAL REVIEWER, document-review skill, business mode Date: 2026-09-06 Assignment: artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-FR131-CASCADE.md (PM, Ana-Maria Petrescu) Document: docs/09-release-notes.md v1.5.0 (owner: sre, Chen Wei) — the REL-LIM-18 closure pass Report: artifacts/reviews/09-release-notes-v1.5.0-business-cycle1.md Verdict: FAIL — 93%, 0 Critical / 0 High / 3 Medium / 2 Low, cycle 1 of 5 Note: NOT reviewing Doc 07/08 this session — those are my own documents; reviewer-qa has them. I did not edit Doc 09 (read-only on the reviewed document, per the skill). Read CLAUDE.md, the review assignment, the document-review skill and docs/templates/document-review.template.md, then Doc 09 v1.5.0 end to end (902 lines). Ran the business rubric (B1–B6). Verified every load-bearing claim against source rather than against the sre's narrative, as the assig …",
+    "artifacts": [
+      "artifacts/tester-2026-09-06T1400-doc09-review.md"
+    ],
+    "routed_to": "project-manager; sre for any rework."
+  },
+  "sre-2026-09-06T1500-doc09-cycle2": {
+    "file": "artifacts/sre-2026-09-06T1500-doc09-cycle2.md",
+    "role": "sre (owning role - Doc 09)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T15:00:00Z",
+    "phase": "Launch - Doc 09 rework cycle 1 against artifacts/reviews/09-release-notes-v1.5.0-business-cycle1.md (FAIL 93%, 0C/0H/3M/2L) into v1.6.0",
+    "scope": "Anchored FIND/REPLACE spec fixing ISS-01..ISS-05; PM transcribes.",
+    "summary": "From the note: Role: sre (Chen Wei — Reliability Lead) Date: 2026-09-06 Against: artifacts/reviews/09-release-notes-v1.5.0-business-cycle1.md (business, cycle 1 — FAIL 93%, 0C/0H/3M/2L; reviewer: tester, neutral, PM-assigned) Artifacts: artifacts/sre-2026-09-06T1500-doc09-cycle2-spec.md (14-op FIND/REPLACE spec) artifacts/sre-2026-09-06T1500-doc09-cycle2.md (this note) Target: docs/09-release-notes.md v1.5.0 In Review - v1.6.0 In Review Index: pre-registered by the project-manager; NOT opened or modified Reworked Doc 09 into v1.6.0 as a 14-op anchored FIND/REPLACE spec against the current file (which contains my v1.5.0 text). I did not edit docs/, and I touched no other document. I did not re-litigate the REL-LIM-18 closure. The cycle-1 review verified that narrative against source — commit, all six sites, every post-fix pin, the three guards, the 619-green suite, the still-unmounted component, the wor …",
+    "artifacts": [
+      "artifacts/sre-2026-09-06T1500-doc09-cycle2.md",
+      "artifacts/sre-2026-09-06T1500-doc09-cycle2-spec.md"
+    ],
+    "routed_to": "project-manager (transcription), then tester (neutral business review, cycle 2)."
+  },
+  "architect-2026-09-06T1500-doc03-04-cycle2": {
+    "file": "artifacts/architect-2026-09-06T1500-doc03-04-cycle2.md",
+    "role": "architect (owning role - Doc 03 and Doc 04)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T15:00:00Z",
+    "phase": "Design - rework of Doc 03 v2.12.0 (FAIL 89%, 0C/1H/2M/2L) into v2.13.0 and, if its review fails, Doc 04 v1.3.0 into v1.4.0",
+    "scope": "Anchored FIND/REPLACE spec; PM transcribes.",
+    "summary": "From the note: Role: architect (Ravi Deshmukh, Principal Architect) · Phase: Design (review-loop rework) Documents owned: Doc 03 (SDD) v2.12.0 → v2.13.0; Doc 04 (Test Strategy) v1.3.0 → v1.4.0 Deliverable: artifacts/architect-2026-09-06T1500-doc03-04-cycle2-spec.md — an 18-operation anchored FIND/REPLACE spec for the project-manager to transcribe. I wrote nothing under docs/ (no Edit tool; whole-file Write truncates these documents). I did not open artifacts/memory-index.json. I did not touch Docs 07, 08 or 09. --- Cycle-1 reviews (reviewer-qa, Rafael Duarte, neutral, PM-assigned) FAILed both documents at 89%: - Doc 03 v2.12.0 — 0C / 1H / 2M / 2L — artifacts/reviews/03-architecture-design-sdd-v2.12.0-technical-cycle1.md - Doc 04 v1.3.0 — 0C / 0H / 2M / 6L — artifacts/reviews/04-test-strategy-master-plan-v1.3.0-technical-cycle1.md Both reports were read in full, including their \"Verified NOT defects\" se …",
+    "artifacts": [
+      "artifacts/architect-2026-09-06T1500-doc03-04-cycle2.md",
+      "artifacts/architect-2026-09-06T1500-doc03-04-cycle2-spec.md"
+    ],
+    "routed_to": "project-manager (transcription), then reviewer-qa (neutral technical review, cycle 2)."
+  },
+  "tester-2026-09-06T1600-doc09-cycle2-review": {
+    "file": "artifacts/tester-2026-09-06T1600-doc09-cycle2-review.md",
+    "role": "tester (neutral reviewer, business mode)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T16:00:00Z",
+    "phase": "Launch - cycle-2 business review of Doc 09 v1.6.0",
+    "scope": "Scores and lists issues only. Report artifacts/reviews/09-release-notes-v1.6.0-business-cycle2.md.",
+    "summary": "From the note: Role: tester (Ji-woo Park) — acting as NEUTRAL REVIEWER via the document-review skill Date: 2026-09-06 Assignment: artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-FR131-CASCADE.md (Doc 09 → business → tester) Document: docs/09-release-notes.md v1.6.0 (owner: sre, Chen Wei) Report: artifacts/reviews/09-release-notes-v1.6.0-business-cycle2.md Verdict: FAIL — 93%, 0 Critical / 0 High / 4 Medium / 3 Low, cycle 2 of 5 Predecessor: artifacts/reviews/09-release-notes-v1.5.0-business-cycle1.md (FAIL 93%, 0C/0H/3M/2L) Read CLAUDE.md, the assignment (including the 2026-09-06 01:23 self-appointment incident), the document-review skill and the report template. Read docs/09-release-notes.md v1.6.0 end to end (998 lines). Re-derived every load-bearing claim against the repository at HEAD rather than accepting the document's own verification statement. Scored against the business rubric (B1–B6), wrote th …",
+    "artifacts": [
+      "artifacts/tester-2026-09-06T1600-doc09-cycle2-review.md"
+    ],
+    "routed_to": "project-manager; sre for any rework."
+  },
+  "reviewer-qa-2026-09-06T1600-doc03-04-cycle2-review": {
+    "file": "artifacts/reviewer-qa-2026-09-06T1600-doc03-04-cycle2-review.md",
+    "role": "reviewer-qa (neutral reviewer, technical mode)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T16:00:00Z",
+    "phase": "Design - cycle-2 technical review of Doc 03 v2.13.0 (and Doc 04 v1.4.0 if reworked)",
+    "scope": "Scores and lists issues only. Reports artifacts/reviews/03-architecture-design-sdd-v2.13.0-technical-cycle2.md (and 04-test-strategy-master-plan-v1.4.0-technical-cycle2.md if applicable).",
+    "summary": "From the note: Role: reviewer-qa (Rafael Duarte) · Capacity: neutral reviewer running the shared document-review skill in technical mode (NOT the Gate-2 merge-signing capacity) Assignment: artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-FR131-CASCADE.md Scope: Doc 03 v2.13.0 and Doc 04 v1.4.0 only. Docs 07/08 belong to a separate instance. Wrote: two review reports + this note. I edited no document and no code. I did not open or modify artifacts/memory-index.json (this note was pre-registered by the PM). --- Document Version Cycle Score C/H/M/L Verdict ------------------ docs/03-architecture-design-sdd.md 2.13.0 2 of 5 97% 0/0/0/2 PASS docs/04-test-strategy-master-plan.md 1.4.0 2 of 5 96% 0/0/0/3 PASS Reports: - artifacts/reviews/03-architecture-design-sdd-v2.13.0-technical-cycle2.md - artifacts/reviews/04-test-strategy-master-plan-v1.4.0-technical-cycle2.md Loop trajectory: Doc 03 89% then 97%; Doc 04 8 …",
+    "artifacts": [
+      "artifacts/reviewer-qa-2026-09-06T1600-doc03-04-cycle2-review.md"
+    ],
+    "routed_to": "project-manager; architect for any rework."
+  },
+  "tester-2026-09-06T1600-doc07-08-cycle2": {
+    "file": "artifacts/tester-2026-09-06T1600-doc07-08-cycle2.md",
+    "role": "tester (owning role - Doc 07 and Doc 08)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T16:00:00Z",
+    "phase": "Verify - rework of Doc 07 v2.5.0 (FAIL 92%, 0C/0H/3M/4L) into v2.6.0 and Doc 08 v2.8.0 (FAIL 85%, 0C/2H/3M/3L) into v2.9.0",
+    "scope": "Anchored FIND/REPLACE spec; PM transcribes.",
+    "summary": "From the note: Role: tester (Ji-woo Park, Test Lead) · Session: tester-2026-09-06T1600 Deliverable: one anchored FIND/REPLACE spec at artifacts/tester-2026-09-06T1600-doc07-08-cycle2-spec.md (33 ops, both documents). No docs/ file was edited by this session — the spec is handed to the applier. No product code was written or edited. artifacts/memory-index.json was not opened (this note was pre-registered by the project-manager). Reworked both tester-owned documents against their cycle-1 FAIL reports: Document Cycle-1 report Verdict Bump ------------ docs/07-test-cases-suites.md artifacts/reviews/07-test-cases-suites-v2.5.0-technical-cycle1.md FAIL 92% · 0C/0H/3M/4L v2.5.0 → v2.6.0, Status: In Review, Last updated: 2026-09-06 (already correct) docs/08-traceability-matrix.md artifacts/reviews/08-traceability-matrix-v2.8.0-technical-cycle1.md FAIL 85% · 0C/2H/3M/3L v2.8.0 → v2.9.0, Status: In Review, Last  …",
+    "artifacts": [
+      "artifacts/tester-2026-09-06T1600-doc07-08-cycle2.md",
+      "artifacts/tester-2026-09-06T1600-doc07-08-cycle2-spec.md"
+    ],
+    "routed_to": "project-manager (transcription), then reviewer-qa (neutral technical review, cycle 2)."
+  },
+  "reviewer-qa-2026-09-06T1700-doc07-08-cycle2-review": {
+    "file": "artifacts/reviewer-qa-2026-09-06T1700-doc07-08-cycle2-review.md",
+    "role": "reviewer-qa (neutral reviewer, technical mode)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T17:00:00Z",
+    "phase": "Verify - cycle-2 technical review of Doc 07 v2.6.0 and Doc 08 v2.9.0",
+    "scope": "Scores and lists issues only. Reports artifacts/reviews/07-test-cases-suites-v2.6.0-technical-cycle2.md and artifacts/reviews/08-traceability-matrix-v2.9.0-technical-cycle2.md.",
+    "summary": "From the note: Role: reviewer-qa (Rafael Duarte) · Session: reviewer-qa-2026-09-06T1700 Assignment: artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-FR131-CASCADE.md — neutral technical reviewer for the two tester-owned documents, cycle 2 of 5. I did not self-appoint; I reviewed nothing outside the two assigned documents. Read-only session. No docs/ file, no product code and no test artifact was edited. artifacts/memory-index.json was not opened for writing (this note was pre-registered by the project-manager). Nothing was committed. Document Version Mode Score C/H/M/L Cycle Verdict Report ------------------------ docs/07-test-cases-suites.md 2.6.0 technical 97% 0/0/0/3 2 of 5 PASS artifacts/reviews/07-test-cases-suites-v2.6.0-technical-cycle2.md docs/08-traceability-matrix.md 2.9.0 technical 98% 0/0/0/1 2 of 5 PASS artifacts/reviews/08-traceability-matrix-v2.9.0-technical-cycle2.md Both meet the bar (sco …",
+    "artifacts": [
+      "artifacts/reviewer-qa-2026-09-06T1700-doc07-08-cycle2-review.md"
+    ],
+    "routed_to": "project-manager; tester for any rework."
+  },
+  "sre-2026-09-06T1700-doc09-cycle3": {
+    "file": "artifacts/sre-2026-09-06T1700-doc09-cycle3.md",
+    "role": "sre (owning role - Doc 09)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T17:00:00Z",
+    "phase": "Launch - Doc 09 rework cycle 2 against artifacts/reviews/09-release-notes-v1.6.0-business-cycle2.md (FAIL 93%, 0C/0H/4M/3L) into v1.7.0",
+    "scope": "Anchored FIND/REPLACE spec; PM transcribes.",
+    "summary": "From the note: Role: sre (Chen Wei — Reliability Lead) Date: 2026-09-06 Against: artifacts/reviews/09-release-notes-v1.6.0-business-cycle2.md (business, cycle 2 — FAIL 93%, 0C/0H/4M/3L; reviewer: tester, neutral, PM-assigned) Artifacts: artifacts/sre-2026-09-06T1700-doc09-cycle3-spec.md (12-op FIND/REPLACE spec) artifacts/sre-2026-09-06T1700-doc09-cycle3.md (this note) Target: docs/09-release-notes.md v1.6.0 In Review - v1.7.0 In Review Index: pre-registered by the project-manager; NOT opened or modified Reworked Doc 09 into v1.7.0 as a 12-op anchored spec against the current file. I did not edit docs/, and I touched no other document. The REL-LIM-18 closure is not reopened. The cycle-2 reviewer re-derived it against source — eight post-fix pins line-exact, three guards present, 619 green re-run independently, component still unmounted, FR-131 word ban clean for a fifth consecutive version, HALT never  …",
+    "artifacts": [
+      "artifacts/sre-2026-09-06T1700-doc09-cycle3.md",
+      "artifacts/sre-2026-09-06T1700-doc09-cycle3-spec.md"
+    ],
+    "routed_to": "project-manager (transcription), then tester (neutral business review, cycle 3)."
+  },
+  "tester-2026-09-06T1800-doc09-cycle3-review": {
+    "file": "artifacts/tester-2026-09-06T1800-doc09-cycle3-review.md",
+    "role": "tester (neutral reviewer, business mode)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T18:00:00Z",
+    "phase": "Launch - cycle-3 business review of Doc 09 v1.7.0",
+    "scope": "Scores and lists issues only. Report artifacts/reviews/09-release-notes-v1.7.0-business-cycle3.md.",
+    "summary": "From the note: Role: tester (Ji-woo Park) — as PM-assigned neutral reviewer, NOT as Doc 07/08 owner Date: 2026-09-06 (T1800) Assignment: artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-FR131-CASCADE.md Skill: document-review (business mode) Document: docs/09-release-notes.md v1.7.0 (owner: sre, Chen Wei) Report: artifacts/reviews/09-release-notes-v1.7.0-business-cycle3.md Verdict: FAIL — 92%, 0 Critical / 0 High / 3 Medium / 2 Low, cycle 3 of 5 Read Doc 09 v1.7.0 end to end (1101 lines) and re-derived every load-bearing claim at source rather than trusting the document or the rework spec. - Git claims re-derived myself: git rev-parse HEAD = 84e2203; git log --no-merges --oneline HEAD -- packages apps = 14 commits, matching the two tables exactly (9 + 5); git log --no-merges e039ff2..HEAD -- packages apps = 2 (as the document now says); git merge-base --is-ancestor on c04b4f2, 31b6df9, e039ff2, 0a5c542, b …",
+    "artifacts": [
+      "artifacts/tester-2026-09-06T1800-doc09-cycle3-review.md"
+    ],
+    "routed_to": "project-manager; sre for any rework."
+  },
+  "sre-2026-09-06T1900-doc09-cycle4": {
+    "file": "artifacts/sre-2026-09-06T1900-doc09-cycle4.md",
+    "role": "sre (owning role - Doc 09)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T19:00:00Z",
+    "phase": "Launch - Doc 09 rework cycle 3 against artifacts/reviews/09-release-notes-v1.7.0-business-cycle3.md (FAIL 92%, 0C/0H/3M/2L) into v1.8.0 - cycle 4 of 5",
+    "scope": "Anchored FIND/REPLACE spec; PM transcribes with the boundary pre-check enabled.",
+    "summary": "From the note: Role: sre (Chen Wei — Reliability Lead) Date: 2026-09-06 Against: artifacts/reviews/09-release-notes-v1.7.0-business-cycle3.md (business, cycle 3 — FAIL 92%, 0C/0H/3M/2L; reviewer: tester, neutral, PM-assigned) Artifacts: artifacts/sre-2026-09-06T1900-doc09-cycle4-spec.md (13-op FIND/REPLACE spec) artifacts/sre-2026-09-06T1900-doc09-cycle4.md (this note) Target: docs/09-release-notes.md v1.7.0 In Review - v1.8.0 In Review Cycle: 4 of 5 — a cycle-5 failure becomes ESCALATED and requires a recorded human decision Index: pre-registered by the project-manager; NOT opened or modified Two of the three Mediums are damage my own cycle-3 spec did to the published file. They are the same error twice: a FIND block that dropped the first line it consumed and appended a line it never consumed. The applier did exactly what it was told. Four defects reached the file: Defect Cause ------ The template li …",
+    "artifacts": [
+      "artifacts/sre-2026-09-06T1900-doc09-cycle4.md",
+      "artifacts/sre-2026-09-06T1900-doc09-cycle4-spec.md"
+    ],
+    "routed_to": "project-manager (transcription), then tester (neutral business review, cycle 4)."
+  },
+  "tester-2026-09-06T2000-doc09-cycle4-review": {
+    "file": "artifacts/tester-2026-09-06T2000-doc09-cycle4-review.md",
+    "role": "tester (neutral reviewer, business mode)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T20:00:00Z",
+    "phase": "Launch - cycle-4 business review of Doc 09 v1.8.0",
+    "scope": "Scores and lists issues only. Report artifacts/reviews/09-release-notes-v1.8.0-business-cycle4.md.",
+    "summary": "From the note: Role in this session: neutral reviewer (not owner) of Doc 09 docs/09-release-notes.md v1.8.0, business mode, cycle 4 of 5, via the shared document-review skill. Assigned by the project-manager in artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-FR131-CASCADE.md. Owner of Doc 09 is the sre (Chen Wei); I own neither the document nor its outcome. Report written: artifacts/reviews/09-release-notes-v1.8.0-business-cycle4.md FAIL — 94%, 0 Critical / 0 High / 2 Medium / 2 Low. Route to the sre for v1.9.0, Status: In Review, cycle 5 — the cap. A further failure becomes ESCALATED and requires a recorded human decision (approve-as-is / rework / reject). Loop trajectory: v1.5.0 FAIL 93% (c1) → v1.6.0 FAIL 93% (c2) → v1.7.0 FAIL 92% (c3) → v1.8.0 FAIL 94% (c4). Read Doc 09 v1.8.0 end to end (1178 lines) and re-derived every load-bearing claim at HEAD = 84e2203 rather than accepting any of them. - Cycle …",
+    "artifacts": [
+      "artifacts/tester-2026-09-06T2000-doc09-cycle4-review.md"
+    ],
+    "routed_to": "project-manager; sre for any rework; ESCALATE to the approver if cycle 5 fails."
+  },
+  "sre-2026-09-06T2100-doc09-cycle5": {
+    "file": "artifacts/sre-2026-09-06T2100-doc09-cycle5.md",
+    "role": "sre (owning role - Doc 09)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T21:00:00Z",
+    "phase": "Launch - Doc 09 rework cycle 4 against artifacts/reviews/09-release-notes-v1.8.0-business-cycle4.md (FAIL 94%, 0C/0H/2M/2L) into v1.9.0 - cycle 5 of 5, the cap",
+    "scope": "Anchored FIND/REPLACE spec; PM transcribes.",
+    "summary": "From the note: Role: sre (Chen Wei — Reliability Lead) Date: 2026-09-06 Against: artifacts/reviews/09-release-notes-v1.8.0-business-cycle4.md (business, cycle 4 — FAIL 94%, 0C/0H/2M/2L; reviewer: tester, neutral, PM-assigned) Artifacts: artifacts/sre-2026-09-06T2100-doc09-cycle5-spec.md (5-op FIND/REPLACE spec) artifacts/sre-2026-09-06T2100-doc09-cycle5.md (this note) Target: docs/09-release-notes.md v1.8.0 In Review - v1.9.0 In Review Cycle: 5 of 5 — THE CAP. A failure here becomes ESCALATED: the surviving issues go to the human approver for a recorded decision (approve-as-is / rework / reject). Index: pre-registered by the project-manager; NOT opened or modified This is the last cycle before escalation, so the spec changes only what the two Mediums and the Low require, plus the version bump and its history entry. No structural change. Cycle 4 verified the REL-LIM-18 closure, the FR-131 word ban, the  …",
+    "artifacts": [
+      "artifacts/sre-2026-09-06T2100-doc09-cycle5.md",
+      "artifacts/sre-2026-09-06T2100-doc09-cycle5-spec.md"
+    ],
+    "routed_to": "project-manager (transcription), then tester (neutral business review, cycle 5); ESCALATE to the approver on FAIL."
+  },
+  "tester-2026-09-06T2200-doc09-cycle5-review": {
+    "file": "artifacts/tester-2026-09-06T2200-doc09-cycle5-review.md",
+    "role": "tester (neutral reviewer, business mode)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T22:00:00Z",
+    "phase": "Launch - cycle-5 (cap) business review of Doc 09 v1.9.0",
+    "scope": "Scores and lists issues only. Report artifacts/reviews/09-release-notes-v1.9.0-business-cycle5.md; on FAIL the verdict becomes ESCALATED for a recorded human decision.",
+    "summary": "From the note: Role in this session: neutral reviewer (document-review skill, business mode) for Doc 09 docs/09-release-notes.md v1.9.0, cycle 5 of 5 — the cap. Owner: sre (Chen Wei). PM-assigned per artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-FR131-CASCADE.md. I reviewed only Doc 09 and self-appointed for nothing (per the assignment's Incident section). I wrote no product code and edited no document under review. - Read CLAUDE.md, the assignment (incl. Incident + Outcomes), the document-review skill, the report template, the cycle-4 report (09-release-notes-v1.8.0-business-cycle4.md, FAIL 94%, 0C/0H/2M/2L) and the sre's cycle-5 rework spec (sre-2026-09-06T2100-doc09-cycle5-spec.md, 5 ops) and note (sre-2026-09-06T2100-doc09-cycle5.md). - Read Doc 09 v1.9.0 end to end and re-derived every load-bearing claim at source. - Wrote artifacts/reviews/09-release-notes-v1.9.0-business-cycle5.md. PASS — 97%, 0 …",
+    "artifacts": [
+      "artifacts/tester-2026-09-06T2200-doc09-cycle5-review.md"
+    ],
+    "routed_to": "project-manager; approver (Rathish) if ESCALATED."
+  },
+  "project-manager-2026-09-06T2300": {
+    "file": "artifacts/project-manager-2026-09-06T2300.md",
+    "role": "project-manager (orchestrator; review-loop coordination; status)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T23:00:00Z",
+    "phase": "FR-131 cascade closure (Docs 03/04/07/08/09) + public-release readiness assessment",
+    "scope": "Orchestrated four owning roles and nine neutral review cycles via anchored specs; transcribed with apply-spec.cjs; pre-registered all agent notes; recorded the review assignment before dispatch and one self-appointment incident; assessed public-release readiness without writing README/LICENSE.",
+    "summary": "Cascade closed: Doc 03 v2.13.0 (PASS 97%), Doc 04 v1.4.0 (96%), Doc 07 v2.6.0 (97%), Doc 08 v2.9.0 (98%), Doc 09 v1.9.0 (97% on cycle 5, the cap) - all Approved; audit exit 0, 0 blocking; 619 tests green; FR-131 Must row stays OPEN (16/138 unchanged). Survivors: Doc 01 v2.0.0 (no v1 posture) and README/landing copy - routed. PO Ruling B on endorsement copy awaits approver confirmation; FR-131 clause (e) proposal held. Readiness assessment at artifacts/status/PUBLIC-RELEASE-READINESS-2026-09-06.md with licence options for the approver.",
+    "artifacts": [
+      "artifacts/project-manager-2026-09-06T2300.md",
+      "artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-FR131-CASCADE.md",
+      "artifacts/status/PUBLIC-RELEASE-READINESS-2026-09-06.md"
+    ],
+    "routed_to": "approver (decisions), engineer (landing copy, TD-RTM-01, DES-098 control), product-owner (Doc 01 posture, E-7), technical-writer (README/CONTRIBUTING/SECURITY), sre (Docs 10-12 reviews, refine-log), architect (ADR-024 amendment)."
+  },
+  "engineer-2026-09-06T1530-endorsement-copy": {
+    "file": "artifacts/engineer-2026-09-06T1530-endorsement-copy.md",
+    "role": "engineer",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T15:30:00Z",
+    "phase": "Coding & UT - approver-confirmed Ruling B: landing copy en/ar, FR-082 strings, UT guard, Doc 06 v2.6.0",
+    "scope": "Product-code strings ruled in DECISIONS-2026-09-06-ENDORSEMENT-COPY.md sections 4, 5, 5.3 + regression guard + Doc 06 section 7 item 26.",
+    "summary": "From the note: Role: engineer (Samuel Oyelaran) Branch: build/v1-cascade-and-release-prep Trigger: artifacts/status/DECISIONS-2026-09-06-ENDORSEMENT-COPY.md §11 (approver-confirmed 2026-09-06, Rathish Kumar); Doc 02 v2.17.0 FR-131 clause (e), In Review. Scope: R-1, R-2, R-3, R-4 from DECISIONS §8. Doc 06 bumped 2.5.1 - 2.6.0, Status: In Review. 1. R-1/R-2 — landing-page copy (en + ar, one change set): - apps/web/src/i18n/en.ts home.steps[1].body — replaced \"Support a new party with your name kept private...\" with the DECISIONS §4.1 copy: \"Backing a party is a public act, on purpose. Your name is not shown, but the backing goes on the public record, and our own records can link it to your account. Only back a party you are content to be seen supporting. When enough people in your area back it, the party starts. Nobody decides this. The count does.\" - apps/web/src/i18n/ar.ts mirror — replaced with the DE …",
+    "artifacts": [
+      "artifacts/engineer-2026-09-06T1530-endorsement-copy.md"
+    ],
+    "routed_to": "project-manager; tester (TC rows for the new UT id)"
+  },
+  "product-owner-2026-09-06T1530-doc01-posture": {
+    "file": "artifacts/product-owner-2026-09-06T1530-doc01-posture.md",
+    "role": "product-owner",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T15:30:00Z",
+    "phase": "Vision - Doc 01 v2.1.0 v1-posture banner + Classification (approver ruling 5)",
+    "scope": "Anchored spec artifacts/product-owner-2026-09-06T1530-doc01-spec.md; PM transcribes.",
+    "summary": "From the note: Role: product-owner Session: Doc 01 v2.0.0 → v2.1.0 public-release posture banner Trigger: Approver ruling 2026-09-06 (Rathish Kumar), ruling 5 — \"Doc 01 must carry a clear banner that it describes the full v2 target vision, NOT the current v1 state\" (DECISIONS-2026-09-06-ENDORSEMENT-COPY.md §11; dispatch REVIEW-ASSIGNMENT-2026-09-06-RELEASE-PREP.md) Deliverable: artifacts/product-owner-2026-09-06T1530-doc01-spec.md (8 anchored OPs) Wrote: that spec + this note. NOTHING else. Doc 01 itself is NOT edited by me — the project-manager applies the spec mechanically (I hold Write, not Edit). Read CLAUDE.md, Doc 01 in full (v2.0.0), PUBLIC-RELEASE-READINESS-2026-09-06 §1 row E-8 + §6, Doc 02 §4.45 FR-131 (v2.17.0, including clause (e)) and §16.4/§16.5, Doc 14 §0.1 and §2.6, Doc 09 §0, the Definition-A caveat pattern in Doc 05 (§2 scope note, EP-06, US-0038) and Doc 13, DECISIONS-2026-09-06-ENDO …",
+    "artifacts": [
+      "artifacts/product-owner-2026-09-06T1530-doc01-posture.md",
+      "artifacts/product-owner-2026-09-06T1530-doc01-spec.md"
+    ],
+    "routed_to": "project-manager (applier); technical-writer (Doc 01 business review)"
+  },
+  "product-owner-2026-09-06T1530-doc01-spec": {
+    "file": "artifacts/product-owner-2026-09-06T1530-doc01-spec.md",
+    "role": "product-owner (anchored spec)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T15:30:00Z",
+    "phase": "Vision - Doc 01 v2.1.0 spec",
+    "scope": "FIND/REPLACE operations on docs/01-press-release-prfaq.md for the PM applier.",
+    "summary": "From the note: Author: product-owner (Priya Raghunathan) Date: 2026-09-06T15:30 Target file: docs/01-press-release-prfaq.md (ONE file — no other file is touched) Applier: project-manager (mechanical FIND/REPLACE; four-backtick fences) Trigger: Approver ruling 2026-09-06 (Rathish Kumar), ruling 5 — artifacts/status/DECISIONS-2026-09-06-ENDORSEMENT-COPY.md §11 and artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-RELEASE-PREP.md: \"Doc 01 gets a banner: full v2 target vision, NOT the current v1 state.\" Finding of record: artifacts/status/PUBLIC-RELEASE-READINESS-2026-09-06.md §1 row E-8 and §6. Result: docs/01-press-release-prfaq.md v2.1.0, Status: In Review, Classification: Public. Neutral reviewer: technical-writer, business mode. Ops: 8 Invariants: NO requirement, tenet, metric, FAQ, scope item or open item is added, removed, reworded or renumbered. Docs 02, 05, 13 and all product code are UNTOUCHED. Apply …",
+    "artifacts": [
+      "artifacts/product-owner-2026-09-06T1530-doc01-spec.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "architect-2026-09-06T1530-doc04-clause-e": {
+    "file": "artifacts/architect-2026-09-06T1530-doc04-clause-e.md",
+    "role": "architect",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T15:30:00Z",
+    "phase": "Design - Doc 04 v1.5.0: section 0.5 S4/S5 annotated for the approved FR-131 clause (e)",
+    "scope": "Anchored spec artifacts/architect-2026-09-06T1530-doc04-spec.md; PM transcribes. Doc 03 only if a normative statement became false.",
+    "summary": "From the note: Role: architect (Ravi Deshmukh — Principal Architect; owner of Doc 03 and Doc 04) Date: 2026-09-06 Session: Doc 04 cascade for the approved FR-131 clause (e) Deliverable: artifacts/architect-2026-09-06T1530-doc04-spec.md — an ANCHORED SPEC of 14 operations taking docs/04-test-strategy-master-plan.md from v1.4.0 (Approved) to v1.5.0 (In Review). The spec is applied mechanically by the project-manager's applier; I hold Write but not Edit and did not touch Doc 04 directly. Wrote: 2 files, both under artifacts/ — this note and the spec above. Edited: no document, no code. Doc 04 is NOT modified by me; the applier applies the spec. The approver (Rathish Kumar) confirmed FR-131 clause (e) on 2026-09-06 (artifacts/status/DECISIONS-2026-09-06-ENDORSEMENT-COPY.md §11 item 3 — \"APPROVED — Draft and apply FR-131 clause (e) in Doc 02\"). It is applied as Doc 02 v2.17.0 (In Review) §4.45. Doc 04 v1.4. …",
+    "artifacts": [
+      "artifacts/architect-2026-09-06T1530-doc04-clause-e.md",
+      "artifacts/architect-2026-09-06T1530-doc04-spec.md"
+    ],
+    "routed_to": "project-manager (applier); reviewer-qa (Doc 04 technical review)"
+  },
+  "architect-2026-09-06T1530-doc04-spec": {
+    "file": "artifacts/architect-2026-09-06T1530-doc04-spec.md",
+    "role": "architect (anchored spec)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T15:30:00Z",
+    "phase": "Design - Doc 04 v1.5.0 spec",
+    "scope": "FIND/REPLACE operations on docs/04-test-strategy-master-plan.md for the PM applier.",
+    "summary": "From the note: Spec ID: SPEC-DOC04-v1.5.0-CLAUSE-E Target file: docs/04-test-strategy-master-plan.md From version: 1.4.0 (Approved) To version: 1.5.0 (In Review) Author: Ravi Deshmukh — Principal Architect (owner of Docs 03 and 04) Date: 2026-09-06 Applier: project-manager's mechanical applier (the architect has Write but not Edit; Doc 04 MUST NOT be whole-file rewritten) Authority: Approver ruling, Rathish Kumar, 2026-09-06 — artifacts/status/DECISIONS-2026-09-06-ENDORSEMENT-COPY.md §11 item 3 (\"APPROVED — Draft and apply FR-131 clause (e) in Doc 02\"), §6 (the amendment as drafted), applied as docs/02-requirements-srs.md v2.17.0 §4.45. Operations: 14 (OP 1 … OP 14) Touches: docs/04-test-strategy-master-plan.md ONLY. No other document, no code. - Fences below are four backticks. Everything between them is literal file text. - Every FIND matches exactly once in the target file. Apply the OPs in order; n …",
+    "artifacts": [
+      "artifacts/architect-2026-09-06T1530-doc04-spec.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "technical-writer-2026-09-06T1530-public-files": {
+    "file": "artifacts/technical-writer-2026-09-06T1530-public-files.md",
+    "role": "technical-writer",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T15:30:00Z",
+    "phase": "Launch - public-release files: README rewrite, CONTRIBUTING.md, SECURITY.md, CODE_OF_CONDUCT.md (v1 truth, FR-131(e) discipline)",
+    "scope": "Root files only; no governed document, no product code.",
+    "summary": "From the note: Role: technical-writer (Maya Lindqvist) Task: Write README.md, CONTRIBUTING.md, SECURITY.md, CODEOFCONDUCT.md at repo root per the project-manager's brief (public-release prep, approver decisions 2026-09-06: AGPL-3.0-or-later + CC BY-SA 4.0, DCO not CLA, artifacts/ published, persona note, FR-131 clause (e) approved). Reviewer: product-owner, business mode, FR-131(e) discipline, reporting to artifacts/status/PUBLIC-FILES-REVIEW-2026-09-06.md (NOT artifacts/reviews/ — these four files are not governed documents and must not enter the hook's cycle counter). Status: Files written. Awaiting the product-owner's review. - README.md (full rewrite, kept existing structure: five-things list, layout, running it, where to start, status, licence). Added the v1-truth \"Status — read this first\" block (from artifacts/status/PUBLIC-RELEASE-READINESS-2026-09-06.md §6, adapted with the persona sentence).  …",
+    "artifacts": [
+      "artifacts/technical-writer-2026-09-06T1530-public-files.md"
+    ],
+    "routed_to": "project-manager; product-owner (public-files review)"
+  },
+  "tester-2026-09-06T1700-clause-e-tc-rtm": {
+    "file": "artifacts/tester-2026-09-06T1700-clause-e-tc-rtm.md",
+    "role": "tester",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T17:00:00Z",
+    "phase": "Verify - Doc 07 v2.7.0 / Doc 08 v2.10.0: clause (e) TC rows and FR-131 chain re-cut",
+    "scope": "Anchored spec artifacts/tester-2026-09-06T1700-clause-e-spec.md; PM transcribes.",
+    "summary": "From the note: Role: tester (Ji-woo Park) — owner of Doc 07 (Test Cases) and Doc 08 (RTM, author) Branch: build/v1-cascade-and-release-prep (working tree at d526910 + the uncommitted engineer change set of artifacts/engineer-2026-09-06T1530-endorsement-copy.md) Trigger: Approver ruling 2026-09-06 (Rathish Kumar) — FR-131 clause (e) APPROVED, \"let Doc 08 reopen and re-close through its loop\" (artifacts/status/DECISIONS-2026-09-06-ENDORSEMENT-COPY.md §11 item 3). Output: ONE anchored spec for the PM's mechanical applier — artifacts/tester-2026-09-06T1700-clause-e-spec.md (31 OPs: 18 Doc 07, 13 Doc 08). Scope: I edited NEITHER document directly, no other document, and no code or unit test. 1. Read the requirement and its acceptance criteria, not the summary. Doc 02 v2.17.1 (Approved — cycle-2 business review PASSED 2026-09-06) §4.45 clause (e), the widened closing sentence, and — decisively for this sessi …",
+    "artifacts": [
+      "artifacts/tester-2026-09-06T1700-clause-e-tc-rtm.md",
+      "artifacts/tester-2026-09-06T1700-clause-e-spec.md"
+    ],
+    "routed_to": "project-manager (applier); reviewer-qa (Doc 07/08 technical review)"
+  },
+  "tester-2026-09-06T1700-clause-e-spec": {
+    "file": "artifacts/tester-2026-09-06T1700-clause-e-spec.md",
+    "role": "tester (anchored spec)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T17:00:00Z",
+    "phase": "Verify - Doc 07/08 spec",
+    "scope": "FIND/REPLACE operations on docs/07 and docs/08 for the PM applier.",
+    "summary": "From the note: Prepared by: tester (Ji-woo Park) — owner of Doc 07 and Doc 08 Date: 2026-09-06 For: project-manager (mechanical applier) Targets: docs/07-test-cases-suites.md v2.6.0 (Approved) - v2.7.0 (In Review) docs/08-traceability-matrix.md v2.9.0 (Approved) - v2.10.0 (In Review) Trigger: Approver ruling 2026-09-06 (Rathish Kumar) — FR-131 clause (e) APPROVED, \"let Doc 08 reopen and re-close through its loop\" (artifacts/status/DECISIONS-2026-09-06-ENDORSEMENT-COPY.md §11 item 3). Sources read: Doc 02 v2.17.1 (Approved — cycle-2 business review PASSED 2026-09-06) §4.45 clause (e) + §8 FR-131 Scenarios 8 and 9 Doc 04 v1.5.0 (In Review) §0.5 S4/S5, §13 OPEN-27, §14 register Doc 06 v2.6.0 (In Review; cycle-1 FAIL 94%, v2.7.0 rework in progress) §3 UT inventory + §7 item 26, and UT-0889 read in the repository Runs: R-18 — npm test 624/624 (exit 0), then the UT-0889 block case by case Rules: FOUR-backtic …",
+    "artifacts": [
+      "artifacts/tester-2026-09-06T1700-clause-e-spec.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "reviewer-qa-2026-09-06T1800-doc02-review": {
+    "file": "artifacts/reviewer-qa-2026-09-06T1800-doc02-review.md",
+    "role": "reviewer-qa (neutral reviewer, business mode)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T18:00:00Z",
+    "phase": "Define - cycle-1 business review of Doc 02 v2.17.0",
+    "scope": "Scores and lists issues only. Report artifacts/reviews/02-requirements-srs-v2.17.0-business-cycle1.md.",
+    "summary": "From the note: Role: reviewer-qa, acting as the PM-assigned neutral document reviewer (not the Gate-2 merge signer in this session). Assignment: artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-RELEASE-PREP.md — Doc 02 docs/02-requirements-srs.md v2.17.0, business mode, cycle 1 (counter restarted for a new minor version). Owner product-owner (Priya Raghunathan) excluded as author. Scope discipline: I reviewed only Doc 02. Other documents blocking in the audit is expected mid-session; I did not self-appoint for any of them (AL-CANDIDATE-3 discipline). - Read CLAUDE.md, the document-review skill, docs/templates/document-review.template.md, the assignment, and the prior passing report 02-requirements-srs-v2.16.3-business-cycle4.md (96%). - Read the applied spec artifacts/product-owner-2026-09-06T1000-endorsement-copy-spec.md and the ruling artifacts/status/DECISIONS-2026-09-06-ENDORSEMENT-COPY.md (including  …",
+    "artifacts": [
+      "artifacts/reviewer-qa-2026-09-06T1800-doc02-review.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "technical-writer-2026-09-06T1800-doc01-review": {
+    "file": "artifacts/technical-writer-2026-09-06T1800-doc01-review.md",
+    "role": "technical-writer (neutral reviewer, business mode)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T18:00:00Z",
+    "phase": "Vision - cycle-1 business review of Doc 01 v2.1.0",
+    "scope": "Scores and lists issues only. Report artifacts/reviews/01-press-release-prfaq-v2.1.0-business-cycle1.md.",
+    "summary": "From the note: Role: technical-writer Capacity: NEUTRAL REVIEWER (document-review skill), NOT document owner this session Assignment: artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-RELEASE-PREP.md Reviewed: docs/01-press-release-prfaq.md v2.1.0, business mode, cycle 1 Report: artifacts/reviews/01-press-release-prfaq-v2.1.0-business-cycle1.md Verdict: FAIL — Score 87%, Critical 1 / High 2 / Medium 3 / Low 0 Read CLAUDE.md, the document-review skill (.claude/skills/document-review/SKILL.md), the review report template, and docs/01-press-release-prfaq.md v2.1.0 in full. Cross-checked every factual claim in the new §0 banner and the six inline (v2 target — see §0.) markers against: docs/02-requirements-srs.md §4.45 (FR-131 full text incl. clause (e), v2.17.0), §16.3/§16.4 (honesty register H-01–H-19)/§16.5 (contradiction surface); docs/14-user-guide.md §0.1, §2.2, §2.6; docs/09-release-notes.md §0 (release- …",
+    "artifacts": [
+      "artifacts/technical-writer-2026-09-06T1800-doc01-review.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "reviewer-qa-2026-09-06T1800-doc04-review": {
+    "file": "artifacts/reviewer-qa-2026-09-06T1800-doc04-review.md",
+    "role": "reviewer-qa (neutral reviewer, technical mode)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T18:00:00Z",
+    "phase": "Design - cycle-1 technical review of Doc 04 v1.5.0",
+    "scope": "Scores and lists issues only. Report artifacts/reviews/04-test-strategy-master-plan-v1.5.0-technical-cycle1.md.",
+    "summary": "From the note: Role: reviewer-qa (Rafael Duarte) — independent approver; READ-ONLY on docs and product code Date: 2026-09-06 Session: Neutral document-review of docs/04-test-strategy-master-plan.md v1.5.0, technical mode, cycle 1 of 5 (new minor version; counter restarted from v1.4.0) Assignment: artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-RELEASE-PREP.md — \"Doc 04 v1.5.0 technical reviewer-qa (new instance)\"; excluded: architect (owner), tester, engineer Deliverable: artifacts/reviews/04-test-strategy-master-plan-v1.5.0-technical-cycle1.md Wrote: 2 files, both under artifacts/ — the review report and this note. NO document edited, no product code touched, no test authored. memory-index.json NOT opened (pre-registered). Verdict: FAIL — Score 92%; 0 Critical / 0 High / 1 Medium / 5 Low FAIL at 92%, one Medium (ISS-01). The pass bar is = 95% AND zero critical/high/medium; the version misses on both cou …",
+    "artifacts": [
+      "artifacts/reviewer-qa-2026-09-06T1800-doc04-review.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "tester-2026-09-06T1800-doc06-review": {
+    "file": "artifacts/tester-2026-09-06T1800-doc06-review.md",
+    "role": "tester (neutral reviewer, technical mode)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T18:00:00Z",
+    "phase": "Coding & UT - cycle-1 technical review of Doc 06 v2.6.0 + the code drop",
+    "scope": "Scores and lists issues only. Report artifacts/reviews/06-coding-and-ut-v2.6.0-technical-cycle1.md.",
+    "summary": "From the note: Role: tester (Ji-woo Park) — acting ONLY as the PM-assigned NEUTRAL REVIEWER (document-review skill, technical mode). Not authoring Doc 07/08 in this instance — a separate tester instance holds the clause-(e) spec. Branch: build/v1-cascade-and-release-prep Assigned: artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-RELEASE-PREP.md (Doc 06 v2.6.0 + the code drop → tester; owner engineer excluded) Output: artifacts/reviews/06-coding-and-ut-v2.6.0-technical-cycle1.md Verdict: FAIL — 94%, 0 Critical / 0 High / 1 Medium / 5 Low, cycle 1 of 5 Reviewed docs/06-coding-and-ut.md v2.6.0 end to end plus its code drop (the review unit for code generation per CLAUDE.md), against the approver-confirmed ruling in artifacts/status/DECISIONS-2026-09-06-ENDORSEMENT-COPY.md §4/§5/§5.3/§5.4/§11 and Doc 02 §4.45 FR-131 clause (e). Scored and listed issues only. I edited no document and no product code. 1. String …",
+    "artifacts": [
+      "artifacts/tester-2026-09-06T1800-doc06-review.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "reviewer-qa-2026-09-06T1900-doc07-08-review": {
+    "file": "artifacts/reviewer-qa-2026-09-06T1900-doc07-08-review.md",
+    "role": "reviewer-qa (neutral reviewer, technical mode)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T19:00:00Z",
+    "phase": "Verify - cycle-1 technical review of Doc 07 v2.7.0 and Doc 08 v2.10.0",
+    "scope": "Scores and lists issues only. Reports artifacts/reviews/07-test-cases-suites-v2.7.0-technical-cycle1.md and 08-traceability-matrix-v2.10.0-technical-cycle1.md.",
+    "summary": "From the note: Role: reviewer-qa (Rafael Duarte) — neutral reviewer under the document-review skill; also A for \"RTM complete (zero gaps)\" under the CLAUDE.md RACI Assigned: artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-RELEASE-PREP.md (PM, Ana-Maria Petrescu) Scope: ONLY docs/07-test-cases-suites.md v2.7.0 and docs/08-traceability-matrix.md v2.10.0, technical mode, cycle 1 each (both are new minor versions; the counter restarts). Wrote: artifacts/reviews/07-test-cases-suites-v2.7.0-technical-cycle1.md artifacts/reviews/08-traceability-matrix-v2.10.0-technical-cycle1.md (this note). I edited NO document, NO test and NO product code, and I did not open artifacts/memory-index.json — the PM pre-registered this note's path. Branch: build/v1-cascade-and-release-prep, working tree at d526910 + uncommitted change sets. Document Version Mode / cycle Score C / H / M / L Verdict ------------------ docs/07-test-c …",
+    "artifacts": [
+      "artifacts/reviewer-qa-2026-09-06T1900-doc07-08-review.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "product-owner-2026-09-06T1800-public-files-review": {
+    "file": "artifacts/product-owner-2026-09-06T1800-public-files-review.md",
+    "role": "product-owner (neutral reviewer of the public files, business mode, FR-131(e) discipline)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T18:00:00Z",
+    "phase": "Launch - review of README / CONTRIBUTING / SECURITY / CODE_OF_CONDUCT (not governed documents)",
+    "scope": "Scores and lists issues only. Report artifacts/status/PUBLIC-FILES-REVIEW-2026-09-06.md (deliberately outside artifacts/reviews/).",
+    "summary": "From the note: Role: product-owner (Priya Raghunathan) — acting ONLY as PM-assigned neutral reviewer Task: Review the four public root files written by the technical-writer this session (README.md, CONTRIBUTING.md, SECURITY.md, CODEOFCONDUCT.md) against the document-review BUSINESS rubric and FR-131 clause (e) (Doc 02 §4.45, v2.17.0). Assignment: artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-RELEASE-PREP.md (last reviewer row) Neutrality: RACI — product-owner is Accountable for public-facing claims (DECISIONS-2026-09-06-ENDORSEMENT-COPY.md §4); owns none of the four files. Author (technical-writer) excluded. Report: artifacts/status/PUBLIC-FILES-REVIEW-2026-09-06.md — deliberately NOT in artifacts/reviews/, and deliberately WITHOUT the hook's machine-parseable field names, so it cannot enter any document's cycle counter. Verdict: FAIL — 81%; Critical 0 · High 4 · Medium 7 · Low 9 Status: Complete. Rout …",
+    "artifacts": [
+      "artifacts/product-owner-2026-09-06T1800-public-files-review.md"
+    ],
+    "routed_to": "project-manager; technical-writer (rework)"
+  },
+  "project-manager-2026-09-06T2359-release-prep": {
+    "file": "artifacts/project-manager-2026-09-06T2359-release-prep.md",
+    "role": "project-manager",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T23:59:00Z",
+    "phase": "Orchestration - approver rulings applied; clause (e) cascade; public-release files; licence; depersonalisation; AL-CANDIDATE-3 packet",
+    "scope": "Session note for the release-prep dispatch.",
+    "summary": "From the note: Role: project-manager (Ana-Maria Petrescu) · Phase: Define → Design → Verify → Launch (approver rulings applied; public-release preparation) · Product: Trumocracy · Trigger: approver rulings 1–5 of 2026-09-06 (Rathish Kumar), recorded in artifacts/status/DECISIONS-2026-09-06-ENDORSEMENT-COPY.md §11. Rulings applied. 1. Ruling B confirmed → engineer replaced home.steps[1].body and home.promises[0] (en + ar) with the DECISIONS §4/§5 strings, rewrote the FR-082 \"Supporters are anonymous\" refusal message and its two comment sites under the approved clause (e), minted UT-0889 (later hardened with a jargon scan and an exact-phrase Arabic guard). Suite 619 → 625 green. 2. FR-131 clause (e) approved → the PO's anchored spec applied as Doc 02 v2.17.0; cycle-1 FAIL (86%, 3M: no Gherkin for (e); ballot-only heading; malformed MUST) → v2.17.1 PASS 96%, Approved with §8 Scenarios 8/9. Doc 08 reopened …",
+    "artifacts": [
+      "artifacts/project-manager-2026-09-06T2359-release-prep.md",
+      "artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-RELEASE-PREP.md"
+    ],
+    "routed_to": "approver"
+  },
+  "product-owner-2026-09-06T1900-doc01-cycle2": {
+    "file": "artifacts/product-owner-2026-09-06T1900-doc01-cycle2.md",
+    "role": "product-owner",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T19:00:00Z",
+    "phase": "Vision - Doc 01 v2.2.0 rework after cycle-1 FAIL (87%, 1C/2H/3M)",
+    "scope": "Anchored spec artifacts/product-owner-2026-09-06T1900-doc01-cycle2-spec.md; PM transcribes.",
+    "summary": "From the note: Role: product-owner (owning role for Doc 01 and Doc 02) Session: (1) Doc 01 v2.1.0 → v2.2.0 — review-loop rework, cycle 2 of 5 (2) Doc 02 v2.17.0 → v2.17.1 — review-loop rework, cycle 2 of 5 (picked up at 20:30 when the stop-hook surfaced the FAIL; see §B) Deliverables: artifacts/product-owner-2026-09-06T1900-doc01-cycle2-spec.md (12 anchored OPs) artifacts/product-owner-2026-09-06T2030-doc02-v2171-spec.md (12 anchored OPs) Wrote: those two specs + this note. NOTHING else. Neither document is edited by me (Write, not Edit); the project-manager applies both specs mechanically. Index: this note's path is the one pre-registered by the PM. The Doc 02 spec is recorded HERE rather than in a second note file, because I must not open artifacts/memory-index.json and an unregistered note would break index hygiene. PM: please register the Doc 02 spec path. --- Against: artifacts/reviews/01-press-re …",
+    "artifacts": [
+      "artifacts/product-owner-2026-09-06T1900-doc01-cycle2.md",
+      "artifacts/product-owner-2026-09-06T1900-doc01-cycle2-spec.md"
+    ],
+    "routed_to": "project-manager (applier); technical-writer (cycle-2 review)"
+  },
+  "product-owner-2026-09-06T1900-doc01-cycle2-spec": {
+    "file": "artifacts/product-owner-2026-09-06T1900-doc01-cycle2-spec.md",
+    "role": "product-owner (anchored spec)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T19:00:00Z",
+    "phase": "Vision - Doc 01 v2.2.0 spec",
+    "scope": "FIND/REPLACE operations on docs/01-press-release-prfaq.md for the PM applier.",
+    "summary": "From the note: Author: product-owner (Priya Raghunathan) — the owning role for Doc 01 Date: 2026-09-06T19:00 Target file: docs/01-press-release-prfaq.md (ONE file — no other file is touched) Applier: project-manager (mechanical FIND/REPLACE; four-backtick fences) Against: artifacts/reviews/01-press-release-prfaq-v2.1.0-business-cycle1.md (business, cycle 1 — FAIL 87%, 1 Critical / 2 High / 3 Medium / 0 Low; reviewer: technical-writer, neutral, PM-assigned) Result: docs/01-press-release-prfaq.md v2.2.0, Status: In Review, cycle 2 of 5. Classification stays Public. §0 and the six v2.1.0 markers are unchanged. Ops: 12 (2 header + 10 inline annotations) Invariants: NO requirement, tenet, metric, FAQ, scope item or open item is added, removed, reworded or renumbered. Nine tenets, the same §C rows, §D bullets and §E questions. Docs 02, 05, 13 and all product code are UNTOUCHED. Issue Severity Fixed by ------ …",
+    "artifacts": [
+      "artifacts/product-owner-2026-09-06T1900-doc01-cycle2-spec.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "technical-writer-2026-09-06T2000-doc01-cycle2-review": {
+    "file": "artifacts/technical-writer-2026-09-06T2000-doc01-cycle2-review.md",
+    "role": "technical-writer (neutral reviewer, business mode)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T20:00:00Z",
+    "phase": "Vision - cycle-2 business review of Doc 01 v2.2.0",
+    "scope": "Scores and lists issues only. Report artifacts/reviews/01-press-release-prfaq-v2.2.0-business-cycle2.md.",
+    "summary": "From the note: Role: technical-writer Capacity: NEUTRAL REVIEWER (document-review skill), NOT document owner this session Assignment: Coordinator message — Doc 01 v2.2.0 cycle 2 (I remain the assigned neutral reviewer, per artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-RELEASE-PREP.md) Reviewed: docs/01-press-release-prfaq.md v2.2.0, business mode, cycle 2 of 5 Report: artifacts/reviews/01-press-release-prfaq-v2.2.0-business-cycle2.md Verdict: FAIL — Score 96%, Critical 0 / High 0 / Medium 1 / Low 0 Checked first for a partial/cut-off report at the target path — none existed, so this is a full, fresh run. Read the product-owner's cycle-2 spec (artifacts/product-owner-2026-09-06T1900-doc01- cycle2-spec.md, 12 OPs) and session note (artifacts/product-owner-2026-09-06T1900-doc01- cycle2.md) to understand the rework's intent, then read docs/01-press-release-prfaq.md v2.2.0 in full and verified each of the s …",
+    "artifacts": [
+      "artifacts/technical-writer-2026-09-06T2000-doc01-cycle2-review.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "technical-writer-2026-09-06T1900-public-files-cycle2": {
+    "file": "artifacts/technical-writer-2026-09-06T1900-public-files-cycle2.md",
+    "role": "technical-writer",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T19:00:00Z",
+    "phase": "Launch - public files rework after PUBLIC-FILES-REVIEW-2026-09-06 FAIL (81%, 0C/4H/7M/9L)",
+    "scope": "README.md, CONTRIBUTING.md, SECURITY.md rework; CODE_OF_CONDUCT passed.",
+    "summary": "From the note: Role: technical-writer (Maya Lindqvist) Trigger: artifacts/status/PUBLIC-FILES-REVIEW-2026-09-06.md — product-owner review, cycle 1: FAIL 81% (0 Critical / 4 High / 7 Medium / 9 Low). Scope: Rework README.md, SECURITY.md, CONTRIBUTING.md. CODEOFCONDUCT.md PASSED (per coordinator instruction) and is untouched this cycle. Status: All required fixes applied. Not self-reviewed (routes to the PM/product-owner for cycle-2 scoring, per AL-CANDIDATE-3 — I do not appoint myself reviewer). - ISS-01 (High) — \"a deployment check refuses to promote any environment still wired to one\" (false present-tense control claim) → replaced with the true form: the check is \"written and unit-tested (UT-0600–UT-0612) — but nothing that actually deploys calls it yet, because nothing deploys\" (Doc 09 REL-LIM-12), framed as owed, not protection in effect. - ISS-02 (High) — the v1 data-retention sentence was pinned t …",
+    "artifacts": [
+      "artifacts/technical-writer-2026-09-06T1900-public-files-cycle2.md"
+    ],
+    "routed_to": "project-manager; product-owner (cycle-2 review)"
+  },
+  "reviewer-qa-2026-09-06T2000-doc02-cycle2-review": {
+    "file": "artifacts/reviewer-qa-2026-09-06T2000-doc02-cycle2-review.md",
+    "role": "reviewer-qa (neutral reviewer, business mode)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T20:00:00Z",
+    "phase": "Define - cycle-2 business review of Doc 02 v2.18.0",
+    "scope": "Scores and lists issues only. Report artifacts/reviews/02-requirements-srs-v2.18.0-business-cycle2.md.",
+    "summary": "From the note: Role: reviewer-qa, PM-assigned neutral document reviewer (not the Gate-2 merge signer in this session). Assignment: artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-RELEASE-PREP.md — Doc 02 docs/02-requirements-srs.md v2.17.1, business mode, cycle 2 of 5. Owner (product-owner, Priya Raghunathan) excluded as author. I reviewed only Doc 02; I did not self-appoint for any other blocking document. PASS — 96%, Critical 0 / High 0 / Medium 0 / Low 7. Cycle 2 of 5. All three cycle-1 Mediums closed and independently verified; the product-owner sets Status: Approved and the SOP advances. Report: artifacts/reviews/02-requirements-srs-v2.17.1-business-cycle2.md. Audit line: PASS 02-requirements-srs.md v2.17.1 (business) <- 02-requirements-srs-v2.17.1-business-cycle2.md. - Read the rework spec artifacts/product-owner-2026-09-06T2030-doc02-v2171-spec.md (12 ops) and my own cycle-1 report, then verified  …",
+    "artifacts": [
+      "artifacts/reviewer-qa-2026-09-06T2000-doc02-cycle2-review.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "product-owner-2026-09-06T2000-public-files-cycle2-review": {
+    "file": "artifacts/product-owner-2026-09-06T2000-public-files-cycle2-review.md",
+    "role": "product-owner (reviewer of the public files, cycle 2)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T20:00:00Z",
+    "phase": "Launch - cycle-2 review of README / CONTRIBUTING / SECURITY",
+    "scope": "Scores and lists issues only. Report artifacts/status/PUBLIC-FILES-REVIEW-2026-09-06-cycle2.md.",
+    "summary": "From the note: Role: product-owner (Priya Raghunathan) — acting ONLY as the PM-assigned neutral reviewer Task: Cycle-2 review of README.md, SECURITY.md, CONTRIBUTING.md after the technical-writer's rework against my cycle-1 review. CODEOFCONDUCT.md unchanged (passed cycle 1). Rework: artifacts/technical-writer-2026-09-06T1900-public-files-cycle2.md Cycle 1: artifacts/status/PUBLIC-FILES-REVIEW-2026-09-06.md — FAIL 81% (0C/4H/7M/9L) Report: artifacts/status/PUBLIC-FILES-REVIEW-2026-09-06-cycle2.md — NOT in artifacts/reviews/, and without the hook's machine-parseable field names, so it cannot enter any document's cycle counter. Verdict: FAIL — 93%; Critical 0 · High 0 · Medium 1 · Low 5 Status: Complete. Cycle 3 routed: five sentence-level fixes to the writer, one Doc 02 amendment to me, one repository setting to the maintainer. Re-read all three reworked files in full (not diffed against my cycle-1 note …",
+    "artifacts": [
+      "artifacts/product-owner-2026-09-06T2000-public-files-cycle2-review.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "architect-2026-09-06T1900-doc04-cycle2": {
+    "file": "artifacts/architect-2026-09-06T1900-doc04-cycle2.md",
+    "role": "architect",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T19:00:00Z",
+    "phase": "Design - Doc 04 v1.6.0 rework after cycle-1 FAIL (92%, 0C/0H/1M/5L)",
+    "scope": "Anchored spec artifacts/architect-2026-09-06T1900-doc04-cycle2-spec.md; PM transcribes.",
+    "summary": "From the note: Role: architect (Ravi Deshmukh — Principal Architect; owning role for Docs 03 and 04) Date: 2026-09-06 Session: Rework of docs/04-test-strategy-master-plan.md after its v1.5.0 cycle-1 technical review FAILED (92%; 0 Critical / 0 High / 1 Medium / 5 Low; reviewer: reviewer-qa, Rafael Duarte — neutral, PM-assigned). Deliverable: artifacts/architect-2026-09-06T1900-doc04-cycle2-spec.md — an ANCHORED SPEC of 21 operations (19 as first written, + OP 20 and OP 21 added under Revision 2) taking Doc 04 from v1.5.0 (In Review, FAILED) to v1.6.0 (In Review, rework cycle 2 of 5). Applied mechanically by the project-manager's applier; I hold Write but not Edit and did not touch Doc 04 directly. Wrote: 2 files, both under artifacts/ — this note and the spec above (the spec was revised three times before application, see §1, §7 and §8). Edited: no document, no code. The 19-OP spec landed, but the appl …",
+    "artifacts": [
+      "artifacts/architect-2026-09-06T1900-doc04-cycle2.md",
+      "artifacts/architect-2026-09-06T1900-doc04-cycle2-spec.md"
+    ],
+    "routed_to": "project-manager (applier); reviewer-qa (cycle-2 review)"
+  },
+  "architect-2026-09-06T1900-doc04-cycle2-spec": {
+    "file": "artifacts/architect-2026-09-06T1900-doc04-cycle2-spec.md",
+    "role": "architect (anchored spec)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T19:00:00Z",
+    "phase": "Design - Doc 04 v1.6.0 spec",
+    "scope": "FIND/REPLACE operations on docs/04-test-strategy-master-plan.md for the PM applier.",
+    "summary": "From the note: Spec ID: SPEC-DOC04-v1.6.0-CYCLE2 Target file: docs/04-test-strategy-master-plan.md From version: 1.5.0 (In Review — FAILED cycle-1 technical review) To version: 1.6.0 (In Review, rework cycle 2 of 5) Author: Ravi Deshmukh — Principal Architect (owning role; rework is the owner's) Date: 2026-09-06 Applier: project-manager's mechanical applier (the architect has Write but not Edit) Against: artifacts/reviews/04-test-strategy-master-plan-v1.5.0-technical-cycle1.md (FAIL 92%; 0 Critical / 0 High / 1 Medium / 5 Low; reviewer: reviewer-qa, Rafael Duarte — neutral, PM-assigned) Fixes: ISS-01 (Medium) + ISS-02 … ISS-06 (Low) — all six taken on this touch, none carried Operations: 21 (OP 1 … OP 21) Touches: docs/04-test-strategy-master-plan.md ONLY. No other document, no code. Revision 1: OP 19 rewritten 2026-09-06 after the applier reported it matched 0 times — its FIND had been truncated to th …",
+    "artifacts": [
+      "artifacts/architect-2026-09-06T1900-doc04-cycle2-spec.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "reviewer-qa-2026-09-06T2000-doc04-cycle2-review": {
+    "file": "artifacts/reviewer-qa-2026-09-06T2000-doc04-cycle2-review.md",
+    "role": "reviewer-qa (neutral reviewer, technical mode)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T20:00:00Z",
+    "phase": "Design - cycle-2 technical review of Doc 04 v1.6.0",
+    "scope": "Scores and lists issues only. Report artifacts/reviews/04-test-strategy-master-plan-v1.6.0-technical-cycle2.md.",
+    "summary": "From the note: Role: reviewer-qa (Rafael Duarte) — independent approver; READ-ONLY on docs and product code Date: 2026-09-06 Session: Neutral document-review of docs/04-test-strategy-master-plan.md v1.6.0, technical mode, cycle 2 of 5. Follows my cycle-1 FAIL of v1.5.0 (92%, 1 Medium). Assignment: artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-RELEASE-PREP.md — Doc 04, technical, reviewer-qa; excluded: architect (owner), tester, engineer. I remain the assigned reviewer across cycles, which is correct: the same reviewer verifies its own findings. Deliverable: artifacts/reviews/04-test-strategy-master-plan-v1.6.0-technical-cycle2.md Wrote: 2 files, both under artifacts/ — the review report and this note. NO document edited, no product code touched. memory-index.json NOT opened (pre-registered). Verdict: PASS — Score 96%; 0 Critical / 0 High / 0 Medium / 3 Low PASS at 96%, zero C/H/M. The cycle-1 Medium is …",
+    "artifacts": [
+      "artifacts/reviewer-qa-2026-09-06T2000-doc04-cycle2-review.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "product-owner-2026-09-06T2030-doc02-v2171-spec": {
+    "file": "artifacts/product-owner-2026-09-06T2030-doc02-v2171-spec.md",
+    "role": "product-owner (anchored spec)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T20:30:00Z",
+    "phase": "Define - Doc 02 v2.17.1 rework spec after cycle-1 FAIL (86%, 0C/0H/3M/10L)",
+    "scope": "12 FIND/REPLACE operations on docs/02-requirements-srs.md; authored by the Doc 01 rework instance as Doc 02 owner. Registered by the PM after the fact (the PO did not open the index). Supersedes the pre-registered product-owner-2026-09-06T1900-doc02-cycle2-spec path, which was never written.",
+    "summary": "Fixes ISS-01 (Scenarios 8 and 9 for clause (e); block header), ISS-02 (section heading + rationale), ISS-03 (MUST NOT form); folds ISS-04/05/06/08/09/10 and the section 12 session-scope entries; carries ISS-11/12/13.",
+    "artifacts": [
+      "artifacts/product-owner-2026-09-06T2030-doc02-v2171-spec.md"
+    ],
+    "routed_to": "project-manager (applier); reviewer-qa (cycle-2 review)"
+  },
+  "engineer-2026-09-06T2100-doc06-cycle2": {
+    "file": "artifacts/engineer-2026-09-06T2100-doc06-cycle2.md",
+    "role": "engineer",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T21:00:00Z",
+    "phase": "Coding & UT - Doc 06 v2.6.1 rework after cycle-1 FAIL (94%, 0C/0H/1M/5L)",
+    "scope": "Doc 06 section 7 item 26 register currency, section 5.0 log, jargon-scan claims; test hardening if cheap.",
+    "summary": "From the note: Role: engineer (Samuel Oyelaran) Branch: build/v1-cascade-and-release-prep Trigger: artifacts/reviews/06-coding-and-ut-v2.6.0-technical-cycle1.md (FAIL 94%, 0C/0H/1M/5L; reviewer: tester Ji-woo Park, neutral). Coordinator directed the target version twice mid-session: first v2.6.1 (patch), then corrected to v2.7.0 (minor) — \"a Medium FAIL takes at least a minor bump.\" Final version: v2.7.0. The reviewer accepted the code as correct (byte-exact against DECISIONS §4/§5/§5.3; UT-0889 verified to satisfy all five §5.4 requirements). The FAIL was entirely on the document. This rework is documentary except for the two test-file changes at ISS-03/ISS-06. - ISS-01 (Medium) — §7 item 26(a)/(b)/(c), the v2.6.0 change-history \"Not done in this session\" clause, the §3 UT-inventory closing note, and the §4a \"until it lands\" sentence all published three cascades as still owed that had already closed o …",
+    "artifacts": [
+      "artifacts/engineer-2026-09-06T2100-doc06-cycle2.md"
+    ],
+    "routed_to": "project-manager; tester (cycle-2 review)"
+  },
+  "tester-2026-09-06T2200-doc06-cycle2-review": {
+    "file": "artifacts/tester-2026-09-06T2200-doc06-cycle2-review.md",
+    "role": "tester (neutral reviewer, technical mode)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T22:00:00Z",
+    "phase": "Coding & UT - cycle-2 technical review of Doc 06 v2.6.1",
+    "scope": "Scores and lists issues only. Report artifacts/reviews/06-coding-and-ut-v2.6.1-technical-cycle2.md.",
+    "summary": "From the note: Role: tester (Ji-woo Park) — acting ONLY as the PM-assigned NEUTRAL REVIEWER (document-review skill, technical mode), the same reviewer as cycle 1. Not authoring Doc 07/08 in this instance — a separate tester instance owns those. Branch: build/v1-cascade-and-release-prep Assigned: artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-RELEASE-PREP.md Reworked: artifacts/engineer-2026-09-06T2100-doc06-cycle2.md (v2.6.0 - v2.7.0) Output: artifacts/reviews/06-coding-and-ut-v2.7.0-technical-cycle2.md Verdict: PASS — 96%, 0 Critical / 0 High / 0 Medium / 3 Low, cycle 2 of 5 Prior: artifacts/reviews/06-coding-and-ut-v2.6.0-technical-cycle1.md (FAIL 94%, 1M/5L) Reviewed docs/06-coding-and-ut.md v2.7.0 end to end plus its code drop, verifying every cycle-1 closure against the primary source rather than against the engineer's note, then re-swept for defects introduced by the rework. Scored and listed issu …",
+    "artifacts": [
+      "artifacts/tester-2026-09-06T2200-doc06-cycle2-review.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "product-owner-2026-09-06T2100-doc01-cycle3": {
+    "file": "artifacts/product-owner-2026-09-06T2100-doc01-cycle3.md",
+    "role": "product-owner",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T21:00:00Z",
+    "phase": "Vision - Doc 01 v2.3.0 rework after cycle-2 FAIL (96%, 0C/0H/1M): integrity / no-gatekeeper class",
+    "scope": "Anchored spec artifacts/product-owner-2026-09-06T2100-doc01-cycle3-spec.md; PM transcribes.",
+    "summary": "From the note: Role: product-owner (owning role for Doc 01) Session: Doc 01 v2.2.0 → v2.3.0 — review-loop rework, cycle 3 of 5 Against: artifacts/reviews/01-press-release-prfaq-v2.2.0-business-cycle2.md (business, cycle 2 — FAIL 96%, 0 Critical / 0 High / 1 Medium / 0 Low; reviewer: technical-writer, neutral, PM-assigned) Ruling: project-manager (Ana-Maria Petrescu), 2026-09-06, within approver ruling 5: the integrity / no-gatekeeper claim class IS in scope of the §0 banner's purpose. Resolution: the reviewer's option (a) — widen the banner and mark the class — not option (b) (an approver ruling that it is out of scope). Deliverable: artifacts/product-owner-2026-09-06T2100-doc01-cycle3-spec.md (10 anchored OPs) Wrote: that spec + this note. NOTHING else. Doc 01 is not edited by me (Write, not Edit); the project-manager applies the spec mechanically. Updated: the Open items below were corrected at 21:40 …",
+    "artifacts": [
+      "artifacts/product-owner-2026-09-06T2100-doc01-cycle3.md",
+      "artifacts/product-owner-2026-09-06T2100-doc01-cycle3-spec.md"
+    ],
+    "routed_to": "project-manager (applier); technical-writer (cycle-3 review)"
+  },
+  "product-owner-2026-09-06T2100-doc01-cycle3-spec": {
+    "file": "artifacts/product-owner-2026-09-06T2100-doc01-cycle3-spec.md",
+    "role": "product-owner (anchored spec)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T21:00:00Z",
+    "phase": "Vision - Doc 01 v2.3.0 spec",
+    "scope": "FIND/REPLACE operations on docs/01-press-release-prfaq.md for the PM applier.",
+    "summary": "From the note: Author: product-owner (Priya Raghunathan) — the owning role for Doc 01 Date: 2026-09-06T21:00 Target file: docs/01-press-release-prfaq.md (ONE file — no other file is touched) Applier: project-manager (mechanical FIND/REPLACE; four-backtick fences) Against: artifacts/reviews/01-press-release-prfaq-v2.2.0-business-cycle2.md (business, cycle 2 — FAIL 96%, 0 Critical / 0 High / 1 Medium / 0 Low; reviewer: technical-writer, neutral, PM-assigned). All six cycle-1 issues verified CLOSED; one new finding, ISS-01. Ruling: project-manager (Ana-Maria Petrescu), 2026-09-06, within approver ruling 5 (\"so a public reader cannot mistake it for what ships today\"): the integrity / no-gatekeeper claim class IS in scope of the §0 banner's purpose. Resolution taken: the reviewer's option (a) — mark the class — plus the banner widening the PM specified. Result: docs/01-press-release-prfaq.md v2.3.0, Status: …",
+    "artifacts": [
+      "artifacts/product-owner-2026-09-06T2100-doc01-cycle3-spec.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "technical-writer-2026-09-06T2130-doc01-cycle3-review": {
+    "file": "artifacts/technical-writer-2026-09-06T2130-doc01-cycle3-review.md",
+    "role": "technical-writer (neutral reviewer, business mode)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T21:30:00Z",
+    "phase": "Vision - cycle-3 business review of Doc 01 v2.3.0",
+    "scope": "Scores and lists issues only. Report artifacts/reviews/01-press-release-prfaq-v2.3.0-business-cycle3.md.",
+    "summary": "From the note: Role: technical-writer Capacity: NEUTRAL REVIEWER (document-review skill), NOT document owner this session Assignment: Coordinator message — Doc 01 v2.3.0 cycle 3 (I remain the assigned neutral reviewer, per artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-RELEASE-PREP.md) Reviewed: docs/01-press-release-prfaq.md v2.3.0, business mode, cycle 3 of 5 Report: artifacts/reviews/01-press-release-prfaq-v2.3.0-business-cycle3.md Verdict: PASS — Score 99%, Critical 0 / High 0 / Medium 0 / Low 1 Read the product-owner's cycle-3 spec (artifacts/product-owner-2026-09-06T2100-doc01-cycle3- spec.md, 10 OPs) and session note, then docs/01-press-release-prfaq.md v2.3.0 in full. Verified the sole cycle-2 finding (ISS-01, Medium — the integrity/no-gatekeeper claim class) closed: the widened §0 override paragraph and all five new (v2 target — see §0.) markers (§A tenet 1, §A tenet 7, §E1 \"goes wrong\", §E3 \"n …",
+    "artifacts": [
+      "artifacts/technical-writer-2026-09-06T2130-doc01-cycle3-review.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "technical-writer-2026-09-06T2130-public-files-cycle3": {
+    "file": "artifacts/technical-writer-2026-09-06T2130-public-files-cycle3.md",
+    "role": "technical-writer",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T21:30:00Z",
+    "phase": "Launch - public files rework after PUBLIC-FILES-REVIEW-2026-09-06-cycle2 FAIL (93%, 0C/0H/1M/5L)",
+    "scope": "README.md and CONTRIBUTING.md (the /verify citation Medium) + five Lows across README/CONTRIBUTING/SECURITY.",
+    "summary": "From the note: Role: technical-writer (Maya Lindqvist) Trigger: artifacts/status/PUBLIC-FILES-REVIEW-2026-09-06-cycle2.md — product-owner review, cycle 2: FAIL 93% (0C/0H/1M/5L). All twenty cycle-1 issues verified closed; one shared Medium (ISS-C2-01) plus four Lows remained, plus ISS-20 carried from cycle 1. Scope: Sentence-level fixes to README.md, CONTRIBUTING.md, SECURITY.md (ISS-C2-01(a)/02/03/04/05), plus CODEOFCONDUCT.md (ISS-20, authorized as \"close if cheap\" by the coordinator this cycle). Status: All six fixes applied. Not self-reviewed; routes back to the product-owner. - ISS-C2-01(a) (Medium; README ~128-130, CONTRIBUTING ~41, ~156-157) — replaced the over-broad \"tracked at Doc 02 §13 (j); Doc 06 §7 item 26\" citation in all three sites with the qualified form: (j) covers only the two landing strings (home.steps[0].body, home.promises[3]), and /verify's own copy \"is not yet in any register\"  …",
+    "artifacts": [
+      "artifacts/technical-writer-2026-09-06T2130-public-files-cycle3.md"
+    ],
+    "routed_to": "project-manager; product-owner (cycle-3 review)"
+  },
+  "product-owner-2026-09-06T2200-public-files-cycle3-review": {
+    "file": "artifacts/product-owner-2026-09-06T2200-public-files-cycle3-review.md",
+    "role": "product-owner (reviewer of the public files, cycle 3)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T22:00:00Z",
+    "phase": "Launch - cycle-3 review of README / CONTRIBUTING / SECURITY",
+    "scope": "Scores and lists issues only. Report artifacts/status/PUBLIC-FILES-REVIEW-2026-09-06-cycle3.md.",
+    "summary": "From the note: Role: product-owner (Priya Raghunathan) — acting ONLY as the PM-assigned neutral reviewer Task: Cycle-3 review of README.md, CONTRIBUTING.md, SECURITY.md (+ CODEOFCONDUCT.md, changed this cycle by the writer under a coordinator \"close if cheap\" authorisation). Rework: artifacts/technical-writer-2026-09-06T2130-public-files-cycle3.md History: cycle 1 FAIL 81% (0C/4H/7M/9L) → cycle 2 FAIL 93% (0/0/1/5) → cycle 3 FAIL 95% (0/0/1/0) Report: artifacts/status/PUBLIC-FILES-REVIEW-2026-09-06-cycle3.md — NOT in artifacts/reviews/, no hook field names, cannot enter any cycle counter. Verdict: FAIL — 95% (94.7 weighted); Critical 0 · High 0 · Medium 1 · Low 0 Status: Complete. Cycle 4 is a one-word edit in one file. Three of four files now PASS clean. Read the writer's cycle-3 note, then re-read every changed passage in all four files and verified each closure against source. Also re-read FR-131 cl …",
+    "artifacts": [
+      "artifacts/product-owner-2026-09-06T2200-public-files-cycle3-review.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "technical-writer-2026-09-06T2230-public-files-cycle4": {
+    "file": "artifacts/technical-writer-2026-09-06T2230-public-files-cycle4.md",
+    "role": "technical-writer",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T22:30:00Z",
+    "phase": "Launch - public files rework after PUBLIC-FILES-REVIEW-2026-09-06-cycle3 FAIL (95%, 0C/0H/1M/0L)",
+    "scope": "README.md: delete 'only' in the open-tier retention sentence (FR-133); test count 624 -> 625 in README and CONTRIBUTING.",
+    "summary": "From the note: Role: technical-writer (Maya Lindqvist) Trigger: artifacts/status/PUBLIC-FILES-REVIEW-2026-09-06-cycle3.md — product-owner review, cycle 3: FAIL 95%, exactly one Medium, zero Lows. Scope: Two edits only, per the coordinator's message — README.md (retention wording) and README.md + CONTRIBUTING.md (test count 624 → 625). Status: Both edits applied. Not self-reviewed; routes back to the product-owner. 1. README.md, \"The five things worth knowing,\" item 3 (retention paragraph). The claim that an open-tier account keeps \"only the phone hash and the party link\" understated retention: FR-133 (Doc 02 §4.47) mandates VoIP screening, IP/device velocity checks, and device anti-fraud signals as restricted-class data (NFR-027), which an open-tier account also carries. Removed \"only\" and added the required clause: an open-tier account \"keeps the phone hash and the party link, plus the anti-abuse sign …",
+    "artifacts": [
+      "artifacts/technical-writer-2026-09-06T2230-public-files-cycle4.md"
+    ],
+    "routed_to": "project-manager; product-owner (cycle-4 review)"
+  },
+  "product-owner-2026-09-06T2300-public-files-cycle4-review": {
+    "file": "artifacts/product-owner-2026-09-06T2300-public-files-cycle4-review.md",
+    "role": "product-owner (reviewer of the public files, cycle 4)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T23:00:00Z",
+    "phase": "Launch - cycle-4 review of README / CONTRIBUTING / SECURITY",
+    "scope": "Scores and lists issues only. Report artifacts/status/PUBLIC-FILES-REVIEW-2026-09-06-cycle4.md.",
+    "summary": "From the note: Role: product-owner (Priya Raghunathan) — acting ONLY as the PM-assigned neutral reviewer Task: Cycle-4 review: verify ISS-C3-01's closure, verify the 624 → 625 test-count edit introduced nothing false, confirm nothing else changed. Rework: artifacts/technical-writer-2026-09-06T2230-public-files-cycle4.md History: c1 FAIL 81% (0C/4H/7M/9L) → c2 FAIL 93% (0/0/1/5) → c3 FAIL 95% (0/0/1/0) → c4 PASS 98% (0/0/0/0) Report: artifacts/status/PUBLIC-FILES-REVIEW-2026-09-06-cycle4.md — NOT in artifacts/reviews/, no hook field names, cannot enter any cycle counter. Verdict: PASS — all four files. Loop closed at cycle 4 of 5; no escalation. Status: Complete. Review assignment discharged. Read the writer's cycle-4 note, then verified both edits against source and confirmed nothing else moved. Checked this cycle: README:66-69 (the reworked open-tier retention sentence) against Doc 02 §4.47 FR-133 and …",
+    "artifacts": [
+      "artifacts/product-owner-2026-09-06T2300-public-files-cycle4-review.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "tester-2026-09-06T2300-doc07-08-cycle2": {
+    "file": "artifacts/tester-2026-09-06T2300-doc07-08-cycle2.md",
+    "role": "tester",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T23:00:00Z",
+    "phase": "Verify - Doc 07 v2.8.0 / Doc 08 v2.11.0 rework after cycle-1 FAILs (94%, 2M/3L; 95%, 1M/2L)",
+    "scope": "Anchored spec artifacts/tester-2026-09-06T2300-doc07-08-cycle2-spec.md; PM transcribes.",
+    "summary": "From the note: Role: tester (Ji-woo Park) — owner of Doc 07 (Test Cases) and Doc 08 (RTM, author) Date: 2026-09-07 (session opened 2026-09-06T23:00) Branch: build/v1-cascade-and-release-prep — working tree at d526910 plus an uncommitted change set (76 dirty paths); reviewer-qa has not signed the merge. Trigger: Two cycle-1 FAILs from reviewer-qa (Rafael Duarte, neutral, PM-assigned): artifacts/reviews/07-test-cases-suites-v2.7.0-technical-cycle1.md FAIL 94%, 0C/0H/2M/3L artifacts/reviews/08-traceability-matrix-v2.10.0-technical-cycle1.md FAIL 95%, 0C/0H/1M/2L Output: ONE anchored spec — artifacts/tester-2026-09-06T2300-doc07-08-cycle2-spec.md 32 OPs: 18 Doc 07 (v2.7.0 - v2.8.0), 14 Doc 08 (v2.10.0 - v2.11.0). Cycle 2 of 5. Scope: I edited NEITHER document directly, no other document, no product or unit-test code. Doc 07 ISS-01 — the changelog cited a Doc 04 register that did not yet exist. It said \"Doc …",
+    "artifacts": [
+      "artifacts/tester-2026-09-06T2300-doc07-08-cycle2.md",
+      "artifacts/tester-2026-09-06T2300-doc07-08-cycle2-spec.md"
+    ],
+    "routed_to": "project-manager (applier); reviewer-qa (cycle-2 review)"
+  },
+  "tester-2026-09-06T2300-doc07-08-cycle2-spec": {
+    "file": "artifacts/tester-2026-09-06T2300-doc07-08-cycle2-spec.md",
+    "role": "tester (anchored spec)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T23:00:00Z",
+    "phase": "Verify - Doc 07/08 cycle-2 spec",
+    "scope": "FIND/REPLACE operations on docs/07 and docs/08 for the PM applier.",
+    "summary": "From the note: Prepared by: tester (Ji-woo Park) — owner of Doc 07 and Doc 08 Date: 2026-09-07 For: project-manager (mechanical applier) Targets: docs/07-test-cases-suites.md v2.7.0 - v2.8.0 (In Review, cycle 2 of 5) docs/08-traceability-matrix.md v2.10.0 - v2.11.0 (In Review, cycle 2 of 5) Against: artifacts/reviews/07-test-cases-suites-v2.7.0-technical-cycle1.md FAIL 94%, 0C/0H/2M/3L (Mediums: ISS-01, the Doc 04 §14 citation; ISS-02, TC-3573) artifacts/reviews/08-traceability-matrix-v2.10.0-technical-cycle1.md FAIL 95%, 0C/0H/1M/2L (Medium = ISS-01, the Doc 04 §14 register claim) Reviewer: reviewer-qa (Rafael Duarte), neutral, PM-assigned. Sources read: Doc 02 v2.17.1 Approved · Doc 03 v2.13.0 Approved · Doc 04 v1.6.0 Approved (§14 register re-read) · Doc 06 v2.7.0 Approved (§3 + the UT-0889 block) Runs: R-19 — npm test 625/625 exit 0; then the UT-0889 block case by case, 6 green Rules: FOUR-backtick …",
+    "artifacts": [
+      "artifacts/tester-2026-09-06T2300-doc07-08-cycle2-spec.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "reviewer-qa-2026-09-06T2330-doc07-08-cycle2-review": {
+    "file": "artifacts/reviewer-qa-2026-09-06T2330-doc07-08-cycle2-review.md",
+    "role": "reviewer-qa (neutral reviewer, technical mode)",
+    "date": "2026-09-06",
+    "timestamp": "2026-09-06T23:30:00Z",
+    "phase": "Verify - cycle-2 technical review of Doc 07 v2.8.0 and Doc 08 v2.11.0",
+    "scope": "Scores and lists issues only. Reports artifacts/reviews/07-test-cases-suites-v2.8.0-technical-cycle2.md and 08-traceability-matrix-v2.11.0-technical-cycle2.md.",
+    "summary": "From the note: Role: reviewer-qa (Rafael Duarte) — PM-assigned neutral reviewer (document-review skill); also A for \"RTM complete (zero gaps)\" under the CLAUDE.md RACI. Date: session opened 2026-09-06T23:30, executed 2026-09-07. Assigned: artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-RELEASE-PREP.md Scope: ONLY docs/07-test-cases-suites.md v2.8.0 and docs/08-traceability-matrix.md v2.11.0, technical mode, cycle 2 of 5 each. Wrote: artifacts/reviews/07-test-cases-suites-v2.8.0-technical-cycle2.md artifacts/reviews/08-traceability-matrix-v2.11.0-technical-cycle2.md (this note). I edited NO document, NO test and NO product code, and did not open artifacts/memory-index.json — the PM pre-registered this note's path. Document Version Cycle Score C / H / M / L Verdict ------------------ docs/07-test-cases-suites.md 2.8.0 2 of 5 95% 0 / 0 / 1 / 3 FAIL docs/08-traceability-matrix.md 2.11.0 2 of 5 96% 0 / 0 / 1  …",
+    "artifacts": [
+      "artifacts/reviewer-qa-2026-09-06T2330-doc07-08-cycle2-review.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "tester-2026-09-07T0930-doc07-08-cycle3": {
+    "file": "artifacts/tester-2026-09-07T0930-doc07-08-cycle3.md",
+    "role": "tester",
+    "date": "2026-09-07",
+    "timestamp": "2026-09-07T09:30:00Z",
+    "phase": "Verify - Doc 07 v2.8.1 / Doc 08 v2.11.1 rework after cycle-2 FAILs (95%, 1M; 96%, 1M)",
+    "scope": "Anchored spec artifacts/tester-2026-09-07T0930-doc07-08-cycle3-spec.md; PM transcribes.",
+    "summary": "From the note: Role: tester (Ji-woo Park) — owner of Doc 07 (Test Cases) and Doc 08 (RTM, author) Date: 2026-09-07 Branch: build/v1-cascade-and-release-prep — working tree still uncommitted; reviewer-qa has not signed the merge. Trigger: Two cycle-2 FAILs from reviewer-qa (Rafael Duarte, neutral, PM-assigned): artifacts/reviews/07-test-cases-suites-v2.8.0-technical-cycle2.md FAIL 95%, 0C/0H/1M/3L artifacts/reviews/08-traceability-matrix-v2.11.0-technical-cycle2.md FAIL 96%, 0C/0H/1M/2L Both reports confirm ALL cycle-1 issues CLOSED. Survivors are header/pin lines. Output: ONE anchored spec — artifacts/tester-2026-09-07T0930-doc07-08-cycle3-spec.md 14 OPs: 7 Doc 07 (v2.8.0 - v2.8.1), 7 Doc 08 (v2.11.0 - v2.11.1). Cycle 3 of 5. Scope: I edited NEITHER document directly, no other document, no product or unit-test code. A statement that outran what it sat on — for the fourth and fifth time in three cycles  …",
+    "artifacts": [
+      "artifacts/tester-2026-09-07T0930-doc07-08-cycle3.md",
+      "artifacts/tester-2026-09-07T0930-doc07-08-cycle3-spec.md"
+    ],
+    "routed_to": "project-manager (applier); reviewer-qa (cycle-3 review)"
+  },
+  "tester-2026-09-07T0930-doc07-08-cycle3-spec": {
+    "file": "artifacts/tester-2026-09-07T0930-doc07-08-cycle3-spec.md",
+    "role": "tester (anchored spec)",
+    "date": "2026-09-07",
+    "timestamp": "2026-09-07T09:30:00Z",
+    "phase": "Verify - Doc 07/08 cycle-3 spec",
+    "scope": "FIND/REPLACE operations on docs/07 and docs/08 for the PM applier.",
+    "summary": "From the note: Prepared by: tester (Ji-woo Park) — owner of Doc 07 and Doc 08 Date: 2026-09-07 For: project-manager (mechanical applier) Targets: docs/07-test-cases-suites.md v2.8.0 - v2.8.1 (In Review, cycle 3 of 5) docs/08-traceability-matrix.md v2.11.0 - v2.11.1 (In Review, cycle 3 of 5) Against: artifacts/reviews/07-test-cases-suites-v2.8.0-technical-cycle2.md FAIL 95%, 0C/0H/1M/3L (Medium = ISS-01, the unadvanced MTP Source pin) artifacts/reviews/08-traceability-matrix-v2.11.0-technical-cycle2.md FAIL 96%, 0C/0H/1M/2L (Medium = ISS-01, \"every source is Approved\") Reviewer: reviewer-qa (Rafael Duarte), neutral, PM-assigned. All cycle-1 issues confirmed CLOSED in both reports. Nature: PATCH bumps. Every fix is in the header block of its document. NO test case, status, count, link, gap code or ruling changes in either. Must COMPLETE stays 16 of 138; FR-131 stays OPEN. No suite re-run: R-19 (625/625)  …",
+    "artifacts": [
+      "artifacts/tester-2026-09-07T0930-doc07-08-cycle3-spec.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "reviewer-qa-2026-09-07T1000-doc07-08-cycle3-review": {
+    "file": "artifacts/reviewer-qa-2026-09-07T1000-doc07-08-cycle3-review.md",
+    "role": "reviewer-qa (neutral reviewer, technical mode)",
+    "date": "2026-09-07",
+    "timestamp": "2026-09-07T10:00:00Z",
+    "phase": "Verify - cycle-3 technical review of Doc 07 v2.8.1 and Doc 08 v2.11.1",
+    "scope": "Scores and lists issues only. Reports artifacts/reviews/07-test-cases-suites-v2.8.1-technical-cycle3.md and 08-traceability-matrix-v2.11.1-technical-cycle3.md.",
+    "summary": "From the note: Role: reviewer-qa (Rafael Duarte) — PM-assigned neutral reviewer (document-review skill); also A for \"RTM complete (zero gaps)\" under the CLAUDE.md RACI. Date: 2026-09-07T10:00. Assigned: artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-RELEASE-PREP.md Scope: ONLY docs/07-test-cases-suites.md v2.8.1 and docs/08-traceability-matrix.md v2.11.1, technical mode, cycle 3 of 5 each. Wrote: artifacts/reviews/07-test-cases-suites-v2.8.1-technical-cycle3.md artifacts/reviews/08-traceability-matrix-v2.11.1-technical-cycle3.md (this note). I edited NO document, NO test and NO product code, and did not open artifacts/memory-index.json — the PM pre-registered this note's path. Document Version Cycle Score C / H / M / L Verdict ------------------ docs/07-test-cases-suites.md 2.8.1 3 of 5 98% 0 / 0 / 0 / 1 PASS docs/08-traceability-matrix.md 2.11.1 3 of 5 96% 0 / 0 / 1 / 1 FAIL Doc 07 is the first PASS of …",
+    "artifacts": [
+      "artifacts/reviewer-qa-2026-09-07T1000-doc07-08-cycle3-review.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "tester-2026-09-07T1100-doc08-cycle4": {
+    "file": "artifacts/tester-2026-09-07T1100-doc08-cycle4.md",
+    "role": "tester",
+    "date": "2026-09-07",
+    "timestamp": "2026-09-07T11:00:00Z",
+    "phase": "Verify - Doc 08 v2.11.2 rework after cycle-3 FAIL (96%, 1M): BKLG v2.5.0 pin vs 134-story census; US-0135..US-0142 undisclosed",
+    "scope": "Anchored spec artifacts/tester-2026-09-07T1100-doc08-cycle4-spec.md; PM transcribes.",
+    "summary": "From the note: Role: tester (Ji-woo Park) — owner of Doc 07 (Test Cases) and Doc 08 (RTM, author) Date: 2026-09-07 Trigger: artifacts/reviews/08-traceability-matrix-v2.11.1-technical-cycle3.md FAIL 96%, 0C/0H/1M/1L — reviewer-qa (Rafael Duarte), neutral, PM-assigned. Doc 07 v2.8.1 PASSED cycle 3 (98%, 1 Low) and is Approved. Output: ONE anchored spec — artifacts/tester-2026-09-07T1100-doc08-cycle4-spec.md 10 OPs, all Doc 08 (v2.11.1 - v2.11.2). Cycle 4 of 5. CYCLE 5 IS THE CAP. Scope: I edited no document directly, no product code, no unit test. Doc 07 NOT touched. This matrix pinned a 142-story backlog and published a 134-story census. Doc 05 v2.5.0 states 142 stories; §6's Stories row read 134 134 (all carry Gherkin AC) 17 117. So \"134 traced of 134\" read as a complete population when the population is 142. I verified the finding independently before accepting it — a mechanical id diff of every US-## …",
+    "artifacts": [
+      "artifacts/tester-2026-09-07T1100-doc08-cycle4.md",
+      "artifacts/tester-2026-09-07T1100-doc08-cycle4-spec.md"
+    ],
+    "routed_to": "project-manager (applier); reviewer-qa (cycle-4 review)"
+  },
+  "tester-2026-09-07T1100-doc08-cycle4-spec": {
+    "file": "artifacts/tester-2026-09-07T1100-doc08-cycle4-spec.md",
+    "role": "tester (anchored spec)",
+    "date": "2026-09-07",
+    "timestamp": "2026-09-07T11:00:00Z",
+    "phase": "Verify - Doc 08 cycle-4 spec",
+    "scope": "FIND/REPLACE operations on docs/08 for the PM applier.",
+    "summary": "From the note: Prepared by: tester (Ji-woo Park) — owner of Doc 08 (RTM, author) Date: 2026-09-07 For: project-manager (mechanical applier) Target: docs/08-traceability-matrix.md v2.11.1 - v2.11.2 (In Review, cycle 4 of 5) Against: artifacts/reviews/08-traceability-matrix-v2.11.1-technical-cycle3.md FAIL 96%, 0C/0H/1M/1L. Reviewer: reviewer-qa (Rafael Duarte), neutral. Medium = ISS-01, a 142-story backlog pinned against a 134-story census. Route taken: the reviewer's disclose-and-register option. Doc 07: NOT touched. v2.8.1 PASSED cycle 3 (98%, 1 Low) and is Approved; its reviewer routed that Low to \"the next touch of the header block\". Bumping an Approved document to clear a non-blocking Low would restart its review loop and buy nothing. Nature: PATCH bump, and a DISCLOSURE. Nothing normative moves: Must 138 / COMPLETE 16 / OPEN 122 / G-PHASE3 47 / FR-131 OPEN, test cases 485 / 230 / gaps 255, suite 6 …",
+    "artifacts": [
+      "artifacts/tester-2026-09-07T1100-doc08-cycle4-spec.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "reviewer-qa-2026-09-07T1130-doc08-cycle4-review": {
+    "file": "artifacts/reviewer-qa-2026-09-07T1130-doc08-cycle4-review.md",
+    "role": "reviewer-qa (neutral reviewer, technical mode)",
+    "date": "2026-09-07",
+    "timestamp": "2026-09-07T11:30:00Z",
+    "phase": "Verify - cycle-4 technical review of Doc 08 v2.11.2",
+    "scope": "Scores and lists issues only. Report artifacts/reviews/08-traceability-matrix-v2.11.2-technical-cycle4.md.",
+    "summary": "From the note: Role: reviewer-qa (Rafael Duarte) — PM-assigned neutral reviewer (document-review skill); also A for \"RTM complete (zero gaps)\" under the CLAUDE.md RACI. Date: 2026-09-07T11:30 (report finalised 2026-09-08 after an API session limit interrupted the write — see \"Report state\" below). Assigned: artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-RELEASE-PREP.md Scope: ONLY docs/08-traceability-matrix.md v2.11.2, technical mode, cycle 4 of 5. Doc 07 v2.8.1 is Approved (PASS at cycle 3) and out of the loop. Wrote: artifacts/reviews/08-traceability-matrix-v2.11.2-technical-cycle4.md (this note). I edited NO document, NO test and NO product code, and did not open artifacts/memory-index.json — the PM pre-registered this note's path. Document Version Cycle Score C / H / M / L Verdict ------------------ docs/08-traceability-matrix.md 2.11.2 4 of 5 96% 0 / 0 / 1 / 1 FAIL - The cycle-3 Medium is substant …",
+    "artifacts": [
+      "artifacts/reviewer-qa-2026-09-07T1130-doc08-cycle4-review.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "tester-2026-09-08T0930-doc08-cycle5": {
+    "file": "artifacts/tester-2026-09-08T0930-doc08-cycle5.md",
+    "role": "tester",
+    "date": "2026-09-08",
+    "timestamp": "2026-09-08T09:30:00Z",
+    "phase": "Verify - Doc 08 v2.11.3 rework after cycle-4 FAIL (96%, 1M/1L) - cycle 5 of 5, the cap",
+    "scope": "Anchored spec artifacts/tester-2026-09-08T0930-doc08-cycle5-spec.md; PM transcribes.",
+    "summary": "From the note: Role: tester (Ji-woo Park) — owner of Doc 07 (Test Cases) and Doc 08 (RTM, author) Date: 2026-09-08 Trigger: artifacts/reviews/08-traceability-matrix-v2.11.2-technical-cycle4.md FAIL 96%, 0C/0H/1M/1L — reviewer-qa (Rafael Duarte), neutral, PM-assigned. The cycle-3 Medium (the story census) is confirmed CLOSED. Output: ONE anchored spec — artifacts/tester-2026-09-08T0930-doc08-cycle5-spec.md 7 OPs, all Doc 08 (v2.11.2 - v2.11.3). CYCLE 5 OF 5 — THE CAP. Scope: I edited no document directly, no product code, no unit test. Doc 07 not touched (Approved at v2.8.1). If cycle 5 fails, the verdict becomes ESCALATED and the approver must record one decision — approve-as-is, rework, or reject. That raised the bar on this rework, so I did not only fix the two issues: I ran the whole-file sweep myself and published its result inside the document, so the next reviewer can check my scope claim without …",
+    "artifacts": [
+      "artifacts/tester-2026-09-08T0930-doc08-cycle5.md",
+      "artifacts/tester-2026-09-08T0930-doc08-cycle5-spec.md"
+    ],
+    "routed_to": "project-manager (applier); reviewer-qa (cycle-5 review)"
+  },
+  "tester-2026-09-08T0930-doc08-cycle5-spec": {
+    "file": "artifacts/tester-2026-09-08T0930-doc08-cycle5-spec.md",
+    "role": "tester (anchored spec)",
+    "date": "2026-09-08",
+    "timestamp": "2026-09-08T09:30:00Z",
+    "phase": "Verify - Doc 08 cycle-5 spec",
+    "scope": "FIND/REPLACE operations on docs/08 for the PM applier.",
+    "summary": "From the note: Prepared by: tester (Ji-woo Park) — owner of Doc 08 (RTM, author) Date: 2026-09-08 For: project-manager (mechanical applier) Target: docs/08-traceability-matrix.md v2.11.2 - v2.11.3 (In Review, cycle 5 of 5) Against: artifacts/reviews/08-traceability-matrix-v2.11.2-technical-cycle4.md FAIL 96%, 0C/0H/1M/1L. Reviewer: reviewer-qa (Rafael Duarte), neutral. Medium = ISS-01, the §9 Decision cell still publishing \"stories 17/134\". Low = ISS-02, TD-RTM-04 calling an eight-cell residue \"one\". CAP WARNING: This is cycle 5 of 5. If it FAILS, the verdict becomes ESCALATED and the approver must record a decision (approve-as-is / rework / reject). Nature: PATCH bump. Nothing normative moves: Must 138 / COMPLETE 16 / OPEN 122 / G-PHASE3 47 / FR-131 OPEN, stories 17 of 142 (numerator unchanged), test cases 485 / 230 / gaps 255, suite 625/625 (R-19). No row, link, gap code, owner or phase changes. Rule …",
+    "artifacts": [
+      "artifacts/tester-2026-09-08T0930-doc08-cycle5-spec.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "reviewer-qa-2026-09-08T1000-doc08-cycle5-review": {
+    "file": "artifacts/reviewer-qa-2026-09-08T1000-doc08-cycle5-review.md",
+    "role": "reviewer-qa (neutral reviewer, technical mode)",
+    "date": "2026-09-08",
+    "timestamp": "2026-09-08T10:00:00Z",
+    "phase": "Verify - cycle-5 (cap) technical review of Doc 08 v2.11.3",
+    "scope": "Scores and lists issues only. Report artifacts/reviews/08-traceability-matrix-v2.11.3-technical-cycle5.md; on FAIL the verdict becomes ESCALATED for a recorded human decision.",
+    "summary": "From the note: Role: reviewer-qa (Rafael Duarte) — PM-assigned neutral reviewer (document-review skill); also A for \"RTM complete (zero gaps)\" under the CLAUDE.md RACI. Date: 2026-09-08T10:00. Assigned: artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-RELEASE-PREP.md Scope: ONLY docs/08-traceability-matrix.md v2.11.3, technical mode, cycle 5 of 5 — the cap. Doc 07 v2.8.1 was Approved at cycle 3 and was not re-reviewed. Wrote: artifacts/reviews/08-traceability-matrix-v2.11.3-technical-cycle5.md (this note). I edited NO document, NO test and NO product code, and did not open artifacts/memory-index.json — the PM pre-registered this note's path. Document Version Cycle Score C / H / M / L Verdict ------------------ docs/08-traceability-matrix.md 2.11.3 5 of 5 (the cap) 98% 0 / 0 / 0 / 1 PASS The cap was reached but not triggered. Escalation is the sanctioned exit below the bar; this version clears it, so the v …",
+    "artifacts": [
+      "artifacts/reviewer-qa-2026-09-08T1000-doc08-cycle5-review.md"
+    ],
+    "routed_to": "project-manager; approver (Rathish) if ESCALATED"
+  },
+  "product-owner-2026-09-08T1000-verify-ruling": {
+    "file": "artifacts/product-owner-2026-09-08T1000-verify-ruling.md",
+    "role": "product-owner",
+    "date": "2026-09-08",
+    "timestamp": "2026-09-08T10:00:00Z",
+    "phase": "Define - /verify page remedy choice (a) flag-gate vs (b) label, on engineering grounds; Doc 02 section 13 (j) record",
+    "scope": "Decision record section 5 + anchored spec artifacts/product-owner-2026-09-08T1000-doc02-spec.md; PM transcribes.",
+    "summary": "From the note: Role: product-owner (Priya Raghunathan) Date: 2026-09-08 Trigger: artifacts/status/DECISIONS-2026-09-08-VERIFY-PAGE.md §1 (approver Rathish Kumar) delegated the (a)/(b) remedy choice for the /verify page to the product-owner, on engineering grounds, with the applying role being the engineer. Assignment: artifacts/status/REVIEW-ASSIGNMENT-2026-09-08-VERIFY-PAGE.md Wrote: artifacts/product-owner-2026-09-08T1000-doc02-spec.md (anchored spec, 5 OPs) this note Wrote no code, no DES, no ADR, no review report. Did not open artifacts/memory-index.json (both paths pre-registered by the PM). Other documents blocking in the audit mid-session is expected and was not acted on; no self-appointed review. Remedy (a): flag-gate /verify out of the public v1 build, behind a new enrolmentui feature flag (dev on; staging off; prod off; removeBy = the enrolment sprint, blocked on CON-015). The nav link is hid …",
+    "artifacts": [
+      "artifacts/product-owner-2026-09-08T1000-verify-ruling.md",
+      "artifacts/product-owner-2026-09-08T1000-doc02-spec.md"
+    ],
+    "routed_to": "project-manager (applier); engineer (implementation); reviewer-qa (Doc 02 review)"
+  },
+  "product-owner-2026-09-08T1000-doc02-spec": {
+    "file": "artifacts/product-owner-2026-09-08T1000-doc02-spec.md",
+    "role": "product-owner (anchored spec)",
+    "date": "2026-09-08",
+    "timestamp": "2026-09-08T10:00:00Z",
+    "phase": "Define - Doc 02 v2.17.2 spec (section 13 (j) update)",
+    "scope": "FIND/REPLACE operations on docs/02-requirements-srs.md for the PM applier.",
+    "summary": "From the note: Author: Priya Raghunathan — Product Owner Applies: artifacts/status/DECISIONS-2026-09-08-VERIFY-PAGE.md (append §5 — the PO's choice) docs/02-requirements-srs.md (v2.17.1 → v2.17.2, In Review) Scope: Decision 1 of DECISIONS-2026-09-08-VERIFY-PAGE.md, delegated to the product-owner. Doc 02 change is a PATCH: §13 tracked-routing block only. No BR/FR/NFR/CON/RISK text, no §8 Gherkin, no §16 row is edited. Applier: the role holding Edit (engineer). Every FIND is verbatim and matches exactly once. --- FIND: (625 at the start of this session; the new guard adds to it). Commit; do not push. After this the approver's stated position is: the repository is ready to publish. REPLACE WITH: (625 at the start of this session; the new guard adds to it). Commit; do not push. After this the approver's stated position is: the repository is ready to publish. --- Decided by: Priya Raghunathan — Product Owne …",
+    "artifacts": [
+      "artifacts/product-owner-2026-09-08T1000-doc02-spec.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "engineer-2026-09-08T1100-verify-and-hook": {
+    "file": "artifacts/engineer-2026-09-08T1100-verify-and-hook.md",
+    "role": "engineer",
+    "date": "2026-09-08",
+    "timestamp": "2026-09-08T11:00:00Z",
+    "phase": "Coding & UT - hooks/check_gates.py block wording (approver decision 3); /verify page remedy per the PO's choice + UT guard; Doc 06 v2.8.0",
+    "scope": "Product code: /verify page, en/ar copy, guard, flag wiring if (a). Framework: hook wording. Doc 06 section 7 + UT registry.",
+    "summary": "From the note: (/verify remedy (a)) both done in this session Role: engineer (Samuel Oyelaran) Trigger: artifacts/status/DECISIONS-2026-09-08-VERIFY-PAGE.md (approver decisions 1 & 3) artifacts/status/REVIEW-ASSIGNMENT-2026-09-08-VERIFY-PAGE.md Scope: First message: decision 3 ONLY — hooks/checkgates.py block wording. Second message (this extension): decision 1 — the product-owner chose remedy (a) (flag-gate /verify behind enrolmentui, honesty placeholder) and directed the engineer to implement it exactly per DECISIONS §5. Both items are now complete and registered together under Doc 06 v2.8.0 (one version bump, not two, per the original plan). Note EXTENDED, not replaced — memory-index entry unchanged, artifacts/memory-index.json not opened. Reworded the review-loop block message in hooks/checkgates.py (checkreviewreports, ~line 528) and the invariant-(c) description in the module docstring, per the a …",
+    "artifacts": [
+      "artifacts/engineer-2026-09-08T1100-verify-and-hook.md"
+    ],
+    "routed_to": "project-manager; tester (Doc 06 review; TC owed)"
+  },
+  "technical-writer-2026-09-08T1200-readme-verify": {
+    "file": "artifacts/technical-writer-2026-09-08T1200-readme-verify.md",
+    "role": "technical-writer",
+    "date": "2026-09-08",
+    "timestamp": "2026-09-08T12:00:00Z",
+    "phase": "Launch - README /verify inventory line (and CONTRIBUTING) brought current with the ruling",
+    "scope": "Root files only.",
+    "summary": "From the note: Role: technical-writer (Maya Lindqvist) Trigger: artifacts/status/REVIEW-ASSIGNMENT-2026-09-08-VERIFY-PAGE.md (my row: \"README /verify inventory line (and CONTRIBUTING if it repeats the 'unruled' claim) brought current\") Sources read (in order): CLAUDE.md; REVIEW-ASSIGNMENT-2026-09-08-VERIFY-PAGE.md; DECISIONS-2026-09-08-VERIFY-PAGE.md (full — §1 approver ruling, §2 confirmations, §5 PO's remedy choice incl. §5.3 normative placeholder copy and §5.7 \"does NOT do\"); artifacts/engineer-2026-09-08T1100-verify-and-hook.md (what shipped: enrolmentui flag, defaults dev/staging/prod = true/false/false, placeholder component, UT-0890 with 15 assertions, npm test 625→640); docs/14-user-guide.md §1.2 (citizen-facing account: \"Not fully available yet... no working screen you complete today\", two-step model, vendor, discard, Aadhaar-only pilot gap); docs/02-requirements-srs.md §13 tracked routing ite …",
+    "artifacts": [
+      "artifacts/technical-writer-2026-09-08T1200-readme-verify.md"
+    ],
+    "routed_to": "project-manager; product-owner (delta review)"
+  },
+  "tester-2026-09-08T1300-doc06-review": {
+    "file": "artifacts/tester-2026-09-08T1300-doc06-review.md",
+    "role": "tester (neutral reviewer, technical mode)",
+    "date": "2026-09-08",
+    "timestamp": "2026-09-08T13:00:00Z",
+    "phase": "Coding & UT - cycle-1 technical review of Doc 06 v2.8.0 + the code drop + the hook wording",
+    "scope": "Scores and lists issues only. Report artifacts/reviews/06-coding-and-ut-v2.8.0-technical-cycle1.md.",
+    "summary": "From the note: Role: tester (Ji-woo Park — Test Lead) Dispatch: project-manager (Ana-Maria Petrescu) Assignment: artifacts/status/REVIEW-ASSIGNMENT-2026-09-08-VERIFY-PAGE.md — \"Neutral reviewers (recorded BEFORE dispatch)\", row 1: Doc 06 v2.8.0 (+ the code drop, incl. the hook wording change) technical tester (new instance). Excluded: engineer (owner), product-owner (chose the remedy). Ruling under review: artifacts/status/DECISIONS-2026-09-08-VERIFY-PAGE.md §1 (approver: /verify page), §3 (approver: stop-hook block wording), §5 (product-owner's choice, remedy (a)). Scope: SCORE AND LIST ONLY. No product code, no test code, no Doc 06, no Doc 07, no Doc 08 was written or edited in this session. artifacts/memory-index.json was NOT opened (the PM pre-registered this note's path). Restart: An earlier run of this same task was terminated by an API rate limit before anything reached disk. This session redid  …",
+    "artifacts": [
+      "artifacts/tester-2026-09-08T1300-doc06-review.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "reviewer-qa-2026-09-08T1300-doc02-review": {
+    "file": "artifacts/reviewer-qa-2026-09-08T1300-doc02-review.md",
+    "role": "reviewer-qa (neutral reviewer, business mode)",
+    "date": "2026-09-08",
+    "timestamp": "2026-09-08T13:00:00Z",
+    "phase": "Define - cycle-1 business review of Doc 02 v2.17.2",
+    "scope": "Scores and lists issues only. Report artifacts/reviews/02-requirements-srs-v2.17.2-business-cycle1.md.",
+    "summary": "From the note: Role: reviewer-qa (neutral reviewer for this dispatch — NOT a Gate-2 merge-signing act) Date: 2026-09-08 Dispatched: project-manager (Ana-Maria Petrescu) Assignment: artifacts/status/REVIEW-ASSIGNMENT-2026-09-08-VERIFY-PAGE.md — names reviewer-qa as the neutral reviewer of Doc 02 v2.17.2 (business), recorded BEFORE dispatch. Excluded: product-owner (owner), tester (Doc 08 rows). Reviewed: docs/02-requirements-srs.md v2.17.2 (In Review), business rubric, cycle 1 of 5 Wrote: artifacts/reviews/02-requirements-srs-v2.17.2-business-cycle1.md this note Wrote no code, no docs/ file, no other review report. Did not open artifacts/memory-index.json (both paths pre-registered by the PM). Did not self-appoint for any other document. FAIL — Score 92% — Critical 0 / High 0 / Medium 1 / Low 9. Routed to the product-owner (Priya Raghunathan) for rework as v2.17.3 (PATCH), Status: In Review. Cycle 1 of  …",
+    "artifacts": [
+      "artifacts/reviewer-qa-2026-09-08T1300-doc02-review.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "product-owner-2026-09-08T1400-public-files-verify-review": {
+    "file": "artifacts/product-owner-2026-09-08T1400-public-files-verify-review.md",
+    "role": "product-owner (reviewer of the README/CONTRIBUTING delta)",
+    "date": "2026-09-08",
+    "timestamp": "2026-09-08T14:00:00Z",
+    "phase": "Launch - delta review of the /verify inventory line",
+    "scope": "Scores and lists issues only. Report artifacts/status/PUBLIC-FILES-REVIEW-2026-09-08-verify.md.",
+    "summary": "From the note: Role: product-owner (Priya Raghunathan) — acting as NEUTRAL REVIEWER only, not as owner Trigger: artifacts/status/REVIEW-ASSIGNMENT-2026-09-08-VERIFY-PAGE.md — \"Neutral reviewers\" table, row: \"README / CONTRIBUTING delta business, FR-131(e)/FR-132(d) discipline product-owner (new instance) — report artifacts/status/PUBLIC-FILES-REVIEW-2026-09-08-verify.md, NOT under artifacts/reviews/ RACI: Accountable for public-facing claims excluded: technical-writer (author)\" Deliverable: artifacts/status/PUBLIC-FILES-REVIEW-2026-09-08-verify.md (written) Restart: an earlier attempt in this session was terminated by an API rate limit before anything reached disk; the review was re-run from the start. Reviewed the technical-writer's /verify delta to the three public root files, in business mode, against the FR-131 clause (e) / FR-132 §(d) discipline and against source facts. Sources read (in order): C …",
+    "artifacts": [
+      "artifacts/product-owner-2026-09-08T1400-public-files-verify-review.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "project-manager-2026-09-08T1800-verify-page": {
+    "file": "artifacts/project-manager-2026-09-08T1800-verify-page.md",
+    "role": "project-manager",
+    "date": "2026-09-08",
+    "timestamp": "2026-09-08T18:00:00Z",
+    "phase": "Orchestration - /verify ruling, confirmations, hook wording fix",
+    "scope": "Session note.",
+    "summary": "From the note: Role: project-manager (Ana-Maria Petrescu) Date: 2026-09-08 Approver: Rathish Kumar — directive of 2026-09-08 (three decisions; \"Reviews per rubric; neutral reviewers, assignment-record enforced. Gate --audit exit 0. npm test (625 green). Commit; do not push.\") Records: artifacts/status/DECISIONS-2026-09-08-VERIFY-PAGE.md (§1–§4 approver; §5 product-owner) artifacts/status/REVIEW-ASSIGNMENT-2026-09-08-VERIFY-PAGE.md (owners, reviewers, outcomes) Result: all three decisions closed; every governed document Approved; audit exit 0; npm test 640/640 (625 + UT-0890's 15); committed on main, NOT pushed. 1. Transcribed the approver's directive into DECISIONS-2026-09-08-VERIFY-PAGE.md and wrote the review-assignment record BEFORE any reviewer was dispatched (owners: product-owner, engineer, technical-writer; neutral reviewers: tester → Doc 06, reviewer-qa → Doc 02, a product-owner reviewer instan …",
+    "artifacts": [
+      "artifacts/project-manager-2026-09-08T1800-verify-page.md",
+      "artifacts/status/DECISIONS-2026-09-08-VERIFY-PAGE.md",
+      "artifacts/status/REVIEW-ASSIGNMENT-2026-09-08-VERIFY-PAGE.md"
+    ],
+    "routed_to": "approver"
+  },
+  "product-owner-2026-09-08T1500-doc02-rework": {
+    "file": "artifacts/product-owner-2026-09-08T1500-doc02-rework.md",
+    "role": "product-owner",
+    "date": "2026-09-08",
+    "timestamp": "2026-09-08T15:00:00Z",
+    "phase": "Define - Doc 02 v2.17.2 -> v2.17.3 review-loop rework cycle 2 (ISS-01 Medium: separate ruling from application; ISS-02/ISS-03 Lows)",
+    "scope": "Anchored spec artifacts/product-owner-2026-09-08T1500-doc02-spec-c2.md; PM transcribes.",
+    "summary": "From the note: Role: product-owner (Priya Raghunathan) — owning role for Doc 02; the reviewer never edits Date: 2026-09-08 Trigger: artifacts/reviews/02-requirements-srs-v2.17.2-business-cycle1.md — business, cycle 1, reviewer-qa (neutral, PM-assigned before dispatch): FAIL 92%, 0C / 0H / 1M / 9L. Wrote: artifacts/product-owner-2026-09-08T1500-doc02-spec-c2.md (anchored spec, 6 OPs) this note Did not: edit Doc 02 (the PM transcribes the spec); touch the decision record; author or self-appoint any review; open artifacts/memory-index.json (both paths pre-registered). I accept ISS-01 without qualification. It is the sharpest finding I have had against this document, and it is right on the merits and on the severity. §13 (j)(3) said \"CLOSED — ruled and applied 2026-09-08\" in a Status column, used the present indicative for build facts (\"the route is flag-gated\", \"the nav link is hidden\", \"the route renders …",
+    "artifacts": [
+      "artifacts/product-owner-2026-09-08T1500-doc02-rework.md",
+      "artifacts/product-owner-2026-09-08T1500-doc02-spec-c2.md"
+    ],
+    "routed_to": "project-manager (applier); reviewer-qa (cycle 2)"
+  },
+  "product-owner-2026-09-08T1500-doc02-spec-c2": {
+    "file": "artifacts/product-owner-2026-09-08T1500-doc02-spec-c2.md",
+    "role": "product-owner (anchored spec)",
+    "date": "2026-09-08",
+    "timestamp": "2026-09-08T15:00:00Z",
+    "phase": "Define - Doc 02 v2.17.3 rework spec",
+    "scope": "FIND/REPLACE operations on docs/02-requirements-srs.md for the PM applier.",
+    "summary": "From the note: Author: Priya Raghunathan — Product Owner (owning role; the reviewer never edits) Applies: docs/02-requirements-srs.md ONLY (v2.17.2 on disk → v2.17.3, Status In Review) Against: artifacts/reviews/02-requirements-srs-v2.17.2-business-cycle1.md (business, cycle 1 — FAIL 92%, 0C / 0H / 1M / 9L; reviewer: reviewer-qa, neutral, PM-assigned before dispatch) Folds: ISS-01 (Medium — the FAIL), ISS-02 (Low), ISS-03 (Low). Carries: ISS-04..ISS-10 (seven Lows) unchanged — NOT folded, per the dispatch. Bump: PATCH. Wording, status and citation corrections only; no normative meaning changes; no BR/FR/NFR/CON/RISK text, no §8 Gherkin, no §16 row is edited; no ID minted, reused or renumbered; Must count stays at 114. Applier: the role holding Edit. Every FIND is verbatim from the CURRENT file on disk (v2.17.2, re-read 2026-09-08T15:00) and matches EXACTLY ONCE. Deletions: NONE. Every OP is annotate-in …",
+    "artifacts": [
+      "artifacts/product-owner-2026-09-08T1500-doc02-spec-c2.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "reviewer-qa-2026-09-08T1600-doc02-review-c2": {
+    "file": "artifacts/reviewer-qa-2026-09-08T1600-doc02-review-c2.md",
+    "role": "reviewer-qa (neutral reviewer, business mode)",
+    "date": "2026-09-08",
+    "timestamp": "2026-09-08T16:00:00Z",
+    "phase": "Define - cycle-2 business review of Doc 02 v2.17.3",
+    "scope": "Scores and lists issues only. Report artifacts/reviews/02-requirements-srs-v2.17.3-business-cycle2.md.",
+    "summary": "From the note: Role: reviewer-qa — NEUTRAL REVIEWER for this task (document-review skill, business rubric). NOT the owner of Doc 02 (product-owner owns it). Read-only: I scored and listed only. Date: 2026-09-08 Assigned: artifacts/status/REVIEW-ASSIGNMENT-2026-09-08-VERIFY-PAGE.md — reviewer recorded BEFORE dispatch. I did not self-appoint. Wrote: artifacts/reviews/02-requirements-srs-v2.17.3-business-cycle2.md this note Did not: edit docs/02-requirements-srs.md or any product code; author any other review; review Doc 06 v2.8.0 or the code drop (tester's assignment); sign any merge; make any Gate-2 finding; open artifacts/memory-index.json (both paths pre-registered by the PM). PASS — 96%, 0 Critical / 0 High / 0 Medium / 10 Low (3 new: ISS-C2-01..03; 7 carried: cycle-1 ISS-04..ISS-10). Predecessor v2.17.2 was FAIL 92%, 0C/0H/1M/9L. Per-criterion: B1 97 · B2 96 · B3 97 · B4 96 · B5 95 · B6 96 → weighte …",
+    "artifacts": [
+      "artifacts/reviewer-qa-2026-09-08T1600-doc02-review-c2.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "technical-writer-2026-09-08T1700-readme-verify-c2": {
+    "file": "artifacts/technical-writer-2026-09-08T1700-readme-verify-c2.md",
+    "role": "technical-writer",
+    "date": "2026-09-08",
+    "timestamp": "2026-09-08T17:00:00Z",
+    "phase": "Launch - README/CONTRIBUTING /verify delta rework cycle 2 (PUBLIC-FILES-REVIEW-2026-09-08-verify.md FAIL 92%: ISS-01/ISS-02 Medium, 5 Lows)",
+    "scope": "Root public files only.",
+    "summary": "From the note: Role: technical-writer (Maya Lindqvist) — owning role, unchanged Trigger: coordinator message: cycle 1 FAIL, 92%, 0C/0H/2M/5L (product-owner reviewer, artifacts/status/PUBLIC-FILES-REVIEW-2026-09-08-verify.md) Sources read this cycle: PUBLIC-FILES-REVIEW-2026-09-08-verify.md in full (§1 summary, §3 per-criterion scores, §4 FR-131(e)/FR-132(d) discipline check, §5 all seven issues, §6 watch items, §7 staleness sweep, §8 routing); re-checked DECISIONS-2026-09-08-VERIFY-PAGE.md §5.1, §5.2, §5.5 item 6 (the facts ISS-01 cites: starting copy, re-litigation duty, H-17/OI-20/H-16/H-18 falsity-even-of- the-planned-check); Doc 14 §1.2 (framing model cited by ISS-02); the current README.md and CONTRIBUTING.md (re-read in full before editing, not from memory). Scope: Fix every Medium (required) and every Low I can close without widening the delta beyond the flagged lines, per the coordinator's brie …",
+    "artifacts": [
+      "artifacts/technical-writer-2026-09-08T1700-readme-verify-c2.md"
+    ],
+    "routed_to": "project-manager; product-owner (cycle-2 delta review)"
+  },
+  "product-owner-2026-09-08T1730-public-files-verify-review-c2": {
+    "file": "artifacts/product-owner-2026-09-08T1730-public-files-verify-review-c2.md",
+    "role": "product-owner (reviewer of the README/CONTRIBUTING delta)",
+    "date": "2026-09-08",
+    "timestamp": "2026-09-08T17:30:00Z",
+    "phase": "Launch - cycle-2 delta review of the /verify public-file lines",
+    "scope": "Scores and lists issues only. Report artifacts/status/PUBLIC-FILES-REVIEW-2026-09-08-verify-cycle2.md.",
+    "summary": "From the note: Role: product-owner (Priya Raghunathan) — acting as NEUTRAL REVIEWER only, not as owner Trigger: coordinator message — the technical-writer reworked the delta against my cycle-1 FAIL; run cycle 2, same rubric and rules Assignment: artifacts/status/REVIEW-ASSIGNMENT-2026-09-08-VERIFY-PAGE.md — \"Neutral reviewers\" table, row: \"README / CONTRIBUTING delta business, FR-131(e)/FR-132(d) discipline product-owner (new instance) … NOT under artifacts/reviews/ excluded: technical-writer (author)\". Cycle-2 report path set by the coordinator. Deliverable: artifacts/status/PUBLIC-FILES-REVIEW-2026-09-08-verify-cycle2.md (written) Cycle 1: artifacts/status/PUBLIC-FILES-REVIEW-2026-09-08-verify.md — FAIL 92%, 0C/0H/2M/5L Ran cycle 2 of the public-files /verify review. Read the writer's rework note (artifacts/technical-writer-2026-09-08T1700-readme-verify-c2.md) for the claimed before/after, then verif …",
+    "artifacts": [
+      "artifacts/product-owner-2026-09-08T1730-public-files-verify-review-c2.md"
+    ],
+    "routed_to": "project-manager"
+  },
+  "engineer-2026-09-08T1900-doc06-rework": {
+    "file": "artifacts/engineer-2026-09-08T1900-doc06-rework.md",
+    "role": "engineer",
+    "date": "2026-09-08",
+    "timestamp": "2026-09-08T19:00:00Z",
+    "phase": "Coding & UT - Doc 06 v2.8.0 -> v2.8.1 review-loop rework cycle 2 (ISS-01 Medium: UT-0889 TC rows wrongly stated as owed; 3 Lows)",
+    "scope": "docs/06-coding-and-ut.md only unless a Low needs a code comment.",
+    "summary": "From the note: Role: engineer (Samuel Oyelaran) Trigger: artifacts/reviews/06-coding-and-ut-v2.8.0-technical-cycle1.md (tester Ji-woo Park, neutral, PM-assigned; FAIL 95%, 0C/0H/1M/3L) Scope: Doc 06 prose only. No product code, no test code, no hook code touched. Doc 07 and Doc 08 explicitly NOT edited (both Approved and correct per the report). Result: Doc 06 v2.8.0 - v2.8.1, Status In Review. ISS-01 (Medium) fixed at both cited locations without touching Doc 07/08; ISS-02/03/04 (Low) folded. Patch bump, not minor, per the report's own routing instruction and house precedent (Doc 07 v2.8.0-v2.8.1, Doc 08 v2.11.2-v2.11.3). Read artifacts/reviews/06-coding-and-ut-v2.8.0-technical-cycle1.md in full (all 9 sections) before editing anything, per the coordinator's instruction. Then verified every factual claim the report and the fix depend on against Doc 07 and Doc 08 on disk at HEAD, not from memory or fro …",
+    "artifacts": [
+      "artifacts/engineer-2026-09-08T1900-doc06-rework.md"
+    ],
+    "routed_to": "project-manager; tester (cycle 2)"
+  },
+  "tester-2026-09-08T1930-doc06-review-c2": {
+    "file": "artifacts/tester-2026-09-08T1930-doc06-review-c2.md",
+    "role": "tester (neutral reviewer, technical mode)",
+    "date": "2026-09-08",
+    "timestamp": "2026-09-08T19:30:00Z",
+    "phase": "Coding & UT - cycle-2 technical review of Doc 06 v2.8.1",
+    "scope": "Scores and lists issues only. Report artifacts/reviews/06-coding-and-ut-v2.8.1-technical-cycle2.md.",
+    "summary": "From the note: Role: tester (Ji-woo Park — Test Lead) Dispatch: project-manager (Ana-Maria Petrescu) Assignment: artifacts/status/REVIEW-ASSIGNMENT-2026-09-08-VERIFY-PAGE.md — same assigned neutral reviewer as cycle 1 (Doc 06 + the code drop, technical, tester). Excluded: engineer (owner), product-owner (chose the remedy). Cycle 1: artifacts/reviews/06-coding-and-ut-v2.8.0-technical-cycle1.md — FAIL 95%, 0C/0H/1M/3L Rework: artifacts/engineer-2026-09-08T1900-doc06-rework.md (engineer, Samuel Oyelaran) Scope: SCORE AND LIST ONLY. No product code, no test code, no Doc 06, no Doc 07, no Doc 08 written or edited. artifacts/memory-index.json NOT opened (path pre-registered). Ran the document-review skill in technical mode against docs/06-coding-and-ut.md v2.8.1 (In Review) and the code drop it registers. Wrote exactly one artifact: - artifacts/reviews/06-coding-and-ut-v2.8.1-technical-cycle2.md Verdict: PAS …",
+    "artifacts": [
+      "artifacts/tester-2026-09-08T1930-doc06-review-c2.md"
+    ],
+    "routed_to": "project-manager"
   }
 }

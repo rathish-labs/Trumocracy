@@ -2,14 +2,535 @@
 
 ```
 Document ID:   TC-TRUMOCRACY
-Version:       2.4.4
-Status:        Approved — 07-test-cases-suites-v2.4.4-technical-cycle2.md (PASS 99%, 0C/0H/0M/1L; ISS-01 Low carried — §9 lacks an R-17 confirmatory re-run row, per the R-14 precedent, accepted at the v2.4.2 PASS)
+Version:       2.8.1
+Status:        Approved — 07-test-cases-suites-v2.8.1-technical-cycle3.md (PASS 98%, 0C/0H/0M/1L; reviewer: reviewer-qa, neutral,
+               PM-assigned; one Low carried, non-blocking, to fold at the next touch (see the report)). Previously: In Review — v2.8.1 (2026-09-07). **Rework cycle 3 of 5 against
+               artifacts/reviews/07-test-cases-suites-v2.8.0-technical-cycle2.md (FAIL 95%, 0C/0H/1M/3L;
+               reviewer: reviewer-qa, Rafael Duarte — neutral, PM-assigned). All four issues addressed;
+               none carried. All five cycle-1 issues were confirmed CLOSED by that report.** Patch bump:
+               **not one test case, status, count or ruling changes at this version** — every fix is in the
+               header block, and a version that touches no case does not earn a minor.
+               **ISS-01 (the Medium) — the pin note announced an advance the `Source:` block never
+               received.** v2.8.0's note says "**MTP v1.0.1 → v1.6.0 (Approved)**"; the Source line still
+               read **v1.0.1**. **The note was the plan; the block is the pin**, and a reader checking the
+               pin found the old one. Advanced, together with the three other stale pins the same note
+               named — see ISS-02.
+               **ISS-02 (Low) — "Every source this document now leans on is Approved" sat above a block
+               pinning SRS v2.16.0, SDD v2.10.0, BKLG v2.3.0 (In Review) and MTP v1.0.1.** True of the
+               documents, false of the block underneath it. **Taken the harder of the two offered ways:
+               the pins are advanced rather than the sentence weakened**, and each advance is annotated
+               with exactly what was read — three **scoped** reads and one **version-only** advance that
+               says so in terms. **The standing "full pin-sync owed" debt, carried since v2.5.0, is
+               DISCHARGED at this version.**
+               **ISS-03 (Low)** — the free `TS-V1-*` band is restated as **TC-3577–TC-3699** in the v2.8.0
+               entry, and the v2.7.0 entry's now-superseded "TC-3576–TC-3699" is annotated in place.
+               **ISS-04 (Low)** — `Last updated` corrected to **2026-09-07**, the date every other line of
+               this version already carries.
+               _(v2.8.0 record, retained:)_ In Review — v2.8.0 (2026-09-07). **Rework cycle 2 of 5 against
+               artifacts/reviews/07-test-cases-suites-v2.7.0-technical-cycle1.md (FAIL 94%, 0C/0H/2M/3L;
+               reviewer: reviewer-qa, Rafael Duarte — neutral, PM-assigned). All five issues addressed;
+               none carried.** Minor bump per the review-loop rule: a Medium-or-worse FAIL earns at least
+               a minor bump.
+               **ISS-01 (Medium 1 of 2) — the changelog cited a Doc 04 register that does not exist yet.**
+               It said "Doc 04 §14 records TC-3564..TC-3569 as minted and reserves TC-3570–TC-3699".
+               **Doc 04 v1.5.0 — the version pinned when that was written — says neither half:** §14
+               reserved TC-3564–TC-3699 annotated "**none minted**", and the strings TC-3569 and TC-3570
+               occur nowhere in that file. **The mint is sound and unchanged; the citation was not**, and it
+               erred in the direction that matters — it read as though the architect's register had
+               already ratified the mint. **Doc 04 v1.6.0 is now Approved and does record it**, so the
+               sentence is re-attributed to v1.6.0 with what v1.5.0 actually said quoted beside it.
+               **ISS-02 (Medium 2 of 2) — TC-3573 described a broader guard than UT-0889 has.** Its expected
+               result banned the bare Arabic substring "سري"; Doc 06 **v2.7.0 (now Approved)** deliberately
+               narrowed that assertion to the exact retired phrase **"اسمك سريًا"** because a bare ban also
+               matches "سريعًا" ("quickly") and "تسري" ("takes effect" — already shipping at `ar.ts`
+               `parties.leaveHelp`). The cell is re-cut to what the test asserts now, with the
+               false-positive rationale recorded as a third stated scope limit. **Same fix as TC-3567
+               (v2.6.0 ISS-02) and TC-3543 (v2.7.0): state less, do not claim more.** Status unchanged —
+               the case is green and was re-observed case by case in run **R-19**.
+               **One TC minted — TC-3576** (the sixth UT-0889 `it`, a DES-085 jargon scan added at Doc 06
+               v2.7.0). **No TC is retired, reused, renumbered or re-statused.** Counts move only by that
+               mint and its observation: designed **477 → 478**, automated **244 → 245**, observed
+               **93 → 94**. Run **R-19** recorded (`npm test` **625/625**, then the UT-0889 block case by
+               case, **6 passed**).
+               **All three Lows discharged, none carried:** ISS-03 (the `it` count 5 → 6
+               and the orphan sweep re-run), ISS-04 (CODE pin advanced to **v2.7.0 Approved**, and with it
+               TC-3568's conditional discharge converted to unconditional now that Doc 03 v2.13.0 is
+               Approved), ISS-05 (§0.2 gains the R-18 and R-19 rows it lacked).
+               _(v2.7.0 record, retained:)_ In Review — v2.7.0 (2026-09-06). **FR-131 clause (e) TC re-cut.** Doc 02
+               **v2.17.1 (Approved)** §4.45 adds clause (e) — the honesty-of-claim duty over every v1
+               participation act, approver-confirmed 2026-09-06 — and, at v2.17.1, the acceptance
+               criteria this version actually derives from: **§8 FR-131 Scenario 8** (the grade-8 reader
+               test, the public-by-design rule, the safe harbour, and the rule that where safe harbour
+               and reader test disagree **the reader test governs**) and **§8 FR-131 Scenario 9** (the
+               absence test over **every** v1 surface in **every** language, including the case where a
+               claim carrying none of the four banned words still fails). The engineer landed **UT-0889**
+               at Doc 06 v2.6.0. This version mints **six cases, TC-3570..TC-3575**; records run **R-18**
+               (`npm test` from the repo root, **624/624**, tester-executed, exit 0) together with a
+               **case-by-case** verbose re-run of the UT-0889 block, which is why TC-3570..TC-3574 are
+               the first FR-131 cases to carry **Pass (obs.)** rather than Pass (inh.); and corrects
+               **TC-3543**, whose expected result paraphrased a refusal message this drop rewrote.
+               **TC-3575 is minted Blocked, deliberately** — Scenario 9 is a population sweep and the
+               only instrument specified for it (Doc 04 §0.5 S5) is not built. **No existing TC is
+               retired, reused, renumbered or re-statused.** Neutral technical review owed (reviewer-qa,
+               per artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-RELEASE-PREP.md).
+               **All three v2.6.0 Lows are DISCHARGED at this version, not carried** — **ISS-C2-01**
+               (TC-3519's inline-code regex pipes are escaped, so the row is 7 cells against a 7-column
+               header), **ISS-C2-02** (§10 prose "Forty-eight" corrected to "Forty-nine", matching the
+               table's 49, with the forty-ninth case named), **ISS-C2-03** (the pin note is re-cut to the
+               versions current on 2026-09-06 and the CODE pin advances to v2.6.0 — see Source).
+               _(v2.6.0 record, retained — the three Lows it carried, and its "fix first on any future
+               touch" instruction, are executed above rather than inherited:)_ Approved — 07-test-cases-suites-v2.6.0-technical-cycle2.md (PASS 97%, 0C/0H/0M/3L;
+               reviewer: reviewer-qa, neutral, PM-assigned). Three Lows carried — **fix first on
+               any future touch:** ISS-C2-01 (TC-3519 row has 10 cells against a 7-column header —
+               unescaped pipes in an inline-code regex; pre-existing since v2.3.0), ISS-C2-02 (§10
+               prose "Forty-eight" vs the table's 49; pre-existing), ISS-C2-03 (In-Review pins of
+               Docs 03/04/09 now superseded — Doc 03 v2.13.0 and Doc 04 v1.4.0 are Approved; refresh
+               at the owed pin-sync). This was v2.6.0 (rework cycle 2 against
+               artifacts/reviews/07-test-cases-suites-v2.5.0-technical-cycle1.md, FAIL 92%,
+               0C/0H/3M/4L). Minor bump per the review-loop rule: a Medium-or-worse FAIL earns at
+               least a minor bump. **No TC is minted, retired, reused, renumbered or re-statused at
+               this version and NO count moves.** All three Mediums are the same defect — a claim
+               that outruns the evidence under it — so the fix is to state less, not to test more.
+               _(v2.5.0 record, retained:)_ In Review — v2.5.0 (FR-131 honesty-drop traceability;
+               Doc 06 v2.5.1 sync).
+               _(v2.4.4 record, retained:)_ Approved — 07-test-cases-suites-v2.4.4-technical-cycle2.md (PASS 99%, 0C/0H/0M/1L; ISS-01 Low **DISCHARGED at v2.5.0** — §9 now carries the confirmatory full-suite re-run row it lacked, as R-17)
 Owner:         Ji-woo Park — Test Lead (tester)
-Source:        MTP-TRUMOCRACY v1.0.1 (docs/04-test-strategy-master-plan.md) · BKLG-TRUMOCRACY v2.3.0 (docs/05-product-backlog.md)
-               SRS-TRUMOCRACY v2.16.0 §8 Gherkin (docs/02-requirements-srs.md) · SDD-TRUMOCRACY v2.10.0 §5.2, §10.13.10, §10.13.10.1, §10.13.13, §11, §14 (docs/03-architecture-design-sdd.md)
-               CODE-TRUMOCRACY v2.4.3 (docs/06-coding-and-ut.md) · SECURITY-RESCAN-SC15-21-2026-08-11.md
-Last updated:  2026-08-30
-Changelog:     v2.4.4 (2026-08-30) — **Rework cycle 1 against
+Source:        MTP-TRUMOCRACY v1.6.0 (**Approved** — PASS 96%; **scoped read**: §0.5 S4/S5 and the §14 register) (docs/04-test-strategy-master-plan.md) · BKLG-TRUMOCRACY v2.5.0 (**Approved** — **version-only advance, NOT re-read for this version**; see the v2.8.1 pin note) (docs/05-product-backlog.md)
+               SRS-TRUMOCRACY v2.17.1 (**Approved** — **scoped read**: §4.45 FR-131 and §8 FR-131 Scenarios 8 and 9) §8 Gherkin (docs/02-requirements-srs.md) · SDD-TRUMOCRACY v2.13.0 (**Approved** — **scoped read**: §10.12.3 / DES-094 clause 9) §5.2, §10.13.10, §10.13.10.1, §10.13.13, §11, §14 (docs/03-architecture-design-sdd.md)
+               CODE-TRUMOCRACY v2.7.0 (**Approved** — 06-coding-and-ut-v2.7.0-technical-cycle2.md, PASS 96%, 0C/0H/0M/3L) (docs/06-coding-and-ut.md) · SECURITY-RESCAN-SC15-21-2026-08-11.md
+               _(v2.5.0 pin note — read this before trusting a pin. Only the CODE pin was advanced
+               (v2.4.3 → **v2.5.1**), because only Doc 06 was re-read for this version. The other
+               four pins are **stale against the current versions** — SRS is now **v2.16.3**
+               (Approved), SDD **v2.12.0** and MTP **v1.3.0** (both **In Review**, both bumped on
+               2026-09-06 by the same FR-131 cascade that produced this version), BKLG **v2.5.0**
+               (Approved) — and are deliberately
+               NOT advanced here: a pin asserts "this document was written against that version",
+               and advancing one without reading its delta would be a false claim of review.
+               **One exception, stated so it is not ambiguous:** FR-131 was read for this version
+               at **SRS v2.16.3 §4.45**, the current Approved text. A full pin-sync of
+               SRS/SDD/BKLG/MTP is owed at the next version.)_
+               _(v2.6.0 pin note — **no pin is advanced at this version**; this is a wording
+               rework and no source document was re-read end to end. Two of the "current versions"
+               named above have themselves moved since the morning of 2026-09-06: SDD is now
+               **v2.13.0** and MTP **v1.4.0**, both **In Review** and both in cycle 2 of their
+               neutral technical review; Doc 09 is now **v1.6.0 (In Review)**. SRS **v2.16.3
+               (Approved)**, BKLG **v2.5.0 (Approved)** and CODE **v2.5.1 (Approved)** are
+               unchanged. Named so the citations in the changelog and §5.3 can be read against the
+               right versions. The full pin-sync is still owed.)_
+               _(v2.7.0 pin note — **one pin advances, and ISS-C2-03 is discharged.** **CODE advances
+               v2.5.1 → v2.6.0 (In Review)**: the Doc 06 v2.6.0 delta was read for this version — its
+               changelog, its §3 `UT-0889` row and its 624 total, and its §7 item 26 rewrite — together
+               with the UT-0889 block itself in `apps/web/test/safety-surfaces.test.tsx`. **The pin is
+               annotated with the fact that matters rather than left bare: Doc 06 v2.6.0 FAILED cycle 1
+               of its neutral technical review (94%, 0C/0H/1M/5L) and a **v2.7.0** rework is in progress.**
+               The Medium (ISS-01) is about stale "owed" statements in §7 item 26 and the change history
+               — **not about UT-0889**, whose five assertions the same reviewer scored as satisfying all
+               five §5.4 requirements and as genuinely failing on the old strings. The cases below
+               therefore rest on the test as read in the repository, not on the document pin.
+               **No other pin advances.** The versions current on 2026-09-06, stated so no reader is
+               misled either way: SRS **v2.17.1 — Approved**: clause (e) plus its §8 Scenarios 8 and 9,
+               which **PASSED cycle 2 of its neutral business review on 2026-09-06**
+               (artifacts/reviews/02-requirements-srs-v2.17.1-business-cycle2.md), so the acceptance
+               criteria these six cases derive from are **settled, not provisional**; SDD **v2.13.0
+               (Approved** — it left In Review after the v2.6.0 note above was written**)**; MTP
+               **v1.5.0 (In Review**, v1.6.0 rework in progress**)**; BKLG **v2.5.0 (Approved)**; Doc 09
+               is `docs/09-release-notes.md` at **v1.9.0 (Approved)**. **The SRS pin on the Source line
+               above is NOT advanced even though SRS is now Approved** — advancing a pin asserts the whole
+               delta was read, and what was read for this version is §4.45 and §8 FR-131 Scenarios 8/9,
+               which is precisely what the six new cases cite, line by line, in their own rows. **MTP
+               v1.5.0 §0.5 S4/S5 is read and cited as *current In-Review text*, not as settled evidence**
+               — a v1.6.0 rework is in progress and S5 may still move, and **TC-3575 is Blocked on S5**,
+               so that caveat is load-bearing rather than decorative. The full SRS/SDD/BKLG/MTP pin-sync
+               is still owed.)_
+               _(v2.8.0 pin note — **two pins advance and both were earned; ISS-01 and ISS-04
+               discharged.** **CODE v2.6.0 → v2.7.0 (Approved)** — Doc 06 cleared its neutral technical
+               review on 2026-09-06 (PASS 96%, 0C/0H/0M/3L), and its v2.7.0 delta was read here for two
+               specific reasons that change this document: its **ISS-06** narrowed the UT-0889 Arabic
+               assertion (TC-3573 is re-cut for it) and its **ISS-03** added a sixth `it`, the DES-085
+               jargon scan (TC-3576 is minted for it). The pin no longer carries a FAIL annotation because
+               there is no longer a FAIL to annotate. **MTP v1.0.1 → v1.6.0 (Approved)** — a **scoped**
+               advance, and the word is meant: **§0.5 S4/S5 and §14 were read; the rest of the v1.6.0
+               delta was not**, so this pin asserts those sections and no more, and the standing full
+               pin-sync debt below is not discharged by it. It advances at all because Doc 04 v1.6.0 is
+               what makes this document's own register sentence true — see the changelog, ISS-01.
+               **SRS, SDD and BKLG do not advance.** Current versions, stated so no reader is misled:
+               SRS **v2.17.1 (Approved)**, SDD **v2.13.0 (Approved)**, BKLG **v2.5.0 (Approved)**, Doc 09
+               **v1.9.0 (Approved)**. **Every source this document now leans on is Approved** — the first
+               version of which that has been true since the FR-131 cascade opened, which is why several
+               "cited as current In-Review text, not settled evidence" caveats below are now spent and are
+               marked as such where they appear. The full SRS/SDD/BKLG pin-sync is still owed.)_ _(v2.8.1, ISS-02: that sentence was true of the **documents** and false of the **block** — the `Source:` lines above it still read SRS v2.16.0, SDD v2.10.0, BKLG v2.3.0 (In Review) and MTP v1.0.1. Corrected at v2.8.1, below, by advancing the pins rather than softening the sentence.)_
+               _(v2.8.1 pin note — **the pin-sync debt this document has carried since v2.5.0 is
+               DISCHARGED, and every advance is annotated with what was actually read.** ISS-01 was the
+               Medium: v2.8.0's note announced "MTP v1.0.1 → v1.6.0" and the Source line still said
+               v1.0.1. **A pin note is a plan; the `Source:` block is the pin.** Four pins advance:
+               **MTP v1.0.1 → v1.6.0 (Approved)** — *scoped*: §0.5 S4/S5 (the S4/S5 re-cut for clause (e))
+               and the §14 register were read; **SRS v2.16.0 → v2.17.1 (Approved)** — *scoped*: §4.45
+               FR-131 and §8 FR-131 **Scenarios 8 and 9**, read line by line, which are the criteria
+               TC-3570..TC-3575 derive from; **SDD v2.10.0 → v2.13.0 (Approved)** — *scoped*: §10.12.3 and
+               DES-094 **clause 9**, the text TC-3568 and TC-3488 verify and the reason TC-3568's
+               conditional discharge could be converted at v2.8.0; **BKLG v2.3.0 → v2.5.0 (Approved)** —
+               **version-only, and the distinction is the point of this note.** No section of Doc 05 was
+               re-read for this version. It advances because leaving an *In Review* pin on a document
+               that reached Approved four versions ago misstates which release this document was written
+               against, and because the `US-####` ids cited here resolve in v2.5.0 — `US-0134` was
+               checked. **What is still owed on BKLG is a story-by-story re-read**, and it is owed as
+               plainly now as before; what is discharged is the *staleness*, not the *reading*.
+               **Why "scoped" is used three times and is not a hedge:** a pin asserts "this document was
+               written against that version". These three were — for the sections named, which are the
+               sections this document cites. Claiming an end-to-end read of three source documents to
+               clear a Low would be precisely the class of over-claim the last three cycles were spent
+               correcting. **CODE stays v2.7.0 (Approved)**, advanced and read at v2.8.0.)_
+Last updated:  2026-09-07
+Changelog:     v2.8.1 (2026-09-07) — **Rework cycle 3 of 5 against
+               artifacts/reviews/07-test-cases-suites-v2.8.0-technical-cycle2.md (FAIL 95%, 0C/0H/1M/3L).
+               All four issues addressed, none carried. PATCH bump: no TC is minted, retired, reused,
+               renumbered or re-statused; NO count, status, suite assignment or ruling moves.** Cases
+               designed **478** · automated **245** · observed **94** · inherited **136** · not executed
+               **15** · Blocked **176** · No mechanism **49** · Manual **12** · failures **0** — every
+               figure identical to v2.8.0. **Doc 08's Must count is untouched: 16 of 138, FR-131 OPEN.**
+               Every fix is in the header block, which is why this is a patch and not a minor.
+               **ISS-01 (Medium) FIXED — the pin note announced an advance the `Source:` block never
+               received.** The v2.8.0 pin note states "**MTP v1.0.1 → v1.6.0 (Approved)** — a **scoped**
+               advance"; the `Source:` line still read **MTP-TRUMOCRACY v1.0.1**. **A pin note is a plan;
+               the `Source:` block is the pin**, and a reader who did the right thing — checked the pin
+               rather than trusting the prose — found the old version and a note claiming otherwise. **The
+               defect class is the one this document has now corrected four cycles running** (TC-3567,
+               TC-3543, TC-3573, the Doc 04 register citation): **a statement that outran what it sat on.**
+               That it recurred in the very version whose changelog named the pattern is worth recording
+               rather than quietly fixing — the lesson evidently has to be **mechanical**, not
+               resolution-shaped. The pin is advanced, and so are the three others the same note named.
+               **ISS-02 (Low) FIXED — "Every source this document now leans on is Approved" was true of
+               the documents and false of the block beneath it.** The `Source:` lines read SRS **v2.16.0**,
+               SDD **v2.10.0**, BKLG **v2.3.0 (In Review)**, MTP **v1.0.1**. The reviewer offered two ways
+               out — advance the pins, or rewrite the sentence. **The pins are advanced**, because the
+               sentence was the true one and the block was the stale one, and because this document has
+               carried a "full pin-sync owed" debt since **v2.5.0** and had by now genuinely read the
+               sources. **That debt is DISCHARGED at this version.** Four advances, each annotated with
+               exactly what was read: **MTP → v1.6.0** *(scoped: §0.5 S4/S5, §14 register)*; **SRS →
+               v2.17.1** *(scoped: §4.45 and §8 FR-131 Scenarios 8 and 9, read line by line — the criteria
+               TC-3570..TC-3575 derive from)*; **SDD → v2.13.0** *(scoped: §10.12.3 / DES-094 clause 9 —
+               the text TC-3568 and TC-3488 verify)*; **BKLG → v2.5.0** *(**version-only; NOT re-read**)*.
+               **The BKLG advance is deliberately labelled differently from the other three**, because it
+               is a different act: it removes a false *In Review* status on a document Approved four
+               versions ago and confirms that the `US-####` ids cited here resolve in v2.5.0 (`US-0134`
+               checked), and it does **not** claim a story-by-story read, which remains owed. **Three
+               "scoped" labels are not a hedge:** a pin asserts the document was written against that
+               version, and for the sections cited it was. Claiming an end-to-end read of three source
+               documents in order to clear a **Low** would be the same over-claim these cycles keep
+               correcting, and would trade a cosmetic defect for a substantive one.
+               **ISS-03 (Low) FIXED — the free band is restated.** The v2.7.0 entry said "the band still
+               holds TC-3576–TC-3699", true when written; v2.8.0 then minted **TC-3576** without restating
+               it, leaving the document's only statement of the free band one id out of date. **The free
+               `TS-V1-*` band is TC-3577–TC-3699**, stated in the v2.8.0 entry and annotated at the v2.7.0
+               sentence, which is retained rather than edited. Doc 04 v1.6.0 §14 reserves TC-3570–TC-3699;
+               Doc 07 has now drawn TC-3570..TC-3576 from it, so **7 of 130 ids are used and 123 remain**.
+               **ISS-04 (Low) FIXED — `Last updated: 2026-09-06` → 2026-09-07**, matching the v2.8.0
+               changelog date, run R-19, the §0.2 and §9 rows and TC-3576's status cell. A stale
+               `Last updated` on a document whose own body is a day newer is small, and it is exactly the
+               field a Gate-2 reader uses to decide whether they are holding the current version.
+               **Not re-run at this version, and deliberately so:** no test, case or count is touched, so
+               **R-19 (2026-09-07, 625/625, plus the UT-0889 block case by case) stands as the current
+               run** and no new run id is minted. Re-running the suite to accompany a header-only patch
+               would add a run id and no information. **The post-merge re-run owed since R-18 is still
+               owed** — the tree is still uncommitted.
+               **Unchanged and still open:** `TD-07-01`, `TD-07-02`, `TD-07-03`, `TD-RTM-02`, `TD-RTM-03`,
+               and the FR-131 ruling in Doc 08 — **Must COMPLETE stays 16 of 138.**
+               v2.8.0 (2026-09-07) — **Rework cycle 2 of 5 against
+               artifacts/reviews/07-test-cases-suites-v2.7.0-technical-cycle1.md (FAIL 94%, 0C/0H/2M/3L).
+               All five issues addressed, none carried.** Cases designed **477 → 478** · with an
+               implementing automated test **244 → 245** · executed and observed **93 → 94** · inherited
+               green **136** (unchanged) · automated but not executed **15** (unchanged) · Blocked **176**
+               (unchanged) · No mechanism **49** (unchanged) · Manual **12** (unchanged) · observed
+               failures **0**. **No Must row of Doc 08 moves and no ruling changes: FR-131 stays OPEN.**
+               **ISS-02 (Medium) FIXED — TC-3573 claimed a guard UT-0889 does not have.** The expected
+               result read that "neither سريًا nor سري (secret) appears in the endorsement step". The
+               shipped assertion is now **only** the exact retired phrase — `ar.home.steps[1].body` is
+               asserted not to contain **"اسمك سريًا"** — plus "لا نعرف" on the promise. The bare "سري"
+               ban was **removed on purpose** at Doc 06 v2.7.0 (its ISS-06): a bare substring ban also
+               matches **"سريعًا"** ("quickly") and **"تسري"** ("takes effect"), the latter already
+               shipping at `ar.ts` `parties.leaveHelp`, so the wide ban would have failed the build on
+               honest copy. **A narrower assertion is the correct engineering choice and a wider claim in
+               this document is a defect regardless** — the row carried this document's strongest status
+               (Pass (obs.)) and fed Doc 08's FR-131 evidence cell, so a reader could have shipped an
+               Arabic string containing "سري" believing TC-3573 would catch it. The cell now states the
+               assertion actually made and carries the false-positive rationale as a **third scope
+               limit**, beside the two it already had. **Status unchanged and never in doubt:** the case
+               is green and was re-observed `it` by `it` in run **R-19**. Third instance of the same
+               defect class corrected in three consecutive versions — TC-3567 (v2.6.0), TC-3543 (v2.7.0),
+               TC-3573 (here) — and the pattern is worth naming: **every one was an expected-result cell
+               that outran its test, and every one was found by re-reading the test rather than the cell.**
+               **ISS-01 (Medium) FIXED — a register claim attributed to a version of Doc 04 that does not
+               carry it.** This
+               changelog said "Doc 04 §14 records TC-3564..TC-3569 as minted and reserves TC-3570–TC-3699".
+               **Doc 04 v1.5.0 — the version pinned when that was written — said neither half:** §14
+               reserved TC-3564–TC-3699 annotated "none minted", and TC-3569 and TC-3570 appeared nowhere
+               in it. **Doc 04 v1.6.0, now Approved (PASS 96%), says exactly what the sentence claimed:**
+               §14 records TC-3564–TC-3567 in `TS-ADV-01…16`, TC-3568 in `TS-SCAFFOLD`, TC-3569 in
+               `TS-ABSENCE`, and narrows the `TS-V1-*` reservation to **TC-3570–TC-3699**, noting that band
+               "is itself being drawn on by **Doc 07 v2.7.0, in progress**". The sentence is re-attributed
+               to v1.6.0 and dated. **The mint was never in question** — ids continue from TC-3569, none
+               reused, the band otherwise free — so no id, suite assignment or count changes. **Recorded
+               rather than quietly corrected, because the direction of the original error was the harmful
+               one:** it read as though the architect's register had already ratified the mint and
+               narrowed the band, when at that moment the register was stale and the reconciliation was
+               owed. **The reviewer scored this a Medium on exactly that ground** — it is wrong on its
+               own terms, independent of any later drop, and it is the same over-claim class Doc 04
+               itself was marked down for on 2026-09-06. It has since been ratified: v1.6.0 is Approved.
+               **ISS-03 (Low) FIXED — UT-0889 has SIX `it`s, not five, and the sixth is now a case.**
+               Doc 06 v2.7.0 added a **DES-085 jargon scan** ahead of the five mapped ones, asserting that
+               both corrected landing strings carry none of the eleven banned blockchain words. **TC-3576
+               is minted for it** rather than recorded as deliberately unmapped, because this document has
+               given every previous per-drop jargon scan its own row — **TC-3538** (UT-0868, membership)
+               and **TC-3561** (UT-0884, proposals) — and an unmapped guard on shipped copy is a guard no
+               RTM reader can see. **The free `TS-V1-*` band after this mint is TC-3577–TC-3699** _(v2.8.1, ISS-03 — v2.8.0 minted TC-3576 without restating it, leaving the v2.7.0 entry's "TC-3576–TC-3699" as the document's only statement of the band and one id out of date)_: Doc 04 v1.6.0 §14 reserves TC-3570–TC-3699, Doc 07 has drawn **TC-3570..TC-3576**, and **123 of those 130 ids remain free**. §8's automation row and orphan sweep are corrected 5 → 6 and the sweep
+               re-run against the settled file; **material orphan count for this drop is 0 again, and now
+               truly**. TC-3576 is **Pass (obs.)** on R-19 (observed `it` by `it`), and it verifies
+               **NFR-023 · DES-085**, which is a link Doc 08 must carry too — recorded there at v2.11.0,
+               together with a new debt, **`TD-RTM-03`**, for the pre-existing fact that Doc 08's NFR-023
+               row cites neither TC-3538 nor TC-3561 and reads "none" for evidence. **That debt is named,
+               not paid here:** paying it means re-deriving two other drops' evidence, which is a recount,
+               not a side-effect of this rework.
+               **ISS-04 (Low) FIXED — CODE pin advanced, and its rider executed.** Doc 06 is **v2.7.0,
+               Approved** (PASS 96%, 0C/0H/0M/3L); the pin advances and drops the FAIL annotation it
+               correctly carried while there was a FAIL. The rider the reviewer attached: **TC-3568's
+               conditional discharge is now unconditional.** The v2.6.0 text discharged the Doc 06 §4a
+               recorded deviation "CONDITIONALLY, on Doc 03 reaching Approved", because DES-094 clause 9
+               was then In Review and could still move. **Doc 03 v2.13.0 is Approved**, so the condition
+               is met and the discharge is unconditional — recorded as the condition being **satisfied**,
+               with the conditional wording retained, not deleted.
+               **ISS-05 (Low) FIXED — §0.2 gains the runs it was missing.** Every previous full-suite run
+               has a row in §0.2 (542/542, 619/619 R-17) but **R-18 had none**, although §9 recorded it in
+               full. R-18 **and** R-19 are both added there, each carrying the qualifications §9 states
+               rather than a bare green number.
+               **Run R-19 (2026-09-07).** `npm test` from the repo root: **625 / 625 pass, 0 failed**, exit
+               0 — contracts 95 · protocol 151 · sdk 244 · ui 18 · indexer 16 · web **101**. Then the
+               UT-0889 block case by case: **6 passed, 20 skipped (26)**, every `it` name green
+               individually. **619 → 624 → 625:** the +5 was UT-0889 at Doc 06 v2.6.0, the +1 is its sixth
+               `it` at v2.7.0. **Still an uncommitted working tree** (76 dirty paths) — reviewer-qa has not
+               signed the merge, so the post-merge re-run stays owed, exactly as R-18 said.
+               **Unchanged and still open:** `TD-07-01`, `TD-07-02`, `TD-07-03`, `TD-RTM-02`, and the
+               FR-131 ruling in Doc 08 — **Must COMPLETE stays 16 of 138.**
+               v2.7.0 (2026-09-06) — **FR-131 clause (e) re-cut: six TC minted, one TC
+               corrected, one run recorded, three Lows discharged.** Cases designed **471 → 477** · with
+               an implementing automated test **239 → 244** · executed and observed **88 → 93** ·
+               inherited green **136** (unchanged) · automated but not executed **15** (unchanged) ·
+               Blocked **175 → 176** · No mechanism **49** (unchanged) · Manual **12** (unchanged) ·
+               observed failures **0**.
+               **Derived from acceptance criteria, not from the requirement prose.** Doc 02 **v2.17.1**
+               added §8 FR-131 **Scenario 8** and **Scenario 9** for clause (e) at its own cycle-1 review
+               (ISS-01), which is what makes these cases derivable at all: v2.17.0 stated clause (e) in
+               §4.45 but gave it no Gherkin, and CLAUDE.md derives `TC` from acceptance criteria. **Every
+               row below names the scenario line it tests.**
+               **Six TC minted — TC-3570..TC-3575**, continuing from the last minted id **TC-3569**. No id
+               is reused. Doc 04 **v1.6.0 (Approved)** §14 records TC-3564..TC-3569 as minted and reserves **TC-3570–TC-3699** _(v2.8.0, ISS-01: this read "Doc 04 §14" while this document pinned MTP **v1.5.0**, which said neither half — v1.5.0 reserved TC-3564–TC-3699 "none minted". v1.6.0, which landed after, records the six and narrows the band exactly as described. Re-attributed, not deleted; the mint never depended on it)_
+               for the `TS-V1-*` band, so these six are minted from the bottom of that reserved range,
+               in order, and the band still holds TC-3576–TC-3699. _(v2.8.1, ISS-03: **superseded, not wrong when written.** v2.8.0 minted TC-3576, so the free band is now **TC-3577–TC-3699** — restated in the v2.8.0 entry below. Doc 04 v1.6.0 §14 reserves TC-3570–TC-3699 for the `TS-V1-*` suites; Doc 07 has drawn TC-3570..TC-3576, leaving **123 of 130** ids free.)_
+               **TC-3570..TC-3574 — Scenario 8, one TC per `it` of UT-0889.** All five map **UT-0889**
+               (`apps/web/test/safety-surfaces.test.tsx`), one TC per `it`, because each is an
+               independently defeatable guard — the TC-3564..TC-3567/UT-0887 precedent rather than the
+               TC-3568/UT-0759 single-row precedent, because these assert five different strings on three
+               different surfaces rather than four paths of one rule. **TC-3570** en `home.steps[1].body`;
+               **TC-3571** en `home.promises[0]`; **TC-3572** the rendered landing page is bound to those
+               two shipped source strings; **TC-3573** the Arabic mirror; **TC-3574** the sdk
+               authorship-refusal message. They are placed in **`TS-ADV-02` (RISK-02)** beside TC-2614 and
+               TC-3564..TC-3567, because what they guard is what those guard — a v1 surface reclaiming a
+               v2 privacy property — and not split across `TS-I18N` and `TS-PRIV`, which would put one
+               guard in three suites.
+               **TC-3575 — Scenario 9, and it is minted BLOCKED on purpose.** Scenario 9 is not a
+               restatement of Scenario 8: it quantifies over **every public-facing surface of a v1
+               deployment, in every language, including the README and the landing copy**, and requires
+               that **zero** materials assert or imply a participation act is unknowable — including
+               claims carrying **none** of the four banned words. That is a **population** obligation and
+               the only instrument specified for it is **Doc 04 §0.5 S5**, the build-failing FR-131
+               denylist over `apps/web` and `packages/ui`, widened at MTP v1.5.0 to every participation
+               act, every language, and to claims as well as words. **S5 is not implemented.** The scans
+               that exist — UT-0857, UT-0868, UT-0884 — are **DES-085 jargon** lists ("wallet", "seed
+               phrase", "blockchain"…) over enumerated per-drop strings; they are not the FR-131 denylist
+               and would have caught **neither** string this drop fixed. Minting TC-3575 Blocked is the
+               honest record: the acceptance criterion exists, no instrument executes it, and the gap is
+               now a **named case** in Doc 08 rather than a paragraph of prose. Recording Scenario 9 as
+               covered by TC-3570..TC-3574 would have been the single easiest false pass available at
+               this version — five guarded strings are not "every surface in every language".
+               **TC-3570..TC-3574 are the first FR-131 cases recorded Pass (obs.), and the reason is
+               stated so the convention does not blur.** Run **R-18** is a full-suite `npm test`
+               (624/624, tester-executed, exit 0); that alone is **file** granularity and, under the §2
+               corroboration convention, would earn only Pass (inh.). The tester additionally ran the
+               UT-0889 block **case by case** — `npx vitest run test/safety-surfaces.test.tsx
+               --reporter=verbose -t "UT-0889"` in `apps/web` — and read all **five** `it` names reported
+               individually green (5 passed, 20 skipped of 25). That is case-by-case observation, which is
+               what Pass (obs.) has always meant here, so the observed count moves 88 → **93** on evidence
+               rather than by relaxing the bar. **TC-3564..TC-3569 are NOT promoted** — no case-by-case
+               run of UT-0887, UT-0759 or UT-0888 was performed at this version.
+               **TC-3543 corrected — an expected result that described copy the product no longer ships.**
+               Its cell read that the Supporter refusal's "stated reason is *anonymity*". Doc 06 v2.6.0
+               rewrote that message under clause (e) — it now reads "…authorship is public and a
+               Supporter's participation is never published". **The case still passes and its status does
+               not change**: UT-0089 asserts a boolean and UT-0832 asserts the error code plus the
+               substring "self-declared", and neither moved. This is a description defect, corrected the
+               way v2.6.0 corrected TC-3568 — by making the cell say what the test asserts. **No other TC
+               quoted or paraphrased any of the five changed strings**: grep over "kept private", "never
+               learn" and "Supporters are anonymous" across Docs 07 and 08 returned nothing else.
+               **Two scope limits recorded rather than glossed.** **(1)** Scenario 8 gained a v2.17.1
+               qualifier the safe harbour did not previously carry — copy passes only if it states what is
+               not published, states what our own records can see, **and makes no contrary claim elsewhere
+               in the same string** — and Scenario 8's closing line makes the **reader test govern** where
+               the two disagree. **UT-0889 tests neither of those**: it asserts substrings, and no
+               automated test in this repository applies a grade-8 reader test. TC-3570/TC-3571 record
+               that limit in terms. **(2)** TC-3573 asserts only **absence** in Arabic; it makes no
+               positive assertion that the mirror states the three facts the English does. Extending
+               either is owed UT scope for the engineer (Samuel Oyelaran) and neither is recorded as
+               covered.
+               **Three v2.6.0 Lows discharged, none carried:** ISS-C2-01 (TC-3519 regex pipes escaped),
+               ISS-C2-02 ("Forty-eight" → "Forty-nine", forty-ninth case named), ISS-C2-03 (pin note
+               re-cut, CODE advanced). `TD-07-01`, `TD-07-02`, `TD-07-03` and `TD-RTM-02` are unchanged
+               and still open.
+               v2.6.0 (2026-09-06) — **Rework cycle 2 against
+               artifacts/reviews/07-test-cases-suites-v2.5.0-technical-cycle1.md (FAIL 92%,
+               0C/0H/3M/4L). All seven issues addressed. No TC minted, retired, re-statused or
+               re-scoped; NO count moves.** Cases designed **471** · with an implementing automated
+               test **239** · observed **88** · inherited green **136** · automated but not executed
+               **15** · Blocked **175** · No mechanism **49** · Manual **12** · observed failures
+               **0** — every figure unchanged from v2.5.0, and stated here rather than left to
+               inference.
+               **ISS-01 (Medium) FIXED — TC-3568's expected result claimed evidence UT-0759 does
+               not produce.** It read that paths (a), (b) and (d) render the title "with a matching
+               `aria-label` and no FR-131 banned word anywhere in the rendered text". Read against
+               the four `it`s of UT-0759 in `packages/ui/test/PrivacyStatus.test.tsx`: only path
+               (a) asserts the `aria-label` **and** the banned-word regex; paths (b)
+               (`unlinkable: false`) and (d) (malformed prop) assert **title selection only** —
+               "Verified" present, "Verified — private" absent; path (c) asserts the title and its
+               `aria-label`. The cell now states, path by path, exactly what is asserted. This is
+               the defect class this document corrected on TC-2614 at v2.5.0 — an expected result
+               no regression could falsify — and it is corrected the same way, by narrowing the
+               claim. Extending the banned-word and accessible-name assertions to paths (b) and (d)
+               is **owed UT scope routed to the engineer (Samuel Oyelaran)** if the wider guarantee
+               is wanted; it is not recorded here as already covered.
+               **ISS-02 (Medium) FIXED — fabricated NFR-013 coverage removed.** TC-3567's Verifies
+               cell read "US-0134 · FR-131 · DES-098 · **NFR-013**". What UT-0887 asserts is the
+               content of two `ar.banner.*` string constants; NFR-013's guarantee is "8 locales
+               incl. RTL", and neither locale coverage nor RTL rendering is exercised — nor does
+               Doc 08 §3.2 carry any NFR-013 → TC-3567 link. `NFR-013` is dropped from the cell
+               (FR-131 and DES-098 already carry the case) and the row now states in terms what it
+               does **not** verify. The two documents no longer disagree about a requirement link.
+               **ISS-03 (Medium) FIXED — the "approved design element" claim is retracted in all
+               three places** (this changelog, and both halves of the TC-3568 row). Doc 03 is
+               `Status: In Review`: **v2.12.0** minted DES-094 clause 9 and then FAILED cycle 1 of
+               its neutral technical review (89%, 0C/1H/2M/2L), and **v2.13.0** (2026-09-06) is the
+               rework, itself under cycle-2 review — clause 9's text may still move. TC-3568 is now
+               recorded as verifying the **current corrected text** of DES-094 clause 9, and the
+               Doc 06 §4a recorded deviation is **discharged CONDITIONALLY, on Doc 03 reaching
+               Approved**, not "DISCHARGED". This is the discipline the v2.5.0 changelog stated for
+               itself three paragraphs earlier and then broke in one place.
+               **ISS-04 (Low) FIXED:** `DES-094` removed from TC-3564's Verifies cell. TC-3564
+               renders `ReceiptFreedomBanner` (DES-098); DES-094 is the `PrivacyStatus` component
+               and has no part in that case, as TC-3565..TC-3567 already record by citing DES-098
+               alone.
+               **ISS-05 (Low) FIXED:** the §4.3 and §5 suite headings now name the cases they
+               actually contain — "(TC-1600–TC-1614, TC-3569)" and "(TC-2600–TC-2752,
+               TC-3564–TC-3567)" — as §5.3's heading and the §2 suite table already did. v2.5.0
+               applied that fix in one place of three.
+               **ISS-06 (Low) FIXED:** §10's overlap paragraph introduced its formula as "the
+               187-case 'implementing automated test' count" and then computed with **193**;
+               v2.5.0 moved the figure in the formula and left the label in the prose. The prose now
+               reads 193 (187 before v2.5.0). No arithmetic changes: 193 + 171 + 48 + 12 = 424, and
+               equivalently 193 + 175 + 48 + 12 − 4 = 424.
+               **ISS-07 (Low) FIXED:** §6's Accessibility row still said the two component-level
+               cases "were not executed". Run R-17 executed `apps/web` **95/95** green, which
+               covers both; what has **not** been made is a case-by-case accessibility pass. The row
+               now says exactly that and points at TD-07-03 — the same distinction §0.1's v2.5.0
+               amendment exists to protect. The verdict is unchanged: still **No**.
+               **Suite re-executed during this rework, and nothing moved.** `npm test` from the
+               repo root, 2026-09-06: **619 / 619 pass, 0 failed**, exit 0 — contracts 95 ·
+               protocol 151 · sdk 244 · ui 18 · indexer 16 · web 95, identical to **R-17** package
+               for package. **No new run id is minted:** an identical re-run of the same commit
+               confirms R-17 rather than adding an observation, so §9 records the re-confirmation
+               inside the R-17 row and no case is promoted on it.
+               **Sources as read at this version:** Doc 06 **v2.5.1 (Approved)**, Doc 02 **v2.16.3
+               (Approved)**, Doc 05 **v2.5.0 (Approved)**, Doc 03 **v2.13.0 (In Review)**, Doc 04
+               **v1.4.0 (In Review)**, Doc 09 **v1.6.0 (In Review)**. The three In-Review documents
+               are cited as current corrected text and never as approved sources.
+               Changelog:     v2.5.0 (2026-09-06) — **FR-131 honesty-drop traceability. Suite re-run, 6 TC minted,
+               1 TC corrected; no TC retired, reused or renumbered.** Doc 06 **v2.5.1** (Approved)
+               closed Doc 09 `REL-LIM-18` in code at commit `0a5c542` (PR #19, merged to `main`)
+               under **US-0134**: five shipped strings and one component title that asserted the
+               retired "votes are anonymous but not receipt-free" framing now state the **FR-131**
+               (SRS v2.16.3 §4.45) v1 truth, and three new UT blocks guard them against regression.
+               **Run R-17 (2026-09-06) — executed by the tester, not inherited:** `npm test` from
+               the repo root, **619 / 619 pass, 0 failed**, exit 0 (contracts 95 · protocol 151 ·
+               sdk 244 · ui 18 · indexer 16 · web 95). Recorded in §0.2 and §9.
+               **Six TC minted — TC-3564..TC-3569**, continuing from the last minted id TC-3563.
+               **TC-3564..TC-3567** map **UT-0887** (`apps/web/test/safety-surfaces.test.tsx`, four
+               assertions) into `TS-ADV-02`, beside TC-2614, the disclosure case they defend:
+               banned words only where immediately negated and never "private"/"secure"; FR-131
+               (a)/(b)/(c) positively stated and the retired claims absent; the guard bound to the
+               shipped `en.ts` strings rather than a test-local copy; the Arabic mirror carrying
+               the same truth. **TC-3568** maps **UT-0759** (`packages/ui/test/PrivacyStatus.test.tsx`,
+               the `ver` TITLE four-path) into `TS-SCAFFOLD` beside TC-3488/UT-0753, as **one** TC,
+               following the TC-3475/UT-0758 precedent that already covers the **subtitle** half of
+               the same backing-aware rule (Doc 03 minted **DES-094 clause 9** for the title the
+               same day, at v2.12.0, and carried it into **v2.13.0** — both **In Review**, so this
+               case verifies the current corrected text of a design element, **not an approved
+               one**; corrected at v2.6.0, ISS-03). **TC-3569** maps **UT-0888**
+               (`packages/protocol/test/party-and-regions.test.js`) into `TS-ABSENCE` with the other
+               protocol flag cases TC-1611/TC-1612, because what it asserts is the **absence of a
+               claim** from a shipped string.
+               **TC-2614 CORRECTED — its expected result was false.** It read "The UI states votes
+               are anonymous but **not** receipt-free", which is the exact framing FR-131’s closing
+               sentence bans and which the code stopped asserting at Doc 06 v2.5.0. What the case
+               exercises is unchanged (UT-0710/0711/0712, now joined by UT-0887); the sentence
+               describing it was wrong. Its note that this is **a disclosure, not a satisfaction of
+               FR-031/FR-032/NFR-003** is kept, and its status moves **Not run → Pass (inh.)** on
+               the R-17 `apps/web` 95/95 result.
+               **Counts moved (arithmetic stated, not asserted).** Cases designed 465 → **471**
+               (+6). With an implementing automated test 233 → **239** (+6). Inherited green
+               129 → **136** (+6 new, +1 TC-2614 re-statused; 55 + 28 + 24 + 22 + 7 = 136).
+               Automated but not executed 16 → **15** (−1, TC-2614). **Observed 88 — UNCHANGED**,
+               and deliberately so: R-17 is a full-suite run observed at **file** granularity, so
+               under the v2.3.0 corroboration convention its cases are recorded Pass (inh.), not
+               promoted to Pass (obs.). Identity holds: 88 + 136 + 15 = **239**. Blocked **175**,
+               No mechanism **49**, Manual **12**, observed failures **0** — all unchanged, because
+               none of the six new cases is blocked and no blocked case was re-statused. §2 suite
+               table: `TS-ABSENCE` 15 → **16** cases / 12 → **13** automated; `TS-ADV-01…16`
+               43 → **47** / 24 → **28**; `TS-SCAFFOLD` 19 → **20** / 16 → **17**; totals
+               465 → **471** / 233 → **239** / Blocked-or-no-mechanism **232** unchanged.
+               **Two stale figures fixed while passing through them, both pre-existing:** §2’s
+               post-table paragraph read "Of those 211 … **107** are inherited-green cases" against
+               its own "233 of 465" headline (v2.4.0-era leftovers); §5.3’s heading and context
+               read "(TC-3470–TC-3487)" and "15 of 18 cases", both pre-TC-3488.
+               **TD-07-03 RAISED (Low).** R-17 executed the `apps/web` suite green, so the 15 rows
+               still marked *Not run* in the `UT-0700…UT-0742` group are now corroborated at file
+               granularity. They are **not** promoted, because no case-by-case pass was made; the
+               §0.1 vocabulary row is amended to say exactly that, so *Not run* is not read as
+               "never executed" for a suite the tester just ran green.
+               **Sweep for the retired wording across `docs/`, run 2026-09-06, whitespace-normalised
+               so that line-broken occurrences are caught — a plain `grep` misses those and would
+               have reported a clean sweep that was not clean. Result: ZERO live assertions of the
+               retired framing survive anywhere in the document set.** Every remaining occurrence is
+               a **quotation of superseded text inside a correction record**, which is the v2.4.4
+               precedent this document set for itself: quote the superseded sentence rather than
+               delete it, so the trail survives. Occurrence counts and dispositions — **Doc 03** (4):
+               corrected the same day at **v2.12.0** (In Review); §13’s "Public tallies in Phase 1"
+               repayment cell now states the FR-131 truth, and §10.12.3 gained **clause 9**, the
+               backing-aware `ver` **title** rule, overruling the v2.7.0 "Verified — private is
+               compliant" analysis. **Doc 04** (6): corrected the same day at **v1.3.0** (In Review);
+               `TS-ADV-02` case **A-02.6** and **OPEN-01** both restated off the retired framing —
+               A-02.6 is the strategy-level source of TC-2614, which is why that correction and this
+               one agree rather than one lagging the other. **Doc 09** (3): historical defect record,
+               and `REL-LIM-18` is now **CLOSED** at Doc 09 **v1.5.0** against commit `0a5c542`.
+               **Doc 06** (2): its own change history, describing the defect it fixed. **Doc 07** (1):
+               TC-2614’s correction note below, quoted for the record. **Doc 02, Doc 05, Doc 08:
+               zero.** **Nothing is owed to another role on the retired wording as of 2026-09-06 —
+               but read the cascade as MADE, not SETTLED:** Doc 03 v2.12.0, Doc 04 v1.3.0 and Doc 09
+               v1.5.0 are all **In Review**, not Approved. None has a passing neutral technical review
+               yet (the assigned reviewer is reviewer-qa per
+               `artifacts/status/REVIEW-ASSIGNMENT-2026-09-06-FR131-CASCADE.md`), so any of the three
+               may still move under rework. This document cites them as the current corrected text,
+               not as approved sources, and the pin note above says the same. FR-131’s ban binds the
+               v1 **product** (UI, README, public-facing
+               materials); a test document recording that a false sentence was corrected is not a
+               product surface, and deleting the quotation would destroy the only evidence that the
+               correction happened.
+               v2.4.4 (2026-08-30) — **Rework cycle 1 against
                artifacts/reviews/07-test-cases-suites-v2.4.3-technical-cycle1.md (FAIL 92%,
                0C/1H/0M/1L). No TC added, changed, re-statused or re-run; no count moved; the
                suite is unchanged at 610 green.**
@@ -322,7 +843,7 @@ This is a **Phase-1 drop**. Three facts shape every status in it, and none of th
 |---|---|
 | **Pass (obs.)** | The implementing test was **executed by the tester in this session (2026-08-09 or 2026-08-25)**, and passed. 2026-08-09: `packages/protocol` (82 tests), `services/indexer` (16 tests), `packages/sdk` (124 tests). 2026-08-25: `packages/ui` (14 tests), `packages/sdk` full re-run (160 tests, 36 new seams). |
 | **Pass (inh.)** | The implementing test exists and is recorded green in **Doc 06 §3/§5**. The contract suite (`packages/contracts`, in-process EVM harness) takes ~5 minutes and was **not executed in this session**; its result is inherited from Doc 06, not observed by the tester. |
-| **Not run** | An automated test exists but was not executed by the tester this session (`apps/web`, `UT-0700…UT-0742`). |
+| **Not run** | An automated test exists and has **not** been executed case-by-case by the tester (`apps/web`, `UT-0700…UT-0742`). **v2.5.0 amendment — read this before treating the label as "never run".** Run **R-17** (2026-09-06, full-repo `npm test`, 619/619 green) executed the `apps/web` suite **95/95 green**, so every row still marked *Not run* in the `UT-0700…UT-0742` group is corroborated green at **file** granularity. Those rows are deliberately **not** promoted here, because no case-by-case pass against each `TC` was made; the promotion is owed and is recorded as **TD-07-03** in §0.3. *Not run* therefore means "no case-level observation recorded", **not** "the test did not run and may be failing". |
 | **Blocked** | The case is designed and cannot execute: the code, circuit, environment or instrument it needs does not exist. The blocking reason is stated in the row. |
 | **No mechanism** | The case is designed and the **product has no implementation to test**. This is a defect against the requirement, not against the case. |
 | **Manual — not run** | The case is by nature manual (audit, screen-reader pass, legal review, usability study) and has not been performed. |
@@ -344,6 +865,9 @@ contract logic passes but the guarantee depends on a real proof, the row says so
 | `apps/web` `test/join-membership.test.tsx` (UT-0858..0870, 2026-08-29) | `npm test` (full suite) | **27 passed / 27** |
 | `apps/web` `test/sdk-types-sync.test.ts` (UT-0871, 2026-08-29) | `npm test` (full suite) | **1 passed / 1** — .d.ts shim drift guard |
 | **Whole repository (2026-08-29, Doc 06 cycle-3 review run)** | `npm test` from the repo root | **542 passed / 542, 0 failed** — contracts 95 · protocol 126 · sdk 220 · ui 14 · indexer 16 · web 71 |
+| **Whole repository (2026-09-06, run R-17 — FR-131 honesty drop)** | `npm test` from the repo root | **619 passed / 619, 0 failed**, exit 0 — contracts 95 · protocol 151 · sdk 244 · ui 18 · indexer 16 · web 95. Per-package durations: contracts 34.29 s, protocol 505 ms, sdk 1.10 s, ui 767 ms, indexer 571 ms, web 2.81 s. Includes the three FR-131 guard blocks UT-0887 (web), UT-0759 (ui) and UT-0888 (protocol). Observed at **file** granularity, so the cases it covers are recorded **Pass (inh.)** against the Doc 06 v2.5.1 pin rather than promoted to Pass (obs.) — see the §2 corroboration note |
+| **Whole repository (2026-09-06, run R-18 — FR-131 clause (e) drop)** | `npm test` from the repo root, then `npx vitest run test/safety-surfaces.test.tsx --reporter=verbose -t "UT-0889"` in `apps/web` | **624 passed / 624, 0 failed**, exit 0 — contracts 95 · protocol 151 · sdk 244 · ui 18 · indexer 16 · web 100. Case-by-case second half: **5 passed, 20 skipped (25)**. **Qualified, as §9 states:** run against an **uncommitted working tree** (reviewer-qa has not signed the merge), so a post-merge re-run is owed |
+| **Whole repository (2026-09-07, run R-19 — cycle-2 rework)** | same two commands | **625 passed / 625, 0 failed**, exit 0 — contracts 95 · protocol 151 · sdk 244 · ui 18 · indexer 16 · web **101**. Case-by-case second half: **6 passed, 20 skipped (26)** — the sixth `it` is the DES-085 jargon scan added at Doc 06 v2.7.0, mapped here to **TC-3576**. **Same qualification: still an uncommitted tree** (76 dirty paths); the post-merge re-run stays owed _(v2.8.0, ISS-05: §0.2 carried every earlier full-suite run but neither R-18 nor R-19; both are added here rather than left to §9 alone, because §0.2 is the section a reader opens first for execution evidence)_ |
 | `packages/contracts` (L1/L2/L3) | *not executed — ~5 min runtime* | Inherited from Doc 06 §3/§5 |
 | `apps/web` (component) | *not executed* | Suite exists: `UT-0700…UT-0742` |
 
@@ -351,14 +875,15 @@ contract logic passes but the guarantee depends on a real proof, the row says so
 (`UT-0100…0125`, `UT-0200…0230`, `UT-0300…0361`, `UT-0400…0420`) plus the deployment-safety
 group (`UT-0600…0612`).
 
-### 0.3 Two inventory defects found while writing this document
+### 0.3 Three inventory / evidence defects found while writing this document
 
-Recorded here, routed to the engineer; neither is fabricated coverage and neither is closed by me.
+Recorded here and routed to the owning role; none is fabricated coverage and none is closed by me. _(v2.5.0: TD-07-03 added — it is the tester’s own debt, not the engineer’s.)_
 
 | # | Finding | Severity | Owner |
 |---|---|---|---|
 | TD-07-01 | **Doc 06 §3's `UT-####` inventory omits two real test groups.** `packages/contracts/test/deployment-safety.test.mjs` uses `UT-0600…UT-0612` (13 tests) and `apps/web/test/safety-surfaces.test.tsx` uses `UT-0700…UT-0742` (16 tests). Neither range appears in the Doc 06 §3 table, and the table's stated counts (e.g. "UT-0100..0125 … 25") therefore under-report the drop. | Medium — the RTM cites tests the inventory does not list | Engineer (Doc 06) |
 | TD-07-02 | **Doc 06 §3 declares "UT-0001..0028 … 41" and "UT-0030..0055 … 41"**, i.e. 82 tests over two ranges of 28 and 26 identifiers. The identifiers are `describe`/`it` group anchors, not one-per-test. The count is right (82 observed); the range labelling implies a 1:1 mapping that does not hold. | Low — cosmetic, but it makes ID-level traceability ambiguous | Engineer (Doc 06) |
+| TD-07-03 | **15 rows still read *Not run* for a suite the tester has now run green.** Run R-17 (2026-09-06) executed `apps/web` **95/95**, covering every `UT-0700…UT-0742` row (TC-1209, TC-1959, TC-2253, TC-2254, TC-2612, TC-2613 and the rest of the group). Only TC-2614 is re-statused in this version, because only TC-2614 was independently re-derived against its assertions while correcting its expected result. The remaining 15 are corroborated at **file** granularity and are held at *Not run* rather than promoted on a run that was not case-by-case — the same discipline the v2.3.0 corroboration note applied to TS-PARTY/TS-MEMBERSHIP. | Low — the label understates real evidence; it never overstates it | **Tester** (Ji-woo Park, Doc 07) — clear by a case-by-case pass over `UT-0700…UT-0742` at the next version |
 
 ---
 
@@ -413,7 +938,7 @@ TC ranges are the ones **reserved in Doc 04 §14**; the tester assigns the actua
 | `TS-EDGE` | Negative / edge / boundary | L0–L2 | SDD §11 failure modes; every custom error by name | TC-1001–TC-1048 | 48 | 41 | 7 |
 | `TS-DIFF` | **Differential** | L3 | `@trumocracy/protocol` vs chain vs SDK vs indexer | TC-1200–TC-1209 | 10 | 10 | 0 |
 | `TS-ZK` | Circuits | L4 | `residency_member`, `tenure_member` | TC-1400–TC-1406 | 7 | 1 | 6 |
-| `TS-ABSENCE` | **Capability-absence** | L1/L2 + artifact scan | CON-003, CON-006, FR-021/035/047/051/056, NFR-017 | TC-1600–TC-1614 | 15 | 12 | 3 |
+| `TS-ABSENCE` | **Capability-absence** | L1/L2 + artifact scan | CON-003, CON-006, FR-021/035/047/051/056, FR-131 closing sentence, NFR-017 | TC-1600–TC-1614, TC-3569 | 16 | 13 | 3 |
 | `TS-ABI` | Contract / API | L1/L5 | ABI allowlist, schema snapshot, SDK drift, size limit | TC-1800–TC-1803 | 4 | 2 | 2 |
 | `TS-SEC` | Security / authZ / negative authority | L1–L6 | NFR-009, FR-056, verifier & deployment safety | TC-1850–TC-1863 | 14 | 12 | 2 |
 | `TS-PRIV` | Privacy & anonymity | L1–L6 | NFR-001/002/010/024, FR-003 | TC-1950–TC-1963 | 14 | 11 | 3 |
@@ -428,23 +953,25 @@ TC ranges are the ones **reserved in Doc 04 §14**; the tester assigns the actua
 | `TS-EXIT` | Export / reconstitute | CI + devnet | NFR-018, FR-055 | TC-2480–TC-2482 | 3 | 0 | 3 |
 | `TS-UPG` | Upgrade / migration | testnet | NFR-017, FR-007 | TC-2520–TC-2523 | 4 | 1 | 3 |
 | `TS-SMOKE` | Post-deploy smoke | all envs | walking skeleton < 5 min | TC-2560–TC-2561 | 2 | 0 | 2 |
-| `TS-ADV-01…16` | **Adversarial, one per RISK** | mixed | RISK-01…RISK-16 | TC-2600–TC-2752 | 43 | 24 | 19 |
+| `TS-ADV-01…16` | **Adversarial, one per RISK** | mixed | RISK-01…RISK-16 | TC-2600–TC-2752, TC-3564–TC-3567, TC-3570–TC-3576 | 54 | 34 | 20 |
 | `TS-EXPL` | Exploratory charters | L7 | one per EP-01…EP-10 | TC-3200–TC-3209 | 10 | 0 | 10 |
 | `TS-UAT` | User acceptance & usability | L7 | NFR-022, Doc 01 §B journey | TC-3250–TC-3253 | 4 | 0 | 4 |
 | `TS-CR1` | CR-v1.1.0 — FR-062..073; RISK-22..24 | L3–L6 | FR-062..073 · BR-013 · RISK-22..24 | TC-3300–TC-3345 | 46 | 0 | 46 |
 | `TS-GOV2` | Governance v2.0 — FR-074..FR-120 · NFR-027/028 · SC-15..21 security closure · Guarded Layer P1..P5 · FR-117 capability-absence · vacancy-immediate fallbacks · anti-circularity direct attack | L1–L6 | FR-074..FR-120 · NFR-027 · NFR-028 · SC-15..SC-21 · DES-087..DES-092 | TC-3400–TC-3469 | 70 | 0 | 70 |
-| `TS-SCAFFOLD` | Scaffold seam & design-system seed | L1–L5 | FR-082..086 · FR-122..124 · FR-131..132 · DES-093..096 · DES-100 · ADR-023..025 | TC-3470–TC-3488 | 19 | 16 | 3 |
+| `TS-SCAFFOLD` | Scaffold seam & design-system seed | L1–L5 | FR-082..086 · FR-122..124 · FR-131..132 · DES-093..096 · DES-100 · ADR-023..025 | TC-3470–TC-3488, TC-3568 | 20 | 17 | 3 |
 | `TS-PARTY` | Party creation protocol, service & web | L1–L5 | FR-010 · FR-011 · FR-012 · FR-013 · FR-018 · FR-020 · FR-077 · FR-130 · BR-020 · DES-073 · DES-074 · DES-097 · DES-101 | TC-3489–TC-3516, TC-3541 | 29 | 28 | 1 |
 | `TS-MEMBERSHIP` | Join / leave / membership history & counting | L1–L5 | FR-020 · FR-022 · FR-064 · FR-122 · FR-123 · FR-130 · FR-131(b)(d) · FR-013 expiry seam · NFR-023 · DES-013 · DES-065 · DES-095 · DES-097 · ADR-007 · ADR-024/025 | TC-3517–TC-3540 | 24 | 24 | 0 |
 | `TS-PROPOSALS` | Proposals & debate: tiers, authorship, lifecycle, trail | L0–L5 | FR-024 · FR-079 · FR-080 · FR-090 · FR-091 · FR-092 · FR-122 · FR-123 · NFR-003 · NFR-023 · DES-103 · DES-104 · DES-105 · DES-106 · DES-095 · DES-085 | TC-3542–TC-3563 | 22 | 22 | 0 |
-| | | | **Total** | | **465** | **233** | **232** |
+| | | | **Total** | | **478** | **245** | **233** |
 
-**233 of 465 cases have an implementing automated test.** (43 new TC-3300..TC-3342 are all Blocked; 70 new TC-3400..TC-3469 are all Blocked or No mechanism — no implementing contracts for TS-GOV2 exist in this drop; 16 of 19 new TC-3470..TC-3488 have passing automated tests — see §9 R-04/R-05 and TC-3488 v2.2.1; 3 are Blocked; all 28 new TC-3489..TC-3516 TS-PARTY cases are inherited Pass from Doc 06 v2.2.0; all 24 new TC-3517..TC-3540 TS-MEMBERSHIP cases are inherited Pass from Doc 06 v2.3.2.) Of those 211, **88 were executed and
-observed passing by the tester this session** under the Pass (obs.) convention; **107** are inherited-green cases (55 contract suite
-+ 28 TS-PARTY + 24 TS-MEMBERSHIP); **16** are `apps/web` component
-cases that exist but were not executed this session.
+**245 of 478 cases have an implementing automated test.** (43 new TC-3300..TC-3342 are all Blocked; 70 new TC-3400..TC-3469 are all Blocked or No mechanism — no implementing contracts for TS-GOV2 exist in this drop; 17 of 20 TC-3470..TC-3488 plus TC-3568 have passing automated tests — see §9 R-04/R-05, TC-3488 v2.2.1 and TC-3568 v2.5.0; 3 are Blocked; all 28 new TC-3489..TC-3516 TS-PARTY cases are inherited Pass from Doc 06 v2.2.0; all 24 new TC-3517..TC-3540 TS-MEMBERSHIP cases are inherited Pass from Doc 06 v2.3.2; the 6 new TC-3564..TC-3569 FR-131 honesty cases are inherited Pass from Doc 06 v2.5.1 and were observed green at file granularity in R-17; of the 7 TC-3570..TC-3576 FR-131 clause-(e) cases, **6 are Pass (obs.)** — the whole suite ran green in R-18 **and** the UT-0889 block was re-run case by case, `it` by `it` — while **TC-3575 has no implementing automated test at all** and is Blocked, because the Doc 04 §0.5 S5 population scan its acceptance criterion (Doc 02 §8 FR-131 Scenario 9) requires is not built.) Of those 245, **94 were executed and
+observed passing by the tester in the 2026-08-09 / 2026-08-25 / 2026-09-06 sessions** under the Pass (obs.) convention; **136** are inherited-green cases (55 contract suite
++ 28 TS-PARTY + 24 TS-MEMBERSHIP + 22 TS-PROPOSALS + 7 from the FR-131 honesty drop); **15** are `apps/web` component
+cases that exist but were not executed case-by-case (TD-07-03). Identity: 94 + 136 + 15 = **245**. _(v2.7.0: 88 → 93 and 239 → 244 for TC-3570..TC-3574; the inherited and not-executed buckets do not move, and TC-3575 enters none of them — it is Blocked.)_
 
-**Corroboration note (v2.3.0, and it cuts against the accounting above).** The tester executed `npm test` from the repo root on 2026-08-29 while running the Doc 06 v2.3.2 cycle-3 document review, and observed **542/542 green** including every file behind TS-PARTY and TS-MEMBERSHIP. Those 24 TS-MEMBERSHIP cases are therefore stronger than a bare inheritance — the tester saw the files pass. They are nevertheless recorded **Pass (inh.)** against the Doc 06 v2.3.2 pin, because the observation was made at file granularity during a review run rather than case-by-case against each TC, and because it keeps the TS-PARTY precedent and the Doc 08 dashboard buckets consistent. The stronger evidence is recorded in §0.2 and §9 (R-12) rather than used to upgrade the status.
+_(v2.5.0 correction, pre-existing and load-bearing enough to name: this paragraph opened "Of those 211 … **107** are inherited-green cases … **16**" — 211 + 107 are v2.4.0-era figures left standing under a "233 of 465" headline in the same sentence, and 88 + 107 + 16 = 211 ≠ 233. The bucket totals in §10 were right throughout; only this paragraph was stale. It is now stated as an identity so it cannot drift again.)_
+
+**Corroboration note (v2.3.0, and it cuts against the accounting above).** The tester executed `npm test` from the repo root on 2026-08-29 while running the Doc 06 v2.3.2 cycle-3 document review, and observed **542/542 green** including every file behind TS-PARTY and TS-MEMBERSHIP. Those 24 TS-MEMBERSHIP cases are therefore stronger than a bare inheritance — the tester saw the files pass. They are nevertheless recorded **Pass (inh.)** against the Doc 06 v2.3.2 pin, because the observation was made at file granularity during a review run rather than case-by-case against each TC, and because it keeps the TS-PARTY precedent and the Doc 08 dashboard buckets consistent. The stronger evidence is recorded in §0.2 and §9 (R-12) rather than used to upgrade the status. **v2.5.0 extension — the same discipline, applied to the tester’s own run.** On 2026-09-06 the tester executed `npm test` from the repo root and observed **619/619 green** (run R-17), which covers every file behind the six new FR-131 honesty cases (TC-3564..TC-3569) and the whole `apps/web` suite. Those six cases are nevertheless recorded **Pass (inh.)** against the Doc 06 v2.5.1 pin, and the Pass (obs.) count is held at **88**, for the identical reason: the observation was at **file** granularity, not case-by-case against each `TC`. Promoting a tester-executed run to Pass (obs.) on that basis would make the strongest status in this document mean two different things depending on which drop minted the row. **v2.7.0 extension — the same discipline, and this time it lets a case through.** On 2026-09-06 the tester executed `npm test` from the repo root and observed **624/624 green** (run **R-18**) — file granularity again, and on its own that would have made TC-3570..TC-3574 Pass (inh.) exactly as R-17 did for TC-3564..TC-3569. The tester then ran the UT-0889 block **case by case** (`npx vitest run test/safety-surfaces.test.tsx --reporter=verbose -t "UT-0889"` in `apps/web`; 5 passed, 20 skipped, each `it` name reported green individually) and mapped each `it` to exactly one `TC`. **That is case-by-case observation, so those five are recorded Pass (obs.) and the figure moves 88 → 93.** The rule has not changed and the bar has not moved: what changed is that the tester did the second run. **TC-3564..TC-3569 are deliberately not promoted on R-18** — no case-by-case run of UT-0887, UT-0759 or UT-0888 was performed at this version, and promoting them on a file-granularity result is the very thing the paragraph above refuses.
 
 **TC-count conventions (ISS-07 resolution; updated v2.2.2).** This suite table uses the **expanded row count** (465 total): the TS-EXPL suite rows TC-3200..TC-3209 are listed as 10 individual cases here. Doc 08 §6 uses the **anchor count** (463 anchors = 299 pre-TS-GOV2 + 70 TS-GOV2 + 19 TS-SCAFFOLD + 29 TS-PARTY incl. TC-3541 + 24 TS-MEMBERSHIP + 22 TS-PROPOSALS), treating TC-3200..TC-3209 as one collapsed anchor, then applies the expanded convention (463 − 1 + 10 = **472 designed test cases**). A 7-row counting difference between the two documents is expected and pre-existing (Doc 07 = 465 row-anchors; Doc 08 = 472 expanded TCs because the TS-EXPL collapsed range TC-3200–TC-3209 is expanded to 10 individual cells); the 472 expanded total is used in the Doc 08 §6 coverage dashboard.
 
@@ -599,7 +1126,7 @@ verified.**
 | TC-1405 | A proof against an unregistered circuit / proving key is refused on-chain | RISK-10 | `VerifierRegistry` rejects it | Pass (inh.) — adversarial · UT-0342, UT-0343 (**contract-level surrogate only**) |
 | TC-1406 | Nullifier soundness: one witness cannot yield two distinct valid nullifiers in one scope | FR-002 | Impossible | **Blocked — Phase 2** |
 
-### 4.3 `TS-ABSENCE` — Capability-absence (TC-1600–TC-1614)
+### 4.3 `TS-ABSENCE` — Capability-absence (TC-1600–TC-1614, TC-3569)
 
 Several guarantees here **are the absence of a function**. Doc 04 §6.5 and Doc 06 §4 both state the
 limits of this technique: it proves no *named* capability exists at the ABI/bytecode boundary; it
@@ -620,6 +1147,7 @@ does **not** prove there is no unnamed backdoor. These cases are written to clai
 | TC-1610 | Flags gate **starting** a capability, never **completing** one already under way | NFR-020, CON-003 | `propose` gated; `vote`/`finalize`/`execute` not | adversarial · UT-0360, UT-0361 | Pass (inh.) — Doc 06 §5 defect #4 regression |
 | TC-1611 | `permanentFlags()` is empty — every flag carries a removal target | NFR-020 | Empty set asserted | protocol · UT-0053, UT-0055 | **Pass (obs.)** |
 | TC-1612 | The censorship escape hatch and gas sponsorship cannot be switched off | NFR-014, FR-061 | Permanently on | protocol · UT-0054 | **Pass (obs.)** |
+| TC-3569 | The `maci_voting` flag description carries no affirmative FR-131 banned claim | FR-131 closing sentence · US-0134 · DES-098 | `FLAGS.MACI_VOTING.description` matches neither `/votes are anonymous/i` nor `/\bis anonymous\b/i`; it does contain "NOT anonymous", "CAN see vote direction", and a citation of `FR-131` as the normative wording, so the flag ledger cannot drift back to the retired framing | protocol · UT-0888 (`packages/protocol/test/party-and-regions.test.js`) | **Pass (inh.)** — Doc 06 v2.5.1, REL-LIM-18 site 1; `packages/protocol` **151/151** green in run R-17 (2026-09-06). _Placed in `TS-ABSENCE` deliberately: what it guarantees is the **absence of a claim** from a shipped string — the same shape as TC-1600..TC-1614 — and it sits with the other protocol flag cases TC-1611/TC-1612. It does **not** test flag behaviour; a passing TC-3569 says nothing about whether MACI works._ |
 | TC-1613 | Storage-layout snapshot detects an unexpected slot | NFR-017 | Snapshot diff fails the build | — | **Blocked** — the harness `storageLayout` output selection (Doc 04 §6.3) was not added |
 | TC-1614 | No deletion or edit path for any published record | FR-047, FR-056, RISK-13 | No selector, no bytecode path, no endpoint | adversarial · UT-0310, UT-0301 | Pass (inh.) — **partial**: the service-endpoint half has no test |
 
@@ -740,7 +1268,7 @@ Every case here needs an environment or an instrument that does not exist in thi
 
 ---
 
-## 5. `TS-ADV-01…16` — Adversarial suites, one per RISK (TC-2600–TC-2752)
+## 5. `TS-ADV-01…16` — Adversarial suites, one per RISK (TC-2600–TC-2752, TC-3564–TC-3567, TC-3570–TC-3576)
 
 The attack trees are Doc 04 §8; each leaf below is a `TC`. **Any defect found here against a
 guardrail FR is automatically Sev-1** (Doc 04), because TD-04 leaves no override to fix the
@@ -758,7 +1286,18 @@ consequence.
 | TC-2611 | ADV-02 · RISK-02 | Re-vote indistinguishability classifier | Advantage ≤ chance | — | **Blocked — Phase 3** |
 | TC-2612 | ADV-02 · RISK-02 | Coercer is shown the confirmation screen | Screen renders identically for every choice and never names it | `apps/web` · UT-0700, UT-0701 | Not run |
 | TC-2613 | ADV-02 · RISK-02 | Coercer checks whether a change-my-vote path exists | Path is offered for the whole window and hidden only after close | `apps/web` · UT-0702, UT-0703 | Not run |
-| TC-2614 | ADV-02 · RISK-02 | Flag-state disclosure while MACI is off | The UI states votes are anonymous but **not** receipt-free, and defaults to the warning when the flag is unknown | `apps/web` · UT-0710, UT-0711, UT-0712 | Not run — **this is a disclosure, not a satisfaction of FR-031/032/NFR-003** |
+| TC-2614 | ADV-02 · RISK-02 | Flag-state disclosure while MACI is off | The vote-surface banner states the **FR-131 v1 truth** — this ballot uses conventional authentication and is **not** anonymous, **not** receipt-free and **not** coercion-resistant; the platform database **can** see how you voted and which party you belong to; the ballot the platform cannot see arrives with the v2 privacy layer and is **not switched on yet** — and the banner appears whenever coercion-resistant voting is off, disappears only once it is on, and **defaults to showing the warning when the flag is unknown** | `apps/web` · UT-0710, UT-0711, UT-0712, UT-0887 | **Pass (inh.)** — Doc 06 v2.5.1; `apps/web` 95/95 green in R-17 (2026-09-06). **This is a disclosure, not a satisfaction of FR-031/FR-032/NFR-003.** _(v2.5.0 correction: this cell read "The UI states votes are anonymous but **not** receipt-free" — the retired framing FR-131’s closing sentence bans, and which the code stopped asserting at Doc 06 v2.5.0 / commit `0a5c542`. What the case exercises never changed; the sentence describing it was false, and a false expected result is a test that cannot fail when the product regresses. Status also moves Not run → Pass (inh.) on R-17. The same false clause was corrected at the strategy layer the same day: **Doc 04 v1.3.0** restated `TS-ADV-02` case **A-02.6** and **OPEN-01** off the retired framing, A-02.6 being the pass criterion this case implements — so the case and its source now agree.)_ |
+| TC-3564 | ADV-02 · RISK-02 | **Regression: a banned word returns to the rendered vote-surface banner.** Render `ReceiptFreedomBanner` with MACI off and scan the banner’s rendered text for "private", "anonymous", "receipt-free", "secure" | Every occurrence is **immediately negated** ("not anonymous", "not receipt-free"); "private" and "secure" do not appear at all, negated or otherwise — neither has a mandated use in this notice. Verifies US-0134 · FR-131 closing sentence · DES-098 | `apps/web` · UT-0887 (`test/safety-surfaces.test.tsx`) | **Pass (inh.)** — Doc 06 v2.5.1; `apps/web` 95/95 green in R-17 (2026-09-06) |
+| TC-3565 | ADV-02 · RISK-02 | **Regression: the retired framing returns as positive copy.** Read the rendered banner for the three facts FR-131 mandates | (a) "not anonymous", "not receipt-free" and "not coercion-resistant" are all present; (b) "can see how you voted" and "which party you belong to" are present; (c) "not switched on yet" is present; and the retired claims "your vote is private" and "nobody can see that a vote was yours" are **absent**. Verifies US-0134 · FR-131 (a)(b)(c) · DES-098 | `apps/web` · UT-0887 | **Pass (inh.)** — Doc 06 v2.5.1; R-17. **TC-3564 and TC-3565 are the guard together and neither is the guard alone:** the retired body ("Nobody can see that a vote was yours") carried **no** banned word, so a word ban would have passed it — only TC-3565’s positive assertions catch it (Doc 06 v2.5.1, decision 2) |
+| TC-3566 | ADV-02 · RISK-02 | **The guard is on the shipped copy, not on a test-local string.** Assert the rendered banner contains `en.banner.notReceiptFreeTitle` and `en.banner.notReceiptFreeBody` imported from `apps/web/src/i18n/en.ts` | Both source strings appear verbatim in the rendered output, so editing the shipped en copy back toward a banned claim **fails** TC-3564/TC-3565 instead of passing them against a copy of the text that lives only in the test. Verifies US-0134 · FR-131 · DES-098 | `apps/web` · UT-0887 | **Pass (inh.)** — Doc 06 v2.5.1; R-17 |
+| TC-3567 | ADV-02 · RISK-02 | **The Arabic locale is not left telling the retired lie.** Read `ar.banner.notReceiptFreeTitle` / `notReceiptFreeBody` | The retired Arabic claims "صوتك سري" (your vote is secret) and "لا يستطيع أحد أن يرى أن هذا الصوت صوتك" are absent; the mandated "ليس مجهول الهوية" (not anonymous) and "تستطيع أن ترى كيف صوّتّ" (can see how you voted) are present. Verifies US-0134 · FR-131 · DES-098 | `apps/web` · UT-0887 | **Pass (inh.)** — Doc 06 v2.5.1; R-17. **Scope limit stated:** this case guards the *claim*, not the *fluency*. The Arabic strings are an engineer draft and native-speaker review is owed before any Arabic-locale deployment (Doc 06 §7 item 17) — a mistranslated coercion warning is a safety defect that a passing TC-3567 would not catch. **NFR-013 is NOT verified by this case** _(v2.6.0, ISS-02: the Verifies cell claimed it, and the claim was not supported)_ — UT-0887 reads the content of two `ar.banner.*` constants; it exercises neither the eight-locale coverage nor the RTL rendering NFR-013 requires, and Doc 08 §3.2 carries no NFR-013 → TC-3567 link. What this case is evidence of is FR-131 copy content in the Arabic locale, and nothing wider |
+| TC-3570 | ADV-02 · RISK-02 | **Regression: the landing page reclaims a v2 privacy property for backing a party.** _(Doc 02 v2.17.1 §8 FR-131 **Scenario 8**, lines 2–5: a public-facing string describing a participation act; the reader must not conclude Trumocracy cannot link them to the act; a **public-by-design** act must be described as such and not as kept private, secret or hidden.)_ Read the shipped source string `en.home.steps[1].body` — the body of the "Back the parties you believe in" step on the public landing page | "kept private" is **absent**; "public act", "name is not shown" and "our own records can link" are all **present**; and none of the four FR-131 banned words ("private", "anonymous", "receipt-free", "secure") appears anywhere in the string, case-insensitively. **The plain substring ban is safe here and negation-aware matching is not required** — unlike the clause-(a) ballot banner TC-3564 guards, no mandated negated form applies to this copy (Scenario 8 line 6; Doc 04 §0.5 S5 carve-out (i)). Verifies US-0134 · **FR-131 clause (e)** · DES-098 | `apps/web` · UT-0889 (`test/safety-surfaces.test.tsx`) | **Pass (obs.)** — run **R-18** (2026-09-06, 624/624) plus the case-by-case verbose re-run of the UT-0889 block; see §2 corroboration note, v2.7.0 extension. **Scope limit, because Scenario 8 asks for more than substrings:** the scenario's operative test is what an **ordinary grade-8 reader (NFR-023)** would take the claim to mean, and its closing line makes that reader test **govern** where it disagrees with the safe harbour. UT-0889 asserts **substrings**; no automated test in this repository applies a reader test. This case is therefore evidence that the **approved wording is the wording that ships and cannot silently revert** — which is exactly what a regression guard is for — and is **not** evidence that Scenario 8 is satisfied as a whole. The reader-test half is verified by **inspection (I)**, FR-131's own recorded Verify-by |
+| TC-3571 | ADV-02 · RISK-02 | **Regression: the "What we promise" list reclaims unlinkability of party membership.** _(Doc 02 v2.17.1 §8 FR-131 **Scenario 8**, line 4 and the safe-harbour line 7; also **Scenario 9** line 4 — "a claim that contains none of the four banned words still FAILS".)_ Read the shipped source string `en.home.promises[0]` | "never learn" is **absent**; "never publish" is **present**; the four banned words are absent. **This is the case that shows why clause (e) is a claims test and not a word list:** the retired string was "We never learn which party you support", which contains **none** of the four banned words and would have passed any word ban — it was false against FR-131(b) ("the platform database CAN see vote direction and party membership in v1") and was found by reading, not by scanning (DECISIONS-2026-09-06-ENDORSEMENT-COPY.md §5). What replaces it is the **safe-harbour pattern** Scenario 8 names — state what the platform does not **publish**, then state what its **own records can see**. Verifies US-0134 · **FR-131 clause (e)**, FR-131(b) · DES-098 | `apps/web` · UT-0889 | **Pass (obs.)** — R-18 + case-by-case re-run. **Two limits, both from the v2.17.1 wording.** **(1)** The safe harbour applies only to copy that "makes **no contrary claim elsewhere in the same string**" — a single-string coherence test UT-0889 does not perform; it checks two substrings independently. **(2)** Where safe harbour and reader test disagree, **the reader test governs**, and no automated test applies it. Both halves rest on **inspection (I)** |
+| TC-3572 | ADV-02 · RISK-02 | **The guard is on the shipped page, not on a test-local string.** _(Doc 02 v2.17.1 §8 FR-131 Scenario 8 line 2 — the duty attaches to the **public-facing screen**, not to a constant.)_ Render `HomePage` (`apps/web/src/app/page`) inside the file's `wrap()` helper (LocaleProvider + FlagProvider) and look for the exact `en.home.steps[1].body` and `en.home.promises[0]` source strings in the DOM | Both source strings are found in the rendered output, so editing the shipped `en.ts` copy back toward a claim **fails** TC-3570/TC-3571 instead of passing them against a copy of the text that lives only in the test. Same shape as TC-3566 for the ballot banner, and the reason a copy fix is a *regression* fix rather than a one-off edit. Verifies US-0134 · **FR-131 clause (e)** · DES-098 | `apps/web` · UT-0889 | **Pass (obs.)** — R-18 + case-by-case re-run. **Binding, not coverage:** this case proves the two guarded strings reach the page. It asserts nothing about **any other string on that page**, and Scenario 9 is where that obligation lives — see TC-3575 |
+| TC-3573 | ADV-02 · RISK-02 | **The Arabic mirror is not left telling the retired claim.** _(Doc 02 v2.17.1 §8 FR-131 Scenario 8 line 2 — "**in any language**"; Scenario 9 line 1 — "in every language".)_ Read `ar.home.steps[1].body` and `ar.home.promises[0]` | The retired Arabic wording is **absent**: `ar.home.steps[1].body` does not contain the exact retired phrase **"اسمك سريًا"** ("your name kept secret"), and `ar.home.promises[0]` does not contain **"لا نعرف"** ("we never know"). A locale mirror left behind is a live clause-(e) violation, not a translation backlog item. Verifies US-0134 · **FR-131 clause (e)** · DES-098 | `apps/web` · UT-0889 | **Pass (obs.)** — R-18, re-observed `it` by `it` in **R-19** (2026-09-07). **Three scope limits, stated rather than implied.** **(1) This case asserts ABSENCE only** — it makes no positive assertion that the Arabic strings state the three facts TC-3570 requires of the English ("public act", "name is not shown", "our own records can link"), so an Arabic mirror that said nothing at all would still pass it; extending it is owed UT scope for the engineer (Samuel Oyelaran) and is not recorded here as covered. **(2) It guards the *claim*, not the *fluency*** — both Arabic strings are an engineer working draft and native-speaker review is owed before any Arabic-locale deployment (ARABIC-I18N; Doc 06 §7 item 17). **NFR-013 is NOT verified by this case**, on the same ground recorded for TC-3567 at v2.6.0: neither eight-locale coverage nor RTL rendering is exercised, and Doc 08 §3.2 carries no NFR-013 → TC-3573 link. **(3) The Arabic ban is on the exact retired phrase, NOT on the word "secret"** _(v2.8.0, ISS-02 — this cell previously claimed the wider guard)_. This row read "neither سريًا nor **سري** appears". Doc 06 **v2.7.0 (Approved)** removed the bare "سري" ban **on purpose** (its ISS-06): a bare substring also matches **"سريعًا"** ("quickly") and **"تسري"** ("takes effect"), the latter already shipping at `ar.ts` `parties.leaveHelp`, so the wide ban would have failed the build on honest copy. **The narrower assertion is the right engineering call; the wider claim here was the defect** — an Arabic string containing "سري" in some other construction would ship and this case would **not** catch it, which is now said in terms rather than left for a reader to discover. What TC-3573 guards is the **return of the specific retired phrase**, which is what a regression guard is for. Extending it to a linguistically-aware claims check is owed scope for the engineer (Samuel Oyelaran), and is not recorded here as covered |
+| TC-3574 | ADV-02 · RISK-02 | **The refusal message a Supporter is shown no longer claims Supporters are anonymous.** _(Doc 02 v2.17.1 §8 FR-131 Scenario 8 line 2 — "any public-facing string … that describes a participation act"; the act here is **joining or belonging to a party** at Supporter tier.)_ Build a minimal `ProposalService` fixture (InMemoryPartyStore → PartyCreationService → petition over threshold → activate → join → InMemoryProposalStore) and file a proposal as `PARTICIPATION_TIER.SUPPORTER` | The call throws with code `AUTHORSHIP_REQUIRES_WORKER_TIER`; the thrown **message** does **not** contain "Supporters are anonymous" and **does** contain "a Supporter's participation is never published". This is the third finding of the same class (DECISIONS §5.3), reached by clause (e) rather than severed by the approver (§11), and it is a **user-facing** string, not a doc comment. Verifies US-0134 · **FR-131 clause (e)** · DES-098 | `packages/sdk` exercised from `apps/web` · UT-0889 | **Pass (obs.)** — R-18 + case-by-case re-run. **This case does NOT verify FR-082.** FR-082 is a Definition-B property (Doc 02 §16.3, DEFERRED-v2) and a Supporter's membership **is** knowable to the v1 operator; what is asserted here is only that the v1 refusal **copy** stopped claiming otherwise. Doc 08 carries no FR-082 → TC-3574 link and none should be added on this evidence — the same discipline v2.6.0 applied when it removed the unsupported NFR-013 claim from TC-3567 |
+| TC-3575 | ADV-02 · RISK-02 | **The population sweep: no v1 surface, in any language, asserts or implies that a participation act is unknowable to Trumocracy.** _(Doc 02 v2.17.1 §8 FR-131 **Scenario 9** in full: "**every** public-facing surface of a v1 deployment, in every language, including the README and the landing copy" · read "against the clause (e) reader test rather than searched for a list of banned words" · "**zero** materials assert or imply" · "a claim that contains **none** of the four banned words still FAILS".)_ Enumerate every public-facing string in `apps/web` and `packages/ui` (both locale dictionaries and every rendered surface), the README and every other public-facing material, and evaluate each against the grade-8 reader test (NFR-023) | **Zero** materials would lead an ordinary grade-8 reader to conclude that Trumocracy cannot link them to casting a vote, endorsing or backing a petition, joining or belonging to a party, or supporting a party — **including materials that contain none of the four banned words**. Two carve-outs and only two: clause (a)'s mandated negated forms inside a DES-098 notice, and the named `anon`-badge exception (Doc 04 §0.5 S5). Verifies US-0134 · **FR-131 clause (e), Scenario 9** · DES-098 | **None — no implementing instrument exists.** The instrument this criterion requires is **Doc 04 §0.5 S5**, the build-failing FR-131 denylist over `apps/web` and `packages/ui`, widened at MTP v1.5.0 to every participation act, every language, and to claims as well as words. It is **specified and not built** | **Blocked — instrument absent.** _(Doc 07 §10 counts "instrument absent" as Blocked, not as No mechanism: the product has plenty to test — it is the test that does not exist.)_ **Minted Blocked deliberately, and this is the load-bearing row of the drop.** The five cases above guard **five strings on three surfaces**; TC-3535/UT-0869 guards the party-join copy and TC-3564..TC-3567/UT-0887 the ballot banner — **eleven strings in total**. Scenario 9 quantifies over **all** of them and everything else. Recording it as covered by TC-3570..TC-3574 would have been the easiest false pass available at this version. **What exists instead:** UT-0857, UT-0868 and UT-0884 are **DES-085 jargon** scans ("wallet", "seed phrase", "blockchain"…) over enumerated per-drop strings — they are not the FR-131 denylist and would have caught **neither** string this drop fixed, which is precisely how "we never learn which party you support" survived the 2026-09-05 sweep. **Two live questions sit inside this case's scope and neither is the tester's to answer:** **OPEN-27** (Doc 04 §13 → Ravi Deshmukh — the S5 `anon`-badge carve-out was reasoned against a **voting-scoped** FR-131, and party-joining and endorsing are now participation acts) and **ENROL-COPY (j)** (Doc 02 §13 → Priya Raghunathan — enrolment/verification claims are expressly outside clause (e) and unruled). **Unblocks when** the engineer builds the S5 scan; until then the remainder of clause (e) rests on **inspection (I)**, which is FR-131's own recorded Verify-by and is legitimate evidence, but is point-in-time and cannot hold a Must row against silent regression |
+| TC-3576 | ADV-02 · RISK-02 | **The corrected landing copy carries no blockchain jargon.** _(DES-085 jargon filter · NFR-023 plain language, Doc 02 §2.2. Not a clause-(e) criterion — clause (e) governs honesty of **claims**; this governs **comprehensibility**, and the two corrected strings arrived at Doc 06 v2.6.0 with no jargon scan of their own.)_ Read `en.home.steps[1].body` and `en.home.promises[0]` case-insensitively against the house jargon list | Neither string contains any of the eleven banned words — "wallet", "seed phrase", "private key", "gas", "token", "mint", "on-chain", "blockchain", "crypto", "nullifier", "hash". Verifies US-0134 · **NFR-023 · DES-085** | `apps/web` · UT-0889 (`test/safety-surfaces.test.tsx`, the jargon `it`) | **Pass (obs.)** — run **R-19** (2026-09-07, 625/625) plus the case-by-case verbose re-run of the UT-0889 block, 6 `it`s green individually. **Minted rather than left as an unmapped guard** _(v2.8.0, ISS-03)_: this document gives every per-drop jargon scan its own row — **TC-3538** (UT-0868, membership strings) and **TC-3561** (UT-0884, the proposals surface) — and a guard on shipped copy that no `TC` names is a guard no RTM reader can see. **Scope limit, and it is the same one NFR-023 has carried since v1.1.0:** this is an **enumerated** scan over **two** strings, not a readability check and not a repository-wide jargon scanner. **It does not close NFR-023**, whose Doc 08 row stays `G-UI` for exactly that reason — the same instrument-versus-enumeration distinction TC-3575 draws for FR-131 Scenario 9. Doc 08 v2.11.0 records the NFR-023 → TC-3576 link and raises **`TD-RTM-03`** for the pre-existing fact that the same row cites neither TC-3538 nor TC-3561 |
 | TC-2620 | ADV-03 · RISK-03 | **100,000 accounts join while a proposal is open** | Zero effect on that proposal | protocol · UT-0018, UT-0014 | **Pass (obs.)** |
 | TC-2621 | ADV-03 · RISK-03 | Look for a transferable surface to buy voting power | None in ABI or bytecode | adversarial · UT-0300, UT-0301 | Pass (inh.) |
 | TC-2622 | ADV-03 · RISK-03 | Mid-vote quorum grief by flooding | Quorum is measured on `snapshotMembers` — flood has no effect | protocol · UT-0014 | **Pass (obs.)** |
@@ -822,7 +1361,7 @@ consequence.
 | Error & timeout paths covered | **Partial** — every contract custom error is provoked by name; network/timeout paths need an environment (Blocked). |
 | Idempotency / retry / concurrency covered | **Partial** — TC-1047 (duplicate log), TC-1033 (execution retry) is Blocked, TC-2382 (exactly-once offline submit) is Blocked. |
 | Security: authN, authZ/IDOR, injection, encryption | **Partial** — negative-authority and capability-absence are strong (TC-1600–1614, TC-1850–1861); penetration test not run (TC-1863). |
-| Accessibility: automated scan + screen-reader/focus | **No** — TC-2250/2251/2252/2255 all Blocked or Manual-not-run. Two component-level cases exist and were not executed. |
+| Accessibility: automated scan + screen-reader/focus | **No** — TC-2250/2251/2252/2255 all Blocked or Manual-not-run. Two component-level cases exist and **were executed green at file granularity** in run R-17 (`apps/web` 95/95, 2026-09-06); no case-by-case accessibility pass has been made, so neither is promoted (**TD-07-03**). The verdict is unchanged — there is still no automated a11y scan and no screen-reader/focus pass. _(v2.6.0, ISS-07: this row read "were not executed", which is exactly the reading §0.1’s v2.5.0 amendment exists to prevent.)_ |
 | Rollback / kill-switch covered | **Partial** — the kill-switch *blast radius* is partly pinned (TC-1610, TC-2751); the rollback drill (TC-2425) and the open-ballot freeze (TC-2426) are not. |
 
 ---
@@ -849,16 +1388,16 @@ consequence.
 
 | Package / app | File(s) | `UT` range | Cases mapped | Executed this session |
 |---|---|---|---|---|
-| `packages/protocol` | `test/governance.test.js`, `test/party-and-regions.test.js` | UT-0001…UT-0055 | 38 | **Yes — 82/82 pass** |
+| `packages/protocol` | `test/governance.test.js`, `test/party-and-regions.test.js` | UT-0001…UT-0055, **UT-0888** | 39 | **Yes — 82/82 pass** (2026-08-09); **151/151 protocol pass in R-17** (2026-09-06), including UT-0888 |
 | `packages/contracts` | `test/lifecycle.test.mjs` | UT-0100…UT-0125 | 21 | No — inherited (Doc 06) |
 | `packages/contracts` | `test/governance.test.mjs` | UT-0200…UT-0230 | 10 | No — inherited |
 | `packages/contracts` | `test/adversarial.test.mjs` | UT-0300…UT-0361 | 27 | No — inherited |
 | `packages/contracts` | `test/differential.test.mjs` | UT-0400…UT-0420 | 6 | No — inherited |
 | `packages/contracts` | `test/deployment-safety.test.mjs` | UT-0600…UT-0612 | 6 | No — inherited (**absent from the Doc 06 §3 inventory — TD-07-01**) |
-| `apps/web` | `test/safety-surfaces.test.tsx` | UT-0700…UT-0742 | 10 | No — not executed (**absent from the Doc 06 §3 inventory — TD-07-01**) |
+| `apps/web` | `test/safety-surfaces.test.tsx` | UT-0700…UT-0742, **UT-0887**, **UT-0889** | 14 | **Yes at file granularity — `apps/web` 95/95 pass in R-17** (2026-09-06), which is the first tester-executed run of this file. UT-0887 → TC-3564..TC-3567 recorded **Pass (inh.)**; the 15 pre-existing rows stay *Not run* pending a case-by-case pass (**TD-07-03**). (**Range absent from the Doc 06 §3 inventory until v2.5.0 — TD-07-01**; UT-0887 IS listed there) _(v2.7.0: **UT-0889** added — 5 `it`s → TC-3570..TC-3574, recorded **Pass (obs.)** on run **R-18** plus a case-by-case verbose re-run of that block; it IS listed in the Doc 06 v2.6.0 §3 inventory. **v2.8.0, ISS-03: the block has SIX `it`s, not five.** Doc 06 **v2.7.0 (Approved)** added a DES-085 jargon scan ahead of the five mapped ones and records the change in terms ("UT-0889 row and Total updated (5 → 6; 624 → 625)"). The sixth is mapped to **TC-3576** at this version, so "one TC per `it`" describes the block again; all six were observed green `it` by `it` in run **R-19**. **TC-3575 maps to no test in this table, by design** — its instrument does not exist. **The `14` in the Cases-mapped column is NOT advanced, and that is a decision, not an oversight:** it is a pre-UT-0887 figure that was already left unadvanced when TC-3564..TC-3567 were minted at v2.5.0, and adding to a base that does not reconcile would replace one unexplained number with another. It is named here as stale and belongs to the `TD-RTM-02` recount, which is owed and not attempted at this version.)_ |
 | `services/indexer` | `test/projection.test.js` | UT-0500…UT-0525 | 12 | **Yes — 16/16 pass** |
 | `packages/sdk` | 8 files | UT-2500…UT-2623 | 13 | **Yes — 124/124 pass** |
-| `packages/ui` | `test/PrivacyStatus.test.tsx` | UT-0750…UT-0758 | 7 | **Yes — 14/14 pass** (2026-08-25) |
+| `packages/ui` | `test/PrivacyStatus.test.tsx` | UT-0750…**UT-0759** | 8 | **Yes — 14/14 pass** (2026-08-25); **18/18 pass in R-17** (2026-09-06) after UT-0759 added 4 tests at Doc 06 v2.5.1 |
 | `packages/sdk` | `test/seams.test.js` | UT-0760…UT-0779 | 9 | **Yes — 36/36 pass** (sdk total 160/160; 2026-08-25) |
 | `packages/protocol` | `test/party-creation.test.js` | UT-0060…UT-0086 | 27 | **No — inherited from Doc 06 v2.2.0 Approved** (44 tests, all green) |
 | `packages/sdk` | `test/party-creation.test.js` | UT-0780…UT-0818, UT-0831 | 29 | **Inherited from Doc 06 v2.3.2 Approved** (38 tests, all green); file observed 38/38 in the 2026-08-29 full-suite run (R-12) |
@@ -876,6 +1415,10 @@ consequence.
 **Orphan check (v2.4.0 — proposals & debate drop).** Every UT in the drop is mapped: UT-0087/0088→TC-3542; UT-0089→TC-3543; UT-0090→TC-3552; UT-0091/0092→TC-3553; UT-0093→TC-3554; UT-0094→TC-3551, TC-3555; UT-0095→TC-3547, TC-3548; UT-0832→TC-3543, TC-3547; UT-0833→TC-3546; UT-0834→TC-3545; UT-0835→TC-3548; UT-0836/0837→TC-3549; UT-0838→TC-3551; UT-0839/0840→TC-3555; UT-0841→TC-3552; UT-0842→TC-3554; UT-0843/0844→TC-3556; UT-0845→TC-3558; UT-0846/0847/0848→TC-3559; UT-0872/0873→TC-3544; UT-0874..0877→TC-3550; UT-0878→TC-3552; UT-0879→TC-3554; UT-0880→TC-3555; UT-0881/0882→TC-3557; UT-0883→TC-3560; UT-0884→TC-3561. **Material orphan count for this drop: 0.** Every id was read in its test file and its assertions checked against the TC text. **v2.4.1 addendum:** UT-0885→TC-3562, UT-0886→TC-3563 — both read in file; orphan count remains **0**.
 
 **Orphan check (v2.3.0 — join/membership drop).** Sweep over the drop's full UT set. Every one is mapped: UT-0819→TC-3517, UT-0820→TC-3518, UT-0821→TC-3523, UT-0822→TC-3524, UT-0823→TC-3521, UT-0824→TC-3526, UT-0825→TC-3528, UT-0826→TC-3530, UT-0827→TC-3531, UT-0828→TC-3532, UT-0829→TC-3536, UT-0830→TC-3532, UT-0831→TC-3539, UT-0858→TC-3519, UT-0859→TC-3525, UT-0860→TC-3522, UT-0861→TC-3527, UT-0862→TC-3529, UT-0863→TC-3533, UT-0864→TC-3534, UT-0865→TC-3533, UT-0866→TC-3520, UT-0867→TC-3537, UT-0868→TC-3538, UT-0869→TC-3535, UT-0870→TC-3538, UT-0871→TC-3540. **Material orphan count for the join/membership drop: 0.** Every UT id above was read in its test file and its assertions checked against the TC text — none was taken from a summary. No `TC` in this document cites a `UT-####` that does not exist in the repository; every `UT` cited above was located by identifier in a real test file. Conversely, the `UT` inventory in Doc 06 §3 omits two real ranges — recorded as TD-07-01, not silently absorbed.
+
+**Orphan check (v2.5.0 — FR-131 honesty drop, Doc 06 v2.5.1 / commit `0a5c542`).** Sweep over the drop’s full UT set, every id read in its test file rather than taken from a summary. **`UT-0887`** (`apps/web/test/safety-surfaces.test.tsx`, 4 assertions) → **TC-3564** (banned words only when negated; never "private"/"secure"), **TC-3565** (FR-131 (a)/(b)/(c) stated; retired claims absent), **TC-3566** (the guard is bound to the shipped `en.ts` strings), **TC-3567** (the Arabic mirror carries the same truth) — one TC per assertion, because each is an independently defeatable guard. **`UT-0759`** (`packages/ui/test/PrivacyStatus.test.tsx`, 4 assertions over the `ver` **title** four-path) → **TC-3568**, one TC for the block, matching the TC-3475/UT-0758 treatment of the **subtitle** four-path in the same component. **`UT-0888`** (`packages/protocol/test/party-and-regions.test.js`, 1 assertion) → **TC-3569**. **Material orphan count for this drop: 0.** Two pre-existing mappings were also re-checked because the drop changed what their tests assert, and neither became stale: **`UT-0751`** → TC-3471 and **`UT-0753`** → TC-3488 both changed their expected `ver` title from "Verified — private" to "Verified"; both TC rows are written at a level the change does not falsify, and both now carry a v2.5.0 note saying so rather than relying on a reader to notice. No `TC` in this document cites a `UT-####` that does not exist in the repository. **Caveat inherited, not resolved here:** Doc 08 §10 `TD-RTM-01` records that `UT-0841`..`UT-0848` are each **defined twice** (`apps/web/test/party-creation.test.tsx` and `packages/sdk/test/proposals.test.js`), so any id-matching sweep is unsound for those eight. None of the six new cases cites one of them, so this drop’s zero is unaffected; renumbering is **engineer** scope and the defect stays open.
+
+**Orphan check (v2.7.0 — FR-131 clause (e) drop, Doc 06 v2.6.0 / branch `build/v1-cascade-and-release-prep`).** One new `UT` in the drop, read `it` by `it` in its test file rather than taken from the engineer's note. **`UT-0889`** (`apps/web/test/safety-surfaces.test.tsx`, **5** `it`s) → **TC-3570** (en `home.steps[1].body`), **TC-3571** (en `home.promises[0]`), **TC-3572** (both strings bound to the rendered landing page), **TC-3573** (the Arabic mirror), **TC-3574** (the sdk authorship-refusal message) — **one TC per `it`**, following the UT-0887/TC-3564..TC-3567 precedent, because each `it` is an independently defeatable guard over a different string on a different surface. **Material orphan count for this drop: 0.** **The converse is also recorded, because it is the finding that matters: TC-3575 is an intentional reverse-orphan** — an acceptance criterion (Doc 02 §8 FR-131 Scenario 9) with **no** `UT`, because the instrument it needs (Doc 04 §0.5 S5) is not built. A `TC` with no `UT` is not an orphan defect in this document's sense; it is a Blocked case, and it is the only honest way to carry a criterion that no test executes. **Reverse sweep over the strings the drop changed, because a copy change can stale a `TC` that never cites the `UT`:** `apps/web/src/i18n/en.ts` (`home.steps[1].body`, `home.promises[0]`), `apps/web/src/i18n/ar.ts` (the two mirrors), `packages/sdk/src/proposals.js` (`AUTHORSHIP_REQUIRES_WORKER_TIER`), `apps/web/src/components/ProposalsAndDebate.tsx` (doc comment) and `packages/protocol/src/proposals.js` (FR-082 markers) were each grepped across this document and Doc 08 in their retired wording — "kept private", "never learn", "Supporters are anonymous". **One hit, corrected at this version: TC-3543**, whose expected result said the Supporter refusal's "stated reason is *anonymity*". It cites UT-0089 and UT-0832, neither of which asserts the message clause that changed (UT-0089 asserts `canAuthorProposal(SUPPORTER) === false`; UT-0832 asserts the error `code` and that the message contains "self-declared"), **so the case still passes and its status is unchanged** — the defect was in the description and it is fixed in §5.5 rather than left for a reader to trip over. No other row in either document quoted or paraphrased a changed string. **v2.8.0 re-sweep, ISS-03 — the paragraph above was written against Doc 06 v2.6.0 and the file has since settled.** `UT-0889` now has **6** `it`s: Doc 06 **v2.7.0 (Approved)** added a **DES-085 jargon scan** as the first `it`, asserting that both corrected landing strings carry none of the eleven banned blockchain words. It is mapped to **TC-3576** at this version, so the mapping is `UT-0889` → **TC-3570..TC-3574 + TC-3576**, six `it`s to six cases, and **"one TC per `it`" is true of the block again**. **Material orphan count for this drop: 0 — and now truly**; between v2.7.0 and this version it was **1**, and saying so is cheaper than implying the zero was always right. The v2.7.0 sweep was not wrong when written — it was scoped and dated to the v2.6.0 drop — but a sweep that stops being true of the file is a sweep worth re-running, which is the whole point of ISS-03. **The reverse-orphan note stands unchanged:** `TC-3575` still deliberately cites no `UT`. **Caveat inherited, not resolved here:** Doc 08 §10 `TD-RTM-01` (the `UT-0841`..`UT-0848` double definition) still makes id-matching unsound for those eight; none of the six new cases cites one of them, so this drop's zero is unaffected.
 
 ---
 
@@ -899,6 +1442,9 @@ consequence.
 | **R-16** | 2026-08-29 | Doc 06 v2.4.2 (In Review) | `apps/web` (proposals consent rework) | **91 / 91 pass** — web 89→91 with UT-0885/UT-0886; suite total 608→**610**. Run by the tester while re-assessing FR-080 | none |
 | **R-15** | 2026-08-29 | Doc 06 v2.4.1 (In Review) · commit c04b4f2 | **whole repository — `npm test` from the repo root** | **608 / 608 pass, 0 failed** — contracts 95 · protocol **150** · sdk **244** · ui 14 · indexer 16 · web **89**. Executed by the tester while authoring TS-PROPOSALS; per-file: protocol `proposals.test.js` 24/24, sdk `proposals.test.js` 24/24, web `proposals.test.tsx` 18/18 | none |
 | **R-14** | 2026-08-29 | Doc 03 v2.8.1 Approved · Doc 07 v2.3.1 rework | **whole repository — `npm test` from the repo root** | **542 / 542 pass, 0 failed** — contracts 95 · protocol 126 · sdk 220 · ui 14 · indexer 16 · web 71. Re-run to confirm the v2.3.1 documentation corrections changed no behaviour: the FR-077 rows were misdescribed, not mis-tested | none |
+| **R-17** | 2026-09-06 | Doc 06 v2.5.1 Approved · commit `0a5c542` (PR #19, merged to `main`; repo `HEAD` `84e2203`) | **whole repository — `npm test` from the repo root** | **619 / 619 pass, 0 failed**, process exit 0 — contracts 95 · protocol **151** · sdk 244 · ui **18** · indexer 16 · web **95**. Suite total 610 → **619** (+9: UT-0887 4 web, UT-0759 4 ui, UT-0888 1 protocol). Per-package duration: contracts 34.29 s · protocol 505 ms · sdk 1.10 s · ui 767 ms · indexer 571 ms · web 2.81 s. **Executed by the tester** while authoring the FR-131 honesty TC rows; this is the confirmatory full-suite re-run the v2.4.2/v2.4.4 reviews recorded as missing (ISS-01 Low, now discharged). Working tree clean apart from `artifacts/memory-index.json`; `apps/web/tsconfig.tsbuildinfo` is untracked as of the Doc 06 v2.5.1 `chore(infra)` commit and was **not** dirtied by this run. **Re-confirmed at v2.6.0 (2026-09-06, cycle-2 rework):** the tester re-ran `npm test` from the repo root and got the identical result — **619 / 619 pass, 0 failed**, exit 0, same package split. **No new run id is minted** — an identical re-run of the same commit confirms R-17 rather than adding an observation — and no case is promoted on it | none |
+| **R-18** | 2026-09-06 | Doc 06 **v2.6.0 (In Review** — cycle-1 FAIL 94%, 0C/0H/1M/5L; **v2.7.0** rework in progress**)** · branch `build/v1-cascade-and-release-prep`, working tree at `d526910` **plus the uncommitted engineer change set** of artifacts/engineer-2026-09-06T1530-endorsement-copy.md (`en.ts`, `ar.ts`, `sdk/proposals.js`, `ProposalsAndDebate.tsx`, `protocol/proposals.js`, `safety-surfaces.test.tsx`) | **whole repository — `npm test` from the repo root**, then the UT-0889 block **case by case** | **624 / 624 pass, 0 failed**, process exit 0 — contracts 95 · protocol 151 · sdk 244 · ui 18 · indexer 16 · web **100**. Suite total 619 → **624** (+5: UT-0889, all in `apps/web/test/safety-surfaces.test.tsx`, which goes 20 → 25 tests). Per-package duration: contracts 46.83 s · protocol 432 ms · sdk 1.27 s · ui 796 ms · indexer 386 ms · web 2.79 s. **Second, case-by-case run:** `npx vitest run test/safety-surfaces.test.tsx --reporter=verbose -t "UT-0889"` in `apps/web` — **5 passed, 20 skipped (25)**, every `it` name in the UT-0889 block reported green individually. **This is the run that earns TC-3570..TC-3574 their Pass (obs.)**; the full-suite half alone would have earned only Pass (inh.), per the §2 corroboration convention. **Executed by the tester.** **Three honest qualifications.** (1) The run is against an **uncommitted working tree** — 40 dirty paths per `git status --porcelain`, product code among them — not against a merged commit, because reviewer-qa has not signed the merge; R-17 by contrast ran against merged `0a5c542`. A re-run after merge should confirm the same 624, and this row will be re-derived if it does not. (2) The Doc 06 version this run pins is **In Review with an open Medium**; that Medium (ISS-01) is about stale "owed" statements in Doc 06 §7, not about UT-0889, whose assertions were read directly in the file for this version. (3) No case outside the UT-0889 block is promoted on this run: TC-3564..TC-3569 stay **Pass (inh.)**, and **TC-3575 executes nothing** — it has no instrument | none |
+| **R-19** | 2026-09-07 | Doc 06 **v2.7.0 (Approved** — 06-coding-and-ut-v2.7.0-technical-cycle2.md, PASS 96%, 0C/0H/0M/3L**)** · branch `build/v1-cascade-and-release-prep`, working tree at `d526910` **plus the still-uncommitted change set** | **whole repository — `npm test` from the repo root**, then the UT-0889 block **case by case** | **625 / 625 pass, 0 failed**, exit 0 — contracts 95 · protocol 151 · sdk 244 · ui 18 · indexer 16 · web **101**. Suite total 624 → **625** (+1: the sixth UT-0889 `it`, the DES-085 jargon scan added at Doc 06 v2.7.0; `safety-surfaces.test.tsx` goes 25 → 26 tests). Per-package duration: contracts 55.84 s · protocol 471 ms · sdk 1.35 s · ui 13.11 s · indexer 459 ms · web 3.79 s. **Second, case-by-case run:** `npx vitest run test/safety-surfaces.test.tsx --reporter=verbose -t "UT-0889"` in `apps/web` — **6 passed, 20 skipped (26)**, every `it` name green individually. **This run re-observes TC-3570..TC-3574 after the Doc 06 v2.7.0 narrowing of the Arabic assertion — which is why TC-3573 can be re-cut without a status change — and earns TC-3576 its Pass (obs.)** **Executed by the tester.** **Qualification, unchanged from R-18 and not softened by repetition:** still an **uncommitted working tree** (76 dirty paths per `git status --porcelain`, product code among them) because reviewer-qa has not signed the merge. The post-merge re-run stays owed; two runs against the same unmerged tree are one piece of evidence, not two | none |
 | — | 2026-08-09 | same | `packages/contracts` (L1/L2/L3) | **not executed this session** (~5 min); result inherited from Doc 06 §3/§5 | — |
 | — | 2026-08-09 | same | `apps/web` (non-party-creation suite) | **not executed this session** | — |
 | — | — | — | `packages/circuits` (L4) | **no suite — circuits not compiled** | Blocked by Phase-2 ceremonies |
@@ -916,25 +1462,25 @@ defect waiting to come back.**
 
 | Measure | Value |
 |---|---|
-| Cases designed | **465** (row-anchor count; see §2 convention note for the 472 expanded total) |
-| Cases with an implementing automated test | **233** (50%) — TS-CR1 and TS-GOV2 add zero automated tests; TS-SCAFFOLD adds 16 (R-04/R-05; TC-3488 added v2.2.1); TS-PARTY adds 28 (R-06/R-07/R-08; inherited from Doc 06 v2.2.0 Approved); TS-MEMBERSHIP adds 24 (R-09..R-12; inherited from Doc 06 v2.3.2 Approved, files observed green in R-12) |
-| Cases executed and observed passing this session | **88** (72 from 2026-08-09 + 16 from TS-SCAFFOLD on 2026-08-25; TC-3488 maps UT-0753 already in the 14/14 run). TS-PARTY and TS-MEMBERSHIP are **not** counted here — see the §2 corroboration note: their files were observed green in R-12 (2026-08-29, 542/542) but their status is held at Pass (inh.) against the Doc 06 pin. |
-| Cases inherited green from Doc 06 (contract suite, party-creation, membership and proposals suites) | **129** (55 from Doc 06 contract suite + 28 from TS-PARTY Doc 06 v2.2.0 Approved + 24 from TS-MEMBERSHIP Doc 06 v2.3.2 Approved + **22 from TS-PROPOSALS Doc 06 v2.4.1/v2.4.2**) |
-| Cases automated but not executed this session (`apps/web` non-party-creation suite) | **16** |
-| Cases **Blocked** (code, circuit, environment or instrument absent) | **175** (140 pre-TS-GOV2 + 32 from TS-GOV2 + 3 from TS-SCAFFOLD: TC-3476 enrolment disclosure affordance, TC-3481 FR-131 clause (d) notice — **now partially delivered at the parties-directory surface (TC-3534) but still Blocked for the SCR-13/SCR-14 ballot surfaces**, TC-3487 audit-contract publication). TS-MEMBERSHIP adds **0** Blocked cases. |
+| Cases designed | **478** (row-anchor count; see §2 convention note and Doc 08 §10 `TD-RTM-02` for the **485** expanded total. +6 at v2.5.0: TC-3564..TC-3569; **+6 at v2.7.0: TC-3570..TC-3575**; **+1 at v2.8.0: TC-3576**) |
+| Cases with an implementing automated test | **245** (51%) — TS-CR1 and TS-GOV2 add zero automated tests; TS-SCAFFOLD adds 16 (R-04/R-05; TC-3488 added v2.2.1); TS-PARTY adds 28 (R-06/R-07/R-08; inherited from Doc 06 v2.2.0 Approved); TS-MEMBERSHIP adds 24 (R-09..R-12; inherited from Doc 06 v2.3.2 Approved, files observed green in R-12); the FR-131 honesty drop adds 6 (TC-3564..TC-3569; inherited from Doc 06 v2.5.1, files observed green in R-17); **the FR-131 clause-(e) drop adds 5 of its 6** (TC-3570..TC-3574; Doc 06 v2.6.0, observed **case by case** in R-18 — **TC-3575 adds none**, its instrument being unbuilt); **v2.8.0 adds 1** (TC-3576, the sixth UT-0889 `it`, observed case by case in R-19) |
+| Cases executed and observed passing this session | **94 — 88 + 5 at v2.7.0 + 1 at v2.8.0** (72 from 2026-08-09 + 16 from TS-SCAFFOLD on 2026-08-25 + **5 from the FR-131 clause-(e) drop on 2026-09-06, + TC-3576 on 2026-09-07**; TC-3488 maps UT-0753 already in the 14/14 run). TS-PARTY and TS-MEMBERSHIP are **not** counted here — see the §2 corroboration note: their files were observed green in R-12 (2026-08-29, 542/542) but their status is held at Pass (inh.) against the Doc 06 pin. **The same rule is applied to run R-17 (2026-09-06, 619/619 green, tester-executed): file granularity, so the six new TC-3564..TC-3569 are Pass (inh.) and this figure does not move.** Promoting it would make Pass (obs.) mean two different things. **v2.7.0 — the figure moves, and it moves for the opposite reason.** TC-3570..TC-3574 are counted here because run **R-18** had a **second half**: after the 624/624 full-suite run the tester re-ran the UT-0889 block with `--reporter=verbose -t "UT-0889"` and read each of its five `it`s reported green **individually**. That is case-by-case observation — the same bar every other case in this bucket met. **TC-3564..TC-3569 are still not promoted**; no such second run was done for UT-0887, UT-0759 or UT-0888, and **R-19 did not change that** — it re-ran the UT-0889 block only. |
+| Cases inherited green from Doc 06 (contract suite, party-creation, membership, proposals and FR-131 honesty suites) | **136** (55 from Doc 06 contract suite + 28 from TS-PARTY Doc 06 v2.2.0 Approved + 24 from TS-MEMBERSHIP Doc 06 v2.3.2 Approved + **22 from TS-PROPOSALS Doc 06 v2.4.1/v2.4.2** + **7 from the FR-131 honesty drop, Doc 06 v2.5.1** — the 6 new TC-3564..TC-3569 plus TC-2614, re-statused Not run → Pass (inh.) on R-17). 55 + 28 + 24 + 22 + 7 = 136. _(v2.7.0: unchanged — the five new clause-(e) cases with evidence are **Pass (obs.)**, not inherited, and TC-3575 has no evidence at all.)_ |
+| Cases automated but not executed case-by-case (`apps/web` non-party-creation suite) | **15** (was 16; TC-2614 re-statused Pass (inh.) at v2.5.0). All 15 were executed **green** at file granularity in R-17 and are held at *Not run* pending a case-by-case pass — **TD-07-03** |
+| Cases **Blocked** (code, circuit, environment or instrument absent) | **176** (140 pre-TS-GOV2 + 32 from TS-GOV2 + 3 from TS-SCAFFOLD: TC-3476 enrolment disclosure affordance, TC-3481 FR-131 clause (d) notice — **now partially delivered at the parties-directory surface (TC-3534) but still Blocked for the SCR-13/SCR-14 ballot surfaces**, TC-3487 audit-contract publication). TS-MEMBERSHIP adds **0** Blocked cases. **+1 at v2.7.0: TC-3575** — the FR-131 clause (e) **Scenario 9** population sweep. It is Blocked on an **absent instrument**, not on absent product: Doc 04 §0.5 S5 (the build-failing FR-131 claims denylist over `apps/web` and `packages/ui`, in every language) is specified and unbuilt, so the criterion cannot execute. It is **not** classed *No mechanism* — the product has abundant surface to test; the test is what is missing. |
 | Cases **No mechanism** (the product has nothing to test) | **49** (10 pre-TS-GOV2 + 38 from TS-GOV2: FR-074..FR-111 have no DES, Doc 03 §16 deliberate phasing; **+1 at v2.3.2: TC-3541**, the FR-077 adversarial amendment case — designed in Doc 03 §10.13.10.1, unbuilt, and the `PREREQ-01` closing evidence) |
 | Cases **Manual — not run** | **12** |
 | Observed test failures | **0** |
-| Open defects raised by this document | **2** (TD-07-01 Medium, TD-07-02 Low — both documentation) |
+| Open defects raised by this document | **3** (TD-07-01 Medium, TD-07-02 Low, TD-07-03 Low — all documentation / evidence-labelling; none is a product defect) |
 
-**Counting convention — four-case automated-and-Blocked overlap (v2.1.0 fix; cycle-2 ISS-01 Low).** Four cases appear in both the 187-case 'implementing automated test' count and the 175-case 'Blocked' count: an implementing test harness exists for these cases but the required contracts or environment are not deployed in this drop, so they cannot execute. These 4 overlap cases are not individually identifiable by inspection of the suite-table summary (automated-test attribution and Blocked-status are not cross-referenced at case level in this document). Convention: **Distinct total = 187 (automated) + 171 (Blocked-only, i.e. 175 minus the 4 also in automated) + 48 (No mechanism) + 12 (Manual) = 418.** Equivalently: 187 + 175 + 48 + 12 − 4 = 418.
+**Counting convention — four-case automated-and-Blocked overlap (v2.1.0 fix; cycle-2 ISS-01 Low).** Four cases appear in both the 199-case 'implementing automated test' count (187 before v2.5.0, 193 before v2.7.0) and the 175-case 'Blocked' count: an implementing test harness exists for these cases but the required contracts or environment are not deployed in this drop, so they cannot execute. These 4 overlap cases are not individually identifiable by inspection of the suite-table summary (automated-test attribution and Blocked-status are not cross-referenced at case level in this document). Convention: **Distinct total = 199 (automated) + 172 (Blocked-only, i.e. 176 minus the 4 also in automated) + 48 (No mechanism) + 12 (Manual) = 431.** Equivalently: 199 + 176 + 48 + 12 − 4 = 431. _(v2.5.0: the +6 from TC-3564..TC-3569 is applied to the automated term (187 → 193, total 418 → 424) so the paragraph stays internally consistent, and **the pre-existing staleness is named rather than inherited silently**: this paragraph’s base figures (187 automated, 48 No mechanism) are v2.1.0-era and already disagree with §2’s 239 and §10’s 49. It is a *third* convention alongside Doc 07 §2’s 471 and Doc 08 §6’s 478. Reconciling all three to one stated definition is the tester’s own owed work, tracked as **`TD-RTM-02`** in Doc 08 §10; it is not attempted in this version because it is a document-wide recount, not a side-effect of an FR-131 drop.)_ _(v2.7.0: the same treatment applied again — the +5 automated from TC-3570..TC-3574 moves that term 193 → **198**, and TC-3575 moves the Blocked term 175 → **176**, so the total goes 424 → **430**. The base is still the v2.1.0-era one, it still disagrees with §2's **244** and §10's **49**, and `TD-RTM-02` is still the entry that is owed the recount. Advancing the addends keeps this paragraph consistent **with itself**; it does not make it agree with the two tables above it, and it is not offered as if it did.)_ _(v2.8.0: +1 automated from TC-3576 → **199**, total → **431**. Same base, same disagreement, same owed recount under `TD-RTM-02`.)_
 
-**Forty-eight cases are "No mechanism". Each one is a requirement defect, not a testing defect**, and each
+**Forty-nine cases are "No mechanism". Each one is a requirement defect, not a testing defect**, and each
 is carried into the RTM gap log (Doc 08 §7). The original 10 (pre-TS-GOV2): TC-0010/TC-1041 (`FR-010` name-collision), TC-0037/
 TC-1043 (`FR-008` residency cooldown), TC-1042 (`FR-018` dwell period), TC-1044 (`FR-023` churn
 limit), TC-0039/TC-2721 (`FR-056` filtering register), TC-2601 (`FR-001` cross-type residual),
 TC-2642 (`FR-004` per-region attestor cap, OPEN-02), TC-2715 (`FR-009` source independence,
-OPEN-12), TC-2426 (`NFR-020` open-ballot flag freeze, OPEN-03). The 38 new TS-GOV2 cases (TC-3400..TC-3437) cover FR-074..FR-111 — no DES has been assigned to any of these requirements (Doc 03 §16 deliberate next-increment phasing); there is nothing to test until the design is produced.
+OPEN-12), TC-2426 (`NFR-020` open-ballot flag freeze, OPEN-03). The 38 new TS-GOV2 cases (TC-3400..TC-3437) cover FR-074..FR-111 — no DES has been assigned to any of these requirements (Doc 03 §16 deliberate next-increment phasing); there is nothing to test until the design is produced. **The forty-ninth is TC-3541** — the `FR-077` adversarial amendment case, minted at v2.3.2 and already named in the §10 table's own No-mechanism cell: 10 + 38 + 1 = **49**. _(v2.7.0, **ISS-C2-02 DISCHARGED**: this paragraph had opened "Forty-eight" against a §10 table reading 49 ever since TC-3541 was minted, and enumerated only the 10 + 38. Prose and table now agree, and the missing case is **named** rather than absorbed into a corrected total. Note for the reader arriving from TC-3575: that case is **Blocked**, not No mechanism, and does not belong to this 49 — the distinction is instrument-absent versus product-absent, and §10 keeps them in different buckets.)_
 
 **What a green run of the executable subset does establish** (Doc 04 §5.5): the governance
 arithmetic is right, the reference implementation and the chain agree, the named capabilities are
@@ -1223,9 +1769,9 @@ Each row status: **Blocked — Phase 3** — DES assigned in Doc 03 §5.2 (see c
 
 ---
 
-## 5.3 `TS-SCAFFOLD` — scaffold seam & design-system seed (TC-3470–TC-3487)
+## 5.3 `TS-SCAFFOLD` — scaffold seam & design-system seed (TC-3470–TC-3488, TC-3568)
 
-**Context.** This suite covers the three user stories minted in Doc 05 v2.2.0 that complete the v1 scaffold seam and design-system seed (DES-093 token set, DES-094 PrivacyStatus, DES-095 IEligibilityVerifier, DES-096 IBallotService, DES-100 allowlist-only shape; ADR-023/024/025). **15 of 18 cases are automated and observed passing** — `npm test -w @trumocracy/ui` (14/14, packages/ui, UT-0750..UT-0758) and `npm test -w @trumocracy/sdk` (160/160 including 36 seam tests, UT-0760..UT-0779) both green 2026-08-25. 3 cases are Blocked: screen wiring is pending for the enrolment disclosure affordance (TC-3476), the FR-131 clause (d) notice surface (TC-3481), and the audit-contract publication endpoint (TC-3487). The seam contracts are IS_INSECURE_MOCK=true in this drop (ADR-024 §3); the seam interface and its guard behaviour are real; the ZK-backed production implementation is Phase 3.
+**Context.** This suite covers the three user stories minted in Doc 05 v2.2.0 that complete the v1 scaffold seam and design-system seed (DES-093 token set, DES-094 PrivacyStatus, DES-095 IEligibilityVerifier, DES-096 IBallotService, DES-100 allowlist-only shape; ADR-023/024/025). **17 of 20 cases are automated and green** _(v2.5.0: this read "15 of 18", a pre-TC-3488 figure left standing after TC-3488 was minted at v2.2.1 and now stale again after TC-3568; §2 has said 16 of 19 since v2.2.1 and 17 of 20 since v2.5.0)_ — `npm test -w @trumocracy/ui` (14/14, packages/ui, UT-0750..UT-0758) and `npm test -w @trumocracy/sdk` (160/160 including 36 seam tests, UT-0760..UT-0779) both green 2026-08-25. The suite now also carries **TC-3568** (UT-0759, the backing-aware `ver` **title** four-path, Doc 06 v2.5.1), green in run R-17. 3 cases are Blocked: screen wiring is pending for the enrolment disclosure affordance (TC-3476), the FR-131 clause (d) notice surface (TC-3481), and the audit-contract publication endpoint (TC-3487). The seam contracts are IS_INSECURE_MOCK=true in this drop (ADR-024 §3); the seam interface and its guard behaviour are real; the ZK-backed production implementation is Phase 3.
 
 **Shared preconditions.** `design_system` flag ON (DES-093/DES-094 token set deployed to packages/ui); `sdk_seams` flag ON (DES-095/DES-096 stubs deployed to packages/sdk); IS_INSECURE_MOCK=true (stub-backed; ADR-024 §3).
 
@@ -1238,7 +1784,7 @@ Each row status: **Blocked — Phase 3** — DES assigned in Doc 03 §5.2 (see c
 | TC | Title | Verifies (US · FR · DES) | Preconditions | Expected result | Automation | Status |
 |---|---|---|---|---|---|---|
 | TC-3470 | Supporter-tier: component renders anonymous copy; no attributable record surface | US-0132 · FR-082 · DES-093/DES-094 | `tier = 'SUPPORTER'`; no profile prop | Component renders the Supporter-tier anonymous copy (no name, no participation record surface); no attribution signal in DOM | Automated — `packages/ui/test/PrivacyStatus.test.tsx` · UT-0750 | **Pass (obs.)** — npm test -w @trumocracy/ui 14/14, 2026-08-25 |
-| TC-3471 | Worker-tier: component renders public-from-consent copy | US-0132 · FR-083 · DES-093/DES-094 | `tier = 'WORKER'` | Component renders Worker-tier copy indicating participation record is public from consent event; ballot direction copy absent | Automated — `packages/ui/test/PrivacyStatus.test.tsx` · UT-0751 | **Pass (obs.)** |
+| TC-3471 | Worker-tier: component renders public-from-consent copy | US-0132 · FR-083 · DES-093/DES-094 | `tier = 'WORKER'` | Component renders Worker-tier copy indicating participation record is public from consent event; ballot direction copy absent | Automated — `packages/ui/test/PrivacyStatus.test.tsx` · UT-0751 | **Pass (obs.)** — re-confirmed green in R-17 (`packages/ui` 18/18, 2026-09-06). _(v2.5.0 note: **UT-0751’s expectation changed** at Doc 06 v2.5.1 — the `ver`-state default title it asserts moved from "Verified — private" to **"Verified"** so the v1 default carries no FR-131 banned word. This row’s expected result is written at the level of *which copy block renders*, not the exact title string, so it stands unaltered; the title assertion itself is now covered explicitly by **TC-3568**. Recorded rather than left silent, because a reader who follows TC-3471 to UT-0751 will find an assertion this cell does not quote.)_ |
 | TC-3472 | Candidate-tier: component renders permanent-disclosure copy | US-0132 · FR-084 · DES-093/DES-094 | `tier = 'CANDIDATE'` | Component renders Candidate-tier copy indicating full permanent disclosure schedule; disclosure schedule surface present | Automated — `packages/ui/test/PrivacyStatus.test.tsx` · UT-0752 | **Pass (obs.)** |
 | TC-3473 | Self-view refusal: component returns null for null holder token, wrong-holder token, and empty token | US-0132 · FR-124 · DES-094 | (a) `viewerToken = null`; (b) `viewerToken ≠ holderToken`; (c) `viewerToken = ''` | Component returns null for all three cases; no verified-status leaks to the viewing user's own surface | Automated — `packages/ui/test/PrivacyStatus.test.tsx` · UT-0754, UT-0755, UT-0756 | **Pass (obs.)** |
 | TC-3474 | DOM absence: only approved tier strings present; zero surveillance metadata in any DOM node | US-0132 · FR-082, FR-083, FR-084, FR-085, FR-086, FR-124 · DES-093/DES-094 | Rendered DOM of PrivacyStatus at each tier | DOM contains only the approved tier copy strings; zero tracking attributes, user-identifiable tokens, or surveillance metadata in any DOM node | Automated — `packages/ui/test/PrivacyStatus.test.tsx` · UT-0757 | **Pass (obs.)** |
@@ -1276,13 +1822,16 @@ Each row status: **Blocked — Phase 3** — DES assigned in Doc 03 §5.2 (see c
 
 ---
 
-### TC-3488 — US-0132 PrivacyStatus accessible name (NFR-011 · DES-094)
+### TC-3488, TC-3568 — US-0132 / US-0134 PrivacyStatus accessible name and backing-aware `ver` title (NFR-011 · FR-131 · FR-124 · DES-094)
 
 **Context (v2.2.1 rework — 07-test-cases-suites-v2.2.0-technical-cycle1.md ISS-01).** UT-0753 (`it('UT-0753 the component carries an accessible name matching the state title', ...)` in `packages/ui/test/PrivacyStatus.test.tsx`) existed in the repository and executed in the 14-test UI suite at v2.2.0 but was not mapped to any TC, making it a material orphan. This row closes that gap. Type: a11y.
 
+**Context (v2.5.0 — FR-131 honesty drop, Doc 06 v2.5.1).** `UT-0759` was added to the same file at commit `0a5c542`, giving the `ver`-state **title** the four-path backing-aware treatment `UT-0758`/TC-3475 already gave the **subtitle**. The v1 default title moved from "Verified — private" to "Verified", because FR-131’s closing sentence bans "private" as a description of v1 voting and the v1 backing is conventional. `UT-0753`’s assertion changed with it (it now expects `aria-label` "Verified"), which is why TC-3488’s status carries an R-17 re-confirmation below. **TC-3568 is one TC for the whole four-path block**, following the TC-3475/UT-0758 precedent rather than minting four rows for four `it`s.
+
 | TC | Title | Verifies (US · FR · DES) | Preconditions | Expected result | Automation | Status |
 |---|---|---|---|---|---|---|
-| TC-3488 | Accessible name: component root carries an accessible name matching the displayed tier state title | US-0132 · NFR-011 · DES-094 | `PrivacyStatus` rendered at each tier (Supporter, Worker, Candidate, and refused/null states); accessibility tree inspected | Component root element carries an accessible name that matches the displayed tier state title; assistive technology can identify the component's current tier state without visual inspection | Automated — `packages/ui/test/PrivacyStatus.test.tsx` · UT-0753 | **Pass (obs.)** — npm test -w @trumocracy/ui 14/14, 2026-08-25 (UT-0753 was already in the 14/14 run at v2.2.0; TC mapping added v2.2.1) |
+| TC-3488 | Accessible name: component root carries an accessible name matching the displayed tier state title | US-0132 · NFR-011 · DES-094 | `PrivacyStatus` rendered at each tier (Supporter, Worker, Candidate, and refused/null states); accessibility tree inspected | Component root element carries an accessible name that matches the displayed tier state title; assistive technology can identify the component's current tier state without visual inspection | Automated — `packages/ui/test/PrivacyStatus.test.tsx` · UT-0753 | **Pass (obs.)** — npm test -w @trumocracy/ui 14/14, 2026-08-25 (UT-0753 was already in the 14/14 run at v2.2.0; TC mapping added v2.2.1); **re-confirmed green in R-17** (`packages/ui` 18/18, 2026-09-06) after UT-0753’s expected `aria-label` changed from "Verified — private" to "Verified" at Doc 06 v2.5.1. The case is unchanged — the accessible name still matches the displayed state title; what the title *is* changed |
+| TC-3568 | Backing-aware `ver` **title**: four-path coverage (absent / `false` / `true` / malformed `backingProperties.unlinkable`), with no FR-131 banned word on the v1 default | US-0134 · FR-131 closing sentence, FR-124 · **DES-094 clause 9** (the title rule, minted Doc 03 v2.12.0 and carried into **v2.13.0** — **In Review**; clause 7 governs the subtitle) | `state = "ver"`, valid self-view; (a) no `backingProperties`; (b) `{ unlinkable: false }`; (c) `{ unlinkable: true }`; (d) `{ onePersonOneVote: false }` — a partial prop with no `unlinkable` field | **Stated path by path, because this cell previously claimed more than the test asserts (v2.6.0, ISS-01).** **(a)** absent `backingProperties` — the full four-assertion path: title **"Verified"** present, "Verified — private" absent, the `status` element’s `aria-label` exactly **"Verified"**, and the rendered `textContent` matching **no** FR-131 banned word (the test’s case-insensitive `BANNED` regex covers "private", "anonymous", "receipt-free" and "secure"). **(b)** `{ unlinkable: false }` and **(d)** `{ onePersonOneVote: false }` (a partial prop with no `unlinkable` field) — **title selection only**: "Verified" present and "Verified — private" absent, the fail-honest v1 default with malformed treated as absent. **Neither (b) nor (d) asserts the `aria-label`, and neither asserts the banned-word regex.** **(c)** `{ unlinkable: true }` — **alone** renders **"Verified — private"** with a matching `aria-label`, the one case in which the word is true of the ballot; it makes no banned-word assertion, correctly, since "private" is present and true there. **Scope limit:** the accessible-name and banned-word guarantees are evidence on path (a) only; extending them to (b) and (d) is owed UT scope for the engineer (Samuel Oyelaran) if the wider guarantee is wanted, and is not recorded here as covered | Automated — `packages/ui/test/PrivacyStatus.test.tsx` · UT-0759 | **Pass (inh.)** — Doc 06 v2.5.1; `packages/ui` **18/18** green in run R-17 (2026-09-06). **The Doc 06 §4a recorded deviation is discharged CONDITIONALLY — on Doc 03 reaching Approved** _(v2.6.0, ISS-03: v2.5.0 wrote "DISCHARGED, 2026-09-06" unqualified, on a source that is In Review)_. It read: the Doc 03 §10.12.3 sub-table listed "Verified — private" for the **v1** row, FR-131 was normative over that copy table (Doc 09 v1.3.0 ISS-03; approver, 2026-09-05), and the SDD cascade was owed — so UT-0759 was standing in as the only record of the intended copy. Doc 03 **v2.12.0** landed that cascade the same day: the v1 row now reads "Verified", the v2.7.0 banned-words analysis is **overruled**, and §10.12.3 gained **clause 9** stating the title rule normatively. This case therefore verifies **the current corrected text** of DES-094 clause 9 rather than substituting for a design element — but **not an approved one**: Doc 03 reads `Status: In Review`, v2.12.0 FAILED cycle 1 of its neutral technical review (89%, 0C/1H/2M/2L) and **v2.13.0** (2026-09-06) is the rework, itself under cycle-2 review, so clause 9 may still move. Until Doc 03 is Approved, UT-0759 and this case remain the operative record of the intended copy. **v2.8.0 — THE CONDITION IS SATISFIED; the discharge is now UNCONDITIONAL** _(ISS-04 rider; the conditional wording above is retained, not deleted, because it records why the caveat existed)_. **Doc 03 v2.13.0 is Approved** (03-architecture-design-sdd-v2.13.0-technical-cycle2.md, PASS 97%), so DES-094 **clause 9** is settled text and can no longer move under this case. TC-3568 therefore verifies an **approved** design element, the Doc 06 §4a recorded deviation is **DISCHARGED** without qualification, and UT-0759 is no longer standing in as the operative record of the intended copy — the SDD is. **Nothing about what the case asserts changes**, and its status does not move: this is the caveat expiring on its own stated terms, which is what a well-formed conditional discharge is supposed to do |
 
 ---
 
@@ -1407,7 +1956,7 @@ _Note: FR-130 has no DES assigned in Doc 03 §5.2 (G-TRACE); the Must row stays 
 |---|---|---|---|---|---|---|
 | TC-3517 | Any account joins an active party on request; membership is immediate and the API exposes no gatekeeping parameter | US-0024 · FR-020 · DES-013 · ADR-007 | Activated party; injected clock at `T0`; `IS_INSECURE_MOCK=true` | `joinParty(partyId, 'member-1')` returns `{ memberCount: 1, joinedAt: T0 }`; `activeMembership('member-1')` equals `{ partyId, joinedAt: T0 }`; **`joinParty.length === 2`** — the method arity *is* the contract, so no approval, sponsorship, fee or veto parameter can exist | Automated — `packages/sdk/test/membership.test.js` · UT-0819 | **Pass (inh.)** — inherited from Doc 06 v2.3.2 Approved |
 | TC-3518 | Join and leave never reach the eligibility seam — and the service structurally cannot reach one | US-0024 · FR-020 · DES-095 · ADR-025 | Activated party; a verifier constructed **in scope** with `vi.spyOn(verifier, 'verifyEligibility')`; the verifier is *not* passed to the service | After `joinParty` then `leaveParty`, the spy has **zero** calls; additionally `service.verifyEligibility`, `service._verifier` and `service._store.verifyEligibility` are all `undefined` — the guarantee is structural (the service never holds a verifier), not merely behavioural | Automated — `packages/sdk/test/membership.test.js` · UT-0820 | **Pass (inh.)** — inherited from Doc 06 v2.3.2 Approved |
-| TC-3519 | Web: one click joins; no approval, request, application or invitation control exists anywhere on the surface | US-0024 · FR-020 · DES-013 · SCR-10, SCR-11 | Parties directory rendered, `party_governance` flag on; demo visitor open-tier | Clicking the single join control produces immediate membership (`membership-joined` and the party's member badge render; `activeMembership(visitor)` is the joined party). Capability-absence sweep: **every** button on the surface is asserted not to match `/approve|request|apply|invite/i` | Automated — `apps/web/test/join-membership.test.tsx` · UT-0858 | **Pass (inh.)** — inherited from Doc 06 v2.3.2 Approved |
+| TC-3519 | Web: one click joins; no approval, request, application or invitation control exists anywhere on the surface | US-0024 · FR-020 · DES-013 · SCR-10, SCR-11 | Parties directory rendered, `party_governance` flag on; demo visitor open-tier | Clicking the single join control produces immediate membership (`membership-joined` and the party's member badge render; `activeMembership(visitor)` is the joined party). Capability-absence sweep: **every** button on the surface is asserted not to match `/approve\|request\|apply\|invite/i` | Automated — `apps/web/test/join-membership.test.tsx` · UT-0858 | **Pass (inh.)** — inherited from Doc 06 v2.3.2 Approved |
 | TC-3520 | Web seam spy across the whole flow: zero verifier calls on join/leave/rejoin; exactly one on the counting action, with the counting scope | US-0024 · US-0133 · FR-020, FR-123 · DES-095 · ADR-025 | Parties directory with a spied demo verifier; visitor open-tier | After join → leave → rejoin the spy has **zero** calls. After the counting action the spy has **exactly one** call, with `(visitor, 'IN/KA', 'STRENGTH_CONTRIBUTION')`. Joining is free; only counting touches the seam | Automated — `apps/web/test/join-membership.test.tsx` · UT-0866 | **Pass (inh.)** — inherited from Doc 06 v2.3.2 Approved |
 
 ### TC-3521..TC-3522 — FR-022 leave at will (DES-013 · US-0025)
@@ -1499,7 +2048,7 @@ _Note: both cases are **guards**, not feature tests. Each was minted from a defe
 | TC | Title | Verifies (US · FR · DES) | Preconditions | Expected result | Automation | Status |
 |---|---|---|---|---|---|---|
 | TC-3542 | Exactly three participation tiers exist; a joiner is a Supporter by default; **no tier confers weight under any configuration** | US-0089 · FR-079, FR-021 · DES-103 | A member joins a party without declaring anything; tier constants inspected | Exactly **three** tiers are named and no privileged fourth can be named (UT-0088). A joiner is a **Supporter** without declaring anything. `votingWeightForTier()` returns **1 for every tier** — no multiplier exists, so tier cannot confer weight, standing or precedence (FR-021 unchanged). An **unknown** tier is refused rather than silently weighted — the failure is loud, not a default-to-zero | Automated — `packages/protocol/test/proposals.test.js` · UT-0087, UT-0088 | **Pass (inh.)** — inherited from Doc 06 v2.4.1 |
-| TC-3543 | Authoring requires Worker tier or above, and the rule is a **pure function of tier** — it takes no approver, reviewer or reason | US-0031, US-0100 · FR-024, FR-090 · DES-104 | Draft authored at each tier | Worker and Candidate may author; a **Supporter may not**, and the stated reason is *anonymity*, not merit — authorship is public (FR-090) and Supporters participate without a public name. The rule's signature accepts **no approver, no reviewer and no reason**, so there is nothing for a gatekeeper to hold (UT-0089). At the service layer a Worker's authorship is **recorded publicly**, and the Supporter refusal says the tier is **self-declarable** — a disclosure step, never an approval step (UT-0832) | Automated — `packages/protocol/test/proposals.test.js` · UT-0089; `packages/sdk/test/proposals.test.js` · UT-0832 | **Pass (inh.)** — inherited from Doc 06 v2.4.1 |
+| TC-3543 | Authoring requires Worker tier or above, and the rule is a **pure function of tier** — it takes no approver, reviewer or reason | US-0031, US-0100 · FR-024, FR-090 · DES-104 | Draft authored at each tier | Worker and Candidate may author; a **Supporter may not**, and the stated reason is *non-publication*, not merit — authorship is public (FR-090) and a Supporter's participation is never published. The rule's signature accepts **no approver, no reviewer and no reason**, so there is nothing for a gatekeeper to hold (UT-0089). At the service layer a Worker's authorship is **recorded publicly**, and the Supporter refusal says the tier is **self-declarable** — a disclosure step, never an approval step (UT-0832) | Automated — `packages/protocol/test/proposals.test.js` · UT-0089; `packages/sdk/test/proposals.test.js` · UT-0832 | **Pass (inh.)** — inherited from Doc 06 v2.4.1. **v2.7.0 correction — the cell described copy the product no longer ships.** It read that the stated reason is *anonymity*, paraphrasing the pre-v2.6.0 refusal message "…because authorship is public and Supporters are anonymous". Doc 06 v2.6.0 rewrote that message under **FR-131 clause (e)**: FR-082 is a Definition-B property (Doc 02 §16.3, DEFERRED-v2) and a Supporter's membership **is** knowable to the v1 operator, so claiming anonymity was an overclaim of the `joinPrivate` class (DECISIONS-2026-09-06-ENDORSEMENT-COPY.md §5.3, approver-confirmed §11). The shipped message now reads "…authorship is public and a Supporter's participation is never published", which is true in v1. **The status does not change and the case was never failing:** UT-0089 asserts `canAuthorProposal(SUPPORTER) === false` and UT-0832 asserts the error `code` plus the substring "self-declared" — neither asserts the clause that changed. **The new message text is guarded by TC-3574/UT-0889**, so this row keeps describing the *rule* and TC-3574 keeps the *copy*. _(Note for the reader who follows this row to the file: `packages/protocol/test/proposals.test.js` still carries "…because authorship is public and Supporters are anonymous" as an `it()` **title**. It asserts nothing about any message and does not fail; it is a describe-text nit, raised here for the engineer rather than corrected by the tester, who does not edit product or unit-test code.)_ |
 | TC-3544 | Web: the Worker gate reads as a **disclosure**, never a judgement; a Supporter is not offered the form; declaring opens it with no approval control anywhere | US-0090, US-0031 · FR-024, FR-080 · DES-103 · SCR-12 | Proposals surface rendered for a Supporter | The gate states that authorship is public / done in the open, that **"Nobody approves it"**, and — as its own assertion — that this is **"not about whether your idea is good… only about whether your name is public"**. A Supporter is **not offered the filing form at all** (UT-0873). On declaring Worker the form opens and **no button anywhere** matches `/approve\|request\|permission\|await\|pending review/` (UT-0872). _**Scope (updated v2.4.1):** this case covers the no-approval and not-a-judgement halves of FR-080 at **step 1** of the declaration. FR-080's **informed-consent clause** — the disclosure that must be stated *before confirmation* — is covered by **TC-3562**, and the right to decline by **TC-3563**. The v2.4.0 note recorded that clause as unimplemented; it was **built, not recorded** (Doc 06 v2.4.2 / Doc 03 v2.9.2 DES-103), and FR-080's Must row **closes** at Doc 08 v2.5.1._ | Automated — `apps/web/test/proposals.test.tsx` · UT-0872, UT-0873 | **Pass (inh.)** — inherited from Doc 06 v2.4.1 |
 | TC-3545 | Authoring **never** calls the eligibility seam — it is not a counting action | US-0100 · FR-020, FR-090, FR-123 · DES-104 · ADR-025 | A spied verifier in scope; a Worker files a proposal | The verifier is **not called**, and the authoring entry point **takes no verifier parameter** — the guarantee is structural, not merely behavioural. This is the FR-conformant reading of the OI-14 gate: authoring is gated on self-declared tier, not on ID verification. _(**RULED 2026-08-30** — Rathish, Human Approver; artifacts/status/DECISIONS-2026-08-30-PROPOSING-AND-STAGE-TAXONOMY.md §1; Doc 03 v2.10.0 §10.13.13(b). This case previously carried: "Doc 03 §10.13.13 open question (b) — whether PROPOSING should instead be an FR-123 counting action — is flagged for an approver ruling; if it is ruled a counting action this case and FR-090's row must be revisited." **The approver ruled that PROPOSING is NOT a counting action** — gating authorship on verification status would be a participation restriction FR-020 prohibits — **so the condition never triggers: this case and FR-090's row stand unchanged and need no revisit.** The FR-conformant reading this case asserts is confirmed correct.)_ | Automated — `packages/sdk/test/proposals.test.js` · UT-0834 | **Pass (inh.)** — inherited from Doc 06 v2.4.1 |
 | TC-3546 | A non-member cannot author, **whatever tier they claim** | US-0100 · FR-090 · DES-104 | A non-member submits a draft declaring Worker, then Candidate | Refused in both cases — a self-declared tier is not a membership claim, so tier self-declaration cannot be used to bypass membership | Automated — `packages/sdk/test/proposals.test.js` · UT-0833 | **Pass (inh.)** — inherited from Doc 06 v2.4.1 |

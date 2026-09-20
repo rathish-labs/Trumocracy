@@ -14,9 +14,9 @@
  *     "asked the question" tag is provenance, never precedence — no control on this surface
  *     lets one author touch another's proposal, because the service exposes none.
  *  2. **The Worker-tier gate is a disclosure step, not an approval step (FR-024/FR-080).**
- *     When a Supporter cannot author, the copy says why (authorship is public, Supporters
- *     are anonymous) and that they may declare Worker themselves. It must never read as a
- *     judgement on the idea.
+ *     When a Supporter cannot author, the copy says why (authorship is public, and a
+ *     Supporter's participation is never published) and that they may declare Worker
+ *     themselves. It must never read as a judgement on the idea.
  *  3. **Deliberation is open to open-tier members (FR-122).** Only the ballot is gated, and
  *     a refusal there says plainly what the member keeps.
  *

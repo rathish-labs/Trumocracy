@@ -23,7 +23,7 @@
 #   --change   (required) the concrete, reviewable change proposed to the role definition
 #   --project  source product name        (default: current repo dir name)
 #   --date     ISO-8601 date              (default: today)
-#   --vektor   org repo URL or local path (default: https://github.com/rrathishk/vektor.git)
+#   --vektor   org repo URL or local path (default: $VEKTOR_ORG_REPO; required if unset)
 #   --base     base branch for the PR     (default: main)
 #   --fork     fork the org repo first (for contributors without push access; needs gh)
 #   --dry-run  print the row + plan; make no clone, commit, or PR
@@ -38,7 +38,8 @@ die()  { echo "contribute-learning: error: $*" >&2; exit 1; }
 info() { echo "contribute-learning: $*"; }
 usage() { sed -n '2,/^set -euo/p' "$0" | sed 's/^# \{0,1\}//; s/^#$//' | sed '$d'; }
 
-DEFAULT_VEKTOR="https://github.com/rrathishk/vektor.git"
+# The org repo is not hard-coded: pass --vektor, or export VEKTOR_ORG_REPO.
+DEFAULT_VEKTOR="${VEKTOR_ORG_REPO:-}"
 VALID_ROLES="product-owner project-manager architect engineer tester reviewer-qa technical-writer sre prompt-architect"
 
 ROLE=""; WHAT=""; CHANGE=""; PROJECT=""; DATE=""; VEKTOR=""; BASE="main"; FORK=0; DRYRUN=0
@@ -66,6 +67,7 @@ done
 echo " $VALID_ROLES " | grep -q " $ROLE " || die "--role '$ROLE' is not a VEKTOR role: $VALID_ROLES"
 
 [ -n "$VEKTOR" ]  || VEKTOR="$DEFAULT_VEKTOR"
+[ -n "$VEKTOR" ]  || die "--vektor is required (or export VEKTOR_ORG_REPO): the vektor org repo URL or local path"
 [ -n "$PROJECT" ] || PROJECT="$(basename "$(pwd)")"
 if [ -z "$DATE" ]; then DATE="$(date +%F)"; fi
 

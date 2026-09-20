@@ -2,28 +2,493 @@
 
 ```
 Document ID:   MTP-TRUMOCRACY
-Version:       1.2.0
-Status:        Approved — 04-test-strategy-master-plan-v1.2.0-technical-cycle3.md (PASS 98%,
-               0C/0H/0M/1L; reviewer: engineer, neutral, PM-assigned). Loop trajectory
-               46% → 94% → 98% across cycles 1–3. The surviving Low (ISS-10: §22's architect
-               Approvals row still describes the v1.1.0 submission) is accepted on this
-               version and owed on the next touch.
+Version:       1.6.0
+Status:        Approved — 04-test-strategy-master-plan-v1.6.0-technical-cycle2.md (PASS 96%, 0C/0H/0M/3L; reviewer: reviewer-qa, neutral,
+               PM-assigned; three Lows carried, non-blocking, to fold at the next touch (see the report)). Previously: In Review — v1.6.0, **rework cycle 2 of 5** against
+               artifacts/reviews/04-test-strategy-master-plan-v1.5.0-technical-cycle1.md
+               (**FAIL 92%; 0 Critical / 0 High / 1 Medium / 5 Low**; reviewer: reviewer-qa,
+               Rafael Duarte — neutral, PM-assigned). Minor bump: a Medium finding makes a minor
+               bump the floor. **All six findings fixed on this touch; none carried.**
+               **ISS-01 (Medium) FIXED — the `TC`-range register at §14 is reconciled against the
+               Doc 07 v2.6.0 that v1.5.0 itself re-pinned.** v1.5.0 advanced the Doc 07 pin
+               v2.4.4 → v2.6.0 without re-verifying the body statements that depend on Doc 07's
+               *content*, and §14 went on reserving **TC-3564–TC-3699** for the six unminted
+               `TS-V1-*` suites, annotated "none minted", after Doc 07 had minted
+               **TC-3564..TC-3569** into three other suites. Four rows re-cut against **Doc 07
+               v2.6.0 §2**: `TS-ADV-01…16` gains **TC-3564–TC-3567**, `TS-SCAFFOLD` gains
+               **TC-3568**, `TS-ABSENCE` gains **TC-3569**, and the `TS-V1-*` reservation is
+               narrowed to the band that is genuinely free, **TC-3570–TC-3699**. The three echoes
+               at §0.4, the v1.1.0 changelog entry and Downstream are corrected with them. This
+               register's stated purpose is "so numbering does not collide"; the collision had
+               already happened, and this is its **second** drift into fiction — the first closed
+               at v1.1.0 as a High. **No `TC` is minted by this document**; ids Doc 07 owns are
+               recorded, and a reservation this document owns is narrowed.
+               **ISS-02 (Low) FIXED** — `OPEN-20`'s basis is half-superseded and now says so: the
+               `TS-SCAFFOLD` range disagreement is **resolved** at Doc 07 v2.6.0 (§5.3's heading
+               now reads TC-3470–TC-3488, TC-3568, matching §2); only the **`TS-PROPOSALS`** half
+               survives (§2 TC-3542–TC-3563 vs §5.6's heading TC-3542–TC-3561). **The item is
+               annotated, not closed** — it remains live and gate-blocking on that half.
+               **ISS-03 (Low) FIXED** — **UT-0889 has landed and is green**: the cycle-1 reviewer
+               independently executed `apps/web/test/safety-surfaces.test.tsx` (**25/25 pass**,
+               2026-09-06) and the guard is registered in Doc 06, minted at **v2.6.0** and carried
+               unchanged into **v2.7.0 (In Review)**. All three
+               "owed-and-in-progress, not green" mentions — `Source:`, §0.5 S4's note and
+               Downstream — are re-pinned to "landed and green; registered in Doc 06, now v2.7.0
+               In Review". The
+               discipline is unchanged: this plan still upgrades no test status it has not seen
+               pass, and here it has, on the reviewer's executed evidence.
+               **ISS-04 (Low) FIXED** — the S5 lapse analysis disposed of Doc 03's trigger (iii)
+               only, while its own text engaged the standing condition Doc 03 equates with trigger
+               **(iv)**, so a reader could reach the opposite conclusion from the document's own
+               sentences. Trigger (iv) is now disposed of **by name and on the evidence standard it
+               states**: it fires only where research or an honesty review "**shows**" open-tier
+               members read the badge as a claim about how their vote is handled; the 2026-09-06
+               ruling took no evidence about the badge at all. **Neither (iii) nor (iv) fired**, (i)
+               and (ii) are untouched, and the carve-out stands. Corrected in both places — §0.5 S5's
+               annotation and `OPEN-27`'s body.
+               **ISS-05 (Low) FIXED** — S4's "**one carve-out**" and S5's "**two carve-outs, and
+               only two**" are both correct in their own scope but read as contradictory out of
+               context. S4's sentence now states its scope before its count.
+               **ISS-06 (Low) FIXED** — §1.4's ragged mid-sentence line breaks, introduced by the
+               v1.5.0 OP 9 replacement text, are re-wrapped to the surrounding paragraph's
+               measure. No word changed by the re-wrap itself.
+               **Pins re-cut to HEAD before this version was submitted, deliberately and as part of
+               the same lesson.** **Doc 02 is now v2.17.1 (Approved)** — clause (e) unchanged, and
+               v2.17.1 adds **§8 Scenarios 8 and 9**, the Gherkin the tester's owed clause-(e) `TC`
+               rows trace to. **Doc 06 is now v2.7.0 (In Review)**, last Approved **v2.5.1**;
+               **UT-0889 was registered at v2.6.0 and is unchanged**. Doc 07 v2.6.0 and Doc 08
+               v2.9.0 remain Approved. The cycle-1 Medium was a pin advanced without its dependent
+               statements re-read; submitting this version with pins already stale would have been
+               the same defect wearing the next costume.
+               **Not re-opened, per the review's routing instruction:** the clause-(e) substance is
+               **verified** — §0.5 S4's widened criterion and its (a)–(d) notice range, S5's four
+               rules, the `Source:` and §1.4 pin **reasoning**, `OPEN-27`'s route-don't-rule
+               disposition, §22, §11.2 and Downstream's clause-(e) paragraph all stand as written.
+               `OPEN-01`, §0.6's 4 / 2 / 7 buckets, every test status and `A-02.6` are untouched.
+               _(v1.5.0 record, retained verbatim per annotate-don't-delete:)_
+               In Review — v1.5.0 (2026-09-06). **FR-131 clause (e) was ruled in, so the
+               requirement question §0.5 S4 routed to the product-owner at v1.4.0 is ANSWERED
+               and this plan is re-cut to the amended requirement.** Authority: the approver's
+               recorded decision of **2026-09-06** (Rathish Kumar —
+               artifacts/status/DECISIONS-2026-09-06-ENDORSEMENT-COPY.md §11 item 3: "**APPROVED**
+               — Draft and apply FR-131 clause (e) in Doc 02"), applied as **Doc 02 v2.17.0
+               (In Review)** §4.45. Minor bump: a normative test-criterion scope change.
+               **What changed.** (1) §0.5 **S4** carries a dated v1.5.0 note recording that
+               clause (e) is ruled in; **the notice-clause range stays (a)–(d)** — clause (e) is
+               **not** a fifth notice assertion but a claims duty over every v1 participation
+               act, so no fifth notice clause is asserted and none may be minted; it is verified
+               by **UT-0889 (Doc 06 v2.6.0)** on the landing copy, by **UT-0869** on the party
+               copy, and otherwise by **inspection (I)**. (2) S4's forbidden-word scan and §0.5
+               **S5**'s build-failing denylist are widened from "v1 voting behaviour" to the
+               amended closing sentence's "**or any other v1 participation act**", keeping this
+               plan's own ***secret*** extension and the **clause-(a) negated-form carve-out**
+               intact, and adding the clause-(e) **claims** test (a string can fail with none of
+               the banned words in it — the two worst strings the 2026-09-06 ruling found
+               contained none). (3) S5's named `anon`-badge carve-out is annotated: it does
+               **not** lapse — Doc 03's re-open trigger (iii) is worded for an *unconditional*
+               FR-131 amendment and this one is not — but the disposition it cites was reasoned
+               against a voting-scoped FR-131, and that question is routed to the architect as
+               **OPEN-27**. (4) Header and §1.4 pins re-cut. **No `OPEN-##`, `TS-`, `TC-` or
+               `UT-` ID is renumbered or reused; no suite is added or retired; no test status is
+               upgraded; §0.6's counts and §14's reservations are untouched.**
+               **Owed downstream, cited as owed and not as done:** the clause-(e) `TC` rows are
+               the tester's to cut — **Doc 07 v2.7.0** and **Doc 08 v2.10.0** — under the
+               existing story **US-0134** (FR-131 · DES-098); no `TC` is minted here.
+               **The three v1.4.0 Lows are DISCHARGED, not carried.** **ISS-C2-01** — Doc 07
+               re-pinned to **v2.6.0 (Approved)** in the `Source:` block **and** at §1.4, the two
+               locations the cycle-2 review named. **ISS-C2-02** — §1.3's no-story annotation
+               re-pinned to **Doc 05 v2.5.0 (Approved)**, the third ISS-05 location. **ISS-C2-03**
+               — the Doc 09 line now states the version in force, **Approved v1.9.0**, instead of
+               an in-flight number that was overtaken within the day. Two further stale pins were
+               found on this touch and swept with them rather than left to age: **Doc 03 v2.13.0
+               is Approved** (the block said In Review) and **Doc 06** is re-pinned with the
+               **v2.6.0** cut that registers **UT-0889**. **No Low is carried forward from
+               v1.4.0.**
+               _(v1.4.0 record, retained verbatim per annotate-don't-delete — its three carried
+               Lows are discharged above:)_
+               Approved — 04-test-strategy-master-plan-v1.4.0-technical-cycle2.md (PASS 96%,
+               0C/0H/0M/3L; reviewer: reviewer-qa, neutral, PM-assigned). Three Lows carried —
+               **fix first on any future touch:** ISS-C2-01 (Doc 07 pinned v2.4.4 in Source and
+               §1.4 — Doc 07 is In Review at v2.5.0+), ISS-C2-02 (§1.3 no-story annotation pins
+               Doc 05 v1.0.0/v2.3.0 — Doc 05 is Approved at v2.5.0), ISS-C2-03 (Source block Doc 09
+               line pins v1.5.0 — Doc 09 has moved on). This was **rework cycle 1 (v1.4.0,
+               2026-09-06)** against
+               artifacts/reviews/04-test-strategy-master-plan-v1.3.0-technical-cycle1.md
+               (FAIL 89%; 0C/0H/2M/6L; reviewer: reviewer-qa, neutral, PM-assigned). Minor bump:
+               a Medium finding makes a minor bump the floor.
+               **ISS-01 + ISS-02 (both Medium) CLOSED — one defect with two halves.** §0.5 **S4**
+               required testing FR-131's "required clauses **(a)–(e)**"; FR-131 (Doc 02 §4.45,
+               Approved v2.16.3) enumerates **(a)**, **(b)**, **(c)**, **(d)** — four clauses.
+               There is no (e). v1.3.0 found this, routed the *requirement* question to the
+               product-owner — the correct instinct, since an architect must not invent or delete
+               a requirement clause — and then published in this very block that "**§0.5 S4/S5
+               needed no change — the honesty doctrine was already stated correctly there**".
+               **Routing the question was acceptable; asserting the section was correct while
+               knowing it was not, and leaving it un-annotated, was not.** That is the over-claim
+               class this document family has repeatedly been marked down for, and it sat in a live
+               status field, in the one section the tester reads next when minting the owed FR-131
+               TC rows. **The true position, stated here and annotated at S4:** **S5 is unchanged
+               and correct. S4 is unchanged in substance but carries a known discrepancy** — now
+               annotated in place, routed to **Priya Raghunathan (product-owner)**, with the
+               criterion reading **(a)–(d)** and testing the four clauses FR-131 actually states
+               until she rules. A product-owner **proposal** for a clause (e) exists but is **NOT
+               applied and awaits the approver**; this plan does not assume it and must not be read
+               as pre-committing to it.
+               **All six Lows taken on this touch rather than carried.** **ISS-03** — S4's fifth
+               forbidden word *secret* is now labelled this plan's **own deliberate extension**
+               beyond FR-131's four, so S4's five and §8's "four banned words" are reconciled on the
+               page. **ISS-04** — `A-02.6` now separates what is **enforced today** (the content
+               and word-ban halves: UT-0887/UT-0888/UT-0759) from the **placement** half that is
+               owed pending SCR-13/SCR-14. **ISS-05** — Doc 05 re-pinned to **v2.5.0, Approved**,
+               in the `Source:` block **and** in `OPEN-21`'s body. **ISS-06** — the Doc 09 pin now
+               states the real position rather than a stale number. **ISS-07** — the `Owner:`
+               parenthetical's Doc 03 citation is marked as the historical provenance it is.
+               **ISS-08** — §0.5 **S5** now carries a named `anon`-title carve-out that **cites**
+               Doc 03 v2.13.0 §10.12.3 as the copy authority; **sequenced after** Doc 03 ruled it,
+               never invented here. **No Low is carried forward.**
+               **Not re-opened.** What v1.3.0 got right and cycle 1 verified stands: `A-02.6` and
+               `OPEN-01` are off the retired "votes are anonymous but not receipt-free" framing with
+               their substantive findings intact — `FR-031`, `FR-032` and `NFR-003` remain **Must**
+               guardrails v1 does not deliver, `TS-ADV-02` still cannot pass, `OPEN-01` remains a
+               Definition-B Gate-2 blocker with unchanged owners; `ISS-10` stays discharged.
+               Prior verdicts (superseded, recorded for the trail): **v1.3.0 FAIL 89%**
+               (04-test-strategy-master-plan-v1.3.0-technical-cycle1.md); **v1.2.0 Approved** —
+               04-test-strategy-master-plan-v1.2.0-technical-cycle3.md (PASS 98%, 0C/0H/0M/1L;
+               reviewer: engineer, neutral, PM-assigned; loop trajectory 46% → 94% → 98% across
+               cycles 1–3).
 Owner:         Ravi Deshmukh — Principal Architect
-               (CLAUDE.md assigns Doc 04 to the architect. Doc 03 v2.11.2 (Approved) names
+               (CLAUDE.md assigns Doc 04 to the architect. Doc 03 — cited as v2.11.2 (Approved)
+                when this line was written at v1.1.0, and **now v2.13.0 (In Review)**; the
+                citation is the historical provenance of the owner name, not a version pin, and
+                the `Source:` block below carries the live pin _(v1.4.0, cycle-1 ISS-07)_ — names
                 Ravi Deshmukh as Principal Architect; Doc 02 v2.16.3 (Approved) §2.7 names
                 Priya Raghunathan as Product Owner, accountable for Docs 01/02/05 — not 03/04.
                 v1.0.x named Priya Raghunathan as "Principal Architect" and was wrong on both
                 counts. Corrected at v1.1.0 per review ISS-04; OPEN-09 re-scoped. Per-suite
                 owners below are named individuals drawn from the Doc 02 §2.7 stakeholder table.)
 Approvers:     reviewer-qa · Engineering · SRE · Product Owner
-Source:        SRS-TRUMOCRACY (docs/02-requirements-srs.md **v2.16.3**, Approved 2026-08-30)
-               BKLG-TRUMOCRACY (docs/05-product-backlog.md **v2.3.0**, In Review — OPEN-21)
-               SDD-TRUMOCRACY (docs/03-architecture-design-sdd.md **v2.11.2**, Approved)
-               CODE-TRUMOCRACY (docs/06-coding-and-ut.md **v2.4.3**, Approved)
-               TC-TRUMOCRACY (docs/07-test-cases-suites.md **v2.4.4**, Approved)
+Source:        SRS-TRUMOCRACY (docs/02-requirements-srs.md **v2.17.1, Approved** 2026-09-06 —
+               02-requirements-srs-v2.17.1-business-cycle2.md, PASS 96%; clause (e) entered at
+               **v2.17.0** and is **unchanged** at v2.17.1, which adds **§8 Scenarios 8 and 9**,
+               the Gherkin the owed clause-(e) `TC` rows trace to;
+               last Approved **v2.16.3**, 2026-08-30) — FR-131 §4.45 is the normative wording
+               this plan tests against. **At v2.17.0 it enumerates (a), (b), (c), (d) and (e)**,
+               and its closing sentence bans the four words for "v1 voting behaviour **or any
+               other v1 participation act**". _(v1.5.0 annotation, not a deletion. This line read
+               "and it enumerates clauses (a), (b), (c), (d) — four, not five (see §0.5 S4)".
+               That was true of v2.16.3 and is retained as the record of why v1.4.0 corrected
+               S4's range; it is **superseded on 2026-09-06**. Clause (e) is **not** a fifth
+               clause of the DES-098 notice — the notice range in §0.5 S4 stays (a)–(d) — it is
+               a claims duty over every v1 participation act. See §0.5 S4 and S5.)_
+               _(v1.6.0, Revision 2 — the **pin** is re-cut; the sentence above is not. This pin
+               read "**v2.17.0**, In Review 2026-09-06; last Approved **v2.16.3**, 2026-08-30",
+               true when written and superseded the same day: Doc 02 **v2.17.1 is Approved**
+               (PASS 96%), leaves clause (e)'s normative text **unchanged**, and adds §8
+               Scenarios 8 and 9. **Origin and currency are different statements and are kept
+               apart:** clause (e) **entered** at v2.17.0 — which is why the sentence above still
+               says so, and why it is left exactly as written — while the **current** version of
+               Doc 02 is **v2.17.1**.)_
+               BKLG-TRUMOCRACY (docs/05-product-backlog.md **v2.5.0**, Approved — re-pinned at
+               v1.4.0 from the stale "v2.3.0, In Review" pin, cycle-1 ISS-05; `OPEN-21` remains
+               live and correct on its merits and is re-pinned in its own body too)
+               SDD-TRUMOCRACY (docs/03-architecture-design-sdd.md **v2.13.0**, **Approved** — the
+               matching half of this same FR-131 cascade, reworked in the same cycle; re-pinned
+               from v2.12.0 at v1.4.0, and from v2.11.2 at v1.3.0) _(v1.5.0: the status half of
+               this pin read "In Review"; v2.13.0 passed its cycle-2 technical review at 97% and
+               is Approved. **No Doc 03 statement is falsified by FR-131 clause (e)** — the
+               §10.12.3 `anon`-badge question that clause (e) does raise is routed as
+               **OPEN-27**, not decided here.)_
+               CODE-TRUMOCRACY (docs/06-coding-and-ut.md — **v2.7.0, In Review**; last
+               **Approved v2.5.1**. **v2.6.0**
+               was cut in this same 2026-09-06 session and registered **UT-0889**, the
+               clause-(e) landing-copy guard in `apps/web/test/safety-surfaces.test.tsx`, which
+               is **landed and green** — 25/25 pass, executed independently by the cycle-1
+               reviewer on 2026-09-06 — and **v2.7.0 carries it unchanged** — re-pinned from
+               v2.4.3 at v1.3.0; v2.5.0/v2.5.1 carry the FR-131 code drop and UT-0759/0887/0888)
+               _(v1.6.0, cycle-1 ISS-03: this cell read "**v2.6.0** is being cut in this same
+               2026-09-06 session and registers **UT-0889** … which this plan cites as
+               **owed-and-in-progress, not green**" — accurate when written in the same session and
+               an under-claim once the guard landed. Re-pinned to **v2.7.0 (In Review)** in the
+               same touch: Doc 06's own cycle-1 Medium concerns stale "owed" statements and
+               **nothing about UT-0889**.)_
+               TC-TRUMOCRACY (docs/07-test-cases-suites.md **v2.6.0**, Approved) _(v1.5.0,
+               cycle-2 ISS-C2-01 DISCHARGED — this read "**v2.4.4**, Approved", which was Doc 07's
+               last Approved version when written and is stale rather than false; the clause-(e)
+               `TC` re-cut is owed at **Doc 07 v2.7.0** / **Doc 08 v2.10.0**, from the tester)_
+               REL-TRUMOCRACY (docs/09-release-notes.md — **Approved v1.9.0**, the version in
+               force (business cycle 5, PASS 97%, 2026-09-06). `REL-LIM-18` / `ISS-03` — the
+               defect this cascade closes — was recorded at **v1.3.0**; every v1.3.0 citation
+               elsewhere in this document is that record, not a version pin) _(v1.4.0, cycle-1
+               ISS-06; re-pinned at **v1.5.0**, cycle-2 ISS-C2-03 DISCHARGED — the superseded
+               pin read "last **Approved v1.4.0**; **v1.5.0** is In Review at this date, the
+               `REL-LIM-18` closure pass, whose cycle-1 review FAILed at 93% with rework to
+               v1.6.0 in progress", which was true when written and was overtaken within the
+               same day; that loop has since closed at v1.9.0)_
                ADR-001 … ADR-025 (docs/adr/ — 25 ADRs present, verified 2026-08-31)
-Last updated:  2026-09-01
-Changelog:     2026-09-01 v1.2.0 — **Rework cycle 2 against
+Last updated:  2026-09-06
+Changelog:     2026-09-06 v1.6.0 — **Rework cycle 2 of 5 against
+               `artifacts/reviews/04-test-strategy-master-plan-v1.5.0-technical-cycle1.md`**
+               (FAIL 92%; 0 Critical / 0 High / 1 Medium / 5 Low; reviewer: reviewer-qa,
+               Rafael Duarte — neutral, PM-assigned). Minor bump: a Medium finding makes a minor
+               bump the floor. This entry describes only what changed.
+               **ISS-01 (Medium) CLOSED — §14's `TC`-range reservation register, reconciled
+               against Doc 07 v2.6.0.** The defect and why it is this version's: v1.5.0's headline
+               achievement was discharging three pin-currency Lows by advancing the Doc 07 pin
+               **v2.4.4 → v2.6.0**, and it advanced the pin **without re-verifying the body
+               statements that depend on Doc 07's content**. Doc 07 minted **TC-3564..TC-3569** at
+               its v2.5.0 and assigned them to three suites — **TC-3564–TC-3567** to
+               `TS-ADV-01…16` (mapping `UT-0887`), **TC-3568** to `TS-SCAFFOLD` (mapping
+               `UT-0759`), **TC-3569** to `TS-ABSENCE` (mapping `UT-0888`), per Doc 07 v2.6.0 §2
+               rows and its §4.3 / §5 / §5.3 headings — out of the very band §14 still reserved
+               for the six unminted `TS-V1-*` suites while annotating it "none minted". §14's own
+               opening says the register exists "so numbering does not collide". **Four rows
+               re-cut** against Doc 07 v2.6.0 §2, recording the **actual** allocation exactly as
+               the v1.1.0 remedy did: `TS-ABSENCE` TC-1600–TC-1614 **+ TC-3569**; `TS-ADV-01…16`
+               TC-2600–TC-2752 **+ TC-3564–TC-3567**; `TS-SCAFFOLD` TC-3470–TC-3488 **+ TC-3568**;
+               and the `TS-V1-*` reservation **narrowed to TC-3570–TC-3699**, with "none minted"
+               replaced by the true statement — none of the **six `TS-V1-*` suites** has minted an
+               id; the band's first six numbers went to other suites. The band from **TC-3570** is
+               described as "**Doc 07 v2.7.0 in progress**" rather than pinned to a number this
+               document cannot see, because the tester is minting the clause-(e) rows in the same
+               session. **Three echoes corrected with the rows:** §0.4's "reserved for them at
+               §14" sentence, the **v1.1.0 changelog entry**'s "TC-3564–TC-3699 reserved for the
+               six unminted v1 suites" (annotated as the historical record it is, not rewritten),
+               and Downstream's "reserved at TC-3564–TC-3699". **Annotated, not deleted**, per
+               house style. **This document mints no `TC`**: it records ids Doc 07 owns and
+               narrows a reservation it owns itself. **Recorded honestly:** the drift originated
+               before v1.5.0, but it became a live self-contradiction **at** v1.5.0 — the version
+               that moved the pin and published "the three v1.4.0 Lows are DISCHARGED… No Low is
+               carried forward". A pin advanced without its dependent statements re-read is the
+               same defect class in a new costume, and it is recorded as such rather than as
+               inherited debt. **`OPEN-26`(a) — the register's first drift, closed at v1.1.0 as a
+               High — is the precedent this closure follows.**
+               **ISS-02 (Low) CLOSED — `OPEN-20`'s half-superseded basis.** `OPEN-20` states that
+               Doc 07 "disagrees with itself on two `TC` ranges". At Doc 07 **v2.6.0** the
+               `TS-SCAFFOLD` half is **resolved** — §5.3's heading now reads "(TC-3470–TC-3488,
+               TC-3568)", matching §2. Only the **`TS-PROPOSALS`** half survives: §2 says
+               TC-3542–TC-3563 (22 cases) while §5.6's heading still reads TC-3542–TC-3561. The
+               item and the §0.4 tester note are **annotated to that narrowed scope; the item is
+               NOT closed** and remains a v1 Gate-2 blocker, so §13's blocker bullet is correct
+               and deliberately untouched. Doc 07 is the tester's document; this stays recorded,
+               not fixed here.
+               **ISS-03 (Low) CLOSED — `UT-0889` is landed and green.** v1.5.0 described it as
+               "owed-and-in-progress, not green", which was accurate at authoring time and is an
+               **under-claim** now: the guard exists at `apps/web/test/safety-surfaces.test.tsx`,
+               was **registered in Doc 06 at v2.6.0** §3/§7 and is **unchanged at v2.7.0**, and the
+               cycle-1 reviewer executed the file independently — **25/25 pass, 2026-09-06**. All
+               three mentions (`Source:`, §0.5 S4's note, Downstream) now read "landed and green as
+               of 2026-09-06 on the cycle-1 reviewer's executed run; registered in Doc 06 (minted
+               at v2.6.0; **v2.7.0 In Review** at this date)". The standing discipline
+               is intact — this plan upgrades no test status it has not seen pass; here the
+               evidence is a named, dated, independently executed run.
+               **ISS-04 (Low) CLOSED — the lapse analysis now disposes of trigger (iv) by name.**
+               v1.5.0 argued correctly that Doc 03's trigger **(iii)** does not fire (clause (e) is
+               scoped, not unconditional) — but `OPEN-27`'s body simultaneously argued that the
+               2026-09-06 ruling "is such a review" for the `anon` subtitle's standing condition,
+               and Doc 03 §10.12.3 states in terms that "**Trigger (iv) is the same standing
+               condition the `anon` subtitle decision already carries**". The document therefore
+               contained the materials for the opposite conclusion — that a trigger fired and the
+               carve-out lapsed automatically — without disposing of it. It is disposed of now, on
+               trigger (iv)'s own evidence standard: (iv) fires where research or an honesty review
+               "**shows**" open-tier members read the badge as a claim about how their vote is
+               handled; the 2026-09-06 ruling is an honesty review, but it examined **landing-page
+               copy** and the FR-082 supporter strings and took **no evidence about the badge**, so
+               it *raises* the question without *showing* the reading. **Neither (iii) nor (iv) has
+               fired**; (i) and (ii) are untouched (the badge renders on no vote surface, and
+               FR-122/FR-123 are unamended by Doc 02 v2.17.0/v2.17.1). Corrected in both places —
+               §0.5 S5's annotation and `OPEN-27`'s body. **The conclusion is unchanged; only its
+               completeness was defective.**
+               **ISS-05 (Low) CLOSED — the carve-out counts are scoped, not reconciled away.** S4
+               said "the word ban carries **one carve-out**" and S5 said "**Two carve-outs, and
+               only two**", four sections apart and both correct: S4 governs the notice and v1
+               voting surfaces, where the `anon` badge does not render; S5 governs the
+               `apps/web` + `packages/ui` string scan, where it does. S4's sentence now names its
+               scope before its count and points at S5's second exception, so a mechanical reader
+               cannot mis-apply either number. **Neither count is changed.**
+               **ISS-06 (Low) CLOSED — §1.4 re-wrapped.** The mid-sentence breaks introduced by the
+               v1.5.0 OP 9 replacement ("…honesty register, and / §4.45 FR-131 clause (e)) ·" and
+               "…(unit-test standard, / `UT-####`, §2.1 / `IS_INSECURE_MOCK` discipline)") are
+               re-flowed to the paragraph's measure — presentation only, and an authoring defect in
+               the v1.5.0 spec rather than an application defect. Two pins in the same paragraph
+               advance with it, under the pin sweep below.
+               **Pin sweep to HEAD, done before submission rather than after the next review.**
+               **Doc 02 → v2.17.1 (Approved)** (`02-requirements-srs-v2.17.1-business-cycle2.md`,
+               PASS 96%): **clause (e) is unchanged**, and v2.17.1 adds **§8 Scenarios 8 and 9** —
+               the Gherkin the owed clause-(e) `TC` rows trace to, now named in §0.5 S4's note so
+               the tester does not have to hunt for it. Clause (e)'s **origin** stays cited as
+               **v2.17.0** where the text is historical; the **current** pin is v2.17.1, and the
+               two are different statements. **Doc 06 → v2.7.0 (In Review)**, last Approved
+               **v2.5.1**; its cycle-1 Medium concerns stale "owed" statements and **not UT-0889**,
+               which was registered at v2.6.0 and is unchanged. **Doc 07 v2.6.0** and **Doc 08
+               v2.9.0** remain Approved; the tester's v2.7.0 / v2.10.0 re-cut is still in progress
+               and is cited as owed, not done. Four locations touched: the `Source:` block (Doc 02
+               and Doc 06), §0.5 S4's note, §1.4 and its trailing annotation, and Downstream.
+               **This sweep is the cycle-1 Medium's real lesson applied to this version's own
+               header** rather than to §14 alone.
+               **Not re-opened.** The review recorded ten items as verified and instructed that the
+               clause-(e) substance MUST NOT be re-opened: the (a)–(d) notice range and its five
+               refusals of a fifth notice clause; S5's four rules and the claims test; the
+               verification path (UT-0889 / UT-0869 / inspection); the pin **reasoning**;
+               `OPEN-27`'s mint and its route-don't-rule disposition — which the reviewer called
+               "the strongest judgement in the version". All stand unchanged here.
+               2026-09-06 v1.5.0 — **FR-131 clause (e) ruled in; this plan re-cut to the amended
+               requirement.** Minor bump: a normative test-criterion scope change. This entry
+               describes only what changed. **Authority.** Approver Rathish Kumar, **2026-09-06**,
+               artifacts/status/DECISIONS-2026-09-06-ENDORSEMENT-COPY.md §11 item 3 — "**APPROVED**
+               — Draft and apply FR-131 clause (e) in Doc 02" — applied as **Doc 02 v2.17.0
+               (In Review)** §4.45. The condition v1.4.0's S4 note wrote down has occurred: "If a
+               clause (e) is later ruled in, this criterion and the TCs derived from it are re-cut
+               together." This version is the criterion half of that re-cut; the `TC` half is the
+               tester's, owed at **Doc 07 v2.7.0** and **Doc 08 v2.10.0** under the existing story
+               **US-0134** (FR-131 · DES-098). No `TC` is minted here.
+               **§0.5 S4 — the routed question is ANSWERED, and the answer is narrower than it
+               looks.** The v1.4.0 note routed to Priya Raghunathan (product-owner) is discharged
+               by a dated v1.5.0 note placed **above** it; the v1.4.0 note is retained in full.
+               **The notice-clause range stays (a)–(d)**: clause (e) is **not** a fifth clause of
+               the DES-098 ballot notice and MUST NOT be tested as a fifth notice assertion. It is
+               a **claims duty on every public-facing string about any v1 participation act** —
+               casting a vote, endorsing or backing a petition, joining or belonging to a party,
+               or supporting a party — **in any language**, whose test is what an ordinary Grade-8
+               reader (`NFR-023`) would take the claim to mean. Verification: **UT-0889 (Doc 06
+               v2.6.0)**, the UT-0869-pattern guard on the landing copy in
+               `apps/web/test/safety-surfaces.test.tsx`; **UT-0869** on the party copy; otherwise
+               **inspection (I)**, which is FR-131's own recorded Verify-by.
+               **§0.5 S4 and S5 — scan scope widened, carve-outs preserved.** Both now read
+               against the amended closing sentence: the four words MUST NOT describe "v1 voting
+               behaviour **or any other v1 participation act**". Two things are deliberately
+               unchanged. (1) This plan's own fifth word ***secret*** stays, still labelled as
+               **this plan's deliberate extension** beyond FR-131's four. (2) The **clause-(a)
+               negated-form carve-out** stays: where clause (a) mandates those words they appear
+               **only negated**, so the FR-131(a) ballot banner and **UT-0887** are unaffected —
+               the amendment was drafted with that carve-out for exactly this reason. What is
+               genuinely new is that S5 is now explicitly a **claims** test and not only a word
+               list: a string can fail it with none of the five words present. That is not a
+               theoretical case — the two strings the 2026-09-06 ruling corrected ("your name kept
+               private", "we never learn") contained none of them, and a per-string ruling cadence
+               is the governance smell clause (e) exists to end.
+               **§0.5 S5 — the `anon`-badge carve-out is annotated, not lapsed, and the question
+               it raises is routed.** Doc 03 v2.13.0 §10.12.3's re-open trigger (iii) is worded for
+               an amendment that bans the four words **unconditionally**; clause (e) widens the
+               scope but keeps it conditional, so **the carve-out does not lapse automatically and
+               this plan does not treat it as lapsed**. But the disposition it cites was reasoned
+               on "the badge is not describing that user's **voting** behaviour", and the `anon`
+               pill's own clause-8 contexts include **party-joining (screen 1.6)** and **endorsing
+               (screen 2.3)** — two acts clause (e) now names. That is a **copy question for the
+               copy authority (Doc 03), not for this plan**; writing the ruling here would repeat
+               the v2.7.0 mistake this document was marked down for. Routed to Ravi Deshmukh as
+               **OPEN-27** (§13). Meanwhile the carve-out stays **exactly one** exception, keyed to
+               those two `anon` strings, and MUST NOT be extended to any other string.
+               **Three carried Lows DISCHARGED (none carried forward).** **ISS-C2-01** — Doc 07
+               re-pinned **v2.4.4 → v2.6.0 (Approved)** in the `Source:` block and at **§1.4**.
+               **ISS-C2-02** — §1.3's no-story annotation re-pinned **Doc 05 v2.3.0 (In Review) →
+               v2.5.0 (Approved)**, the third ISS-05 location, the one carrying the live
+               re-derivation instruction `OPEN-21` cross-references. **ISS-C2-03** — the Doc 09
+               line now names the version in force, **Approved v1.9.0**, rather than an in-flight
+               number. Swept with them: **Doc 03 v2.13.0** is **Approved** (the pin said In
+               Review), and the **Doc 06** pin now carries the **v2.6.0** cut and **UT-0889**.
+               **What did NOT change.** No requirement is interpreted beyond Doc 02's own words;
+               no suite is added or retired; no `TC`, `UT`, `TS-`, `OPEN-##` or `ISS-` ID is reused
+               or renumbered; §0.6's 4 / 2 / 7 bucketing and its counts, §14's reservations and
+               every test status are untouched; `OPEN-01` remains a Definition-B Gate-2 blocker
+               with unchanged owners; `A-02.6`'s enforced-today / owed split stands as written and
+               was re-read against clause (e) — it describes the **ballot** banner under the
+               clause-(a) carve-out and is unaffected. **No product code is edited by this
+               document**; the code corrections are the engineer's, routed by the decision record
+               §8 R-1…R-4.
+               2026-09-06 v1.4.0 — **Rework cycle 1 against
+               `artifacts/reviews/04-test-strategy-master-plan-v1.3.0-technical-cycle1.md`**
+               (FAIL 89%; 0 Critical / 0 High / 2 Medium / 6 Low; reviewer: reviewer-qa, neutral,
+               PM-assigned). Minor bump: a Medium finding makes a minor bump the floor. This entry
+               describes only what changed.
+               **ISS-01 + ISS-02 (Medium) CLOSED — §0.5 S4, and the claim this document made
+               about it.** S4 required testing FR-131's "required clauses **(a)–(e)**"; FR-131
+               (Doc 02 §4.45, Approved v2.16.3) has **(a)–(d)**, with (d) added at Doc 02 v2.12.0.
+               v1.3.0 routed the requirement question to the product-owner and then asserted, in
+               the Status block and in this changelog, that "§0.5 S4/S5 needed no change" and
+               "Neither S4 nor S5 is changed". **The remedy for an unresolved question is to
+               annotate it, not to leave the criterion asserting a range that does not exist** —
+               and this plan's own house convention, applied more than ten times across the
+               sibling document in the same session, is annotate-don't-delete. S4 is now
+               annotated in place: the discrepancy is named, the authority is cited, the owner is
+               **Priya Raghunathan (PO)**, and what governs meanwhile is stated — the criterion
+               reads **(a)–(d)** and tests the four clauses FR-131 actually states. A PO
+               **proposal** for a clause (e) exists but is **NOT applied and awaits the
+               approver**; this plan does not assume it. A **tester note** is attached at S4:
+               do not derive FR-131 TC rows from a five-clause reading. The v1.3.0 Status and
+               changelog sentences are corrected and annotated rather than deleted.
+               **ISS-03 (Low) CLOSED — S4's fifth forbidden word.** S4 scans five words (adding
+               *secret*) while FR-131 bans four and §8 `A-02.6` says "The four banned words".
+               A stricter superset is a legitimate test-strategy choice and cannot cause a false
+               pass — but it was unlabelled, so the document said five in one place and four in
+               another with nothing reconciling them, in the version whose subject is citation
+               accuracy. *secret* is now labelled **this plan's own deliberate extension beyond
+               FR-131**.
+               **ISS-04 (Low) CLOSED — `A-02.6` over-reached on "Enforced today by".** All three
+               cited tests exist and assert what was claimed, but they enforce the **content** and
+               **word-ban** halves only. The **placement** half — "before the ballot is confirmed"
+               — is not enforced today: UT-0887 renders `ReceiptFreedomBanner` at component level,
+               SCR-13/SCR-14 are not built (Doc 06 §7 item 21), Doc 08 records `TC-3481` as
+               **Blocked**, and Doc 03 v2.13.0 §15 records the DES-098 acknowledge-to-proceed
+               control as unbuilt. The cell now splits enforced-today from owed, as Doc 03 §15
+               does for the same facts.
+               **ISS-05, ISS-06, ISS-07 (Low) CLOSED — header pin currency.** Doc 05 re-pinned
+               **v2.3.0 (In Review) → v2.5.0 (Approved)** in the `Source:` block and in `OPEN-21`'s
+               body (OPEN-21 itself remains live and correct on its merits — the no-story list must
+               still be re-derived). Doc 09's pin now states the real position: last **Approved
+               v1.4.0**, **v1.5.0 In Review** at this date with its cycle-1 FAIL at 93% and rework
+               to v1.6.0 in progress, and v1.3.0 identified as where `REL-LIM-18` / `ISS-03` was
+               recorded rather than as a pin. The `Owner:` parenthetical's "Doc 03 v2.11.2
+               (Approved)" is marked as the historical provenance of the owner name and re-pinned
+               to v2.13.0. **A `Source:` pin asserting a document is unapproved when it is
+               Approved is a live status field, not narration** — which is why three Lows in one
+               header block are recorded rather than waved through.
+               **ISS-08 (Low) CLOSED — §0.5 S5's build-failing denylist vs the shipped `anon`
+               title.** S5 forbids any v1 `packages/ui` string asserting anonymity outside a
+               DES-098 notice; `PrivacyStatus` `STATE_CONFIG.anon.title` is the word "Anonymous",
+               outside any notice — so S5 as written would fail the build on copy the design
+               authority approves. S5 now carries **one named carve-out**, narrow and keyed to the
+               `anon` state's two strings, **citing Doc 03 v2.13.0 §10.12.3's `anon` TITLE
+               banned-word disposition** (the state renders only for open-tier users who cannot
+               cast a binding vote under FR-122/FR-123). **Sequenced deliberately:** Doc 03 ruled
+               first and this plan cites it. Writing a carve-out here that Doc 03 had not ruled
+               would repeat, in the test plan, the v2.7.0 mistake of a copy ruling living
+               somewhere other than the copy authority.
+               **Not re-opened:** `A-02.6`'s and `OPEN-01`'s FR-131 corrections, and `ISS-10`'s
+               discharge, were all verified in cycle 1 and stand.
+               2026-09-06 v1.3.0 — **FR-131 cascade.** Minor bump: normative test-criterion copy
+               changes. Routed in with the Doc 03 v2.12.0 cascade from Doc 06 v2.5.1 §7 item
+               26(a), `artifacts/engineer-2026-09-05T1700.md` (commit 0a5c542; merged to main in
+               PR #19 as 84e2203), Doc 09 v1.3.0 `REL-LIM-18` / `ISS-03`, and the approver's
+               direction of 2026-09-05 / 2026-09-06 (Rathish).
+               **A-02.6 (§8, `TS-ADV-02`) CORRECTED — it was false on both counts.** The pass
+               criterion read "The UI states that votes are anonymous but **not** receipt-free —
+               the flag's own description requires it." v1 votes are **not anonymous**, and
+               `packages/protocol/src/flags.js` `MACI_VOTING.description` now says exactly that.
+               The case now asserts the FR-131(a)/(b)/(c) content and the four-word ban, and names
+               the tests that already enforce it (`UT-0887`, `UT-0888`, `UT-0759`). Its
+               substantive point is unchanged: this **still** does not satisfy `FR-031`/`FR-032`/
+               `NFR-003`, which are **Must**, and it remains recorded as `OPEN-01`.
+               **OPEN-01 (§13) CORRECTED** for the same false clause ("Without MACI, votes are
+               anonymous but **not** receipt-free — the flag's own description says so"), with its
+               impact, owners and Gate-2-blocker status unchanged. A finding that a Must guardrail
+               is undelivered does not need a false premise to stand.
+               **Why this is a cascade and not a new opinion:** §0.5 **S4** and **S5** already
+               stated the correct rule — no v1 surface may claim anonymity, unlinkability,
+               receipt-freeness, coercion resistance, one-person-one-vote or zero-knowledge except
+               inside a DES-098 notice denying it, build-failing. A-02.6 and OPEN-01 were this
+               plan failing its own S5. Neither S4 nor S5 is changed.
+               _(v1.4.0 correction to this historical entry, cycle-1 ISS-01: **the claim about S4
+               was an over-claim and the author knew it when it was written** — the session note
+               `artifacts/architect-2026-09-06T1000-fr131-cascade.md` §6 item 4 records the
+               "(a)–(e)" discrepancy as found and routed before this entry was published. **S5 was
+               and is correct and unchanged. S4 was not correct**: it cited a clause range FR-131
+               does not have. The sentence "Neither S4 nor S5 is changed" was true of the text and
+               false as a statement of correctness, which is exactly the distinction the over-claim
+               class turns on. S4 is annotated and its range corrected to (a)–(d) at v1.4.0.)_
+               **ISS-10 (the Low carried from v1.2.0, owed on the next touch) CLOSED** — §22's
+               architect Approvals row described the v1.1.0 submission; it now describes v1.3.0.
+               §22's "Downstream" note re-pins Doc 06 from Approved v2.4.3 to Approved v2.5.1.
+               2026-09-01 v1.2.0 — **Rework cycle 2 against
                `artifacts/reviews/04-test-strategy-master-plan-v1.1.0-technical-cycle2.md`
                (FAIL 94%; 0 Critical / 0 High / 1 Medium / 1 Low; reviewer: engineer,
                neutral).** Minor bump: a Medium finding makes a minor bump the floor.
@@ -64,7 +529,11 @@ Changelog:     2026-09-01 v1.2.0 — **Rework cycle 2 against
                TC-2752) and TC-2800–TC-3199 reserved for `TS-ADV-22`…`TS-ADV-32`; `TS-GOV2`
                narrowed to its actual TC-3400–TC-3469; reservations added for `TS-SCAFFOLD`,
                `TS-PARTY` (incl. the out-of-block TC-3541), `TS-MEMBERSHIP` and
-               `TS-PROPOSALS`; TC-3564–TC-3699 reserved for the six unminted v1 suites. The
+               `TS-PROPOSALS`; TC-3564–TC-3699 reserved for the six unminted v1 suites _(v1.6.0,
+               cycle-1 ISS-01: that reservation is **narrowed to TC-3570–TC-3699** at v1.6.0 —
+               Doc 07 v2.5.0 minted TC-3564..TC-3569 into three other suites. This sentence is
+               retained as the historical record of what v1.1.0 did, not as a live reservation;
+               §14 governs)_. The
                `UT-####` reservation block, which had also failed, is replaced with the actual
                Doc 06 v2.4.3 allocation (OPEN-26).
                **ISS-04 (High) CLOSED** — `Owner:` corrected to Ravi Deshmukh — Principal
@@ -222,9 +691,22 @@ on 2026-08-31 and reserved at §14.
 > **TC-3542–TC-3561**; likewise §2's `TS-SCAFFOLD` row reads **TC-3470–TC-3488** while §5.3's
 > heading reads **TC-3470–TC-3487**. §14 here reserves the **§2** ranges, because those are the
 > ones the suite table and the case counts agree on. Routed to Ji-woo Park as **OPEN-20**.
+>
+> _(v1.6.0, cycle-1 ISS-02 — **half of this note is now historical**. At **Doc 07 v2.6.0** the
+> `TS-SCAFFOLD` disagreement is **RESOLVED**: §5.3's heading reads "(TC-3470–TC-3488, TC-3568)",
+> matching §2. **Only the `TS-PROPOSALS` half survives** — §2's TC-3542–TC-3563 against §5.6's
+> TC-3542–TC-3561 — and `OPEN-20` stands on that half alone. The note is annotated rather than
+> rewritten because it records what was true of Doc 07 v2.4.4, which is why §14 reserved the §2
+> ranges in the first place.)_
 
 **v1 capabilities with no suite at all.** Named here rather than left to be discovered at Gate 2.
-`TC-3564–TC-3699` is reserved for them at §14; the tester mints the IDs.
+**`TC-3570–TC-3699`** is reserved for them at §14; the tester mints the IDs. _(v1.6.0, cycle-1
+ISS-01: this read "`TC-3564–TC-3699` is reserved for them at §14". Doc 07 v2.6.0 §2 shows
+**TC-3564..TC-3569 already minted into other suites** — TC-3564–TC-3567 to `TS-ADV-01…16`,
+TC-3568 to `TS-SCAFFOLD`, TC-3569 to `TS-ABSENCE` — so the free band now begins at **TC-3570**.
+The band from TC-3570 is itself being drawn on by **Doc 07 v2.7.0, in progress** for the
+clause-(e) rows; this plan states the floor it can verify and does not pin a number it cannot
+see. **None of the six `TS-V1-*` suites has minted an id.**)_
 
 | Planned suite | Would cover | Blocked on | Owner |
 |---|---|---|---|
@@ -271,16 +753,186 @@ seek a waiver for it. **OPEN-19.**
 
 **S4 — Disclosure copy is asserted verbatim, not paraphrased.** The DES-098 notice (`FR-131`) MUST
 be tested for: presence before confirmation; non-dismissability; WCAG 2.2 AA (DES-081);
-screen-reader operability; the required clauses (a)–(e); and a **forbidden-word scan** — the notice
-and every v1 voting surface MUST NOT use *private*, *anonymous*, *receipt-free*, *secret* or
-*secure* to describe v1 voting behaviour. Clause (d) (the blocked-counting-action disclosure for
-open-tier participants, Doc 02 H-19) is tested at **every** surface that can block a counting
-action, not only the first one built.
+screen-reader operability; the required clauses **(a)–(d)**; and a **forbidden-word scan** — the
+notice and every v1 voting surface MUST NOT use *private*, *anonymous*, *receipt-free* or
+*secure* to describe v1 voting behaviour **or any other v1 participation act (FR-131 clause (e):
+casting a vote, endorsing or backing a petition, joining or belonging to a party, supporting a
+party)**, and this plan's scan additionally forbids *secret* as a
+deliberate extension of its own (see the note below). Clause (d) (the blocked-counting-action
+disclosure for open-tier participants, Doc 02 H-19) is tested at **every** surface that can block a
+counting action, not only the first one built. **Clause (e) is not a fifth notice assertion** —
+the notice-clause range above is **(a)–(d)** and stays there; clause (e) is a claims duty over
+every v1 participation act, scanned at **S5** and guarded by **UT-0889 (Doc 06 v2.6.0)** and
+**UT-0869**. **Within S4's scope** — the DES-098 notice and v1 voting surfaces, where the DES-094
+`anon` badge does not render — the word ban carries **exactly one carve-out**: where **clause (a)**
+mandates the words
+("NOT anonymous, NOT receipt-free, NOT coercion-resistant") they MUST appear **only in the negated
+form clause (a) requires** — the negation-aware assertion `UT-0887` already makes, and the reason
+the amendment cannot break the FR-131(a) banner. **S5's scan is broader and carries that same
+carve-out plus one more** — the named `anon`-badge exception — which is why S5 rule 4 counts
+**two**. The counts differ because the scopes differ; neither may be applied outside its own
+section. _(v1.6.0, cycle-1 ISS-05: this sentence stated its count without its scope, immediately
+after directing the reader to S5. Neither count is changed.)_
+
+> **_(v1.5.0 — 2026-09-06. READ THIS FIRST. The v1.4.0 note below is retained in full per
+> annotate-don't-delete and is SUPERSEDED on one point: the requirement question it routed has
+> been answered.)_**
+> **Clause (e) was ruled in on 2026-09-06.** The approver (Rathish Kumar) approved the
+> product-owner's amendment — artifacts/status/DECISIONS-2026-09-06-ENDORSEMENT-COPY.md §11
+> item 3 — and it is applied as **Doc 02 v2.17.0 (In Review)** §4.45. The v1.4.0 routing to
+> Priya Raghunathan is **discharged**; the note below is retained because it records why the
+> criterion read (a)–(d) while the question was open, and because its closing sentence — "If a
+> clause (e) is later ruled in, this criterion and the TCs derived from it are re-cut together" —
+> is the instruction this version is executing.
+> **The notice-clause range does NOT become (a)–(e).** This is the point most likely to be got
+> wrong, so it is stated flatly. Clause (e) is **not** a fifth clause of the DES-098 notice. It is
+> a **duty about claims** — "no public-facing string, screen, README or other material, in any
+> language, MUST assert that a **participation act** is unknowable to Trumocracy" — where a
+> participation act is casting a vote, endorsing or backing a petition, joining or belonging to a
+> party, or supporting a party. Its test is **what an ordinary Grade-8 reader (`NFR-023`) would
+> take the claim to mean, not whether a banned word appears**. S4 therefore keeps testing the
+> **four** notice clauses **(a)–(d)** verbatim, and clause (e) is tested at **S5** as a scan over
+> every v1 public-facing string.
+> **How clause (e) is verified, and by whom.** By **UT-0889** — registered in Doc 06 at **v2.6.0**
+> and unchanged at **v2.7.0 (In Review)** — a UT-0869-pattern
+> guard on the landing copy in `apps/web/test/safety-surfaces.test.tsx`, minted by the engineer in
+> the same 2026-09-06 session and **landed and green**: 25/25 pass, executed independently by the
+> cycle-1 reviewer on 2026-09-06 _(v1.6.0, cycle-1 ISS-03 — this read "**UT-0889 (Doc 06 v2.6.0)**
+> … cited here as **owed-and-in-progress, not green**", accurate at authoring time and an
+> under-claim within the session. The discipline it protected is unchanged: this plan upgrades no
+> test status it has not seen pass, and the evidence here is a named, dated, independently executed
+> run)_. **The Gherkin to derive the owed rows from is Doc 02 v2.17.1 §8 Scenarios 8 and 9**
+> _(v1.6.0: v2.17.1 is Approved and leaves clause (e)'s normative text unchanged; it adds the two
+> scenarios, so the tester traces to them rather than paraphrasing §4.45)_; by **UT-0869**
+> on the party copy (`apps/web/src/i18n/en.ts` `parties.joinPrivate`, the pattern Doc 02 names as
+> the **approved satisfying form**: state what the platform does not *publish*, and separately
+> state what the platform's own records **can see**); and otherwise by **inspection (I)**, which is
+> FR-131's own recorded Verify-by. No new suite is created for clause (e).
+> **Tester note (Ji-woo Park) — supersedes the v1.4.0 tester note below on one point.** Still do
+> **not** derive a fifth *notice* `TC` row from a five-clause reading of the notice: the notice has
+> four clauses. **Do** cut clause-(e) rows as a **copy/claims** obligation against `UT-0889` /
+> `UT-0869` and inspection, at **Doc 07 v2.7.0** and **Doc 08 v2.10.0**, under the existing story
+> **US-0134** (FR-131 · DES-098) — the decision record mints no new `US`. FR-131's Doc 08 Must row
+> is OPEN and the mints are owed; this plan does not upgrade that status and neither should the
+> re-cut until the guard is green.
+> **Scope of the ban, restated because it moved.** FR-131's closing sentence now reads "…to
+> describe v1 voting behaviour **or any other v1 participation act as defined in clause (e)**",
+> with an explicit carve-out preserving clause (a)'s mandated negated forms. The superseded
+> wording — "to describe v1 voting behaviour", full stop — is quoted verbatim in Doc 02 §4.45's own
+> Source annotation. S4's scan and S5's denylist are widened to match; the ***secret*** extension
+> and the clause-(a) carve-out are both preserved.
+>
+> _(v1.4.0 — cycle-1 ISS-02 and ISS-03; annotated in place rather than silently rewritten.)_
+> **Clause range.** This criterion read "the required clauses **(a)–(e)**". **FR-131**
+> (`docs/02-requirements-srs.md` §4.45, Approved **v2.16.3**) enumerates **(a)**, **(b)**, **(c)**
+> and **(d)** — four lettered clauses, (d) added at Doc 02 v2.12.0. **There is no (e).** Whether
+> "(e)" named a clause that was never minted, or was a typo for (d), is a **requirement question**
+> and not the architect's to answer: inventing or deleting a requirement clause from a test plan
+> would be a worse defect than the one it fixed. It is **routed to Priya Raghunathan
+> (product-owner)**. A product-owner **proposal** for a clause (e) exists but is **NOT applied and
+> awaits the approver** — this plan does not assume it, and this note MUST NOT be read as
+> pre-committing to it. **Until the PO rules, this criterion tests the four clauses FR-131 actually
+> states**, which is why the range now reads (a)–(d). **Tester note (Ji-woo Park):** do **not**
+> derive FR-131 TC rows from a five-clause reading — FR-131 §4.45 is the normative wording, and
+> FR-131's Doc 08 Must row is OPEN with TC mints owed, so this is the live risk. If a clause (e) is
+> later ruled in, this criterion and the TCs derived from it are re-cut together.
+> **Forbidden-word list.** FR-131's closing sentence bans **four** words — *private*, *anonymous*,
+> *receipt-free*, *secure*. This plan's scan adds a fifth, ***secret***, as **its own deliberate
+> extension**: a stricter superset cannot cause a false pass, and *secret* is the plainest synonym
+> a copywriter reaches for. It is labelled here so the list is not read as a mis-citation of
+> FR-131, and so this criterion's five and §8 `A-02.6`'s "four banned words" are reconciled on the
+> page rather than left to contradict each other.
 
 **S5 — No v1 surface may claim a v2 property.** Extends the DES-085 jargon filter with a second
 denylist over `apps/web` and `packages/ui` user-facing strings: no v1 string may assert anonymity,
 unlinkability, receipt-freeness, coercion resistance, one-person-one-vote, zero-knowledge or "we
 cannot see it", except inside a DES-098 notice that is explicitly denying it. **Build-failing.**
+
+**Scope, widened at v1.5.0 by FR-131 clause (e)** _(Doc 02 v2.17.0 §4.45; approver ruling
+2026-09-06)_. The scan is no longer voting-scoped and is no longer only a word list. Four rules,
+stated so the scan is mechanical:
+
+1. **Words.** *private*, *anonymous*, *receipt-free*, *secure* — plus this plan's own extension
+   ***secret*** — MUST NOT describe **v1 voting behaviour or any other v1 participation act**:
+   casting a vote, endorsing or backing a petition, joining or belonging to a party, or supporting
+   a party. **In every language**, `en` and `ar` alike; a locale mirror is a public-facing string.
+2. **Claims, not only words.** A string FAILS this scan if an **ordinary reader at the Grade-8
+   level (`NFR-023`)** would conclude from it that **Trumocracy itself** cannot link them to a
+   participation act — even when none of the five words appears. The two strings the 2026-09-06
+   ruling corrected ("…with your name kept private", "we never learn…") contained none of them.
+   Under conventional authentication (ADR-024, ADR-025) the v1 operator database **can** make that
+   link, and for endorsement necessarily **does**: `FR-014` (at most one endorsement per person per
+   petition) and `FR-015` (withdraw your own endorsement) cannot be satisfied in v1 without it.
+3. **The satisfying pattern PASSES, and is named so the scan is not merely prohibitive.** Copy that
+   states what the platform does **not publish**, and separately states what the platform's **own
+   records can see**, satisfies clause (e). The approved exemplar is `apps/web/src/i18n/en.ts`
+   `parties.joinPrivate`, guarded by **UT-0869**; the landing copy is guarded by **UT-0889
+   (Doc 06 v2.6.0)**. Where an act is additionally **public by design** — petition endorsement is
+   (Doc 14 §2.2, "a public act, on purpose"; the fully private alternative is the
+   `private_endorsement` charter option, a Phase-4 flag OFF in every v1 deployment) — the copy MUST
+   say so plainly and MUST NOT describe that act as kept private, secret or hidden.
+4. **Two carve-outs, and only two.** (i) **Clause (a)'s mandated negated forms** — inside a DES-098
+   notice the banned words appear **only** as "NOT anonymous / NOT receipt-free /
+   NOT coercion-resistant", which is a denial, not a claim; `UT-0887` is negation-aware for exactly
+   this reason and is unaffected by the widening. (ii) The **named `anon`-badge carve-out** below,
+   unchanged and unextended. **Out of scope:** claims about **personhood enrolment and identity
+   verification** are governed by `FR-132` and Doc 02 §16.4 H-16/H-17/H-18, expressly **not** by
+   clause (e) (Doc 02 §13 tracked routing (j)) — this scan MUST NOT be used to rule them, and the
+   product-owner's ruling on them is owed.
+
+> **Named carve-out — the `anon` participation-tier badge** _(v1.4.0, cycle-1 ISS-08)_.
+> `packages/ui/src/PrivacyStatus.tsx` `STATE_CONFIG.anon.title` is the word **"Anonymous"** and its
+> subtitle is "Nothing you do here is linked to you", both outside any DES-098 notice — so S5 as
+> written above would **fail the build on copy the design authority approves**. The scan MUST
+> therefore carry **exactly one** named exception: the `anon` state's title and subtitle in the
+> DES-094 PrivacyStatus component. **The basis is Doc 03's, not this plan's.** Doc 03 **v2.13.0
+> §10.12.3, "`anon` TITLE banned-word disposition"**, rules the title COMPLIANT in v1 because the
+> `anon` state renders only for open-tier users who **cannot cast a binding vote** (FR-122/FR-123),
+> so the badge names a participation tier and makes no claim about v1 voting behaviour. **This plan
+> cites that disposition; it does not make one** — a copy ruling living anywhere other than the
+> copy authority is the v2.7.0 mistake, and repeating it in the test plan would be worse than
+> leaving the scan over-broad. **Narrow and keyed:** the exception covers those two strings in that
+> one component and lapses automatically if any of Doc 03's four recorded re-open triggers fires
+> (the badge rendering on a vote surface or for a user who can vote; FR-122/FR-123 changing; an
+> unconditional FR-131 amendment; contrary user research). **Everything else stays in scope**, and
+> the `ver` title stays in scope in **both** directions: "Verified — private" is permitted **only**
+> against `unlinkable === true` (Doc 03 §10.12.3 clauses 7 and 9), and the scan MUST NOT relax
+> that. Note also that Doc 03's disposition **concedes** the `anon` subtitle is not literally true
+> of the operator in v1 — that is a clause-8 disclosure obligation with an unbuilt link, tracked
+> there and not answered by this carve-out.
+>
+> **_(v1.5.0 — 2026-09-06: FR-131 was amended. The carve-out does NOT lapse; the question it now
+> raises is routed, not answered here.)_** Doc 03's re-open trigger **(iii)** reads "FR-131 is
+> amended to ban the four words **unconditionally** rather than 'to describe v1 voting
+> behaviour'". Clause (e) (Doc 02 **v2.17.0** §4.45) widens the scope to **any v1 participation
+> act** but keeps the ban **conditional** — it is not the unconditional amendment trigger (iii)
+> describes. **Trigger (iv) does not fire either, and it is disposed of here by name because the
+> annotation below engages it** _(v1.6.0, cycle-1 ISS-04)_. Doc 03 states that "**Trigger (iv) is
+> the same standing condition the `anon` subtitle decision already carries**", and (iv) fires only
+> where "user research or an honesty review **shows** open-tier members read the badge as a claim
+> about how their vote is handled". The 2026-09-06 ruling **is** an honesty review — but it
+> examined **landing-page copy** (`home.steps[1]`, `home.promises[0]`) and the FR-082 supporter
+> strings, and took **no evidence whatsoever about the badge**. It *raises* the question; it does
+> not *show* the reading, and "shows" is the standard trigger (iv) sets. **Triggers (i) and (ii)
+> are untouched:** the badge still renders on no vote surface and for no user who can cast a
+> binding vote, and FR-122/FR-123 are unamended by Doc 02 v2.17.0 or its v2.17.1 patch. **None of
+> the four triggers has
+> fired.** **The carve-out therefore stands, unchanged and unextended**, and this plan does not
+> treat it as lapsed. **What has changed underneath it, stated rather than glossed:** the
+> disposition's stated basis is that the badge "is not describing that user's **voting**
+> behaviour", and the `anon` pill's own clause-8 contexts are browsing (screen 1.2),
+> **party-joining (screen 1.6)** and **endorsing (screen 2.3)** — the last two of which clause (e)
+> now names as participation acts, and about which Doc 03 already concedes the subtitle is "not
+> literally true in v1". Whether the title and subtitle still pass is a **copy ruling, and the copy
+> authority is Doc 03, not this plan** — ruling it here would repeat the v2.7.0 mistake this
+> carve-out was written to avoid. Routed to **Ravi Deshmukh** for the next Doc 03 increment as
+> **OPEN-27** (§13). **Not a shipped-copy defect today:** `PrivacyStatus` has no authenticated host
+> surface in `apps/web` (the component's own header records that it is not rendered), so no citizen
+> currently sees the string — but `packages/ui` is inside this scan's scope and Doc 03 clause 8's
+> trigger is "before any screen rendering the `anon` pill in a non-vote context ships to
+> production". **Until Doc 03 rules:** the exception covers those two `anon` strings in that one
+> component and **no others**; no new string may claim it; and rule 2 above (the claims test)
+> applies to every string that is not inside the exception.
 
 **S6 — Call-site census.** `verifyEligibility()` MUST be invoked at exactly the three `FR-123`
 counting call sites — strength contribution, binding-ballot admission, candidacy nomination — and
@@ -531,18 +1183,37 @@ had **no backlog story** at Doc 05 v1.0.0 §12. All were Should/Could **except `
 §11 has since raised to Must** (BR-019). The tester MUST record them as **open RTM rows**, not as
 absent. Delegation (`DELEGATION` flag, ADR-007 §5) ships off in all non-dev environments and is
 tested only to the level of "the flag is off and the capability is unreachable". _(v1.1.0: this
-no-story list is derived from Doc 05 **v1.0.0** and Doc 05 is now at **v2.3.0 (In Review)**. The
+no-story list is derived from Doc 05 **v1.0.0** and Doc 05 is now at **v2.5.0 (Approved)**. The
 list MUST be re-derived by the product owner at the next backlog version — **OPEN-21**. `FR-050`'s
 promotion to Must is recorded here so it is not carried forward as a Should by inheritance.)_
+_(v1.5.0, cycle-2 **ISS-C2-02 DISCHARGED**: the pin above read "**v2.3.0 (In Review)**" — the third
+and last location of the cycle-1 ISS-05 defect, and the one carrying the live re-derivation
+instruction `OPEN-21` cross-references. Doc 05 is Approved at v2.5.0, five minor versions ahead of
+the v1.0.0 the list was derived from, which makes the finding **more** live, not less. `OPEN-21`'s
+own body was already re-pinned at v1.4.0 and is unchanged.)_
 
 ### 1.4 References
 
-Doc 01 PR-FAQ · Doc 02 SRS **v2.16.3** (incl. §16 delivery phasing and §16.4 honesty register) ·
-Doc 03 SDD **v2.11.2** (§9 repo design, §10.13 v1/v2 split, §11 failure-mode analysis which seeds
-`TS-EDGE`, §14 test hooks) · Doc 05 Backlog **v2.3.0** (§8 non-functional backlog items
-`NF-01`…`NF-08`) · Doc 06 Coding & UT **v2.4.3** (unit-test standard, `UT-####`, §2.1
-`IS_INSECURE_MOCK` discipline) · Doc 07 Test Cases **v2.4.4** (`TC-####`) · Doc 08 RTM ·
+Doc 01 PR-FAQ · Doc 02 SRS **v2.17.1** (incl. §16 delivery phasing and §16.4 honesty register,
+§4.45 FR-131 clause (e) and its §8 Scenarios 8 and 9) · Doc 03 SDD **v2.13.0** (§9 repo design,
+§10.13 v1/v2 split, §11 failure-mode analysis which seeds `TS-EDGE`, §14 test hooks) · Doc 05
+Backlog **v2.5.0** (§8 non-functional backlog items `NF-01`…`NF-08`) · Doc 06 Coding & UT
+**v2.5.1 Approved / v2.7.0 In Review** (unit-test standard, `UT-####`, §2.1 `IS_INSECURE_MOCK`
+discipline) · Doc 07 Test Cases **v2.6.0** (`TC-####`) · Doc 08 RTM **v2.9.0** ·
 **ADR-001…ADR-025** · CLAUDE.md · ISO/IEC/IEEE 29119 · IEEE 829 · WCAG 2.2 Level AA · RFC 2119.
+
+_(v1.5.0 — cycle-2 **ISS-C2-01 DISCHARGED** at the second of its two named locations, and the
+stale neighbours swept with it rather than left to age. The superseded pins read: Doc 02 SRS
+**v2.16.3** · Doc 03 SDD **v2.11.2** · Doc 05 Backlog **v2.3.0** · Doc 06 Coding & UT **v2.4.3** ·
+Doc 07 Test Cases **v2.4.4**. Each was accurate when written; none changed a conclusion drawn from
+it, which is why the class was graded Low twice. **At v1.6.0 the roll-call is:** Doc 06 **v2.7.0**
+is **In Review** (last Approved v2.5.1); Doc 02 **v2.17.1**, Doc 03 v2.13.0, Doc 05 v2.5.0,
+Doc 07 v2.6.0 and Doc 08 v2.9.0 are **Approved**. _(v1.6.0, Revision 2: this read "Doc 02 v2.17.0
+and Doc 06 v2.6.0 are **In Review**
+at this date, Doc 03 v2.13.0 / Doc 05 v2.5.0 / Doc 07 v2.6.0 / Doc 08 v2.9.0 are **Approved**",
+true when written on 2026-09-06 and superseded the same day by Doc 02's v2.17.1 approval and
+Doc 06's v2.7.0 cut. Retained rather than deleted, because a pin that moved twice in one day is
+exactly what the standing pin-currency sweep exists to catch.)_
 
 ---
 
@@ -1124,7 +1795,7 @@ recorded, that is stated — an adversarial suite that is written to pass is not
 | A-02.3 Device seized after voting | Adversary has the unlocked device post-vote | Cannot determine the choice; the confirmation screen is identical for every option (ADR-012 §7) |
 | A-02.4 Coercer watches, voter defects | Coerced vote, then a panic re-vote (`DES-063`) | Only the last ballot counts; nothing in the public record, the device or any notification indicates a replacement occurred or how many were cast (`FR-032`) |
 | A-02.5 Buy the account, not the vote | Adversary purchases the phone + passkey + guardian set | This is the acknowledged residual (ADR-006). Test the *detection* half: bulk device-transfer anomaly patterns are surfaced. We do **not** claim to prevent it (§12) |
-| A-02.6 Flag-state disclosure | `MACI_VOTING` is off (its production default) | The UI states that votes are anonymous but **not** receipt-free — the flag's own description requires it. **This does not satisfy `FR-031`/`FR-032`/`NFR-003`, which are Must. Recorded as OPEN-01.** |
+| A-02.6 Flag-state disclosure | `MACI_VOTING` is off (its production default) | The UI states, before the ballot is confirmed, that the vote is cast through conventional authentication and is **NOT anonymous, NOT receipt-free and NOT coercion-resistant**; that the platform database **CAN** see vote direction and party membership; and that the cryptographic private ballot arrives with the Definition-B (v2) privacy layer — `FR-131`(a)/(b)/(c) via `DES-098`. The four banned words ("private", "anonymous", "receipt-free", "secure") appear **only negated**, never as a claim. **Enforced today — the content and word-ban halves only:** `UT-0887` (rendered banner, negation-aware), `UT-0888` (flag description) and `UT-0759` (the `ver` badge title renders "Verified — private" only against `unlinkable === true`). **Owed, NOT enforced today — the placement half:** "before the ballot is confirmed" is asserted nowhere, because SCR-13/SCR-14 are not built (Doc 06 §7 item 21); UT-0887 renders `ReceiptFreedomBanner` directly at component level; Doc 08 records `TC-3481` — the SCR-13/SCR-14 case — as **Blocked**; and Doc 03 v2.13.0 §15 records that DES-098's acknowledge-to-proceed control is unbuilt. **This does not satisfy `FR-031`/`FR-032`/`NFR-003`, which are Must. Recorded as OPEN-01.** _(v1.3.0: this cell read "The UI states that votes are anonymous but **not** receipt-free — the flag's own description requires it." False on both counts — v1 votes are not anonymous, and the flag description no longer says they are. FR-131's closing sentence forbids the claim outright. Corrected per Doc 09 v1.3.0 `REL-LIM-18`; approver 2026-09-05. **v1.4.0, cycle-1 ISS-04:** v1.3.0 then wrote "Enforced today by" across all three halves; the three tests are real and assert what is claimed, but none of them tests placement.)_ |
 
 > _(v1.1.0.)_ **This suite cannot pass in v1 and MUST NOT be run as if a fail were a defect.** Doc 02
 > §16.3 classifies `NFR-003` and `FR-031` **DEFERRED-v2**; `FR-032` is PARTIAL (last-ballot-counts by
@@ -1600,7 +2271,7 @@ they exist.**
 | **_(v1.1.0)_ DES-097(b) Postgres backing of `IPartyStore`** | `NFR-028`'s named controls (`INSERT`-only grant, `BEFORE UPDATE` refusal, projection-equals-replay) cannot be asserted above the store; and `IS_INSECURE_MOCK()` cannot return `false` across the graph without it | Samuel Oyelaran | Doc 03 §10.13.12, **OPEN-19** |
 | **_(v1.1.0)_ `tests/e2e/` + a headless driver for level V5** | the v1 citizen journey (create → petition → activate → join → propose → vote → tally → published hash) has no home and no runner; `NFR-019`'s "reproducible by the verifier" half also has no v1 instrument because `apps/verifier/` does not exist | Ji-woo Park (harness), Samuel Oyelaran (driver selection) | §0.3, **OPEN-24** |
 | **_(v1.1.0)_ Repo-wide behavioural-event scanner (build-failing)** | `NFR-027`(b); `UT-0525` and `UT-0740` bound only two surfaces and the prohibition must bind every new surface as it lands | Dr. Lena Kowalczyk | §9 `NFR-027`, **OPEN-19** |
-| **_(v1.1.0)_ Second denylist over user-facing strings (build-failing)** | §0.5 S5 — no v1 string may claim anonymity, unlinkability, receipt-freeness, coercion resistance, one-person-one-vote or zero-knowledge, except inside a DES-098 notice denying it | Nadia Hassan | DES-085, DES-098 |
+| **_(v1.1.0)_ Second denylist over user-facing strings (build-failing)** | §0.5 S5 — no v1 string may claim anonymity, unlinkability, receipt-freeness, coercion resistance, one-person-one-vote or zero-knowledge, except inside a DES-098 notice denying it. _(v1.5.0: **widened by FR-131 clause (e)** — the scan now covers **any v1 participation act**, not only voting, applies **in every language**, and is a **claims** test as well as a word list: a string fails if a Grade-8 reader would take it to mean Trumocracy cannot link them to the act, even with none of the banned words present. Two carve-outs only: clause (a)'s mandated negated forms, and the named `anon`-badge exception. See §0.5 S5.)_ | Nadia Hassan | DES-085, DES-098, **FR-131(e)** |
 | circom + snarkjs + **circomspect**, pinned and offline in CI | `circomspect` finding ≥ Warning fails the build | Rafael Duarte | ADR-005 |
 | Headless browser driver with CPU throttling, 64 kbit/s network shaping and offline mode | `NFR-006`, `NFR-012` are *measured through it*; selection is Doc 06's | Nadia Hassan | ADR-012 |
 | Offline-capable automated WCAG 2.2 rule engine, runnable in CI with no egress | `NFR-011`; automated coverage is partial, so it never replaces the manual pass | Nadia Hassan | ADR-012 §6 |
@@ -1652,12 +2323,15 @@ exists. Each names the owner who must close it.
 - **Blocking a Definition-B (v2) Gate 2 (§10.2 item 17):** `OPEN-01` … `OPEN-06`, `OPEN-11`,
   `OPEN-23`, plus every item above that is still open at that time.
 - **Not gate-blocking, but owed:** `OPEN-07`, `OPEN-08`, `OPEN-09`, `OPEN-10`, `OPEN-12` … `OPEN-15`,
-  `OPEN-22`.
+  `OPEN-22`, **`OPEN-27`** _(added v1.5.0 — a design-authority copy question raised by FR-131
+  clause (e); it is **not** a shipped-copy defect today, which is why it is owed rather than
+  blocking. It becomes a **v1 Gate-2 blocker** the moment any screen rendering the `anon` pill in a
+  non-vote context is scheduled to ship, per Doc 03 §10.12.3 clause 8's own trigger)_.
 - **Closed at v1.1.0:** `OPEN-16`, `OPEN-17`.
 
 | ID | Finding | Impact | Owner |
 |---|---|---|---|
-| **OPEN-01** | `MACI_VOTING` defaults to **off in staging and production** and ADR-006 defers MACI to Phase 3, but `FR-031`, `FR-032` and `NFR-003` (receipt-freeness, silent re-vote) are **Must** in Doc 02 and are guardrails, not walking-skeleton items. Without MACI, votes are anonymous but **not** receipt-free — the flag's own description says so | A Must guardrail is not delivered at v1. `TS-ADV-02` cannot pass. **Gate-2 blocker unless Doc 02 or the roadmap changes** | Aisha Nkemdirim / Priya Raghunathan |
+| **OPEN-01** | `MACI_VOTING` defaults to **off in staging and production** and ADR-006 defers MACI to Phase 3, but `FR-031`, `FR-032` and `NFR-003` (receipt-freeness, silent re-vote) are **Must** in Doc 02 and are guardrails, not walking-skeleton items. Without MACI a vote is **not anonymous, not receipt-free and not coercion-resistant**, and the platform database **can** see vote direction and party membership — the flag's own description says exactly that, and `FR-131`/`DES-098` require the UI to say it before every ballot _(v1.3.0: this clause read "votes are anonymous but **not** receipt-free — the flag's own description says so", which was false on both counts and is the framing `FR-131` forbids; corrected per Doc 09 v1.3.0 `REL-LIM-18`. The finding itself is unchanged — it never depended on the premise)_ | A Must guardrail is not delivered at v1. `TS-ADV-02` cannot pass. **Gate-2 blocker unless Doc 02 or the roadmap changes** | Aisha Nkemdirim / Priya Raghunathan |
 | **OPEN-02** | `FR-004` requires refusing issuance from an attestor whose share would exceed **50% in a region**. `PersonhoodRegistry` has a per-issuer *per-epoch count* cap and **no region dimension**; `RegionRegistry.issuanceCount` covers residency attesters, not personhood issuers | `FR-004` and half of `NFR-004` are untestable as written | Marcus Adeyemi |
 | **OPEN-03** | `FeatureFlags.disable()` is unconditional and callable unilaterally by `emergencyDisabler`. Nothing prevents disabling a flag that governs an **open ballot** or blocks execution of an already-passed proposal. `NFR-020` requires exactly that prevention, and `CON-003` forbids any capability to halt a governance process | The one unilateral power in the protocol has an unbounded and untested blast radius | Rafael Duarte |
 | **OPEN-04** | ADR-003's `Nᵢ = Poseidon(idHashᵢ, ISSUER_SCOPE)` is scoped **per issuer** under a 1-of-N acceptance model. One human holding two accepted credentials therefore enrols twice and votes twice. `FR-001`/`BR-006` require **at most one active credential per human** | The foundational "one person, one vote" property does not hold across issuers as recorded. `TS-ADV-01/A-01.3` | Principal Architect (Doc 03) |
@@ -1676,13 +2350,14 @@ exists. Each names the owner who must close it.
 | **OPEN-17** — **CLOSED v1.1.0** | Resolved on verified evidence (2026-08-31): `packages/contracts/package.json` and `vitest.config.mjs` exist; `packages/contracts/test/` holds `adversarial.test.mjs`, `differential.test.mjs`, `governance.test.mjs`, `lifecycle.test.mjs`, `deployment-safety.test.mjs` and `fixture.mjs`; `src/promotion-gate.mjs`, `script/compile.mjs` and `script/deploy.mjs` are present; root `package.json` `verify` = `lint:deps && compile:contracts && typecheck && test` across workspaces. Doc 06 v2.4.3 (Approved) §3 records **95 passing contract tests** of 610 total. `npm run verify` no longer skips contract tests | No action outstanding. §1.2, §3, §11.2 and §16 updated to match | — (closed) |
 | **OPEN-18** _(new v1.1.0)_ | **The largest coverage gap in the plan, and it is not a testing omission.** `FR-074`…`FR-120` (47 Must) are covered by `TS-GOV2`'s 70 cases, of which **0 are automated and all 70 are Blocked or No mechanism**; 38 are *No mechanism* because `FR-074`…`FR-111` have **no `DES` assigned at all** (Doc 03 §16 deliberate phasing). Of `FR-121`…`FR-133` (13 Must), **seven have no suite anywhere** (`FR-121`, `125`, `126`, `127`, `128`, `129`, `133`; the bucketing rule and the 4 / 2 / 7 split are at §0.6). Of `RISK-22`…`RISK-32` (11), **three have only Blocked cases, one has a single unbuilt case, and seven have no case at all** — zero have passing evidence. §0.6 and §0.8 carry the item-by-item detail | A Gate-2 packet must state that **47 + 7 = 54 Must FRs and 11 RISKs have no passing evidence** — 47 with declared but unrunnable cases, 7 with no Definition-A suite at all. A suite that cannot run is coverage on paper. The unblocking sequence is design → build → test, in that order | Ravi Deshmukh (DES first), then Samuel Oyelaran (build), then Ji-woo Park (TC statuses) |
 | **OPEN-19** _(new v1.1.0)_ | The **DES-097(b) Postgres backing of `IPartyStore` is unbuilt**; the v1 store is the in-memory implementation returning `IS_INSECURE_MOCK = true` (Doc 03 §10.13.12). Consequences: (a) `NFR-028`'s named controls — `INSERT`-only grant on `membership_event`, the `archived_at` `BEFORE UPDATE` refusal, projection-equals-replay — **cannot be asserted**, so v1's append-only claim is a claim about one writer; (b) the deployment-safety promotion gate correctly **blocks promotion past devnet**; (c) `NFR-027`'s repo-wide behavioural-event scanner does not exist and the two green tests bound only two surfaces | Blocks §0.9 items 4, 6 and 7 — three hard v1 Gate-2 conditions. **No waiver is sought and none should be granted:** the gate is behaving correctly | Samuel Oyelaran |
-| **OPEN-20** _(new v1.1.0)_ | Doc 07 v2.4.4 disagrees with itself on two `TC` ranges: §2's suite table says `TS-PROPOSALS` = **TC-3542–TC-3563** and `TS-SCAFFOLD` = **TC-3470–TC-3488**, while §5.6's heading reads TC-3542–TC-3561 and §5.3's heading reads TC-3470–TC-3487 | §14 here reserves the **§2** ranges, because those are the ones the suite table and the case counts agree on. If the headings are authoritative instead, §14 must be re-cut. Doc 07 is the tester's document; this is recorded, not fixed here | Ji-woo Park |
-| **OPEN-21** _(new v1.1.0)_ | §1.3's "features not to be tested at v1" list is derived from **Doc 05 v1.0.0** §12 and Doc 05 is now at **v2.3.0 (In Review)**. Separately, `FR-050` has since been raised from Should to **Must** (Doc 02 §11, BR-019) and must not be carried forward as a Should by inheritance | The no-story list must be re-derived at the next backlog version before it is used to justify an RTM row being non-Must | Priya Raghunathan |
+| **OPEN-20** _(new v1.1.0; scope narrowed v1.6.0)_ | **Now stands on the `TS-PROPOSALS` half alone.** At **Doc 07 v2.6.0** §2's suite table says `TS-PROPOSALS` = **TC-3542–TC-3563** (22 cases) while its own §5.6 heading still reads **TC-3542–TC-3561** — a live self-disagreement in the tester's document. _(v1.6.0, cycle-1 ISS-02: this item read "Doc 07 v2.4.4 disagrees with itself on **two** `TC` ranges: §2's suite table says `TS-PROPOSALS` = **TC-3542–TC-3563** and `TS-SCAFFOLD` = **TC-3470–TC-3488**, while §5.6's heading reads TC-3542–TC-3561 and §5.3's heading reads TC-3470–TC-3487". **The `TS-SCAFFOLD` half is RESOLVED at Doc 07 v2.5.0/v2.6.0** — §5.3's heading now reads "(TC-3470–TC-3488, TC-3568)", matching §2 — and is retained here as the record of what §14 was reserved against. The item is **annotated, not closed**.)_ | §14 here reserves the **§2** ranges, because those are the ones the suite table and the case counts agree on. If the headings are authoritative instead, §14 must be re-cut. Doc 07 is the tester's document; this is recorded, not fixed here. **Still a v1 Gate-2 blocker on the surviving half** — the §13 blocker bullet is unchanged | Ji-woo Park |
+| **OPEN-21** _(new v1.1.0)_ | §1.3's "features not to be tested at v1" list is derived from **Doc 05 v1.0.0** §12 and Doc 05 is now at **v2.5.0 (Approved)** _(v1.4.0, cycle-1 ISS-05: this read "v2.3.0 (In Review)"; the staleness makes the finding **more** live, not less — the list is now five minor versions behind an **Approved** backlog)_. Separately, `FR-050` has since been raised from Should to **Must** (Doc 02 §11, BR-019) and must not be carried forward as a Should by inheritance | The no-story list must be re-derived at the next backlog version before it is used to justify an RTM row being non-Must | Priya Raghunathan |
 | **OPEN-22** _(new v1.1.0)_ | Four related items that belong to the project-manager and product owner, not the architect. (a) **Definition B has no committed date** anywhere in Doc 02 — §16 defines it but §11 commits only to the 2027-06-01 v1 release. (b) §2.2's ~35/30/20/15 **effort re-weighting** was cut against 16 risks and is not re-derived across 27 here, because the budget is Doc 13's (`CON-007`; 18 people; USD 4.2M). (c) `TS-UPG` needs a **seam-swap rehearsal** (Definition A → B behind DES-095/DES-096) before any v2 release; it does not exist. (d) `NFR-018` (party export / exit) is a **Should** but is the only structural check on a v1 operator who holds everything else — §0.9 treats it as a Must for v1 and the formal re-prioritisation is owed. (e) `NFR-025`'s v1 question — can a single operator delay one citizen's action beyond 60 minutes? — is untested and has a worse answer in v1 than in v2 | None of the five is decidable by the architect. Band **membership** (which determines blocking behaviour) *is* decided, at §2.2 | Ana-Maria Petrescu (a, b, c); Priya Raghunathan (d); Chen Wei (e) |
 | **OPEN-23** _(new v1.1.0)_ | **Definition A has no `TS-DIFF` analogue.** L3 is the highest-value level in the v2 plan because two independent implementations of the same rules can be compared. In v1 the rules run in `packages/protocol` and are consumed by one service; there is no second oracle. A narrow differential against the audit contract covers only the values that contract stores | **The single largest assurance difference between the two tracks, and it is not recoverable by effort.** The compensating controls are `packages/protocol` at 100% branch coverage and the `TS-V1-BALLOT` precision suite against the SQL `computeTally` path (§5.4, §0.4). Both are weaker than L3 and the Gate-2 packet must say so | Ravi Deshmukh |
 | **OPEN-24** _(new v1.1.0)_ | Three absent surfaces, verified 2026-08-31: `tests/e2e/` **does not exist** and no headless driver is selected, so **level V5 has no home and no runner**; `apps/verifier/` **does not exist**, so `NFR-019`'s "every published metric reproducible by the verifier" has **no v1 instrument**; `services/relayer/` does not exist | V5 is a §0.9 precondition for the v1 journey evidence. `NFR-019`'s v1 form must be restated as reproducibility from the published audit-record data, or the NFR's instrument must be built | Ji-woo Park (E2E harness), Samuel Oyelaran (driver + verifier), Yuki Sato (`NFR-019` restatement) |
 | **OPEN-25** _(new v1.1.0)_ | §6.1's **checked-in golden files do not exist**: there is no `.json` anywhere under `packages/contracts/test/`, so `test/absence/<Contract>.selectors.json` is unimplemented. The capability-absence *tests* do exist (`adversarial.test.mjs` performs selector and denylist scanning) but the control as specified — *"a human deliberately approved this new selector, and the diff is reviewable"* — is **not in force**; what is in force is an in-code assertion a reviewer must read the test to audit | §6.5 limit 2 already says the control is only as good as its review. Today there is nothing to review. Needed **before the `NF-02` audit freeze**, because the auditor's baseline is the snapshot | Samuel Oyelaran |
 | **OPEN-26** _(new v1.1.0)_ | Two `UT-####` register defects, found while reconciling §14. (a) **Doc 04's own `UT` reservation had failed completely** — it reserved UT-1000–1999 for contracts, UT-2500–2999 for SDK and UT-3000–3499 for ui/web, while Doc 06 v2.4.3 §3 actually uses contracts UT-0100…UT-0612, indexer UT-0500…UT-0525, web UT-0700…UT-0886, ui UT-0750…UT-0758, SDK UT-0760…UT-0848. §14 is re-cut at v1.1.0 to record the **actual** allocation rather than a fiction. (b) **Doc 06 v2.4.3 §3 contains an ID overlap:** its table assigns `UT-0841..0857` to **web** (party-creation web flow) and `UT-0832..0848` to **sdk** (ProposalService) — `UT-0841`…`UT-0848` is claimed by both. CLAUDE.md's ID scheme says IDs are never reused | (a) is fixed here. (b) is Doc 06's to rule on — recorded, not fixed, because Doc 06 is the engineer's document. Until it is ruled on, an RTM row citing a `UT` in that band is ambiguous about which package it refers to | Samuel Oyelaran |
+| **OPEN-27** _(new v1.5.0; lapse analysis completed v1.6.0)_ | **The `anon`-badge disposition that §0.5 S5's carve-out cites was reasoned against a voting-scoped FR-131, and FR-131 is no longer voting-scoped.** Doc 03 v2.13.0 §10.12.3 rules `STATE_CONFIG.anon.title` ("Anonymous") COMPLIANT in v1 on the basis that the badge renders only for open-tier users who cannot cast a binding vote, so it "is not describing that user's voting behaviour" but names a participation tier. Doc 02 **v2.17.0** FR-131 **clause (e)** (approver, 2026-09-06; carried unchanged into the Approved **v2.17.1**) extends the duty to **every v1 participation act**, expressly including **joining or belonging to a party** and **endorsing a petition** — two of the three contexts §10.12.3 **clause 8** itself names for the `anon` pill (screens 1.6 and 2.3). §10.12.3 separately **concedes** that the `anon` subtitle "Nothing you do here is linked to you" is **not literally true in v1**, and carries a standing condition that a subtitle variant MUST be considered if an honesty review establishes that a reasonable user does not read it as "publicly linked"; the 2026-09-06 ruling — which litigated exactly this claim class on the landing page — is such a review **of that copy, and it is why this item exists**. _(v1.6.0, cycle-1 ISS-04 — the sentence above engages the condition Doc 03 equates with **trigger (iv)**, so (iv) is disposed of here rather than left for a reader to draw the opposite conclusion from.)_ **No re-open trigger has fired. (iii)** is worded for an ***unconditional*** amendment and clause (e) is scoped, not unconditional. **(iv)** fires only where research or an honesty review "**shows**" open-tier members read the badge as a claim about how their vote is handled; the 2026-09-06 ruling examined landing-page copy and the FR-082 strings and took **no evidence about the badge**, so it raises the question without showing the reading. **(i)** and **(ii)** are untouched — the badge renders on no vote surface and FR-122/FR-123 are unamended. **The disposition has therefore NOT lapsed, and neither has S5's carve-out; this plan does not treat either as lapsed** | **Not a shipped-copy defect today:** `PrivacyStatus` has no authenticated host surface in `apps/web`, so no citizen currently sees the string; `packages/ui` is nevertheless inside S5's scan scope, and Doc 03 clause 8's own trigger is "before any screen rendering the `anon` pill in a non-vote context ships to production" — at which point this becomes a v1 Gate-2 blocker. **This is a copy ruling for the copy authority (Doc 03), not for this plan**: ruling it in the test plan would repeat the v2.7.0 mistake of a copy ruling living somewhere other than the copy authority. **What is owed is a fresh look, not a lapse**: the architect re-examines the `anon` title **and** subtitle against clause (e) at the next Doc 03 increment. Until then S5's carve-out stands, covering exactly the two `anon` strings and extended to nothing | Ravi Deshmukh (Doc 03 ruling); Nadia Hassan (the S5 scan once ruled) |
 
 ---
 
@@ -1697,7 +2372,7 @@ here** so numbering does not collide; the tester assigns the actual IDs.
 | `TS-EDGE` | Negative / edge | L0–L2 | SDD §11 failure modes; every custom error by name | TC-1000–TC-1199 | Engineer |
 | `TS-DIFF` | **Differential** | L3 | `protocol` vs contracts; `NFR-021`; every governance rule | TC-1200–TC-1399 | Engineer + Tester |
 | `TS-ZK` | Circuits (Z1–Z7) | L4 | `FR-001`–`FR-005`, `FR-030`–`FR-035`, `NFR-001`, `RISK-10` | TC-1400–TC-1599 | Rafael Duarte |
-| `TS-ABSENCE` | **Capability-absence** | L1/L2 + artifact scan | `FR-021`, `FR-035`, `FR-047`, `FR-051`, `FR-056`, `NFR-017`, `CON-003`, `CON-006` | TC-1600–TC-1799 | Rafael Duarte |
+| `TS-ABSENCE` | **Capability-absence** | L1/L2 + artifact scan | `FR-021`, `FR-035`, `FR-047`, `FR-051`, `FR-056`, `NFR-017`, `CON-003`, `CON-006`, **`FR-131` closing sentence** | TC-1600–TC-1799 **and TC-3569** *(v1.6.0: the out-of-block **TC-3569** maps `UT-0888` (the `MACI_VOTING` flag description) and was minted at Doc 07 v2.5.0; Doc 07 v2.6.0 §2 and its §4.3 heading both read "TC-1600–TC-1614, TC-3569". Actual use is TC-1600–TC-1614, 16 cases)* | Rafael Duarte |
 | `TS-ABI` | Contract / API | L1/L5 | ABI allowlist, indexer schema, SDK drift, public read interface | TC-1800–TC-1849 | Engineer |
 | `TS-SEC` | Security (authZ, negative-authority, pen) | L1–L6 | `NFR-009`, `FR-056` | TC-1850–TC-1949 | Rafael Duarte |
 | `TS-PRIV` | Privacy & data | L1–L6 | `NFR-001`, `NFR-002`, `NFR-010`, `NFR-024`, `FR-003` | TC-1950–TC-2049 | Dr. Lena Kowalczyk |
@@ -1712,19 +2387,34 @@ here** so numbering does not collide; the tester assigns the actual IDs.
 | `TS-EXIT` | Export / reconstitute (DR) | CI + devnet | `NFR-018`, `FR-055` | TC-2480–TC-2519 | Erik Lindqvist |
 | `TS-UPG` | Upgrade / migration | testnet | `NFR-017`, `FR-007`, ADR-010 | TC-2520–TC-2559 | Rafael Duarte |
 | `TS-SMOKE` | Post-deploy smoke | all envs | walking skeleton in < 5 min | TC-2560–TC-2579 | Tester |
-| `TS-ADV-01` … `TS-ADV-16` | **Adversarial, one per RISK** (Definition-B set) | mixed | `RISK-01` … `RISK-16` (§8) | TC-2600–TC-2799 *(narrowed at v1.1.0 from TC-2600–TC-3199; Doc 07 v2.4.4 §2's actual high-water mark is TC-2752)* | per §8 |
+| `TS-ADV-01` … `TS-ADV-16` | **Adversarial, one per RISK** (Definition-B set) | mixed | `RISK-01` … `RISK-16` (§8) | TC-2600–TC-2799 **and TC-3564–TC-3567** *(narrowed at v1.1.0 from TC-2600–TC-3199; Doc 07 v2.4.4 §2's actual high-water mark is TC-2752. **v1.6.0:** the four out-of-block ids **TC-3564–TC-3567** map `UT-0887` (the rendered, negation-aware FR-131(a) banner) and were minted at Doc 07 v2.5.0; Doc 07 v2.6.0 §2 and its §5 heading both read "TC-2600–TC-2752, TC-3564–TC-3567" — 47 cases)* | per §8 |
 | `TS-ADV-22` … `TS-ADV-32` | **Adversarial, one per RISK** (Definition-A set) | mixed | `RISK-22` … `RISK-32` (**§0.8**) | TC-2800–TC-3199 *(reserved at v1.1.0; none minted yet — OPEN-18)* | per §0.8 |
 | `TS-EXPL` | Exploratory charters | L7 | one charter per epic `EP-01`…`EP-10` | TC-3200–TC-3249 | Tester |
 | `TS-UAT` | User acceptance & usability | L7 | `NFR-022`, Doc 01 §B journey | TC-3250–TC-3299 | Grace Mbeki |
 | `TS-CR1` | Change-request regression & new-FR | L0–L6 + regression | `FR-062`–`FR-073`, `RISK-22`–`RISK-24` | TC-3300–TC-3399 | Ji-woo Park (tester) |
 | `TS-GOV2` | v2 governance catch-up | L0–L7 | `FR-074`–`FR-120`, `NFR-027`, `NFR-028`, `SC-15`–`SC-21` closure, Guarded Layer property tests | TC-3400–TC-3469 *(narrowed at v1.1.0 from TC-3400–TC-3499 to its actual use in Doc 07 v2.4.4 §2 — it never used TC-3470–TC-3499; 70 cases, all Blocked or No mechanism, OPEN-18)* | Ji-woo Park (tester) |
-| `TS-SCAFFOLD` | **Definition-A** — scaffold seam & design-system seed | V1/V3 | `FR-082`–`086`, `FR-122`–`124`, `FR-131`/`132`, DES-093…096, DES-100, ADR-023…025 | TC-3470–TC-3488 *(reserved retroactively at v1.1.0 — in use in Doc 07 since v2.2.1; 19 cases, 16 automated, 3 Blocked)* | Samuel Oyelaran |
+| `TS-SCAFFOLD` | **Definition-A** — scaffold seam & design-system seed | V1/V3 | `FR-082`–`086`, `FR-122`–`124`, `FR-131`/`132`, DES-093…096, DES-100, ADR-023…025 | TC-3470–TC-3488 **and TC-3568** *(reserved retroactively at v1.1.0 — in use in Doc 07 since v2.2.1; 19 cases, 16 automated, 3 Blocked. **v1.6.0:** the out-of-block **TC-3568** maps `UT-0759` (the backing-aware `ver` title, four paths) and was minted at Doc 07 v2.5.0; Doc 07 v2.6.0 §2 and its §5.3 heading both read "TC-3470–TC-3488, TC-3568" — 20 cases, 17 automated, 3 Blocked. **This agreement is why the `TS-SCAFFOLD` half of `OPEN-20` is closed**)* | Samuel Oyelaran |
 | `TS-PARTY` | **Definition-A** — party creation: protocol, service & web | V0/V1/V3 | `FR-010`/`011`/`012`/`013`/`018`/`020`/`077`/`130`, `BR-020`, DES-073/074/097/101 | TC-3489–TC-3516 **and TC-3541** *(reserved retroactively at v1.1.0; the out-of-block TC-3541 is the FR-077 adversarial amendment case minted at Doc 07 v2.3.2 — 29 cases, 28 automated, 1 No mechanism)* | Ji-woo Park |
 | `TS-MEMBERSHIP` | **Definition-A** — join / leave / membership history & counting | V1/V3 | `FR-020`/`022`/`064`/`122`/`123`/`130`/`131(b)(d)`, `NFR-023`, DES-013/065/095/097 | TC-3517–TC-3540 *(reserved retroactively at v1.1.0; 24 cases, 24 automated)* | Ji-woo Park |
 | `TS-PROPOSALS` | **Definition-A** — proposals & debate: tiers, authorship, lifecycle, trail | V0/V1/V3 | `FR-024`/`079`/`080`/`090`/`091`/`092`, `FR-122`/`123`, `NFR-003`/`023`, DES-085/095/103…106 | TC-3542–TC-3563 *(reserved retroactively at v1.1.0 against Doc 07 §2; §5.6's heading disagrees — OPEN-20. 22 cases, 22 automated)* | Ji-woo Park |
-| `TS-V1-BALLOT` · `TS-V1-NOTICE` · `TS-V1-ID` · `TS-V1-SPAM` · `TS-V1-AUDIT` · `TS-V1-ENROL` | **Definition-A** — the six unminted v1 suites (**§0.4**) | V1–V6 | `FR-121`/`125`/`126`/`128`/`129`/`131`/`132`/`133`, `FR-054`/`092`/`108`, DES-096/098/099/100, and the §6.4 negative-authority matrix in its conventional form | TC-3564–TC-3699 *(reserved at v1.1.0; none minted — each is blocked on unbuilt capability or on `CON-015`. OPEN-18)* | per §0.4 |
+| `TS-V1-BALLOT` · `TS-V1-NOTICE` · `TS-V1-ID` · `TS-V1-SPAM` · `TS-V1-AUDIT` · `TS-V1-ENROL` | **Definition-A** — the six unminted v1 suites (**§0.4**) | V1–V6 | `FR-121`/`125`/`126`/`128`/`129`/`131`/`132`/`133`, `FR-054`/`092`/`108`, DES-096/098/099/100, and the §6.4 negative-authority matrix in its conventional form | **TC-3570–TC-3699** *(v1.6.0, cycle-1 ISS-01: **narrowed from TC-3564–TC-3699**, which was reserved at v1.1.0 and annotated "none minted" — true of these six suites, false of the band, because Doc 07 v2.5.0 minted **TC-3564..TC-3569** into `TS-ADV-01…16`, `TS-SCAFFOLD` and `TS-ABSENCE`. **None of these six suites has minted an id**; each is still blocked on unbuilt capability or on `CON-015`. **OPEN-18.** The floor of the free band is **TC-3570** and is itself being drawn on by **Doc 07 v2.7.0, in progress** for the clause-(e) rows — this register states the floor it can verify and does not pin an id it cannot see)* | per §0.4 |
 
 > *TS-CR1 and TS-GOV2 rows reserved retroactively at v1.0.1: ranges TC-3300–TC-3399 and TC-3400–TC-3499 were already in use by Doc 07 (minted 2026-08-10 and 2026-08-11 respectively); this patch regularises them at source — recorded, not hidden. Trigger: Doc 07 v2.0.0 cycle-1 review ISS-04.*
+
+> **_(v1.6.0 — register reconciliation against Doc 07 v2.6.0 §2, cycle-1 ISS-01, Medium.)_** This
+> table's stated purpose is that **numbering does not collide**, so a row of it asserting a band it
+> does not own is a defect of the same class as a stale pin, not a cosmetic one. Four rows were
+> contradicted by the **Approved Doc 07 v2.6.0** that v1.5.0 itself re-pinned, because that version
+> advanced the pin without re-reading the body statements depending on Doc 07's *content*. The six
+> ids Doc 07 minted at its v2.5.0 are now recorded where they actually live: **TC-3564–TC-3567**
+> (`TS-ADV-01…16`, mapping `UT-0887`), **TC-3568** (`TS-SCAFFOLD`, mapping `UT-0759`), **TC-3569**
+> (`TS-ABSENCE`, mapping `UT-0888`) — the FR-131 honesty drop, spread across three suites rather
+> than one. **This document mints no `TC` and re-statuses none**: it records ids the tester owns and
+> narrows a reservation it owns itself. **This is the register's second drift into fiction** — the
+> first was closed at v1.1.0 as a **High** (`OPEN-26`(a)) — and the standing remedy is the same one
+> applied then: record the **actual** allocation, not the intended one. **Standing instruction:**
+> any future version that advances the Doc 07 pin MUST re-read this table against Doc 07 §2 in the
+> same touch.
 
 **`UT-####` allocation (engineer, Doc 06) — re-cut at v1.1.0.** The v1.0.x reservation
 (UT-1000–1999 contracts · UT-2500–2999 SDK · UT-3000–3499 ui/web · UT-3500–3999 services) **failed
@@ -1963,7 +2653,7 @@ exists**, because conflating the two is how coverage-on-paper reaches a gate.)_
 
 | Role | Name | Decision | Date | Notes |
 |---|---|---|---|---|
-| Architect (Accountable, author) | **Ravi Deshmukh** | Submitted for review | 2026-08-31 | **v1.1.0, Status: In Review.** Rework cycle 1 against the v1.0.2 technical review (FAIL 46%; 2C/2H/2M/1L). ISS-01…ISS-07 all addressed. _(v1.0.0 was submitted 2026-08-09 under an incorrect `Owner:` line naming Priya Raghunathan as Principal Architect; Doc 02 §2.7 lists her as Product Owner and Doc 03 names Ravi Deshmukh as Principal Architect — corrected here per ISS-04, `OPEN-09` re-scoped.)_ |
+| Architect (Accountable, author) | **Ravi Deshmukh** | Submitted for review | 2026-09-06 | **v1.6.0, Status: In Review.** Rework **cycle 2 of 5** against the v1.5.0 technical review (FAIL 92%; 0 Critical / 0 High / 1 Medium / 5 Low; reviewer: reviewer-qa, Rafael Duarte — neutral, PM-assigned). All six findings taken on this touch, none carried: **ISS-01 (Medium)** — §14's `TC`-range reservation register reconciled against **Doc 07 v2.6.0 §2** (TC-3564–TC-3567 → `TS-ADV-01…16`, TC-3568 → `TS-SCAFFOLD`, TC-3569 → `TS-ABSENCE`; the `TS-V1-*` reservation narrowed to **TC-3570–TC-3699**), with its three echoes at §0.4, the v1.1.0 changelog entry and Downstream; **ISS-02** — `OPEN-20` narrowed to the surviving `TS-PROPOSALS` half and deliberately left **open** and gate-blocking; **ISS-03** — `UT-0889` re-stated as **landed and green** (25/25, executed by the cycle-1 reviewer on 2026-09-06; registered in Doc 06 at v2.6.0, unchanged at **v2.7.0 In Review**) at all three mentions; **ISS-04** — Doc 03's re-open trigger **(iv)** disposed of by name in both §0.5 S5 and `OPEN-27`, completing the not-lapsed conclusion; **ISS-05** — S4's carve-out count scoped before it is stated; **ISS-06** — §1.4 re-wrapped. **Pins swept to HEAD before submission** rather than left for the next reviewer to catch: **Doc 02 → v2.17.1 (Approved)**, clause (e) unchanged plus its §8 Scenarios 8 and 9; **Doc 06 → v2.7.0 (In Review)**, last Approved v2.5.1; Doc 07 v2.6.0 and Doc 08 v2.9.0 Approved. **No `TC`, `UT`, `US` or `OPEN-##` is minted, renumbered or reused; no test status is upgraded.** The clause-(e) substance is **not re-opened**, per the review's routing instruction. _(Row history: **v1.5.0** was submitted 2026-09-06 and **FAILed cycle 1 at 92%** on one Medium — the `TC`-register drift this version closes. It was not a rework cycle but a **requirement cascade**: FR-131 **clause (e)** was ruled in by the approver on 2026-09-06 and applied as Doc 02 v2.17.0, so the question §0.5 S4 routed to the product-owner at v1.4.0 is answered and S4/S5 are re-cut to the amended closing sentence. The notice-clause range stays **(a)–(d)**; clause (e) is scanned at S5 and guarded by **UT-0889 (Doc 06 v2.6.0)** and **UT-0869**, not by a fifth notice assertion. The S5 `anon`-badge carve-out is annotated and the copy question it raises is routed to Doc 03 as **OPEN-27** rather than ruled here. **All three v1.4.0 Lows discharged** (ISS-C2-01, ISS-C2-02, ISS-C2-03) with two further stale pins swept; none carried. `TC` re-cut owed from the tester at Doc 07 v2.7.0 / Doc 08 v2.10.0. **v1.4.0** was submitted 2026-09-06 and Approved at PASS 96% (0C/0H/0M/3L) — rework cycle 1 against the v1.3.0 technical review (FAIL 89%; 0C/0H/2M/6L): §0.5 S4's clause range corrected to (a)–(d) and annotated with the PO routing; the S4/S5 correctness over-claim withdrawn from the Status block and annotated in the v1.3.0 changelog entry; all six Lows taken rather than carried. **v1.3.0** was submitted 2026-09-06 — the FR-131 cascade that corrected `A-02.6` and `OPEN-01` off the retired "votes are anonymous but not receipt-free" framing and closed `ISS-10`; cycle 1 verified both corrections and they are not re-opened. **v1.2.0** was Approved on the cycle-3 review, PASS 98%, 0C/0H/0M/1L — the surviving Low being that this row still described v1.1.0, which v1.3.0 closed; keeping this row current at every version is the standing discipline that Low bought. **v1.1.0** was submitted 2026-08-31, rework cycle 1 against the v1.0.2 technical review (FAIL 46%; 2C/2H/2M/1L), ISS-01…ISS-07 all addressed. **v1.0.0** was submitted 2026-08-09 under an incorrect `Owner:` line naming Priya Raghunathan as Principal Architect; Doc 02 §2.7 lists her as Product Owner and Doc 03 names Ravi Deshmukh as Principal Architect — corrected at v1.1.0 per ISS-04, `OPEN-09` re-scoped.)_ |
 | reviewer-qa (independent) | _pending_ | | | Testability of all Must rows; the `OPEN-##` list |
 | Engineering | _pending_ | | | §11.2 required-tooling ownership; `OPEN-17` |
 | SRE | _pending_ | | | Environments §11.1; `NF-06`, `NF-07` |
@@ -1976,17 +2666,40 @@ exists**, because conflating the two is how coverage-on-paper reaches a gate.)_
 
 Suites defined here become cases in **Doc 07 (Test Cases)** and are mapped in **Doc 08 (RTM)**. The
 unit-test standard and the physical repository structure were built at the start of Coding in
-**Doc 06** (Approved v2.4.3), before feature code — `packages/contracts`'s test workspace is now real
-and **`OPEN-17` is closed**.
+**Doc 06** (Approved **v2.5.1**; re-pinned at v1.3.0 from the stale v2.4.3 pin), before feature code
+— `packages/contracts`'s test workspace is now real and **`OPEN-17` is closed**. Doc 06 v2.5.0/v2.5.1
+carry the FR-131 code drop and the regression guards this plan cites at `A-02.6`: **UT-0887**
+(rendered banner, negation-aware), **UT-0888** (flag description), **UT-0759** (`ver` title,
+four paths). `TC` mints for these remain owed from Doc 07.
+
+_(v1.5.0.)_ **FR-131 clause (e) adds one guard and one owed re-cut, and nothing else.** The guard is
+**UT-0889**, registered in **Doc 06 v2.6.0** and asserting the landing copy in
+`apps/web/test/safety-surfaces.test.tsx` in the **UT-0869** pattern (en source strings, the rendered
+page, and the Arabic mirror). It is **landed and green** — 25/25 pass, executed independently by the
+cycle-1 reviewer on 2026-09-06 — and is **registered in Doc 06, minted at v2.6.0 and unchanged at
+v2.7.0 (In Review)**. _(v1.6.0, cycle-1
+ISS-03: this read "It is cited here as **owed-and-in-progress, not green** — the engineer
+mints it in the same 2026-09-06 session, and this plan upgrades no status on a test it has not seen
+pass." Accurate when written, an under-claim once the guard landed. The rule it states is unchanged
+and is satisfied here by a named, dated, independently executed run.)_ The owed re-cut is still the
+tester's: clause-(e) rows at **Doc 07 v2.7.0** and **Doc 08 v2.10.0**,
+under the existing story **US-0134** (FR-131 · DES-098) — the 2026-09-06 decision record mints no
+new `US`, and this plan mints no `TC`. FR-131's Doc 08 Must row stays **OPEN** until that re-cut
+closes it.
 
 _(v1.1.0.)_ What Doc 06 and Doc 07 still owe this plan: the harness `storageLayout` extension that
 §6.3 depends on; the `TS-ABSENCE` golden files that §6.1 specifies and that do not exist
 (**OPEN-25**); the DES-097(b) Postgres backing without which `NFR-028`'s named controls cannot be
 asserted and the promotion gate cannot pass (**OPEN-19**); the `tests/e2e` harness and driver that
 level V5 needs (**OPEN-24**); and `TC` mints for the six Definition-A suites reserved at
-TC-3564–TC-3699 and the eleven adversarial suites reserved at TC-2800–TC-3199 (**OPEN-18**).
+**TC-3570–TC-3699** and the eleven adversarial suites reserved at TC-2800–TC-3199 (**OPEN-18**).
+_(v1.6.0, cycle-1 ISS-01: this read "reserved at TC-3564–TC-3699"; Doc 07 v2.5.0 minted
+TC-3564..TC-3569 into `TS-ADV-01…16`, `TS-SCAFFOLD` and `TS-ABSENCE`, so the free band begins at
+TC-3570 — see §14.)_
 
 **Two documents carry an item back from this rework.** Doc 07 v2.4.4's §2-vs-§5.3/§5.6 range
-disagreement is **OPEN-20** (Ji-woo Park). Doc 06 v2.4.3 §3's `UT-0841`…`UT-0848` overlap between
+disagreement is **OPEN-20** (Ji-woo Park) — _(v1.6.0, cycle-1 ISS-02: **the §5.3 / `TS-SCAFFOLD`
+half is resolved at Doc 07 v2.6.0**; `OPEN-20` now stands on the §5.6 / `TS-PROPOSALS` half alone
+and remains open and gate-blocking on it)_. Doc 06 v2.4.3 §3's `UT-0841`…`UT-0848` overlap between
 `apps/web` and `packages/sdk` is **OPEN-26** (Samuel Oyelaran). Neither is fixed here — each is the
 owning role's to rule on.

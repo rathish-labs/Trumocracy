@@ -28,7 +28,8 @@ an agent definition.
 ## Why these were not submitted from this session
 
 `scripts/contribute-learning` clones the org repo and **opens a pull request** against
-`https://github.com/rrathishk/vektor.git`. That is an outward-facing action on a different
+the vektor org repo (its URL is no longer hard-coded: pass `--vektor` or export `VEKTOR_ORG_REPO`;
+depersonalised 2026-09-06). That is an outward-facing action on a different
 repository, and this session's instruction was **"Commit; do not push."** Firing two PRs at an
 external repo would contradict that instruction, so both rows are prepared here and the exact
 commands are given below for whoever chooses to send them.

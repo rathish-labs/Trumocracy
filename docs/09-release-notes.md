@@ -2,28 +2,376 @@
 
 ```
 Document ID:   REL-trumocracy-0.1.0
-Version:       1.4.0            (document version; SemVer)
+Version:       1.9.0            (document version; SemVer)
 Release:       0.1.0            (Phase-1 walking skeleton, public testnet)
-Status:        Approved — 09-release-notes-v1.4.0-business-cycle4.md (PASS 97%, 0C/0H/0M/2L;
-               reviewer: tester, neutral, PM-assigned). Loop closed INSIDE the 5-cycle cap at
-               cycle 4: 77% → 89% → 94% → 97%. Two Lows survive and are accepted on this
-               version: the unresolvable `REF-##` citations (PM-accepted across all four
-               cycles, owed by the sre at the next Operate cycle) and the §0 staleness fixed
-               in this same edit. **This PASS closes the document-review loop only — it is
-               NOT a Gate-2 sign-off, and it is NOT a release authorisation. This document's
-               own verdict on release 0.1.0 remains HALTED (§0, §7).**
+Status:        Approved — 09-release-notes-v1.9.0-business-cycle5.md (PASS 97%, 0C/0H/0M/4L;
+               reviewer: tester, neutral, PM-assigned). Loop closed ON the cap: cycle 5 of 5, no
+               escalation entered (v1.5.0 93% → v1.6.0 93% → v1.7.0 92% → v1.8.0 94% → v1.9.0 97%).
+               Four Lows carried — **fix first on any future touch:** ISS-C5-01 (v1.9.0 history
+               entry welded to the v1.8.0 header at lines ~76-77 — a relocated `>` separator),
+               ISS-C5-02 (narrowed "single place" sentence lists Doc 03 then excepts it),
+               ISS-C5-03 (the Doc 06 pin also appears at the REL-LIM-18 row, the internal record
+               and §7 — under-counted exceptions), ISS-L1 (unresolvable `REF-##` citations, owed
+               by the sre at the next Operate cycle). Previously: In Review — v1.9.0, rework **cycle 5 of 5 — the cap** against
+               artifacts/reviews/09-release-notes-v1.8.0-business-cycle4.md (business, cycle 4 —
+               **FAIL 94%, 0 Critical / 0 High / 2 Medium / 2 Low**; reviewer: tester, neutral,
+               PM-assigned). Loop position: v1.5.0 FAIL 93% (cycle 1) → v1.6.0 FAIL 93%
+               (cycle 2) → v1.7.0 FAIL 92% (cycle 3) → v1.8.0 FAIL 94% (cycle 4) →
+               **v1.9.0, cycle 5 of 5, not yet reviewed. This is the cap: if cycle 5 does not
+               clear the bar the verdict becomes ESCALATED and the surviving issues go to the
+               human approver for a recorded decision (approve-as-is / rework / reject).** The
+               predecessor v1.4.0 closed its own loop at PASS 97% on cycle 4 — a fact about
+               v1.4.0, not about the current version. Carried Low: the unresolvable `REF-##`
+               citations (PM-accepted across eight cycles, still owed by the sre at the next
+               Operate cycle). **No
+               document-review PASS on this document is a Gate-2 sign-off, and none is a release
+               authorisation. This document's own verdict on release 0.1.0 remains HALTED
+               (§0, §7), and the code fix v1.5.0 records is merged to trunk and deployed
+               nowhere.**
 Owner:         Chen Wei — Reliability Lead (sre), Doc 13 §7.1
 Source:        SRS-TRUMOCRACY §4.45 FR-131 · §4.46 FR-132 · §4.41 FR-122/FR-123 (docs/02-requirements-srs.md) ·
                UG-TRUMOCRACY v2.3.0 §1.2, §2.3, §2.6, §4.3 (docs/14-user-guide.md, Approved) ·
+               Doc 06 v2.5.1 §7 item 26 (docs/06-coding-and-ut.md, Approved) · commit 0a5c542 (PR #19) ·
                packages/protocol/src/flags.js · packages/contracts/src/core/* ·
                packages/contracts/src/mocks/MockVerifier.sol · packages/sdk/src/party-creation.js ·
-               apps/web/src/i18n/en.ts · apps/web/src/components/PartyMembership.tsx ·
+               packages/sdk/src/client.js · packages/ui/src/PrivacyStatus.tsx ·
+               apps/web/src/i18n/en.ts · apps/web/src/i18n/ar.ts ·
+               apps/web/src/components/ReceiptFreedomBanner.tsx ·
+               apps/web/src/components/PartyMembership.tsx ·
                apps/web/src/components/ProposalsAndDebate.tsx · Doc 03 §5.2, §7 · Doc 13 §3.1, §9
-Last updated:  2026-09-02
+Last updated:  2026-09-06
 ```
 
 > **Based on:** Keep a Changelog + Semantic Versioning. **Produced in:** Launch. **Approved at:** Gate 2.
 > Customer-facing section is plain language; the internal record carries the facts and traceability.
+>
+> **Document history — v1.9.0 (2026-09-06).** Rework **cycle 5 of 5 — the cap** against
+> `artifacts/reviews/09-release-notes-v1.8.0-business-cycle4.md` (business, cycle 4 — **FAIL 94%,
+> 0 Critical / 0 High / 2 Medium / 2 Low**). The review confirmed **all four cycle-3 issues closed**
+> and **zero transcription residue** — the boundary rule the v1.8.0 spec enforced mechanically held
+> across all 13 ops. Three changes, and deliberately nothing else, because a cycle-5 failure
+> escalates to the human approver:
+>
+> - **`ISS-C4-01` (Medium) — the §0 snapshot quoted two different exit codes for one command.** It
+>   read "`node hooks/run_gates.cjs --audit` **(exit 1)**: **0 documents blocking**" and, sixty
+>   words later, "The audit exits **0**." The parenthetical was copied through when v1.8.0 rewrote
+>   the count from 2 to 0; with zero blocking documents the hook exits 0, so the two cannot both be
+>   outputs of one run. **`(exit 1)` is deleted, and the exit code is now stated exactly once**, in
+>   the closing sentence — the same "state it in one place" remedy that closed `ISS-C2-01` and
+>   `ISS-C3-03`. Re-derived at publication: `--audit` exits **0**, **0 documents blocking**.
+>   This was rule 1 of this document's own method ("execute every command it quotes and confirm the
+>   output matches the claim") failing on a line the same op had rewritten.
+> - **`ISS-C4-02` (Medium) — a structural claim made more broadly than the change.** v1.8.0 said the
+>   §0 snapshot is "the **single** place in this document where another document's current version
+>   is pinned". That is true of Docs 07 and 08, whose five sites were rewritten; it is **false** of
+>   Docs 06 and 14, whose current versions are stated bare four rows above in §0 and again in
+>   §Links, and of Doc 03, which §7 names inside a dated withdrawal. **The claim is narrowed to what
+>   was actually done, at both sites that make it**, and the exceptions are disclosed by name rather
+>   than removed — Docs 06 and 14 have not moved since their last approval, so restating them where
+>   they are used is not the drift risk the change was aimed at.
+> - **`ISS-C4-03` (Low, fixed).** The internal record's append-only review-loop history stopped one
+>   closed fact short: v1.7.0's verdict was missing while every earlier entry carried its own.
+>   v1.7.0 **FAIL 92%** and v1.8.0 **FAIL 94%** are appended, and v1.9.0 opened.
+>
+> **`ISS-L1` (Low) is carried** for an eighth cycle — `docs/refine-log.md` is still the unfilled
+> template with zero `REF-` entries. PM-accepted; owed by the sre at the next Operate cycle.
+>
+> **Nothing else is touched.** The `REL-LIM-18` closure, the `FR-131` word ban, the HALTED /
+> deployed-nowhere posture, the changelog record, the §0 durable-claims structure and every
+> boundary repair made at v1.8.0 were all verified correct at cycle 4 and are unchanged. **The
+> release verdict is unchanged: HALTED, Gate 2 not approved** (§0, §7); the fix remains **merged to
+> trunk and deployed nowhere**. Authored by the sre as an anchored FIND/REPLACE spec
+> (`artifacts/sre-2026-09-06T2100-doc09-cycle5-spec.md`).
+> **Document history — v1.8.0 (2026-09-06).** Rework cycle 4 of 5 against
+> `artifacts/reviews/09-release-notes-v1.7.0-business-cycle3.md` (business, cycle 3 — **FAIL 92%,
+> 0 Critical / 0 High / 3 Medium / 2 Low**). The review confirmed **all four cycle-2 Mediums and all
+> three cycle-2 Lows closed at source**, re-executed every command this document quotes and
+> reproduced every claim, re-ran the suite (**619 green, exit 0**), and found the `REL-LIM-18`
+> closure unregressed and the `FR-131` word ban clean for a **sixth** consecutive version. None of
+> that is touched here.
+>
+> **Two of the three Mediums were damage this document's own rework spec did to the file**, and they
+> are the most serious finding in this loop so far, because they are not judgement calls:
+> **`ISS-C3-01`** and **`ISS-C3-02`** are the same boundary error, twice. In each case the spec's
+> `FIND` block **dropped the first line it consumed** and **appended a line it never consumed**. The
+> applier did exactly what it was told, so four defects reached the published file:
+>
+> - the template provenance line **`> **Based on:** Keep a Changelog + Semantic Versioning…`** was
+>   **silently deleted** — from a document whose declared discipline is annotate-don't-delete, while
+>   every other governed document still carries its equivalent. **Restored verbatim here.**
+> - `> **Document history — v1.6.0 (2026-09-06).** Rework cycle 2 against` was **duplicated**.
+>   One copy deleted.
+> - §7's routing sentence was **truncated to "(routed" with an unclosed parenthesis**, losing two
+>   recorded facts: that `REL-LIM-18` was re-scoped from three sites to five, and that it *came back
+>   fixed*. **The whole sentence is restored, with both facts.**
+> - `**no longer routed to anyone**: it is closed…` was **duplicated**. One copy deleted.
+>
+> **Why the v1.7.0 self-check missed all four, and what replaces it.** That spec's self-check ended
+> with "a simulated applier was run over a copy: all 12 ops parsed and applied cleanly" — true, and
+> exactly the trap the reviewer named: *a clean apply proves the anchors matched; it proves nothing
+> about whether the result reads correctly.* Three mechanical checks now run **before** a spec is
+> finalised, and they are enforced in the builder rather than left to attention:
+>
+> 1. **Every line a `FIND` consumes must reappear verbatim in its `REPLACE`**, unless the op's
+>    intent line says "delete" and names it. Multiplicity counts, so a duplicated line cannot be
+>    silently created or dropped.
+> 2. **`REPLACE[0]` must equal `FIND[0]` and `REPLACE[-1]` must equal `FIND[-1]`**, unless the op
+>    records a reason. This is the single check that catches both of this version's Mediums.
+> 3. **An adjacent-duplicate scan and a `grep` for the template's own header lines run over the
+>    produced file** — not over the ops. All four v1.7.0 symptoms were visible to a plain read of
+>    the file around lines 108, 1071 and 1080, and to `grep -n "Based on:"`.
+>
+> The third Medium, **`ISS-C3-03`**, is the signature class once more and a two-word fix: the
+> §Changelog preamble said the tables carry "three branch-side rows" while the closing paragraph of
+> the same section said "two" — and two is right (the tables hold 16 rows: 14 on-`main` plus
+> `c04b4f2` and `31b6df9`). "Three" was inherited from a v1.6.0 sentence that counted *commits*, and
+> was not re-tested when the sentence was rewritten to count *rows*. Fixed by applying the lesson
+> `ISS-C2-01` was closed on: **the count is now stated in exactly one place** — the "Scope of the
+> record" paragraph — and the preamble refers to it instead of restating it.
+>
+> **`ISS-C3-04` (Low, fixed).** Three sites said the fix was "merged to `main` … on 2026-09-05".
+> `0a5c542` and `b6be070` were *authored* 2026-09-05; the squash commit `84e2203` reached `main` on
+> **2026-09-06**, as this document's own changelog row says. All three now state both dates, or the
+> SHA. **`ISS-L1` (Low) is carried** for a seventh cycle — `docs/refine-log.md` is still the
+> unfilled template with zero `REF-` entries; PM-accepted, owed by the sre at the next Operate
+> cycle.
+>
+> **One structural change, made because this is the fourth version in a row to fail on a stale or
+> duplicated cross-document fact.** §0's volatile snapshot is now the single place in this document
+> where the current version of a document **whose review state was in motion this week** — Docs 03,
+> 04, 07 and 08 — is pinned. For Docs 07 and 08 the change is complete: §0's other rows, the
+> internal record, the §Links table and §7 now carry only **durable** facts — last-approved
+> versions, and figures that do not move (122 of 138 Must rows OPEN is unchanged across Doc 08
+> v2.7.0, v2.8.0 and v2.9.0; 619 green at `HEAD`) — and refer to the snapshot for anything that
+> does. Five sites that could drift apart became one that cannot. *(v1.9.0 narrows this paragraph:
+> v1.8.0 claimed the snapshot was the single place **any** other document's current version is
+> pinned, which is false — the document falsifies it four rows below. Two exceptions stand, and are
+> disclosed rather than removed. **Docs 06 and 14 are not covered:** their versions have not moved
+> since their last approval, so they are stated where they are used — in §0's own precondition
+> rows, in §Links and in the header `Source:` block — as well as in the snapshot. And **§7 names
+> Doc 03 v2.13.0** inside a dated withdrawal that tells the reader to re-derive rather than trust
+> it. Per `09-release-notes-v1.8.0-business-cycle4` `ISS-C4-02`.)* The reviewer's addendum to
+> cycle 3 demonstrated the need: its own audit table went stale inside two hours, while its durable
+> conclusions did not.
+>
+> **The release verdict is unchanged: HALTED, Gate 2 not approved** (§0, §7). The `REL-LIM-18`
+> closure stands, and the fix remains **merged to trunk and deployed nowhere**. Authored by the sre
+> as an anchored FIND/REPLACE spec (`artifacts/sre-2026-09-06T1900-doc09-cycle4-spec.md`).
+>
+> **Document history — v1.7.0 (2026-09-06).** Rework cycle 3 against
+> `artifacts/reviews/09-release-notes-v1.6.0-business-cycle2.md` (business, cycle 2 — **FAIL 93%,
+> 0 Critical / 0 High / 4 Medium / 3 Low**). The review re-derived the `REL-LIM-18` closure against
+> source and found it **clean and not regressed** — all eight post-fix pins line-exact, the three
+> guards present, 619 green re-run independently, the component still unmounted, the `FR-131` word
+> ban clean for a fifth consecutive version, the HALT never softened — and found **no transcription
+> residue** in any of the 14 cycle-2 ops. It also confirmed all three cycle-1 Mediums and `ISS-L2`
+> closed at source. **None of that is reopened or weakened here.**
+>
+> All four new Mediums are the same class, now **five-for-five**: a statement of scope, currency or
+> provenance published as exact, above records that do not bear it out. Two were *created by the ops
+> that closed cycle 1*, and one appeared *inside the remedy chosen for the class*. Closed here:
+>
+> - **`ISS-C2-01` (Medium) — the document stated two different versions of itself.** The internal
+>   record's "Document version" cell still read `1.5.0` against a `1.6.0` header — the same cell
+>   v1.5.0 had rewritten with the words "corrected here", stale again one version later. **The
+>   duplicate is deleted, not re-synchronised:** the cell now points at the header `Version:` field
+>   as the single source of truth and keeps only an append-only review-loop history of closed facts.
+>   A fact stored twice drifts; this one drifted twice.
+> - **`ISS-C2-02` (Medium) — the remedy was an instance of the disease.** The paragraph that
+>   replaced the withdrawn "complete as of `HEAD`" claim offered
+>   `git log --no-merges e039ff2..HEAD -- packages apps` as the re-derivation. **It returns 2 of the
+>   14 rows**, because `e039ff2` is not on `main` — which the same paragraph says three sentences
+>   earlier. Replaced at **both** sites (§Changelog and the v1.6.0 "On method" paragraph) with
+>   `git log --no-merges --oneline HEAD -- packages apps`, **executed before publishing**: it
+>   returns exactly the 14 on-`main` commits the tables list. The old command is retained, labelled
+>   as what it actually was — the delta that found the two missing rows.
+> - **`ISS-C2-03` (Medium) — a heading falsified by rows added beneath it in the same version.**
+>   "Definition-A (v1) application — 2026-08-25 → 2026-08-29", with "deliberately **not** described
+>   as release content", now sat above `1c589c8` (2026-09-05) and `84e2203` (2026-09-06) — the
+>   latter being the commit this document describes in five separate sections. Range widened to
+>   2026-09-06 and the caveat re-scoped to the five v1 application rows it was written for, with
+>   `84e2203` named as the explicit exception.
+> - **`ISS-C2-04` (Medium) — incomplete squash provenance.** The `84e2203` row said the squash
+>   carries `0a5c542`. **PR #19's branch carries two commits:** `0a5c542` and `b6be070`
+>   (`chore(infra): untrack the TypeScript incremental build cache`), and `84e2203`'s diff contains
+>   both — three `.gitignore` lines and the deletion of the tracked `apps/web/tsconfig.tsbuildinfo`,
+>   neither of which is in `0a5c542`. A reader following this document's own
+>   reconstruct-from-the-branch-commit instruction would get a diff that does not match. Both
+>   commits are now named, in the row and in the preamble's branch-side list; `b6be070` is an
+>   infrastructure chore, so the row's "no behaviour change" characterisation still holds.
+> - **`ISS-C2-05`, `ISS-C2-06` (Low, both fixed).** Two cross-document pins had gone stale the same
+>   day: §7 said Doc 03 "has not yet cleared its document-review" (it has since reached v2.13.0 and
+>   **passed** cycle 2), and §0 pinned Docs 03/04 as two of four blockers (both have since passed;
+>   **two** documents block now, not four). Rather than re-pin and wait to go stale a third time,
+>   **both sites now separate the durable fact from the volatile one** — §7 keeps "the cascade was
+>   delivered" and withdraws the review-state claim; §0 leads with what does not move (this document
+>   has no passing report; Docs 10–12 have none at all) and demotes the per-document pins to an
+>   explicitly volatile, dated, command-reproducible snapshot.
+> - **`ISS-C2-07` (Low, fixed).** The ragged wrapping introduced in §7 halt reason 1 is re-wrapped.
+>
+> **`ISS-L1` (Low) is carried** for a sixth cycle: `REF-02` and `REF-04`…`REF-10` still do not
+> resolve — `docs/refine-log.md` is the unfilled template with zero `REF-` entries. PM-accepted;
+> owed by the sre at the next Operate cycle. No `REF-##` was opened for `REL-LIM-18`, which was a
+> pre-release honesty defect caught by document review, not a production signal.
+>
+> **On method, cycle 3 — what changed, since checking summaries was not enough.** v1.6.0 checked
+> its summaries conscientiously and still shipped four instances of the class, because it checked
+> the sentences it *inherited* and not all of the ones it *wrote*. Three rules were applied here:
+>
+> 1. **Execute every command this document quotes**, and confirm the output matches the claim
+>    attached to it. That alone would have caught `ISS-C2-02` — and it did catch a stale
+>    four-blockers claim in §0 before this version was published.
+> 2. **After adding a row to any table, re-read the heading above it and the paragraph below it.**
+>    That is where `ISS-C2-03` and `ISS-C2-04` were born.
+> 3. **Prefer deleting a duplicated fact to synchronising it, and separate durable claims from
+>    volatile pins.** A version number stored in two places will drift; a cross-document review
+>    state pinned in prose will go stale within the day.
+>
+> **The release verdict is unchanged: HALTED, Gate 2 not approved** (§0, §7). The `REL-LIM-18`
+> closure stands, and the fix remains **merged to trunk and deployed nowhere**. Authored by the sre
+> as an anchored FIND/REPLACE spec (`artifacts/sre-2026-09-06T1700-doc09-cycle3-spec.md`).
+>
+> **Document history — v1.6.0 (2026-09-06).** Rework cycle 2 against
+> `artifacts/reviews/09-release-notes-v1.5.0-business-cycle1.md` (business, cycle 1 — **FAIL 93%,
+> 0 Critical / 0 High / 3 Medium / 2 Low**; reviewer: tester, neutral, PM-assigned). The review
+> verified every substantive claim v1.5.0 makes about the `REL-LIM-18` fix against source — the
+> commit, all six sites, every post-fix line pin, the three regression guards, the 619-green suite,
+> the still-unmounted component, the `FR-131` word ban, the halt, and the verbatim
+> annotate-don't-delete treatment of the register row — and found **no false claim about the fix**
+> and **no transcription residue**. **Nothing in the closure narrative is re-litigated or weakened
+> here.**
+>
+> What failed was a fourth instance of this document's oldest defect: **a sentence claiming a sweep
+> or a record is complete, sitting above rows that are correct but not exhaustive.** All three
+> Mediums are that class, and all three are **authoring** omissions — none of the eleven ops in
+> `artifacts/sre-2026-09-06T1000-rel-lim-18-spec.md` touched the affected lines, and the
+> transcription was clean. Closed here:
+>
+> - **`ISS-01` (Medium) — a false statement inside a Gate-2 precondition cell.** §0's
+>   `document-review` row still said this document "now carries one for its **current version**",
+>   citing the v1.4.0 report; the version bump to 1.5.0 had already falsified it. The cell now
+>   states the true loop position (v1.5.0 FAIL 93% at cycle 1; v1.6.0 cycle 2 pending) and, rather
+>   than the stale roll-up "Docs 01–08, 13 and 14 each carry a passing report", **enumerates** the
+>   current audit: four documents (03, 04, 07, 08) carry cycle-1 reports that **failed the bar**
+>   and Docs 10–12 carry none at all. The verdict hardens from "Partially met"
+>   to **Not met**.
+> - **`ISS-02` (Medium) — the Doc 06 re-pin reached two of three sites.** The §Links table still
+>   pinned Doc 06 at v2.4.3 while §0 and the internal record said v2.5.1 — the same document
+>   asserting two current versions of another. Re-pinned, **and** the v1.5.0 change note that
+>   claimed "two stale facts corrected in passing" is annotated in place to say there was a third.
+>   Since the Links table was already being corrected, its **Doc 07 and Doc 08 pins were checked
+>   too** and were stale by the same class (v2.4.4/v2.7.0 Approved → v2.5.0/v2.8.0 In Review).
+> - **`ISS-03` (Medium) — the Changelog claimed completeness while omitting the commit this
+>   document exists to record**, and it turned out to be worse than the review found. The section
+>   said it was cut at `HEAD (e039ff2, 2026-09-01)` and was "complete as of `HEAD`". Re-derived
+>   with `git merge-base --is-ancestor` on every listed commit: `HEAD` is **`84e2203`**; `e039ff2`
+>   **is not on `main` at all**; `c04b4f2` and `31b6df9` are **branch-side commits**, not on `main`;
+>   and **two** commits were missing, not one — `1c589c8` (PR #18) as well as `84e2203` (PR #19).
+>   The cause is that this repository **squash-merges** PRs, so `0a5c542` — cited throughout this
+>   document — is a branch-side commit whose content is on `main` as `84e2203`. The preamble now
+>   states that convention, every branch-side row is labelled, the two missing rows are added, and
+>   the completeness sentence is replaced by an exact statement of scope with the command that
+>   re-derives it.
+> - **`ISS-L2` (Low, fixed — it was cheap).** The post-fix pin
+>   `ReceiptFreedomBanner.tsx:3-17` under-covered by one line; the "do not copy warning text"
+>   instruction the customer-facing bullet depends on is at `:18`. Widened to `:3-18`.
+> - **Topology correction, found by this version's own sweep and not raised by the review.** v1.5.0
+>   called `84e2203` a "**merge commit**" in two places. It has a single parent and is a squash
+>   commit. Corrected in the register row and annotated in the v1.5.0 history entry.
+>
+> **`ISS-L1` (Low) is carried, not fixed:** the `REF-02` and `REF-04`…`REF-10` citations still do
+> not resolve — `docs/refine-log.md` remains the unfilled template with zero `REF-` entries. It has
+> been PM-accepted across five cycles and is owed by the sre at the next Operate cycle. It is
+> **not** a production-learning gap created by this work: no `REF-##` was opened for `REL-LIM-18`
+> because it was a pre-release honesty defect caught by document review, not a production signal.
+>
+> **On method, since the failing class is now four-for-four.** Every sentence in this document that
+> asserts a sweep, a record or a set is *complete* was located and re-tested against the thing it
+> claims to summarise — including the three the review did not raise. Where a roll-up could not be
+> re-derived on demand, it has been replaced by an enumeration plus the command that reproduces it
+> (`node hooks/run_gates.cjs --audit` for the review state; for the changelog, `git log --no-merges
+> --oneline HEAD -- packages apps` and `git merge-base --is-ancestor`). That is the only defence
+> against this class that has worked in this document's history. *(v1.7.0 correction: v1.6.0 cited
+> `git log --no-merges e039ff2..HEAD -- packages apps` here and in the §Changelog. **That command
+> returns 2 of the 14 on-`main` rows**, because `e039ff2` is not on `main` — the very fact stated
+> three sentences away from it. It was the delta that found the two missing rows, not the
+> derivation of the record. Corrected at both sites per
+> `09-release-notes-v1.6.0-business-cycle2` `ISS-C2-02`; the replacement command was executed
+> before publishing and returns exactly the 14 rows the tables list.)*
+>
+> **A live demonstration of why, recorded because it happened during this rework.** The §0
+> enumeration was first written when Docs 07 and 08 had *no* cycle-1 report; within the same
+> session all four blocked documents acquired one, and all four **failed** (Doc 03 89%, Doc 04
+> 89%, Doc 07 92%, Doc 08 85%). Re-running the audit before publishing caught it — a roll-up
+> would not have. Cross-document state in this repository moves faster than a document version
+> does, which is why the row carries its as-of date **and** the command that re-derives it.
+>
+> **The release verdict is unchanged: HALTED, Gate 2 not approved** (§0, §7). The `REL-LIM-18`
+> closure stands, and the fix remains **merged to trunk and deployed nowhere**. Authored by the sre
+> as an anchored FIND/REPLACE spec (`artifacts/sre-2026-09-06T1500-doc09-cycle2-spec.md`).
+>
+> **Document history — v1.5.0 (2026-09-06).** `REL-LIM-18` closure pass — a **state change in the
+> limitation register**, not a review-loop rework. Doc 06 v2.5.1 §7 item 26(b) routed the closure to
+> the sre. On 2026-09-05 the engineer fixed all five `FR-131`-violating code strings **and** the
+> `PrivacyStatus.tsx` pre-mount blocker in commit `0a5c542` ("fix(honesty): state the FR-131 v1
+> truth in code, closing REL-LIM-18 (US-0134)"), which reached `main` through PR #19. *(v1.6.0
+> correction: PR #19 was **squash-merged**. `0a5c542` is a branch-side authoring commit and is
+> **not** an ancestor of `main`; the commit on `main` is `84e2203`, which has a single parent —
+> v1.5.0 called it a "merge commit", and it is a squash commit. See the Changelog preamble.)*
+> Doc 06 is Approved at v2.5.1
+> (`artifacts/reviews/06-coding-and-ut-v2.5.0-technical-cycle1.md`, PASS 96%;
+> `artifacts/reviews/06-coding-and-ut-v2.5.1-technical-cycle2.md`, PASS 98%). **The sre verified
+> every claim against `HEAD` before writing this version**, rather than taking the commit message
+> for it: all six sites read as fixed, the three regression guards `UT-0887`, `UT-0759` and
+> `UT-0888` are present, and the full suite runs green — 619 tests, `npm test` exit 0, on
+> 2026-09-06. Changed here:
+>
+> - **`REL-LIM-18` moves from Open to Closed** in the limitation register, **annotated rather than
+>   rewritten**: the v1.4.0 text of the row is kept verbatim inside it, so a reader can still see
+>   what the five strings were and where, with the fix, the post-fix pins and the regression guards
+>   added around it.
+> - **The `PrivacyStatus.tsx` pre-mount blocker inside that row is cleared.** The `ver`-state title
+>   is now backing-aware by the same clause-7 rule as the subtitle — the fail-honest v1 default is
+>   `Verified`, and the v2 title renders only when the live backing declares `unlinkable: true` —
+>   and `UT-0759` asserts all four paths. **The component is still not mounted on any shipped
+>   surface.** Both facts are stated together, because clearing the blocker removed the pre-mount
+>   condition, not the unmounted state.
+> - **The customer-facing bullet in "What this release does not do"** no longer says five shipped
+>   strings assert the retired framing, because they no longer do. It records that they did, that
+>   they are fixed, and it keeps the two instructions that were always its point: the normative
+>   wording is `FR-131` itself, and do not copy warning text out of the code.
+> - **Three internal-record cells and two §7 paragraphs** follow the same state change —
+>   `REL-LIM-18` moves to the closed security-defect list, the routing paragraph returns it from the
+>   engineer, and §7 says plainly that closing it removes a blocker **without lifting the halt**.
+> - **Two stale facts corrected in passing**, both falsified by the same commit: the §0 gate-status
+>   table and the internal record still pinned Doc 06 at v2.4.3 (now v2.5.1), and the internal
+>   record's "Document version" cell had been stuck at 1.2.0 since that version. *(v1.6.0
+>   correction — this bullet was wrong to imply the Doc 06 sweep was exhaustive. A **third** site,
+>   the §Links table, carried the same v2.4.3 pin and v1.5.0 never reached it; cycle 1 caught it as
+>   `ISS-02`. The sites are enumerated in the v1.6.0 entry rather than rolled up.)*
+>
+> **Sweep result.** Every remaining occurrence of the retired "votes are anonymous but not
+> receipt-free" framing in this document was re-read in context. The only ones left are inside the
+> **document-history blockquotes for v1.1.0 → v1.4.0**, which are the record of past review cycles
+> and are deliberately untouched. Outside them, nothing in this document asserts the retired framing
+> and nothing claims the five strings are live. Two residuals lived **outside** this document —
+> Doc 03 §13, which instructed the client to state the retired framing, and Doc 03 §10.12.3, which
+> gave the v2 `ver` title as the v1 spec. Both were architect cascades created by the same commit
+> (Doc 06 v2.5.1 §7 item 26(a)), and both were **delivered by the architect on 2026-09-06 at Doc 03
+> v2.12.0**. They are tracked there, not here; §7 records that. *(v1.7.0: this sentence went on to
+> say Doc 03 "has not yet cleared its document-review" — true when written, false by 2026-09-06,
+> when Doc 03 reached v2.13.0 and its cycle-2 report PASSED. The delivery is the durable fact; the
+> review state is not, and is withdrawn from here rather than re-pinned.)*
+>
+> **What this version does NOT change.** The release verdict: **HALTED, Gate 2 not approved** (§0,
+> §7). The fix is on trunk and is **deployed nowhere** — this remains a testnet-rehearsal release
+> note, and nothing here should be read as a deployment. `REL-LIM-12`, `-15`, `-16` and the two
+> independently sufficient halt reasons (RTM Must-row gaps; undrilled rollback) are untouched. The
+> unresolvable `REF-##` citations remain PM-accepted and owed by the sre at the next Operate cycle;
+> `docs/refine-log.md` is still the unfilled template, and no `REF-##` was opened for this closure —
+> `REL-LIM-18` was a pre-release honesty defect caught by document review, not a production learning,
+> and the refine-log registers production learnings only. Authored by the sre as an anchored
+> FIND/REPLACE spec (`artifacts/sre-2026-09-06T1000-rel-lim-18-spec.md`).
 >
 > **Document history — v1.4.0 (2026-09-02).** Rework cycle 3 against
 > `artifacts/reviews/09-release-notes-v1.3.0-business-cycle3.md` (business, cycle 3 — **FAIL 94%,
@@ -186,17 +534,17 @@ Last updated:  2026-09-02
 
 **This release has NOT been approved and MUST NOT be promoted to production.**
 
-| Gate-2 precondition (Doc 13 §3.3) | State on 2026-09-02 |
+| Gate-2 precondition (Doc 13 §3.3) | State on 2026-09-02, except where a row gives a later date |
 |---|---|
-| RTM (Doc 08) zero gaps in Must rows | **Not met** — `docs/08-traceability-matrix.md` now exists at **v2.7.0, Approved**, and records **138 Must rows: 16 COMPLETE, 122 OPEN** (Doc 08 §3.1 and gap log). The check that could not be performed at the first readiness pass now can be, and it **fails** |
-| All suites green, 0 Sev-1/2 (Doc 07) | **Partially met** — `docs/07-test-cases-suites.md` now exists at **v2.4.4, Approved**, recording **610 suite cases green** and no Sev-1/2 of record. That is a suite result, not a Gate-2 pass on its own: the NFR measurements below are still absent |
-| Coding & UT record (Doc 06) | **Met as a document** — present at **v2.4.3, `Status: Approved`** (`artifacts/reviews/06-coding-and-ut-v2.4.3-technical-cycle1.md`, PASS 100%). Its §7 "Known limitations of this drop" remains open |
+| RTM (Doc 08) zero gaps in Must rows | **Not met** — `docs/08-traceability-matrix.md` records **138 Must rows: 16 COMPLETE, 122 OPEN** (Doc 08 §3.1 and gap log) — figures re-derived independently on 2026-09-06 by `node hooks/run_gates.cjs --audit`, whose two signals (row status markers and RTM §9) agree, and **unchanged across v2.7.0, v2.8.0 and v2.9.0**, so the conclusion does not depend on which version is current. Doc 08 is **Approved at v2.9.0** as of 2026-09-06, so this failing check now rests on an approved matrix rather than one in review — which strengthens it, not weakens it; the current version and review state are pinned **once**, in the dated volatile snapshot in the `Passing document-review reports` row below, and are not restated here, because a fact stored twice drifts (`09-release-notes-v1.6.0-business-cycle2` `ISS-C2-01`; `...-v1.7.0-business-cycle3` `ISS-C3-03`). The check that could not be performed at the first readiness pass now can be, and it **fails** |
+| All suites green, 0 Sev-1/2 (Doc 07) | **Partially met** — `docs/07-test-cases-suites.md` records run **R-17**, full-repo `npm test`, **619/619 green**, exit 0, and no Sev-1/2 of record. Doc 07 is **Approved at v2.6.0** as of 2026-09-06, so **619 is now the approved figure of record**, not merely the figure observed at `HEAD` — 610 was the approved figure at v2.4.4 and is superseded. Doc 07's current version and review state are pinned **once**, in the volatile snapshot below. That is a suite result, not a Gate-2 pass on its own: the NFR measurements below are still absent |
+| Coding & UT record (Doc 06) | **Met as a document** — present at **v2.5.1, `Status: Approved`** (`artifacts/reviews/06-coding-and-ut-v2.5.1-technical-cycle2.md`, PASS 98%; cycle 1 at v2.5.0, PASS 96%), re-pinned by the sre on **2026-09-06**. This row carried **v2.4.3** (`artifacts/reviews/06-coding-and-ut-v2.4.3-technical-cycle1.md`, PASS 100%) until that date; v2.4.3 is superseded, not withdrawn. Its §7 "Known limitations of this drop" remains open — item 26 records `REL-LIM-18` closed in code at `0a5c542` and names the cascades still owed to the architect, the sre and the tester |
 | User Guide published (Doc 14) | **Not met** — present at **v2.3.0, `Status: Approved`** (review loop closed at PASS 96%), but publication happens **at** Gate 2, which is not approved |
 | Two independent audits, 0 critical/high open (`NFR-009`) | **Not met** — MS-09/MS-10 target 2027-03-12 / 2027-04-16 |
 | Six ceremony transcripts, `zkeyHash` frozen | **Not met** — MS-08 target 2027-01-25 (Doc 13 v2.0.2; batched assurance-sized phase-2 campaign per ADR-022); verifiers are mocks |
 | Rollback drilled < 15 min (`NFR-020`) | **Not met** — drill defined in Doc 10 §8.6, not yet executed |
 | MACI 5-of-7 committee constituted (`ADR-006`) | **Not met** — MS-12 target 2027-05-07 |
-| Passing `document-review` reports | **Partially met** — Docs 01–08, 13 and 14 each carry a passing report in `artifacts/reviews/` as of 2026-09-01, and **this document now carries one for its current version** (`09-release-notes-v1.4.0-business-cycle4.md`, PASS 97%, cycle 4 of 5; the three earlier cycles failed). **Docs 10, 11 and 12 carry none** — which is why this precondition is still not met |
+| Passing `document-review` reports | **Not met.** *The durable claims, which do not depend on any version pin:* **(a)** this document's current version carries **no** passing report — the header `Status:` field carries its loop position; **(b)** the review-loop state of the other governed documents is **volatile** — on 2026-09-06 alone the number of blocking documents went four → two → zero — so it is pinned **once**, in the dated snapshot below, and is never quoted forward; **(c)** **Docs 10, 11 and 12 carry no `document-review` report at all** — zero files match `^(10\|11\|12)-` in `artifacts/reviews/`, and those three are outside the hook's ten governed documents, so no audit run will ever surface them. **(c) alone keeps this precondition unmet, and (c) is owed by the sre.** *Volatile snapshot — a per-document pin goes stale within hours in this repository, so read the list below as evidence of the date it carries, re-derive it, and never quote it forward. As re-derived on **2026-09-06** by `node hooks/run_gates.cjs --audit`:* **0 documents blocking** — every one of the hook's ten governed documents now carries a passing report for its current version: Docs 01 (v2.0.0), 02 (v2.16.3), **03 (v2.13.0, cycle 2 PASS 97%)**, **04 (v1.4.0, cycle 2 PASS 96%)**, 05 (v2.5.0), **06 (v2.5.1)**, **07 (v2.6.0, cycle 2 PASS 97%)**, **08 (v2.9.0, cycle 2 PASS 98%)**, 13 (v2.8.1) and 14 (v2.3.0). The audit exits **0**. *(v1.6.0 pinned Doc 03 at v2.12.0 and Doc 04 at v1.3.0 as two of four blockers; both have since been reworked and passed at cycle 2 — `09-release-notes-v1.6.0-business-cycle2` `ISS-C2-06`. That same-day churn is why this row leads with what does not move — and it recurred twice more inside a day. At the v1.7.0 review Docs 07 and 08 blocked at v2.5.0/v2.8.0 for "report exists but fails the bar"; by the time v1.8.0 was authored they had been reworked to v2.6.0/v2.9.0 and blocked for the opposite reason, "no report for this version"; and before v1.8.0 was transcribed both had been **approved** and the blocking count had gone from four to two to **zero**. Through all of it the durable claims (a) and (b) did not move, and neither did this row's verdict. This row is the single place where the current version of a document **whose review state was in motion this week** — Docs 03, 04, 07 and 08 — is pinned. For Docs 07 and 08 that holds without exception: §0's other rows, the internal record, the §Links table and §7 all state durable facts and refer here, so the pin cannot drift out of sync with itself. **Two exceptions, disclosed rather than claimed away.** Docs 06 and 14 have not moved since their last approval and are stated where they are used — §0's own `Coding & UT record (Doc 06)` and `User Guide published (Doc 14)` rows, the §Links `Coding & UT` and `User guide` rows, and the header `Source:` block — as well as here; that is a real remaining duplication and it is named rather than removed, because those two versions are static. And §7 names Doc 03 v2.13.0 inside a dated withdrawal that instructs the reader to re-derive it. v1.8.0 claimed this row was the single such place for **any** other document, which those four rows falsify — corrected per `09-release-notes-v1.8.0-business-cycle4` `ISS-C4-02`.)* |
 
 Gate 2 is milestone **MS-13**, target **2027-05-14**, and it gates the **Phase-3** production rollout
 — not this release. Release `0.1.0` is the **Phase-1 walking skeleton on public testnet**
@@ -440,12 +788,18 @@ Until the Definition-B privacy layer ships:
   **non-dismissable**, WCAG 2.2 AA and screen-reader accessible, on `SCR-13` and `SCR-14`
   (Doc 02 §4.45; Doc 14 v2.3.0 §2.6). It MUST also carry the
   real-person-verified-not-unique-personhood caveat (`FR-132`(d), Doc 02 §4.46).
-- **The normative wording is `FR-131` itself — not any string in the codebase.** **Five** shipped
-  code strings still assert the retired "votes are anonymous but not receipt-free" framing and are
-  themselves violations of this requirement: a feature-flag description, contract documentation, an
-  SDK comment, a component comment — and, the one that matters most, **the banner copy a citizen
-  actually reads on the vote screen**. They are disclosed as **`REL-LIM-18`** and routed to the
-  engineer. Do not copy warning text out of the code.
+- **The normative wording is `FR-131` itself — not any string in the codebase.** Until 2026-09-05,
+  **five** shipped code strings asserted the retired "votes are anonymous but not receipt-free"
+  framing and were themselves violations of this requirement: a feature-flag description, contract
+  documentation, an SDK comment, a component comment — and, the one that mattered most, **the
+  banner copy a citizen actually reads on the vote screen**. They were disclosed as **`REL-LIM-18`**
+  and routed to the engineer, and they are **fixed in commit `0a5c542`** (PR #19 — authored
+  2026-09-05, merged to `main` as `84e2203` on 2026-09-06; Doc 06 v2.5.1, Approved), verified
+  against `HEAD` by the sre on 2026-09-06. Each of
+  those sites now states the `FR-131` v1 truth, and three regression tests — `UT-0887` (the rendered
+  banner, English and its Arabic mirror), `UT-0759` and `UT-0888` — fail if the retired framing comes
+  back. **The fix is merged to trunk and is deployed nowhere**, and it does not change this
+  release's verdict (§0, §7). Do not copy warning text out of the code.
 - **No public-facing Trumocracy material** — this document, the README, the UI — may use the words
   "private", "anonymous", "receipt-free" or "secure" to describe v1 voting behaviour, or present v1
   as providing the Definition-B guarantees (Doc 02 §4.45, closing sentence).
@@ -552,7 +906,7 @@ this document was wrong to say there was.
 | **REL-LIM-12** | **The deployment-safety gate is not wired to anything that deploys.** *(Corrected 2026-09-02: v1.0.1 and v1.1.0 said "no production deploy script exists", that the deploy order came from `test/fixture.mjs`, and that the gate was only a test assertion. All three were false and are withdrawn.)* What is actually true: `packages/contracts/script/deploy.mjs` exists but **prints** the plan and executes nothing — it is a CLI wrapper over `formatDeploymentPlan()`, run as `npm run deploy:plan`. The order itself is frozen and authoritative in `promotion-gate.mjs` (`DEPLOY_ORDER`, `WIRING_STEPS`), not in the test fixture. And `assertSafeToPromote()` **is** real, throwing code with real coverage — but it is exercised only against injected test readers. | **No environment can actually be promoted through the gate**, because nothing runs it against a live deployment. Doc 10 §3.2 specifies the check as a job that calls `versionCount`/`IS_INSECURE_MOCK()` on the **target environment's `VerifierRegistry`**; no CI job does that, and there is no executing deployer for it to sit in front of. The gate is proven as a function and unproven as a control. | `packages/contracts/script/deploy.mjs` (print-only); `packages/contracts/src/promotion-gate.mjs:23` (`DEPLOY_ORDER`), `:46` (`WIRING_STEPS`), `:86` (`assertSafeToPromote`), `:88` and `:144` (the two throws), `:167-168` (the gate's published description), `:157` (`formatDeploymentPlan`); `packages/contracts/test/deployment-safety.test.mjs` (`UT-0600`–`UT-0612`); `.github/workflows/verify.yml`; Doc 10 §3.2; `NFR-020` | **Blocks Gate 2** — on the narrowed ground that Doc 10 §3.2's control is unexecuted, not on the withdrawn claim that it was unwritten. Clears when a promotion job runs `assertSafeToPromote` against a live target and the run is recorded |
 | **REL-LIM-13** | Interim tallies are readable on-chain; suppression before close (`FR-034`) is enforced by the client and indexer only, because the chain cannot hide what it stores. | A determined observer can read a running tally directly. Disclosed, not fixed. | `Governor.sol:81-83` (`forVotes` / `againstVotes` / `abstainVotes` on the stored `Proposal`), `:420` (`proposals(uint256)` returns the whole struct, unguarded), `:343-345` (the increments); `FR-034`, `DES-026` | By design — disclosed in Doc 14 |
 | **REL-LIM-14** | Capacity figures (`NFR-008`), cost per action (`NFR-005`), latency (`NFR-006`) and availability (`NFR-007`) are **N/A — not yet measured** for this release. | No SLO baseline exists. Doc 11 §3 carries the targets; the observed columns are empty. | Doc 03 §7.6 | Load test before Gate 2 (Doc 13 §3.3 item 6) |
-| **REL-LIM-18** | **Five shipped code strings still assert the retired "votes are anonymous but not receipt-free" framing, in violation of `FR-131`.** *(Corrected 2026-09-02 from "three" after a full re-sweep of `packages/*/src` and `apps/web/src`.)* **(1)** `packages/protocol/src/flags.js:44` — `MACI_VOTING.description` says votes are anonymous but not receipt-free **and that the UI must say so**. **(2)** `packages/contracts/src/core/Governor.sol:25,28` — the same assertion in contract NatSpec, twice. **(3)** `apps/web/src/i18n/en.ts:400-405` — `banner.notReceiptFreeTitle` uses the banned word "private" about v1 voting and `notReceiptFreeBody` claims nobody can see that a vote was yours. **(4)** `packages/sdk/src/client.js:455-456` — "which is why a vote is anonymous even though it is public". **(5)** `apps/web/src/components/ReceiptFreedomBanner.tsx:6-10` — the file's own doc comment repeats the claim and quotes an SDD line instructing the client to state it. | **(3) is the only one a citizen reads** — it is the rendered banner copy on the vote surface, exactly where `FR-131` mandates the opposite text. **(5) is a comment inside that same component** instructing that the copy be kept, so it is the reason (3) would come back; it is not itself seen by anyone outside the codebase. (1), (2) and (4) are developer-facing, but (1) was cited by this document, until v1.1.0, as the normative warning text. **The requirement is normative; none of these strings is.** | `FR-131`(a) and its closing sentence (Doc 02 §4.45); `packages/protocol/src/flags.js:44`; `packages/contracts/src/core/Governor.sol:25,28`; `apps/web/src/i18n/en.ts:400-405`; `packages/sdk/src/client.js:455-456`; `apps/web/src/components/ReceiptFreedomBanner.tsx:6-10` (violating comment) and `:41-44` (the render), mounted at `ProposalsAndDebate.tsx:489` | **Open — routed to the engineer** via the project-manager, 2026-09-02, re-scoped from three sites to five on 2026-09-02 (`09-release-notes-v1.1.0-business-cycle1` `ISS-05`). Blocks any v1 customer-facing deployment. *Excluded from the five, and why:* `packages/ui/src/PrivacyStatus.tsx` is **not rendered on any shipped surface** — it is exported at `packages/ui/src/index.ts:12`, but all five consuming files carry an explicit non-render comment, at six sites (`apps/web/src/app/parties/page.tsx:19`, `app/petitions/new/page.tsx:13,134`, `app/proposals/page.tsx:22`, `components/PartyMembership.tsx:26`, `components/ProvisionalStatus.tsx:11`). **That, and only that, is why it is excluded.** It is *not* compliant by construction, and an earlier version of this row wrongly said it was: `PrivacyStatus.tsx:236` sets `title: 'Verified — private'` for the `ver` state and renders it at `:333-335`, directly above the clause-7 fail-honest v1 subtitle — a banned word on a voting-adjacent status badge. **Routed to the engineer as a pre-mount blocker, not a watch item:** the `ver`-state title MUST be re-copy-reviewed against `FR-131` **before** this component is first mounted anywhere |
+| ~~**REL-LIM-18**~~ | **CLOSED — all five strings are fixed in commit `0a5c542`** ("fix(honesty): state the FR-131 v1 truth in code, closing REL-LIM-18 (US-0134)"), authored 2026-09-05 and merged to `main` as `84e2203` on 2026-09-06 in PR #19; Doc 06 v2.5.1, Approved. Verified at `HEAD` by the sre on 2026-09-06: each of the five sites now states the `FR-131` v1 truth — a v1 vote is cast through conventional authentication and is NOT anonymous, NOT receipt-free and NOT coercion-resistant; the platform database CAN see vote direction and party membership; the ballot the platform is technically unable to read arrives with the Definition-B (v2) privacy layer. *The row as it stood at v1.4.0 is kept verbatim below, unedited, so a reader can still see what the five strings were and where —* **Five shipped code strings still assert the retired "votes are anonymous but not receipt-free" framing, in violation of `FR-131`.** *(Corrected 2026-09-02 from "three" after a full re-sweep of `packages/*/src` and `apps/web/src`.)* **(1)** `packages/protocol/src/flags.js:44` — `MACI_VOTING.description` says votes are anonymous but not receipt-free **and that the UI must say so**. **(2)** `packages/contracts/src/core/Governor.sol:25,28` — the same assertion in contract NatSpec, twice. **(3)** `apps/web/src/i18n/en.ts:400-405` — `banner.notReceiptFreeTitle` uses the banned word "private" about v1 voting and `notReceiptFreeBody` claims nobody can see that a vote was yours. **(4)** `packages/sdk/src/client.js:455-456` — "which is why a vote is anonymous even though it is public". **(5)** `apps/web/src/components/ReceiptFreedomBanner.tsx:6-10` — the file's own doc comment repeats the claim and quotes an SDD line instructing the client to state it. | *Impact while the row was open, kept verbatim:* **(3) is the only one a citizen reads** — it is the rendered banner copy on the vote surface, exactly where `FR-131` mandates the opposite text. **(5) is a comment inside that same component** instructing that the copy be kept, so it is the reason (3) would come back; it is not itself seen by anyone outside the codebase. (1), (2) and (4) are developer-facing, but (1) was cited by this document, until v1.1.0, as the normative warning text. **The requirement is normative; none of these strings is.** *Impact now that the row is closed:* **that impact is retired at the source.** The banner a citizen reads states the `FR-131` v1 truth in English and in its Arabic mirror, and `UT-0887` fails the build if it stops doing so; `UT-0888` guards the flag description; `UT-0759` guards the `PrivacyStatus` title. What has **not** changed is the underlying limitation those strings mis-described — v1 voting is still NOT anonymous, NOT receipt-free and NOT coercion-resistant. That is `REL-LIM-02`, which remains open and is untouched by this closure. | *Pre-fix pins, as recorded on 2026-09-02:* `FR-131`(a) and its closing sentence (Doc 02 §4.45); `packages/protocol/src/flags.js:44`; `packages/contracts/src/core/Governor.sol:25,28`; `apps/web/src/i18n/en.ts:400-405`; `packages/sdk/src/client.js:455-456`; `apps/web/src/components/ReceiptFreedomBanner.tsx:6-10` (violating comment) and `:41-44` (the render), mounted at `ProposalsAndDebate.tsx:489` — *Fix and post-fix pins, verified at `HEAD` on 2026-09-06:* commit `0a5c542` (PR #19; **squash-merged to `main` as `84e2203`**, so `0a5c542` is a branch-side authoring commit and is **not** an ancestor of `main` — v1.5.0 called `84e2203` a "merge commit"; it has a single parent. See the Changelog preamble); `packages/protocol/src/flags.js:42-47`; `packages/contracts/src/core/Governor.sol:25-32`; `apps/web/src/i18n/en.ts:400-408` and its Arabic mirror `apps/web/src/i18n/ar.ts:359-366`; `packages/sdk/src/client.js:450-459`; `apps/web/src/components/ReceiptFreedomBanner.tsx:3-18` (widened from `:3-17` in v1.6.0 per `ISS-L2`: the instruction "Do not copy warning text out of this file into any document; cite FR-131" is at `:18`, and the customer-facing bullet depends on exactly that line); `packages/ui/src/PrivacyStatus.tsx:205` (`VER_TITLE_V1`), `:212` (`VER_TITLE_V2`), `:323-326` (the backing-aware title selection). Regression guards: `UT-0887` (`apps/web/test/safety-surfaces.test.tsx:112`), `UT-0759` (`packages/ui/test/PrivacyStatus.test.tsx:198`), `UT-0888` (`packages/protocol/test/party-and-regions.test.js:302`). Doc 06 v2.5.1 §7 item 26; `artifacts/engineer-2026-09-05T1700.md` | **Closed — fixed in commit `0a5c542` (PR #19; authored 2026-09-05, on `main` as `84e2203` 2026-09-06), Doc 06 v2.5.1 Approved** (`artifacts/reviews/06-coding-and-ut-v2.5.0-technical-cycle1.md`, PASS 96%; `artifacts/reviews/06-coding-and-ut-v2.5.1-technical-cycle2.md`, PASS 98%). Re-verified against `HEAD` by the sre on 2026-09-06, source site by source site, with the full suite green (619 tests, `npm test` exit 0). **The `PrivacyStatus.tsx` pre-mount blocker recorded in this row is CLEARED:** the `ver`-state title is now backing-aware by the same clause-7 rule as the subtitle — the fail-honest v1 default is `VER_TITLE_V1 = 'Verified'`, which carries no banned word, and the v2 title renders only where the live backing declares `unlinkable: true` — and `UT-0759` asserts all four paths. **And the component is still not mounted on any shipped surface:** it is exported at `packages/ui/src/index.ts:12`, and all five consuming files still carry an explicit non-render comment. Both facts hold at once and neither replaces the other — clearing the blocker removed the pre-mount *condition*, not the unmounted *state*. The component may now be mounted without violating `FR-131`; it has not been. **The fix is merged to trunk and is deployed nowhere.** This closure removes a blocker on a customer-facing v1 deployment; it does not lift the halt on release `0.1.0`, whose two sufficient reasons (§7) are untouched. *The v1.4.0 text of this cell is kept verbatim below —* **Open — routed to the engineer** via the project-manager, 2026-09-02, re-scoped from three sites to five on 2026-09-02 (`09-release-notes-v1.1.0-business-cycle1` `ISS-05`). Blocks any v1 customer-facing deployment. *Excluded from the five, and why:* `packages/ui/src/PrivacyStatus.tsx` is **not rendered on any shipped surface** — it is exported at `packages/ui/src/index.ts:12`, but all five consuming files carry an explicit non-render comment, at six sites (`apps/web/src/app/parties/page.tsx:19`, `app/petitions/new/page.tsx:13,134`, `app/proposals/page.tsx:22`, `components/PartyMembership.tsx:26`, `components/ProvisionalStatus.tsx:11`). **That, and only that, is why it is excluded.** It is *not* compliant by construction, and an earlier version of this row wrongly said it was: `PrivacyStatus.tsx:236` sets `title: 'Verified — private'` for the `ver` state and renders it at `:333-335`, directly above the clause-7 fail-honest v1 subtitle — a banned word on a voting-adjacent status badge. **Routed to the engineer as a pre-mount blocker, not a watch item:** the `ver`-state title MUST be re-copy-reviewed against `FR-131` **before** this component is first mounted anywhere |
 
 ### Upgrade / migration notes
 
@@ -665,7 +1019,7 @@ before use (`ADR-014`).
 | Field | Value |
 |-------|-------|
 | Release / SemVer | **0.1.0** — Phase-1 walking skeleton |
-| Document version | 1.2.0 (`Status: In Review`) — rework cycle 1 (`FR-131` sweep at v1.1.0; correctness and re-pin pass at v1.2.0), 2026-09-02 |
+| Document version | **See the header `Version:` field — this row deliberately does not restate it.** Two copies of one fact drifted apart twice: this cell went stale at 1.2.0 (corrected in v1.5.0, which added the parenthetical "corrected here"), and stale again at 1.5.0 one version later, caught as `09-release-notes-v1.6.0-business-cycle2` `ISS-C2-01`. The duplicate is deleted rather than maintained. **Review-loop history** (closed facts, append-only): v1.1.0 `FR-131` sweep · v1.2.0 correctness and re-pin pass (rework cycle 1), 2026-09-02 · v1.3.0 rework cycle 2 · v1.4.0 rework cycle 3, both 2026-09-02, **Approved** at PASS 97% on cycle 4 · v1.5.0 `REL-LIM-18` closure pass, 2026-09-06, **FAIL 93%** cycle 1 · v1.6.0 rework cycle 2, 2026-09-06, **FAIL 93%** cycle 2 · v1.7.0 rework cycle 3, 2026-09-06, **FAIL 92%** cycle 3 · v1.8.0 rework cycle 4, 2026-09-06, **FAIL 94%** cycle 4 · v1.9.0 rework cycle 5, 2026-09-06 — cycle 5 is the cap |
 | Date drafted | 2026-08-09 |
 | Target environment | **public testnet** (Doc 03 §7.1 `testnet`) — **not production** |
 | Milestone | **MS-05**, target 2026-11-27; exit decided by Eng Lead (Samuel Oyelaran) · Test Lead (Ji-woo Park) |
@@ -677,19 +1031,29 @@ before use (`ADR-014`).
 | Requirements explicitly **not** delivered | `FR-030`–`FR-035` (MACI) · `FR-036`–`FR-045` (elections, recall) · `FR-049`–`FR-052` (treasury) · `FR-053` (fork) · `NFR-003` · `NFR-009` |
 | Design elements | `DES-001`, `DES-003`–`DES-005`, `DES-007`–`DES-022`, `DES-035`, `DES-037`, `DES-038`, `DES-039`, `DES-045` |
 | Epics / stories | `N/A — not yet produced` (Doc 05 exists; no per-release story cut recorded) |
-| Test status | Suites present: `packages/contracts/test/{lifecycle,governance,adversarial,differential}.test.mjs`, `packages/protocol/test/*`, `apps/web/test/*`. Doc 07 v2.4.4 (Approved) records **610 suite cases green** and no Sev-1/2 of record; Doc 06 v2.4.3 (Approved) records the `UT-####` inventory and its §7 open limitations; Doc 08 v2.7.0 (Approved) records **122 of 138 Must rows OPEN**. Performance, capacity, availability and a11y remain `N/A — not yet measured` — see the NFR row below |
+| Test status | Suites present: `packages/contracts/test/{lifecycle,governance,adversarial,differential}.test.mjs`, `packages/protocol/test/*`, `apps/web/test/*`. Doc 07 is **Approved at v2.6.0** (2026-09-06) and records run **R-17**, full-repo `npm test`, **619/619 green**, exit 0, and no Sev-1/2 of record — so **619 is now the approved figure of record**, superseding the 610 approved at v2.4.4; Doc 06 **v2.5.1** (Approved) records the `UT-####` inventory — now **619**, after the three `REL-LIM-18` regression guards `UT-0887`, `UT-0759` and `UT-0888` landed in `0a5c542` on 2026-09-05 — and its §7 open limitations; Doc 08 is **Approved at v2.9.0** (2026-09-06) and records **122 of 138 Must rows OPEN**, a figure unchanged across v2.7.0, v2.8.0 and v2.9.0 and now carried by an approved matrix. *(v1.5.0 said "Docs 07 and 08 have not caught up to 619" and that the `TC` rows for the three guards and the `FR-131` RTM row were owed by the tester. The tester delivered that catch-up the same day, at Doc 07 v2.5.0 and Doc 08 v2.8.0; both failed cycle 1 (92% and 85%), were reworked to v2.6.0 and v2.9.0, and both were **Approved at cycle 2** on 2026-09-06 (PASS 97% and 98%, reviewer-qa). Those rows are therefore **authored, reviewed and approved**, and **Doc 06 v2.5.1 §7 item 26(c) is closed** — not merely discharged into review. `FR-131` itself remains an **OPEN** Must row (G-PHASE3: the ballot-surface notice ships with voting), which is a requirement-completeness fact, not a documentation gap.)* The sre re-ran the full suite against `HEAD` on 2026-09-06 — **619 green, `npm test` exit 0** — which verifies the fix; it does not substitute for Doc 07. Performance, capacity, availability and a11y remain `N/A — not yet measured` — see the NFR row below |
 | NFR verification | `NFR-005` cost `N/A — not yet measured` · `NFR-006` p95 `N/A — not yet measured` · `NFR-007` availability `N/A — not yet measured` · `NFR-008` load `N/A — not yet measured` · `NFR-020` rollback drill **not executed** |
-| Security / a11y | Audits **not started** (MS-04 contracting target 2026-10-15). `NFR-011` a11y `N/A — not yet measured`. Security defects **open**: `REL-LIM-12` (deployment-safety gate unexecuted — narrowed 2026-09-02), `REL-LIM-15`, `REL-LIM-16`, `REL-LIM-18` (five `FR-131` violations in code, routed to the engineer). Security defects **closed**: `REL-LIM-04` and `REL-LIM-07` in `b8cf2ce` (Doc 06 §5.1 numbered defects 1 and 4), and `REL-LIM-03` in `c854c0a` (Doc 06 §5.2 `C-01` / `SEC-C01`) — two commits, both on 2026-08-09. `REL-LIM-03`'s closure was re-verified against `HEAD` on 2026-09-02 after this document had carried it as open in error; the commit split was corrected on the same date after this document had attributed all three to one commit in error |
+| Security / a11y | Audits **not started** (MS-04 contracting target 2026-10-15). `NFR-011` a11y `N/A — not yet measured`. Security defects **open**: `REL-LIM-12` (deployment-safety gate unexecuted — narrowed 2026-09-02), `REL-LIM-15`, `REL-LIM-16`. Security defects **closed**: `REL-LIM-04` and `REL-LIM-07` in `b8cf2ce` (Doc 06 §5.1 numbered defects 1 and 4), and `REL-LIM-03` in `c854c0a` (Doc 06 §5.2 `C-01` / `SEC-C01`) — two commits, both on 2026-08-09 — and **`REL-LIM-18`** (the five `FR-131` violations in code, and the `PrivacyStatus.tsx` pre-mount blocker recorded in the same row) in **`0a5c542`** on 2026-09-05 (PR #19; Doc 06 v2.5.1, Approved), re-verified against `HEAD` by the sre on 2026-09-06. `REL-LIM-03`'s closure was re-verified against `HEAD` on 2026-09-02 after this document had carried it as open in error; the commit split was corrected on the same date after this document had attributed all three to one commit in error |
 | Dependencies | OP Stack L2 (Base Sepolia for testnet) · Ethereum blobs · ERC-4337 bundler + paymaster · IPFS pinning cluster ≥3 operators · Arweave mirror · indexer (Postgres read model) · `@zk-kit/lean-imt.sol` 2.0.1 · `poseidon-solidity` 0.0.5 · Solidity 0.8.28 (Cancun) · Node 22. Full record: Doc 12 |
 | Rollback | Flag-off via `FeatureFlags.disable` (emergency disabler, single tx) + client bundle revert + indexer/relayer re-point. **Target < 15 min (`NFR-020`). Cannot halt a running vote or reverse an on-chain decision** (`ADR-010`, `CON-003`). Full procedure and honest limits: Doc 10 §8 |
 | Approvals (Gate 2) | **None.** Product `—` · Eng `—` · QA `—` · SRE `—` · Security `—` |
 
 ### Changelog (this release)
 
-Cut from the repository history at `HEAD` (`e039ff2`, 2026-09-01): every non-merge commit touching
-`packages/` or `apps/`, oldest first. **What this is not:** it is not a tagged release range — no
-git tag exists and no `CHANGELOG.md` file is maintained — and it is not a claim of verified
-delivery; the RTM position is in the internal record above.
+Cut from `main` at `HEAD` (**`84e2203`**, 2026-09-06). The record is derived by
+`git log --no-merges --oneline HEAD -- packages apps`, which returns **14** commits — every
+non-merge commit on `main` touching `packages/` or `apps/` — and the tables below list exactly
+those 14, oldest first, plus the branch-side rows that are labelled as such and are **counted and
+enumerated once**, in the "Scope of the record" paragraph that closes this section. **Read the commit
+identifiers carefully.** This repository **squash-merges** pull requests, so `main` carries **one**
+commit per PR and the branch-side authoring commits are **not** ancestors of `main`. The tables
+were originally cut across a branch and so mix the two: `c04b4f2`, `31b6df9` and the old cut pin
+`e039ff2` are **branch-side** commits that are not on `main`; PR #19's two branch-side commits,
+`0a5c542` and `b6be070`, are likewise not on `main`, and their combined content is on `main` as
+`84e2203`. Every such row now says so, and `git merge-base --is-ancestor <sha> HEAD` settles any
+of them. **What this is not:** it is not a tagged release range — no git tag exists and no
+`CHANGELOG.md` file is maintained — and it is not a claim of verified delivery; the RTM position
+is in the internal record above.
 
 **Protocol and contract skeleton — 2026-08-08 → 2026-08-09**
 
@@ -705,21 +1069,43 @@ delivery; the RTM position is in the internal record above.
 | `c854c0a` | 2026-08-09 | `fix(contracts):` six criticals and four highs from the independent security scan — **closes `REL-LIM-03`** (Doc 06 §5.2 `C-01` / `SEC-C01`). It also hardens the `REL-LIM-04` family with `H-01` (`setSpenderAuthoriser` made set-once, four lines) but does **not** close `REL-LIM-04` itself, which `b8cf2ce` had already done |
 | `4b935f8` | 2026-08-09 | `ci:` run verify on windows-latest; fix hardcoded absolute path in `compile.mjs` |
 
-**Definition-A (v1) application — 2026-08-25 → 2026-08-29.** *Merged to trunk, and deliberately
-**not** described as release content in this document — see the coverage note in §0 and the owed
-refresh in §7.*
+**Definition-A (v1) application, and the drops that followed — 2026-08-25 → 2026-09-06.** *The
+first five rows are the v1 application drops, merged to trunk and deliberately **not** described as
+release content in this document — see the coverage note in §0 and the owed refresh in §7. The
+last row, `84e2203`, is the exception: this document **does** describe it, at length, in §0, the
+customer-facing bullet, the `REL-LIM-18` register row, the internal record and §7, because it is
+the commit that closes `REL-LIM-18`.* *(v1.7.0: the heading read "2026-08-25 → 2026-08-29" and
+applied the "not release content" caveat to every row, both of which v1.6.0 falsified when it added
+the `1c589c8` and `84e2203` rows beneath them —
+`09-release-notes-v1.6.0-business-cycle2` `ISS-C2-03`.)*
 
 | Commit | Date | Summary |
 |---|---|---|
 | `26d6ab5` | 2026-08-25 | `feat(scaffold):` v1 structure and `ADR-024` seams — `packages/ui`, `IEligibilityVerifier`, `IBallotService` |
-| `4879d8e` | 2026-08-28 | `build/v1` party creation |
-| `fe102a4` | 2026-08-29 | `build/v1` join membership — includes the live `FR-131`(d) counting-tier notice |
-| `c04b4f2` | 2026-08-29 | `feat(proposals):` v1 proposals and debate flow with `DES-103`…`DES-106` |
-| `31b6df9` | 2026-08-29 | `fix(proposals):` `FR-080` informed-consent event; Doc 07 v2.4.1 + Doc 08 v2.5.1 traceability |
+| `4879d8e` | 2026-08-28 | `build/v1` party creation (**PR #15**) |
+| `fe102a4` | 2026-08-29 | `build/v1` join membership (**PR #16**) — includes the live `FR-131`(d) counting-tier notice |
+| `c04b4f2` | 2026-08-29 | `feat(proposals):` v1 proposals and debate flow with `DES-103`…`DES-106`. **Branch-side commit — not on `main`**; its content reached `main` as `1c589c8` below |
+| `31b6df9` | 2026-08-29 | `fix(proposals):` `FR-080` informed-consent event; Doc 07 v2.4.1 + Doc 08 v2.5.1 traceability. **Branch-side commit — not on `main`**; its content reached `main` as `1c589c8` below |
+| `1c589c8` | 2026-09-05 | `build/v1` proposals (**PR #18**) — the squash commit on `main` carrying `c04b4f2` and `31b6df9`. *Added in v1.6.0: absent from this table while the section claimed completeness (`09-release-notes-v1.5.0-business-cycle1` `ISS-03`).* |
+| `84e2203` | 2026-09-06 | `build/v1` fr131 honesty (**PR #19**) — the squash commit on `main` carrying **both** of the branch's commits: `0a5c542`, `fix(honesty): state the FR-131 v1 truth in code, closing REL-LIM-18 (US-0134)`, authored 2026-09-05; and `b6be070`, `chore(infra): untrack the TypeScript incremental build cache`, also 2026-09-05, which adds three `.gitignore` lines and deletes the tracked `apps/web/tsconfig.tsbuildinfo` — an infrastructure chore with no product change. **This is the commit on `main` that closes `REL-LIM-18`**: the five `FR-131`-violating strings and the `PrivacyStatus.tsx` pre-mount blocker, plus regression guards `UT-0887`, `UT-0759` and `UT-0888` (suite 610 → 619). A copy-and-comment honesty fix with its guards — **no behaviour change, merged to trunk, deployed nowhere.** *Added in v1.6.0 (`ISS-03`); `b6be070` named in v1.7.0 (`ISS-C2-04`), because reconstructing PR #19 from `0a5c542` alone yields a diff that does not match `84e2203`.* |
 
 A `CHANGELOG.md` and a tagged `0.1.0` range are owed at the release cut, alongside the refresh
-recorded in §7. Neither is a precondition of this document leaving `In Review`: the record above is
-the release record, and it is complete as of `HEAD`.
+recorded in §7. Neither is a precondition of this document leaving `In Review`. **Scope of the
+record above — stated exactly, in place of a completeness claim, and re-derivable by one command:**
+it lists every non-merge commit on `main` touching `packages/` or `apps/` from `48b07e0`
+(2026-08-08) through `HEAD` = `84e2203` (2026-09-06). Run
+`git log --no-merges --oneline HEAD -- packages apps`: it returns **14** commits, and the two
+tables list exactly those 14 — nine in the first table, five in the second. The second table also
+carries **two branch-side rows** (`c04b4f2`, `31b6df9`), labelled as such and deliberately not in
+the 14; `0a5c542` and `b6be070` are branch-side too and appear by reference inside the `84e2203`
+row. Executed on 2026-09-06 before publishing this version. *(v1.5.0 and every version before it
+said the record was "complete as of `HEAD`" while pinning `HEAD` to `e039ff2` — which is itself
+not on `main` — and while omitting `1c589c8` and `84e2203`; corrected per
+`09-release-notes-v1.5.0-business-cycle1` `ISS-03`. v1.6.0 then offered
+`git log --no-merges e039ff2..HEAD -- packages apps` as the re-derivation, which returns **2** of
+the 14 rows for exactly the reason this section states — `e039ff2` is not on `main`. That command
+was the delta that found the two missing rows, not the derivation; corrected per
+`09-release-notes-v1.6.0-business-cycle2` `ISS-C2-02`.)*
 
 ### Contributors
 
@@ -738,9 +1124,9 @@ Chen Wei (sre — owner of this document).
 | Architecture (SDD) | `docs/03-architecture-design-sdd.md` |
 | Test strategy | `docs/04-test-strategy-master-plan.md` |
 | Backlog | `docs/05-product-backlog.md` |
-| Coding & UT | `docs/06-coding-and-ut.md` (v2.4.3, Approved) |
-| Test cases | `docs/07-test-cases-suites.md` (v2.4.4, Approved — 610 green) |
-| **RTM** | `docs/08-traceability-matrix.md` (v2.7.0, Approved) — **still a Gate-2 blocker: 122 of 138 Must rows OPEN** |
+| Coding & UT | `docs/06-coding-and-ut.md` (v2.5.1, Approved) |
+| Test cases | `docs/07-test-cases-suites.md` — **Approved at v2.6.0** (2026-09-06, cycle 2 PASS 97%); records run R-17, **619/619 green**, which is therefore the approved suite figure of record (610 was the figure approved at v2.4.4). Current version and review state are pinned **once**, in §0's dated volatile snapshot |
+| **RTM** | `docs/08-traceability-matrix.md` — **Approved at v2.9.0** (2026-09-06, cycle 2 PASS 98%); current version and review state are pinned **once**, in §0's dated volatile snapshot — **still a Gate-2 blocker: 122 of 138 Must rows OPEN**, a figure unchanged across v2.7.0, v2.8.0 and v2.9.0 and now carried by an approved matrix |
 | Deployment runbook | `docs/10-deployment-runbook.md` |
 | Operations runbook | `docs/11-operations-runbook.md` |
 | Application inventory | `docs/12-application-inventory.md` |
@@ -759,18 +1145,29 @@ initiated, for the reasons in §0. **Two preconditions are not merely absent but
 one is sufficient on its own** — the halt does not depend on both, and it does not depend on any
 code defect:
 
-1. **The RTM (Doc 08) has open Must rows.** The document exists at v2.7.0 (Approved), so the
-   zero-gap check that could not be performed at the first readiness pass now can be — and it
-   **fails**: 122 of 138 Must rows are OPEN (Doc 08 §3.1 and gap log). Doc 07 v2.4.4 (Approved)
-   supplies a suite result of record — 610 green — which clears the "no result of record" blocker
-   but not this one. **Sufficient alone:** Gate 2 requires zero gaps in Must rows.
+1. **The RTM (Doc 08) has open Must rows.** Doc 08 is **Approved at v2.9.0** (2026-09-06); its
+   current version and review state are pinned **once**, in §0's dated volatile snapshot. The
+   zero-gap check that could not be performed at the first readiness pass now can be — against an
+   **approved** matrix — and it **fails**: **122 of 138 Must rows are OPEN** (Doc 08 §3.1 and gap
+   log), a figure unchanged across v2.7.0, v2.8.0 and v2.9.0 and re-derived 2026-09-06 by
+   `node hooks/run_gates.cjs --audit`, whose two signals agree. Doc 07 — **Approved at v2.6.0** —
+   supplies a suite result of record: **619 green**, now the approved figure rather than merely the
+   figure observed at `HEAD`. That clears the "no result of record" blocker but not this one.
+   **Sufficient alone:** Gate 2 requires zero gaps in Must rows, and this is the one Gate-2
+   precondition that the whole review loop closing has **not** moved.
 2. **Rollback is unproven** — the drill in Doc 10 §8.6 has not been executed (`NFR-020`, Doc 13
    §3.3 item 5). **Sufficient alone:** an unproven rollback means the reversibility this release
    would be operated under is asserted, not demonstrated.
 
 Beyond those two, `REL-LIM-12` (the deployment-safety gate is written and unit-tested but is
-executed by nothing that deploys) and `REL-LIM-18` (five `FR-131`-violating strings in shipped code,
-two of them customer-facing) are open and independently block a customer-facing v1 deployment.
+executed by nothing that deploys) is open and independently blocks a customer-facing v1 deployment.
+`REL-LIM-18` (five `FR-131`-violating strings in shipped code, two of them customer-facing) stood
+beside it until 2026-09-05 and is now **closed**: all five sites, and the `PrivacyStatus.tsx`
+pre-mount blocker recorded in the same row, are fixed in commit `0a5c542` (PR #19; Doc 06 v2.5.1,
+Approved), and were re-verified against `HEAD` by the sre on 2026-09-06. **That closure removes a
+blocker; it does not lift the halt.** Reasons 1 and 2 above are each sufficient on their own, and
+the fix is merged to trunk and **deployed nowhere** — nothing in this document should be read as a
+deployment of it.
 
 **Correction of record — a false third reason, withdrawn (2026-09-02).** Versions 1.0.1 and 1.1.0
 gave a third reason: `REL-LIM-03`, an unauthenticated `RegionRegistry.issueResidency`. **That defect
@@ -797,11 +1194,23 @@ pass:** `REL-LIM-15` (activation still flag-gated), `REL-LIM-16` (issuer-removal
 `REL-LIM-17` (irrevocable spender set).
 
 Routed back through the project-manager (Ana-Maria Petrescu). Owning roles: **engineer** —
-`REL-LIM-12`, `REL-LIM-15`, and **`REL-LIM-18`, the five `FR-131`-violating code strings** (routed
-2026-09-02, re-scoped from three sites to five the same day); **tester** — the RTM Must-row gaps
-(Doc 08 §3.1); **architect** — `REL-LIM-05`, `-06`, `-09`, `-16`; **technical-writer** — Doc 14
-publication at Gate 2. `REL-LIM-03` is **no longer routed to anyone**: it is closed (see the
-correction of record above).
+`REL-LIM-12`, `REL-LIM-15`; **tester** — the RTM Must-row gaps (Doc 08 §3.1), which remain open at
+122 of 138; the `TC` rows for `UT-0887`, `UT-0759` and `UT-0888` and the `FR-131` RTM row, owed
+since `0a5c542` (Doc 06 v2.5.1 §7 item 26(c)), were delivered and **Approved on 2026-09-06** at
+Doc 07 v2.6.0 and Doc 08 v2.9.0, so **item 26(c) is closed**; **architect** — `REL-LIM-05`, `-06`,
+`-09`, `-16`; **technical-writer** — Doc 14
+publication at Gate 2. **`REL-LIM-18`, the five `FR-131`-violating code strings** (routed to the
+engineer 2026-09-02, re-scoped from three sites to five the same day) came back **fixed** — the
+work authored 2026-09-05 as `0a5c542`, landing on `main` as `84e2203` on 2026-09-06 — and it
+is **no longer routed to the engineer**; this version closes its register row. The Doc 03 cascade
+the same commit created — §13 "Public tallies in Phase 1" instructing the client to state the
+retired framing, and §10.12.3 giving the v2 `ver` title as the v1 spec — was **delivered by the
+architect on 2026-09-06, at Doc 03 v2.12.0**, and is tracked in Doc 03, not here (Doc 06 v2.5.1 §7
+item 26(a)). *Delivery is the durable fact; Doc 03's version and review state are not — as of
+2026-09-06 Doc 03 had moved to v2.13.0 and its cycle-2 report PASSED at 97%. Re-derive with
+`node hooks/run_gates.cjs --audit` rather than trusting this pin; the finding is recorded as
+`ISS-C2-05` in `09-release-notes-v1.6.0-business-cycle2`.* `REL-LIM-03` is
+**no longer routed to anyone**: it is closed (see the correction of record above).
 
 **Owed by the sre, named rather than left implicit:**
 

@@ -47,8 +47,10 @@ export const en = {
       {
         title: 'Back the parties you believe in',
         body:
-          'Support a new party with your name kept private. When enough people in your area back it, ' +
-          'the party starts. Nobody decides this. The count does.',
+          'Backing a party is a public act, on purpose. Your name is not shown, but the backing goes ' +
+          'on the public record, and our own records can link it to your account. Only back a party ' +
+          'you are content to be seen supporting. When enough people in your area back it, the party ' +
+          'starts. Nobody decides this. The count does.',
       },
       {
         title: 'Have an equal say',
@@ -59,13 +61,18 @@ export const en = {
     ],
     promisesTitle: 'What we promise',
     promises: [
-      'We never learn which party you support.',
+      'We never publish which party you belong to. In this version of the platform, our own records ' +
+        'can see it, and we say so plainly rather than promise more.',
       'Nobody can remove you, block you, or stop your party.',
       'Every rule is written down, and the same rules apply to everyone.',
       'We do not count your visits, and we do not keep a record of what you read here.',
     ],
     cta: 'Get started',
   },
+  // DECISIONS-2026-09-08-VERIFY-PAGE.md §5.5 item 5: the strings below describe the DESIGNED
+  // enrolment screen (FR-132 §(b), DES-100, ADR-003). Enrolment is not built (Doc 06 §7), so
+  // this whole block renders only in `dev` (flag `enrolment_ui`, off in staging/prod). It is
+  // NOT a v1 claim — see `unavailable*` below for what actually ships.
   verify: {
     title: 'Show that you are a real person',
     lead:
@@ -91,6 +98,25 @@ export const en = {
       'Your date of birth',
       'A photo, a scan, or a fingerprint',
       'Your phone number or email',
+    ],
+    // Honesty placeholder shown when `enrolment_ui` is off (DECISIONS-2026-09-08-VERIFY-PAGE.md
+    // §5.3, NORMATIVE — exact text, asserted by UT-0890).
+    unavailableTitle: 'This step is not built yet',
+    unavailableBody:
+      'There is nothing to do on this page. Today anyone can make an account, join a party, ' +
+      'read, discuss and support one, and nobody is checked at all.',
+    unavailablePlannedTitle: 'What is planned, and what it will and will not do',
+    unavailablePlanned: [
+      'Later, one check will be added. You will be asked once for a government ID document, and ' +
+        'only if you want your membership counted in a party’s official size, to cast a vote ' +
+        'that decides something, or to stand as a candidate.',
+      'An outside company will do that check, and that company will see your document. It is ' +
+        'meant to delete it afterwards. That is a promise written into a contract, not ' +
+        'something the maths makes impossible.',
+      'Even then, the check will not prove that each person has only one account. Someone with ' +
+        'two valid ID documents could have two.',
+      'None of this is built. It cannot start until a legal opinion for the first pilot country ' +
+        'is finished.',
     ],
   },
   parties: {

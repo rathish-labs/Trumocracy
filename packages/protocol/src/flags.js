@@ -77,6 +77,20 @@ export const FLAGS = Object.freeze({
     onChain: true,
     removeBy: 'Phase 3',
   },
+  ENROLMENT_UI: {
+    key: 'enrolment_ui',
+    description:
+      'The /verify enrolment screen. OFF above dev: the screen describes the verify-and-discard ' +
+      'enrolment design (FR-132 §(b), DES-100, ADR-003) as current fact, and enrolment is ' +
+      'unbuilt (StubIdDocumentChecker.IS_INSECURE_MOCK() = true, Doc 06 §7) and blocked on ' +
+      'CON-015. With the flag off the route renders the honesty placeholder fixed at ' +
+      'DECISIONS-2026-09-08-VERIFY-PAGE.md §5.3. The normative wording is that record, not ' +
+      'this string.',
+    defaults: { dev: true, staging: false, prod: false },
+    onChain: false,
+    removeBy: 'Enrolment sprint — retires when FR-132 §(b) ships behind a real ' +
+      'IEligibilityVerifier backing; blocked on CON-015',
+  },
   L1_FORCE_INCLUSION: {
     key: 'l1_force_inclusion',
     description: 'Censorship fallback: submit citizen actions via L1 force-inclusion (ADR-001).',

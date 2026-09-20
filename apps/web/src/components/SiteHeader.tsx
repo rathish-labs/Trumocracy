@@ -11,10 +11,14 @@
 import Link from 'next/link';
 import { useLocale, useT } from '@/i18n/LocaleProvider';
 import { localeCodes } from '@/i18n';
+import { useFlag, FLAG } from '@/config/flags';
 
 export function SiteHeader() {
   const t = useT();
   const { locale, setLocale } = useLocale();
+  // /verify is flag-gated off in the public build (DECISIONS-2026-09-08-VERIFY-PAGE.md §5.1):
+  // the nav must not point a citizen at a route that only shows an honesty placeholder there.
+  const enrolmentUiOn = useFlag(FLAG.ENROLMENT_UI);
 
   return (
     <header className="site-header">
@@ -31,9 +35,11 @@ export function SiteHeader() {
           <li>
             <Link href="/petitions/new/">{t.nav.startAParty}</Link>
           </li>
-          <li>
-            <Link href="/verify/">{t.nav.verify}</Link>
-          </li>
+          {enrolmentUiOn && (
+            <li>
+              <Link href="/verify/">{t.nav.verify}</Link>
+            </li>
+          )}
         </ul>
       </nav>
 

@@ -2,27 +2,191 @@
 
 ```
 Document ID:   SDD-TRUMOCRACY
-Version:       2.11.2
-Status:        Approved — 03-architecture-design-sdd-v2.11.2-technical-cycle4.md (PASS 95%,
-               0C/0H/0M/5L). Score sat AT the bar (95.05%), not above it — recorded because it
-               matters to anyone reading this as comfortably passed. Five Lows accepted and
-               carried, none warranting escalation alone or together; **fix first on any future
-               touch:** (1) §16 Q17's body still reads "exercises neither" after its title was
-               corrected to three representations — and the v2.11.2 changelog over-claims that
-               this was "corrected in both its title and body", which it was not; (2) the
-               `Source:` pin reads SRS v2.16.0 and is three versions stale (Doc 02 is Approved at
-               v2.16.3 — no normative requirement text changed across the delta, verified by the
-               reviewer); (3) the changelog's "Still routed … Doc 02 §13 (h)" line is now wrong —
-               that routing was discharged at Doc 02 v2.16.3; (4) §10.13.12's `Traces:` footer
-               lists FR-107 among DES-097(b)'s related IDs (not a §5.2 register link, and the next
-               line says "Enables (does not close)"); (5) §10.13.3 did not receive the DES-096
-               accessor clause, though §13 now carries the owned debt row.
+Version:       2.13.0
+Status:        Approved — 03-architecture-design-sdd-v2.13.0-technical-cycle2.md (PASS 97%,
+               0C/0H/0M/2L; reviewer: reviewer-qa, neutral, PM-assigned). Two Lows carried —
+               **fix first on any future touch:** ISS-C2-01 (header Status block line ~16: the
+               Doc 08 FR-131-row history sentence over-states the TC count/dates) and ISS-C2-02
+               (§5.2 DES-066 cell still says "private vote" of a v1-reachable element — annotate).
+               This was **rework cycle 1 (v2.13.0, 2026-09-06)** against
+               artifacts/reviews/03-architecture-design-sdd-v2.12.0-technical-cycle1.md
+               (FAIL 89%; 0C/1H/2M/2L; reviewer: reviewer-qa, neutral, PM-assigned). Minor bump:
+               a High and two Mediums make a minor bump the floor. The FR-131 title/notice copy
+               work of v2.12.0 is **correct and is not re-opened** — cycle 1 verified it byte for
+               byte against the shipped constants. All four findings are elsewhere.
+               **ISS-01 (High) FIXED — a §15 cell contradicted Doc 08, and contradicted itself.**
+               The new v2.12.0 sub-table's DES-098 row ended "FR-131 has **no `US`/`TC`/RTM row**
+               yet" while naming `US-0134` one clause earlier. Doc 08 has carried the FR-131 Must
+               row since v2.2.0 (2026-08-25) — `EP-06 ▸ FE-058 ▸ US-0134` with sixteen TCs, row
+               **OPEN (G-PHASE3)**. With Gate 2 approaching, a §15 register publishing "no RTM
+               row" for a Must requirement that has an OPEN, evidence-bearing one is a material
+               correctness defect. The cell now states the true position and, as the review asked,
+               states the intended DES assignment so the tester can align Doc 08 rather than guess.
+               **ISS-02 (Medium) FIXED** — the v2.4.0 sub-table's FR-131 row, edited at v2.12.0 to
+               add the fourth banned word, still closed "US layer: owed — PO to mint US from
+               FR-131". US-0134 exists. **This is the "fixes stopped at the section boundary"
+               pattern this document's own v2.11.1 changelog names as the lesson of that cycle,
+               and it recurred inside a cell that was open in the editor.**
+               **ISS-03 (Medium) FIXED** — v2.12.0 minted a normative rule that FR-131's ban
+               reaches voting-adjacent **status** copy, then dispositioned only one of the two
+               badge states carrying a banned word. The `anon` title is the bare word "Anonymous".
+               §10.12.3's `anon` analysis now carries a banned-word disposition in the same form
+               the `ver` and `pub` analyses use — **COMPLIANT in v1**, on the narrow basis that the
+               `anon` state renders only for open-tier users who cannot cast a binding vote
+               (FR-122/FR-123), with re-open triggers recorded and the clause-8 disclosure gap
+               conceded, not papered over — and §10.13.6's status-copy rule now names its own
+               scope. Doc 04 v1.4.0 §0.5 S5 cites this disposition; it does not make one.
+               **Both Lows taken on this touch rather than carried:** ISS-04 (§10.11's
+               "individual votes are private" survived the sweep — annotated, and the standing
+               sweep widened to a bare-word scan) and ISS-05 (§10.12.3's note quoted one
+               annotation as if both cells carried it — both are now quoted as they actually read).
+               **No Low is carried forward.**
+               Prior verdicts (superseded, recorded for the trail): **v2.12.0 FAIL 89%**
+               (03-architecture-design-sdd-v2.12.0-technical-cycle1.md) — its own five discharged
+               v2.11.2 Lows were re-verified at their locations by that review and stand;
+               **v2.11.2 Approved** — 03-architecture-design-sdd-v2.11.2-technical-cycle4.md
+               (PASS 95%, 0C/0H/0M/5L); the score sat AT the bar (95.05%), not above it.
 Owner:         Ravi Deshmukh — Principal Architect
 Approvers:     Rafael Duarte (Security), Chen Wei (Reliability), Dr. Lena Kowalczyk (Privacy),
                Aisha Nkemdirim (Elections & Voting)
-Source:        SRS-TRUMOCRACY v2.16.0
-Last updated:  2026-08-30
-Change:        v2.11.2 (2026-08-30) — Rework cycle 3 against
+Source:        SRS-TRUMOCRACY v2.16.3 (Approved 2026-08-30) — re-pinned at v2.12.0 from the
+               three-versions-stale v2.16.0 pin (carried Low #2). No normative requirement text
+               changed across the v2.16.0 → v2.16.3 delta; FR-131 (§4.45) is unchanged and is the
+               normative wording this version cascades.
+Last updated:  2026-09-06
+Change:        v2.13.0 (2026-09-06) — **Rework cycle 1 against
+               artifacts/reviews/03-architecture-design-sdd-v2.12.0-technical-cycle1.md**
+               (FAIL 89%; 0C/1H/2M/2L). Minor bump: a High and two Mediums set a minor bump as the
+               floor. **Nothing in the FR-131 title/notice copy work is re-opened** — cycle 1
+               checked §10.12.3's tables, clause 9 and §10.13.6 against the shipped constants and
+               found them correct; all four findings sit elsewhere. This entry describes only what
+               changed.
+               **ISS-01 (High) FIXED — §15, the v2.12.0 sub-table's DES-098 row.** Its closing
+               clause read "FR-131 has **no `US`/`TC`/RTM row** yet". False, and self-contradicted:
+               the same cell named `US-0134` one clause earlier. Corrected to the true state, read
+               from source rather than asserted: **Doc 08 carries the FR-131 Must row** —
+               `BR-005, BR-009 → FR-131 → EP-06 ▸ FE-058 ▸ US-0134`, sixteen TCs, row **OPEN
+               (G-PHASE3)** at **v2.7.0 (Approved)** and still OPEN at **v2.8.0 (In Review,
+               2026-09-06)**, which adds TC-3564…TC-3569 for this drop; **TC-3476, TC-3481 and
+               TC-3487 are Blocked**, TC-3481 because SCR-13/SCR-14 are not built (Doc 06 §7 item
+               21). The row has existed since Doc 08 v2.2.0 (2026-08-25), so the claim was never
+               true in this window. The first half of that clause — the DES-098
+               acknowledge-to-proceed control is not built — was verified TRUE and stands. **DES
+               half reconciled as the review asked:** Doc 08 assigns FR-131 → `DES-096 · ADR-024`;
+               the architect's intended assignment is now stated in the cell (**DES-098** primary,
+               **DES-094** for the status-badge reach, **DES-096** retained as the ballot seam) and
+               **routed to the tester**. Doc 08 is the tester's document and is **not edited from
+               here**.
+               **ISS-02 (Medium) FIXED — §15, the v2.4.0 sub-table's FR-131 → DES-098 row.** Its
+               closing sentence still read "US layer: owed — PO to mint US from FR-131 covering the
+               SCR-13/SCR-14 notice surface" after the rest of the cell was edited at v2.12.0.
+               `US-0134` (EP-06 ▸ FE-058, Doc 05 **v2.5.0 Approved**) exists and covers that
+               surface, and `TC-3481` is written against SCR-13/SCR-14 and is **Blocked, not
+               absent**. Replaced with the true state, and the genuine residue is **named rather
+               than asserted as an unminted US**: US-0134's Definition of Done is not met (its
+               FR-131 RTM row is OPEN) and the acknowledge-to-proceed control is unbuilt.
+               **ISS-03 (Medium) FIXED — §10.12.3 `anon` copy analysis + §10.13.6 cross-reference.**
+               v2.12.0 minted the rule that FR-131's ban reaches voting-adjacent **status** copy and
+               then dispositioned only the `ver` title, leaving the `anon` title — the bare word
+               "Anonymous", hardcoded in the same `STATE_CONFIG` of the same component — with no
+               banned-word line at all, the only one of the three state analyses without one. A new
+               **`anon` TITLE banned-word disposition** rules it **COMPLIANT in v1** on an
+               explicitly narrow basis: the `anon` state renders only for **open-tier** users who
+               by FR-122/FR-123 **cannot cast a binding vote**, so the badge cannot be describing
+               that user's v1 voting behaviour, and clause 8's contexts (browse 1.2, join 1.6,
+               endorse 2.3) are all non-vote. **The basis is deliberately narrower than the
+               "status visibility" reading v2.12.0 overruled** — that reading failed because the
+               `ver` badge renders for users who *can* vote; the distinction is the voter, not the
+               word. The disposition **concedes what clause 8 already concedes**: "Nothing you do
+               here is linked to you" is not literally true in v1 (`phone_hash` → phone number →
+               in the India pilot a TRAI-registered person; H-16, H-18, T-01, T-02), that being a
+               disclosure obligation carried by clause 8 whose link is still unbuilt — not a
+               banned-word question. Four **re-open triggers** are recorded, in the form the `anon`
+               subtitle decision already uses. §10.13.6's status-copy bullet now **names its own
+               scope**: `ver` and `anon` are the whole set at v2.13.0.
+               **ISS-04 (Low) FIXED — §10.11 governance-constants table.** The conduct-vote quorum
+               rationale read "individual votes are private, aggregate public (FR-103)" — an
+               affirmative "votes are private" surviving a version whose declared purpose was to
+               stop asserting exactly that. It is internal design rationale rather than product
+               copy, so FR-131 does not bind it; it is corrected anyway to "**not published
+               individually**", because this document's own diagnosis of v2.7.0 is that a reader
+               does not parse the distinction. The **standing FR-131 sweep is widened** from the
+               five routed phrases to a bare-word scan of "private" / "anonymous" / "secure" in
+               vote-adjacent prose, so the next cascade does not rediscover this class.
+               **ISS-05 (Low) FIXED — §10.12.3 normative note.** It presented one annotation string
+               as a quotation applying to "each" of the title and subtitle cells; the two cells
+               carry different strings. Both are now quoted as they actually read — in the very
+               note whose job is to stop a reader taking the wrong cell as normative.
+               **Reported, not fixed here (not Doc 03's to fix), carried from the cycle-1 report's
+               routing section:** the engineer's `PrivacyStatus.tsx` header still pins "Doc 03
+               §10.12.3 **v2.7.1**" and attributes the title rule to clause 7 — the behaviour is
+               right, the citation is stale, cheap at the next touch of that file; the tester owes
+               TC mints for UT-0759/UT-0887/UT-0888 (Doc 06 v2.5.1 §7 item 26(c)) and the Doc 08
+               DES-half alignment; the approver holds the ADR-024 §(d) quotation question.
+               v2.12.0 (2026-09-06) — **FR-131 cascade: this document stops asserting the claim
+               the rest of the project has already retired.** Minor bump — normative copy in a
+               DES table changes. Routed in by Doc 06 v2.5.1 §7 item 26(a) and
+               artifacts/engineer-2026-09-05T1700.md; superseding authority is Doc 09 v1.3.0
+               `REL-LIM-18` / `ISS-03` (pre-mount blocker, 2026-09-02) and the approver's
+               direction of 2026-09-05 (Rathish), re-affirmed 2026-09-06 as the highest-priority
+               cascade.
+               **REVERSAL — the v2.7.0 FR-131 banned-words ruling on the `ver` TITLE is
+               OVERRULED.** v2.7.0 ruled the title "Verified — private" COMPLIANT in v1 on the
+               reading that "private" describes *status visibility*, not voting behaviour. That
+               reading is overruled. **The rule that now governs, v1 and v2 alike:** the word
+               "private" may appear on a voting-adjacent status badge **only** against a live
+               `IEligibilityVerifier` backing that declares `getProperties().unlinkable === true`.
+               FR-131's closing sentence bans "private", "anonymous", "receipt-free" and "secure"
+               across the v1 product's UI, README and all public-facing materials where they
+               describe v1 voting behaviour, and carves out no "status visibility" exception; the
+               green `ver` badge sits on the same authenticated surfaces from which a member
+               votes, so a reasonable member reads it as a claim about the ballot — in v1, a false
+               one. Locations corrected: §10.12.3 backing-aware sub-table (v1 row title
+               "Verified — private" → **"Verified"**; the v2 row keeps "Verified — private",
+               verbatim-matching `VER_TITLE_V2`); §10.12.3 three-state reference table (`ver`
+               title cell annotated v2-only, as the subtitle cell already was); §10.12.3 v2.7.1
+               normative note (its warning was scoped to the *subtitle* alone — that scoping is
+               precisely what left the title cell reading as normative, and it now covers the
+               title too); §10.12.3 banned-words analysis (v2.7.0 ruling marked SUPERSEDED, text
+               retained verbatim, new rule stated); §10.12.3 normative binding list — **clause 9
+               added**, applying clause 7's fail-honest backing test to the TITLE, including the
+               `aria-label`. Clause 7's own body is left untouched: it is subtitle-scoped and
+               remains correct as written; clause 9 is its title-side twin and says so. The
+               v2.7.0 changelog entry below is marked as reversed but is otherwise left standing
+               as history.
+               **§13 debt row "Public tallies in Phase 1" corrected.** Its Repayment cell told the
+               client to "state plainly that Phase-1 votes are anonymous but not receipt-free" — a
+               statement FR-131 forbids and the v1 build does not make. It now carries the FR-131
+               truth: a v1 vote is cast through conventional authentication and is NOT anonymous,
+               NOT receipt-free and NOT coercion-resistant; the platform database CAN see vote
+               direction and party membership; the cryptographic private ballot arrives with the
+               Definition-B (v2) privacy layer.
+               **§10.13.6 DES-098 aligned to FR-131(a).** The element's clause (1) said only "NOT
+               the private receipt-free ballot", under-stating FR-131(a)'s three explicit denials;
+               it now states NOT anonymous, NOT receipt-free, NOT coercion-resistant. The
+               banned-words bullet now states that the ban reaches voting-adjacent *status* copy,
+               not only notice text, and records the overruling. §15's FR-131 → DES-098 trace row
+               gains the fourth banned word ("secure") and the badge rule.
+               **Alignment with built code (verified by reading at commit 84e2203, not assumed):**
+               `packages/ui/src/PrivacyStatus.tsx` (`VER_TITLE_V1 = 'Verified'`,
+               `VER_TITLE_V2 = 'Verified — private'`, selected by
+               `backingProperties?.unlinkable === true`, `aria-label` following the selected
+               title; UT-0759 four-path test), `packages/protocol/src/flags.js`
+               `MACI_VOTING.description`, `apps/web/src/i18n/en.ts`
+               `banner.notReceiptFreeTitle`/`Body` (UT-0887),
+               `packages/contracts/src/core/Governor.sol` NatSpec,
+               `packages/sdk/src/client.js` `#tenureSignals`.
+               **All five v2.11.2 carried Lows discharged** (see the Status block): Q17 body;
+               `Source:` re-pin to SRS v2.16.3; the "Still routed … Doc 02 §13 (h)" line; the
+               §10.13.12 `Traces:` FR-107 annotation; the §10.13.3 DES-096 accessor clause.
+               **ADR sweep (reported, not edited — ADRs are decision records):** `ADR-024`
+               §"Relationship to existing Doc 03 §13 debt row" quotes the retired §13 wording as
+               its precedent pattern; that quotation is now historical and is contradicted by this
+               version. `ADR-023` defers to §10.12.3 for the DES-094 copy rather than restating
+               it, so it follows this correction automatically. `ADR-006`'s "even when it is
+               anonymous" is a general statement about public-ledger voting, not a claim about v1
+               Trumocracy. No ADR was edited.
+               v2.11.2 (2026-08-30) — Rework cycle 3 against
                artifacts/reviews/03-architecture-design-sdd-v2.11.1-technical-cycle3.md
                (FAIL 90%, 0C/0H/1M/5L). All nine cycle-2 findings were verified fixed at their
                locations against source; nothing in §10.13.13(a) needed rework.
@@ -45,11 +209,21 @@ Change:        v2.11.2 (2026-08-30) — Rework cycle 3 against
                Deshmukh**, due before the v1 ballot layer. (3) FR-107's gap class corrected to
                `G-TRACE + G-PHASE3`, matching Doc 08. (4) **Q17 still counted two** representations
                after the sub-table had established three; corrected in both its title and body.
+               _(v2.12.0 correction to this historical entry: the **body was NOT corrected** at
+               v2.11.2 — it still read "`differential.test.mjs` exercises neither". Only the title
+               and the annotation were fixed. The v2.11.2 review carried this as Low #1; the body
+               is corrected at v2.12.0.)_
                (5) §15's DES-104 row now records Doc 08 v2.6.0's new **Q16 revisit flag** on
                FR-090, while noting the row correctly stays COMPLETE.
                **Still routed elsewhere, unfixed here (not architect-owned):** Doc 02 §13 (h) and
                the two engineer-owned stale code comments at packages/sdk/src/proposals.js:295 and
                packages/protocol/src/proposals.js:103-108.
+               _(v2.12.0 correction to this historical entry, carried Low #3: the **Doc 02 §13 (h)
+               routing was already discharged** when this line was written — Doc 02 v2.16.3
+               (Approved 2026-08-30) corrected (h)'s ADR-024 mis-citation, which was the routed
+               item. (h) itself remains OPEN as a product-owner requirement question, but nothing
+               is routed from this document to it. The two engineer-owned code comments are not
+               re-asserted here; their status is Doc 06's to record.)_
                v2.11.1 (2026-08-30) — Rework cycle 2 against
                artifacts/reviews/03-architecture-design-sdd-v2.11.0-technical-cycle2.md
                (FAIL 84%, 0C/0H/5M/4L). Both cycle-1 Highs were confirmed genuinely fixed, and
@@ -386,7 +560,12 @@ Change:        v2.11.2 (2026-08-30) — Rework cycle 3 against
                clause 7 + backing-aware sub-table are the normative implementation spec;
                three-state table is informational reference copy; v1 default subtitle
                stated explicitly.
-               v2.7.0 (2026-08-25) — DES-094 backing-aware copy + carried debt ISS-A/ISS-B
+               v2.7.0 (2026-08-25) — **[REVERSED IN PART at v2.12.0: the FR-131 banned-words
+               ruling recorded in this entry — that the `ver` title "Verified — private" is
+               COMPLIANT in v1 — is OVERRULED (Doc 09 v1.3.0 REL-LIM-18 / ISS-03; approver
+               2026-09-05). The v1 title is "Verified". The rest of this entry stands. Historical
+               text retained per annotate-don't-delete.]**
+               DES-094 backing-aware copy + carried debt ISS-A/ISS-B
                (approver directive Rathish, 2026-08-25; engineer FLAG A,
                artifacts/engineer-2026-08-24T2015.md):
                §10.12.3 DES-094 — `ver` state subtitle made backing-aware. FR-131 banned-words
@@ -1478,7 +1657,7 @@ others).
 | Seat count | 5 | Enough for coordination diversity; small enough that elections are meaningful; a single steward's absence never blocks a quorum for any listed power | Open Layer |
 | Steward recall bar | 20% affirmative quorum of enrolled citizens + 60% of recall-vote turnout | Affirmative-quorum recall ensures silence cannot remove a steward; 60% of turnout means a motivated minority cannot remove without a real majority; growth-surge defence (FR-023 mechanics) applies throughout | Open Layer |
 | **Conduct, removal, expulsion (FR-103..105)** | | | |
-| Conduct-vote minimum quorum | 10% of eligible party members | Sets a floor that prevents a tiny faction from stigmatising a member; individual votes are private, aggregate public (FR-103) | Open Layer |
+| Conduct-vote minimum quorum | 10% of eligible party members | Sets a floor that prevents a tiny faction from stigmatising a member; individual conduct-vote choices are **not published individually**, and the aggregate is public (FR-103) _(v2.13.0, cycle-1 ISS-04: this cell read "individual votes are private, aggregate public (FR-103)". In v1 the platform database **CAN** see individual choices — FR-131(b) — so "private" here meant **unpublished, not unseen**. This is internal design rationale, not product copy, so FR-131's ban does not bind it; it is corrected anyway, because this document's own diagnosis of the v2.7.0 title ruling is that a reader does not parse that distinction. The standing FR-131 sweep is widened from the five routed phrases to a **bare-word scan** of "private" / "anonymous" / "secure" in vote-adjacent prose.)_ | Open Layer |
 | Removal vote bar | T2 structural tier approval (60% of votes cast, 15% quorum) | Removal is more consequential than an ordinary policy vote and MUST require the structural tier with its adaptive quorum and surge defence (FR-104) | Open Layer |
 | Expulsion vote bar | T3 constitutional tier (80% of votes cast, 20% quorum) | Expulsion is the most severe action; the bar MUST exceed removal; the 20 pp supermajority margin ensures near-consensus is required (FR-105) | Open Layer |
 | Failed-recall cooldown | 6 months | Prevents harassment-campaign cycles; mirrors the recall-cooldown precedent from FR-044/FR-042 party-level recall mechanics | Open Layer |
@@ -1567,12 +1746,16 @@ others).
 
 **Three states — exact wireframe copy and colour bindings:**
 
-> **Normative note (v2.7.1 — ISS-03):** The table below is **informational reference copy** maintained per the annotate-don't-delete convention. The `ver` row preserves the v2 reference subtitle annotated "(v2 ZK backing only — see backing-aware copy below)." **Clause 7 in the normative binding list below and the backing-aware sub-table are the normative implementation spec for the `ver` subtitle.** The v1 default `ver` subtitle ("Your vote counts. How you voted is never made public.") does not appear in this table — it appears in the backing-aware sub-table. An engineer implementing `PrivacyStatus.tsx` MUST consult clause 7 and the backing-aware sub-table; taking the `ver` row of this table as the implementation spec will produce an incorrect hardcoded v2 subtitle, which clause 7 expressly prohibits.
+> **Normative note (v2.7.1 — ISS-03; scope extended from the subtitle to the TITLE at v2.12.0; quotations corrected at v2.13.0):** The table below is **informational reference copy** maintained per the annotate-don't-delete convention. The `ver` row preserves the v2 reference **title and** subtitle, each annotated as v2-ZK-backing-only, but the two annotations are **not the same string**: the subtitle cell carries "(v2 ZK backing only — see backing-aware copy below)" and the title cell carries the longer "(v2 ZK backing only — the v1 default title is "Verified"; see backing-aware copy below)". **Clause 7 (subtitle) and clause 9 (title) in the normative binding list below, together with the backing-aware sub-table, are the normative implementation spec for BOTH the `ver` title and the `ver` subtitle.** The v1 default `ver` title ("Verified") and the v1 default `ver` subtitle ("Your vote counts. How you voted is never made public.") do not appear in this table — they appear in the backing-aware sub-table. An engineer implementing `PrivacyStatus.tsx` MUST consult clauses 7 and 9 and the backing-aware sub-table; taking the `ver` row of this table as the implementation spec will produce an incorrect hardcoded v2 title and an incorrect hardcoded v2 subtitle, both of which those clauses expressly prohibit.
+>
+> _(v2.13.0, cycle-1 ISS-05: the v2.12.0 form of this note presented one annotation string as a quotation applying to "each" of the two cells. Only the subtitle cell carries that string. A quotation matching one of the two cells it claims to quote is a self-inconsistency in the one note whose job is to stop a reader taking the wrong cell as normative.)_
+>
+> _(v2.12.0: the v2.7.1 form of this note scoped its warning to the **subtitle alone**. That scoping is exactly what left the `ver` **title** cell reading as normative — and it is the defect Doc 09 v1.3.0 `REL-LIM-18` / `ISS-03` caught in shipped code, where `PrivacyStatus.tsx` hardcoded "Verified — private" as the v1 title. A note that guards one cell of a two-cell row does not guard the row.)_
 
 | State | CSS class | Dot colour | Background | Text colour | Title | Subtitle |
 |---|---|---|---|---|---|---|
 | `anon` | `privacy anon` | `--grey-soft` (#8892AE) | #ECEEF5 | #41496b | "Anonymous" | "Nothing you do here is linked to you" |
-| `ver` | `privacy ver` | `--green` (#2C7A5B) | `--green-soft` (#E7F1EC) | #1f5a42 | "Verified — private" | "Your vote counts. Your identity is not stored." *(v2 ZK backing only — see backing-aware copy below)* |
+| `ver` | `privacy ver` | `--green` (#2C7A5B) | `--green-soft` (#E7F1EC) | #1f5a42 | "Verified — private" *(v2 ZK backing only — the v1 default title is "Verified"; see backing-aware copy below)* | "Your vote counts. Your identity is not stored." *(v2 ZK backing only — see backing-aware copy below)* |
 | `pub` | `privacy pub` | `--amber` (#F2B134) | #FDF3E0 | #8a5b10 | "Public" | "You chose a public role. Your record is visible" |
 
 **Backing-aware copy for `ver` state (v2.7.0 amendment — approver directive Rathish, 2026-08-25; engineer FLAG A, `artifacts/engineer-2026-08-24T2015.md`):**
@@ -1580,11 +1763,19 @@ others).
 | Backing | Title | Subtitle | When rendered |
 |---|---|---|---|
 | v2 (ZK): `getProperties().unlinkable = true` | "Verified — private" | "Your vote counts. Your identity is not stored." | Live `IEligibilityVerifier` backing (DES-095, §10.13.2) declares `unlinkable = true` |
-| v1 (conventional): `getProperties().unlinkable = false`, or call absent/error — **fail-honest default** | "Verified — private" | "Your vote counts. How you voted is never made public." | All other cases, including getProperties() failure or absent backing information |
+| v1 (conventional): `getProperties().unlinkable = false`, or call absent/error — **fail-honest default** | "Verified" *(v2.12.0 — this cell read "Verified — private"; overruled, see the banned-words analysis below)* | "Your vote counts. How you voted is never made public." | All other cases, including getProperties() failure or absent backing information |
 
-**FR-131 banned-words analysis (v2.7.0, architect record):**
+**FR-131 banned-words analysis (v2.7.0, architect record — the TITLE ruling is SUPERSEDED at v2.12.0):**
 
-Title "Verified — private": the word "private" describes the **visibility of the holder's verified status** (private to the holder; never published per-individual; aggregate-only by FR-124(b)), NOT voting behaviour. FR-131's ban ("MUST NOT use 'private' to describe v1 voting behaviour" — §10.13.6 DES-098) does not apply to a title describing *status visibility*. The title is COMPLIANT in v1 and requires no change.
+> **SUPERSEDED — OVERRULED at v2.12.0 (2026-09-06).** Superseding authority: **Doc 09 v1.3.0 `REL-LIM-18` / `ISS-03`** (pre-mount blocker raised 2026-09-02 against the shipped `PrivacyStatus.tsx` title) and the **approver's direction of 2026-09-05 (Rathish)**. **The rule that now governs, in v1 and in v2:** the word **"private" may appear on a voting-adjacent status badge only against a live `IEligibilityVerifier` backing that declares `getProperties().unlinkable === true`.** Against a v1 conventional backing the `ver` title is **"Verified"** — the fail-honest default, exactly as the subtitle already was under clause 7.
+>
+> **Why the v2.7.0 reading fails.** FR-131's closing sentence (Doc 02 §4.45) bans "private", "anonymous", "receipt-free" and "secure" across *the v1 product — its UI, README, and all public-facing materials* — wherever they describe v1 voting behaviour. It carves out no exception for "status visibility". The `ver` badge is a persistent element on the same authenticated surfaces from which a member votes, and it sits directly above a subtitle whose entire subject is the member's vote ("Your vote counts…"); a reasonable member reads the badge as a claim about the ballot. In v1 that claim is false: the platform database can see vote direction and party membership (FR-131(b)). An architect's reading of what a word "describes" cannot outrank what a member is likely to understand from it — that is the whole point of the honesty doctrine (§0.5 of Doc 04; DES-098).
+>
+> **Implemented and guarded, not merely written:** `packages/ui/src/PrivacyStatus.tsx` constants `VER_TITLE_V1 = 'Verified'` and `VER_TITLE_V2 = 'Verified — private'`, selected by `backingProperties?.unlinkable === true`, with `aria-label` following the selected title; **UT-0759** asserts all four paths (prop absent / `false` / `true` / malformed). The historical v2.7.0 text is retained verbatim below per annotate-don't-delete so the reversal is legible; it **MUST NOT** be relied on.
+
+_(v2.7.0 text — SUPERSEDED, retained for the trail:)_ Title "Verified — private": the word "private" describes the **visibility of the holder's verified status** (private to the holder; never published per-individual; aggregate-only by FR-124(b)), NOT voting behaviour. FR-131's ban ("MUST NOT use 'private' to describe v1 voting behaviour" — §10.13.6 DES-098) does not apply to a title describing *status visibility*. The title is COMPLIANT in v1 and requires no change.
+
+**v1 title "Verified" (v2.12.0, architect record — this is the ruling in force):** no banned word is present; the title makes no claim about the ballot at all. It is truthful for v1 — the holder's COUNTING-tier eligibility (FR-123) is real, and the fact of it is restricted-class and never published per-individual (FR-124(b)). Grade-8 reading level; one word. **COMPLIANT.** **v2 title "Verified — private"** renders only when the live backing declares `unlinkable === true`, the one case in which "private" is true of the ballot; clause 7's proxy annotation applies to the title exactly as it applies to the subtitle — any future backing declaring `unlinkable: true` MUST satisfy the full "no identity at rest" guarantee by design review before the v2 title may render behind it. **COMPLIANT in v2 only.**
 
 v1 subtitle "Your vote counts. How you voted is never made public.": no banned words present; truthful for v1 (aggregate-only publication is policy-enforced by FR-124(b); individual vote direction is never published to any public audience; the operator-level DB access is separately disclosed by DES-098/FR-131); Grade-8 reading level; one short sentence. COMPLIANT.
 
@@ -1604,7 +1795,19 @@ v1 subtitle "Your vote counts. How you voted is never made public.": no banned w
 
 **`anon` subtitle v1 variant — no change (architect decision, 2026-08-25).** "Nothing you do here is linked to you" is sustainable under the explicit interpretive basis stated above: no `anon`-state action is published linked to any individual identity in either v1 or v2 (FR-124(b) aggregate-only policy). The operator-side linkage is real in v1 — but that is a platform-data-practices disclosure concern addressed by clause 8, not by a subtitle change. No v1 subtitle variant is required. This decision is recorded; if a future honesty review or user-research finding establishes that "publicly linked" is not the reading a reasonable user in the India pilot context applies to the claim, a subtitle variant MUST be considered before that deployment.
 
-**Verdict (revised).** Copy is compliant under the stated interpretive basis. Non-vote `anon` context disclosure gap addressed normatively via clause 8. No v1 subtitle variant required.
+**`anon` TITLE banned-word disposition (v2.13.0 — added per cycle-1 ISS-03; the analysis that was missing).** The `anon` title is the bare word **"Anonymous"** — one of FR-131's four banned words — hardcoded in the same `STATE_CONFIG` of the same component as the `ver` title (`packages/ui/src/PrivacyStatus.tsx`). Until this version, this was the **only one of the three state analyses with no banned-word line at all**: the `pub` analysis states "No banned words" and the `ver` analysis devotes four paragraphs to one. v2.12.0 minted a normative rule that FR-131's ban reaches voting-adjacent **status** copy, and then dispositioned one of the two badge states that rule touches. That is the same shape as the defect v2.12.0 was written to correct, at component scale rather than cell scale.
+
+**Disposition: COMPLIANT in v1 — the ban is not engaged.** The basis, stated explicitly rather than assumed: FR-131's closing sentence bans the four words where they **describe v1 voting behaviour**. The `anon` state renders only for **open-tier** users — phone-verified accounts without government-ID verification, the user class stated at the head of this analysis — who by **FR-122/FR-123 cannot cast a binding vote at all**. A badge on a user who cannot vote is not describing that user's voting behaviour; it names their **participation tier**. Clause 8's contexts are all non-vote by construction: browsing (screen 1.2), party-joining (1.6), endorsing (2.3).
+
+**Why this is not the reading that was just overruled.** v2.7.0 ruled the `ver` title compliant because "private" described *status visibility* rather than voting behaviour, and that reading is OVERRULED above. This disposition is deliberately **narrower** and rests on a different fact: the `ver` badge renders for users who **can** vote, on the authenticated surfaces from which they vote, so the reasonable-member reading reaches the ballot; the `anon` badge renders only for users who cannot. **The distinction is the voter, not the word.** If that fact ever changes, this disposition falls with it — see the triggers below.
+
+**What this disposition does NOT claim.** It does **not** claim the `anon` copy is fully truthful. Clause 8 expressly concedes that "Nothing you do here is linked to you" is **not literally true in v1**: the platform DB associates open-tier actions with the account; `phone_hash` is derivable to a phone number by an operator holding the KMS pepper; and in the India pilot that chain reaches a TRAI-registered real person (Doc 02 H-16, H-18; §10.13.7 T-01, T-02). That gap is a **disclosure** obligation, discharged by clause 8 — whose data-practices link is **still unbuilt** (owner: engineer, enrolment sprint) — and not an FR-131 banned-word question. Recording the compliance finding without also recording this concession would be exactly the tidier-than-the-record over-claim this document family has been marked down for.
+
+**Re-open triggers — this disposition MUST be revisited if any of these holds:** (i) the `anon` badge ever renders on a vote-casting surface, or for any user who can cast a binding vote; (ii) FR-122/FR-123 change so that open-tier participation includes binding voting; (iii) FR-131 is amended to ban the four words unconditionally rather than "to describe v1 voting behaviour"; (iv) user research or an honesty review shows open-tier members read the badge as a claim about how their vote is handled. Trigger (iv) is the same standing condition the `anon` subtitle decision already carries.
+
+**Downstream — the copy authority is here, and only here.** Doc 04 §0.5 **S5** is a **build-failing** denylist over `apps/web` and `packages/ui` user-facing strings forbidding any v1 string that asserts anonymity outside a DES-098 notice denying it; the shipped `STATE_CONFIG.anon.title` is exactly such a string, so S5 as written would fail the build on copy this section approves. Doc 04 v1.4.0 §0.5 S5 therefore carries a **named carve-out citing this disposition**. It cites; it does not rule. A copy ruling living anywhere other than the copy authority is precisely the v2.7.0 mistake.
+
+**Verdict (revised — v2.13.0).** Copy is compliant under the stated interpretive basis, cell by cell: the `anon` **subtitle** is compliant under the interpretive basis stated above together with the clause-8 disclosure obligation, and the `anon` **title** is compliant with FR-131 on the basis and re-open triggers stated immediately above. Non-vote `anon` context disclosure gap addressed normatively via clause 8. No v1 subtitle variant required, and no v1 title variant required.
 
 **`pub` state copy analysis (v2.7.0):** "You chose a public role. Your record is visible." True in both v1 and v2: Workers and Candidates have voluntarily taken a public role (FR-124(c)); their public participation record is visible by design. No banned words. No identity-at-rest claims. Copy is backing-independent. **Verdict: no v1 variant needed.**
 
@@ -1618,6 +1821,8 @@ v1 subtitle "Your vote counts. How you voted is never made public.": no banned w
 6. **No retroactive linkage (FR-124(e), FR-086):** The PrivacyStatus component MUST NOT write, emit, or trigger any log entry or export that associates the holder's rendered state with any persistent record accessible to any other actor. FR-086 applies: no retroactive linkage between an anonymous Supporter's verified status and their identity is permitted through any data the system holds or emits. This obligation is particularly relevant at screen 3.6, whose copy ("What you've done as an anonymous supporter stays anonymous forever. It is never linked to your new public identity") makes the no-retroactive-linkage guarantee explicit to the user — the component rendering MUST be consistent with that guarantee.
 7. **Backing-aware copy selection for `ver` state (FR-131, H-15, H-16, T-01, T-02):** The subtitle rendered in the `ver` state MUST be selected by the live `IEligibilityVerifier` backing's declared properties (DES-095 seam, §10.13.2 `getProperties()`). The v2 subtitle ("Your vote counts. Your identity is not stored.") MUST render ONLY when the live backing declares `getProperties().unlinkable = true`. The v1 subtitle ("Your vote counts. How you voted is never made public.") MUST render in all other cases — including when `getProperties()` returns `unlinkable = false`, when the call fails, or when backing information is absent. **Absence of backing information MUST fall back to the v1 (weaker-claim) subtitle — the fail-honest default; the v2 subtitle MUST never be assumed.** This ensures the stronger identity-at-rest claim is never shown against a v1 conventional backing, which retains `phone_hash` and `subject_id_hash` in the operator DB and cannot technically sustain "Your identity is not stored" (H-15, H-16, T-01 — operator can see account↔membership; T-02 — subpoena test deferred to v2). The component MUST NOT hardcode the v2 subtitle. Cites: FR-131 (no misleading identity-at-rest claim for v1 voting behaviour), H-15 (one-person-one-vote not guaranteed in v1), H-16 (hashed identity data at rest in v1), T-01/T-02 (DB operator access and subpoena deferral). *(v2.7.1 — ISS-02 annotation: `getProperties().unlinkable` is used as the subtitle-selection trigger because the current v2 ZK backing that declares `unlinkable: true` also guarantees "no identity data at rest" by construction — ZK enrolment; nullifier-only on-chain; no `phone_hash` or `subject_id_hash` retained. The `unlinkable` property is a **proxy** for the full "no identity at rest" guarantee, not an independent test. Any future backing declaring `unlinkable: true` MUST satisfy the same guarantee by design review before the v2 subtitle may render behind it. This is a design-review invariant for future backing registrations.)*
 8. **Non-vote `anon` context disclosure (FR-131, ADR-025 §(c-ii), Doc 02 H-16, H-18):** In any screen where the `anon` pill renders in a non-vote-casting context — specifically browsing (screen 1.2), party-joining (screen 1.6), and endorsing (screen 2.3) — the component or its host screen MUST provide an accessible data-practices disclosure link adjacent to the pill. The disclosure MUST inform the user, in plain language at Grade-8 level or lower, that: (i) the platform holds a hashed account identifier associated with their phone number in a restricted-access store; (ii) their open-tier participation actions are associated with that account in the platform DB; and (iii) this account record is subject to legal compulsion in the jurisdiction of operation. The minimum disclosure mechanism is a "?" or "Learn more" affordance adjacent to the `anon` pill that surfaces a one-paragraph plain-language data notice. This obligation exists because DES-098's honesty notice (FR-131) applies only at vote time (SCR-13/14) and does not cover non-vote contexts where the `anon` pill displays the claim "Nothing you do here is linked to you." DES-098's scope is unchanged; this clause supplements it for non-vote surfaces. Cites: FR-131 (honesty notice obligation); ADR-025 §(c-ii) (phone number at rest as identity data in v1); Doc 02 H-16 (`phone_hash` is derived identity data held in operator DB); Doc 02 H-18 (`subject_id_hash` retained as derived identifier); T-01 (operator-side linkage accepted with disclosure). Owner: engineer (enrolment sprint). Trigger: MUST be implemented before any screen rendering the `anon` pill in a non-vote context is shipped to production.
+
+9. **Backing-aware `ver` TITLE selection (FR-131; v2.12.0 — clause 7's rule, applied to the title):** The title rendered in the `ver` state MUST be selected by the same live-backing test as clause 7 applies to the subtitle. The v2 title ("Verified — private") MUST render **ONLY** when the live `IEligibilityVerifier` backing declares `getProperties().unlinkable === true`. The v1 title ("Verified") MUST render in every other case — `unlinkable = false`, the call failing, the property malformed, or backing information absent. **Absence of backing information MUST fall back to the v1 title — the fail-honest default; the v2 title MUST never be assumed.** The component's accessible name (`aria-label`) MUST carry the *selected* title rather than a fixed string, so assistive technology never announces a claim the visual badge does not make. Clause 7's proxy annotation applies unchanged to the title: `getProperties().unlinkable` is a **proxy** for the full "no identity at rest" guarantee, and any future backing declaring `unlinkable: true` MUST satisfy that guarantee by design review before the v2 title may render behind it. **Why this clause exists, stated plainly:** v2.7.0 ruled the title compliant in v1 on a "status visibility" reading, and clause 7 was written for the subtitle alone — so the shipped badge read "Verified — private" against a conventional backing, on the same authenticated surfaces from which a member votes. Doc 09 v1.3.0 recorded that as `REL-LIM-18` / `ISS-03` (pre-mount blocker, 2026-09-02); the approver overruled the v2.7.0 reading on 2026-09-05; the banned-words analysis above records the reversal. **Clause 7's body is deliberately unchanged** — it is subtitle-scoped and remains correct as written; this clause is its title-side twin and the two MUST be read together. Implemented at `packages/ui/src/PrivacyStatus.tsx` (`VER_TITLE_V1` / `VER_TITLE_V2`); guarded by **UT-0759** (four paths: prop absent / `false` / `true` / malformed).
 
 **Leak-check verdict (FR-124 applied to entire wireframe):**
 
@@ -1809,6 +2014,8 @@ The verifier MUST NOT be called as a precondition of account creation or party-j
 
 **Composes with:** `IProofVerifier` seam (ADR-022) — v2 `computeTally()` produces a ZK proof verified through `IProofVerifier`; v1 `computeTally()` produces a conventional aggregate and does not call `IProofVerifier` (honest bypass, not hidden).
 
+**Owed — ballot-state accessor (added v2.12.0; carried Low #5 from v2.11.2).** The interface above is `castBallot`, `changeBallot`, `computeTally`, `getTallyProperties` **and no more** — it never reports the ballot's state. §10.13.13(a) makes the ballot layer authoritative over the FR-091 `VOTE` / `DECISION` / `IMPLEMENTATION` stages in **both** versions, and that rule is unsatisfiable against an interface with nothing to derive FROM; the only way to render those stages without an accessor is to track them independently, which is precisely what the rule forbids. **DES-096 MUST gain a ballot-state accessor before the v1 ballot layer is built:** a read-only method returning the current ballot state for an election, with the same v1/v2 backing symmetry as the four methods above (v1 — database read; v2 — MACI/tally-layer state), and with **no** capability to set, force, skip or reorder a state. Not urgent today: the proposals and debate layer derives nothing and stops at `admitToBallot()`, so this blocks no current work. Owner: **Ravi Deshmukh (architect)**. Tracked as the owned §13 debt row "DES-096 exposes no ballot-state accessor…" entered at v2.11.2 — this clause is that row's design-side counterpart, whose absence was the fifth Low carried from v2.11.2 (the debt was owned in §13 but invisible to anyone reading the seam spec itself).
+
 ### 10.13.4 IS_INSECURE_MOCK() and the promotion gate
 
 The CI deployment-safety scan (§14, §7.1) blocks any deployment to testnet, staging, or production that has a MockVerifier in the VerifierRegistry (`IS_INSECURE_MOCK()` returning true). The distinction between a mock and the v1 conventional backing is critical:
@@ -1843,12 +2050,14 @@ The v1 conventional backing MUST NOT be labelled or implemented as a mock. It ho
 
 ### 10.13.6 DES-098 — v1 honesty notice
 
-**Element:** Wherever a vote is cast in v1, the UI MUST display a plain-language honesty notice before the ballot is confirmed. The notice MUST state: (1) this vote uses conventional authentication and is NOT the private receipt-free ballot; (2) the platform database CAN see vote direction and party membership; (3) the cryptographic private ballot — where the platform is technically unable to see it — is available when the platform upgrades to the v2 privacy layer; (4) the tally result IS publicly auditable and published to the blockchain.
+**Element:** Wherever a vote is cast in v1, the UI MUST display a plain-language honesty notice before the ballot is confirmed. The notice MUST state: (1) this ballot uses conventional authentication and is **NOT anonymous, NOT receipt-free and NOT coercion-resistant**; (2) the platform database CAN see vote direction and party membership; (3) the cryptographic private ballot — where the platform is technically unable to see it — is available when the platform upgrades to the Definition-B (v2) privacy layer; (4) the tally result IS publicly auditable and published to the blockchain.
+
+_(v2.12.0: clause (1) previously read "this vote uses conventional authentication and is NOT the private receipt-free ballot". That under-stated **FR-131(a)**, which requires all three denials by name. FR-131 (Doc 02 §4.45) is the normative wording — not this paraphrase and not any string in code. The shipped copy is `apps/web/src/i18n/en.ts` `banner.notReceiptFreeTitle` / `banner.notReceiptFreeBody` (and its `ar.ts` mirror, native-speaker review owed per Doc 06 §7 item 17), guarded by **UT-0887**, which bans each of the four FR-131 words unless immediately negated, bans "private"/"secure" outright, and separately asserts that clauses (a), (b) and (c) are present.)_
 
 **Requirements:**
 - Visible before confirmation; non-dismissable (voter must acknowledge to proceed); WCAG 2.2 AA (DES-081); screen-reader accessible
 - Displayed on SCR-13 (ballot booth) and SCR-14 (post-vote confirmation)
-- MUST NOT use the words "private", "anonymous", "receipt-free", or "secure" to describe v1 voting behaviour
+- MUST NOT use the words "private", "anonymous", "receipt-free", or "secure" to describe v1 voting behaviour — in the notice, in any other v1 UI string, in the README, or in any public-facing material (FR-131 closing sentence, Doc 02 §4.45). **v2.12.0 clarification (normative):** this ban reaches voting-adjacent **status** copy, not only notice text. "private" may appear on a status badge **only** against a backing declaring `getProperties().unlinkable === true` (§10.12.3 clauses 7 and 9). The v2.7.0 "status visibility" carve-out is **overruled** — Doc 09 v1.3.0 `REL-LIM-18` / `ISS-03`; approver 2026-09-05. The four words MAY appear **negated** ("NOT anonymous", "NOT receipt-free") because FR-131(a) mandates exactly that phrasing; a blanket substring ban would fail the mandated text, which is why UT-0887 is negation-aware. **v2.13.0 — the scope of that status reach, named rather than left open-ended (cycle-1 ISS-03):** exactly two DES-094 badge states carry copy containing a banned word, and **both are dispositioned in §10.12.3**, which is the copy authority for both — (a) **`ver`**: the title "Verified — private" and the v2 subtitle render **only** against `unlinkable === true`; the v1 defaults are "Verified" and "Your vote counts. How you voted is never made public." (clauses 7 and 9; the v2.7.0 ruling is marked SUPERSEDED there); (b) **`anon`**: the title "Anonymous" is **COMPLIANT in v1** — the state renders only for open-tier users who cannot cast a binding vote under FR-122/FR-123, so the badge describes a participation tier and not voting behaviour — with four recorded re-open triggers and the clause-8 disclosure gap conceded, not papered over. A rule that reaches status copy must say **which** status copy it reaches; these two are the whole set at v2.13.0, and any new badge state carrying one of the four words MUST be dispositioned in §10.12.3 before it ships
 - Backs: **FR-131** (v1 honesty notice MUST — minted by PO, Doc 02 v2.6.0, 2026-08-23; owner Nadia Hassan; traces BR-005/BR-009)
 
 **FR-131 clause (d) extension (Doc 02 v2.12.0, 2026-08-24; DECISIONS-2026-08-24-V1-ID-GATES-COUNTING.md):** DES-098 MUST also provide a disclosure to open-tier (unverified) participants at the point a COUNTING action is blocked due to absence of government-ID verification. The disclosure MUST, in plain language: (1) inform the participant that the specific action (contributing to strength, casting a binding vote, or standing as a candidate) requires COUNTING-tier eligibility; (2) explain that open-tier participation (reading, following, watching, discussing, supporting, organising) continues to be available without any additional verification; (3) explain how to complete the government-ID document check to become COUNTING-eligible. This disclosure composes with the ballot-booth notice above: the ballot-booth notice applies to verified (COUNTING-tier) participants; this clause (d) disclosure applies to open-tier participants who attempt a COUNTING action before completing ID verification. No new DES element is minted — this is a clause extension to DES-098, reflecting FR-131 clause (d) (Doc 02 v2.12.0, owner Nadia Hassan).
@@ -2337,7 +2546,14 @@ and is blocked past devnet — the honest position, and the same discipline the 
 already follows.
 
 **Traces:** DES-097, DES-100 (retention), DES-102 (cap), DES-080 (schema guard), ADR-024 §(b),
-ADR-013 §2, CON-002, CON-008, CON-015, FR-010, FR-013, FR-022, FR-064, FR-107, FR-130, NFR-010.
+ADR-013 §2, CON-002, CON-008, CON-015, FR-010, FR-013, FR-022, FR-064, FR-107 *(v2.12.0 — carried
+Low #4 discharged: **related only, and expressly NOT a DES assignment.** The store's
+recorded-not-erased rule serves FR-107's append-only property **for party and membership records
+only**. FR-107 is platform-wide and its lifecycle is still undesigned; **Doc 08 holds the FR-107
+Must row OPEN with DES = none** (`G-TRACE + G-PHASE3`, gap-log entry 98) and §15 disclaims the link
+in terms. This footer is not the `FR/NFR → DES` register — §5.2 is — but it was listing FR-107
+among DES-097(b)'s IDs with nothing marking the distinction, which is how a disclaimed link gets
+published anyway)*, FR-130, NFR-010.
 **Enables (does not close):** the FR-010 production-store build and every row whose gap reads
 "production store pending DES-097". **US layer:** owed — PO to derive the persistence-build stories.
 
@@ -2736,7 +2952,7 @@ not duplicated here. Architectural debt carried knowingly:
 | Debt | Why now | Repayment | Severity |
 |---|---|---|---|
 | Mock verifiers in Phase 1 | circuits depend on ceremonies (Phase 2) | replaced at Phase 2; a mock in a promoted environment fails CI today | Medium (blocked by CI) |
-| Public tallies in Phase 1 | MACI is a Phase-3 deliverable | MACI flag; client MUST state plainly that Phase-1 votes are anonymous but not receipt-free | Medium (disclosed) |
+| Public tallies in Phase 1 | MACI is a Phase-3 deliverable | MACI flag; the client MUST state plainly, **per FR-131 / DES-098 (§10.13.6)**, that a Phase-1 (v1) vote is cast through conventional authentication and is **NOT anonymous, NOT receipt-free and NOT coercion-resistant**; that the platform database **CAN** see vote direction and party membership; and that the cryptographic private ballot — where the platform is technically unable to see either — arrives with the Definition-B (v2) privacy layer. _(v2.12.0: this cell read "client MUST state plainly that Phase-1 votes are anonymous but not receipt-free" — a claim **FR-131 forbids** and the v1 build does not make. Corrected per Doc 09 v1.3.0 `REL-LIM-18`; approver 2026-09-05. **ADR-024 §(d) quotes the retired wording** as the precedent pattern for DES-098; that quotation is historical and is not the rule — ADRs are decision records and are not edited here.)_ | Medium (disclosed) |
 | Growth-sample array O(n²) scan in `Party` | 512 samples × state-changing path = liveness ceiling, not just a cost: joins become impossible at the cap | move to ring buffer (DES-015 ref) before mainnet scale | **High — liveness blocker at cap** |
 | No Elections/Recall/Treasury contracts yet | Phase-3 scope, flags off | built behind their flags | Medium |
 | Region path stored as a string on-chain | readability for auditors | acceptable; measured, small | Low |
@@ -2807,7 +3023,7 @@ pre-existing Phase-3, environment, external, or mechanism gaps per Doc 08 §gap-
 | BR-006, BR-009, FR-030..035, FR-069, FR-070, FR-082..086, FR-106..108, FR-121..129, NFR-001..004, NFR-009, NFR-027, CON-002, CON-008, CON-012, CON-013 | DES-095 (IEligibilityVerifier seam) | Design-level interface decoupling the application from the identity/personhood proof mechanism; v1 backing: conventional DB auth; v2 backing: `ICredentialAdapter` → `PersonhoodRegistry` (ADR-017); IS_INSECURE_MOCK() = false in both honest backings; ADR-024. US layer: owed — PO to derive US from this design element. |
 | BR-011, FR-030..035, FR-082..086, NFR-001..004, NFR-009 | DES-096 (IBallotService seam) | Design-level interface decoupling the application from the ballot-casting and tally mechanism; v1 backing: conventional DB write + audit chain log; v2 backing: MACI + 5-of-7 DKG + ZK tally proof (ADR-006, DES-023..025); `IProofVerifier` seam (ADR-022) is the upgrade path at the tally-proof layer; ADR-024. US layer: owed — flows through existing US once backings are wired. |
 | FR-108 (blockchain as trust layer not database), CON-012, CON-013 | DES-097 (v1 conventional-auth stack and package disposition) | Blockchain as audit-record only in v1; `packages/contracts` audit subset deployed; `packages/circuits` / `apps/verifier` untouched for v2; `packages/protocol` as-is; disposition table in §10.13.5; ADR-024 §(b). US layer: no new US — package disposition is a build-time decision, not a story-level deliverable. |
-| FR-131 (v1 honesty notice MUST — minted by PO, Doc 02 v2.6.0, 2026-08-23; owner Nadia Hassan; traces BR-005/BR-009) | DES-098 (v1 honesty notice) | Non-dismissable plain-language notice on SCR-13 (ballot booth) and SCR-14 (post-vote confirmation); MUST NOT use "private", "anonymous", "receipt-free" to describe v1 voting; ADR-024 §(d); WCAG 2.2 AA (DES-081). US layer: owed — PO to mint US from FR-131 covering the SCR-13/SCR-14 notice surface. |
+| FR-131 (v1 honesty notice MUST — minted by PO, Doc 02 v2.6.0, 2026-08-23; owner Nadia Hassan; traces BR-005/BR-009) | DES-098 (v1 honesty notice) | Non-dismissable plain-language notice on SCR-13 (ballot booth) and SCR-14 (post-vote confirmation); MUST NOT use "private", "anonymous", "receipt-free" **or "secure"** to describe v1 voting — all four words, per FR-131's closing sentence _(v2.12.0: this cell listed three of the four)_; the ban reaches voting-adjacent **status** copy as well as notice text (§10.12.3 clauses 7 and 9 — "private" on a status badge only against `unlinkable === true`, and clause `anon` disposition for "Anonymous"); ADR-024 §(d); WCAG 2.2 AA (DES-081). **US layer: `US-0134` EXISTS** (EP-06 ▸ FE-058; Doc 05 v2.5.0, Approved) and covers the SCR-13/SCR-14 notice surface; `TC-3481` is written against SCR-13/SCR-14 and is **Blocked pending those screens, not absent**. Residue — named, rather than asserted as an unminted US: US-0134's **Definition of Done is not met** (its FR-131 RTM row is OPEN — see the v2.12.0 sub-table below), and the DES-098 **acknowledge-to-proceed control is still unbuilt**. _(v2.13.0, cycle-1 ISS-02: this cell closed "US layer: owed — PO to mint US from FR-131 covering the SCR-13/SCR-14 notice surface" — false; US-0134 has carried the row since Doc 08 v2.2.0, 2026-08-25. The rest of the cell was edited at v2.12.0 and this sentence was left standing: the "fixes stopped at the section boundary" pattern this document's v2.11.1 changelog records as the lesson of that cycle, recurring inside an open cell.)_ |
 
 **v2.4.0 v1 phone-auth + spam-resistance additions (§10.13, 2026-08-23):**
 
@@ -2858,6 +3074,13 @@ the first rework cycle, not the mint.)_
 | FR-092 (permanent decision trail, third-party reconstructable) | **DES-106** (decision trail) | Append-only per window; `appendTrailEvent` the only writer; reads return copies. **RTM row OPEN (G-NOMECH)** on two counts: the four enumerated elements this layer cannot hold (no vote here) and the unbuilt DES-097 anchoring |
 | FR-107 (nothing deleted; append-only state-transition lifecycle) | **partially served by DES-106 — NOT discharged by it** | ⚠ **Do not read this as a DES assignment.** DES-106 satisfies FR-107's append-only property **for the decision trail only**. FR-107 is platform-wide — *every governed entity* active-or-inactive, transitions appended with timestamp and cause, plus the FR-085 confidential-class carve-out — and that lifecycle is **still undesigned**. **Doc 08 correctly records FR-107 as `G-TRACE + G-PHASE3` with DES = none** (§3.1; gap-log entry 98, owner Erik Lindqvist): a DES is owed *from the architect*, which is a stronger claim than a build being owed. _(v2.11.1: the v2.11.0 table mapped FR-107 → DES-106 and marked its row "OPEN (G-NOMECH)", contradicting Doc 08 on both the link and the gap class — a §15 sub-table added to fix a traceability omission had itself asserted a traceability link that does not exist.)_ |
 
+**v2.12.0 DES-094 title correction + DES-098 alignment (§10.12.3, §10.13.6, §13, 2026-09-06):**
+
+| Requirement | DES | Notes |
+|---|---|---|
+| FR-131 (v1 honesty — closing sentence: the v1 product MUST NOT use "private", "anonymous", "receipt-free" or "secure" to describe v1 voting behaviour); FR-124(b) (verified status restricted-class); H-15, H-16, T-01, T-02 | **DES-094 amended** — backing-aware `ver` **TITLE**: v1 conventional backing renders **"Verified"** (fail-honest default, all cases where `unlinkable !== true`); v2 ZK backing renders "Verified — private" (only when `getProperties().unlinkable === true`). **Clause 9** added to the normative binding list, applying clause 7's test to the title and to the `aria-label`; the v2.7.0 "status visibility" ruling is marked SUPERSEDED in place | **REVERSAL of a v2.7.0 architect ruling.** Superseding authority: Doc 09 v1.3.0 `REL-LIM-18` / `ISS-03` (pre-mount blocker, 2026-09-02) + approver direction 2026-09-05 (Rathish), re-affirmed 2026-09-06. Already built and guarded: `packages/ui/src/PrivacyStatus.tsx` `VER_TITLE_V1`/`VER_TITLE_V2`, **UT-0759** (four paths). **US layer: no new US** — this is a copy-selection constraint on the existing DES-094 component, and the component ships with it |
+| FR-131(a) (the notice MUST state NOT anonymous, NOT receipt-free, NOT coercion-resistant); FR-131 closing sentence | **DES-098 aligned** (§10.13.6) — element clause (1) now carries all three denials by name; the banned-words bullet now covers voting-adjacent status copy and records the overruling; §13's "Public tallies in Phase 1" repayment cell now states the FR-131 truth instead of "Phase-1 votes are anonymous but not receipt-free" | Shipped copy: `apps/web/src/i18n/en.ts` `banner.notReceiptFreeTitle`/`Body` (+ `ar.ts` mirror), `packages/protocol/src/flags.js` `MACI_VOTING.description`, `packages/contracts/src/core/Governor.sol` NatSpec, `packages/sdk/src/client.js` `#tenureSignals`; guarded by **UT-0887**, **UT-0888**. **Still owed against DES-098** (unchanged by this version, carried openly): the **acknowledge-to-proceed control** on SCR-13 is not built — the banner is non-dismissable but has no acknowledgement step (US-0134; Doc 06 v2.5.1 §7 item 26(d)). **The FR-131 chain is NOT absent — it is OPEN.** Doc 08 carries the FR-131 Must row `BR-005, BR-009 → FR-131 → EP-06 ▸ FE-058 ▸ US-0134` with sixteen TCs; the row is **OPEN (`G-PHASE3`)** at Doc 08 **v2.7.0 (Approved)** and remains OPEN at **v2.8.0 (In Review, 2026-09-06)**, which adds `TC-3564`…`TC-3569` for this drop. **`TC-3476`, `TC-3481` and `TC-3487` are Blocked** — `TC-3481` because SCR-13/SCR-14 are not built (Doc 06 §7 item 21). **DES assignment — stated so the tester can align rather than guess.** Doc 08's row assigns FR-131 → `DES-096 · ADR-024`; the architect's intended assignment is **DES-098** (the notice itself — the primary backing element, §10.13.6), **DES-094** (the status-badge copy that FR-131's closing sentence reaches, §10.12.3 clauses 7 and 9 and the `anon` disposition), with **DES-096** retained as the ballot seam the notice's cast path runs through. Routed to **Ji-woo Park (tester)**; **Doc 08 is the tester's document and is NOT edited from here**, and nothing in this cell should be read as having edited it. _(v2.13.0, cycle-1 ISS-01 (High): this cell previously closed "and FR-131 has **no `US`/`TC`/RTM row** yet" — false, contradicted by Doc 08 and self-contradicted by its own citation of US-0134 one clause earlier. The row has existed since Doc 08 v2.2.0, 2026-08-25. With Gate 2 approaching, a §15 register publishing "no RTM row" for a Must requirement that has an OPEN, evidence-bearing one is a material correctness defect, not a wording slip.)_ |
+
 ## 16. Open questions
 
 | # | Question | Owner | Needed by |
@@ -2878,7 +3101,7 @@ the first rework cycle, not the mint.)_
 | Q14 | **Party finance ledger screen — design owed.** The wireframe 1.6 "Finances — every rupee in and out" navigation row links to an undesigned screen. FR-050 (Must) requires the itemised public treasury record. DES-033 covers the on-chain mechanism; the UI is not designed. A ledger SCR, DES surface element, FE, and US are all owed. | Ravi Deshmukh (architect) + Priya Raghunathan (PO) | Before Coding sprint covering FR-050 |
 | Q15 | **FR-091 does not say what happens to a DEFEATED or CANCELLED decision.** Surfaced 2026-08-30 while mapping FR-091 to ADR-008's `PROPOSAL_STATE` (§10.13.13(a)). FR-091 requires every proposal to move through all eight stages in sequence with **no stage skipped**; a defeated or cancelled decision cannot be implemented or measured, so under the recorded mapping such a window **terminates at `DECISION`**. Terminating is not skipping — but the requirement's text does not say so, leaving a future implementer free to read it as obliging an implementation stage for a proposal the members rejected. **This is a requirement clarification, not an architect's call** — the architect surfaces it and routes it. **Not a defect in what is built:** the proposals and debate layer holds no vote — it stops at `admitToBallot()` and hands off to `IBallotService` — so no window can yet reach a defeated state. _(v2.11.1: this row previously read "v1 holds no vote (ADR-024 §(b))" — the same mis-citation corrected in §10.13.13 at v2.11.0 and missed here, one of the three locations the cycle-1 finding named. ADR-024 §(b) removes on-chain **execution** in v1; **DES-096 §10.13.3 specifies a v1 ballot backing**. It also contradicted **Q16** two rows above, which already used the corrected narrow form.)_ Recorded in Doc 02 §13 tracked routing (h). | Priya Raghunathan (PO) | Before the ballot layer is built |
 | Q16 | **Nothing specifies how a decision window with several competing proposals RESOLVES.** Surfaced 2026-08-30 at the v2.10.0 review, while checking the cardinality argument in §10.13.13(a). FR-090 requires every competing proposal to be presented with equal standing and voted **in the same decision window**; `Governor` gives each proposal an **independent binary ballot**; and DES-104 deliberately exposes **no** window-closing, merging, ranking or primary-selection capability — that absence is a first-class anti-capture control and MUST NOT be quietly removed to answer this. So two competing proposals answering one question can **both pass**, and no rule says what then happens. This is a genuine gap between FR-090's "same decision window" and the ballot model, not an implementation detail. It is **not a v1 defect** — the layer built in this drop holds no vote — but it MUST be answered before the ballot layer is built, and the answer is a **requirement decision** (what does the party get when both options win?) before it is an architecture one. Related: **Q15**. | Priya Raghunathan (PO) + Ravi Deshmukh (architect) | Before the ballot layer is built |
-| Q17 | **None of the THREE ballot-state representations is covered by a differential test.** _(v2.11.2: this row said "neither … enum", counting two, after the reconciliation sub-table had established three.)_ `Governor.State` (Solidity, 7 values), `PROPOSAL_STATE` (JS mirror, 8 values) and `PROPOSAL_STATE_ENUM` (SDK ordinal-indexed decode array, 7 values) all express the same machine, differ by name in one state (`Timelocked` / `SUCCEEDED_TIMELOCK`), and differ by one **vestigial** value (`PROPOSAL_STATE.DRAFT` has no producer anywhere — `stateAt()` never returns it and no contract declares it). `differential.test.mjs` exercises neither. §10.13.13(a) now makes the ballot layer authoritative over derived stage positions, which raises the cost of an undetected divergence between the reference mirror and the chain. **Write the ordinal-indexing case first:** `PROPOSAL_STATE_ENUM` decodes by position, so a Solidity enum reorder silently remaps every state with nothing to raise an error. Also owed: a decision on whether to retire `PROPOSAL_STATE.DRAFT` or give it a producer. | Ji-woo Park (tester) + Samuel Oyelaran (Engineering Lead) | Before the v2 seam swap |
+| Q17 | **None of the THREE ballot-state representations is covered by a differential test.** _(v2.11.2: this row said "neither … enum", counting two, after the reconciliation sub-table had established three. **v2.12.0:** the **body** still read "exercises neither" — v2.11.2 corrected the title and the annotation but not the body, and its changelog over-claimed otherwise. Corrected here; this was carried Low #1.)_ `Governor.State` (Solidity, 7 values), `PROPOSAL_STATE` (JS mirror, 8 values) and `PROPOSAL_STATE_ENUM` (SDK ordinal-indexed decode array, 7 values) all express the same machine, differ by name in one state (`Timelocked` / `SUCCEEDED_TIMELOCK`), and differ by one **vestigial** value (`PROPOSAL_STATE.DRAFT` has no producer anywhere — `stateAt()` never returns it and no contract declares it). `differential.test.mjs` exercises **none of the three**. §10.13.13(a) now makes the ballot layer authoritative over derived stage positions, which raises the cost of an undetected divergence between the reference mirror and the chain. **Write the ordinal-indexing case first:** `PROPOSAL_STATE_ENUM` decodes by position, so a Solidity enum reorder silently remaps every state with nothing to raise an error. Also owed: a decision on whether to retire `PROPOSAL_STATE.DRAFT` or give it a producer. | Ji-woo Park (tester) + Samuel Oyelaran (Engineering Lead) | Before the v2 seam swap |
 
 **Confirmations recorded (2026-08-23; DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md §4):**
 

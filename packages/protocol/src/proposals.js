@@ -20,8 +20,9 @@
  *
  * Authoring a proposal (original or competing) requires Worker tier or above (OI-14,
  * Rathish, 2026-08-11). The reason is NOT that Supporters are less trusted: authorship is
- * public (FR-090) and a Supporter is anonymous unconditionally (FR-082), so a Supporter
- * cannot author without destroying their own anonymity. Worker tier is self-declared
+ * public (FR-090) and a Supporter is anonymous unconditionally (FR-082 — Definition-B
+ * property; §16.3 DEFERRED-v2), so a Supporter cannot author without destroying their own
+ * anonymity. Worker tier is self-declared
  * (FR-080), so any member who wishes to author simply declares — this is a disclosure
  * step, never an approval step. Supporters retain full voting rights on every proposal.
  *
@@ -65,7 +66,8 @@ export const DEFAULT_PARTICIPATION_TIER = PARTICIPATION_TIER.SUPPORTER;
 /**
  * Tiers permitted to author a proposal (FR-024, FR-090, OI-14).
  * Supporter is excluded because authorship is public and Supporters are anonymous
- * unconditionally — not because a Supporter's proposal would be worth less.
+ * unconditionally (FR-082 — Definition-B property; §16.3 DEFERRED-v2) — not because a
+ * Supporter's proposal would be worth less.
  */
 const AUTHORING_TIERS = Object.freeze(
   new Set([PARTICIPATION_TIER.WORKER, PARTICIPATION_TIER.CANDIDATE]),
