@@ -2,8 +2,40 @@
 
 ```
 Document ID:   SDD-TRUMOCRACY
-Version:       2.14.1
-Status:        Approved — 03-architecture-design-sdd-v2.14.1-technical-cycle2.md (PASS 97%, 0C/0H/0M/1L; reviewer: tester; one Low carried, non-blocking, to fold at the next touch: ISS-C2-01 the ISS-01 annotations call the superseded sentence the paragraph's 'closing sentence' when it is the third of four, and S4 (the actual closing sentence) survives — quoted verbatim at both sites, so no careful reader is misled). Previously: In Review — v2.14.1 (2026-09-20). **Rework cycle 2 of 5** against
+Version:       2.16.0
+Status:        Approved — 03-architecture-design-sdd-v2.16.0-technical-cycle2.md (PASS 97%, 0C/0H/0M/2L; reviewer: tester; two Lows carried, non-blocking, to fold at the next touch: ISS-C2-01 DES-067 rule 8 cites UT-0887 for the banner's non-dismissability but UT-0887 asserts copy only — no test looks for a close control (true by inspection of ReceiptFreedomBanner, unasserted; a candidate UT for the tester); ISS-C2-02 the §5.6 annotation and the v2.16.0 change entry say 'nine stages' — CANDIDACY_STAGE has EIGHT, and the annotation's own edge list names exactly those eight (the enumeration is right; the count word is wrong)). Previously: In Review — v2.16.0 (2026-09-21). **Rework cycle 2 of 5** against
+               artifacts/reviews/03-architecture-design-sdd-v2.15.0-technical-cycle1.md (**FAIL 88%;
+               0 Critical / 2 High / 4 Medium / 5 Low**; neutral reviewer: **tester**, Ji-woo Park,
+               PM-assigned before dispatch — artifacts/status/REVIEW-ASSIGNMENT-2026-09-21-CANDIDATE-DES.md).
+               **MINOR bump per the Medium-or-worse rule.** All six blocking findings fixed and all five
+               Lows taken; nothing carried. **Both Highs were mine and both were the same class — a
+               design sentence describing what the code should do as if it did:** ISS-01 said the
+               FR-131(b) feedback disclosure renders *before* the controls (it renders after, and no
+               test asserts order — now stated as built and the placement recorded as OWED); ISS-02
+               grounded a v1 rule on FR-082's anonymity, a DEFERRED-v2 property this document's own
+               §16 says v1 makes no claim to (now non-publication, with the FR-131(b)-equivalent
+               disclosure made an obligation of the owed question surface). The Mediums: FR-065's
+               third clause ("the same nullifier mechanism") recorded as a v1 DIVERGENCE for the
+               tester's ruling, with the Postgres UNIQUE requirement and the convergent form
+               specified; FR-081's active/inactive state stated as a design-level derivation from the
+               recorded stage, not a recorded field; the §5.2 SCR-assignment note — the ORIGIN of the
+               SCR-22/23 inversion — and the §5.6 CANDIDACY sketch annotated in place. The layering,
+               the seam, the mints, the OPEN rulings and the constants record are unchanged — the
+               reviewer wrote "nothing in the layering … needs reworking". Same neutral reviewer for
+               cycle 2. Previously:
+               In Review — v2.15.0 (2026-09-21). **TRUMO-P03 — the candidate/election design elements
+               made Definition-A.** Cycle 1 of a fresh loop (the v2.14.1 lineage closed PASS at 97%).
+               Neutral reviewer, PM-assigned and recorded BEFORE dispatch: **tester** (Ji-woo Park, new
+               instance) — artifacts/status/REVIEW-ASSIGNMENT-2026-09-21-CANDIDATE-DES.md. **MINOR
+               bump:** DES-107 and DES-108 minted; DES-027/028/066/067/076 amended in place so the
+               shipped SDK conventional backing (Doc 06 v2.11.1) is the v1 design behind the
+               `ICandidateStore` seam with the Elections contract as the deferred v2 backing; §10.11
+               gains the two approver-ratified constants; §16 gains Q18. No product code, test or UT
+               is written or edited; no US, TC, SCR, ADR or RISK id is minted; nothing renumbered or
+               reused. **This version closes no RTM row** — it makes each row rulable, and the ruling
+               is the tester's (Doc 08 v2.13.0). **The one Low carried from v2.14.1 (ISS-C2-01) is
+               folded** (§10.12.3 annotated with the correct ordinal). Previously:
+               Approved — 03-architecture-design-sdd-v2.14.1-technical-cycle2.md (PASS 97%, 0C/0H/0M/1L; reviewer: tester; one Low carried, non-blocking, to fold at the next touch: ISS-C2-01 the ISS-01 annotations call the superseded sentence the paragraph's 'closing sentence' when it is the third of four, and S4 (the actual closing sentence) survives — quoted verbatim at both sites, so no careful reader is misled). Previously: In Review — v2.14.1 (2026-09-20). **Rework cycle 2 of 5** against
                artifacts/reviews/03-architecture-design-sdd-v2.14.0-technical-cycle1.md
                (**FAIL 93%; 0 Critical / 0 High / 2 Medium / 3 Low**). Neutral reviewer:
                **tester** (Ji-woo Park, new instance), assigned by the project-manager **before
@@ -255,8 +287,157 @@ Source:        SRS-TRUMOCRACY **v2.17.3 (Approved** — 02-requirements-srs-v2.1
                unchanged. **MTP Doc 04 is at v1.7.1 (In Review)** — the matching half of this
                rework, which uses the Doc 07 v2.9.0 approval recorded here to discharge its
                `OPEN-30` §14 register reconciliation in the same session.)_
-Last updated:  2026-09-20
-Change:        v2.14.1 (2026-09-20) — **Rework cycle 2 of 5 against
+Last updated:  2026-09-21
+Change:        v2.16.0 (2026-09-21) — **Rework cycle 2 of 5 against
+               artifacts/reviews/03-architecture-design-sdd-v2.15.0-technical-cycle1.md** (FAIL 88%;
+               0C / 2H / 4M / 5L; neutral reviewer: tester, Ji-woo Park, PM-assigned). **MINOR bump.**
+               Every finding taken; no Low carried. The reviewer verified every refusal code, the
+               seam table member-for-member, the order-of-checks claims, the suite (739/739) and the
+               "Sites changed" list against `git diff`, and faulted none of them; the six blocking
+               defects are all in the DES prose, and all are fixed by annotation in place.
+               **ISS-01 (High) — DES-066 rule 4 claimed the FR-131(b) feedback disclosure renders
+               "before the controls (UT-0906)".** False against HEAD: `feedbackVisibility` is the
+               LAST child of the feedback section, after the thumbs-up/thumbs-down controls, and
+               UT-0906 asserts its presence only. Corrected to what ships, the placement obligation
+               (before the controls, as the post-debate vote already has) recorded as **owed** with a
+               §13 row, and the citation re-scoped. **ISS-02 (High) — DES-108 rule 3(a) rested a v1
+               rule on FR-082 ("a Supporter is anonymous unconditionally").** FR-082 is DEFERRED-v2
+               (Doc 02 §16.3.1; this document's §16 confirmations: "v1 makes no claim to these
+               properties"). Annotated: FR-082 is NOT claimed; the v1 property is **non-publication**
+               of the asker, exactly as DES-066 rule 4 treats the feedback caster; the operator
+               database will hold the asker↔question link; the owed question surface MUST carry the
+               FR-131(b)-equivalent disclosure before the ask control. The §5.2 DES-108 cell says the
+               same. **ISS-03 (Medium) — FR-065's third clause, "enforced by the same nullifier
+               mechanism as scope-action limits", was never addressed** while §15 posted the row as
+               design + code + tests present. DES-066 rule 2 now records it as a **v1 divergence**:
+               `castFeedback` uses a store-local check-then-write caster record, not DES-095's
+               atomic first-write-wins `isUniqueInScope` that `nominate` uses for CANDIDACY. Design
+               consequences specified — the DES-097(b) Postgres backing MUST enforce a UNIQUE
+               (candidacyId, member) constraint; the convergent form (register `FEEDBACK:<candidacyId>`
+               through `isUniqueInScope`) is the recommended engineer touch (§13); whether the clause
+               is satisfied as built is the tester's ruling. v2.15.0's phrase "is the v1 nullifier"
+               asserted an equivalence this document had not established and is withdrawn. §15's
+               FR-065 row and the evidence map now say which clauses are evidenced and which two are
+               the tester's. **ISS-04 (Medium) — DES-107 rule 4 listed the active/inactive mapping
+               among code facts.** No field records it, no read exposes it, no cited UT asserts it.
+               Now stated as a **design-level derivation from the recorded stage**, total and
+               published here; the architect's view (satisfied by derivation) is stated as a view,
+               the ruling left to Doc 08, and the §5.2 cell and §15 row re-phrased. **ISS-05 (Medium)
+               — the §5.2 provisional SCR-assignment note, the ORIGIN of the SCR-22/SCR-23 inversion,
+               was left live and unannotated** five lines above the rows v2.15.0 annotated — the
+               "a note that guards one row does not guard the table" defect this document named at
+               v2.14.1. Annotated in place; not swapped. **ISS-06 (Medium) — §5.6's four-node
+               CANDIDACY sketch omitted six of the nine stages** that this version makes normative,
+               while `candidates.js` cites §5.6 as the state model. Annotated with the nine stages,
+               the legal edges from `TRANSITIONS`, and the pointer to §10.13.14 as the authority.
+               **Lows, all taken:** ISS-07 the normative rule now names `NOMINATION_MATURATION_SECONDS`
+               (the short form "NOMINATION_MATURATION = 30 days" in the v2.15.0 entry below is the
+               approver's wording and is retained as such); ISS-08 "and the store" re-scoped to what
+               is asserted — the store half is true by inspection and unasserted; ISS-09 the
+               decisions record's Q18 lettering brought into line with §10.11/§16 (durations = (a),
+               waiver = (b)), with a correction note in the record; ISS-10 non-dismissability cited
+               to the banner's own UT-0887, placement to UT-0906; ISS-11 "one row per FR" → "one row
+               per requirement group" in the v2.15.0 entry, marked as corrected.
+               **Sites changed at v2.16.0:** header (Version, Status, this entry); §5.2 provisional
+               SCR note (ISS-05) and the DES-107 / DES-108 cells; §5.6 CANDIDACY block; §10.13.14
+               DES-027 rule 3, DES-066 rules 2 and 4, DES-067 rule 8, DES-107 rules 3 and 4, DES-108
+               rule 3(a), and the evidence map's FR-065 / FR-081 rows; §13 one row added; §15 the
+               FR-065 and FR-081 rows; the v2.15.0 change entry (two words, marked). Outside this
+               document: artifacts/status/DECISIONS-2026-09-21-CANDIDATE-CONSTANTS.md §3 (lettering).
+               **No id minted, renumbered or reused; no product code, test or UT touched; no RTM row
+               closed.**
+               v2.15.0 (2026-09-21) — **TRUMO-P03 — the candidate/election design elements made
+               Definition-A, so the RTM rows TRUMO-P02 built for can be ruled on.** Architect session;
+               documents only — no product code, test or UT is written or edited. Neutral reviewer,
+               PM-assigned and recorded BEFORE dispatch: **tester** (Ji-woo Park, new instance) —
+               artifacts/status/REVIEW-ASSIGNMENT-2026-09-21-CANDIDATE-DES.md, which also carries
+               the Phase-1 map this version implements. **MINOR bump — earned by two mints and five
+               in-place amendments.**
+               **Why.** TRUMO-P02 (Doc 06 v2.10.0 → v2.11.1 Approved; UT-0891..UT-0907; suite
+               739/739) built and tested the v1 candidate-selection flow and closed **zero** RTM
+               rows: every candidate element in §5.2 (DES-027, DES-028, DES-066, DES-067, DES-076)
+               named the on-chain **Elections contract** as its component, and FR-081 / FR-093 had
+               no element at all. DES-095/DES-096 (v2.3.0) and DES-101..DES-106 (v2.8.0, v2.9.0)
+               established the rule this version applies: **the conventional backing IS the
+               Definition-A (v1) design, and the on-chain form is the Definition-B (v2) backing
+               behind the same seam** — a layering, never a rewrite (ADR-024 guardrail), and
+               nothing v2 pulled forward.
+               **What changes.** (1) **§10.13.14 (new)** — the normative text: the `ICandidateStore`
+               seam with each member group's data class and its v1/v2 backing; the counting-tier
+               placement (two call sites: CANDIDACY at `nominate`, BINDING_VOTE at the two votes;
+               the service holds no verifier and no ballot service); **DES-027 amended** (self only
+               by construction; `inScopeForOffice`; maturation before the gate; the CANDIDACY
+               nullifier; five endorsements gating the debates; window and withdrawal); **DES-028
+               amended** (consent recorded once with all three acknowledgements literal `true`, no
+               verifier, only the candidate; nothing published and nobody named before consent;
+               the FR-038 two-step crossing on SCR-15; the FR-085 lifecycle — `destroyDisclosures`
+               the store's only delete, fired only before the window closes; disclosures stand after;
+               no revocation method for the term); **DES-066 amended** (+3/−1; a second vote REFUSED
+               via the store's caster record — which is why feedback does not ride DES-096;
+               BINDING_VOTE gate; aggregate-only reads; the FR-131(b) truth on the surface;
+               "unlinkable" declared Definition-B and NOT claimed for v1); **DES-067 amended** (three
+               topics; boolean attestation with `contentRef`; absence blocks, unheld does not;
+               PUBLISHED only via DEBATES_COMPLETE → VOTE_OPEN; the post-debate vote cast and tallied
+               through DES-096 with the service storing no ballot; strictly net-positive; incumbency
+               unreachable by construction; **rule 6 states plainly that v1 appends no event for a
+               refused attempt**, and rule 7 that FR-066's "verifiable record" is NOT met until
+               DES-097 anchoring); **DES-076 amended** (timetable + `lockBallot` built and immutable
+               by construction; the office ballot's voter-scope guard and tie-break field designed
+               at rule 2 and **owed**); **DES-107 (new, FR-081)** — the Candidate tier is DERIVED
+               from PUBLISHED, never assigned; eligibility by named constants and functions; no
+               approve/reject/rank capability; every transition on the append-only trail with an
+               active/inactive mapping; **DES-108 (new, FR-093)** — the schedule is the immutable
+               election record; nomination window, debates, vote and lock built; the question phase
+               (`QUESTION_ASKED` / `ANSWER_RECORDED` / `QUESTION_UNANSWERED`, never naming the asker)
+               and the office election designed and **owed**. (2) **§5.2** — the five rows annotated
+               in place (the Elections contract struck through in Tech and re-homed as the v2
+               backing; nothing deleted), plus a v2.15.0 sub-table minting DES-107 and DES-108.
+               (3) **§10.11** — a "Candidate selection" sub-table records **NOMINATION_ENDORSEMENTS_MIN
+               = 5** (NOMINATION-MIN-01) and **NOMINATION_MATURATION = 30 days** (MATURATION-01) as
+               **approver-ruled** (Rathish Kumar, 2026-09-21;
+               artifacts/status/DECISIONS-2026-09-21-CANDIDATE-CONSTANTS.md) with rationale and
+               amendment layer, replacing the engineer's "flagged for ratification" markers at the
+               design layer (the code comments are the engineer's on the next Doc 06 version; the
+               Doc 02 annotation is the product-owner's, as COOLDOWN-01's was). The same sub-table
+               records that the candidate-selection phase durations FR-093's Gherkin expected "at
+               OI-17 closure" were never set. (4) **§10.12.4** — SCR-15/16/22/23 rows annotated as
+               built on `/candidates/`, with the §5.2 ↔ §10.12.4 **SCR-22/SCR-23 id inversion**
+               recorded (feedback vs debates) rather than swapped silently. (5) **§11** — the
+               FR-036/065/066/067 rows annotated with the v1 mechanism. (6) **§13** — three rows
+               added: the office ballot + question phase designed-not-built; the `ICandidateStore`
+               production backing owed; the FR-066 anchoring / FR-067 refusal-event question.
+               (7) **§15** — a v2.15.0 trace sub-table, one row per requirement group _(v2.16.0, ISS-11: was "per FR" — eight rows cover eleven requirements)_, stating for each whether
+               design + code + tests are present or the row stays OPEN and why. (8) **§16 Q18** —
+               the unset phase durations, and whether DES-068's founding-cohort waiver applies to
+               nomination maturation (v1 does not apply it).
+               **What this version does NOT claim.** It closes no RTM row — a DES written is not a
+               row closed. It states, per FR, only whether the design, the code and the tests are
+               all present; the row ruling is the tester's in Doc 08 v2.13.0, folded into this
+               session. Three FRs are designed and stay OPEN with the blocker named: **FR-039**
+               (office ballot not built), **FR-066** ("verifiable record" needs DES-097 anchoring),
+               **FR-093** (question phase and election not built). Three clauses are surfaced for
+               the tester rather than decided here: FR-065's "unlinkable to its caster"
+               (Definition-B; Doc 02 §16.3.1 reads FR-065's v1 mechanism as "DB aggregate; aggregate
+               public"), FR-067's "refused **and logged**" (refusal by construction, no event), and
+               FR-085's TC-3476 (a Blocked FR-131 clause-8 case cited on that row).
+               **Findings the brief did not anticipate.** FR-037's DES is **DES-028**, not one of
+               the four the brief named — it is amended here because the row points at it. §5.2's
+               DES-066/DES-067 rows carry SCR-23/SCR-22 the other way round from §10.12.4's screen
+               inventory — annotated, not swapped.
+               **Carried Low folded.** ISS-C2-01 (v2.14.1's only Low): the two §10.12.3 v2.14.1
+               annotations that called the superseded sentence the paragraph's "closing sentence"
+               are annotated with the correct ordinal — it is the **third of four**; the fourth
+               survives with the first two. Both annotations retained verbatim. **No Low is carried
+               forward.**
+               **Sites changed:** header (Version, Status, Last updated, this entry); §5.2 five
+               rows + one sub-table; §10.11 one sub-table; §10.12.3 one annotation; §10.12.4 four
+               rows; §10.13.14 (new); §11 four rows; §13 three rows; §15 one sub-table; §16 one row.
+               **No `US`, `TC`, `UT`, `SCR`, `ADR` or `RISK` id is minted; `DES-107` and `DES-108`
+               are the only ids minted; nothing is renumbered or reused.** Sources: Doc 06 v2.11.1
+               §3 and §7 item 30; artifacts/engineer-2026-09-20T2200-candidate-selection.md; Doc 02
+               v2.17.3 §4 (FR-036/037/038/039/065/066/067/081/083/085/093) and §16.3.1; Doc 08
+               v2.12.3 §3.1 and §7.
+               v2.14.1 (2026-09-20) — **Rework cycle 2 of 5 against
                artifacts/reviews/03-architecture-design-sdd-v2.14.0-technical-cycle1.md**
                (FAIL 93%; 0C / 0H / 2 Medium / 3 Low; neutral reviewer: **tester**, Ji-woo Park,
                PM-assigned). **PATCH bump: annotation and enumeration corrections only, with no
@@ -1368,6 +1549,7 @@ Six decisions carry the design; everything else follows from them.
 > **SCR assignments (provisional; architect confirms, splits or merges per SRS §5.1):**
 > SCR-21 = Participation profile surface (FR-062, FR-063); SCR-22 = Debate scheduling and
 > attendance surface (FR-066, FR-067); SCR-23 = Candidate feedback voting surface (FR-065).
+> _(**v2.16.0 — ISS-05:** this provisional note is the ORIGIN of the SCR-22/SCR-23 inversion that v2.15.0 annotated at the DES-066 and DES-067 rows below. **§10.12.4 is the screen inventory of record**, and there **SCR-22 = Candidate feedback widget** and **SCR-23 = Debate schedule, attendance & post-debate vote** — the reverse of this note. §10.13.14 follows §10.12.4. The note is retained as written and is not swapped; a reader working top-down meets the correction here, before the rows.)_
 
 | ID | Component | Responsibility | Satisfies | Tech |
 |---|---|---|---|---|
@@ -1397,8 +1579,8 @@ Six decisions carry the design; everything else follows from them.
 | DES-024 | threshold coordinator (5-of-7) | no single party can decrypt a ballot | NFR-003, RISK-07 | DKG across jurisdictions |
 | DES-025 | tally proof + public verifier | anyone can re-compute the result | FR-033, FR-055 | `apps/verifier` |
 | DES-026 | interim-tally suppression | no partial counts before close | FR-034 | client + indexer policy |
-| DES-027 | self-nomination only, region-scoped | you may stand only where you live | FR-036 | Solidity |
-| DES-028 | candidate consent record | explicit, separate, irreversible-for-term disclosure | FR-037, FR-038 | Solidity + client copy |
+| DES-027 | self-nomination only, region-scoped | you may stand only where you live _(**v2.15.0 — Definition-A backing specified, §10.13.14:** `CandidateService.nominate` — self only by construction (no nominee parameter); `inScopeForOffice` = `isWithin(residency, officeRegion)`; maturation 30 d checked before the CANDIDACY gate (§10.13.2(c)); one candidacy per member per election by `isUniqueInScope`; five nomination endorsements (§10.11, ratified 2026-09-21) gate the debates; withdrawal at any time before the ballot locks. v1 residency is self-declared and the surface says so. The Elections contract is the v2 backing behind `ICandidateStore`.)_ | FR-036, FR-023, FR-123(c) | ~~Solidity~~ **v1 (v2.15.0):** packages/protocol (candidates.js); packages/sdk (CandidateService over ICandidateStore); apps/web · **v2 (deferred, same seam):** Elections contract |
+| DES-028 | candidate consent record | explicit, separate, irreversible-for-term disclosure _(**v2.15.0 — Definition-A backing specified, §10.13.14:** `recordConsent` — its own call, once, all three `CONSENT_ACKNOWLEDGEMENTS` literal `true`, no verifier, only the candidate (`NOT_YOUR_CANDIDACY`); nothing published and nobody named before consent; the FR-038 two-step crossing on SCR-15 reuses the FR-080 pattern (DES-103); **the FR-085 lifecycle now lives here** — withdrawal before the nomination window closes fires `destroyDisclosures`, the store's only delete (FR-107/OI-16 carve-out); after the window the disclosures stand; after `lockBallot`, `BALLOT_LOCKED`; no revocation method exists for the term. DES-093/094 remain the display layer for FR-085.)_ | FR-037, FR-038, FR-085 | ~~Solidity + client copy~~ **v1 (v2.15.0):** packages/protocol (`validateConsent`); packages/sdk (CandidateService); apps/web (SCR-15 crossing) · **v2 (deferred, same seam):** consent hash on-chain; disclosures off-chain, confidential-class |
 | DES-029 | office assignment on close | automatic, no confirmation step | FR-040, FR-041 | Solidity |
 | DES-030 | two-stage recall | signature threshold then ballot | FR-042..045 | Solidity |
 | DES-031 | manifesto version chain | append-only, diffable, permanently public | FR-046, FR-047 | on-chain hash + IPFS/Arweave |
@@ -1422,8 +1604,8 @@ Six decisions carry the design; everything else follows from them.
 | DES-063 | safe confirmation + panic re-vote | screen safe to show a coercer | NFR-003, RISK-02 | client |
 | DES-064 | participation profile surface | per-person public page: ballot participation (direction withheld), party memberships, endorsed petitions, authored proposals, attended debates; MUST NOT ship until OI-13 resolved | FR-062, FR-063, SCR-21 | apps/web; indexer |
 | DES-065 | single-party membership nullifier | global scope nullifier `keccak("membership", personhood)` enforces one-party-at-a-time; join-B burns join-A nullifier automatically; tenure clock resets on switch | FR-064 | PersonhoodRegistry |
-| DES-066 | candidate feedback scorer | per-candidate-per-election nullifier; upvote +3, downvote −1 (ADR-015); private votes _(v2.14.0 — v2.13.0 carried Low **ISS-C2-02**, discharged: "private votes" here is a **Definition-B (v2) property** and is annotated, not deleted. In **Definition-A (v1)** the platform database **CAN** see the direction of a candidate-feedback vote (FR-131(b)); privacy of the individual vote arrives with the MACI/ZK layer (ADR-006, DES-095/DES-096, §10.13.1). FR-131 does **not** bind this cell — it is internal design rationale in a DES register, not product copy — but the element is **v1-reachable**, and v2.13.0's own ISS-04 finding was that this document's diagnosis of the v2.7.0 failure is that **a reader does not parse the distinction**. The standing FR-131 bare-word sweep widened at v2.13.0 is what found it; it is corrected here rather than left to be rediscovered.)_; public tally | FR-065, ADR-015, SCR-23 | Elections; Solidity |
-| DES-067 | debate lifecycle | Elections contract: schedule 3 debates per candidate; off-chain content CID on-chain; attendance attestation; post-debate member vote determines candidacy | FR-066, FR-067, SCR-22 | Elections; IPFS |
+| DES-066 | candidate feedback scorer | per-candidate-per-election nullifier; upvote +3, downvote −1 (ADR-015); private votes _(v2.14.0 — v2.13.0 carried Low **ISS-C2-02**, discharged: "private votes" here is a **Definition-B (v2) property** and is annotated, not deleted. In **Definition-A (v1)** the platform database **CAN** see the direction of a candidate-feedback vote (FR-131(b)); privacy of the individual vote arrives with the MACI/ZK layer (ADR-006, DES-095/DES-096, §10.13.1). FR-131 does **not** bind this cell — it is internal design rationale in a DES register, not product copy — but the element is **v1-reachable**, and v2.13.0's own ISS-04 finding was that this document's diagnosis of the v2.7.0 failure is that **a reader does not parse the distinction**. The standing FR-131 bare-word sweep widened at v2.13.0 is what found it; it is corrected here rather than left to be rediscovered.)_; public tally _(**v2.15.0 — Definition-A backing specified, §10.13.14:** `FEEDBACK_SCORE` +3/−1; a second vote is REFUSED via the store's caster record (`ALREADY_GAVE_FEEDBACK`) — which is why feedback does not ride DES-096's last-ballot-counts seam; BINDING_VOTE gate; `feedbackTally` aggregate-only and no read returns a caster; the FR-131(b) truth — the operator CAN see direction — stated on the surface; "unlinkable to its caster" is Definition-B and is NOT claimed for v1. **SCR id note:** this row and Doc 08 bind feedback to SCR-23; §10.12.4's screen inventory names **SCR-22** the feedback widget and SCR-23 the debate schedule — the inversion is recorded here and at DES-067, not swapped silently; §10.13.14 follows §10.12.4.)_ | FR-065, ADR-015, SCR-23 _(SCR-22 per §10.12.4)_ | ~~Elections; Solidity~~ **v1 (v2.15.0):** packages/protocol; packages/sdk; apps/web · **v2 (deferred, same seam):** Elections contract, per-(election, candidate) nullifier |
+| DES-067 | debate lifecycle | Elections contract: schedule 3 debates per candidate; off-chain content CID on-chain; attendance attestation; post-debate member vote determines candidacy _(**v2.15.0 — Definition-A backing specified, §10.13.14:** three debates keyed by `REQUIRED_DEBATE_TOPICS`; boolean attestation with `contentRef`; an absence is on the trail, visible, and blocks; PUBLISHED only via DEBATES_COMPLETE → VOTE_OPEN (`assertCandidacyTransition`); the post-debate vote is cast and tallied through DES-096 with this service storing no ballot; strictly net-positive advances, a tie does not; `officeHolder` unreachable on the path and no renominate/override capability. **v1 boundaries stated, not papered over:** no event is appended for a refused attempt (rule 6), and FR-066's "verifiable record" is not met until DES-097 anchoring (rule 7). **SCR id note:** see DES-066 — §10.12.4 names SCR-23 the debate schedule and vote.)_ | FR-066, FR-067, SCR-22 _(SCR-23 per §10.12.4)_ | ~~Elections; IPFS~~ **v1 (v2.15.0):** packages/protocol; packages/sdk (CandidateService + IBallotService); apps/web · **v2 (deferred, same seam):** Elections contract; IPFS CID; DES-097 anchoring |
 | DES-068 | tenure waiver flag for new parties | `newPartyWaiverActive(partyId)` = party age < 3 calendar months; waives one-month tenure check only; FR-023 surge defence + FR-028 snapshot remain active. **Party-switch exclusion (FR-064):** a tenure clock reset by a party switch is NOT excused by the destination party's waiver — the waiver covers a party's founding cohort only, not members arriving by switch; a member who leaves party A and joins party B MUST be rejected at `vote()` if fewer than one month has elapsed since joining, unconditionally regardless of party B's age. | FR-068 | Governor |
 | DES-069 | in-circuit enrolment nullifier | `Poseidon(stable_id_secret, enrolment_scope)`; universal in-circuit checks: issuer authenticity, freshness, region, correct derivation; trust-anchor commitment is a **public input** to the enrolment circuit and MUST be checked on-chain against `issuers[issuerId].trustAnchorHash` (SC-01); no identifier leaves circuit (ADR-017) | FR-069, ADR-017 | circuits/personhood_enrol_[class] |
 | DES-070 | credential adapter interface + registry | `ICredentialAdapter`: credentialClass, namespaceId, verifierAddress; `verifierAddress` is the dispatch target for `enrol()` — per-adapter-class verifier, not a shared CIRCUIT_ENROL constant (SC-01); per-class in-circuit requirements (ADR-017); region-level config, not hardcoded | FR-070, ADR-017 | ICredentialAdapter; PersonhoodRegistry |
@@ -1432,7 +1614,7 @@ Six decisions carry the design; everything else follows from them.
 | DES-073 | name + emblem collision guard | `PartyRegistry.createPetition` rejects a name or emblem that collides (case-normalised) with any open petition or active party in the same jurisdiction; on-chain name registry | FR-010 | PartyRegistry |
 | DES-074 | eight-pillar minimum-substance gate | `PartyRegistry.publishDraft` checks: all 8 pillars present, each ≥ published character floor; named rejection per deficient pillar | FR-011 | PartyRegistry |
 | DES-075 | no-transfer invariant (capability absence) | no `transfer`, `approve`, `delegate` or `assign` function exists on Party, Governor, or Elections; ABI-surface assertion enforced in CI | FR-035, ADR-007 | Solidity; CI |
-| DES-076 | election scope guard + immutable timetable | Elections contract: `vote()` restricted to members with active residency in the election's region; timetable, candidate set and tie-break rule immutable after `openElection()` | FR-039 | Elections |
+| DES-076 | election scope guard + immutable timetable | Elections contract: `vote()` restricted to members with active residency in the election's region; timetable, candidate set and tie-break rule immutable after `openElection()` _(**v2.15.0 — Definition-A backing specified, §10.13.14:** **built** — `openElection` validates region-within-jurisdiction and an ordered future timetable, exposes no update method, and `lockBallot` freezes the candidate set at the published time (`TOO_EARLY` before it); **designed, owed (§13)** — the office ballot's voter-scope guard through DES-096 and the tie-break field fixed at open (rule 2). FR-039's row stays OPEN until those are built.)_ | FR-039 | ~~Elections~~ **v1 (v2.15.0):** packages/sdk (timetable + lock — built; office ballot — owed) · **v2 (deferred, same seam):** Elections contract |
 | DES-077 | operator-capability absence: no delete/edit/suspend/alter/reorder | no function with those semantics exists in any core contract; verified by ABI-surface assertion (first-class CI test) | FR-056, ADR-010 | Solidity; CI |
 | DES-078 | performance budget constraints | initial JS ≤ 200 KB; p95 interactive ≤ 5 s on 4× throttled mid-range Android over Slow 4G; proof ≤ 10 s worst-case on reference device; finalisation on-chain ≤ 120 s p95 | NFR-006 | apps/web; circuits |
 | DES-079 | audited-primitive policy + independent pre-Gate-2 audit | CON-012: all privacy/personhood/ballot properties rest on audited constructions; independent security audit with 0 critical/high required before Gate 2 | NFR-009 | all layers |
@@ -1469,6 +1651,19 @@ because §5.2 named no design element. Full normative specifications in §10.13.
 | DES-105 | deliberative lifecycle stage machine | The eight FR-091 stages — proposal → review → discussion → debate → vote → decision → implementation → measurement — advanced exactly one step at a time. `assertStageTransition` refuses skipping (`STAGE_SKIPPED`, naming what was skipped), reversal (`STAGE_REVERSED`) and no-ops; `advanceStage()` takes no target, no `force`, no `skipTo` and no actor, so there is nothing for a human to veto. Review/discussion/debate are DELIBERATIVE: they produce records, never outcomes. A competing proposal may join only while the window still accepts entries (proposal / review / discussion); **once the window reaches debate, entry is refused** — the deliberation has by then been framed around a fixed set of options, and admitting another would change the question people have been arguing about. **Layer boundary (ruled 2026-08-30, §10.13.13(a)):** these eight stages are the PUBLIC-PROCESS taxonomy and are canonical at that layer; ADR-008's `PROPOSAL_STATE` is canonical for the BALLOT. They are complementary, not competing — different subjects (window vs one proposal's ballot), one-to-many at resolution. **The ballot layer is the sole authority on ballot state IN BOTH VERSIONS** — the DES-096 database backing in v1, `Governor.State` at the v2 seam — and `VOTE`/`DECISION`/`IMPLEMENTATION` MUST be DERIVED from whatever backing `IBallotService` is bound to, never tracked independently. _(v2.11.1: this row published the v2-only scope after §10.13.13 had been corrected to bind both versions — one normative MUST at two scopes, and this row is the one an implementer reads.)_ | FR-091, BR-014, BR-008, SCR-12, ADR-008, DES-096 | packages/protocol; packages/sdk |
 | DES-106 | permanent decision trail | Every event in a decision window — opened, proposal filed (with author), deliberation posted, stage advanced, ballot admission — appends to a per-window log that is never updated and never deleted (FR-107). Reads return copies, so a caller mutating what it received changes nothing. **v1 boundary, disclosed not papered over:** the trail is held in the application store, which makes it complete but not yet independently checkable; FR-092's "reconstructable by any third party from public data alone" additionally requires the DES-097 audit-record anchoring (stage S-8), which is not built. The surface states this in plain words rather than implying more | FR-092, BR-014, BR-019 _(**NOT FR-107** — v2.11.2: this column listed FR-107, publishing the very `FR → DES` link §15 disclaims. DES-106 gives FR-107's append-only property **for the decision trail only**; FR-107 is platform-wide and undesigned, and Doc 08 holds its Must row OPEN as `G-TRACE + G-PHASE3` with DES = none, owner Erik Lindqvist. §5.2 is the register §15 points to for the `FR/NFR → DES` half, so a link here is a link claimed.)_ | packages/sdk; apps/web; (owed) DES-097 anchoring |
 | DES-102 | provisional-party membership cap | A platform-activated party whose legal registration is unverified is capped at `PROVISIONAL_MEMBER_CAP` = 100 **ACTIVE** members. The cap is checked at the membership-write boundary and is **UNCONDITIONAL** — no grace window, no queue, no override (Ruling 1, Rathish, 2026-08-26). It lifts by code only, on the recording of verified legal registration (FR-075); no operator, admin, configuration or bypass surface exists, and the absence is tested as a first-class control. Anti-capture invariant (C-02 ruling, Rathish, 2026-08-22) | FR-130, FR-075, BR-002, BR-012, SCR-09, SCR-11 | packages/protocol (constant); packages/sdk (v1 enforcement); DES-097(b) store; (v2) `Party.join()` |
+
+**v2.15.0 candidate selection — Definition-A backing (FR-081, FR-093; DES-027/028/066/067/076 amended in place above)**
+
+Two new elements close chain gaps for requirements that had no design element at all, and the five
+amended rows above make the shipped SDK backing (Doc 06 v2.11.1 Approved; UT-0891..UT-0907) the
+Definition-A (v1) design behind the `ICandidateStore` seam, with the on-chain Elections contract as
+the deferred Definition-B (v2) backing behind the same seam — the DES-095/DES-096 pattern. Full
+normative text in §10.13.14. Whether any RTM row closes is the tester's ruling in Doc 08.
+
+| ID | Component | Responsibility | Satisfies | Tech |
+|---|---|---|---|---|
+| DES-107 | Candidate tier decided by code | The Candidate tier is **derived**, never assigned: held for election E exactly while the member's candidacy in E is PUBLISHED; no method assigns it, no field stores it, and it confers nothing (`votingWeightForTier()` = 1, DES-103). Eligibility is checked by code against published rules only — maturation (30 d), residency scope, the DES-095 counting gate, the endorsement minimum (5), consent, three attended debates, a strictly net-positive post-debate vote — each a named constant or function with a named refusal. **No human approves, rejects or ranks — by absence:** no method or parameter named approve/reject/rank/renominate/override/skip exists on the service or the store; the only decision input is the ballot tally read through DES-096. Every stage transition is appended to the trail with `from`, `to` and the clock; `appendTrailEvent` is the only writer; the active/inactive state FR-081 names is a **design-level derivation from the recorded stage**, not a recorded field (active = NOMINATED..PUBLISHED, inactive = NOT_ADVANCED / WITHDRAWN — ISS-04, v2.16.0; the tester rules whether derivation satisfies the clause); nothing deletes a trail event | FR-081, FR-036, FR-067, BR-016, BR-013, DES-103 | packages/protocol (candidates.js); packages/sdk (CandidateService); (v2) Elections contract events |
+| DES-108 | published candidate-selection schedule | The schedule is the election record, published at `openElection` and immutable (DES-076): nomination window → question phase → debates (DES-067) → post-debate member vote (DES-067) → election (ballot lock → office ballot → DES-029). **Built in v1:** nomination window, debates, post-debate vote, ballot lock. **Designed, owed (§13):** the question phase — `QUESTION_ASKED` (question text + per-election question id; the asker is never named on the public record — FR-082 is DEFERRED-v2 and NOT claimed, the operator-side link is disclosed per FR-131(b) on the owed surface — ISS-02, v2.16.0), `ANSWER_RECORDED` (candidate only), `QUESTION_UNANSWERED` appended for every open question at phase close so the unanswered state is visibly and permanently on the public record — and the office election (DES-076 rule 2). Durations are per-election with no published floor — Q18 | FR-093, FR-039, BR-013, BR-004 | packages/sdk (election timetable — built); question phase + office election (owed); (v2) Elections contract |
 
 ### 5.3 Data model
 
@@ -1700,6 +1895,18 @@ PROPOSAL:  discussion ──▶ voting ──▶ tallying ──▶ {defeated | 
 CANDIDACY: nominated(self) ──3 debates completed──▶ post-debate member vote ──passes──▶ published
            (no debates = candidacy not published; no automatic renomination of incumbents)
            published ──election──▶ {elected | not elected}
+           _(v2.16.0 — ISS-06: the sketch above is a SUMMARY. The authoritative machine is
+           `assertCandidacyTransition` / `CANDIDACY_STAGE` in packages/protocol, specified at
+           §10.13.14 DES-067 rule 3, which `candidates.js` cites this section for. Nine stages and the
+           legal edges from its TRANSITIONS table:
+             NOMINATED ──consent (FR-037 one-way door; debates cannot be scheduled from NOMINATED)──▶ CONSENTED
+             CONSENTED ──scheduleDebates──▶ DEBATING ──all three attended──▶ DEBATES_COMPLETE
+             DEBATES_COMPLETE ──openPostDebateVote──▶ VOTE_OPEN ──close, strictly net positive──▶ PUBLISHED
+             VOTE_OPEN ──close, not net positive──▶ NOT_ADVANCED
+             any of NOMINATED / CONSENTED / DEBATING / DEBATES_COMPLETE / VOTE_OPEN ──withdraw, before the ballot locks──▶ WITHDRAWN
+             PUBLISHED, NOT_ADVANCED, WITHDRAWN: terminal — no exits.
+           Every other edge is refused with ILLEGAL_TRANSITION. "published ──election──▶" is DES-076
+           rule 2 / DES-029 and is not built in v1.)_
            elected ──term end──▶ expired
            elected ──recall stage 1 + stage 2──▶ removed ──▶ by-election
 
@@ -2018,6 +2225,21 @@ others).
 | Ordinary revocation timelock | 30 days | Enough time for the community to identify false alarms; `REVOCATION_PENDING` is entered at enactment (public on-chain signal); `enrol()` against the affected anchor CONTINUES until `anchorEffectiveAt` (30 days after enactment) and reverts `AnchorRevoked` from then on; the enactment-to-effectiveAt window is the accepted RISK-30 residual; existing enrolled credentials unaffected | Open Layer |
 | Emergency revocation timelock | 7 days | Shortened but non-zero; requires a passed governance vote at the ordinary platform governance voting bar (60% supermajority / 15% quorum — UNCHANGED from the ordinary revocation path per ADR-020); only the timelock is shortened, not the voting requirement; seven days allows false-alarm veto without enabling unilateral operator action. NOTE: revocation and rotation are governance ACTIONS governed at the ordinary platform governance bar; the Guarded Layer super-process (80% / 25% / 180-day two-vote) applies only to AMENDMENTS of named absolutes — it does not apply here. RISK-30 accepted residual: 7-day window is a Sybil enrolment opportunity if private key is compromised between enactment and emergency vote. | Open Layer |
 
+**Candidate selection (added v2.15.0 — ratified 2026-09-21, `artifacts/status/DECISIONS-2026-09-21-CANDIDATE-CONSTANTS.md`).**
+These two values were engineer-chosen at Doc 06 v2.10.0 and flagged **NOMINATION-MIN-01** /
+**MATURATION-01**; the approver (Rathish Kumar) ratified both on 2026-09-21. They are normative for
+DES-027 and DES-107 and live in code at `packages/protocol/src/candidates.js`
+(`NOMINATION_ENDORSEMENTS_MIN`, `NOMINATION_MATURATION_SECONDS`). The Doc 02 annotation that gives
+them an FR-side home (FR-036 "published minimum number of nomination endorsements"; FR-023
+"published maturation period") is routed to the product-owner, as COOLDOWN-01's was; the code
+comments that still read "flagged for ratification" are the engineer's on the next Doc 06 version.
+
+| Constant | Value | Rationale | Amendment Layer |
+|---|---|---|---|
+| `NOMINATION_ENDORSEMENTS_MIN` (NOMINATION-MIN-01 — **CLOSED**) | 5 matured members resident in the office region, each endorsing once, never the candidate | Mirrors the founding-member minimum above (5 — "low enough not to exclude small movements, high enough to prove non-trivial coordination"). A nomination is the same kind of claim at a smaller scale — that a candidacy is not a solo act — and the endorsers are drawn from the population that will vote in the office. It gates the scheduling of debates, not nomination itself, so a nomination is recorded first and gathers backing inside the window (DES-027 rule 5) | Open Layer |
+| `NOMINATION_MATURATION_SECONDS` (MATURATION-01 — **CLOSED**) | 30 days since joining — for nominating **and** for endorsing a nomination (both FR-023 rights) | The one-month tenure the platform already uses at the vote (DES-068 waives "the one-month tenure check"; FR-068 names "the one-month tenure requirement"), the re-petition cooldown (COOLDOWN-01) and the fork cooling-off (DES-034). One published figure for "matured" on the nomination path keeps FR-023's rights on one clock rather than giving nominating a different one from voting. Checked **before** the counting gate (DES-027 rule 3). **Not waived** for a new party's founding cohort in v1 — Q18(b) | Open Layer |
+| Candidate-selection phase durations — nomination window, question phase, debates, post-debate vote, election (FR-093) | **Unset.** Each election publishes its own dates at `openElection` (DES-076, DES-108); no platform floor exists | FR-093's Gherkin expected these "at OI-17 closure"; this table closed OI-17 without them. Recorded here so the absence is owned rather than discovered — **Q18(a)** | Open Layer (when set) |
+
 ### 10.12 Design system & screen inventory
 
 **Source:** Approver directive, Rathish, 2026-08-22. Wireframe input: `design/wireframes/index.html` (15 phone screens, 3 flows). **Referent correction (applied):** The approver attributed the verified-status-privacy ruling to "OI-19"; that is a mislabel. OI-19 is the invite-gating ruling (FR-125; DECISIONS-2026-08-20-OI19-OI20.md). The verified-status-privacy ruling is the **FR-124 ruling** (Doc 02 v2.3.1, Rathish, 2026-08-20; FR-124 normative text and ruling banner near line 694 of Doc 02). All citations in this section use FR-124. The mislabel is noted in the architect memory note (artifacts/architect-2026-08-22T1120.md) and does not affect any requirement; no silent referent swap was made.
@@ -2140,6 +2362,7 @@ v1 subtitle "Your vote counts. How you voted is never made public.": no banned w
 **FR-124(b) aggregate-only policy.** No participant action is ever published linked to any individual identity. No published record accessible to anyone other than the operator links any action to the `anon` user's account or phone number. This is the operative basis on which "linked to you" is truthful in the public sense — the claim holds for every published record. The operator-accessible linkage is real but is a platform-data-practices concern, not a published-record concern, and is accepted as a disclosed v1 limitation.
 
 > **_(v2.14.1 — annotated in place at the paragraph, per cycle-1 ISS-01 (Medium). The paragraph above is retained verbatim; nothing in it is deleted.)_** **Its closing sentence is SUPERSEDED for Definition-A (v1) and MUST NOT be read as current:** *"This is the operative basis on which 'linked to you' is truthful in the public sense."* **FINDING 1 below is the ruling in force.** FR-131 clause (e) is not a publication rule and makes the **ordinary reader's** reading govern over the **author's gloss**, so *"truthful in the public sense"* is no longer the test the `anon` subtitle has to pass — and on that test the subtitle **FAILS**. **What survives in this paragraph is its first two sentences**, unchanged and load-bearing: publication is **aggregate-only**, no published record links any action to the `anon` holder, and the operator-side linkage is real and disclosed. Those facts are **true**, are not reopened by v2.14.0, and are what **clause 10(b)**'s `'browse'` and `'join'` strings say in the reader's own words — stating the not-published half **and** the operator-records half **in the same string**, which is clause (e)'s approved satisfying pattern. **The same is true of the paragraph above it** ("Interpretive basis"): its **facts** about `phone_hash`, `subject_id_hash`, the KMS pepper and the TRAI chain (Doc 02 H-16, H-18; §10.13.7 T-01, T-02) are **true and still relied on** — FINDING 1 cites them — while its **conclusion**, that these facts leave "linked to you" truthful because the linkage is not *published*, is the gloss clause (e) displaces. **Facts survive; the gloss does not.**
+> _(**v2.15.0 — ISS-C2-01 folded**, the one Low carried from v2.14.1: this annotation and the "Which half is superseded" paragraph above both call the superseded sentence the paragraph's "closing sentence". It is the **third of four**; the fourth — the paragraph's actual closing sentence — survives with the first two and is quoted verbatim at both sites, so no reader was misled. Both annotations are retained verbatim; this note corrects the ordinal.)_
 
 **Disclosure gap acknowledged.** DES-098 (the FR-131 honesty notice) applies at vote-casting time (SCR-13/14 — ballot booth and vote-confirmation screen only). The `anon` pill renders on browsing (screen 1.2), party-joining (screen 1.6), and endorsing (screen 2.3) with no equivalent contextual disclosure at the point the claim is displayed. A user seeing "Nothing you do here is linked to you" while browsing parties or joining a party has no in-context signal that the platform DB associates their actions with their account and holds a hash linkable — with the KMS pepper — to their phone number and, in the India pilot, to a TRAI-registered real-world identity. This is a real gap; it is addressed normatively in clause 8 below.
 
@@ -2319,15 +2542,15 @@ Review scope: all 15 wireframe screens examined for (a) every `privacy(...)` com
 | SCR-12 | Proposal list & detail | 3.1 | Full |
 | SCR-13 | Ballot booth (cast / re-cast) | 3.3 | Full |
 | SCR-14 | Result & verify-it-yourself | 3.4 (partial) | Partial — post-vote tally shown; independent-verifier flow absent |
-| SCR-15 | Nomination & disclosure consent | 3.6 (partial) | Partial — Worker declaration shares the consent pattern; candidacy nomination is distinct |
-| SCR-16 | Election & office record | None | No wireframe screen |
+| SCR-15 | Nomination & disclosure consent | 3.6 (partial) | Partial — Worker declaration shares the consent pattern; candidacy nomination is distinct _(v2.15.0: candidacy nomination and the FR-038 consent crossing are **built** on `/candidates/` behind `elections` — Doc 06 v2.10.0..v2.11.1, DES-027/DES-028, §10.13.14)_ |
+| SCR-16 | Election & office record | None | No wireframe screen _(v2.15.0: the race, its published timetable, the incumbent note and the ballot list are **built** on `/candidates/` — DES-076; the office ballot itself is owed)_ |
 | SCR-17 | Manifesto, commitments & version history | 3.5 (partial) | Partial — commitment progress bars present; manifesto and version history absent |
 | SCR-18 | Recall initiation & ballot | None | No wireframe screen — see design-debt §10.12.5 class (ii) |
 | SCR-19 | Account recovery (seedless + collision) | None | No wireframe screen |
 | SCR-20 | Public transparency dashboard & filtering log | 3.5 (partial) | Partial — dashboard present; filtering log absent |
 | SCR-21 | Public participation profile | None | No wireframe screen (DES-064 dormant pending OI-13 resolution — §18) |
-| SCR-22 | Candidate feedback widget | 3.2 (partial) | Partial — feedback scores shown; widget interaction mechanics absent |
-| SCR-23 | Debate schedule, attendance & post-debate vote | 3.2 (partial) | Partial — debate list shown; schedule/attendance/voting mechanics absent |
+| SCR-22 | Candidate feedback widget | 3.2 (partial) | Partial — feedback scores shown; widget interaction mechanics absent _(v2.15.0: the feedback controls and aggregate score are **built** on `/candidates/` — DES-066. **Id note:** §5.2's DES-066/DES-067 rows and Doc 08 carry SCR-22/SCR-23 the other way round from this table; this table is the screen inventory of record, and the inversion is annotated at those rows rather than swapped silently)_ |
+| SCR-23 | Debate schedule, attendance & post-debate vote | 3.2 (partial) | Partial — debate list shown; schedule/attendance/voting mechanics absent _(v2.15.0: the debate schedule, attendance attestation (demo) and the post-debate vote with the FR-131 notice before its controls are **built** on `/candidates/` — DES-067)_ |
 
 ---
 
@@ -3283,6 +3506,306 @@ amendment — governance work through the SOP, not a code change.
 
 ---
 
+### 10.13.14 DES-027/028/066/067/076 Definition-A backing + DES-107/DES-108 — candidate selection (FR-036, FR-037/038, FR-039, FR-065, FR-066, FR-067, FR-081, FR-085, FR-093)
+
+**Why this section exists.** TRUMO-P02 (Doc 06 v2.10.0 → v2.11.1 Approved; UT-0891..UT-0907;
+suite 739/739) built and tested the v1 candidate-selection flow — `packages/protocol/src/candidates.js`
+(reference rules), `packages/sdk/src/candidates.js` (`ICandidateStore`, `InMemoryCandidateStore`,
+`CandidateService`) and the `apps/web` `/candidates/` surface behind the `elections` flag — and
+closed **zero** RTM rows, because every candidate element in §5.2 named the on-chain **Elections
+contract** as its component and FR-081 / FR-093 had no element at all. That is the posture
+DES-095/DES-096 corrected for eligibility and ballots at v2.3.0, and DES-101..DES-106 corrected for
+the party and proposals flows: **the conventional backing IS the Definition-A (v1) design, and the
+on-chain form is the Definition-B (v2) backing behind the same seam.** This section applies the same
+rule to candidate selection. It is a layering, not a rewrite: nothing designed for v2 is discarded
+(ADR-024 guardrail), and nothing v2 is pulled forward. The Phase-1 map that scoped this section is
+`artifacts/status/REVIEW-ASSIGNMENT-2026-09-21-CANDIDATE-DES.md`.
+
+**The seam — `ICandidateStore`.** The application logic above the seam is `CandidateService` and is
+**identical in v1 and v2**; only the store backing changes. The seam's member groups and their data
+class are normative:
+
+| Member(s) | Data class | v1 backing (`InMemoryCandidateStore` today; Postgres per DES-097(b) owed) | v2 backing (Elections contract adapter — deferred) |
+|---|---|---|---|
+| `saveElection` · `findElectionById` · `updateElection` | public record | election row; `updateElection` is reached only from `lockBallot` — the service exposes no timetable update | `openElection()` / `lockBallot()` on-chain; timetable immutable by construction |
+| `saveCandidacy` · `findCandidacyById` · `findCandidaciesByElection` · `updateCandidacy` | public record **except** `disclosures` | the candidacy row holds stage and residency; **disclosures are split off on save** into a separate confidential-class holding | candidacy state on-chain; disclosures off-chain, confidential-class, never on any chain (FR-108) |
+| `destroyDisclosures` | confidential-class (FR-106) | **the store's only delete** — hard-deletes the disclosure holding; exercised solely by `withdraw` before the nomination window closes (FR-085; FR-107/OI-16 carve-out) | same, off-chain |
+| `hasEndorsed` · `recordEndorsement` · `countEndorsements` | restricted-class nullifier record | the endorser is kept **only** to refuse a second endorsement; no read returns an endorser; the trail records that an endorsement was made, never by whom | per-candidacy endorsement nullifier |
+| `upsertDebate` · `findDebates` | public record | three records keyed by topic; attendance and `contentRef` | on-chain attestation + content CID |
+| `hasGivenFeedback` · `recordFeedback` · `feedbackTally` | caster: restricted-class nullifier record · tally: public record | the caster is kept only to REFUSE a second vote (FR-065); `feedbackTally` returns the aggregate only | per-(election, candidate) feedback nullifier; aggregate on-chain |
+| `recordOfficeHolder` · `officeHolder` | public record (FR-083) | recorded; **unreachable from the nomination and publication paths** | same |
+| `appendTrailEvent` · `getTrail` | public record, append-only (FR-054; FR-107 for this trail) | `appendTrailEvent` is the only writer; `getTrail` returns copies; no update or delete path exists; the trail never contains disclosures | Elections contract events (DES-035) |
+| `IS_INSECURE_MOCK()` | — | `true` for the in-memory store (dev only; blocked past devnet by the §10.13.4 CI gate); `false` for the DES-097(b) Postgres backing once built | `false` |
+
+**Counting-tier placement (§10.13.2).** Exactly two kinds of call site in this flow reach
+`IEligibilityVerifier`: `nominate()` with scope **CANDIDACY** (call site (c)), and the two votes —
+`castPostDebateVote()` and `castFeedback()` — with scope **BINDING_VOTE** (call site (b)). The
+service **holds no verifier and no ballot service**; both are passed per call, so consent,
+withdrawal, endorsement, debate attestation and every read structurally cannot reach a gate
+(UT-0902). Endorsing a nomination is an FR-023 maturation-gated right but **not** an FR-123 counting
+action, so it takes no verifier. A refusal at either gate MUST state what the member keeps —
+membership, following the race — and the FR-131 clause (d) route to counting eligibility (DES-098).
+
+#### DES-027 (amended v2.15.0) — self-nomination only, region-scoped (FR-036)
+
+1. **Self only, by construction.** `nominate(electionId, memberPseudonym, {residencyRegion,
+   disclosures}, verifier)` has no nominee parameter; there is no method by which one member places
+   another on the record. Capability absence in the §4/DES-075 sense, asserted by test (UT-0896).
+2. **Stand only where you live.** `inScopeForOffice({residencyRegion, officeRegion})` =
+   `isWithin(residencyRegion, officeRegion)`: the office region equals or contains the residency,
+   never the reverse; the residency must also lie within the party's jurisdiction. Refusals:
+   `OUT_OF_SCOPE`, `RESIDENCY_OUTSIDE_JURISDICTION`. **v1 boundary, stated on the surface:**
+   residency is self-declared — no attestation exists in v1 (DES-007's attested residency scope is
+   the v2 backing's input) — and the `/candidates/` copy says the platform takes the member at
+   their word (UT-0905).
+3. **Matured first, verified second.** `isMatured({joinedAt, now})` against
+   **`NOMINATION_MATURATION_SECONDS` (= 30 days; §10.11, ratified 2026-09-21 — ISS-07)** is checked before the seam is
+   asked (`NOT_MATURED`), so an unmatured member is never sent to verify for an act they cannot yet
+   perform.
+4. **The counting gate.** `verifyEligibility(member, officeRegion, CANDIDACY)`; the refusal
+   `NOT_COUNTING_ELIGIBLE` carries `stillAMember: true` and `mayStillFollow: true`, and the surface
+   renders the FR-131 clause (d) notice. Then `isUniqueInScope(member, 'CANDIDACY:<electionId>')`
+   — one candidacy per member per election (`ALREADY_NOMINATED`).
+5. **Nomination endorsements.** `endorseNomination(candidacyId, endorser, {residencyRegion})`: the
+   endorser is matured, resident in the office region, endorses once, and never endorses themselves
+   (`SELF_ENDORSEMENT`, `ALREADY_ENDORSED`, `OUT_OF_SCOPE`). **NOMINATION_ENDORSEMENTS_MIN = 5**
+   (§10.11, ratified 2026-09-21) is the published minimum FR-036 requires; it gates
+   `scheduleDebates` (`ENDORSEMENTS_SHORT`, naming the shortfall), not nomination itself, so a
+   nomination is recorded first and gathers its backing inside the window.
+6. **Window and withdrawal.** Nomination and endorsement are refused after `nominationClosesAt`
+   (`NOMINATION_WINDOW_CLOSED`). Withdrawal is permitted at any time before the ballot locks
+   (`withdraw` → `BALLOT_LOCKED` after `lockBallot`); the lifecycle is DES-028's.
+7. **v2 backing.** The Elections contract enforces rules 1–6 on-chain with the attested residency
+   scope and the CANDIDACY nullifier (DES-001); the service signature is unchanged.
+
+#### DES-028 (amended v2.15.0) — candidate consent record and the one-way door (FR-037, FR-038, FR-085)
+
+1. **Separate, explicit, recorded once.** `recordConsent(candidacyId, memberPseudonym,
+   acknowledgements)` is its own call, after nomination and before anything is published. It
+   requires each of `CONSENT_ACKNOWLEDGEMENTS` — `identityBecomesPublic`, `irreversibleForTerm`,
+   `revocableOnlyByWithdrawalBeforeLock` — to be the literal `true` (`validateConsent`; a truthy
+   non-`true` is a missing acknowledgement), and `CONSENT_INCOMPLETE` names what is missing. It is
+   recorded at most once (`NOT_AWAITING_CONSENT` thereafter). Consent is **not a counting action**:
+   it takes no verifier (FR-122).
+2. **Only the candidate.** `_requireCandidate` refuses any other or absent actor with
+   `NOT_YOUR_CANDIDACY` before any read or write (the TRUMO-P02 cycle-1 High, closed at Doc 06
+   v2.11.0; UT-0897). The same binding governs `withdraw`.
+3. **Nothing published before consent.** NOMINATED → CONSENTED is the only exit from NOMINATED
+   other than WITHDRAWN. `candidacy()` returns `member: null` and `disclosures: null` while
+   NOMINATED; `scheduleDebates` refuses before consent (`CONSENT_REQUIRED`).
+4. **The record names nobody who has not consented.** The trail's `NOMINATED` event carries the
+   residency region only; the member's pseudonym first enters the trail at `CONSENT_RECORDED`;
+   endorsers, feedback casters and post-debate voters are never named on any read or trail event.
+   The trail never carries disclosures at any stage.
+5. **The disclosure before the door (FR-038).** Bound surface **SCR-15**, reusing the FR-080
+   two-step pattern of DES-103: step 1 explains; step 2 states, **before** the confirm control
+   (document order asserted, UT-0904), that the real-world identity becomes public, that this is
+   irreversible for the campaign and any term, that it is revocable only by withdrawing before the
+   ballot locks, and that nobody reviews it. Declining records nothing.
+6. **The lifecycle (FR-085).** Withdrawal **before `nominationClosesAt`** advances to WITHDRAWN and
+   calls `destroyDisclosures` — the store's only delete — and the trail records
+   `disclosuresDestroyed: true` without ever having held them (the confidential-class carve-out,
+   FR-107/OI-16). Withdrawal **after the window closes and before the lock** is permitted but the
+   disclosures **stand**: the candidacy is by then a completed public action (FR-107). After
+   `lockBallot`, `BALLOT_LOCKED`. **No revocation path exists for a term in progress** — there is
+   no method (capability absence, UT-0897).
+7. **v2 backing.** Consent hash on-chain; disclosures off-chain and confidential-class, never
+   written to any public chain (FR-108); the client copy is unchanged.
+
+#### DES-066 (amended v2.15.0) — candidate feedback scorer (FR-065, ADR-015)
+
+1. **Scoring.** `FEEDBACK_SCORE` = { UPVOTE: +3, DOWNVOTE: −1 }; `feedbackScore(tally)` is the
+   reference; ADR-015 records the asymmetry rationale.
+2. **One vote per member per candidate per election — REFUSED, not overwritten.** `castFeedback`
+   checks `hasGivenFeedback` and refuses with `ALREADY_GAVE_FEEDBACK`; the first vote is unchanged.
+   This is why feedback does **not** ride the DES-096 ballot seam, whose v1 backing is
+   last-ballot-counts (`changeBallot`) — FR-065 requires refusal. The caster record is kept solely
+   to refuse and is returned by no read. _(**v2.16.0 — ISS-03 Medium. FR-065's third clause —
+   "enforced by the same nullifier mechanism as scope-action limits" — is a v1 DIVERGENCE, recorded
+   here rather than argued around.** The scope-action mechanism is DES-095's `isUniqueInScope`, a
+   first-write-wins atomic check-and-register that `nominate` itself uses for
+   `CANDIDACY:<electionId>`. `castFeedback` instead does `hasGivenFeedback` then `recordFeedback`
+   against `ICandidateStore`: a different component, and a check-then-write pair whose atomicity is
+   only as good as the backing. Design consequences: (i) the DES-097(b) Postgres backing for
+   `ICandidateStore` MUST enforce the one-vote rule with a UNIQUE constraint on (candidacyId,
+   member), so the write is first-write-wins — the property the seam's nullifier record provides;
+   (ii) the convergent form — registering `FEEDBACK:<candidacyId>` through `isUniqueInScope` and
+   keeping the store's record only for the aggregate — is the recommended engineer touch (§13);
+   (iii) whether the clause is satisfied by the store-local record as built, or only once (i)/(ii)
+   land, is the **tester's ruling** in Doc 08, alongside "unlinkable" below. v2.15.0's phrase "is the
+   v1 nullifier" asserted an equivalence this document had not established and is withdrawn.)_
+3. **It is a vote.** Matured; not the candidate (`SELF_VOTE`); the BINDING_VOTE gate through
+   DES-095. Open from CONSENTED until the post-debate vote closes (`FEEDBACK_CLOSED` outside that
+   span).
+4. **Publication is aggregate-only.** `feedbackTally` returns `{up, down, score}` and takes no
+   verifier; the public view and the trail (`FEEDBACK_RECORDED` carries nothing) return no caster.
+   **v1 honesty (FR-131(b)):** the operator database CAN see the direction of an individual
+   feedback vote — the record is unpublished, not unseen — and the surface states it
+   (`feedbackVisibility`; asserted present by UT-0906). _(**v2.16.0 — ISS-01 High, corrected.**
+   v2.15.0 said "before the controls". At HEAD the sentence is the LAST child of the feedback
+   section, **after** the thumbs-up/thumbs-down controls (`CandidateSelection.tsx`), and no test
+   asserts its order. Because this design classes a feedback vote as a BINDING_VOTE-gated vote, the
+   FR-131 obligation is that the disclosure render **before** the controls, as the post-debate vote's
+   notice already does (DES-067 rule 8): that placement, with a document-order assertion, is
+   **owed** — §13.)_ "Unlinkable to its caster" in FR-065 is a **Definition-B property**,
+   delivered by the v2 nullifier `keccak(feedback, electionId, candidateId)`; this document does
+   not claim it for v1. Whether FR-065's Must row can close on the Definition-A reading Doc 02
+   §16.3.1 itself records for FR-065 ("DB aggregate; aggregate public") is the **tester's ruling**
+   in Doc 08, not this element's.
+5. **Surface:** SCR-22 (feedback widget) per §10.12.4.
+
+#### DES-067 (amended v2.15.0) — debate lifecycle and post-debate member vote (FR-066, FR-067)
+
+1. **Three debates, one per topic.** `REQUIRED_DEBATE_TOPICS` = LOCAL_CONDITIONS, LOCAL_PROBLEMS,
+   WORK_REQUIRED (`DEBATES_PER_CANDIDATE` = 3). `scheduleDebates` — after consent and the
+   endorsement minimum — creates exactly three unheld records and advances to DEBATING.
+2. **Attestation.** `recordDebate(candidacyId, topic, {attended, contentRef})`: `attended` MUST be
+   a boolean (`ATTENDANCE_REQUIRED`); an unknown topic is refused (`UNKNOWN_TOPIC`); `contentRef` is
+   the publicly verifiable external reference to the debate content (a CID in v2; any resolvable
+   reference in v1). Each attestation appends `DEBATE_ATTENDED` or `DEBATE_ABSENT` to the trail; an
+   absence is visible in the candidacy view and **blocks** completion; an unheld debate is not an
+   absence (`debatesComplete` names the missing topics).
+3. **Completion is total.** DEBATES_COMPLETE only when all three are attended; VOTE_OPEN only from
+   DEBATES_COMPLETE (`DEBATES_INCOMPLETE`); PUBLISHED only from VOTE_OPEN.
+   `assertCandidacyTransition(from, to)` is the authority and refuses every other edge with
+   `ILLEGAL_TRANSITION`; the terminal stages (PUBLISHED, NOT_ADVANCED, WITHDRAWN) have no exits.
+4. **The post-debate vote is a ballot.** `openPostDebateVote` names the ballot `pdv:<candidacyId>`;
+   `castPostDebateVote` — matured, not the candidate, BINDING_VOTE gate — then
+   `IBallotService.castBallot(...)`; **the candidate service stores no ballot** (structurally
+   asserted, UT-0901); `closePostDebateVote` reads the tally through `IBallotService.computeTally`
+   **alone** and advances to PUBLISHED iff `isNetPositive(tally)` — **strictly** positive; a tie
+   does not advance (NOT_ADVANCED). The tally and the ballot service's `resultHash` go on the
+   trail. A locked ballot refuses close (`BALLOT_LOCKED`).
+5. **No incumbency, no renomination — by absence.** `officeHolder` is recorded for FR-083 and is
+   **unreachable** from the nomination and publication paths (spy-asserted through
+   `closePostDebateVote`, UT-0899); no method or parameter on the service or store is named
+   incumbent, renominate, override or skip; the candidate set (`candidateSet` = PUBLISHED only) is
+   empty until a net-positive vote closes. An incumbent takes the identical path to NOMINATED.
+6. **Refusal of an out-of-cycle ballot placement — what v1 does and does not do.** There is no call
+   that adds a candidacy to the ballot: publication is the sole effect of a closed net-positive
+   vote, and any out-of-order transition throws `ILLEGAL_TRANSITION` naming `from` and `to`. A
+   refused call changes no state, and the trail records state; **v1 therefore appends no event for
+   a refused attempt.** Every PUBLISHED candidacy's trail carries its complete cycle, so a candidacy
+   on the ballot without one is impossible and its absence detectable. The v2 contract reverts and
+   emits an event. Whether FR-067's "refused **and logged**" is satisfied by construction or requires
+   a refusal event is the **tester's ruling** in Doc 08; if the latter, it is a small engineer
+   touch, tracked in §13.
+7. **The verifiable record (FR-066) — v1 boundary, disclosed.** The trail is the application-held
+   record (the DES-106 boundary): complete and append-only, but not independently checkable until
+   the DES-097 audit-record anchoring (Doc 13 stage S-8) publishes the debate attestations' hashes.
+   FR-066's "recorded on the verifiable record" is therefore **not met in v1**; the row stays OPEN
+   on that clause, and that is recorded rather than argued around. Doc 02 §16.3.1 itself scopes
+   FR-066's v1 mechanism as "on-chain CID attestation".
+8. **Surface:** SCR-23 (debate schedule, attendance and post-debate vote) per §10.12.4; the FR-131
+   notice (DES-098) renders **before** the post-debate vote controls (document order asserted, UT-0906) and is non-dismissable — a property of `ReceiptFreedomBanner` itself, asserted by its own UT-0887 (ISS-10).
+
+#### DES-076 (amended v2.15.0) — election scope guard and immutable timetable (FR-039)
+
+1. **Built.** `openElection(partyId, {officeId, officeRegion, nominationClosesAt, ballotLocksAt})`:
+   the party ACTIVE (`NOT_ACTIVE`); the office region within the party's jurisdiction
+   (`OFFICE_OUTSIDE_JURISDICTION`); the timetable ordered and in the future (`INVALID_TIMETABLE`).
+   **The timetable is immutable by construction** — the service exposes no update method
+   (UT-0901). `lockBallot` refuses before `ballotLocksAt` (`TOO_EARLY`), is idempotent, and freezes
+   the candidate set: after lock, withdrawal and vote-close are refused (`BALLOT_LOCKED`).
+2. **Designed, not built (owed — §13).** The office ballot itself: (a) **voter scope** — a vote is
+   cast through DES-096 only after the BINDING_VOTE gate and a residency check identical to DES-027
+   rule 2 (a matured member whose residency scope lies within the election region; refusal
+   `OUT_OF_SCOPE`); (b) the **tie-break rule** is a field of the election record fixed at
+   `openElection` and consulted only by the close; (c) office assignment on close is DES-029. Until
+   (a) and (b) are built, FR-039's row stays OPEN with this as the named blocker.
+3. **v2 backing.** `Elections.vote()` restricted on-chain to attested residency; timetable,
+   candidate set and tie-break rule immutable after `openElection()`.
+
+#### DES-107 (new v2.15.0) — Candidate tier decided by code (FR-081)
+
+1. **The tier is derived, never assigned.** A member holds the Candidate tier (DES-103) for
+   election E exactly while their candidacy in E is PUBLISHED; no method assigns it and no field
+   stores it. `votingWeightForTier()` still returns 1 — the tier confers nothing (FR-021, FR-079).
+2. **Eligibility by code against published rules.** Every rule on the path is a named constant or
+   function in `packages/protocol`, and every refusal a named code: maturation (30 days, §10.11),
+   residency scope (`inScopeForOffice`), the counting gate (DES-095), the endorsement minimum (5,
+   §10.11), consent (`validateConsent`), three attended debates (`debatesComplete`), a strictly
+   net-positive vote (`isNetPositive`).
+3. **No human approves, rejects or ranks — by absence.** The service exposes no method or
+   parameter named approve, reject, rank, renominate, override or skip (the protocol module's export
+   scan, UT-0891; the `CandidateService.prototype` scan, UT-0899); the store's prototype carries none
+   either — true by inspection but **unasserted** (UT-0897's store scan covers delete/destroy/remove/
+   purge only; a candidate UT for the tester — ISS-08); the only decision input on the path to PUBLISHED is the ballot tally read
+   through DES-096. Composition: DES-027 (standing) → DES-028 (consent) → DES-067 (debates and
+   vote).
+4. **Every transition is recorded append-only.** Each stage change appends a trail event carrying
+   `from`, `to` and the clock; `appendTrailEvent` is the only writer and nothing updates or deletes
+   a trail event. **State per FR-081 ("with its state (active/inactive)") — a design-level
+   derivation, not a recorded field** _(v2.16.0, ISS-04)_: the trail event records the **stage**
+   (`from`, `to`); no active/inactive field exists in code, no read exposes one, and no cited UT
+   asserts the mapping. The mapping is total and fixed here: NOMINATED, CONSENTED, DEBATING,
+   DEBATES_COMPLETE, VOTE_OPEN and PUBLISHED are **active**; NOT_ADVANCED and WITHDRAWN are
+   **inactive**. The architect's view is that the clause is satisfied by derivation — every recorded
+   event carries the stage from which the state follows, and the mapping is published — but that is
+   a view; the row ruling is the **tester's** (Doc 08), and if the tester requires the state to be
+   recorded or asserted it is a small engineer touch (§13). The one delete in the
+   store is the confidential-class disclosure holding (DES-028 rule 6), which never enters the
+   trail.
+5. **v2 backing.** Elections contract events (DES-035) carry the same transitions.
+
+#### DES-108 (new v2.15.0) — published candidate-selection schedule (FR-093)
+
+1. **The schedule is the election record.** Published at `openElection` and immutable (DES-076):
+   nomination window (to `nominationClosesAt`) → question phase → debates (DES-067) → post-debate
+   member vote (DES-067) → election (ballot lock at `ballotLocksAt` → office ballot, DES-076 rule 2
+   → assignment, DES-029). The whole timetable is readable by anyone (`election()`); no phase can
+   be re-ordered or re-timed after opening.
+2. **Built in v1:** the nomination window, the debates, the post-debate vote and the ballot lock.
+3. **Designed, not built (owed — §13).** (a) **The question phase:** during it any matured member
+   may ask any candidate a question; `askQuestion` appends `QUESTION_ASKED` to the candidacy trail
+   carrying the question text and a per-election question id and **not** the asker's identity on
+   the public record _(**v2.16.0 — ISS-02 High, corrected.** v2.15.0 grounded this on FR-082, "a
+   Supporter is anonymous unconditionally". FR-082 is **DEFERRED-v2** — Doc 02 §16.3.1: "cannot be
+   technically satisfied in v1 where DB holds member↔party mapping"; §16 confirmations below: "v1
+   makes no claim to these properties" — and is **not claimed here**. The v1 property is
+   **non-publication**: the public record and every read omit the asker, exactly as DES-066 rule 4
+   treats the feedback caster, while the operator database will hold the asker↔question link. The
+   owed question surface MUST therefore carry the FR-131(b)-equivalent disclosure — our own records
+   can see who asked — **before** the ask control. Asking remains participation, not a counting
+   action, FR-122.)_; `recordAnswer` appends `ANSWER_RECORDED`, by the candidate only (`_requireCandidate`);
+   at phase close, `closeQuestionPhase` appends `QUESTION_UNANSWERED` for every open question, so
+   the unanswered state is **visible on the public record** and can never be erased (FR-107 for
+   this trail). (b) **The election** — DES-076 rule 2. Until (a) and (b) are built, FR-093's row
+   stays OPEN with these as the named blockers.
+4. **Durations.** No platform-wide fixed durations exist: each election publishes its own dates.
+   FR-093's Gherkin says the durations were to be "set at OI-17 closure"; §10.11 did not set them,
+   and no floor is published — **Q18**.
+
+**Honesty (FR-131, DES-098).** Every surface in this flow is Definition-A copy: the residency claim
+is self-declared and says so; the clause (d) notice renders at every counting-gate refusal; the
+FR-131 notice precedes the post-debate vote; the feedback surface states that the operator can see
+direction; no v1 string uses the four banned words of any act here (UT-0907's scan). Arabic strings
+are engineer drafts flagged for the human-gated native review, not claimed reviewed.
+
+**Failure modes considered.** (a) *A leaked candidacy id* — consent and withdrawal are bound to the
+candidate; a stranger is refused before any read. (b) *A Map-backed store makes a "stores no
+ballot" assertion vacuous* — the structural check walks Maps and Sets and proves the ballot present
+in the ballot service. (c) *A tie* — does not advance. (d) *Unheld vs absent* — distinguished, and
+only absence blocks. (e) *A malformed region path* — `isWithin` throws rather than returning false.
+(f) *An open-tier visitor tries to stand* — refused at the gate with membership intact and the
+route to counting eligibility stated.
+
+**Evidence map (for Doc 08's ruling — design claims only; the row rulings are the tester's).**
+
+| FR | Rules | Tests (Doc 06 v2.11.1 §3) | Design outlook |
+|---|---|---|---|
+| FR-036 | DES-027 1–6 | UT-0894, UT-0896, UT-0897, UT-0905 | design + code + tests present |
+| FR-037 (+ FR-038, Should) | DES-028 1–5, 7 | UT-0895, UT-0897, UT-0904 | design + code + tests present |
+| FR-039 | DES-076 1 built; 2 owed | UT-0901 (timetable, lock) | OPEN — office ballot owed |
+| FR-065 | DES-066 1–4 | UT-0893, UT-0900, UT-0906 | design + code + tests present for scoring, refusal and aggregate-only publication; **two clauses for the tester** — "unlinkable" (Definition-B) and "the same nullifier mechanism" (v1 divergence, rule 2); disclosure placement owed (rule 4) — v2.16.0 |
+| FR-066 | DES-067 1–3, 7 | UT-0892, UT-0898 | OPEN — "verifiable record" needs DES-097 anchoring |
+| FR-067 | DES-067 3–6 | UT-0891, UT-0893, UT-0899, UT-0901, UT-0906 | design + code + tests present; "logged" — tester rules |
+| FR-081 | DES-107 1–4 | UT-0891, UT-0896, UT-0897, UT-0901 | design + code + tests present for every clause but "with its state (active/inactive)", which is a design-level derivation asserted by no UT (rule 4) — tester rules; v2.16.0 |
+| FR-085 | DES-028 2, 6 | UT-0895, UT-0897, UT-0904 | design + code + tests present; TC-3476 on the row is the tester's |
+| FR-093 | DES-108 1–2 built; 3 owed | UT-0901 (timetable) | OPEN — question phase and election owed |
+
+---
+
 ## 11. Situation & failure-mode analysis (per requirement)
 
 | Requirement / DES | Normal | Edge | Failure → behaviour |
@@ -3306,7 +3829,7 @@ amendment — governance work through the SOP, not a code change.
 | FR-031 | receipt-free | user screenshots confirmation | screen is choice-independent; re-vote remains possible → receipt is worthless |
 | FR-032 | last ballot counts | re-vote at deadline | last message in the queue wins; window ≥ 72 h |
 | FR-034 / DES-026 | no interim tallies | chain state read directly | **we state plainly: on-chain Phase-1 tallies are observable** — closed by MACI in Phase 3 |
-| FR-036 / DES-027 | self-nomination in own region | member moves region | candidacy invalid for new region; term in old one runs to expiry |
+| FR-036 / DES-027 | self-nomination in own region | member moves region | candidacy invalid for new region; term in old one runs to expiry _(v2.15.0: v1 residency is self-declared at nomination and checked against the office region then; a later move is not detected in v1 — DES-007's attested residency is the v2 input)_ |
 | FR-042 / DES-030 | recall in two stages | recall spam | grace window after election + cooldown after failed recall |
 | FR-049 / DES-033 | contribution under cap | whale splits into 100 donations | cap is per **nullifier**, not per address |
 | FR-053 / DES-034 | fork proceeds | parent tries to block | no blocking function exists; initiators counted on-chain via ZK proofs |
@@ -3314,9 +3837,9 @@ amendment — governance work through the SOP, not a code change.
 | FR-061 / DES-043 | sponsored action | budget exhausted | **queue with explanation and expected time**; never charge, never deny |
 | FR-062 / DES-064 | participation profile viewed | OI-13 unresolved | profile not served until OI-13 resolved at Gate 1 re-affirmation; flag `participation_profile` off above dev |
 | FR-064 / DES-065 | member joins party B | party A membership scope nullifier spent | join B burns the global membership-scope nullifier; tenure clock resets to zero |
-| FR-065 / DES-066 | candidate receives feedback votes | member attempts second vote on same candidate | per-(election, candidate) scope nullifier already spent → **reject** |
-| FR-066 / DES-067 | three debates scheduled per candidate | off-chain content host fails | CID still on-chain; attendance attestation preserved; content is lost unless IPFS/Arweave pin survives |
-| FR-067 / DES-067 | candidacy from post-debate vote | incumbent skips debate cycle | no automated candidacy without completed debate cycle; on-chain guard rejects ballot inclusion |
+| FR-065 / DES-066 | candidate receives feedback votes | member attempts second vote on same candidate | per-(election, candidate) scope nullifier already spent → **reject** _(v2.15.0: v1 — `ALREADY_GAVE_FEEDBACK`, the store's caster record acting as the nullifier; the first vote unchanged)_ |
+| FR-066 / DES-067 | three debates scheduled per candidate | off-chain content host fails | CID still on-chain; attendance attestation preserved; content is lost unless IPFS/Arweave pin survives _(v2.15.0: v1 — `contentRef` and the attestation survive on the application-held trail; nothing is on-chain until DES-097 anchoring)_ |
+| FR-067 / DES-067 | candidacy from post-debate vote | incumbent skips debate cycle | no automated candidacy without completed debate cycle; on-chain guard rejects ballot inclusion _(v2.15.0: v1 — no ballot-inclusion call exists; any out-of-order transition throws `ILLEGAL_TRANSITION`; `officeHolder` is unreachable on the path; no event is appended for the refused call)_ |
 | FR-068 / DES-068 | tenure waiver active (party age < 3 months) | new-member surge during waiver | FR-023 churn limits and FR-028 snapshot remain active — waiver relaxes tenure only |
 | FR-069 / DES-069 | nullifier derived and stored | credential expired during enrolment | derivation circuit check 2 fails (`validUntil > blockTimestamp`) → **reject** with reason |
 | FR-071 / DES-071 | legitimate recovery via collision | nullifier already exists | → RECOVERY_PENDING; 7-day delay; notification; active-key veto window opens |
@@ -3404,6 +3927,10 @@ not duplicated here. Architectural debt carried knowingly:
 | v1 party/membership store is in-memory (`IS_INSECURE_MOCK = true`) | production Postgres backing not built; blocked past devnet by the CI gate | **Design complete v2.8.0** — DES-097(b) (§10.13.12) specifies the mapping, constraints, retention boundary and promotion condition; the build remains owed, and §6's CON-015 answers gate promotion | Medium (blocked by CI) |
 | **DES-096 exposes no ballot-state accessor, so the v1 half of the derivation rule has nothing to derive FROM** — its interface (§10.13.3) is `castBallot`, `changeBallot`, `computeTally`, `getTallyProperties` and no more | §10.13.13(a) makes the ballot layer authoritative over the FR-091 `VOTE`/`DECISION`/`IMPLEMENTATION` stages in **both** versions; that rule is unsatisfiable against an interface which never reports the ballot's state, and the only way to render those stages without one is to track them independently — precisely what the rule forbids. Recorded at v2.11.1 in §10.13.13(a) prose only; entered here at v2.11.2 so it is **owned and tracked** rather than discoverable only by the implementer who hits it | **DES-096 MUST gain a ballot-state accessor before the v1 ballot layer is built.** Not urgent today — the proposals layer derives nothing, stopping at `admitToBallot()` — and it blocks no current work | Medium — **Ravi Deshmukh (architect)**; owed before the v1 ballot layer |
 | FR-130 cap is application-enforced in v1 | v1 has no on-chain membership (ADR-024 §(b)); the application boundary is the only enforcement point that exists | audit-record publication makes an over-cap party **detectable** today (DES-102 rule 8); the on-chain guard in `Party.join()` (DES-102 rule 7) makes it **impossible** at the v2 increment | Medium (disclosed) |
+| **The office ballot and tie-break rule (FR-039) and the question phase (FR-093) are designed, not built** — DES-076 rule 2, DES-108 rule 3 (v2.15.0) | TRUMO-P02's fence stopped at the candidate set and the ballot lock; the question phase and the office election were never in its scope | build the office ballot through DES-096 with the residency guard and the tie-break field, and the three question-phase trail events; FR-039 and FR-093 stay OPEN until then | Medium — **Samuel Oyelaran (engineer)**, next candidate increment |
+| `ICandidateStore`'s production backing is not built — the shipped store is `InMemoryCandidateStore` (`IS_INSECURE_MOCK = true`) (v2.15.0) | the same posture as the party/membership store row above; the seam and each member group's data class are specified (§10.13.14) | extend DES-097(b)'s Postgres mapping to the eight member groups in the §10.13.14 seam table; the CI gate blocks promotion until then | Medium (blocked by CI) — **Ravi Deshmukh (architect)** for the mapping; engineer for the build |
+| **Three v1 gaps the v2.15.0 review found in the candidate flow (v2.16.0):** (a) the FR-131(b) feedback disclosure renders AFTER the feedback controls (DES-066 rule 4); (b) feedback's one-vote rule is a store-local check-then-write, not DES-095's atomic `isUniqueInScope` (DES-066 rule 2 — FR-065's "same nullifier mechanism"); (c) FR-081's active/inactive state is derived, not recorded or asserted (DES-107 rule 4) | the design now says what ships; each gap is one small engineer touch with a test: (a) move the sentence above the controls and assert document order; (b) register `FEEDBACK:<candidacyId>` through `isUniqueInScope` (and a UNIQUE constraint in the Postgres backing); (c) a UT asserting the stage→state mapping, if the tester's ruling requires it | (a) owed regardless — an FR-131 obligation on a BINDING_VOTE-gated control; (b) and (c) owed if the tester's Doc 08 ruling on FR-065 / FR-081 requires them | (a) Medium, (b)/(c) Low — **Samuel Oyelaran (engineer)**, next Doc 06 version |
+| FR-066's "verifiable record" and FR-067's "refused and logged" have no v1 mechanism beyond the application-held trail (v2.15.0) | the trail is complete and append-only but application-held (the DES-106 boundary), and it records state, not refused calls (DES-067 rules 6–7) | DES-097 audit-record anchoring (S-8) for FR-066; for FR-067 the tester's Doc 08 ruling decides whether a refusal event is required — if so, a small engineer touch | Low — **Ravi Deshmukh** (anchoring); tester (ruling) |
 
 ## 14. Test hooks designed in
 
@@ -3524,6 +4051,19 @@ the first rework cycle, not the mint.)_
 | FR-131 (v1 honesty — closing sentence: the v1 product MUST NOT use "private", "anonymous", "receipt-free" or "secure" to describe v1 voting behaviour); FR-124(b) (verified status restricted-class); H-15, H-16, T-01, T-02 | **DES-094 amended** — backing-aware `ver` **TITLE**: v1 conventional backing renders **"Verified"** (fail-honest default, all cases where `unlinkable !== true`); v2 ZK backing renders "Verified — private" (only when `getProperties().unlinkable === true`). **Clause 9** added to the normative binding list, applying clause 7's test to the title and to the `aria-label`; the v2.7.0 "status visibility" ruling is marked SUPERSEDED in place | **REVERSAL of a v2.7.0 architect ruling.** Superseding authority: Doc 09 v1.3.0 `REL-LIM-18` / `ISS-03` (pre-mount blocker, 2026-09-02) + approver direction 2026-09-05 (Rathish), re-affirmed 2026-09-06. Already built and guarded: `packages/ui/src/PrivacyStatus.tsx` `VER_TITLE_V1`/`VER_TITLE_V2`, **UT-0759** (four paths). **US layer: no new US** — this is a copy-selection constraint on the existing DES-094 component, and the component ships with it |
 | FR-131(a) (the notice MUST state NOT anonymous, NOT receipt-free, NOT coercion-resistant); FR-131 closing sentence | **DES-098 aligned** (§10.13.6) — element clause (1) now carries all three denials by name; the banned-words bullet now covers voting-adjacent status copy and records the overruling; §13's "Public tallies in Phase 1" repayment cell now states the FR-131 truth instead of "Phase-1 votes are anonymous but not receipt-free" | Shipped copy: `apps/web/src/i18n/en.ts` `banner.notReceiptFreeTitle`/`Body` (+ `ar.ts` mirror), `packages/protocol/src/flags.js` `MACI_VOTING.description`, `packages/contracts/src/core/Governor.sol` NatSpec, `packages/sdk/src/client.js` `#tenureSignals`; guarded by **UT-0887**, **UT-0888**. **Still owed against DES-098** (unchanged by this version, carried openly): the **acknowledge-to-proceed control** on SCR-13 is not built — the banner is non-dismissable but has no acknowledgement step (US-0134; Doc 06 v2.5.1 §7 item 26(d)). **The FR-131 chain is NOT absent — it is OPEN.** Doc 08 carries the FR-131 Must row `BR-005, BR-009 → FR-131 → EP-06 ▸ FE-058 ▸ US-0134` with sixteen TCs; the row is **OPEN (`G-PHASE3`)** at Doc 08 **v2.7.0 (Approved)** and remains OPEN at **v2.8.0 (In Review, 2026-09-06)**, which adds `TC-3564`…`TC-3569` for this drop. **`TC-3476`, `TC-3481` and `TC-3487` are Blocked** — `TC-3481` because SCR-13/SCR-14 are not built (Doc 06 §7 item 21). **DES assignment — stated so the tester can align rather than guess.** Doc 08's row assigns FR-131 → `DES-096 · ADR-024`; the architect's intended assignment is **DES-098** (the notice itself — the primary backing element, §10.13.6), **DES-094** (the status-badge copy that FR-131's closing sentence reaches, §10.12.3 clauses 7 and 9 and the `anon` disposition), with **DES-096** retained as the ballot seam the notice's cast path runs through. Routed to **Ji-woo Park (tester)**; **Doc 08 is the tester's document and is NOT edited from here**, and nothing in this cell should be read as having edited it. _(v2.13.0, cycle-1 ISS-01 (High): this cell previously closed "and FR-131 has **no `US`/`TC`/RTM row** yet" — false, contradicted by Doc 08 and self-contradicted by its own citation of US-0134 one clause earlier. The row has existed since Doc 08 v2.2.0, 2026-08-25. With Gate 2 approaching, a §15 register publishing "no RTM row" for a Must requirement that has an OPEN, evidence-bearing one is a material correctness defect, not a wording slip.)_ |
 
+**v2.15.0 candidate selection — Definition-A trace rows (§10.13.14, 2026-09-21):**
+
+| Requirement | DES | Notes |
+|---|---|---|
+| FR-036 (self-nomination; region scope; published endorsement minimum; withdrawal before lock); FR-023 (maturation on nominating and endorsing); FR-123(c) | **DES-027 amended** — the SDK conventional backing is the Definition-A design; Elections contract deferred v2 behind `ICandidateStore` | Self only by construction; `inScopeForOffice`; maturation 30 d then the CANDIDACY gate; five endorsements gate the debates; withdrawal before lock. Constants ratified 2026-09-21 (§10.11). **Design + code + tests present** (UT-0894/0896/0897/0905); the row ruling is the tester's (Doc 08 v2.13.0) |
+| FR-037 (consent before publication; nobody else disclosed); FR-038 (Should — the disclosure before consent); FR-085 (irrevocable for the term; withdrawal before the window closes destroys the disclosure data) | **DES-028 amended** — consent record + the one-way-door lifecycle; FR-085 gains its lifecycle DES (DES-093/094 remain the display layer) | Recorded once, all three acknowledgements literal `true`, no verifier, only the candidate; nothing published and nobody named before consent; `destroyDisclosures` is the store's only delete and fires only before the window closes; no revocation method for the term. **Design + code + tests present** (UT-0895/0897/0904). FR-085's row also cites TC-3476 (a Blocked FR-131 clause-8 case) — whether it belongs on that row is the tester's ruling |
+| FR-039 (election scoped; timetable, candidate set and tie-break immutable after opening) | **DES-076 amended** — timetable + lock built; office ballot designed (rule 2), owed | **Row stays OPEN** — the office ballot's voter-scope guard and tie-break field are not built (§13) |
+| FR-065 (feedback +3/−1; one vote per member per candidate per election; individual votes not published) | **DES-066 amended** — scorer over the store's caster record (refuse, never overwrite); BINDING_VOTE gate; aggregate-only reads | **Design + code + tests present for the scoring, refusal and aggregate-only clauses** (UT-0893/0900/0906). **Two clauses for the tester** _(v2.16.0)_: "unlinkable to its caster" (Definition-B, not claimed for v1; Doc 02 §16.3.1 records FR-065's v1 mechanism as "DB aggregate; aggregate public") and "enforced by the same nullifier mechanism as scope-action limits" (v1 divergence — store-local caster record, not `isUniqueInScope`; DES-066 rule 2). The FR-131(b) disclosure's placement before the feedback controls is owed (§13) |
+| FR-066 (three debates by topic; content reference; attendance and vote on the verifiable record) | **DES-067 amended** — lifecycle built; the verifiable-record clause needs DES-097 anchoring | **Row stays OPEN** on "recorded on the verifiable record" — the trail is application-held until S-8 anchoring (§13) |
+| FR-067 (candidacy from a net-positive post-debate vote; no automatic advancement or renomination) | **DES-067 amended** — strictly net-positive close through DES-096; `officeHolder` unreachable; no renominate capability | **Design + code + tests present** (UT-0891/0893/0899/0901/0906). "Refused and logged": refusal is by construction with no refusal event in v1 (rule 6) — the tester rules |
+| FR-081 (Candidate tier self-nominated, code-checked, no human approval or ranking, append-only transitions) | **DES-107** (new) — chain gap closed | Tier derived from PUBLISHED; every rule a named constant/function; no approve/reject/rank capability; trail append-only. **Design + code + tests present for every clause but "with its state (active/inactive)"** _(v2.16.0)_, which is a design-level derivation from the recorded stage, asserted by no UT (DES-107 rule 4) — the tester rules whether derivation satisfies it (UT-0891/0896/0897/0901) |
+| FR-093 (published schedule with question phase; unanswered questions visibly recorded) | **DES-108** (new) — chain gap closed | **Row stays OPEN** — the question phase and the office election are designed, not built (§13); durations unset (Q18) |
+
 ## 16. Open questions
 
 | # | Question | Owner | Needed by |
@@ -3545,6 +4085,7 @@ the first rework cycle, not the mint.)_
 | Q15 | **FR-091 does not say what happens to a DEFEATED or CANCELLED decision.** Surfaced 2026-08-30 while mapping FR-091 to ADR-008's `PROPOSAL_STATE` (§10.13.13(a)). FR-091 requires every proposal to move through all eight stages in sequence with **no stage skipped**; a defeated or cancelled decision cannot be implemented or measured, so under the recorded mapping such a window **terminates at `DECISION`**. Terminating is not skipping — but the requirement's text does not say so, leaving a future implementer free to read it as obliging an implementation stage for a proposal the members rejected. **This is a requirement clarification, not an architect's call** — the architect surfaces it and routes it. **Not a defect in what is built:** the proposals and debate layer holds no vote — it stops at `admitToBallot()` and hands off to `IBallotService` — so no window can yet reach a defeated state. _(v2.11.1: this row previously read "v1 holds no vote (ADR-024 §(b))" — the same mis-citation corrected in §10.13.13 at v2.11.0 and missed here, one of the three locations the cycle-1 finding named. ADR-024 §(b) removes on-chain **execution** in v1; **DES-096 §10.13.3 specifies a v1 ballot backing**. It also contradicted **Q16** two rows above, which already used the corrected narrow form.)_ Recorded in Doc 02 §13 tracked routing (h). | Priya Raghunathan (PO) | Before the ballot layer is built |
 | Q16 | **Nothing specifies how a decision window with several competing proposals RESOLVES.** Surfaced 2026-08-30 at the v2.10.0 review, while checking the cardinality argument in §10.13.13(a). FR-090 requires every competing proposal to be presented with equal standing and voted **in the same decision window**; `Governor` gives each proposal an **independent binary ballot**; and DES-104 deliberately exposes **no** window-closing, merging, ranking or primary-selection capability — that absence is a first-class anti-capture control and MUST NOT be quietly removed to answer this. So two competing proposals answering one question can **both pass**, and no rule says what then happens. This is a genuine gap between FR-090's "same decision window" and the ballot model, not an implementation detail. It is **not a v1 defect** — the layer built in this drop holds no vote — but it MUST be answered before the ballot layer is built, and the answer is a **requirement decision** (what does the party get when both options win?) before it is an architecture one. Related: **Q15**. | Priya Raghunathan (PO) + Ravi Deshmukh (architect) | Before the ballot layer is built |
 | Q17 | **None of the THREE ballot-state representations is covered by a differential test.** _(v2.11.2: this row said "neither … enum", counting two, after the reconciliation sub-table had established three. **v2.12.0:** the **body** still read "exercises neither" — v2.11.2 corrected the title and the annotation but not the body, and its changelog over-claimed otherwise. Corrected here; this was carried Low #1.)_ `Governor.State` (Solidity, 7 values), `PROPOSAL_STATE` (JS mirror, 8 values) and `PROPOSAL_STATE_ENUM` (SDK ordinal-indexed decode array, 7 values) all express the same machine, differ by name in one state (`Timelocked` / `SUCCEEDED_TIMELOCK`), and differ by one **vestigial** value (`PROPOSAL_STATE.DRAFT` has no producer anywhere — `stateAt()` never returns it and no contract declares it). `differential.test.mjs` exercises **none of the three**. §10.13.13(a) now makes the ballot layer authoritative over derived stage positions, which raises the cost of an undetected divergence between the reference mirror and the chain. **Write the ordinal-indexing case first:** `PROPOSAL_STATE_ENUM` decodes by position, so a Solidity enum reorder silently remaps every state with nothing to raise an error. Also owed: a decision on whether to retire `PROPOSAL_STATE.DRAFT` or give it a producer. | Ji-woo Park (tester) + Samuel Oyelaran (Engineering Lead) | Before the v2 seam swap |
+| Q18 | **Candidate-selection phase durations and the founding-cohort waiver are unset.** Surfaced 2026-09-21 while minting DES-108 (§10.13.14). **(a)** FR-093's Gherkin says the phase durations — nomination window, question phase, debates, post-debate vote, election — were to be "set at OI-17 closure"; §10.11 closed OI-17 without them, and v1 publishes per-election dates at `openElection` with no floor. Is a floor wanted, and what is it? **(b)** DES-068 waives the one-month tenure check at `vote()` for a new party's founding cohort; v1 does **not** apply that waiver to the 30-day nomination and endorsement maturation ratified 2026-09-21 (§10.11), so nobody can stand or endorse in a party's first 30 days. Intended? Both are product decisions the constants ruling did not settle. | Aisha Nkemdirim (with the product-owner) | before the first election opens above dev |
 
 **Confirmations recorded (2026-08-23; DECISIONS-2026-08-23-V1-IDENTITY-VERIFICATION.md §4):**
 
