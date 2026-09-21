@@ -16,10 +16,10 @@ import { fileURLToPath } from 'node:url';
 const read = (rel: string): string =>
   readFileSync(fileURLToPath(new URL(rel, import.meta.url)), 'utf8');
 
-/** Property names of the IPartyStore JSDoc @typedef in the real SDK source. */
-function jsdocMembers(): string[] {
-  const src = read('../../../packages/sdk/src/party-creation.js');
-  const start = src.indexOf('@typedef {Object} IPartyStore');
+/** Property names of a store-seam JSDoc @typedef in the real SDK source. */
+function jsdocMembers(file = 'party-creation.js', typedef = 'IPartyStore'): string[] {
+  const src = read(`../../../packages/sdk/src/${file}`);
+  const start = src.indexOf(`@typedef {Object} ${typedef}`);
   expect(start).toBeGreaterThan(-1);
   const block = src.slice(start, src.indexOf('*/', start));
   // Greedy `.*` reaches the LAST `}` on the line, so nested type braces
@@ -41,16 +41,26 @@ function dtsMembers(header: RegExp): string[] {
   return names;
 }
 
-describe('UT-0871 SDK type-shim sync — .d.ts IPartyStore matches the JSDoc typedef', () => {
-  it('interface and class member sets equal the JSDoc typedef member set exactly', () => {
-    const jsdoc = jsdocMembers().sort();
-    const iface = dtsMembers(/export interface IPartyStore \{/).sort();
-    const klass = dtsMembers(/export class InMemoryPartyStore implements IPartyStore \{/).sort();
+describe('UT-0871 SDK type-shim sync — every .d.ts store seam matches its JSDoc typedef', () => {
+  // Extended from IPartyStore-only (Doc 06 §7 item 23 / ISS-C3-01): the proposals and
+  // candidate stores carry the same silent-crash drift risk and get the same guard.
+  const SEAMS = [
+    { file: 'party-creation.js', typedef: 'IPartyStore', klass: 'InMemoryPartyStore' },
+    { file: 'proposals.js', typedef: 'IProposalStore', klass: 'InMemoryProposalStore' },
+    { file: 'candidates.js', typedef: 'ICandidateStore', klass: 'InMemoryCandidateStore' },
+  ] as const;
 
-    // Set equality both ways: a member missing from the shim is the silent-crash
-    // drift; a member missing from the JSDoc means the shim promises an API the
-    // SDK does not have.
-    expect(iface).toEqual(jsdoc);
-    expect(klass).toEqual(jsdoc);
-  });
+  for (const seam of SEAMS) {
+    it(`${seam.typedef}: interface and class member sets equal the JSDoc typedef member set exactly`, () => {
+      const jsdoc = jsdocMembers(seam.file, seam.typedef).sort();
+      const iface = dtsMembers(new RegExp(`export interface ${seam.typedef} \\{`)).sort();
+      const klass = dtsMembers(new RegExp(`export class ${seam.klass} implements ${seam.typedef} \\{`)).sort();
+
+      // Set equality both ways: a member missing from the shim is the silent-crash
+      // drift; a member missing from the JSDoc means the shim promises an API the
+      // SDK does not have.
+      expect(iface).toEqual(jsdoc);
+      expect(klass).toEqual(jsdoc);
+    });
+  }
 });

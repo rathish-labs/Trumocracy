@@ -12,6 +12,7 @@ export * from './regions.js';
 export * from './flags.js';
 export * from './party.js';
 export * from './proposals.js';
+export * from './candidates.js';
 // proposals.js exports: PARTICIPATION_TIER, DEFAULT_PARTICIPATION_TIER, canAuthorProposal,
 // votingWeightForTier, PROPOSAL_STAGE, STAGE_ORDER, DELIBERATIVE_STAGES,
 // COMPETING_ENTRY_STAGES, ProposalError, stageIndex, isDeliberativeStage,

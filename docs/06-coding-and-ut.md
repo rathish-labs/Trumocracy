@@ -2,8 +2,35 @@
 
 ```
 Document ID:   CODE-TRUMOCRACY
-Version:       2.9.0
-Status:        Approved — 06-coding-and-ut-v2.9.0-technical-cycle1.md (PASS 96%, 0C/0H/0M/5L; reviewer: tester; five Lows carried, non-blocking, to fold at the next touch: ISS-01 S5.0 has no v2.7.0 cycle-2 entry though the report exists and is quoted in the header (pre-existing); ISS-02 header Source: pins SDD v2.13.0 S9 while Doc 03 is v2.14.1 (S9 content verified unchanged across the delta - currency, not correctness); ISS-03 the '--audit reports 0 blocking' clause was false of its own file during its own review window (annotated at the site as 'at the moment of writing'); ISS-04 item 29 names a role, not a person; ISS-05 item 26 carries Doc 03 FINDING 3's present tense without the v2.14.1 tense reconciliation). Previously: In Review — debt-closure session, rework-loop cycle 1 of 5. Neutral reviewer:
+Version:       2.11.1
+Status:        Approved — 06-coding-and-ut-v2.11.1-technical-cycle3.md (PASS 97%, 0C/0H/0M/3L; reviewer: tester; three Lows carried, non-blocking, to fold at the next touch: ISS-L7 v2.11.1 should have been a MINOR bump (two test files and a product comment changed; the only patch carve-out, v2.8.1, requires no test change) — do not renumber, take the next version to v2.12.0; ISS-L8 the S3 table caption still reads 'Counts are actual as of v2.8.1' above a table totalling 739; ISS-L9 mixed trimmed/raw measurement basis in the L5 arithmetic (282 raw, 281 trimmed; conclusion unaffected)). Previously: In Review — v2.11.1 (2026-09-20). **Rework cycle 3 of 5** against
+               artifacts/reviews/06-coding-and-ut-v2.11.0-technical-cycle2.md (FAIL 94%,
+               0C/0H/1M/3L; reviewer: tester Ji-woo Park, neutral, PM-assigned). The Medium was
+               documentation only — §3's accounting note grafted new totals onto the old
+               per-package sentence instead of reconciling it — now rewritten per package. All
+               three Lows taken (L4 the spy now runs the PUBLISHED branch; L5 a false claim
+               about the page-load cause corrected; L6 the Arabic sign pinned). PATCH bump: no
+               UT minted, no count moved, no normative text changed — a comment, two assertions
+               and one paragraph. Suite 739/739 unchanged. Same neutral reviewer for cycle 3.
+               Previously:
+               In Review — v2.11.0 (2026-09-20). **Rework cycle 2 of 5** against
+               artifacts/reviews/06-coding-and-ut-v2.10.0-technical-cycle1.md (FAIL 88%,
+               0C/1H/4M/3L; reviewer: tester Ji-woo Park, neutral, PM-assigned). All five
+               blocking findings fixed and one Low taken; minor bump per the Medium+ rule.
+               **The High (ISS-01) was real and mine:** recordConsent() and withdraw() bound to
+               no actor — any caller holding a candidacy id could publish another member's legal
+               name or destroy their disclosures. Both now take the member and refuse anyone
+               else with NOT_YOUR_CANDIDACY; asserted by UT-0897. Suite 739/739 (+3). Same
+               neutral reviewer for cycle 2. Previously:
+               In Review — v2.10.0 (2026-09-20). **Code drop TRUMO-P02: candidate selection (v1)
+               + the OPEN-27 PrivacyStatus clause-10 fix, bundled.** Review-loop cycle 1 of 5;
+               neutral reviewer: tester (Ji-woo Park, new instance), assigned by the
+               project-manager BEFORE dispatch per
+               artifacts/status/REVIEW-ASSIGNMENT-2026-09-20-CANDIDATE-SELECTION.md (engineer is
+               the owning role and is excluded). Technical mode; the verdict is recorded against
+               this version. Suite 736/736 (was 640; +96); typecheck and lint:deps clean; gate
+               --audit exit 0. Previously:
+               Approved — 06-coding-and-ut-v2.9.0-technical-cycle1.md (PASS 96%, 0C/0H/0M/5L; reviewer: tester; five Lows carried, non-blocking, to fold at the next touch: ISS-01 S5.0 has no v2.7.0 cycle-2 entry though the report exists and is quoted in the header (pre-existing); ISS-02 header Source: pins SDD v2.13.0 S9 while Doc 03 is v2.14.1 (S9 content verified unchanged across the delta - currency, not correctness); ISS-03 the '--audit reports 0 blocking' clause was false of its own file during its own review window (annotated at the site as 'at the moment of writing'); ISS-04 item 29 names a role, not a person; ISS-05 item 26 carries Doc 03 FINDING 3's present tense without the v2.14.1 tense reconciliation). Previously: In Review — debt-closure session, rework-loop cycle 1 of 5. Neutral reviewer:
                tester (Ji-woo Park, new instance), assigned by the project-manager BEFORE
                dispatch per artifacts/status/REVIEW-ASSIGNMENT-2026-09-20-DEBT-CLOSURE.md
                (engineer is the owning role and is excluded; standing precedent for this
@@ -48,6 +75,132 @@ Last updated:  2026-09-20
 
 ```
 Change history:
+  v2.11.1 (2026-09-20) — **Rework cycle 3 of 5** against
+               artifacts/reviews/06-coding-and-ut-v2.11.0-technical-cycle2.md (FAIL 94%,
+               0C/0H/1M/3L; tester, neutral). **ISS-06 (Medium) — §3 accounting note
+               reconciled.** The v2.11.0 edit appended "+96 … +3 … = 739" to the sentence whose
+               subject was "the web total of 116", splicing cross-package addends (UT-0897 is an
+               sdk test) into a web breakdown, and left the sdk/protocol/ui totals reading
+               244/151/18 in the present tense. Rewritten so every package's figure derives from
+               its own addends: sdk 287 = 244 + 42 + 1 · protocol 178 = 151 + 27 · ui 25 = 18 + 7
+               · web 138 = 116 + 2 + 18 + 2 · total 739. **L4 — taken:** the UT-0899 spy test now
+               casts one SUITABLE vote before closing, so the PUBLISHED branch itself executes
+               under the spy (it resolved NOT_ADVANCED before). **L5 — taken, and it corrects a
+               false claim of mine:** the v2.11.0 entry and the page comment said the
+               proposals-page wording ×3 fell below MIN_PILLAR_CHARS for short pillar names. It
+               does not (392–413 for all eight). What fell short was the page's FIRST wording
+               ("…in enough detail to judge a programme.") — 282 for "finance", below 280 for
+               shorter names. The defect was real; the stated cause was not. Comment and this
+               record corrected; the v2.11.0 entry is retained with this annotation governing.
+               **L6 — taken:** UT-0906 pins the Arabic `feedbackLead` sign ("يخصم", deducts)
+               alongside the English — wording, not fluency; still an ARABIC-I18N draft. No UT
+               minted; counts unchanged at 739 (contracts 95 · protocol 178 · sdk 287 · ui 25 ·
+               indexer 16 · web 138); typecheck, lint:deps, --audit unchanged.
+  v2.11.0 (2026-09-20) — **Rework cycle 2 of 5** against
+               artifacts/reviews/06-coding-and-ut-v2.10.0-technical-cycle1.md (FAIL 88%,
+               0C/1H/4M/3L; tester, neutral). Every finding taken; nothing carried but the two
+               Lows the reviewer recorded as rulings (L3) or mixed precedent (L1, now guarded).
+               **ISS-01 (High) — actor binding.** `recordConsent(candidacyId, memberPseudonym,
+               acks)` and `withdraw(candidacyId, memberPseudonym)` now refuse any caller who is
+               not the candidate with `NOT_YOUR_CANDIDACY`, before anything is read or written
+               (`_requireCandidate`). This adds NO verifier — the FR-037 "consent is not a
+               counting action" property and UT-0897's parameter-inspection assertion stand.
+               New UT-0897 `it`: a stranger and an absent actor are both refused on both
+               methods; state and disclosures unchanged. Web component and page pass the
+               visitor's pseudonym; shim updated. House precedent honoured
+               (`proposals.js`: "no withdraw-someone-else's … asserted by test, not assumed").
+               **ISS-02 (Medium) — the UT-0899 spy now covers publication:** the
+               `officeHolder` spy test awaits `closePostDebateVote()` before asserting
+               not-called, so the claim "never read on the nomination OR publication path" is
+               evidenced as stated in §3 and §7 item 30(vii). **ISS-03 (Medium) — structural
+               "stores no ballot":** `JSON.stringify` renders a Map as `{}`; the check now walks
+               Maps and Sets explicitly AND proves it bites by finding the ballot in
+               `ballots._ballots`. **ISS-04 (Medium) — the trail named the member pre-consent:**
+               `NOMINATED` no longer carries `member`; the name enters the record at
+               `CONSENT_RECORDED` (FR-083 — the public record starts at consent). Applied
+               conservatively to `NOMINATION_ENDORSED` too: an endorser is not a consenting
+               candidate and FR-037 names nobody else, so the trail records THAT an endorsement
+               was made, never by whom (the store keeps the endorser only to refuse a second).
+               UT-0896/UT-0897 assert both. **ISS-05 (Medium) — feedbackLead sign:** "a
+               thumbs-down counts one" → "takes one away" (en + ar); UT-0906 asserts the lead and
+               the rendered score (−1) agree. **ISS-L1 (Low) — taken:** a UT-0890-style test
+               renders `/candidates/` with `elections` off and asserts only the flag-off line
+               — and **it caught a real defect**: the page's module-level seed used a pillar
+               text that fell below MIN_PILLAR_CHARS (280) for short pillar names, so the page
+               threw on import. Fixed (four repeats of the proposals-page wording). **ISS-L2 —
+               taken:** §7 item 30(iv) now enumerates every demo-acting control. **ISS-L3 —
+               ruling recorded**, no change: the name regexes are belt-and-braces; the
+               structural assertions carry the weight. All six engineer judgement calls were
+               upheld by the reviewer. **Suite 736 → 739** (UT-0897 +1, UT-0905 +1, UT-0906 +1):
+               contracts 95 · protocol 178 · sdk 287 · ui 25 · indexer 16 · web 138. Typecheck,
+               lint:deps and --audit unchanged (clean / OK / exit 0; RTM 138/16/122).
+  v2.10.0 (2026-09-20) — **TRUMO-P02 — candidate selection (v1) + OPEN-27 clause-10 fix.**
+               Branch build/v1-candidate-selection. Engineer: Samuel Oyelaran. Neutral reviewer:
+               tester (per REVIEW-ASSIGNMENT-2026-09-20-CANDIDATE-SELECTION.md).
+               **Built (FR-036/037/038/065/066/067/081/085; DES-027/028/066/067; Doc 03 §5.6
+               CANDIDACY):** `packages/protocol/src/candidates.js` — the reference rules: the
+               CANDIDACY_STAGE lifecycle whose transition table reaches PUBLISHED only through
+               DEBATES_COMPLETE → VOTE_OPEN (the FR-067 guarantee as an absence), the three
+               FR-066 topics and `debatesComplete()`, FEEDBACK_SCORE +3/−1 (ADR-015),
+               `isNetPositive()` (strictly more SUITABLE than NOT_SUITABLE; a tie does not
+               advance), `inScopeForOffice()` over `isWithin()`, `isMatured()`,
+               `validateConsent()` over the three FR-038 acknowledgements. Two engineer-chosen
+               constants flagged for ratification: NOMINATION_ENDORSEMENTS_MIN = 5
+               (**NOMINATION-MIN-01**) and NOMINATION_MATURATION_SECONDS = 30 days
+               (**MATURATION-01**) — §7 item 30. `packages/sdk/src/candidates.js` —
+               ICandidateStore + InMemoryCandidateStore (IS_INSECURE_MOCK=true) + CandidateService
+               in the ProposalService shape: `openElection` (published, immutable timetable —
+               no update method exists, FR-039), `nominate` (self only; matured; residency
+               within the party jurisdiction AND the office region; the **CANDIDACY** counting
+               gate at Doc 03 §10.13.2(c); one candidacy per member per election via
+               `isUniqueInScope`), `endorseNomination`, `recordConsent` (the FR-037 one-way
+               door — a disclosure step that takes NO verifier), `withdraw` (before the
+               nomination window closes → disclosures DESTROYED, the FR-085/OI-16 carve-out and
+               the store's ONLY delete; after → consent stands for the term), `scheduleDebates`,
+               `recordDebate` (attendance attested; an absence is on the trail and blocks),
+               `openPostDebateVote` / `castPostDebateVote` (BINDING_VOTE gate, then cast
+               through the injected IBallotService — this service stores no ballot) /
+               `closePostDebateVote` (the tally alone decides; no override parameter exists),
+               `castFeedback` (one per member per candidate per election — a second attempt is
+               REFUSED, not overwritten, which is why feedback does not ride the ballot seam's
+               last-ballot-counts), `feedbackTally` (aggregate only; no read returns a caster).
+               The service holds neither seam. `officeHolder` exists for FR-083's record and
+               nothing on the nomination or publication path reads it — asserted by spy.
+               `apps/web`: `CandidateSelection.tsx` + `/candidates/` page behind the
+               `elections` flag (dev/staging on, prod off), reusing the FR-080 two-step consent
+               pattern for the FR-037/038 crossing, the parties surface's FR-131 clause-(d) notice
+               for an open-tier visitor who tries to stand or vote, and `ReceiptFreedomBanner`
+               BEFORE the post-debate vote controls (it is a binding vote). Demo seeds a
+               neighbour's candidacy through all three debates so feedback and the vote act on
+               something real; the visitor is open-tier on purpose. 66 new `candidates.*` +
+               `nav.candidates` strings in en; Arabic mirrors as ENGINEER DRAFTS (ARABIC-I18N,
+               §7 item 17). Type shims: `ConventionalBallotService` (previously undeclared),
+               `ICandidateStore`/`InMemoryCandidateStore`/`CandidateService` in
+               trumocracy-sdk.d.ts; candidates.js exports in trumocracy-protocol.d.ts.
+               **OPEN-27 (Doc 03 §10.12.3 clause 10, v2.14.1):** `PrivacyStatus.tsx` — v1
+               `anon` title `"Open tier"`; subtitle selected by the explicit `anonContext`
+               prop over `'browse' | 'join' | 'endorse'` with the three verbatim strings;
+               fail-honest default `"Our own records can link what you do here to your
+               account."` for absent/unrecognised/malformed context; context is never inferred.
+               **UT-0750's anon assertion FLIPPED** — it had pinned the superseded pair, so a
+               green test guarded the non-compliant string (§7 item 26 ISS-05(i)); **UT-0903**
+               guards clause 10 in the UT-0759 four-path pattern incl. no banned word in title,
+               subtitle or aria-label. `AnonContext` exported from `@trumocracy/ui`.
+               **Also closed:** §7 item 23 — UT-0871 now guards IPartyStore, IProposalStore AND
+               ICandidateStore (the standing ISS-C3-01). **New UTs:** UT-0891..UT-0895 (protocol,
+               27), UT-0896..UT-0902 (sdk, 42), UT-0903 (ui, 7), UT-0904..UT-0907 (web, 18) +
+               UT-0871 (+2) = **+96; total 640 → 736.** `npm test` 736/736; `typecheck` clean
+               in ui and web; `lint:deps` layering OK; `node hooks/run_gates.cjs --audit`
+               exit 0, 0 blocking, RTM 138/16/122 unmoved. **Not built (scope fence):** the
+               office election ballot itself beyond timetable + candidate-set lock (FR-039);
+               FR-093's question phase; enrolment internals; MACI/tally internals; IPFS; anything
+               on-chain. **What this drop does NOT close (§7 item 30):** every candidate RTM row
+               stays OPEN (G-PHASE3) — the DES name the on-chain Elections contract as the
+               component and the counting gate runs through the stub verifier; FR-081 and FR-093
+               have NO DES (G-TRACE) and are routed to the architect. Three carried Lows from
+               v2.9.0 folded (ISS-01 §5.0 v2.7.0 cycle-2 entry; ISS-02 Source: pin → SDD
+               v2.14.1; ISS-03 the '0 blocking' clause re-dated); two carried (ISS-04 item 29
+               names a role; ISS-05 item 26 tense) — see the v2.9.0 status line.
   v2.9.0 (2026-09-20) — Debt-closure session (documents only; NO product code, test or config
                changed), per artifacts/status/REVIEW-ASSIGNMENT-2026-09-20-DEBT-CLOSURE.md.
                Authored LAST in the session, after Docs 03/04/07/08 landed and were
@@ -980,7 +1133,7 @@ version-relative wording so this line cannot go stale again on the next count ch
 | UT-0819..0830 | join/membership: join-without-permission, join/leave never call the seam, one-active-party (explicit leave), leave-at-will, append-only history, FR-130 100/101 boundary on ACTIVE members, strength counts verified members only, seam scope assertion, clock determinism, countingStatus | sdk | 22 |
 | UT-0841..0857 | party-creation web flow: emblem field, deficiency errors, collision surfaces, BR-020 disclosure, non-violence clause, ProvisionalStatus, jargon scan | web | 27 |
 | UT-0858..0870 | join/membership web flow: one-click join, no-approval absence, one-active-party refusal surface, leave, history active/inactive, cap at join surface, join ≠ counting figures, FR-131(d) notice (four clauses, non-dismissable), verified-member counting, seam spy, flag gating, jargon scan, v1-honest join copy, absence test | web | 27 |
-| UT-0871 | SDK type-shim sync guard: trumocracy-sdk.d.ts IPartyStore member set equals the JSDoc typedef (v2.3.2, ISS-C2-01) | web | 1 |
+| UT-0871 | SDK type-shim sync guard: trumocracy-sdk.d.ts store-seam member sets equal their JSDoc typedefs — IPartyStore (v2.3.2, ISS-C2-01); **extended at v2.10.0 to IProposalStore and ICandidateStore** (closes §7 item 23 / ISS-C3-01) | web | 3 |
 | UT-0087..0095 | proposals reference rules: participation tiers (weight always 1), Worker-tier authoring gate, eight-stage order, skip/reverse/no-op refusals, capability absence, deliberative stages, competing-entry window, draft floors, question-key grouping | protocol | 24 |
 | UT-0888 | `maci_voting` flag description states the FR-131 v1 truth, not the retired "votes are anonymous" framing (REL-LIM-18 site 1, v2.5.0) | protocol | 1 |
 | UT-0832..0848 | ProposalService: Worker-tier authoring, authoring never calls the seam, competing proposals in one window with equal standing, the fairness capability-absence set, entry closed after the ballot opens, open-tier deliberation, records-not-outcomes, one-step lifecycle, BINDING_VOTE admission gate, refusal states what is kept, no vote is cast, append-only trail, clock determinism | sdk | 24 |
@@ -990,22 +1143,44 @@ version-relative wording so this line cannot go stale again on the next count ch
 | UT-0889 | endorsement-copy honesty guard (FR-131 clause (e); DECISIONS-2026-09-06-ENDORSEMENT-COPY.md §5.4): `home.steps[1].body` states public-act/name-not-shown/records-can-link, no "kept private"; `home.promises[0]` states "never publish", no "never learn"; neither string contains "private"/"anonymous"/"receipt-free"/"secure"; en source strings render on the landing page; Arabic mirror carries no "اسمك سريًا" phrase or "لا نعرف" claim (v2.7.0: tightened from a bare "سري" substring ban — ISS-06); the sdk AUTHORSHIP_REQUIRES_WORKER_TIER refusal no longer claims Supporters are anonymous; jargon filter clean over both new strings (v2.7.0, ISS-03) (v2.6.0; v2.7.0) | web | 6 |
 | (SDK core) | identity, proofs, transports, verified reads, prediction, client, scopes | sdk | 124 |
 | UT-0890 | `/verify` page flag-gated dark, honesty placeholder itself honest (DECISIONS-2026-09-08-VERIFY-PAGE.md §1/§5; FR-131(e); FR-132 §(d)/(e); §16.4 H-15/H-17/H-18; CON-015): `enrolment_ui` off in staging/prod, on in dev; `permanentFlags()` stays `[]`; description cites CON-015/FR-132; flag-off placeholder shows all four new strings and the retired claims (`never leaves your phone`, `and nothing else`, `cannot be traced back to you`, `never run by a government`, `Everything happens on your phone`) are absent from the DOM, the enrolment controls are gone, and the nav carries no `/verify/` link; flag-on the screen and nav link are intact; the four new strings carry no FR-131 banned word and no §2.2 jargon, state the H-17/H-15/CON-015 facts and "nobody is checked at all"; the Arabic mirror has the same key set, is complete, is not a copy-paste, and carries no banned word (v2.8.0) | web | 15 |
-| **Total** | | | **640** |
+| UT-0891 | Candidacy lifecycle reaches PUBLISHED only through DEBATES_COMPLETE → VOTE_OPEN; every other edge to PUBLISHED refused with ILLEGAL_TRANSITION; terminal stages immutable; capability absence — no export approves/rejects/ranks/renominates (FR-067, FR-081, BR-013; v2.10.0) | protocol | 6 |
+| UT-0892 | Three debates, one per FR-066 topic; `debatesComplete()` names missing topics; a recorded absence blocks and stays visible; unheld ≠ absent (FR-066; v2.10.0) | protocol | 5 |
+| UT-0893 | Feedback +3/−1 exactly (ADR-015); `feedbackScore`; post-debate vote must be STRICTLY net positive — a tie does not advance (FR-065, FR-067; v2.10.0) | protocol | 4 |
+| UT-0894 | Region scope: stand only where you live — office region equals or contains residency, never the reverse; malformed region throws; maturation boundary to the second; ratification-flagged constants non-zero (FR-036, FR-023; v2.10.0) | protocol | 7 |
+| UT-0895 | Consent valid only when all three FR-038 facts are the literal `true`; a missing key is a missing acknowledgement; truthy-not-true rejected (FR-037, FR-038, FR-085; v2.10.0) | protocol | 5 |
+| UT-0896 | CandidateService.nominate: self only (no nominee parameter); in-scope ward and containing district accepted; other ward OUT_OF_SCOPE; outside jurisdiction refused; open-tier NOT_COUNTING_ELIGIBLE with stillAMember and the seam asked with scope CANDIDACY; fresh joiner NOT_MATURED before the seam; one candidacy per election; window closed; endorsements matured/resident/once/never self (FR-036, FR-081, FR-123(c); v2.10.0) | sdk | 10 |
+| UT-0897 | The one-way door: public view hides member+disclosures before consent, shows both after; CONSENT_INCOMPLETE names the gap; consent takes no verifier and calls no seam; recorded once; withdraw before window close DESTROYS disclosures and the trail says so without ever containing them; after close they STAND; after lock BALLOT_LOCKED; the store's only delete is destroyDisclosures; **the name enters the trail at CONSENT_RECORDED and not before; only the candidate can consent or withdraw — a stranger or an absent actor is refused NOT_YOUR_CANDIDACY on both, state unchanged; the endorsement trail names no endorser** (FR-037, FR-038, FR-083, FR-085, FR-107/OI-16; v2.10.0, +1 at v2.11.0 ISS-01/ISS-04) | sdk | 9 |
+| UT-0898 | Debates need consent then the endorsement minimum; scheduling creates exactly three unheld topics; two attended leave DEBATING and the vote cannot open; an absence is on the trail, visible, and blocks; all three attended → DEBATES_COMPLETE; attendance must be boolean; unknown topic refused (FR-066; v2.10.0) | sdk | 6 |
+| UT-0899 | Incumbency confers nothing: the office-holder takes the identical path to NOMINATED; `officeHolder` never read on the nomination/publication path (spy — **the spied path runs through closePostDebateVote(), v2.11.0 ISS-02**); no method/parameter mentions incumbent/renominate/override/skip; the candidate set is empty until a net-positive vote closes (FR-067, BR-013; v2.10.0) | sdk | 4 |
+| UT-0900 | Feedback +3/−1 aggregate; a second vote is REFUSED not overwritten; self/open-tier/fresh refused with specific codes; no read returns a caster (aggregate, public view, trail); `feedbackTally` takes no verifier (FR-065, FR-131(b); v2.10.0) | sdk | 5 |
+| UT-0901 | Post-debate vote: seam asked with BINDING_VOTE then cast through IBallotService — this service stores no ballot (**structural: Maps/Sets walked, and the ballot proven present in the ballot service, v2.11.0 ISS-03**); net positive → PUBLISHED on the candidate set with tally + resultHash on the trail; tie → NOT_ADVANCED; self-vote and open-tier refused before the ballot service; locked ballot refuses close; timetable invalid/outside-jurisdiction refused and no update method exists; lockBallot TOO_EARLY (FR-067, FR-081, FR-039, DES-096; v2.10.0) | sdk | 6 |
+| UT-0902 | IS_INSECURE_MOCK discipline: InMemoryCandidateStore true; service delegates; an honest store makes the service honest; the service holds no verifier and no ballot service (Doc 06 §2.1; v2.10.0) | sdk | 3 |
+| UT-0903 | PrivacyStatus anon copy is context-selected (Doc 03 §10.12.3 clause 10, OPEN-27): absent → "Open tier" + fail-honest default with aria-label = title; 'browse'/'join'/'endorse' → the verbatim strings; unrecognised context → default, never inferred; the superseded pair never renders; no banned word in title, subtitle or aria-label; no effect on ver/pub (FR-131(e), DES-094; v2.10.0) | ui | 7 |
+| UT-0904 | Web consent crossing: two-step; step 2 states all three FR-038 facts + no-approval BEFORE the confirm control (document order asserted); cancel records nothing; confirm → CONSENTED and the trail carries no disclosure; withdraw before close says destroyed (FR-037, FR-038, FR-085; v2.10.0) | web | 4 |
+| UT-0905 | Web standing: open-tier visitor gets the FR-131 clause-(d) notice (what is not counted, why, membership still works, request not counted) and no control pretends to verify; other-ward residency → outOfScope; residency help says v1 takes the member at their word; counted resident stands and the timetable reads as fixed; **with `elections` off the page renders only the flag-off line** (FR-036, FR-123, FR-131(d), NFR-020; v2.10.0, +1 at v2.11.0 ISS-L1) | web | 5 |
+| UT-0906 | Web vote/feedback/incumbency: incumbent named and disclaimed; opening the vote renders the FR-131 banner BEFORE the controls; yes + close → PUBLISHED and on the ballot; no votes → NOT_ADVANCED, ballot empty; open-tier voter gets the clause-(d) notice; FR-131(b) feedback-visibility stated; one feedback signal then controls gone and score +3; **the lead says a thumbs-down "takes one away" and the rendered score goes to −1** (FR-065, FR-067, FR-131; v2.10.0, +1 at v2.11.0 ISS-05) | web | 7 |
+| UT-0907 | Honesty scan: every new en.candidates string (templates rendered) free of FR-131 banned words and DES-085 jargon; ar.candidates mirrors en key-for-key; Arabic not a copy-paste and no Latin banned word; ar.ts carries the ARABIC-I18N draft marker — reviewed status NOT claimed (FR-131(e), NFR-023, ARABIC-I18N; v2.10.0) | web | 4 |
+| **Total** | | | **739** |
 
-Note: the SDK total of 244 comprises 124 (core) + 36 (seams UT-0760..UT-0779) + 38
+Note (per package, each figure from its own addends — reconciled at v2.11.1, ISS-06):
+**sdk 287** = 244 through v2.9.0 [124 (core) + 36 (seams UT-0760..UT-0779) + 38
 (UT-0780..UT-0818 + UT-0831 party-creation service) + 22 (UT-0819..UT-0830 membership) + 24
-(UT-0832..UT-0848 proposals, v2.4.0). The web total of 116 comprises 16 (original
-UT-0700..UT-0742) + 27 (UT-0841..UT-0857 party-creation web tests) + 27 (UT-0858..UT-0870
-join-membership web tests) + 1 (UT-0871 type-shim sync guard, v2.3.2) + 18 (UT-0872..UT-0884
-proposals & debate, v2.4.0) + 2 (UT-0885..UT-0886 Worker informed consent, v2.4.2) + 4
-(UT-0887 vote-surface banner, v2.5.0) + 6 (UT-0889 endorsement-copy guard: 5 at v2.6.0, +1
-jargon-scan assertion at v2.7.0, ISS-03) + 15 (UT-0890 `/verify` flag-gate guard, v2.8.0).
-(Through
-v2.4.3 this sentence stated the web total as 89 while its own addends summed to 91 and
-`npm test` reported 91 — corrected at v2.5.0.) The
-protocol total of 151 comprises 126 (as below) + 24 (UT-0087..UT-0095 proposals, v2.4.0) + 1
-(UT-0888 flag description, v2.5.0); that 126 comprises 82 (original UT-0001..UT-0055) + 44
-(UT-0060..UT-0086). The ui total of 18 comprises 14 (UT-0750..UT-0758) + 4 (UT-0759, v2.5.0).
+(UT-0832..UT-0848 proposals, v2.4.0)] + 42 (UT-0896..UT-0902 candidate selection, v2.10.0)
++ 1 (UT-0897 actor-binding `it`, v2.11.0). **protocol 178** = 151 through v2.9.0 [126 (82
+original UT-0001..UT-0055 + 44 UT-0060..UT-0086) + 24 (UT-0087..UT-0095 proposals, v2.4.0) + 1
+(UT-0888 flag description, v2.5.0)] + 27 (UT-0891..UT-0895 candidate rules, v2.10.0). **ui 25**
+= 18 through v2.9.0 [14 (UT-0750..UT-0758) + 4 (UT-0759, v2.5.0)] + 7 (UT-0903 clause 10,
+v2.10.0). **web 138** = 116 through v2.9.0 [16 (original UT-0700..UT-0742) + 27
+(UT-0841..UT-0857 party-creation web tests) + 27 (UT-0858..UT-0870 join-membership web tests)
++ 1 (UT-0871 type-shim sync guard, v2.3.2) + 18 (UT-0872..UT-0884 proposals & debate, v2.4.0)
++ 2 (UT-0885..UT-0886 Worker informed consent, v2.4.2) + 4 (UT-0887 vote-surface banner,
+v2.5.0) + 6 (UT-0889 endorsement-copy guard: 5 at v2.6.0, +1 jargon-scan assertion at v2.7.0,
+ISS-03) + 15 (UT-0890 `/verify` flag-gate guard, v2.8.0)] + 2 (UT-0871 extended to two more
+seams, v2.10.0) + 18 (UT-0904..UT-0907 candidate web flow, v2.10.0) + 2 (UT-0905 flag-off,
+UT-0906 sign — one each, v2.11.0). **contracts 95 · indexer 16** unchanged. **Total 739.**
+(Through v2.4.3 the web sentence stated 89 while its own addends summed to 91 and `npm test`
+reported 91 — corrected at v2.5.0. At v2.11.0 the same shape recurred: cross-package addends
+spliced into the web sentence — corrected at v2.11.1.)
 Every `UT-####` maps to an `FR`/`NFR`/`RISK` in the RTM (Doc 08) — the **UT-0890** block's
 TC row, **closed at v2.9.0** (§7 item 28 — not item 26, corrected below), is tracked there.
 **(v2.7.0, ISS-01 correction:** the
@@ -1182,7 +1357,7 @@ All of these are recorded in the scan and routed; none is closed by silence.
 |---|---|---|---|---|---|
 | `petitions` | on | on | on | yes | GA v1.0.0 |
 | `party_governance` | on | on | on | yes | GA v1.0.0 |
-| `elections` | on | on | **off** | yes | Phase 3 complete |
+| `elections` | on | on | **off** | yes | Phase 3 complete — **v2.10.0:** the SDK-layer v1 candidate-selection flow (`/candidates/`, §7 item 30) ships dark behind this flag; the on-chain Elections contract the DES name is still Phase 3 |
 | `recall` | on | on | **off** | yes | Phase 3 complete |
 | `maci_voting` | on | **off** | **off** | yes | Phase 3 — becomes mandatory |
 | `private_endorsement` | on | off | off | yes | Phase 4 |
@@ -1228,10 +1403,15 @@ on-chain-relevant.
    and written in the v1.1.0 SEC-C03 fix); compiling them needs the `circom` binary, which is
    a Phase-2 CI job. Nothing in this drop claims a proof has been verified.
 3. **The fork path must stay disabled** until C-05 is fixed (§5.3).
-4. **Elections, Recall, Treasury and the MACI adapter are not implemented.** They are Phase-3
-   scope, and their flags are off in every environment above dev. The `Governor` already
-   refuses the public-tally path when `maci_voting` is on, so the switchover cannot leave both
-   paths open.
+4. **The on-chain Elections contract, Recall, Treasury and the MACI adapter are not
+   implemented.** They are Phase-3 scope, and their flags are off in prod. The `Governor`
+   already refuses the public-tally path when `maci_voting` is on, so the switchover cannot
+   leave both paths open. **(v2.10.0)** The **SDK-layer v1 candidate-selection flow IS
+   implemented** behind `elections` (item 30) — self-nomination, the consent crossing, the
+   three-debate gate, feedback scoring and the post-debate member vote through IBallotService.
+   What remains Phase 3 is the on-chain `Elections` contract that DES-027/066/067/076 name as
+   the component, and the office election ballot itself. "Elections not implemented" was true
+   at v2.9.0 and is no longer the whole truth.
 5. **`Party.growthSamples` trims by array shift** and `surgeActive` is O(n²) over the
    512-sample bound, on a path that `join` and `leave` both take. A ring buffer and a cached
    verdict are required before mainnet scale (scan finding H-02).
@@ -1298,6 +1478,13 @@ on-chain-relevant.
     English's two, so the packet renders each template at 1/2/3/11; and `UT-0889`/`TC-3573`
     guards the Arabic landing copy by **absence only** — it proves the retired phrasing is gone,
     not that the three required facts are present.
+    **(v2.10.0)** 66 new `candidates.*` strings and `nav.candidates` are added in `ar.ts` as
+    **engineer drafts**, headed by an ARABIC-I18N marker that UT-0907 asserts is present. They
+    include the FR-038 consent facts and the FR-131(b) feedback-visibility line — copy where a
+    mistranslation is a safety defect, not polish, on the same footing as the banner strings
+    above. The native-speaker packet (artifacts/status/ARABIC-NATIVE-REVIEW-2026-09-20.md, 253
+    leaves) predates these and **needs regenerating** to cover them; running
+    `pair2.mjs` again is the mechanical step. **Not claimed reviewed.** Still human-gated.
 18. **PrivacyStatus not rendered in the party-creation demo flow.** The petitions/new page demo
     has no authenticated session; DES-094 clause 1 would return null. Rendering PrivacyStatus
     without a session would be dishonest (it would imply a session-backed guarantee that does not
@@ -1358,6 +1545,10 @@ on-chain-relevant.
     exercises — the same class of gap ISS-C2-01 found. Extending UT-0871 to the proposals
     surfaces is owed (it is also the standing ISS-C3-01 backlog item for
     `PartyCreationService`).
+    **~~23 OWED~~ — CLOSED (v2.10.0).** UT-0871 is parametrised over every store seam —
+    IPartyStore, IProposalStore and ICandidateStore — and asserts set equality both ways
+    between each JSDoc typedef and its `.d.ts` interface AND class. The proposals shim, never
+    guarded until now, matched on the first run. The standing ISS-C3-01 item is discharged.
 24. **FR-092's public-reconstruction half is not built.** `decisionTrail()` is complete and
     append-only, but it lives in the application store. FR-092 requires the trail be
     "reconstructable end-to-end by any third party from public data alone", which needs the
@@ -1506,6 +1697,21 @@ on-chain-relevant.
     enrolment/verification copy question (`home.steps[0].body`, `home.promises[3]`) is a
     **separate, not-yet-ruled** question (DECISIONS §7.1, tracked Doc 02 §13 (j)) and is
     untouched by this version.
+    **(v2.10.0) ISS-05(i) RESOLVED IN CODE — OPEN-27 implemented.** Doc 03 v2.14.1 §10.12.3
+    clause 10 ruled both `anon` strings non-compliant under FR-131 clause (e) and specified the
+    fix; this drop implements it verbatim: title `"Open tier"`; subtitle selected by the
+    explicit `anonContext` prop over `'browse' | 'join' | 'endorse'`; fail-honest default for
+    absent/unrecognised/malformed context; context never inferred; `aria-label` carries the
+    selected title. **The green test that pinned the non-compliant string is flipped**
+    (UT-0750's anon `it`) and **UT-0903** guards clause 10 in the four-path pattern, including
+    the banned-word scan over title, subtitle and aria-label. `packages/ui/test/
+    PrivacyStatus.test.tsx:32` no longer asserts `'Anonymous'`. **Still owed before first
+    mount (clause 10's render trigger, tracked as OPEN-28):** clause 8's data-practices
+    affordance; a host screen that supplies a context; and **clause 10(d)'s Arabic mirrors —
+    the component has NO locale input at all today (all three states are English constants),
+    so the ar strings are owed as a component change, not an i18n key** (item 31). The
+    component is still mounted on no shipped surface; `/candidates/` deliberately does not
+    mount it (no authenticated session — item 18's reason).
 27. **`apps/web/tsconfig.tsbuildinfo` hygiene (ISS-C2-02,
     `06-coding-and-ut-v2.5.1-technical-cycle2.md`) — RESOLVED, recorded here rather than only
     in the change history log.** The v2.5.1 ISS-04 rework reverted the file and kept it out of
@@ -1566,6 +1772,57 @@ on-chain-relevant.
     the re-check command leaves `git status` clean and no tracked file changes, so the duty
     this item names remains, in the sense that matters to a reader, a documents-and-figures-only
     action.
+
+30. **Candidate selection (v1) is built at the SDK layer and does not close a single RTM
+    row — stated before anyone reads the drop as closures.** What exists: the full
+    nominate → consent → endorse → three debates → post-debate vote → published flow across
+    protocol, sdk and web (change history, v2.10.0), guarded by UT-0891..UT-0907. What keeps
+    every candidate row OPEN, in the RTM's own terms: **(a)** DES-027, DES-066, DES-067 and
+    DES-076 name the **on-chain Elections contract** as the component, and this drop is the SDK
+    conventional backing — the same posture under which FR-122/123/131/132 stayed
+    **G-PHASE3**; **(b)** both counting gates (CANDIDACY, BINDING_VOTE) run through the stub
+    verifier, `IS_INSECURE_MOCK=true`, CON-015 uncleared; **(c)** **FR-081 and FR-093 have NO
+    DES** (Doc 08 G-TRACE) — FR-081's substance is the same code path as FR-036/067 and is
+    built; FR-093's question phase is **not built** and is out of this drop's fence. Closing
+    any of these rows needs the **architect** to amend the DES so the SDK backing is the
+    Definition-A (v1) design (as DES-095/096 did for eligibility and ballots) and to mint DES
+    for FR-081/FR-093 — a design decision, not an engineering one; routed. **Honest
+    limitations of what IS built:** (i) **v1 residency is self-declared** — no attestation
+    exists; `nominate()` checks the declared region is within the party jurisdiction and the
+    office region, and nothing more; real residency is DES-007/v2. (ii) **Feedback direction
+    is visible to the operator's database** (FR-131(b)) — the caster is stored only as a
+    nullifier so a second vote can be refused, and no read returns it; unlinkability arrives
+    with the v2 nullifier (DES-066's annotation). The web surface states this. (iii) **Two
+    constants need approver ratification** — NOMINATION_ENDORSEMENTS_MIN = 5 (Flag:
+    **NOMINATION-MIN-01**; no published figure anywhere in Doc 02/03) and
+    NOMINATION_MATURATION_SECONDS = 30 days (Flag: **MATURATION-01**; Doc 02 OI-08 records the
+    maturation period as "published but unset"; TIER_RULES sets tenure per DECISION tier only;
+    FR-068's "at least one month" is the nearest published figure). (iv) **Demo controls act
+    for the visitor** where the real product has another actor act — enumerated in full
+    (v2.11.0, ISS-L2): "Record an endorsement from a neighbour (demo)" (a neighbour endorses);
+    "Mark attended / Mark absent (demo)" (the debate host attests); "Schedule the three debates"
+    and "Open the member vote" (a scheduler runs the published timetable); "Close the vote and
+    decide (demo)" (the timetable closes it). Each is labelled or disclosed at the control, the
+    section and the page, the same class item 25 records for proposals. (v) The post-debate
+    vote uses `ConventionalBallotService` per (candidate, election) — last-ballot-counts and a
+    receipt that includes the choice, both the honest v1 tally properties the banner discloses.
+    (vi) The office election ballot itself (FR-039 beyond timetable + candidate-set lock),
+    FR-093's question phase, IPFS content storage and anything on-chain are **not built**.
+    (vii) `officeHolder` is recorded for FR-083 and is unreachable from nomination and
+    publication (UT-0899 spy, which runs through `closePostDebateVote()` — v2.11.0 ISS-02) —
+    incumbency confers nothing because nothing can read it. (viii) **Only the candidate can
+    consent or withdraw** (v2.11.0, ISS-01 High): both methods take the member and refuse
+    anyone else with `NOT_YOUR_CANDIDACY` before any read or write. The v2.10.0 drop lacked
+    this — a caller holding a candidacy id could have published another member's legal name
+    or destroyed their disclosures. Unreachable from the shipped surface (`elections` off in
+    prod; the component passes only the visitor's own id; in-memory store), which is why it was
+    High and not Critical — but it was a real hole in the one-way door and it is closed.
+31. **PrivacyStatus has no locale input; clause 10(d)'s Arabic mirrors are owed as a
+    component change (pre-mount).** All three states' copy are English constants; the `ver`
+    and `pub` states have always been so. Clause 10(d) requires `ar` mirrors of the four
+    `anon` strings to pass the human native-speaker review before first mount. That needs a
+    locale (or strings) input on the component — a design touch for DES-094, not an i18n key —
+    and is one of OPEN-28's five render conditions. Nothing renders today.
 
 ## 8. Commit and branch conventions
 

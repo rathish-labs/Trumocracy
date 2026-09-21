@@ -30,6 +30,7 @@ export const en = {
     parties: 'Parties',
     startAParty: 'Start a party',
     verify: 'Prove you are a real person',
+    candidates: 'Stand for office',
   },
   home: {
     title: 'Start a political party. Or join one.',
@@ -410,6 +411,131 @@ export const en = {
     choiceAgainst: 'No',
     choiceAbstain: 'Take part, but do not pick a side',
     submit: 'Send my vote',
+  },
+  // ─── Candidate selection (FR-036/037/038, FR-065, FR-066, FR-067, FR-081, FR-085) ───
+  // Every string here is v1-accurate: it describes what this version does, not the
+  // design target. No FR-131 banned word; no DES-085 jargon; Grade-8 (NFR-023).
+  candidates: {
+    title: 'Stand for office',
+    lead:
+      'Any member who is counted can stand for an office where they live. Nobody approves it. ' +
+      'Three debates and a member vote decide who goes on the ballot. A sitting office-holder gets ' +
+      'no shortcut.',
+    // The race (FR-039 — timetable published before opening, fixed after)
+    raceTitle: (office: string) => `The race for ${office}`,
+    raceRegion: (region: string) => `Region: ${region}`,
+    timetableTitle: 'The timetable, fixed when the race opened',
+    nominationsClose: (when: string) => `Nominations close: ${when}`,
+    ballotLocks: (when: string) => `The ballot locks: ${when}`,
+    timetableFixed: 'Nobody can move these dates now that the race is open.',
+    // Standing (FR-036, FR-081, FR-123 CANDIDACY)
+    standTitle: 'Stand for this office',
+    standLead: 'You can stand only where you live. Say where that is.',
+    residencyField: 'Where you live (region code)',
+    residencyHelp:
+      'This version takes your word for it. A real check of where you live is planned; it is not ' +
+      'built yet.',
+    legalNameField: 'Your legal name, as it will appear if you go public',
+    legalNameHelp:
+      'This is kept apart from the public record until you give your consent. If you withdraw ' +
+      'before nominations close, it is destroyed.',
+    standAction: 'Put my name forward',
+    stood: 'Your name is in. Nothing is public yet.',
+    outOfScope: 'You can stand only where you live. That region is not inside the office region.',
+    alreadyStanding: 'You are already standing in this race.',
+    windowClosed: 'Nominations have closed for this race.',
+    notMatured: 'You joined too recently to stand. Governance rights start after the waiting period.',
+    // The consent crossing (FR-037, FR-038, FR-085) — two steps, like the Worker declaration.
+    // Step 1 must not understate what step 2 asks the member to accept.
+    consentGateTitle: 'Going public is the one-way door',
+    consentGateBody:
+      'To go on to the debates, your candidacy has to become public, and your legal name with it. ' +
+      'This is your choice and nobody makes it for you. Read what it means before you decide.',
+    consentGateAction: 'Show me what I am agreeing to',
+    consentTitle: 'Before you go public',
+    // The three FR-038 facts. None may be softened.
+    consentIdentityPublic:
+      'Your legal name becomes public. Members, and anyone else, can see that you are standing.',
+    consentIrreversible:
+      'This cannot be undone for the whole campaign and, if you win, for the whole term.',
+    consentWithdrawOnly:
+      'The only way back is to withdraw before the ballot locks. If you withdraw before nominations ' +
+      'close, what you submitted is destroyed. After that, your consent stands.',
+    consentNoApproval: 'Nobody reviews this. When you confirm, it is done.',
+    consentConfirm: 'I understand — make my candidacy public',
+    consentCancel: 'Not now',
+    consented: 'Your candidacy is public. The debates can now be scheduled.',
+    // Withdrawal (FR-036, FR-085)
+    withdrawAction: 'Withdraw my candidacy',
+    withdrawnDestroyed: 'You have withdrawn. What you submitted has been destroyed.',
+    withdrawnKept:
+      'You have withdrawn. Your consent stands for the term, so what you submitted is kept on record.',
+    // Endorsements (FR-036)
+    endorsementsTitle: 'Local backing',
+    endorsements: (n: number, required: number) =>
+      `${n} of ${required} endorsements from members who live here`,
+    endorseDemoAction: 'Record an endorsement from a neighbour (demo)',
+    endorseDemoNote:
+      'In this demo a neighbour endorses when you press the button. In the real product each ' +
+      'neighbour presses their own.',
+    // Debates (FR-066)
+    debatesTitle: 'Three debates, then the members decide',
+    debatesLead:
+      'Every candidate faces three debates: local conditions, local problems, and the work the office ' +
+      'needs. Missing one goes on the record, and the vote does not open until all three are done.',
+    topicNames: {
+      LOCAL_CONDITIONS: 'Local conditions',
+      LOCAL_PROBLEMS: 'Local problems',
+      WORK_REQUIRED: 'The work the office needs',
+    },
+    scheduleDebatesAction: 'Schedule the three debates',
+    debateNotHeld: 'Not held yet',
+    debateAttended: 'Attended',
+    debateAbsent: 'Did not attend — on the record',
+    attendDemoAction: 'Mark attended (demo)',
+    absentDemoAction: 'Mark absent (demo)',
+    debatesDemoNote:
+      'In this demo you record attendance yourself. In the real product the debate host attests it.',
+    debatesComplete: 'All three debates are done. The member vote can open.',
+    // Feedback (FR-065, ADR-015)
+    feedbackTitle: 'What members think',
+    feedbackLead:
+      'Each member gives one signal per candidate. A thumbs-up adds three; a thumbs-down takes one ' +
+      'away. Only the total is shown.',
+    feedbackScore: (score: number) => `Score: ${score}`,
+    feedbackCounts: (up: number, down: number) => `${up} up · ${down} down`,
+    upvote: 'Thumbs up',
+    downvote: 'Thumbs down',
+    feedbackGiven: 'Your signal is counted. You cannot change it.',
+    // FR-131(b): the v1 truth about who can see the direction of a feedback signal.
+    feedbackVisibility:
+      'In this version our own records can see which way you signalled. Only the total is ever ' +
+      'published.',
+    // The post-debate member vote (FR-067) — a binding vote; the FR-131 notice precedes it.
+    voteTitle: 'Is this candidate suitable?',
+    voteLead: 'Only candidates with more “yes” than “no” go on the ballot. A tie does not.',
+    voteOpenAction: 'Open the member vote',
+    voteSuitable: 'Yes, suitable',
+    voteNotSuitable: 'No, not suitable',
+    voteCast: 'Your vote is in.',
+    voteCloseAction: 'Close the vote and decide (demo)',
+    votePublished: 'On the ballot: the members said yes.',
+    voteNotAdvanced: 'Not on the ballot: the members did not say yes.',
+    voteNotOpen: 'The vote is not open yet.',
+    // Incumbency (FR-067, BR-013)
+    incumbentNote: (who: string) =>
+      `${who} holds this office now. That gives them nothing here: the same three debates and the same vote.`,
+    // The ballot's candidate set (FR-039, FR-067)
+    ballotTitle: 'Who is on the ballot',
+    ballotEmpty: 'Nobody yet. A name goes here only after the members vote yes.',
+    // The record (FR-054, FR-092, FR-107)
+    trailTitle: 'The record',
+    trailNote:
+      'Every step is written down and never edited. What you submitted before going public is never ' +
+      'in it.',
+    demoNote:
+      'This is a demo. The stores are in memory, the identity check is a stub, and every control ' +
+      'acts for you.',
   },
   vote: {
     confirmTitle: 'Your vote has been accepted',

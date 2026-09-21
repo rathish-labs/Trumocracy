@@ -163,7 +163,29 @@ export interface PrivacyStatusProps {
    * a data-practices disclosure link in non-vote contexts (Doc 03 §10.12.3 clause 8).
    */
   backingProperties?: BackingProperties;
+  /**
+   * Render context for the `anon` state (Doc 03 §10.12.3 clause 10(b), v2.14.0 — OPEN-27).
+   *
+   * The v1 `anon` subtitle is selected by an EXPLICIT context over the enumerated set
+   * `'browse' | 'join' | 'endorse'` — the same three contexts clause 8 enumerates. There is
+   * no single static subtitle that is honest in all three: "not made public" is true when
+   * browsing and joining and FALSE when endorsing, because petition endorsement is public
+   * by design (Doc 14 §2.2).
+   *
+   * Clause 10(c): absent, unrecognised or malformed → the fail-honest default, which claims
+   * nothing about publication and is therefore true in every context. The component MUST
+   * NOT infer a context from the route, the referrer or any heuristic; a silently-wrong
+   * context is the clause-(e) breach the default exists to prevent. Has no effect when
+   * state is "ver" or "pub".
+   */
+  anonContext?: AnonContext;
 }
+
+/**
+ * The enumerated `anon` render contexts — clause 10(b) / clause 8, deliberately one list.
+ * Screen 1.2 browse · screen 1.6 join · screen 2.3 endorse.
+ */
+export type AnonContext = 'browse' | 'join' | 'endorse';
 
 // ─── ver-state subtitle constants (clause 7, Doc 03 §10.12.3 v2.7.1 backing-aware sub-table)
 
@@ -211,6 +233,43 @@ const VER_TITLE_V1 = 'Verified' as const;
  */
 const VER_TITLE_V2 = 'Verified — private' as const;
 
+// ─── anon-state copy — context-selected by Doc 03 §10.12.3 clause 10 (v2.14.0, OPEN-27) ─
+
+/**
+ * v1 `anon` TITLE — one string, all contexts (clause 10(a)).
+ *
+ * Names the participation tier and carries no FR-131 banned word and no claim of any kind
+ * about linkability or publication, so the clause-(e) ordinary-reader test has nothing to
+ * catch. It is Doc 02's own term (§4.41, FR-122). The superseded "Anonymous" was ruled
+ * non-compliant at Doc 03 v2.14.0: clause (e) reaches joining and endorsing, and "Anonymous"
+ * describes a public-by-design act as hidden.
+ */
+const ANON_TITLE_V1 = 'Open tier' as const;
+
+/**
+ * v1 `anon` SUBTITLES by context (clause 10(b)) — normative and verbatim. Each follows
+ * clause (e)'s approved pattern: state what is NOT published, and separately, in the same
+ * string, what the platform's own records CAN see. The `endorse` string asserts NO
+ * non-publication, because endorsing is public on purpose.
+ */
+const ANON_SUBTITLE_BY_CONTEXT: Readonly<Record<AnonContext, string>> = {
+  browse:  'What you do here is not made public. Our own records can link it to your account.',
+  join:    'Your membership is not made public. Our own records can link it to your account.',
+  endorse: 'Backing a petition is public, on purpose. Our own records link it to your account.',
+} as const;
+
+/**
+ * Fail-honest default (clause 10(c)) — the claim-least string, true in every context,
+ * rendered whenever `anonContext` is absent, unrecognised or malformed. Mirrors clauses 7
+ * and 9 exactly: absence of the selecting input falls back to the weaker claim; the
+ * stronger claim is never assumed.
+ */
+const ANON_SUBTITLE_DEFAULT = 'Our own records can link what you do here to your account.' as const;
+
+/** Type guard: only a member of the enumerated set selects a context-specific subtitle. */
+const isAnonContext = (v: unknown): v is AnonContext =>
+  v === 'browse' || v === 'join' || v === 'endorse';
+
 // ─── State configuration (verbatim from Doc 03 §10.12.3 table) ───────────────────
 
 type StateConfig = {
@@ -248,8 +307,12 @@ const STATE_CONFIG: Readonly<Record<PrivacyState, StateConfig>> = {
     background: '#ECEEF5',
     textColor:  '#41496b',
     cssClass:   'privacy anon',
-    title:      'Anonymous',
-    subtitle:   'Nothing you do here is linked to you',
+    // Clause 10: the title is ANON_TITLE_V1 in every context; the subtitle stored here is
+    // the clause-10(c) FAIL-HONEST DEFAULT. The component overrides it per anonContext.
+    // The superseded pair ("Anonymous" / "Nothing you do here is linked to you") MUST NOT
+    // render in a Definition-A (v1) deployment — Doc 03 §10.12.3 v2.14.0, OPEN-27.
+    title:      ANON_TITLE_V1,
+    subtitle:   ANON_SUBTITLE_DEFAULT,
   },
   ver: {
     dotColor:   '#2C7A5B', // var(--green)
@@ -293,7 +356,7 @@ const STATE_CONFIG: Readonly<Record<PrivacyState, StateConfig>> = {
  * // v2 ZK backing — pass getProperties() directly:
  * return <PrivacyStatus state="ver" selfView={selfView} backingProperties={verifier.getProperties()} />;
  */
-export function PrivacyStatus({ state, selfView, backingProperties }: PrivacyStatusProps): ReactElement | null {
+export function PrivacyStatus({ state, selfView, backingProperties, anonContext }: PrivacyStatusProps): ReactElement | null {
   // Clause 1 — runtime guard: self-view only.
   // The component returns null when the selfView contract is not satisfied, regardless of
   // what TypeScript's type system allows. This is the fail-closed rendering rule.
@@ -313,10 +376,17 @@ export function PrivacyStatus({ state, selfView, backingProperties }: PrivacySta
   // `unlinkable` is a PROXY for "no identity at rest" — see proxy annotation in JSDoc above.
   // Any future backing declaring unlinkable: true MUST satisfy the same guarantee by design
   // review. Doc 03 §10.12.3 clause 7, v2.7.1 ISS-02.
+  // ─── Clause 10 — context-selected subtitle for `anon` state (v2.14.0, OPEN-27) ────
+  //
+  // Selected by the EXPLICIT anonContext input, never inferred. An unrecognised or absent
+  // value falls back to the claim-least default (clause 10(c)) — the same fail-honest
+  // discipline as clauses 7 and 9: the stronger claim is never assumed.
   const subtitle: string =
     state === 'ver' && backingProperties?.unlinkable === true
       ? VER_SUBTITLE_V2
-      : cfg.subtitle;
+      : state === 'anon'
+        ? (isAnonContext(anonContext) ? ANON_SUBTITLE_BY_CONTEXT[anonContext] : ANON_SUBTITLE_DEFAULT)
+        : cfg.subtitle;
 
   // The title follows the same rule (FR-131; Doc 09 REL-LIM-18 pre-mount blocker): the word
   // "private" renders only against a backing that has declared it true.

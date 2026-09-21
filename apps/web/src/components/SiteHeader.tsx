@@ -19,6 +19,8 @@ export function SiteHeader() {
   // /verify is flag-gated off in the public build (DECISIONS-2026-09-08-VERIFY-PAGE.md §5.1):
   // the nav must not point a citizen at a route that only shows an honesty placeholder there.
   const enrolmentUiOn = useFlag(FLAG.ENROLMENT_UI);
+  // Candidate selection ships dark behind the elections flag (dev/staging on; prod off).
+  const electionsOn = useFlag(FLAG.ELECTIONS);
 
   return (
     <header className="site-header">
@@ -38,6 +40,11 @@ export function SiteHeader() {
           {enrolmentUiOn && (
             <li>
               <Link href="/verify/">{t.nav.verify}</Link>
+            </li>
+          )}
+          {electionsOn && (
+            <li>
+              <Link href="/candidates/">{t.nav.candidates}</Link>
             </li>
           )}
         </ul>

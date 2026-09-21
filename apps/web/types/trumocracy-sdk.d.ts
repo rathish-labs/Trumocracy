@@ -378,4 +378,174 @@ declare module '@trumocracy/sdk' {
     getProperties(): EligibilityProperties;
     IS_INSECURE_MOCK(): boolean;
   }
+
+  // ─── IBallotService seam (DES-096, ADR-024) ──────────────────────────────────
+
+  export interface BallotReceipt {
+    electionId: string;
+    messageHash: string;
+    timestamp: string;
+    choice?: string;
+    memberId?: string;
+  }
+  export interface TallyProperties {
+    receiptFree: boolean;
+    coercionOverride: boolean;
+    zeroKnowledge: boolean;
+    publiclyVerifiable: boolean;
+  }
+  export interface TallyResult {
+    electionId: string;
+    result: Record<string, number>;
+    resultHash: string;
+    evidence: string;
+    publicationPath: string;
+    verifiabilityProps: TallyProperties;
+  }
+  /** v1 conventional ballot backing. IS_INSECURE_MOCK() delegates to the eligibility verifier. */
+  export class ConventionalBallotService {
+    constructor(deps: { eligibilityVerifier: ConventionalEligibilityVerifier });
+    castBallot(electionId: string, choice: string, memberId: string, eligibilityRef: EligibilityResult): Promise<BallotReceipt>;
+    changeBallot(electionId: string, newChoice: string, memberId: string): Promise<BallotReceipt>;
+    computeTally(electionId: string): Promise<TallyResult>;
+    getTallyProperties(): TallyProperties;
+    IS_INSECURE_MOCK(): boolean;
+  }
+
+  // ─── Candidate selection (DES-027/028/066/067) ───────────────────────────────
+
+  export interface ICandidateStore {
+    IS_INSECURE_MOCK(): boolean;
+    saveElection(election: object): string;
+    findElectionById(id: string): object | null;
+    updateElection(electionId: string, patch: object): object;
+    saveCandidacy(candidacy: object): string;
+    findCandidacyById(id: string): object | null;
+    findCandidaciesByElection(electionId: string): object[];
+    updateCandidacy(candidacyId: string, patch: object): object;
+    destroyDisclosures(candidacyId: string): void;
+    hasEndorsed(candidacyId: string, endorser: string): boolean;
+    recordEndorsement(candidacyId: string, endorser: string): void;
+    countEndorsements(candidacyId: string): number;
+    upsertDebate(candidacyId: string, debate: object): void;
+    findDebates(candidacyId: string): object[];
+    hasGivenFeedback(candidacyId: string, member: string): boolean;
+    recordFeedback(candidacyId: string, member: string, feedback: string): void;
+    feedbackTally(candidacyId: string): Record<string, number>;
+    recordOfficeHolder(officeId: string, member: string): void;
+    officeHolder(officeId: string): string | null;
+    appendTrailEvent(event: object): void;
+    getTrail(candidacyId: string): object[];
+  }
+
+  /** IS_INSECURE_MOCK=true; blocked past devnet. Postgres backing is later wiring. */
+  export class InMemoryCandidateStore implements ICandidateStore {
+    IS_INSECURE_MOCK(): true;
+    saveElection(election: object): string;
+    findElectionById(id: string): object | null;
+    updateElection(electionId: string, patch: object): object;
+    saveCandidacy(candidacy: object): string;
+    findCandidacyById(id: string): object | null;
+    findCandidaciesByElection(electionId: string): object[];
+    updateCandidacy(candidacyId: string, patch: object): object;
+    destroyDisclosures(candidacyId: string): void;
+    hasEndorsed(candidacyId: string, endorser: string): boolean;
+    recordEndorsement(candidacyId: string, endorser: string): void;
+    countEndorsements(candidacyId: string): number;
+    upsertDebate(candidacyId: string, debate: object): void;
+    findDebates(candidacyId: string): object[];
+    hasGivenFeedback(candidacyId: string, member: string): boolean;
+    recordFeedback(candidacyId: string, member: string, feedback: string): void;
+    feedbackTally(candidacyId: string): Record<string, number>;
+    recordOfficeHolder(officeId: string, member: string): void;
+    officeHolder(officeId: string): string | null;
+    appendTrailEvent(event: object): void;
+    getTrail(candidacyId: string): object[];
+  }
+
+  export interface ElectionRecord {
+    id: string;
+    partyId: string;
+    officeId: string;
+    officeRegion: string;
+    openedAt: number;
+    nominationClosesAt: number;
+    ballotLocksAt: number;
+    locked: boolean;
+    lockedAt?: number;
+  }
+  export interface DebateRecord {
+    topic: string;
+    scheduledAt: number | null;
+    attended: boolean | null;
+    contentRef: string | null;
+    heldAt?: number;
+  }
+  export interface FeedbackAggregate {
+    score: number;
+    upvotes: number;
+    downvotes: number;
+  }
+  /** One candidacy as the public sees it — member and disclosures only after consent (FR-083). */
+  export interface CandidacyView {
+    candidacyId: string;
+    electionId: string;
+    member: string | null;
+    stage: string;
+    residencyRegion: string;
+    nominatedAt: number;
+    consentRecordedAt: number | null;
+    endorsements: number;
+    endorsementsRequired: number;
+    debates: DebateRecord[];
+    feedback: FeedbackAggregate;
+    disclosures: Record<string, unknown> | null;
+  }
+  export type TrailEvent = Record<string, unknown> & { candidacyId: string; type: string; at: number; seq: number };
+
+  /**
+   * The v1 candidate-selection flow (FR-036/037/038/065/066/067/081/085).
+   *
+   * Holds NO verifier and NO ballot service: reads and the consent step structurally
+   * cannot reach a seam. nominate()/castFeedback()/castPostDebateVote() receive the
+   * verifier per call; the post-debate vote is cast through the ballot service per call.
+   */
+  export class CandidateService {
+    constructor(store: ICandidateStore, membership: unknown, clock?: () => number);
+    IS_INSECURE_MOCK(): boolean;
+    openElection(
+      partyId: string,
+      timetable: { officeId: string; officeRegion: string; nominationClosesAt: number; ballotLocksAt: number },
+    ): { electionId: string };
+    lockBallot(electionId: string): { electionId: string; locked: true };
+    nominate(
+      electionId: string,
+      memberPseudonym: string,
+      nomination: { residencyRegion: string; disclosures?: Record<string, unknown> },
+      verifier: ConventionalEligibilityVerifier,
+    ): { candidacyId: string; stage: string };
+    endorseNomination(candidacyId: string, endorserPseudonym: string, args: { residencyRegion: string }): { endorsements: number; required: number; met: boolean };
+    recordConsent(candidacyId: string, memberPseudonym: string, acknowledgements: Record<string, boolean>): { stage: string; consentRecordedAt: number };
+    withdraw(candidacyId: string, memberPseudonym: string): { stage: string; disclosuresDestroyed: boolean };
+    scheduleDebates(candidacyId: string, scheduledAt?: Record<string, number>): { stage: string; debates: DebateRecord[] };
+    recordDebate(candidacyId: string, topic: string, record: { attended: boolean; contentRef?: string | null }): { stage: string; complete: boolean; absences: string[] };
+    openPostDebateVote(candidacyId: string): { stage: string; ballotId: string };
+    castPostDebateVote(
+      candidacyId: string,
+      memberPseudonym: string,
+      choice: string,
+      verifier: ConventionalEligibilityVerifier,
+      ballotService: ConventionalBallotService,
+    ): Promise<BallotReceipt>;
+    closePostDebateVote(candidacyId: string, ballotService: ConventionalBallotService): Promise<{ stage: string; tally: Record<string, number>; resultHash: string }>;
+    castFeedback(candidacyId: string, memberPseudonym: string, feedback: string, verifier: ConventionalEligibilityVerifier): FeedbackAggregate;
+    feedbackTally(candidacyId: string): FeedbackAggregate;
+    candidacy(candidacyId: string): CandidacyView;
+    candidacies(electionId: string): CandidacyView[];
+    candidateSet(electionId: string): CandidacyView[];
+    election(electionId: string): ElectionRecord;
+    recordOfficeHolder(officeId: string, memberPseudonym: string): void;
+    officeHolder(officeId: string): string | null;
+    trail(candidacyId: string): TrailEvent[];
+  }
 }
