@@ -33,13 +33,29 @@ Rule:          Reviewer assignment is recorded HERE before dispatch. A role that
 | Document(s) | Mode | Reviewer | Why neutral | Excluded |
 |---|---|---|---|---|
 | Doc 06 v2.8.0 (+ the code drop, incl. the hook wording change) | technical | **tester** (new instance) | Precedent (Doc 06 v2.6.0/v2.7.0); has Bash to run the suite and the audit; the tester is the role that raised the hook-wording evidence and is the natural verifier that the new text routes correctly | engineer (owner); product-owner (chose the remedy) |
-| Doc 02 v2.17.2 | business | **reviewer-qa** (new instance) | Precedent (v2.17.0/v2.17.1) | product-owner (owner); tester (Doc 08 rows) |
+| Doc 02 v2.17.2 **and its cycle-2 successor v2.17.3** | business | **reviewer-qa** (new instance) | Precedent (v2.17.0/v2.17.1) | product-owner (owner); tester (Doc 08 rows) |
 | README / CONTRIBUTING delta | business, FR-131(e)/FR-132(d) discipline | **product-owner** (new instance) — report `artifacts/status/PUBLIC-FILES-REVIEW-2026-09-08-verify.md`, NOT under artifacts/reviews/ | RACI: Accountable for public-facing claims | technical-writer (author) |
 
 - General-purpose agents are never reviewers. Reviewers score and list only. Rework returns to the
   owning role as a new version. Cap 5, then ESCALATE.
 - Note paths are pre-registered by the PM; roles never open `artifacts/memory-index.json`.
 - Other documents blocking mid-session is expected; do not self-appoint.
+
+> **Annotation added 2026-09-20 by the project-manager (Ana-Maria Petrescu), closing Doc 02
+> `ISS-C2-03`.** The Doc 02 row above originally read "Doc 02 v2.17.2" alone. Doc 02 v2.17.3's
+> `Status:` block cites this record for its **cycle-2** reviewer assignment, and the cycle-2
+> review (`02-requirements-srs-v2.17.3-business-cycle2.md` §4, `ISS-C2-03`, Low) correctly found
+> that the claim was **true in fact but unverifiable at the cited source** — this table scoped
+> itself to v2.17.2. The reviewer named the PM route as sufficient on its own: *"alternatively
+> the project-manager extends the assignment record's Doc 02 row to name the cycle-2 reviewer,
+> which makes the citation resolve."* **Recorded now, as the fact's owner:** the PM assigned
+> **reviewer-qa** — the same neutral reviewer as cycle 1 — for **Doc 02 v2.17.3, cycle 2**,
+> dispatched after the v2.17.2 FAIL. The row is widened to say so, so Doc 02's citation now
+> resolves at the document it cites. **Doc 02 is NOT reopened** — opening a governed document to
+> fix a citation whose underlying fact belongs to another role would invert the convention
+> v2.17.3 itself adopted (*"a document records the decision it owns and routes the
+> application; only the applying role's document reports that the application happened"*). Full
+> rationale: `REVIEW-ASSIGNMENT-2026-09-20-DEBT-CLOSURE.md` §"Doc 02 `ISS-C2-03`".
 
 ## Outcomes (recorded by the PM as each loop closed)
 

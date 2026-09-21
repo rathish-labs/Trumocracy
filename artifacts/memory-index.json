@@ -8116,5 +8116,325 @@
       "artifacts/tester-2026-09-08T1930-doc06-review-c2.md"
     ],
     "routed_to": "project-manager"
+  },
+  "tester-2026-09-20T1000-doc07-08-debt.md": {
+    "role": "tester",
+    "date": "2026-09-20",
+    "summary": "Doc 07 v2.9.0 + Doc 08 v2.12.0 anchored specs: TC rows for UT-0890's 15 its, RTM rows, carried Low folded, clean-tree run R-20 (640/640) recorded. Debt-closure session.",
+    "ids": [
+      "UT-0890",
+      "FR-131",
+      "FR-132",
+      "NFR-023",
+      "CON-015",
+      "US-0134"
+    ]
+  },
+  "tester-2026-09-20T1000-doc07-spec.md": {
+    "role": "tester",
+    "date": "2026-09-20",
+    "summary": "Anchored FIND/REPLACE spec taking docs/07-test-cases-suites.md v2.8.1 -> v2.9.0 (In Review): TC rows for UT-0890.",
+    "ids": [
+      "UT-0890"
+    ]
+  },
+  "tester-2026-09-20T1000-doc08-spec.md": {
+    "role": "tester",
+    "date": "2026-09-20",
+    "summary": "Anchored FIND/REPLACE spec taking docs/08-traceability-matrix.md v2.11.3 -> v2.12.0 (In Review): RTM rows for UT-0890's TCs, Last-updated Low folded, run R-20.",
+    "ids": [
+      "UT-0890",
+      "FR-131",
+      "FR-132"
+    ]
+  },
+  "architect-2026-09-20T1000-open27.md": {
+    "role": "architect",
+    "date": "2026-09-20",
+    "summary": "OPEN-27 fresh look: PrivacyStatus anon title and subtitle re-examined against FR-131 clause (e) in Doc 03 section 10.12.3 (the copy authority); outcome recorded in Doc 04 section 13. Doc 03 v2.14.0, Doc 04 v1.7.0.",
+    "ids": [
+      "OPEN-27",
+      "DES-094",
+      "DES-098",
+      "FR-131",
+      "FR-082",
+      "FR-122",
+      "FR-123"
+    ]
+  },
+  "architect-2026-09-20T1000-doc03-spec.md": {
+    "role": "architect",
+    "date": "2026-09-20",
+    "summary": "Anchored FIND/REPLACE spec taking docs/03-architecture-design-sdd.md v2.13.0 -> v2.14.0 (In Review): the OPEN-27 clause-(e) disposition for the anon title and subtitle.",
+    "ids": [
+      "OPEN-27",
+      "DES-094",
+      "FR-131"
+    ]
+  },
+  "architect-2026-09-20T1000-doc04-spec.md": {
+    "role": "architect",
+    "date": "2026-09-20",
+    "summary": "Anchored FIND/REPLACE spec taking docs/04-test-strategy-master-plan.md v1.6.0 -> v1.7.0 (In Review): OPEN-27 outcome recorded, section 0.5 S5 carve-out re-stated to match.",
+    "ids": [
+      "OPEN-27",
+      "FR-131"
+    ]
+  },
+  "technical-writer-2026-09-20T1000-public-files.md": {
+    "role": "technical-writer",
+    "date": "2026-09-20",
+    "summary": "SECURITY.md figure currency (16 of 138 re-verified against Doc 08) plus an anti-staleness maintenance note; and the Arabic native-speaker review packet (human-gated, prepared not closed).",
+    "ids": [
+      "TD-RTM-01",
+      "ARABIC-I18N",
+      "FR-131"
+    ]
+  },
+  "technical-writer-2026-09-20T1000-security-spec.md": {
+    "role": "technical-writer",
+    "date": "2026-09-20",
+    "summary": "Anchored FIND/REPLACE spec for SECURITY.md: Gate-2 figure currency and the Doc 08 maintenance note.",
+    "ids": [
+      "TD-RTM-01"
+    ]
+  },
+  "reviewer-qa-2026-09-20T1300-doc07-08-review.md": {
+    "role": "reviewer-qa",
+    "date": "2026-09-20",
+    "summary": "Neutral technical review (cycle 1) of Doc 07 v2.9.0 and Doc 08 v2.12.0 per REVIEW-ASSIGNMENT-2026-09-20-DEBT-CLOSURE.md.",
+    "ids": [
+      "UT-0890",
+      "FR-131",
+      "FR-132"
+    ]
+  },
+  "tester-2026-09-20T1300-doc03-04-review.md": {
+    "role": "tester",
+    "date": "2026-09-20",
+    "summary": "Neutral technical review (cycle 1) of Doc 03 v2.14.0 and Doc 04 v1.7.0 per REVIEW-ASSIGNMENT-2026-09-20-DEBT-CLOSURE.md.",
+    "ids": [
+      "OPEN-27",
+      "DES-094",
+      "FR-131"
+    ]
+  },
+  "product-owner-2026-09-20T1300-security-review.md": {
+    "role": "product-owner",
+    "date": "2026-09-20",
+    "summary": "Neutral business review of the SECURITY.md delta (public-facing claims; FR-131(e)/FR-132(d) discipline); report at artifacts/status/PUBLIC-FILES-REVIEW-2026-09-20-security-md.md.",
+    "ids": [
+      "FR-131",
+      "FR-132"
+    ]
+  },
+  "engineer-2026-09-20T1600-doc06.md": {
+    "role": "engineer",
+    "date": "2026-09-20",
+    "summary": "Doc 06 v2.9.0: registers what landed this session (section 7 items 17/26/28, section 3, section 5.0) and folds the three carried Lows. No product code written or edited.",
+    "ids": [
+      "UT-0890",
+      "OPEN-27",
+      "ARABIC-I18N"
+    ]
+  },
+  "engineer-2026-09-20T1600-doc06-spec.md": {
+    "role": "engineer",
+    "date": "2026-09-20",
+    "summary": "Anchored FIND/REPLACE spec taking docs/06-coding-and-ut.md v2.8.1 -> v2.9.0 (In Review).",
+    "ids": [
+      "UT-0890",
+      "OPEN-27"
+    ]
+  },
+  "tester-2026-09-20T1800-doc06-review.md": {
+    "role": "tester",
+    "date": "2026-09-20",
+    "summary": "Neutral technical review (cycle 1) of Doc 06 v2.9.0 per REVIEW-ASSIGNMENT-2026-09-20-DEBT-CLOSURE.md.",
+    "ids": [
+      "UT-0890",
+      "OPEN-27"
+    ]
+  },
+  "tester-2026-09-20T1700-doc08-c2-spec.md": {
+    "role": "tester",
+    "date": "2026-09-20",
+    "summary": "Anchored spec taking docs/08-traceability-matrix.md v2.12.0 -> v2.12.1 (In Review), rework cycle 2 of 5 against the reviewer-qa cycle-1 FAIL (92%, 0C/0H/3M/2L).",
+    "ids": [
+      "UT-0890",
+      "FR-132",
+      "NFR-023",
+      "TD-RTM-03"
+    ]
+  },
+  "tester-2026-09-20T1700-doc08-c2.md": {
+    "role": "tester",
+    "date": "2026-09-20",
+    "summary": "Doc 08 v2.12.1 rework cycle 2: FR-132 TC cell corrected to fourteen cases (TC-3586 is NFR-023 evidence), section 9 denominator made single-valued, FR-132 Requirement cell states clause (d). No count or status moves.",
+    "ids": [
+      "FR-132",
+      "NFR-023",
+      "TC-3586",
+      "TD-RTM-02",
+      "TD-RTM-03"
+    ]
+  },
+  "engineer-2026-09-20T1900-doc06.md": {
+    "role": "engineer",
+    "date": "2026-09-20",
+    "summary": "Doc 06 v2.9.0: registers what landed in the debt-closure session and folds the three carried Lows plus the SECURITY.md reviewer's ISS-02 (recurring re-check duty needs an owner in the debt register). No product code.",
+    "ids": [
+      "UT-0890",
+      "OPEN-27",
+      "ARABIC-I18N"
+    ]
+  },
+  "engineer-2026-09-20T1900-doc06-spec.md": {
+    "role": "engineer",
+    "date": "2026-09-20",
+    "summary": "Anchored spec taking docs/06-coding-and-ut.md v2.8.1 -> v2.9.0 (In Review).",
+    "ids": [
+      "UT-0890",
+      "OPEN-27"
+    ]
+  },
+  "tester-2026-09-20T2100-doc06-review.md": {
+    "role": "tester",
+    "date": "2026-09-20",
+    "summary": "Neutral technical review (cycle 1) of Doc 06 v2.9.0 per REVIEW-ASSIGNMENT-2026-09-20-DEBT-CLOSURE.md.",
+    "ids": [
+      "UT-0890",
+      "OPEN-27"
+    ]
+  },
+  "reviewer-qa-2026-09-20T1900-doc08-c2-review.md": {
+    "role": "reviewer-qa",
+    "date": "2026-09-20",
+    "summary": "Neutral technical review (cycle 2) of Doc 08 v2.12.1.",
+    "ids": [
+      "FR-132",
+      "NFR-023",
+      "TC-3586"
+    ]
+  },
+  "architect-2026-09-20T1700-doc03-c2-spec.md": {
+    "role": "architect",
+    "date": "2026-09-20",
+    "summary": "Anchored spec taking docs/03-architecture-design-sdd.md v2.14.0 -> v2.14.1 (In Review), rework cycle 2 of 5: annotate the two live v2.7.1 anon paragraphs; correct the Downstream five-site enumeration to six.",
+    "ids": [
+      "OPEN-27",
+      "DES-094",
+      "FR-131"
+    ]
+  },
+  "architect-2026-09-20T1700-doc04-c2-spec.md": {
+    "role": "architect",
+    "date": "2026-09-20",
+    "summary": "Anchored spec taking docs/04-test-strategy-master-plan.md v1.6.0 -> v1.7.1 (In Review), rework cycle 2 of 5: section 11.2 tooling-register row brought into agreement with S5 rule 4; OPEN-30 section 14 band reconciliation now that Doc 07 v2.9.0 is Approved.",
+    "ids": [
+      "OPEN-27",
+      "OPEN-30",
+      "FR-131"
+    ]
+  },
+  "architect-2026-09-20T1700-doc03-04-c2.md": {
+    "role": "architect",
+    "date": "2026-09-20",
+    "summary": "Rework cycle 2 for Docs 03 and 04 against the tester's cycle-1 FAILs (93% and 94%, sweep-completeness only; the OPEN-27 ruling itself unchanged). OPEN-30 discharged.",
+    "ids": [
+      "OPEN-27",
+      "OPEN-30",
+      "DES-094",
+      "FR-131"
+    ]
+  },
+  "tester-2026-09-20T2000-doc03-04-c2-review.md": {
+    "role": "tester",
+    "date": "2026-09-20",
+    "summary": "Neutral technical review (cycle 2) of Doc 03 v2.14.1 and Doc 04 v1.7.1.",
+    "ids": [
+      "OPEN-27",
+      "OPEN-30",
+      "DES-094"
+    ]
+  },
+  "tester-2026-09-20T2100-doc08-c3-spec.md": {
+    "role": "tester",
+    "date": "2026-09-20",
+    "summary": "Anchored spec taking docs/08-traceability-matrix.md v2.12.1 -> v2.12.2 (In Review), rework cycle 3 of 5: the sixth ISS-01 site, the Source: block line 247.",
+    "ids": [
+      "FR-132",
+      "TC-3586"
+    ]
+  },
+  "tester-2026-09-20T2100-doc08-c3.md": {
+    "role": "tester",
+    "date": "2026-09-20",
+    "summary": "Doc 08 v2.12.2 rework cycle 3: the Source: block's fifteen-case claim corrected to fourteen; the all-five-places claim restated as six. No figure moves.",
+    "ids": [
+      "FR-132",
+      "TC-3586"
+    ]
+  },
+  "reviewer-qa-2026-09-20T2200-doc08-c3-review.md": {
+    "role": "reviewer-qa",
+    "date": "2026-09-20",
+    "summary": "Neutral technical review (cycle 3) of Doc 08 v2.12.2.",
+    "ids": [
+      "FR-132",
+      "TC-3586"
+    ]
+  },
+  "tester-2026-09-20T2300-doc08-c4-spec.md": {
+    "role": "tester",
+    "date": "2026-09-20",
+    "summary": "Anchored spec taking docs/08-traceability-matrix.md v2.12.2 -> v2.12.3 (In Review), rework cycle 4 of 5: the false 'section 6 is not edited at all' claim, the OP-8 section mislabel, and two Lows.",
+    "ids": [
+      "FR-132",
+      "TC-3586"
+    ]
+  },
+  "tester-2026-09-20T2300-doc08-c4.md": {
+    "role": "tester",
+    "date": "2026-09-20",
+    "summary": "Doc 08 v2.12.3 rework cycle 4: section-boundary claim corrected, symmetry-as-cause framing withdrawn, published greps bridged to the current version. No figure moves.",
+    "ids": [
+      "FR-132",
+      "TC-3586"
+    ]
+  },
+  "reviewer-qa-2026-09-21T0000-doc08-c4-review.md": {
+    "role": "reviewer-qa",
+    "date": "2026-09-20",
+    "summary": "Neutral technical review (cycle 4) of Doc 08 v2.12.3.",
+    "ids": [
+      "FR-132",
+      "TC-3586"
+    ]
+  },
+  "technical-writer-2026-09-20T2330-security-pin-spec.md": {
+    "role": "technical-writer",
+    "date": "2026-09-20",
+    "summary": "Anchored spec advancing SECURITY.md's Doc 08 pin v2.11.3 -> v2.12.3 (Approved) under the PUBLIC-FILES-REVIEW ISS-03 condition, and fixing ISS-01's overclaim of what --audit reports.",
+    "ids": [
+      "TD-RTM-01"
+    ]
+  },
+  "technical-writer-2026-09-20T2330-security-pin.md": {
+    "role": "technical-writer",
+    "date": "2026-09-20",
+    "summary": "SECURITY.md pin advance and --audit wording correction, discharging both PM-routed Lows from the 2026-09-20 public-files review.",
+    "ids": [
+      "TD-RTM-01"
+    ]
+  },
+  "product-owner-2026-09-21T0100-security-pin-review.md": {
+    "role": "product-owner",
+    "date": "2026-09-20",
+    "summary": "Neutral business review of the SECURITY.md pin-advance delta; report at artifacts/status/PUBLIC-FILES-REVIEW-2026-09-20-security-md-cycle2.md.",
+    "ids": [
+      "FR-131",
+      "FR-132"
+    ]
   }
 }
