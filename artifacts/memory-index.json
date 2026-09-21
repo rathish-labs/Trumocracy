@@ -8436,5 +8436,76 @@
       "FR-131",
       "FR-132"
     ]
+  },
+  "engineer-2026-09-20T2200-candidate-selection.md": {
+    "role": "engineer",
+    "date": "2026-09-20",
+    "summary": "TRUMO-P02: candidate selection v1 (protocol rules, SDK CandidateService, web /candidates/ surface, en + ar drafts, type shims) + OPEN-27 PrivacyStatus clause-10 fix with the pinned test flipped. Suite 640 -> 736. Doc 06 v2.9.0 -> v2.10.0. Zero RTM rows close; FR-081/FR-093 DES routed to the architect; two constants routed for ratification.",
+    "ids": [
+      "FR-036",
+      "FR-037",
+      "FR-038",
+      "FR-039",
+      "FR-065",
+      "FR-066",
+      "FR-067",
+      "FR-081",
+      "FR-085",
+      "FR-131",
+      "DES-027",
+      "DES-028",
+      "DES-066",
+      "DES-067",
+      "DES-094",
+      "OPEN-27",
+      "OPEN-28",
+      "UT-0891",
+      "UT-0907",
+      "NOMINATION-MIN-01",
+      "MATURATION-01"
+    ]
+  },
+  "tester-2026-09-20T2300-doc06-candidate-review.md": {
+    "role": "tester",
+    "date": "2026-09-20",
+    "summary": "Neutral technical review (cycle 1) of Doc 06 v2.10.0 and the TRUMO-P02 code drop per REVIEW-ASSIGNMENT-2026-09-20-CANDIDATE-SELECTION.md.",
+    "ids": [
+      "FR-036",
+      "FR-065",
+      "FR-066",
+      "FR-067",
+      "FR-131",
+      "OPEN-27",
+      "UT-0891",
+      "UT-0907"
+    ]
+  },
+  "tester-2026-09-21T0100-doc06-candidate-c2-review.md": {
+    "role": "tester",
+    "date": "2026-09-20",
+    "summary": "Neutral technical review (cycle 2) of Doc 06 v2.11.0 and the reworked TRUMO-P02 code drop.",
+    "ids": [
+      "FR-036",
+      "FR-037",
+      "FR-065",
+      "FR-067",
+      "FR-085",
+      "UT-0897",
+      "UT-0899",
+      "UT-0901"
+    ]
+  },
+  "tester-2026-09-21T0300-doc06-candidate-c3-review.md": {
+    "role": "tester",
+    "date": "2026-09-20",
+    "summary": "Neutral technical review (cycle 3) of Doc 06 v2.11.1 and the TRUMO-P02 code drop.",
+    "ids": [
+      "FR-036",
+      "FR-065",
+      "FR-067",
+      "UT-0897",
+      "UT-0899",
+      "UT-0906"
+    ]
   }
 }

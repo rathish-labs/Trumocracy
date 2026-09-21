@@ -62,3 +62,13 @@ export {
   InMemoryProposalStore,
   ProposalService,
 } from './proposals.js';
+
+// ─── Candidate selection (DES-027/028/066/067) ───────────────────────────────
+// ICandidateStore + InMemoryCandidateStore + CandidateService: self-nomination,
+// the consent crossing, the three-debate gate, feedback scoring and the post-debate
+// member vote. Standing is the CANDIDACY counting action (Doc 03 §10.13.2(c)); the
+// post-debate vote is cast through IBallotService. The service holds neither seam.
+export {
+  InMemoryCandidateStore,
+  CandidateService,
+} from './candidates.js';

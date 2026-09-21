@@ -223,4 +223,32 @@ declare module '@trumocracy/protocol' {
 
   /** Normalise a name or emblem for collision detection (FR-010, DES-073). */
   export function normalizeCollisionKey(s?: string | null): string;
+
+  // ─── Candidate selection reference rules (candidates.js; DES-027/028/066/067) ────
+
+  export class CandidateError extends Error {
+    code: string;
+  }
+  export type CandidacyStage = 'NOMINATED' | 'CONSENTED' | 'DEBATING' | 'DEBATES_COMPLETE' | 'VOTE_OPEN' | 'PUBLISHED' | 'NOT_ADVANCED' | 'WITHDRAWN';
+  export const CANDIDACY_STAGE: { readonly [K in CandidacyStage]: K };
+  export function assertCandidacyTransition(from: string, to: string): { valid: true };
+  export type DebateTopic = 'LOCAL_CONDITIONS' | 'LOCAL_PROBLEMS' | 'WORK_REQUIRED';
+  export const DEBATE_TOPIC: { readonly [K in DebateTopic]: K };
+  export const REQUIRED_DEBATE_TOPICS: readonly DebateTopic[];
+  export const DEBATES_PER_CANDIDATE: 3;
+  export function debatesComplete(debates: { topic: string; attended: boolean | null }[]): { complete: boolean; missingTopics: string[]; absences: string[] };
+  export const FEEDBACK: { readonly UPVOTE: 'UPVOTE'; readonly DOWNVOTE: 'DOWNVOTE' };
+  export const FEEDBACK_SCORE: { readonly UPVOTE: 3; readonly DOWNVOTE: -1 };
+  export function feedbackScore(tally: Record<string, number> | undefined): number;
+  export const POST_DEBATE_CHOICE: { readonly SUITABLE: 'SUITABLE'; readonly NOT_SUITABLE: 'NOT_SUITABLE' };
+  export function isNetPositive(tally: Record<string, number> | undefined): boolean;
+  export function inScopeForOffice(args: { residencyRegion: string; officeRegion: string }): boolean;
+  /** RATIFICATION REQUIRED (NOMINATION-MIN-01). */
+  export const NOMINATION_ENDORSEMENTS_MIN: number;
+  /** RATIFICATION REQUIRED (MATURATION-01). */
+  export const NOMINATION_MATURATION_SECONDS: number;
+  export function isMatured(args: { joinedAt: number | null | undefined; now: number; maturationSeconds?: number }): { matured: boolean; tenure: number; required: number };
+  export const CONSENT_ACKNOWLEDGEMENTS: readonly ['identityBecomesPublic', 'irreversibleForTerm', 'revocableOnlyByWithdrawalBeforeLock'];
+  export function validateConsent(acknowledgements: Record<string, unknown> | undefined): { valid: boolean; missing: string[] };
+  export function isWithin(child: string, parent: string, schemeVersion?: number): boolean;
 }

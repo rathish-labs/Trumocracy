@@ -16,7 +16,14 @@
  * pre-mount blocker): "Verified" is the v1 fail-honest default; "Verified — private" renders
  * only when unlinkable: true.
  *
- * Traces: DES-094, DES-095, FR-082..086, FR-124, FR-131, NFR-001, NFR-002, NFR-024.
+ * UT-0903 covers Doc 03 §10.12.3 clause 10 (v2.14.0, OPEN-27) — the context-selected `anon`
+ * copy — in the UT-0759 four-path pattern: context absent / 'browse' / 'join' / 'endorse',
+ * asserting each exact normative string and that no FR-131 banned word appears in the title,
+ * subtitle or aria-label. UT-0750's anon assertion was flipped at the same time: it had
+ * pinned the superseded pair ("Anonymous" / "Nothing you do here is linked to you"), so a
+ * green test guarded a non-compliant string (Doc 06 v2.9.0 §7 item 26).
+ *
+ * Traces: DES-094, DES-095, FR-082..086, FR-124, FR-131 (clause (e)), NFR-001, NFR-002, NFR-024.
  */
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
@@ -27,10 +34,13 @@ import type { SelfViewToken, BackingProperties } from '../src/PrivacyStatus.js';
 const VALID_SELF_VIEW: SelfViewToken = { holder: 'authenticated-self' };
 
 describe('UT-0750 PrivacyStatus renders each state with exact approved copy', () => {
-  it('renders the anon state with the correct title and subtitle', () => {
+  it('renders the anon state with the clause-10 v1 title and, with no context, the fail-honest default subtitle', () => {
+    // Doc 03 §10.12.3 clause 10 (v2.14.0, OPEN-27). The superseded pair MUST NOT render in v1.
     render(<PrivacyStatus state="anon" selfView={VALID_SELF_VIEW} />);
-    expect(screen.getByText('Anonymous')).toBeTruthy();
-    expect(screen.getByText('Nothing you do here is linked to you')).toBeTruthy();
+    expect(screen.getByText('Open tier')).toBeTruthy();
+    expect(screen.getByText('Our own records can link what you do here to your account.')).toBeTruthy();
+    expect(screen.queryByText('Anonymous')).toBeNull();
+    expect(screen.queryByText('Nothing you do here is linked to you')).toBeNull();
   });
 
   it('UT-0751 renders the ver state with the correct title and v1 subtitle when no backingProperties (fail-honest default)', () => {
@@ -235,5 +245,87 @@ describe('UT-0759 PrivacyStatus ver-state title is backing-aware and carries no 
     render(<PrivacyStatus state="ver" selfView={VALID_SELF_VIEW} backingProperties={partialBacking} />);
     expect(screen.getByText('Verified')).toBeTruthy();
     expect(screen.queryByText('Verified — private')).toBeNull();
+  });
+});
+
+describe('UT-0903 PrivacyStatus anon-state copy is context-selected, never inferred, and carries no FR-131 banned word (clause 10, OPEN-27)', () => {
+  /**
+   * Doc 03 §10.12.3 clause 10 (v2.14.0): both superseded `anon` strings FAIL FR-131 clause (e),
+   * which reaches joining and endorsing — and no single static subtitle is honest across the
+   * three clause-8 contexts, because endorsing is public by design. So the subtitle is selected
+   * by an explicit `anonContext`; absent/unrecognised → the claim-least default (clause 10(c)).
+   * Four-path pattern, as UT-0758/UT-0759. Banned-word check covers title, subtitle AND
+   * aria-label, as clause 10(g) requires.
+   * Traces: FR-131 clause (e), DES-094 clause 10, Doc 14 §2.2, OPEN-27/OPEN-28.
+   */
+  const BANNED = /\b(private|anonymous|receipt-free|secure)\b/i;
+  const TITLE = 'Open tier';
+  const DEFAULT = 'Our own records can link what you do here to your account.';
+  const BY_CONTEXT = {
+    browse: 'What you do here is not made public. Our own records can link it to your account.',
+    join: 'Your membership is not made public. Our own records can link it to your account.',
+    endorse: 'Backing a petition is public, on purpose. Our own records link it to your account.',
+  } as const;
+
+  const assertNoBannedWord = () => {
+    const status = screen.getByRole('status');
+    expect(status.textContent ?? '').not.toMatch(BANNED);
+    expect(status.getAttribute('aria-label') ?? '').not.toMatch(BANNED);
+  };
+
+  it('context absent → the v1 title and the fail-honest default; aria-label carries the selected title', () => {
+    render(<PrivacyStatus state="anon" selfView={VALID_SELF_VIEW} />);
+    expect(screen.getByText(TITLE)).toBeTruthy();
+    expect(screen.getByText(DEFAULT)).toBeTruthy();
+    expect(screen.getByRole('status').getAttribute('aria-label')).toBe(TITLE);
+    assertNoBannedWord();
+  });
+
+  it("'browse' → the browse subtitle, verbatim", () => {
+    render(<PrivacyStatus state="anon" selfView={VALID_SELF_VIEW} anonContext="browse" />);
+    expect(screen.getByText(BY_CONTEXT.browse)).toBeTruthy();
+    expect(screen.queryByText(DEFAULT)).toBeNull();
+    assertNoBannedWord();
+  });
+
+  it("'join' → the join subtitle, verbatim — the badge-length form of parties.joinPrivate", () => {
+    render(<PrivacyStatus state="anon" selfView={VALID_SELF_VIEW} anonContext="join" />);
+    expect(screen.getByText(BY_CONTEXT.join)).toBeTruthy();
+    assertNoBannedWord();
+  });
+
+  it("'endorse' → the endorse subtitle, which asserts NO non-publication — endorsing is public by design", () => {
+    render(<PrivacyStatus state="anon" selfView={VALID_SELF_VIEW} anonContext="endorse" />);
+    expect(screen.getByText(BY_CONTEXT.endorse)).toBeTruthy();
+    expect(screen.queryByText(/not made public/)).toBeNull();
+    assertNoBannedWord();
+  });
+
+  it('an unrecognised context is NOT inferred or guessed — it renders the fail-honest default (clause 10(c))', () => {
+    // A future screen that passes a value outside the enumerated set must get the
+    // claim-least string, never a context-specific one chosen for it.
+    render(<PrivacyStatus state="anon" selfView={VALID_SELF_VIEW} anonContext={'vote' as never} />);
+    expect(screen.getByText(DEFAULT)).toBeTruthy();
+    for (const s of Object.values(BY_CONTEXT)) expect(screen.queryByText(s)).toBeNull();
+    assertNoBannedWord();
+  });
+
+  it('the superseded pair never renders in any context', () => {
+    for (const ctx of [undefined, 'browse', 'join', 'endorse'] as const) {
+      const { unmount } = render(<PrivacyStatus state="anon" selfView={VALID_SELF_VIEW} anonContext={ctx} />);
+      expect(screen.queryByText('Anonymous')).toBeNull();
+      expect(screen.queryByText('Nothing you do here is linked to you')).toBeNull();
+      unmount();
+    }
+  });
+
+  it('anonContext has no effect on the ver and pub states', () => {
+    const { unmount } = render(<PrivacyStatus state="ver" selfView={VALID_SELF_VIEW} anonContext="endorse" />);
+    expect(screen.getByText('Verified')).toBeTruthy();
+    expect(screen.queryByText(BY_CONTEXT.endorse)).toBeNull();
+    unmount();
+    render(<PrivacyStatus state="pub" selfView={VALID_SELF_VIEW} anonContext="endorse" />);
+    expect(screen.getByText('Public')).toBeTruthy();
+    expect(screen.queryByText(BY_CONTEXT.endorse)).toBeNull();
   });
 });
