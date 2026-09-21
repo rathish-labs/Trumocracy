@@ -106,13 +106,24 @@ nothing and is more useful than a reader discovering them independently.
 ## Gate 2 (launch readiness): NOT met
 
 This project's own governance requires two human-approved gates before anything ships:
-direction (Gate 1) and launch (Gate 2). **Gate 2 has not been reached.** As of the traceability
-matrix's current approved version, of **138 Must-priority requirement rows, 16 are complete and
-122 remain open**. Independent audits have not started, a rollback drill has not been executed,
-and the MACI committee that would run the private ballot does not exist yet. See
-[Doc 08](docs/08-traceability-matrix.md) and [Doc 09 §0](docs/09-release-notes.md) for the full,
-current accounting — those documents, not this one, are the source of truth for the exact
-figures, and they are updated more often than this file.
+direction (Gate 1) and launch (Gate 2). **Gate 2 has not been reached.** As of
+[Doc 08](docs/08-traceability-matrix.md) **v2.12.3** (Approved), of **138 Must-priority
+requirement rows, 16 are complete and 122 remain open**. Independent audits have not started, a
+rollback drill has not been executed, and the MACI committee that would run the private ballot
+does not exist yet. See Doc 08 and [Doc 09 §0](docs/09-release-notes.md) for the full, current
+accounting — those documents, not this one, are the source of truth for the exact figures, and
+they are updated more often than this file.
+
+**Keeping this figure current.** The 138/16/122 count above is a **derived copy** of Doc 08 §9
+("Gate verdict & sign-off"), copied here by hand rather than generated automatically, so it can
+go silently stale if Doc 08 moves and this file is not updated to match. To re-derive it
+mechanically, run `node hooks/run_gates.cjs --audit`, which reports the Must / COMPLETE / OPEN
+triple read from the RTM's own row-status markers alongside Doc 08 §9's published figure, so a
+reader can see directly whether the two independent signals still agree (`--audit` only prints
+this report — it changes nothing and stops nothing). **Re-check this figure on every Doc 08
+version bump, and before any public release.** Last verified: **2026-09-20**, against **Doc 08
+v2.12.3**, where `node hooks/run_gates.cjs --audit` reported 138 Must rows / 16 COMPLETE / 122
+OPEN, agreeing with Doc 08 §9.
 
 ## Reporting a vulnerability
 
