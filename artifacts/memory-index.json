@@ -8507,5 +8507,196 @@
       "UT-0899",
       "UT-0906"
     ]
+  },
+  "architect-2026-09-21T0100-candidate-des-definition-a.md": {
+    "role": "architect",
+    "date": "2026-09-21",
+    "summary": "TRUMO-P03: DES-027/028/066/067/076 amended to Definition-A (SDK CandidateService + InMemoryCandidateStore behind ICandidateStore; Elections contract deferred v2 behind the same seam); DES-107 (FR-081) and DES-108 (FR-093) minted; NOMINATION-MIN-01 / MATURATION-01 ratified into §10.11. Doc 03 v2.14.1 -> v2.15.0.",
+    "ids": [
+      "FR-036",
+      "FR-037",
+      "FR-038",
+      "FR-039",
+      "FR-065",
+      "FR-066",
+      "FR-067",
+      "FR-081",
+      "FR-085",
+      "FR-093",
+      "DES-027",
+      "DES-028",
+      "DES-066",
+      "DES-067",
+      "DES-076",
+      "DES-107",
+      "DES-108",
+      "Q18"
+    ]
+  },
+  "tester-2026-09-21T0200-doc03-candidate-des-c1-review.md": {
+    "role": "tester",
+    "date": "2026-09-21",
+    "summary": "Neutral technical review (cycle 1) of Doc 03 v2.15.0 — candidate/election DESs made Definition-A.",
+    "ids": [
+      "DES-027",
+      "DES-028",
+      "DES-066",
+      "DES-067",
+      "DES-076",
+      "DES-107",
+      "DES-108"
+    ]
+  },
+  "tester-2026-09-21T0300-doc03-candidate-des-c2-review.md": {
+    "role": "tester",
+    "date": "2026-09-21",
+    "summary": "Neutral technical review (cycle 2) of Doc 03 v2.15.x — candidate/election DESs made Definition-A.",
+    "ids": [
+      "DES-027",
+      "DES-028",
+      "DES-066",
+      "DES-067",
+      "DES-076",
+      "DES-107",
+      "DES-108"
+    ]
+  },
+  "tester-2026-09-21T0500-doc07-doc08-candidate-rows.md": {
+    "role": "tester",
+    "date": "2026-09-21",
+    "summary": "TC rows for UT-0891..UT-0907 (Doc 07 v2.10.0) and the per-row RTM ruling for the candidate/election Must rows after Doc 03 v2.15.0 (Doc 08 v2.13.0).",
+    "ids": [
+      "FR-036",
+      "FR-037",
+      "FR-039",
+      "FR-065",
+      "FR-066",
+      "FR-067",
+      "FR-081",
+      "FR-085",
+      "FR-093",
+      "UT-0891",
+      "UT-0907"
+    ]
+  },
+  "tester-2026-09-21T0700-doc07-doc08-candidate-rework.md": {
+    "role": "tester",
+    "date": "2026-09-21",
+    "summary": "Rework of Doc 07 / Doc 08 after the reviewer-qa cycle-1 verdicts (candidate/election rows).",
+    "ids": [
+      "FR-036",
+      "FR-037",
+      "FR-067",
+      "FR-081",
+      "FR-085"
+    ]
+  },
+  "tester-2026-09-21T0900-doc07-doc08-candidate-rework2.md": {
+    "role": "tester",
+    "date": "2026-09-21",
+    "summary": "Second rework of Doc 07 / Doc 08 after the reviewer-qa cycle-2 verdicts (candidate/election rows).",
+    "ids": [
+      "FR-036",
+      "FR-037",
+      "FR-067",
+      "FR-081",
+      "FR-085"
+    ]
+  },
+  "reviewer-qa-2026-09-21T0600-doc07-candidate-c1-review.md": {
+    "role": "reviewer-qa",
+    "date": "2026-09-21",
+    "summary": "Neutral technical review (cycle 1) of Doc 07 v2.10.0 — TC rows for the candidate-selection UTs.",
+    "ids": [
+      "UT-0891",
+      "UT-0907",
+      "FR-036",
+      "FR-067",
+      "FR-081"
+    ]
+  },
+  "reviewer-qa-2026-09-21T0600-doc08-candidate-c1-review.md": {
+    "role": "reviewer-qa",
+    "date": "2026-09-21",
+    "summary": "Neutral technical review (cycle 1) of Doc 08 v2.13.0 — candidate/election Must rows after Doc 03 v2.15.0.",
+    "ids": [
+      "FR-036",
+      "FR-037",
+      "FR-067",
+      "FR-081",
+      "FR-085"
+    ]
+  },
+  "reviewer-qa-2026-09-21T0800-doc07-candidate-c2-review.md": {
+    "role": "reviewer-qa",
+    "date": "2026-09-21",
+    "summary": "Neutral technical review (cycle 2) of Doc 07 v2.10.x.",
+    "ids": [
+      "UT-0891",
+      "UT-0907"
+    ]
+  },
+  "reviewer-qa-2026-09-21T0800-doc08-candidate-c2-review.md": {
+    "role": "reviewer-qa",
+    "date": "2026-09-21",
+    "summary": "Neutral technical review (cycle 2) of Doc 08 v2.13.x.",
+    "ids": [
+      "FR-036",
+      "FR-037",
+      "FR-067",
+      "FR-081",
+      "FR-085"
+    ]
+  },
+  "reviewer-qa-2026-09-21T1000-doc07-candidate-c3-review.md": {
+    "role": "reviewer-qa",
+    "date": "2026-09-21",
+    "summary": "Neutral technical review (cycle 3) of Doc 07 v2.10.x.",
+    "ids": [
+      "UT-0891",
+      "UT-0907"
+    ]
+  },
+  "reviewer-qa-2026-09-21T1000-doc08-candidate-c3-review.md": {
+    "role": "reviewer-qa",
+    "date": "2026-09-21",
+    "summary": "Neutral technical review (cycle 3) of Doc 08 v2.13.x.",
+    "ids": [
+      "FR-036",
+      "FR-037",
+      "FR-067",
+      "FR-081",
+      "FR-085"
+    ]
+  },
+  "tester-2026-09-21T1100-doc08-candidate-rework3.md": {
+    "role": "tester",
+    "date": "2026-09-21",
+    "summary": "Third rework: Doc 08 v2.14.0 → v2.15.0 after the reviewer-qa cycle-2 verdict (Source-block parenthesis; ISS-01 sweep count).",
+    "ids": [
+      "FR-036",
+      "FR-037",
+      "FR-085"
+    ]
+  },
+  "tester-2026-09-21T1300-doc07-doc08-candidate-rework4.md": {
+    "role": "tester",
+    "date": "2026-09-21",
+    "summary": "Fourth rework of Doc 07 / Doc 08 if a cycle-3 verdict fails.",
+    "ids": [
+      "FR-036",
+      "FR-037",
+      "FR-085"
+    ]
+  },
+  "reviewer-qa-2026-09-21T1200-doc08-candidate-c4-review.md": {
+    "role": "reviewer-qa",
+    "date": "2026-09-21",
+    "summary": "Neutral technical review (cycle 4) of Doc 08, if needed.",
+    "ids": [
+      "FR-036",
+      "FR-037",
+      "FR-085"
+    ]
   }
 }
